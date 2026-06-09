@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{c49f25fa-5ce9-465d-af73-b683308e0b2b}</ProjectGuid>
+    <RootNamespace>Project1</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\Users\Admin\Desktop\progtram\Project1-sss\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\Users\Admin\Desktop\progtram\Project1-sss\EFKforDxLib\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
+      <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\Admin\Desktop\progtram\Project1-sss\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\Users\Admin\Desktop\progtram\Project1-sss\EFKforDxLib\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>C:\Users\student\Desktop\team_T\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\student\Desktop\team_T\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>C:\Users\student\Desktop\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalIncludeDirectories)</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\Users\Admin\Desktop\progtram\Project1-sss\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\Users\Admin\Desktop\progtram\Project1-sss\EFKforDxLib\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
+      <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\Admin\Desktop\progtram\Project1-sss\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\Users\Admin\Desktop\progtram\Project1-sss\EFKforDxLib\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
+      <PerUserRedirection>true</PerUserRedirection>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>C:\Users\student\Desktop\team_T\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\Users\student\Desktop\team_T\EFKforDxLib\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\student\Desktop\team_T\EFKforDxLib\プロジェクトに追加すべきファイル_VC用;C:\Users\student\Desktop\team_T\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Animal.cpp" />
+    <ClCompile Include="Source\AnimalManager.cpp" />
+    <ClCompile Include="Source\AnimalMove.cpp" />
+    <ClCompile Include="Source\AttachmentModel.cpp" />
+    <ClCompile Include="Source\Bait.cpp" />
+    <ClCompile Include="Source\Boss.cpp" />
+    <ClCompile Include="Source\Camera.cpp" />
+    <ClCompile Include="Source\CapsuleCollider.cpp" />
+    <ClCompile Include="Source\Collider.cpp" />
+    <ClCompile Include="Source\ColliderManager.cpp" />
+    <ClCompile Include="Source\Combo.cpp" />
+    <ClCompile Include="Source\Cow.cpp" />
+    <ClCompile Include="Source\CowManager.cpp" />
+    <ClCompile Include="Source\CowMove.cpp" />
+    <ClCompile Include="Source\Cow_2.cpp" />
+    <ClCompile Include="Source\Cow_gold.cpp" />
+    <ClCompile Include="Source\DebugCamera.cpp" />
+    <ClCompile Include="Source\Cow_Tutorial.cpp" />
+    <ClCompile Include="Source\Effect.cpp" />
+    <ClCompile Include="Source\EffectManager.cpp" />
+    <ClCompile Include="Source\EffekseerEffect.cpp" />
+    <ClCompile Include="Source\Fever.cpp" />
+    <ClCompile Include="Source\Floor.cpp" />
+    <ClCompile Include="Source\GameManager.cpp" />
+    <ClCompile Include="Source\GameTimer.cpp" />
+    <ClCompile Include="Source\InputManager.cpp" />
+    <ClCompile Include="Source\Level.cpp" />
+    <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\Model.cpp" />
+    <ClCompile Include="Source\ModelAnimation.cpp" />
+    <ClCompile Include="Source\Object2D.cpp" />
+    <ClCompile Include="Source\Object3D.cpp" />
+    <ClCompile Include="Source\ObjectManager.cpp" />
+    <ClCompile Include="Source\Object_Stage.cpp" />
+    <ClCompile Include="Source\Mountain.cpp" />
+    <ClCompile Include="Source\Player3D.cpp" />
+    <ClCompile Include="Source\ResourceManager.cpp" />
+    <ClCompile Include="Source\ResultScene.cpp" />
+    <ClCompile Include="Source\Rule.cpp" />
+    <ClCompile Include="Source\Scene.cpp" />
+    <ClCompile Include="Source\Scene3D.cpp" />
+    <ClCompile Include="Source\SceneManager.cpp" />
+    <ClCompile Include="Source\Score.cpp" />
+    <ClCompile Include="Source\SelectionManager.cpp" />
+    <ClCompile Include="Source\Skill.cpp" />
+    <ClCompile Include="Source\SkyBox.cpp" />
+    <ClCompile Include="Source\SoundManager.cpp" />
+    <ClCompile Include="Source\SphereCollider.cpp" />
+    <ClCompile Include="Source\Stage.cpp" />
+    <ClCompile Include="Source\Tatumaki.cpp" />
+    <ClCompile Include="Source\Texture.cpp" />
+    <ClCompile Include="Source\Thunder.cpp" />
+    <ClCompile Include="Source\TitleScene.cpp" />
+    <ClCompile Include="Source\TutorialScene.cpp" />
+    <ClCompile Include="Source\Wall.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Animal.h" />
+    <ClInclude Include="Source\AnimalManager.h" />
+    <ClInclude Include="Source\AnimalMove.h" />
+    <ClInclude Include="Source\AttachmentModel.h" />
+    <ClInclude Include="Source\Bait.h" />
+    <ClInclude Include="Source\Boss.h" />
+    <ClInclude Include="Source\Camera.h" />
+    <ClInclude Include="Source\CapsuleCollider.h" />
+    <ClInclude Include="Source\Collider.h" />
+    <ClInclude Include="Source\ColliderManager.h" />
+    <ClInclude Include="Source\Combo.h" />
+    <ClInclude Include="Source\Cow.h" />
+    <ClInclude Include="Source\CowManager.h" />
+    <ClInclude Include="Source\CowMove.h" />
+    <ClInclude Include="Source\Cow_2.h" />
+    <ClInclude Include="Source\Cow_gold.h" />
+    <ClInclude Include="Source\DebugCamera.h" />
+    <ClInclude Include="Source\Cow_Tutorial.h" />
+    <ClInclude Include="Source\Effect.h" />
+    <ClInclude Include="Source\EffectManager.h" />
+    <ClInclude Include="Source\EffekseerEffect.h" />
+    <ClInclude Include="Source\Fever.h" />
+    <ClInclude Include="Source\Floor.h" />
+    <ClInclude Include="Source\GameManager.h" />
+    <ClInclude Include="Source\GameTimer.h" />
+    <ClInclude Include="Source\InputManager.h" />
+    <ClInclude Include="Source\Level.h" />
+    <ClInclude Include="Source\Master.h" />
+    <ClInclude Include="Source\Model.h" />
+    <ClInclude Include="Source\ModelAnimation.h" />
+    <ClInclude Include="Source\ModelUtility.h" />
+    <ClInclude Include="Source\Object2D.h" />
+    <ClInclude Include="Source\Object3D.h" />
+    <ClInclude Include="Source\ObjectManager.h" />
+    <ClInclude Include="Source\Object_Stage.h" />
+    <ClInclude Include="Source\Mountain.h" />
+    <ClInclude Include="Source\Player3D.h" />
+    <ClInclude Include="Source\ResourceManager.h" />
+    <ClInclude Include="Source\ResultScene.h" />
+    <ClInclude Include="Source\Rule.h" />
+    <ClInclude Include="Source\Scene.h" />
+    <ClInclude Include="Source\Scene3D.h" />
+    <ClInclude Include="Source\SceneManager.h" />
+    <ClInclude Include="Source\Score.h" />
+    <ClInclude Include="Source\SelectionManager.h" />
+    <ClInclude Include="Source\Skill.h" />
+    <ClInclude Include="Source\SkyBox.h" />
+    <ClInclude Include="Source\SoundManager.h" />
+    <ClInclude Include="Source\SphereCollider.h" />
+    <ClInclude Include="Source\Stage.h" />
+    <ClInclude Include="Source\Tatumaki.h" />
+    <ClInclude Include="Source\Texture.h" />
+    <ClInclude Include="Source\Thunder.h" />
+    <ClInclude Include="Source\TitleScene.h" />
+    <ClInclude Include="Source\TutorialScene.h" />
+    <ClInclude Include="Source\Utility.h" />
+    <ClInclude Include="Source\Wall.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
