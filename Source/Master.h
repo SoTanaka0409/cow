@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include"SceneManager.h"
 #include"SoundManager.h"
 #include"ResourceManager.h"

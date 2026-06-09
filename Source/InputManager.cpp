@@ -1,4 +1,4 @@
-#include"InputManager.h"
+﻿#include"InputManager.h"
 #include"DxLib.h"
 
 int InputManager::mDownBuffer[256] = { 0 };

@@ -1,4 +1,4 @@
-#include "Thunder.h"
+﻿#include "Thunder.h"
 #include <cmath>
 #include "CapsuleCollider.h"
 #include "dxlib.h"

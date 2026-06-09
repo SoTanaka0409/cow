@@ -1,4 +1,4 @@
-#include"Scene.h"
+﻿#include"Scene.h"
 #include "Rule.h"
 #include "DxLib.h"
 #include "Master.h"

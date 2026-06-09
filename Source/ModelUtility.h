@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "InputManager.h"
 
 // 3Dモデルのアニメーション状態を表す列挙型

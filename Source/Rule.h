@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include"Scene.h"
 
 // ゲームの各種環境設定（BGM音量、SE音量など）の調整を行うシーンクラス

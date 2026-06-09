@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include"dxlib.h"
 #include"Scene.h"
 #include"Texture.h"

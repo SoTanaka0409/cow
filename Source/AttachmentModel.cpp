@@ -1,4 +1,4 @@
-#include "AttachmentModel.h"
+﻿#include "AttachmentModel.h"
 
 AttachmentModel::AttachmentModel(std::string filename, int parentModelHandle, int parentFrameIndex)
 	: Object3D(VGet(0.0f, 0.0f, 0.0f)) // 親モデルの位置に同期するため初期値は原点にする

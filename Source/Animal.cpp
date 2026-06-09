@@ -1,4 +1,4 @@
-#include "Animal.h"
+﻿#include "Animal.h"
 #include "CapsuleCollider.h"
 
 Animal::Animal(std::string filename, VECTOR initPos)

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "DxLib.h"
 
 // デバッグ用の一人称視点（スペクテイター）の自由移動カメラ制御クラス

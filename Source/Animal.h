@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "AnimalMove.h"
 
 // ステージ上に出現する一般の動物（牛以外）を制御するクラス

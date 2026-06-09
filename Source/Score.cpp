@@ -1,4 +1,4 @@
-#include "Score.h"
+﻿#include "Score.h"
 #include <stdio.h>
 #include <string.h>
 #include "DxLib.h"

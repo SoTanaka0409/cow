@@ -1,4 +1,4 @@
-#include "EffectManager.h"
+﻿#include "EffectManager.h"
 
 EffectManager::EffectManager()
 	: effectResourcehandle(-1)

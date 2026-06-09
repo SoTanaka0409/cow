@@ -1,4 +1,4 @@
-#include "DxLib.h"
+﻿#include "DxLib.h"
 #include "ModelAnimation.h"
 
 ModelAnimation::ModelAnimation(int ModelHandle)

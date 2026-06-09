@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 // プレイヤーの獲得スコア、ランキング、ネーム入力（ネームエントリー）を管理・保存するクラス
 class Score

@@ -1,4 +1,4 @@
-#include "Wall.h"
+﻿#include "Wall.h"
 
 Wall::Wall(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight)
 	: Object3D(centerPos)

@@ -1,4 +1,4 @@
-#include "Floor.h"
+﻿#include "Floor.h"
 #include "DxLib.h"
 
 Floor::Floor(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight)

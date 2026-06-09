@@ -1,9 +1,9 @@
-#pragma once
+﻿#pragma once
 #include"dxlib.h"
-#include"Object2D.h"
+
 
 // ゲーム本編の制限時間タイマーを管理・描画するクラス
-class GameTimer : public Object2D
+class GameTimer 
 {
 public:
 	// タイマーを使用する状況タグ
@@ -23,7 +23,7 @@ public:
 	 * [出力] なし
 	 * [副作用] Timeの減算、タイムアップ時の mbFlag / mbStopFlag の有効化、mLastTimeの更新
 	 */
-	void Update() override;
+	void Update();
 
 	/*
 	 * @brief 画面上部に「LIMIT」テキスト画像と残り秒数の数値を並べて描画する
@@ -31,7 +31,7 @@ public:
 	 * [出力] なし
 	 * [副作用] バックバッファへのグラフィック描画
 	 */
-	void Draw() override;
+	void Draw();
 
 	// ゲッター・セッター群
 	bool OutTimerFlag() { return mbFlag; }

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "DxLib.h"
 
 // ゲーム内で共通して使用されるスクリーンサイズ定数やユーティリティ関数を定義する静的クラス

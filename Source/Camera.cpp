@@ -1,4 +1,4 @@
-#include "Camera.h"
+﻿#include "Camera.h"
 #include <cmath>
 #include "Master.h"
 #include "ObjectManager.h"

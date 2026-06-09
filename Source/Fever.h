@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 // ゲーム内のフィーバー（一定時間吸引強化・金牛の連続出現）状態を管理するクラス
 class Fever

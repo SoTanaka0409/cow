@@ -1,4 +1,4 @@
-#include "Object_Stage.h"
+﻿#include "Object_Stage.h"
 
 Object_Stage::Object_Stage(std::string filename, VECTOR initPos, float scale, VECTOR angle)
 	: Object3D(initPos)

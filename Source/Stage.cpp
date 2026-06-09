@@ -1,4 +1,4 @@
-#include "Stage.h"
+﻿#include "Stage.h"
 #include "Master.h"
 
 Stage::Stage(VECTOR initPos, std::string stageModelName, std::string stageCollisionModelName)

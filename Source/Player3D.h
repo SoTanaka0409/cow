@@ -1,8 +1,9 @@
-#pragma once
+﻿#pragma once
 #include "DxLib.h"
 #include <string>
 #include "Object3D.h"
 #include "Model.h"
+#include "ModelUtility.h"
 #include "Skill.h"
 #include "Level.h"
 #include "camera.h"

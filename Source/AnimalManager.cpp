@@ -1,4 +1,4 @@
-#include "AnimalManager.h"
+﻿#include "AnimalManager.h"
 #include "AnimalMove.h"
 #include "Player3D.h"
 #include "SceneManager.h"

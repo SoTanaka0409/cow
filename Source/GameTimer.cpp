@@ -1,11 +1,10 @@
-#include"GameTimer.h"
+﻿#include"GameTimer.h"
 
 GameTimer::GameTimer(VECTOR pos, int timer, Tag_Num num)
 	: Time(timer)
 	, mvPosition(pos)
 	, mbFlag(false)
 	, mbStopFlag(false)
-	, Object2D(pos)
 	, mnTag(num)
 {
 	mLastTime = GetNowCount();

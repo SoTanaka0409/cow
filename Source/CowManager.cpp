@@ -1,4 +1,4 @@
-#include "CowManager.h"
+﻿#include "CowManager.h"
 #include "CowMove.h"
 #include "Player3D.h"
 #include "SceneManager.h"
@@ -58,22 +58,14 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 				if (furthestIt != mCows.end())
 				{
 					// 最も遠い牛の削除フラグを立ててリストから除外する（実体はObjectManagerが安全に解放する）
-					(*furthestIt)->SetDeleteFlag(true);
-					if ((*furthestIt)->GetCollisionCollider() != nullptr)
-					{
-						(*furthestIt)->GetCollisionCollider()->SetDeleteFlag(true);
-					}
+					(*furthestIt)->SetDeadFlag(true);
 					mCows.erase(furthestIt);
 					erased = true;
 				}
 				else if (!mCows.empty())
 				{
 					// 全員が金の牛である場合は、一番古いものの削除フラグを立てて除外する
-					mCows[0]->SetDeleteFlag(true);
-					if (mCows[0]->GetCollisionCollider() != nullptr)
-					{
-						mCows[0]->GetCollisionCollider()->SetDeleteFlag(true);
-					}
+					mCows.front()->SetDeadFlag(true);
 					mCows.erase(mCows.begin());
 					erased = true;
 				}

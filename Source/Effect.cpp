@@ -1,4 +1,4 @@
-#include "Effect.h"
+﻿#include "Effect.h"
 
 Effect::Effect(VECTOR initPos, std::string filename, COLOR_U8 Changecolor, float Size, float VisibleTime)
 	: Object3D(initPos)

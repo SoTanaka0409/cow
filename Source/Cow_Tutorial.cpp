@@ -1,4 +1,4 @@
-#include "Cow_Tutorial.h"
+﻿#include "Cow_Tutorial.h"
 
 Cow_Tutorial::Cow_Tutorial(std::string filename, VECTOR initPos)
 	: CowMove(filename, initPos)

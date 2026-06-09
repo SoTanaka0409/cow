@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include"dxlib.h"
 
 // タイトル画面やリザルト画面でのメニュー項目選択IDおよび現在インデックスを管理するクラス

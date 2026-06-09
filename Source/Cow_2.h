@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CowMove.h"
 
 // 少し価値の高い中型の牛キャラクター（タグ: Cow_2）を制御するクラス

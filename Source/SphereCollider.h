@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Collider.h"
 
 // 球体形状（中心点と半径）の当たり判定コライダークラス

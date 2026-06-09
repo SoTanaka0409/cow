@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include"Scene.h"
 
 // シーン（画面）の遷移およびライフサイクル（初期化・更新・描画・終了）を管理するクラス

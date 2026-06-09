@@ -1,4 +1,4 @@
-#include"Player3D.h"
+﻿#include"Player3D.h"
 #include"Model.h"
 #include"ModelAnimation.h"
 #include"Master.h"
@@ -6,7 +6,7 @@
 #include"SceneManager.h"
 #include"ObjectManager.h"
 #include"Scene3D.h"
-
+#include"Utility.h"
 #include<string>
 #include <iostream>
 #include <cstring> // strcmp, strncmp
@@ -118,6 +118,10 @@ void Player3D::Update()
 	{
 		mvPosition = VGet(0, 2000, 0);
 		return;
+	}
+	if (mIsOutOfBounds)
+	{
+		mvPosition = VGet(0, 2000, 0);
 	}
 	
 	
@@ -235,8 +239,8 @@ void Player3D::ColliderUpdate()
 
 void Player3D::ScreenOutCheck()
 {
-	if (mvPosition.x > 5000.0f || mvPosition.x < -5000.0f ||
-		mvPosition.z > 5000.0f || mvPosition.z < -5000.0f)
+	if (mvPosition.x >Utility::StageSize.x  || mvPosition.x < -Utility::StageSize.x||
+		mvPosition.z > Utility::StageSize.z || mvPosition.z < -Utility::StageSize.z)
 	{
 		mIsOutOfBounds = true;
 
@@ -294,10 +298,7 @@ void Player3D::Draw()
 
 	);*/
 
-	if (mIsOutOfBounds)
-	{
-		mvPosition = VGet(0, 0, 0);
-	}
+	
 
 	// --- �n�ʂɉ~��`�悷�鏈�� ---
 	const int DIV = 32;             // �~����������ĕ`�����i���������قǊ��炩�ɂȂ�܂��j
@@ -446,9 +447,7 @@ void Player3D::MoveEx()
 						vertex.at(3).pos, vertex.at(1).pos, vertex.at(2).pos)
 					)
 				{
-					int WallFontSize = GetFontSize();
-					(40);
-					(WallFontSize);
+					
 					hitwall = true;
 					// �ǂɉ����čs���悤�ȃx�N�g����擾
 					VECTOR slide = VGet(0.0f, 0.0f, 0.0f);  // �ǉ����x�N�g��
@@ -681,10 +680,7 @@ void Player3D::SetScale(float scale)
 }
 
 
-void Player3D::VacuumCow()
-{
 
-}
 
 void Player3D::ApplyStun(int stunTime)
 {

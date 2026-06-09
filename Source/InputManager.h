@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 // キーボードからの入力状態（単発押し、押し続けなど）を判定するクラス
 class InputManager

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 // 連続で獲物を獲得した際にボーナススコアを付与するコンボシステムクラス
 class Combo

@@ -1,4 +1,4 @@
-#include "Fever.h"
+﻿#include "Fever.h"
 #include "Cow_gold.h"
 #include "CowManager.h"
 #include "Master.h"
