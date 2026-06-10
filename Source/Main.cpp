@@ -22,7 +22,7 @@ SoundManager* Master::mpSoundManager = new SoundManager();
 
 EffectManager* Master::mpEffectManager = new EffectManager();
 
-Score* Master::mpScore = new Score();
+Score* Master::mpScore = nullptr;
 bool Master::SelectSkill = false;
 int Master::mnTutorialcount = 0;
 bool Master::GameFinishFlag = false;
@@ -51,6 +51,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	{
 		return -1;
 	}
+
+	Master::mpScore = new Score(); // DxLib初期化後にインスタンス化して画像読み込みを正常に行う
 
 	SRand(GetNowCount());
 
@@ -131,6 +133,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ColliderManager::GetInstance()->Finalize();
 	
 	Effkseer_End();
+
+	delete Master::mpScore;
 
 	DxLib_End(); // DxLibシステム全体のクローズ処理
 

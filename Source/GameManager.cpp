@@ -72,11 +72,20 @@ void GameManager::GameNextStep(GameStepType type)
 		Master::GameFinishFlag = true;
 		if (player != nullptr)
 		{
-			// プレイ中スコアをマスターに登録し、キーボードネーム入力を開始
+			// プレイ中スコアをマスターに登録し、ランキングへ反映
 			Master::mpScore->AddScore(player->mpScore->GetScore());
-			player->mpScore->StartNameInput();
+			Master::mpScore->SetResultScore(player->mpScore->GetScore());
 			player->mpScore->AddRanking();
+
+			// 名前入力はスキップして自動セーブ
+			player->mpScore->Save();
+			player->mpScore->SaveRanking();
 		}
+
+		// リザルト画面へのフェードアウトを開始
+		Master::mpSceneManager->GetCurrentScene()->mFadeState = Scene::SceneFade_Out;
+		Master::mpSceneManager->GetCurrentScene()->mNextScene = SceneManager::SCENE_RESULT;
+
 		mnType = type;
 	}
 }
@@ -111,23 +120,10 @@ void GameManager::Update()
 	auto p = Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->GetObject3DByTag(Object3D::Tag3D_player);
 	Player3D* player = dynamic_cast<Player3D*>(p);
 	
-	// タイムアップ後のリザルトネーム入力更新と決定(ENTER)待ち処理
+	// タイムアップ後のリザルト遷移待ち処理
 	if (GameStepType::game_final == mnType)
 	{
-		if (player != nullptr)
-		{
-			player->mpScore->UpdateNameInput();
-		}
-		if (InputManager::CheckDownKey(KEY_INPUT_RETURN))
-		{
-			Master::mpSceneManager->GetCurrentScene()->mFadeState = Scene::SceneFade_Out;
-			Master::mpSceneManager->GetCurrentScene()->mNextScene = SceneManager::SCENE_RESULT;
-			if (player != nullptr)
-			{
-				player->mpScore->Save();
-				player->mpScore->SaveRanking();
-			}
-		}
+		// GameNextStepでフェードアウト設定済みなため、ここでは何もしない
 	}
 	
 	// ゲーム本編進行中：制限時間タイマー管理およびランダムフェーズ切り替え処理
@@ -135,7 +131,7 @@ void GameManager::Update()
 	{
 		if (!mpGameTimer)
 		{
-			mpGameTimer = new GameTimer(VGet(0, 0, 0), 120, GameTimer::Tag_Game);
+			mpGameTimer = new GameTimer(VGet(0, 0, 0), 60, GameTimer::Tag_Game);
 		}
 
 		if (mpGameTimer)

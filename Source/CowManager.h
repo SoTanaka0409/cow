@@ -54,7 +54,7 @@ public:
 	void EraseCow();
 
 private:
-	std::vector<CowMove*> mCows;        // 生成された牛オブジェクトのポインタ配列
+	std::vector<CowMove*>mCows;        // 生成された牛オブジェクトのポインタ配列
 	SaveTagDate s;                      // タグコンボ判定用のバッファデータ
 	int mnTagCount;                     // 現在バッファに入っているタグの個数
 };

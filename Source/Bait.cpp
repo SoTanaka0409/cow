@@ -60,6 +60,7 @@ void Bait::Update()
 			if (cow != nullptr && cow->GetBaitFlag())
 			{
 				cow->KilledByBait();
+				Master::mpSoundManager->PlaySE(SoundManager::SE_BAITFINAL);
 			}
 		}
 

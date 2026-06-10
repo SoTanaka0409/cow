@@ -33,6 +33,7 @@ TitleScene::TitleScene()
 	rankImage[1] = LoadGraph("Resource/2D/2位.png");
 	rankImage[2] = LoadGraph("Resource/2D/3位.png");
 	rankingTitleImage = LoadGraph("Resource/2D/ランキング.png");
+	pointImg = LoadGraph("Resource/2D/点.png");
 	 
 	// インタラクティブな各遷移ボタンのデータをリストに登録
 	// 1. スタートボタン
@@ -90,7 +91,7 @@ TitleScene::~TitleScene()
 void TitleScene::Initialize()
 {
 	Master::GameFinishFlag = false;
-
+	SetMouseDispFlag(true); // タイトル画面ではマウスポインタを表示する
 	Master::mpScore->LoadRanking(); // 最新のハイスコアデータをストレージから読み込み
 	Master::mpCamera->Initialize();
 
@@ -99,6 +100,7 @@ void TitleScene::Initialize()
 
 void TitleScene::Draw()
 {
+	Scene::Draw();
 	DrawExtendGraph(0, 0, 1600, 900, mnTitleGraphHandle, FALSE);
 
 	int ufoDrawY = mUfoY;
@@ -142,7 +144,7 @@ void TitleScene::Draw()
 		}
 	}
 
-	Scene::Draw();
+	
 	DrawRankingUI();
 	if (mFadeState != SceneFade_None) {
 		Scene::Fade(mFadeState);
@@ -276,8 +278,9 @@ void TitleScene::Finalize()
 	{
 		DeleteGraph(rankImage[i]);
 	}
-
+	SetMouseDispFlag(false); // タイトルシーン終了後はマウスポインタを非表示にする
 	DeleteGraph(rankingTitleImage);
+	DeleteGraph(pointImg);
 	Master::mpSoundManager->StopBGM();
 }
 
@@ -315,10 +318,30 @@ void TitleScene::DrawRankingUI()
 			TRUE
 		);
 
+		float scale = 0.6f;
+		int w = (int)(80 * scale);
+		int h = (int)(80 * scale);
+		int drawY = y - 10 + (80 - h) / 2;
+
 		Master::mpScore->DrawNumber(
 			baseX + 180,
-			y - 10,
-			data.score
+			drawY,
+			data.score,
+			scale,
+			4
 		);
+
+		int temp = data.score;
+		int digitCount = 0;
+		if (temp == 0) digitCount = 1;
+		else {
+			while (temp > 0) {
+				temp /= 10;
+				digitCount++;
+			}
+		}
+		if (digitCount < 4) digitCount = 4;
+		int pointX = baseX + 180 + digitCount * w;
+		DrawExtendGraph(pointX, drawY, pointX + w, drawY + h, pointImg, TRUE);
 	}
 }

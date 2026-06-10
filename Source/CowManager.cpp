@@ -25,6 +25,7 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 {
 	for (int i = 0; i < count; i++)
 	{
+		
 		// 画面上の同時アクティブ牛数上限を30匹に制限する
 		if (mCows.size() >= 30)
 		{

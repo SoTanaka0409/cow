@@ -28,6 +28,7 @@ public:
 		SE_TATUMAKI,          // スキル（竜巻）発動時の風切音
 		SE_KAMINARI,          // スキル（落雷）発動時の雷鳴音
 		SE_TutorialChange,    // チュートリアルの進行状況変化時の効果音
+		SE_BAITFINAL,        // エサ投下完了時の効果音
 	};
 
 	SoundManager();

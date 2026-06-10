@@ -38,6 +38,7 @@ ResultScene::ResultScene()
 
 	Master::mpSoundManager->PlayBGM(SoundManager::BGM_RESULT);
 	Master::mpSoundManager->SetBGMVolume(120);
+	Master::mpScore;
 }
 
 ResultScene::~ResultScene()
@@ -61,14 +62,29 @@ void ResultScene::Draw()
 	// プレイヤーの最終獲得スコアを描画
 	DrawExtendGraph(500, 300, 1100, 550, yourScoreTextImg, TRUE);
 	int score = Score::GetResultScore();
-	Master::mpScore->DrawNumber(850, 490, score);
-	DrawExtendGraph(1050, 430, 1250, 630, pointImg, TRUE);
+	int temp = score;
+	int digitCount = 0;
+	if (temp == 0) digitCount = 1;
+	else {
+		while (temp > 0) {
+			temp /= 10;
+			digitCount++;
+		}
+	}
+	if (digitCount < 4) digitCount = 4;
+
+	int startX = 850;
+	if (digitCount > 3) {
+		startX = 850 - (digitCount - 3) * 40;
+	}
+
+	Master::mpScore->DrawNumber(startX, 490, score, 1.0f, 4);
+	
+	int pointX = startX + digitCount * 80;
+	DrawExtendGraph(pointX, 430, pointX + 200, 630, pointImg, TRUE);
 
 	// プレイ中に回収した牛の総数を描画
-	SetFontSize(40);
-	DrawFormatString(500, 600, GetColor(0, 0, 0), "Cows Caught :");
-	Master::mpScore->DrawNumber(850, 580, Master::mnCaughtCowCount);
-	SetFontSize(16); // 元のフォントサイズ設定に復帰
+
 
 	Scene::Draw();
 	if (mFadeState != SceneFade_None) {
@@ -135,11 +151,31 @@ void ResultScene::DrawRankingUI()
 			TRUE
 		);
 
+		float scale = 0.6f;
+		int w = (int)(80 * scale);
+		int h = (int)(80 * scale);
+		int drawY = y - 10 + (80 - h) / 2;
+
 		Master::mpScore->DrawNumber(
 			baseX + 180,
-			y - 10,
-			data.score
+			drawY,
+			data.score,
+			scale,
+			4
 		);
+
+		int temp = data.score;
+		int digitCount = 0;
+		if (temp == 0) digitCount = 1;
+		else {
+			while (temp > 0) {
+				temp /= 10;
+				digitCount++;
+			}
+		}
+		if (digitCount < 4) digitCount = 4;
+		int pointX = baseX + 180 + digitCount * w;
+		DrawExtendGraph(pointX, drawY, pointX + w, drawY + h, pointImg, TRUE);
 	}
 }
 

@@ -64,6 +64,7 @@ private:
 	int mnOperationProcedures;    // 設定説明ボタンの画像ハンドル（未使用・ボタン構造体へ移行）
 
 	int rankingTitleImage;        // ランキングボードのタイトル画像ハンドル
+	int pointImg;                 // 点の画像ハンドル
 
 	SelectionManager* mnTitleSelect; // 選択マネージャー（未使用・ボタンリストへ移行）
 	Texture* mpTexture;           // テクスチャオブジェクト（未使用・ボタン構造体へ移行）

@@ -35,6 +35,7 @@ void SoundManager::Initialize()
 	LoadSE(SOUND_SE::SE_BEAM, "Resource/SE/HP吸収魔法1.mp3");
 	LoadSE(SOUND_SE::SE_SKILL_STATUS, "Resource/SE/ステータス上昇魔法2.mp3");
 	LoadSE(SOUND_SE::SE_SKILL_FOOD, "Resource/SE/ロボット起動2.mp3");
+	LoadSE(SOUND_SE::SE_BAITFINAL, "Resource/SE/高速移動.mp3");
 }
 
 /*

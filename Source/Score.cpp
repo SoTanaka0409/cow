@@ -85,6 +85,11 @@ void Score::Draw()
 		}
 	}
 
+	while (digitCount < 4)
+	{
+		digit[digitCount++] = 0;
+	}
+
 	for (int i = digitCount - 1; i >= 0; i--)
 	{
 		DrawExtendGraph(
@@ -179,6 +184,10 @@ void Score::UpdateNameInput()
 	if (CheckHitKey(KEY_INPUT_RETURN) && strlen(playerName) > 0)
 	{
 		nameInputMode = false;
+		if (nameIndex >= 0 && nameIndex < 3)
+		{
+			strcpy_s(ranking[nameIndex].name, sizeof(ranking[nameIndex].name), playerName);
+		}
 	}
 }
 
@@ -190,6 +199,7 @@ bool Score::IsNameInputFinished() const
 void Score::AddRanking()
 {
 	int target = score;
+	nameIndex = -1;
 
 	// 上位3位の中に今回のスコアが割り込める位置があるか探索
 	for (int i = 0; i < 3; i++)
@@ -205,6 +215,7 @@ void Score::AddRanking()
 			// 今回のプレイヤーとして仮登録（後にネーム入力値で確定）
 			strcpy_s(ranking[i].name, "PLAYER");
 			ranking[i].score = target;
+			nameIndex = i;
 			break;
 		}
 	}
@@ -284,7 +295,7 @@ void Score::Initialize()
 	score = 0;
 }
 
-void Score::DrawNumber(int x, int y, int value)
+void Score::DrawNumber(int x, int y, int value, float scale, int minDigits)
 {
 	int digit[10];
 	int digitCount = 0;
@@ -310,19 +321,26 @@ void Score::DrawNumber(int x, int y, int value)
 		}
 	}
 
+	while (digitCount < minDigits)
+	{
+		digit[digitCount++] = 0;
+	}
+
 	int drawX = x;
+	int w = (int)(80 * scale);
+	int h = (int)(80 * scale);
 
 	if (isMinus)
 	{
 		DrawExtendGraph(
 			drawX,
 			y,
-			drawX + 80,
-			y + 80,
+			drawX + w,
+			y + h,
 			minusImg,
 			TRUE
 		);
-		drawX += 80;
+		drawX += w;
 	}
 
 	for (int i = digitCount - 1; i >= 0; i--)
@@ -330,12 +348,12 @@ void Score::DrawNumber(int x, int y, int value)
 		DrawExtendGraph(
 			drawX,
 			y,
-			drawX + 80,
-			y + 80,
+			drawX + w,
+			y + h,
 			numberImg[digit[i]],
 			TRUE
 		);
-		drawX += 80;
+		drawX += w;
 	}
 }
 

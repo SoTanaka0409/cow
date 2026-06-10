@@ -187,7 +187,7 @@ void Skill::AddSkill()
 	else if (ProcessSkill(mpTexture2, 2))
 	{
 		// 餌（デコイにんじん）設置
-		auto b = new Bait("Resource/3D/にんじん/Carrot.mv1", mpParent->GetPosition());
+		auto b = new Bait("Resource/3D/牛の餌/Carrot.mv1", mpParent->GetPosition());
 		float scale = 5000.0f;
 		b->mpModel->SetScale(VGet(scale, scale, scale));
 

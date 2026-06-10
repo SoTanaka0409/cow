@@ -121,7 +121,6 @@ private:
 
 	int mouseX;                     // マウス座標（リザーブ）
 
-	CowManager* mpCowManager;       // 牛管理マネージャー（基底クラス Scene と共有）
 	Thunder* thunder;               // 落雷用（リザーブ）
 	Camera* mpCamera = nullptr;     // 3Dカメラオブジェクトへのポインタ
 	Combo* mpCombo = nullptr;       // コンボ表示用（リザーブ）

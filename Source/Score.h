@@ -123,7 +123,7 @@ public:
 	 * [出力] なし
 	 * [副作用] バックバッファへの数字画像描画
 	 */
-	void DrawNumber(int x, int y, int value);
+	void DrawNumber(int x, int y, int value, float scale = 1.0f, int minDigits = 1);
 
 	/*
 	 * @brief コンボ数に応じたスコア倍率を適用してスコアを加算する

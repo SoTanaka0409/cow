@@ -113,6 +113,10 @@ void TutorialScene::Update()
 	{
 		mpCamera->Update();
 	}
+	if (mpCowManager != nullptr)
+	{
+		mpCowManager->Update();
+	}
 
 	switch (mState)
 	{
@@ -155,9 +159,9 @@ void TutorialScene::Update()
 			Master::mpSceneManager->SetNextScene((SceneManager::SCENE_TYPE)mNextScene);
 		}
 	}
-
+	
 	Scene::Update();
-	mpCowManager->Update();
+	
 }
 
 // 1. 移動操作説明：WASD入力のいずれかを検知したら次のステップへ進む
@@ -285,7 +289,7 @@ void TutorialScene::Draw()
 void TutorialScene::DrawTutorialText(const char* text, int yOffset)
 {
 	unsigned int color = GetColor(255, 255, 0);
-	DrawFormatStringToHandle(600, 100 + yOffset, color, fontHandle, text);
+	DrawFormatStringToHandle(400, 50 + yOffset, color, fontHandle, text);
 }
 
 void TutorialScene::Finalize()
