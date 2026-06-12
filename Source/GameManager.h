@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include"DxLib.h"
 #include<vector>
 
@@ -11,9 +11,8 @@ public:
 	// ゲーム本編のステップ段階定義
 	enum GameStepType
 	{
-		game_CowGet,    // 通常の牛回収プレイ時間
-		game_Boss,      // ボス戦（未使用・予約）
-		game_final,     // タイムアップ後の終了・名前入力待ち段階
+		game_CowGet,    // 通常の牛ゲット
+		game_final,     // タイムアップ後の終了・画面遷移待機ち段階
 	};
 
 	// 各ステップの有効フラグ構造体

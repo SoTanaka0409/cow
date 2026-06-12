@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "DxLib.h"
 #include <string>
 
@@ -18,7 +18,6 @@ public:
 		Tag3D_Enemy,
 		Tag3D_Cow,
 		Tag3D_Wall,
-		Tag3D_boss,
 		Tag3D_Bait,
 		Tag3D_Animal
 	};

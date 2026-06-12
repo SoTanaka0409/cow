@@ -1,9 +1,8 @@
-﻿#include"GameManager.h"
+#include"GameManager.h"
 #include"Master.h"
 #include"SceneManager.h"
 #include"Player3D.h"
 #include"ObjectManager.h"
-#include"Boss.h"
 #include"InputManager.h"
 #include"GameTimer.h"
 #include"Utility.h"
@@ -19,11 +18,6 @@ GameManager::GameManager()
 	// 各進行ステップデータの定義と登録
 	auto data = new GameStepData;
 	data->type = GameStepType::game_CowGet;
-	data->TrueFlag = true;
-	mData.push_back(data);
-
-	data = new GameStepData;
-	data->type = GameStepType::game_Boss;
 	data->TrueFlag = true;
 	mData.push_back(data);
 

@@ -150,9 +150,7 @@
     <ClCompile Include="Source\Animal.cpp" />
     <ClCompile Include="Source\AnimalManager.cpp" />
     <ClCompile Include="Source\AnimalMove.cpp" />
-    <ClCompile Include="Source\AttachmentModel.cpp" />
     <ClCompile Include="Source\Bait.cpp" />
-    <ClCompile Include="Source\Boss.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\CapsuleCollider.cpp" />
     <ClCompile Include="Source\Collider.cpp" />
@@ -165,7 +163,6 @@
     <ClCompile Include="Source\Cow_gold.cpp" />
     <ClCompile Include="Source\DebugCamera.cpp" />
     <ClCompile Include="Source\Cow_Tutorial.cpp" />
-    <ClCompile Include="Source\Effect.cpp" />
     <ClCompile Include="Source\EffectManager.cpp" />
     <ClCompile Include="Source\EffekseerEffect.cpp" />
     <ClCompile Include="Source\Fever.cpp" />
@@ -207,9 +204,7 @@
     <ClInclude Include="Source\Animal.h" />
     <ClInclude Include="Source\AnimalManager.h" />
     <ClInclude Include="Source\AnimalMove.h" />
-    <ClInclude Include="Source\AttachmentModel.h" />
     <ClInclude Include="Source\Bait.h" />
-    <ClInclude Include="Source\Boss.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\CapsuleCollider.h" />
     <ClInclude Include="Source\Collider.h" />
@@ -222,7 +217,6 @@
     <ClInclude Include="Source\Cow_gold.h" />
     <ClInclude Include="Source\DebugCamera.h" />
     <ClInclude Include="Source\Cow_Tutorial.h" />
-    <ClInclude Include="Source\Effect.h" />
     <ClInclude Include="Source\EffectManager.h" />
     <ClInclude Include="Source\EffekseerEffect.h" />
     <ClInclude Include="Source\Fever.h" />
