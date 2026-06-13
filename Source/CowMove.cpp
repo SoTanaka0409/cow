@@ -1,4 +1,4 @@
-﻿#include "CowMove.h"
+#include "CowMove.h"
 #include "Master.h"
 #include "InputManager.h"
 #include "SceneManager.h"
@@ -163,42 +163,13 @@ void CowMove::CowDied()
 		// 限界高度を超えたら回収完了（死亡フラグON）
 		if (mvPosition.y > mfdeathTime && !mIsDead)
 		{
-			mIsDead = true;
-			Master::mnCaughtCowCount++; // 総回収数のカウントアップ
-			Master::mpSoundManager->PlaySE(SoundManager::SE_COW); // 鳴き声SE
-			mbIsVisible = false;       // モデルを非表示に
-			mEffectTimer = 60;         // 消滅までの猶予タイマー設定
-
-			if (mpCowVm != nullptr)
-			{
-				mpCowVm->Play(); // 回収エフェクト再生
-			}
-
-			// プレイヤーの各種報酬処理（経験値、コンボ、スコア）
-			if (player != nullptr)
-			{
-				player->mpLevel->AddXp(mfXp);
-				player->mpCombo->AddHit();
-				player->mpScore->AddScore(mfScore + player->mpCombo->GetMultiplier()); // コンボ倍率を上乗せ
-			}
-
-			// チュートリアル用のフラグ制御
-			if (Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TUTORIAL)
-			{
-				Master::TutrialVacumFlag = true;
-			}
+			Die(DEATH_VACUUM);
 		}
 
 		mpModel->SetPosition(mvPosition);
 		return;
 	}
 
-	// --- 2. 吸引モード以外で死亡フラグが立っている場合のクリーンアップ ---
-	if (mIsDead)
-	{
-		mpCapsuleCollider->SetDeleteFlag(true);
-		SetDeleteFlag(true);
-	}
 }
 
 /*
@@ -206,26 +177,66 @@ void CowMove::CowDied()
  */
 void CowMove::KilledByBait()
 {
+	Die(DEATH_BAIT);
+}
+
+/*
+ * @brief 死亡処理の統合
+ */
+void CowMove::Die(DeathReason reason)
+{
+	if (mIsDead) return;
+	mIsDead = true;
+
 	auto p = Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->GetObject3DByTag(Object3D::Tag3D_player);
 	Player3D* player = dynamic_cast<Player3D*>(p);
 
-	if (player != nullptr)
+	switch (reason)
 	{
+	case DEATH_VACUUM:
 		Master::mnCaughtCowCount++;
 		Master::mpSoundManager->PlaySE(SoundManager::SE_COW);
-		player->mpLevel->AddXp(mfXp);
-		player->mpCombo->AddHit();
-		player->mpScore->AddScore(mfScore + player->mpCombo->GetMultiplier());
-
+		mbIsVisible = false;
+		mEffectTimer = 60;
+		if (mpCowVm != nullptr)
+		{
+			mpCowVm->Play();
+		}
+		if (player != nullptr)
+		{
+			player->mpLevel->AddXp(mfXp);
+			player->mpCombo->AddHit();
+			player->mpScore->AddScore(mfScore + player->mpCombo->GetMultiplier());
+		}
 		if (Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TUTORIAL)
 		{
 			Master::TutrialVacumFlag = true;
 		}
-	}
+		break;
 
-	mIsDead = true;
-	mpCapsuleCollider->SetDeleteFlag(true);
-	SetDeleteFlag(true);
+	case DEATH_BAIT:
+		Master::mnCaughtCowCount++;
+		Master::mpSoundManager->PlaySE(SoundManager::SE_COW);
+		if (player != nullptr)
+		{
+			player->mpLevel->AddXp(mfXp);
+			player->mpCombo->AddHit();
+			player->mpScore->AddScore(mfScore + player->mpCombo->GetMultiplier());
+		}
+		if (Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TUTORIAL)
+		{
+			Master::TutrialVacumFlag = true;
+		}
+		mpCapsuleCollider->SetDeleteFlag(true);
+		SetDeleteFlag(true);
+		break;
+
+	case DEATH_LIMIT:
+		// 上限消去の場合はスコア等を加算せず即座に削除
+		mpCapsuleCollider->SetDeleteFlag(true);
+		SetDeleteFlag(true);
+		break;
+	}
 }
 
 /*

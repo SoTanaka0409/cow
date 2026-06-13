@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "DxLib.h"
 #include "Object3D.h"
 #include "Model.h"
@@ -28,6 +28,13 @@ public:
 		Animal_3,
 		Animal_gold,
 		Animal_T,
+	};
+
+	enum DeathReason
+	{
+		DEATH_VACUUM, // 吸い込まれて回収
+		DEATH_BAIT,   // エサで回収
+		DEATH_LIMIT   // 生成上限による消去
 	};
 
 public:
@@ -90,8 +97,27 @@ public:
 	void ResetVacuumTimer() { mVacuumTimer = 0; }
 	int  GetVacuumTimer() { return mVacuumTimer; }
 
+	/*
+	 * @brief 徘徊AIタイマーを減らし、立ち止まりと歩き状態を定期的に選択する
+	 */
+	void UpdateWanderAI();
+
+	/*
+	 * @brief ステージ境界や壁面との衝突を判定し、壁沿いに滑り移動するように座標を補正する
+	 */
+	void CheckWallCollision();
+
+	/*
+	 * @brief 吸引状態の更新および死亡判定処理
+	 */
+	virtual void AnimalDied();
+
+	/*
+	 * @brief 動物の死亡処理の統合
+	 */
+	virtual void Die(DeathReason reason);
+
 	bool IsDead() { return mIsDead; }
-	void SetDeadFlag(bool flag) { mIsDead = flag; }
 
 	void SetTag_animal(Tag_animal tag) { mntag_animal = tag; }
 	Tag_animal GetTag_animal() { return mntag_animal; }

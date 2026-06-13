@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "CowMove.h"
 
 // 獲得時に高スコアおよびフィーバー状態を誘発する特別な金の牛（タグ: Cow_gold）を制御するクラス
@@ -24,8 +24,7 @@ public:
 
 	void Update() override;
 	void MoveCow() override;
-	void CowDied();
-	void KilledByBait() override;
+	void Die(DeathReason reason) override;
 
 private:
 	Tag_fever mnFever;  // スポーン時のフィーバー状態

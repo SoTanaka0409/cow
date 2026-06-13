@@ -1,4 +1,4 @@
-﻿#include "AnimalMove.h"
+#include "AnimalMove.h"
 #include "Master.h"
 #include "InputManager.h"
 #include "SceneManager.h"
@@ -43,6 +43,7 @@ AnimalMove::~AnimalMove()
 void AnimalMove::Update()
 {
 	MoveAnimal();
+	AnimalDied();
 
 	if (!(mCurrentState == STATE_VACUUM))
 	{
@@ -67,43 +68,21 @@ void AnimalMove::ColliderMove()
 
 void AnimalMove::MoveAnimal()
 {
-	auto p = Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->GetObject3DByTag(Object3D::Tag3D_player);
-	Player3D* player = dynamic_cast<Player3D*>(p);
-
-	if (mCurrentState == STATE_VACUUM)
-	{
-		AnimalRotate();
-		if (player != nullptr)
-		{
-			mvPosition.y += player->Status(Player3D::Status_AttackS);
-		}
-
-		if (mvPosition.y > mfdeathTime && !mDelete)
-		{
-			mIsDead = true;
-			SetDeleteFlag(true);
-			mpCapsuleCollider->SetDeleteFlag(true);
-
-			if (player != nullptr)
-			{
-				player->mpLevel->AddXp(mfXp);
-				player->mpCombo->Reset();
-				player->mpScore->AddScore(mfScore);
-			}
-			mDelete = true;
-		}
-		else
-		{
-			mIsDead = false;
-		}
-
-		mpModel->SetPosition(mvPosition);
-		return;
-	}
+	if (mCurrentState == STATE_VACUUM) return;
 	
-	mActionTimer--;
 	mvOldPosition = mvPosition;
 
+	UpdateWanderAI();
+	CheckWallCollision();
+
+	mpModel->SetPosition(mvPosition);
+}
+
+void AnimalMove::UpdateWanderAI()
+{
+	if (mCurrentState == STATE_VACUUM) return;
+
+	mActionTimer--;
 	if (mActionTimer <= 0)
 	{
 		// 徘徊行動AI：50%の確率で徘徊、50%で静止する
@@ -139,8 +118,10 @@ void AnimalMove::MoveAnimal()
 			mvPosition.y = 0;
 		}
 	}
+}
 
-	// 壁との衝突判定補正
+void AnimalMove::CheckWallCollision()
+{
 	bool hitwall = false;
 	bool hitwalls = false;
 	const auto& walls = Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->GetObject3DListByTag(Object3D::Tag3D_Wall);
@@ -183,8 +164,6 @@ void AnimalMove::MoveAnimal()
 			}
 		}
 	}
-
-	mpModel->SetPosition(mvPosition);
 }
 
 void AnimalMove::RotationAnimal()
@@ -239,5 +218,57 @@ void AnimalMove::OnExit(Collider* collider, Collider* check)
 		{
 			mbBaitFlag = false;
 		}
+	}
+}
+
+void AnimalMove::AnimalDied()
+{
+	if (mCurrentState != STATE_VACUUM) return;
+
+	auto p = Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->GetObject3DByTag(Object3D::Tag3D_player);
+	Player3D* player = dynamic_cast<Player3D*>(p);
+
+	AnimalRotate();
+	if (player != nullptr)
+	{
+		mvPosition.y += player->Status(Player3D::Status_AttackS);
+	}
+
+	if (mvPosition.y > mfdeathTime && !mIsDead)
+	{
+		Die(DEATH_VACUUM);
+	}
+
+	mpModel->SetPosition(mvPosition);
+}
+
+void AnimalMove::Die(DeathReason reason)
+{
+	if (mIsDead) return;
+	mIsDead = true;
+
+	auto p = Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->GetObject3DByTag(Object3D::Tag3D_player);
+	Player3D* player = dynamic_cast<Player3D*>(p);
+
+	switch (reason)
+	{
+	case DEATH_VACUUM:
+	case DEATH_BAIT:
+		if (player != nullptr)
+		{
+			player->mpLevel->AddXp(mfXp);
+			player->mpCombo->Reset();
+			player->mpScore->AddScore(mfScore);
+		}
+		mpCapsuleCollider->SetDeleteFlag(true);
+		SetDeleteFlag(true);
+		mDelete = true;
+		break;
+
+	case DEATH_LIMIT:
+		mpCapsuleCollider->SetDeleteFlag(true);
+		SetDeleteFlag(true);
+		mDelete = true;
+		break;
 	}
 }

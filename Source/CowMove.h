@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "DxLib.h"
 #include "Object3D.h"
 #include "Model.h"
@@ -29,6 +29,13 @@ public:
 		Cow_3,
 		Cow_gold,
 		Cow_T,
+	};
+
+	enum DeathReason
+	{
+		DEATH_VACUUM, // 吸い込まれて回収
+		DEATH_BAIT,   // エサで回収
+		DEATH_LIMIT   // 生成上限による消去
 	};
 
 public:
@@ -139,8 +146,12 @@ public:
 	 */
 	virtual void KilledByBait();
 
+	/*
+	 * @brief 牛の死亡処理を統合
+	 */
+	virtual void Die(DeathReason reason);
+
 	bool IsDead() { return mIsDead; }
-	void SetDeadFlag(bool flag) { mIsDead = flag; }
 
 	void SetTag_cow(Tag_cow tag) { mntag_cow = tag; }
 	Tag_cow GetTag_cow() { return mntag_cow; }

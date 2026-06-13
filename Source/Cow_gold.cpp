@@ -1,4 +1,4 @@
-﻿#include "Cow_gold.h"
+#include "Cow_gold.h"
 #include "CapsuleCollider.h"
 #include "Player3D.h"
 #include "Master.h"
@@ -26,16 +26,7 @@ Cow_gold::~Cow_gold()
 void Cow_gold::Update()
 {
 	DeathCount++;
-	MoveCow();
-	
-	if (!(mCurrentState == STATE_VACUUM))
-	{
-		RotationCow();
-	}
-
-	ColliderMove();
-	CowDied();
-	mpModel->Update();
+	CowMove::Update();
 
 	// フィーバー用金の牛で、フィーバーが終了したか生存時間を超えた場合は自動消滅させる
 	if (mnFever == fever && (Master::mpSceneManager->GetCurrentScene()->mpFever->IsFever() == false || DeathCount >= DeathTimer))
@@ -45,91 +36,18 @@ void Cow_gold::Update()
 	}
 }
 
-void Cow_gold::CowDied()
+void Cow_gold::Die(DeathReason reason)
 {
-	auto p = Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->GetObject3DByTag(Object3D::Tag3D_player);
-	Player3D* player = dynamic_cast<Player3D*>(p);
-	if (player == nullptr) return; 
+	if (mIsDead) return;
+	CowMove::Die(reason);
 
-	if (mCurrentState == STATE_VACUUM)
+	if (reason == DEATH_VACUUM || reason == DEATH_BAIT)
 	{
-		if (mIsDead)
-		{
-			if (mpCowVm != nullptr)
-			{
-				mpCowVm->Update();
-			}
-			return;
-		}
-
-		CowRotate();
-		mvPosition.y += player->Status(Player3D::Status_AttackS);
-
-		VECTOR playerPos = player->GetPosition();
-		float followSpeed = 0.15f;
-
-		if (this->mnFever == fever)
-		{
-			mvPosition.x += (playerPos.x - mvPosition.x) * followSpeed;
-			mvPosition.z += (playerPos.z - mvPosition.z) * followSpeed;
-		}
-
-		if (mvPosition.y > mfdeathTime && !mCowtDelete)
-		{
-			if (mpCowVm != nullptr)
-			{
-				mpCowVm->SetPosition(mvPosition);
-				mpCowVm->Play();
-			}
-
-			mIsDead = true;
-			mEffectTimer = 30;
-
-			Master::mpSoundManager->PlaySE(SoundManager::SE_COW);
-			SetDeleteFlag(true);
-			mpCapsuleCollider->SetDeleteFlag(true);
-
-			player->mpLevel->AddXp(mfXp);
-			player->mpCombo->AddHit();
-			player->mpScore->AddScore(mfScore + player->mpCombo->GetMultiplier());
-
-			if (this->mnFever == Nofever)
-			{
-				Master::mpSceneManager->GetCurrentScene()->mpFever->StartFever();
-			}
-			mCowtDelete = true;
-		}
-
-		mpModel->SetPosition(mvPosition);
-	}
-}
-
-void Cow_gold::KilledByBait()
-{
-	auto p = Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->GetObject3DByTag(Object3D::Tag3D_player);
-	Player3D* player = dynamic_cast<Player3D*>(p);
-	if (player != nullptr)
-	{
-		Master::mnCaughtCowCount++;
-		Master::mpSoundManager->PlaySE(SoundManager::SE_COW);
-		player->mpLevel->AddXp(mfXp);
-		player->mpCombo->AddHit();
-		player->mpScore->AddScore(mfScore + player->mpCombo->GetMultiplier());
-
 		if (this->mnFever == Nofever)
 		{
 			Master::mpSceneManager->GetCurrentScene()->mpFever->StartFever();
 		}
-
-		if (Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TUTORIAL)
-		{
-			Master::TutrialVacumFlag = true;
-		}
 	}
-
-	mIsDead = true;
-	mpCapsuleCollider->SetDeleteFlag(true);
-	SetDeleteFlag(true);
 }
 
 void Cow_gold::MoveCow()
