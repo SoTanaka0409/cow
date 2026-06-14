@@ -1,4 +1,4 @@
-ï»¿#include "Floor.h"
+#include "Floor.h"
 #include "DxLib.h"
 
 Floor::Floor(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight)
@@ -6,35 +6,35 @@ Floor::Floor(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bott
 {
 	mnGraphHandle = LoadGraph(filename.c_str());
 
-	// åºŠã®å·¦ä¸Šé ‚ç‚¹ã®è¨­å®š
+	// °‚Ì¶ã’¸“_‚Ìİ’è
 	mVertex[0].pos = VAdd(centerPos, topLeft);
 	mVertex[0].dif = GetColorU8(255, 255, 255, 255);
 	mVertex[0].spc = GetColorU8(0, 0, 0, 0);
 	mVertex[0].u = 0.0f;
 	mVertex[0].v = 0.0f;
 
-	// åºŠã®å³ä¸Šé ‚ç‚¹ã®è¨­å®š
+	// °‚Ì‰Eã’¸“_‚Ìİ’è
 	mVertex[1].pos = VAdd(centerPos, VGet(bottomRight.x, 0, topLeft.z));
 	mVertex[1].dif = GetColorU8(255, 255, 255, 255);
 	mVertex[1].spc = GetColorU8(0, 0, 0, 0);
 	mVertex[1].u = 1.0f;
 	mVertex[1].v = 0.0f;
 
-	// åºŠã®å·¦ä¸‹é ‚ç‚¹ã®è¨­å®š
+	// °‚Ì¶‰º’¸“_‚Ìİ’è
 	mVertex[2].pos = VAdd(centerPos, VGet(topLeft.x, 0, bottomRight.z));
 	mVertex[2].dif = GetColorU8(255, 255, 255, 255);
 	mVertex[2].spc = GetColorU8(0, 0, 0, 0);
 	mVertex[2].u = 0.0f;
 	mVertex[2].v = 1.0f;
 
-	// åºŠã®å³ä¸‹é ‚ç‚¹ã®è¨­å®š
+	// °‚Ì‰E‰º’¸“_‚Ìİ’è
 	mVertex[3].pos = VAdd(centerPos, bottomRight);
 	mVertex[3].dif = GetColorU8(255, 255, 255, 255);
 	mVertex[3].spc = GetColorU8(0, 0, 0, 0);
 	mVertex[3].u = 1.0f;
 	mVertex[3].v = 1.0f;
 
-	// å„é ‚ç‚¹ã®æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã‚’è¨ˆç®—ã—ã¦é¢å…¨ä½“ã®å‘ãã‚’çµ±ä¸€ã™ã‚‹
+	// Še’¸“_‚Ì–@üƒxƒNƒgƒ‹‚ğŒvZ‚µ‚Ä–Ê‘S‘Ì‚ÌŒü‚«‚ğ“ˆê‚·‚é
 	VECTOR norm = VCross(
 		VSub(mVertex[0].pos, mVertex[1].pos),
 		VSub(mVertex[0].pos, mVertex[2].pos)
@@ -67,8 +67,9 @@ void Floor::Draw()
 	index[4] = 2;
 	index[5] = 1;
 
-	// ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°è¨ˆç®—ã‚’ç„¡åŠ¹åŒ–ã—ã€ãƒ†ã‚¯ã‚¹ãƒãƒ£æœ¬æ¥ã®è‰²ã§åºŠã‚’æç”»ã™ã‚‹
+	// ƒ‰ƒCƒeƒBƒ“ƒOŒvZ‚ğ–³Œø‰»‚µAƒeƒNƒXƒ`ƒƒ–{—ˆ‚ÌF‚Å°‚ğ•`‰æ‚·‚é
 	SetUseLighting(false);
 	DrawPolygonIndexed3D(mVertex, 4, index, 2, mnGraphHandle, TRUE);
 	SetUseLighting(true);
 }
+

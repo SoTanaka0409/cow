@@ -1,4 +1,4 @@
-ï»¿#include"GameTimer.h"
+#include"GameTimer.h"
 
 GameTimer::GameTimer(VECTOR pos, int timer, Tag_Num num)
 	: Time(timer)
@@ -9,24 +9,24 @@ GameTimer::GameTimer(VECTOR pos, int timer, Tag_Num num)
 {
 	mLastTime = GetNowCount();
 
-	scoreTextImage = LoadGraph("Resource/2D/rimit.png"); // ã€ŒLIMITã€è¡¨ç¤ºç”¨æ–‡å­—ç”»åƒ
+	scoreTextImage = LoadGraph("Resource/2D/rimit.png"); // uLIMITv•\¦—p•¶š‰æ‘œ
 
-	// æ®‹ã‚Šç§’æ•°ã‚’è¡¨ç¤ºã™ã‚‹ãŸã‚ã®ãƒ‡ã‚¸ã‚¿ãƒ«æ•°å­—ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã®ãƒ­ãƒ¼ãƒ‰
-	numberImg[0] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°00.png");
-	numberImg[1] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°01.png");
-	numberImg[2] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°02.png");
-	numberImg[3] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°03.png");
-	numberImg[4] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°04.png");
-	numberImg[5] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°05.png");
-	numberImg[6] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°06.png");
-	numberImg[7] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°07.png");
-	numberImg[8] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°08.png");
-	numberImg[9] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°09.png");
+	// c‚è•b”‚ğ•\¦‚·‚é‚½‚ß‚ÌƒfƒWƒ^ƒ‹”šƒOƒ‰ƒtƒBƒbƒN‚Ìƒ[ƒh
+	numberImg[0] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”00.png");
+	numberImg[1] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”01.png");
+	numberImg[2] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”02.png");
+	numberImg[3] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”03.png");
+	numberImg[4] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”04.png");
+	numberImg[5] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”05.png");
+	numberImg[6] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”06.png");
+	numberImg[7] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”07.png");
+	numberImg[8] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”08.png");
+	numberImg[9] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”09.png");
 }
 
 GameTimer::~GameTimer()
 {
-	// èª­ã¿è¾¼ã¿æ¸ˆã¿ç”»åƒãƒªã‚½ãƒ¼ã‚¹ã®ãƒ¡ãƒ¢ãƒªè§£æ”¾
+	// “Ç‚İ‚İÏ‚İ‰æ‘œƒŠƒ\[ƒX‚Ìƒƒ‚ƒŠ‰ğ•ú
 	DeleteGraph(scoreTextImage);
 	for (int i = 0; i < 10; i++)
 	{
@@ -38,7 +38,7 @@ void GameTimer::Draw()
 {
 	if (mnTag == Tag_NoGame) return;
 
-	// ã€ŒLIMITã€ãƒ†ã‚­ã‚¹ãƒˆã®æç”»
+	// uLIMITvƒeƒLƒXƒg‚Ì•`‰æ
 	DrawExtendGraph(
 		static_cast<int>(mvPosition.x + 20),
 		static_cast<int>(mvPosition.y),
@@ -53,7 +53,7 @@ void GameTimer::Draw()
 	int digit[10];
 	int digitCount = 0;
 
-	// æ®‹ã‚Šæ™‚é–“ã‚’å„æ¡ã«åˆ†å‰²ã™ã‚‹
+	// c‚èŠÔ‚ğŠeŒ…‚É•ªŠ„‚·‚é
 	if (temp == 0)
 	{
 		digit[digitCount++] = 0;
@@ -68,7 +68,7 @@ void GameTimer::Draw()
 		}
 	}
 
-	// å„æ¡ã®ãƒ‡ã‚¸ã‚¿ãƒ«æ•°å­—ç”»åƒã‚’é †ç•ªã«æç”»ã™ã‚‹
+	// ŠeŒ…‚ÌƒfƒWƒ^ƒ‹”š‰æ‘œ‚ğ‡”Ô‚É•`‰æ‚·‚é
 	for (int i = digitCount - 1; i >= 0; i--)
 	{
 		DrawExtendGraph(
@@ -89,13 +89,13 @@ void GameTimer::Update()
 
 	int now = GetNowCount();
 
-	// 1ç§’(1000ãƒŸãƒªç§’)ã”ã¨ã«æ®‹ã‚Šæ™‚é–“ã‚’1æ¸›ç®—ã™ã‚‹
+	// 1•b(1000ƒ~ƒŠ•b)‚²‚Æ‚Éc‚èŠÔ‚ğ1Œ¸Z‚·‚é
 	if (now - mLastTime >= 1000)
 	{
 		mLastTime = now;
 		Time--;
 
-		// ã‚¿ã‚¤ãƒ ã‚¢ãƒƒãƒ—ã«é”ã—ãŸæ™‚ç‚¹ã§ã‚¿ã‚¤ãƒãƒ¼æ›´æ–°å‡¦ç†ã‚’è‡ªã‚‰åœæ­¢ã™ã‚‹
+		// ƒ^ƒCƒ€ƒAƒbƒv‚É’B‚µ‚½“_‚Åƒ^ƒCƒ}[XVˆ—‚ğ©‚ç’â~‚·‚é
 		if (Time <= 0)
 		{
 			Time = 0;
@@ -104,3 +104,4 @@ void GameTimer::Update()
 		}
 	}
 }
+

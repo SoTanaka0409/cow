@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "Scene.h"
 #include"Texture.h"
 #include "SelectionManager.h"
@@ -6,17 +6,17 @@
 #include "Score.h"
 #include "SceneManager.h"
 
-// タイトル画面のボタン情報と状態（位置、サイズ、ホバーなど）を保持する構造体
+// �^�C�g����ʂ̃{�^�����Ə�ԁi�ʒu�A�T�C�Y�A�z�o�[�Ȃǁj��ێ�����\����
 struct TitleButton
 {
-	SelectionManager::Title type; // ボタンの識別子（ゲーム開始、チュートリアルなど）
-	int graphHandle;              // 描画する画像ハンドル
-	int x, y;                     // ボタン左上の描画開始座標
-	int w, h;                     // 画像の横幅と縦幅
-	bool isHover;                 // マウスカーソルがボタン領域に乗っているかどうかの判定フラグ
+	SelectionManager::Title type; // �{�^���̎��ʎq�i�Q�[���J�n�A�`���[�g���A���Ȃǁj
+	int graphHandle;              // �`�悷��摜�n���h��
+	int x, y;                     // �{�^������̕`��J�n���W
+	int w, h;                     // �摜�̉����Əc��
+	bool isHover;                 // �}�E�X�J�[�\�����{�^���̈�ɏ���Ă��邩�ǂ����̔���t���O
 };
 
-// ゲーム起動時に最初に読み込まれるタイトル画面のシーンクラス
+// �Q�[���N�����ɍŏ��ɓǂݍ��܂��^�C�g����ʂ̃V�[���N���X
 class TitleScene : public Scene
 {
 public:
@@ -24,80 +24,81 @@ public:
 	virtual ~TitleScene();
 
 	/*
-	 * @brief タイトルシーンのアセット初期設定（ランキング読み込み、タイトルBGM再生）を行う
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] スコアの読み込み、BGMのループ再生開始
+	 * @brief �^�C�g���V�[���̃A�Z�b�g�����ݒ�i�����L���O�ǂݍ��݁A�^�C�g��BGM�Đ��j���s��
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �X�R�A�̓ǂݍ��݁ABGM�̃��[�v�Đ��J�n
 	 */
 	virtual void Initialize() override;
 
 	/*
-	 * @brief マウス入力、ドラッグ、ボタンホバー、およびシーン遷移フェードの毎フレーム更新
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] マウス座標に基づく状態値、UFO座標、フェードアルファ値などの更新
+	 * @brief �}�E�X���́A�h���b�O�A�{�^���z�o�[�A����уV�[���J�ڃt�F�[�h�̖��t���[���X�V
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �}�E�X���W�Ɋ�Â���Ԓl�AUFO���W�A�t�F�[�h�A���t�@�l�Ȃǂ̍X�V
 	 */
 	virtual void Update() override;
 
 	/*
-	 * @brief タイトル背景、ふわふわ動くUFO、各選択ボタン、およびランキングボードの描画
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 画面描画コマンドの実行
+	 * @brief �^�C�g���w�i�A�ӂ�ӂ퓮��UFO�A�e�I���{�^���A����у����L���O�{�[�h�̕`��
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] ��ʕ`��R�}���h�̎��s
 	 */
 	virtual void Draw() override;
 
 	/*
-	 * @brief タイトルシーン終了時のリソース（背景画像、ボタン画像、ランキング画像）解放
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 各種ロード画像ハンドルの削除、BGMの停止
+	 * @brief �^�C�g���V�[���I�����̃��\�[�X�i�w�i�摜�A�{�^���摜�A�����L���O�摜�j���
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �e�탍�[�h�摜�n���h���̍폜�ABGM�̒�~
 	 */
 	virtual void Finalize() override;
 
 private:
-	int mFrameCount;              // サイン波などを用いたふわふわ演出や定期タイマー用のフレームカウンター
+	int mFrameCount;              // �T�C���g�Ȃǂ�p�����ӂ�ӂ퉉�o�����^�C�}�[�p�̃t���[���J�E���^�[
 
-	int mnTitleGraphHandle;       // タイトル背景画像ハンドル
-	int mnNewGame;                // ゲーム開始ボタンの画像ハンドル（未使用・ボタン構造体へ移行）
-	int mnTutorial;               // チュートリアルボタンの画像ハンドル（未使用・ボタン構造体へ移行）
-	int mnOperationProcedures;    // 設定説明ボタンの画像ハンドル（未使用・ボタン構造体へ移行）
+	int mnTitleGraphHandle;       // �^�C�g���w�i�摜�n���h��
+	int mnNewGame;                // �Q�[���J�n�{�^���̉摜�n���h���i���g�p�E�{�^���\���̂ֈڍs�j
+	int mnTutorial;               // �`���[�g���A���{�^���̉摜�n���h���i���g�p�E�{�^���\���̂ֈڍs�j
+	int mnOperationProcedures;    // �ݒ�����{�^���̉摜�n���h���i���g�p�E�{�^���\���̂ֈڍs�j
 
-	int rankingTitleImage;        // ランキングボードのタイトル画像ハンドル
-	int pointImg;                 // 点の画像ハンドル
+	int rankingTitleImage;        // �����L���O�{�[�h�̃^�C�g���摜�n���h��
+	int pointImg;                 // �_�̉摜�n���h��
 
-	SelectionManager* mnTitleSelect; // 選択マネージャー（未使用・ボタンリストへ移行）
-	Texture* mpTexture;           // テクスチャオブジェクト（未使用・ボタン構造体へ移行）
+	SelectionManager* mnTitleSelect; // �I���}�l�[�W���[�i���g�p�E�{�^�����X�g�ֈڍs�j
+	Texture* mpTexture;           // �e�N�X�`���I�u�W�F�N�g�i���g�p�E�{�^���\���̂ֈڍs�j
 	Texture* mpTexture2;
 	Texture* mpTexture3;
 
-	int mNewGameX;                // ゲーム開始ボタン初期配置X（未使用・ボタン構造体へ移行）
-	int mNewGameY;                // ゲーム開始ボタン初期配置Y（未使用・ボタン構造体へ移行）
-	int mNewGameW;                // ゲーム開始ボタンの横幅
-	int mNewGameH;                // ゲーム開始ボタンの縦幅
+	int mNewGameX;                // �Q�[���J�n�{�^�������z�uX�i���g�p�E�{�^���\���̂ֈڍs�j
+	int mNewGameY;                // �Q�[���J�n�{�^�������z�uY�i���g�p�E�{�^���\���̂ֈڍs�j
+	int mNewGameW;                // �Q�[���J�n�{�^���̉���
+	int mNewGameH;                // �Q�[���J�n�{�^���̏c��
 
-	bool mbIsHoverNewGame;        // 開始ボタンにホバーしているか（未使用・ボタン構造体へ移行）
+	bool mbIsHoverNewGame;        // �J�n�{�^���Ƀz�o�[���Ă��邩�i���g�p�E�{�^���\���̂ֈڍs�j
 
-	std::vector<TitleButton> mButtons; // タイトル画面上のすべてのインタラクティブボタンのリスト
+	std::vector<TitleButton> mButtons; // �^�C�g����ʏ�̂��ׂẴC���^���N�e�B�u�{�^���̃��X�g
 
 	/*
-	 * @brief ハイスコア上位3名のランキングUIボードを画面左上に描画する
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] ランキング文字画像およびスコア数値の描画
+	 * @brief �n�C�X�R�A���3���̃����L���OUI�{�[�h����ʍ���ɕ`�悷��
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �����L���O�����摜����уX�R�A���l�̕`��
 	 */
 	void DrawRankingUI();
 
-	int rankImage[3];             // 1位、2位、3位のメダル等の画像ハンドル
+	int rankImage[3];             // 1�ʁA2�ʁA3�ʂ̃��_�����̉摜�n���h��
 
-	int mnUfoGraphHandle;         // タイトル画面でドラッグ可能なイースターエッグUFOの画像ハンドル
-	int mUfoX, mUfoY;             // UFOの現在画面座標
-	int mUfoW, mUfoH;             // UFO画像の幅と高さ
-	bool mbIsDraggingUfo;         // マウス左クリックでUFOがドラッグ操作中かどうかのフラグ
-	int mOffsetX, mOffsetY;       // ドラッグ時にクリックした箇所とUFO左上座標の相対オフセット値
-	int mCowVoiceTimer;           // タイトル画面で定期的に牛の鳴き声を再生するための間隔タイマー
-	float mUfoVX, mUfoVY;         // UFOの自動巡回時の移動速度ベクトル
-	float mUfoAngle;              // UFOの自動円軌道巡回時の角度パラメータ
-	bool  mIsAutoPatrol;          // クリックされた後に円軌道で自動巡回するモードの有効化フラグ
-	int mAutoPatrolTimer;         // 自動巡回モードの有効時間カウンター
+	int mnUfoGraphHandle;         // �^�C�g����ʂŃh���b�O�\�ȃC�[�X�^�[�G�b�OUFO�̉摜�n���h��
+	int mUfoX, mUfoY;             // UFO�̌��݉�ʍ��W
+	int mUfoW, mUfoH;             // UFO�摜�̕��ƍ���
+	bool mbIsDraggingUfo;         // �}�E�X���N���b�N��UFO���h���b�O���쒆���ǂ����̃t���O
+	int mOffsetX, mOffsetY;       // �h���b�O���ɃN���b�N�����ӏ���UFO������W�̑��΃I�t�Z�b�g�l
+	int mCowVoiceTimer;           // �^�C�g����ʂŒ���I�ɋ��̖������Đ����邽�߂̊Ԋu�^�C�}�[
+	float mUfoVX, mUfoVY;         // UFO�̎������񎞂̈ړ����x�x�N�g��
+	float mUfoAngle;              // UFO�̎����~�O�����񎞂̊p�x�p�����[�^
+	bool  mIsAutoPatrol;          // �N���b�N���ꂽ��ɉ~�O���Ŏ������񂷂郂�[�h�̗L�����t���O
+	int mAutoPatrolTimer;         // �������񃂁[�h�̗L�����ԃJ�E���^�[
 };
+

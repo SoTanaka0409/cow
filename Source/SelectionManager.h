@@ -1,23 +1,24 @@
-ï»¿#pragma once
+#pragma once
 #include"dxlib.h"
 
-// ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ã‚„ãƒªã‚¶ãƒ«ãƒˆç”»é¢ã§ã®ãƒ¡ãƒ‹ãƒ¥ãƒ¼é …ç›®é¸æŠIDãŠã‚ˆã³ç¾åœ¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
+// ƒ^ƒCƒgƒ‹‰æ–Ê‚âƒŠƒUƒ‹ƒg‰æ–Ê‚Å‚Ìƒƒjƒ…[€–Ú‘I‘ğID‚¨‚æ‚ÑŒ»İƒCƒ“ƒfƒbƒNƒX‚ğŠÇ—‚·‚éƒNƒ‰ƒX
 class SelectionManager
 {
 public:
-	// ãƒœã‚¿ãƒ³ãªã©ã®ãƒ¡ãƒ‹ãƒ¥ãƒ¼é …ç›®é¸æŠID
+	// ƒ{ƒ^ƒ“‚È‚Ç‚Ìƒƒjƒ…[€–Ú‘I‘ğID
 	enum Title
 	{
-		NewGame = 0,            // æ–°è¦ã‚²ãƒ¼ãƒ é–‹å§‹
-		Tutorial,               // ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«é–‹å§‹
-		OperationProcedures,    // æ“ä½œèª¬æ˜ç”»é¢ã¸é·ç§»
-		titleOUT,               // ã‚²ãƒ¼ãƒ ã‚’çµ‚äº†
-		title,                  // ã‚¿ã‚¤ãƒˆãƒ«ã¸æˆ»ã‚‹
+		NewGame = 0,            // V‹KƒQ[ƒ€ŠJn
+		Tutorial,               // ƒ`ƒ…[ƒgƒŠƒAƒ‹ŠJn
+		OperationProcedures,    // ‘€ìà–¾‰æ–Ê‚Ö‘JˆÚ
+		titleOUT,               // ƒQ[ƒ€‚ğI—¹
+		title,                  // ƒ^ƒCƒgƒ‹‚Ö–ß‚é
 	};
 
 public:
 	SelectionManager();
 	~SelectionManager();
 	
-	static int TitlecrrentIndex; // ç¾åœ¨é¸æŠä¸­ã®é …ç›®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ï¼ˆã‚­ãƒ¼ãƒœãƒ¼ãƒ‰é¸æŠç”¨ï¼‰
+	static int TitlecrrentIndex; // Œ»İ‘I‘ğ’†‚Ì€–ÚƒCƒ“ƒfƒbƒNƒXiƒL[ƒ{[ƒh‘I‘ğ—pj
 };
+

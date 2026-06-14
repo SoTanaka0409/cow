@@ -1,9 +1,9 @@
-﻿#pragma once
+#pragma once
 #include <list>
 
 class Collider;
 
-// ゲーム内のすべてのコライダーオブジェクトを管理し、相互の当たり判定を一括処理するマネージャークラス
+// �Q�[�����̂��ׂẴR���C�_�[�I�u�W�F�N�g���Ǘ����A���݂̓����蔻����ꊇ��������}�l�[�W���[�N���X
 class ColliderManager
 {
 public:
@@ -11,26 +11,26 @@ public:
 	~ColliderManager();
 
 	/*
-	 * @brief 毎フレーム登録されたコライダー同士の交差判定を総当たりで実行する
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 各コライダーの当たり判定・イベント発行の呼び出し、不要コライダーの自動クリーンアップ
+	 * @brief ���t���[���o�^���ꂽ�R���C�_�[���m�̌�������𑍓�����Ŏ��s����
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �e�R���C�_�[�̓����蔻��E�C�x���g���s�̌Ăяo���A�s�v�R���C�_�[�̎����N���[���A�b�v
 	 */
 	void Update();
 
 	/*
-	 * @brief （デバッグ表示用）各コライダーの外形を描画する（現在処理なし）
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] なし
+	 * @brief �i�f�o�b�O�\���p�j�e�R���C�_�[�̊O�`��`�悷��i���ݏ����Ȃ��j
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �Ȃ�
 	 */
 	void Draw();
 
 	/*
-	 * @brief シングルトンインスタンスを取得する（存在しない場合は新規生成）
-	 * [入力] なし
-	 * [出力] ColliderManagerクラスの静的インスタンスへのポインタ
-	 * [副作用] なし
+	 * @brief �V���O���g���C���X�^���X���擾����i���݂��Ȃ��ꍇ�͐V�K�����j
+	 * [����] �Ȃ�
+	 * [�o��] ColliderManager�N���X�̐ÓI�C���X�^���X�ւ̃|�C���^
+	 * [����p] �Ȃ�
 	 */
 	static ColliderManager* GetInstance()
 	{
@@ -42,10 +42,10 @@ public:
 	}
 
 	/*
-	 * @brief シングルトンインスタンスを安全に解放し、後片付けを行う
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 静的インスタンス(Instance)のdelete
+	 * @brief �V���O���g���C���X�^���X�����S�ɉ�����A��Еt�����s��
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �ÓI�C���X�^���X(Instance)��delete
 	 */
 	static void Finalize()
 	{
@@ -58,41 +58,42 @@ public:
 
 public:
 	/*
-	 * @brief コライダーを管理リストに追加する
-	 * [入力] Collider: 追加するコライダーオブジェクトへのポインタ
-	 * [出力] なし
-	 * [副作用] mColliderListへの追加
+	 * @brief �R���C�_�[���Ǘ����X�g�ɒǉ�����
+	 * [����] Collider: �ǉ�����R���C�_�[�I�u�W�F�N�g�ւ̃|�C���^
+	 * [�o��] �Ȃ�
+	 * [����p] mColliderList�ւ̒ǉ�
 	 */
 	void AddCollider(Collider* Collider);
 
 	/*
-	 * @brief 登録されているすべてのコライダーの削除フラグを立て、管理リストを空にする
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 全登録コライダーのSetDeleteFlag(true)実行、およびmColliderListのクリア
+	 * @brief �o�^����Ă��邷�ׂẴR���C�_�[�̍폜�t���O�𗧂āA�Ǘ����X�g����ɂ���
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �S�o�^�R���C�_�[��SetDeleteFlag(true)���s�A�����mColliderList�̃N���A
 	 */
 	void DeleteAllCollider();
 
 	/*
-	 * @brief 削除フラグ(mbDeleteFlag)が真に設定されているコライダーを管理リストから自動除外する
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] mColliderListからの削除
+	 * @brief �폜�t���O(mbDeleteFlag)���^�ɐݒ肳��Ă���R���C�_�[���Ǘ����X�g���玩�����O����
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] mColliderList����̍폜
 	 */
 	void DeleteAllColliderIfNeeded();
 
 	/*
-	 * @brief 特定のコライダーを管理リストから手動で除外する
-	 * [入力] collider: 除外するコライダーオブジェクトへのポインタ
-	 * [出力] なし
-	 * [副作用] mColliderListからの特定コライダーの削除
+	 * @brief ����̃R���C�_�[���Ǘ����X�g����蓮�ŏ��O����
+	 * [����] collider: ���O����R���C�_�[�I�u�W�F�N�g�ւ̃|�C���^
+	 * [�o��] �Ȃ�
+	 * [����p] mColliderList����̓���R���C�_�[�̍폜
 	 */
 	void RemoveCollider(Collider* collider);
 	
 	std::list<Collider*>& GetColliderList() { return mColliderList; }
 
 private:
-	std::list<Collider*> mColliderList; // 判定対象となるアクティブな全コライダーの管理リスト
+	std::list<Collider*> mColliderList; // ����ΏۂƂȂ�A�N�e�B�u�ȑS�R���C�_�[�̊Ǘ����X�g
 
-	static ColliderManager* Instance;  // シングルトン管理用の静的インスタンスポインタ
+	static ColliderManager* Instance;  // �V���O���g���Ǘ��p�̐ÓI�C���X�^���X�|�C���^
 };
+

@@ -1,4 +1,4 @@
-ï»¿#include "Mountain.h"
+#include "Mountain.h"
 
 Mountain::Mountain(std::string filename, VECTOR initPos, VECTOR scale, VECTOR angle)
 	: Object3D(initPos)
@@ -10,7 +10,7 @@ Mountain::Mountain(std::string filename, VECTOR initPos, VECTOR scale, VECTOR an
 
 Mountain::~Mountain()
 {
-	// ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯é˜²æ­¢ã®ãŸã‚ã€å‹•çš„ã«ç”Ÿæˆã—ãŸModelã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç ´æ£„ã™ã‚‹
+	// ƒƒ‚ƒŠƒŠ[ƒN–hŽ~‚Ì‚½‚ßA“®“I‚É¶¬‚µ‚½ModelƒCƒ“ƒXƒ^ƒ“ƒX‚ð”jŠü‚·‚é
 	if (mpModel != nullptr)
 	{
 		delete mpModel;
@@ -57,3 +57,4 @@ void Mountain::SetColor(float r, float g, float b, float a)
 		mpModel->SetColor(r, g, b, a);
 	}
 }
+

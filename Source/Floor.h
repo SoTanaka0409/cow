@@ -1,17 +1,17 @@
-﻿#pragma once
+#pragma once
 #include "Object3D.h"
 #include <vector>
 #include <string>
 
-// ゲーム内の床面（平面ポリゴン）を生成・描画するクラス
+// �Q�[�����̏��ʁi���ʃ|���S���j�𐶐��E�`�悷��N���X
 class Floor : public Object3D
 {
 public:
 	/*
-	 * @brief 床ポリゴンのテクスチャ画像と範囲パラメータを設定して初期化する
-	 * [入力] filename: テクスチャ画像へのパス, centerPos: 床の基準中心座標, topLeft: 左上端の相対座標, bottomRight: 右下端の相対座標
-	 * [出力] なし
-	 * [副作用] テクスチャがメモリにロードされ、頂点バッファ(mVertex)が設定される
+	 * @brief ���|���S���̃e�N�X�`���摜�Ɣ͈̓p�����[�^��ݒ肵�ď���������
+	 * [����] filename: �e�N�X�`���摜�ւ̃p�X, centerPos: ���̊���S���W, topLeft: ����[�̑��΍��W, bottomRight: �E���[�̑��΍��W
+	 * [�o��] �Ȃ�
+	 * [����p] �e�N�X�`�����������Ƀ��[�h����A���_�o�b�t�@(mVertex)���ݒ肳���
 	 */
 	Floor(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight);
 	virtual ~Floor();
@@ -20,6 +20,7 @@ public:
 	void Draw() override;
 
 private:
-	int mnGraphHandle;      // 床のテクスチャグラフィックハンドル
-	VERTEX3D mVertex[4];    // 床面を構成する4つの頂点データ
+	int mnGraphHandle;      // ���̃e�N�X�`���O���t�B�b�N�n���h��
+	VERTEX3D mVertex[4];    // ���ʂ��\������4�̒��_�f�[�^
 };
+

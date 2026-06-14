@@ -1,4 +1,5 @@
-ï»¿#include "Object2D.h"
+#include "ServiceLocator.h"
+#include "Object2D.h"
 #include "Master.h"
 #include "ObjectManager.h"
 #include "Scene.h"
@@ -10,8 +11,8 @@ Object2D::Object2D(VECTOR initPos)
 	, mnTag(Tag2D::None2D)
 	, mbDrawFlag(true)
 {
-	// ç”Ÿæˆã—ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç®¡ç†ãƒ»æ›´æ–°ã™ã‚‹ãŸã‚ã€ç¾åœ¨ã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªã‚·ãƒ¼ãƒ³ã®ãƒžãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã¸è‡ªå‹•ã§ç™»éŒ²ã™ã‚‹
-	Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->AddObject(this);
+	// ¶¬‚µ‚½ƒIƒuƒWƒFƒNƒg‚ðŠÇ—EXV‚·‚é‚½‚ßAŒ»Ý‚ÌƒAƒNƒeƒBƒu‚ÈƒV[ƒ“‚Ìƒ}ƒl[ƒWƒƒ[‚ÖŽ©“®‚Å“o˜^‚·‚é
+	ServiceLocator::GetObjectManager()->AddObject(this);
 }
 
 Object2D::~Object2D()
@@ -25,3 +26,4 @@ void Object2D::Draw()
 void Object2D::Update()
 {
 }
+

@@ -1,10 +1,10 @@
-﻿#pragma once
+#pragma once
 
-// プレイヤーの獲得スコア、ランキング、ネーム入力（ネームエントリー）を管理・保存するクラス
+// �v���C���[�̊l���X�R�A�A�����L���O�A�l�[�����́i�l�[���G���g���[�j���Ǘ��E�ۑ�����N���X
 class Score
 {
 public:
-	// ランキング用のプレイヤー名と獲得スコアを保持する構造体
+	// �����L���O�p�̃v���C���[���Ɗl���X�R�A��ێ�����\����
 	struct RankData
 	{
 		char name[64];
@@ -15,28 +15,28 @@ public:
 	~Score();
 
 	/*
-	 * @brief スコアオブジェクトの初期化を行う
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] scoreの初期化
+	 * @brief �X�R�A�I�u�W�F�N�g�̏��������s��
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] score�̏�����
 	 */
 	void Initialize();
 
 	const RankData& GetRanking(int index) const;
 
 	/*
-	 * @brief スコアを加算する（加算後が負になる場合は0に丸める）
-	 * [入力] value: 加算するスコア値
-	 * [出力] なし
-	 * [副作用] scoreの加算
+	 * @brief �X�R�A�����Z����i���Z�オ���ɂȂ�ꍇ��0�Ɋۂ߂�j
+	 * [����] value: ���Z����X�R�A�l
+	 * [�o��] �Ȃ�
+	 * [����p] score�̉��Z
 	 */
 	void AddScore(int value);
 	
 	/*
-	 * @brief スコアをゼロクリアする
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] scoreを0に設定
+	 * @brief �X�R�A���[���N���A����
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] score��0�ɐݒ�
 	 */
 	void ResetScore();
 
@@ -44,114 +44,115 @@ public:
 	const char* GetName() const;
 
 	/*
-	 * @brief タイムアップ後のプレイヤー名（ネームエントリー）の入力を開始する
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] nameInputModeの有効化、キー入力ハンドルの新規作成とアクティブ化
+	 * @brief �^�C���A�b�v��̃v���C���[���i�l�[���G���g���[�j�̓��͂��J�n����
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] nameInputMode�̗L�����A�L�[���̓n���h���̐V�K�쐬�ƃA�N�e�B�u��
 	 */
 	void StartNameInput();
 
 	/*
-	 * @brief プレイヤー名の入力受付を毎フレーム処理し、画面にテキストを描画する
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] playerName配列の更新、ENTERキー押下での入力モード終了
+	 * @brief �v���C���[���̓��͎�t�𖈃t���[���������A��ʂɃe�L�X�g��`�悷��
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] playerName�z��̍X�V�AENTER�L�[�����ł̓��̓��[�h�I��
 	 */
 	void UpdateNameInput();
 
 	bool IsNameInputFinished() const;
 
 	/*
-	 * @brief 獲得したスコアをランキングリストに登録する（上位3位以内に収まれば挿入）
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] ranking 配列の挿入・並び替え
+	 * @brief �l�������X�R�A�������L���O���X�g�ɓo�^����i���3�ʈȓ��Ɏ��܂�Α}���j
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] ranking �z��̑}���E���ёւ�
 	 */
 	void AddRanking();
 
 	/*
-	 * @brief 現在のランキングデータを rank.txt に保存する
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] rank.txt ファイルの書き込み・作成
+	 * @brief ���݂̃����L���O�f�[�^�� rank.txt �ɕۑ�����
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] rank.txt �t�@�C���̏������݁E�쐬
 	 */
 	void SaveRanking();
 
 	/*
-	 * @brief 保存されたランキングデータを rank.txt から読み込む（存在しない場合は初期データを作成）
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] ranking 配列の更新、rank.txt がない場合は新規保存
+	 * @brief �ۑ����ꂽ�����L���O�f�[�^�� rank.txt ����ǂݍ��ށi���݂��Ȃ��ꍇ�͏����f�[�^���쐬�j
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] ranking �z��̍X�V�Arank.txt ���Ȃ��ꍇ�͐V�K�ۑ�
 	 */
 	void LoadRanking();
 
 	/*
-	 * @brief ランキング上位3名をテキスト形式で指定座標に描画する（デバッグ用）
-	 * [入力] x, y: 描画開始画面座標
-	 * [出力] なし
-	 * [副作用] 文字列描画コマンドの実行
+	 * @brief �����L���O���3�����e�L�X�g�`���Ŏw����W�ɕ`�悷��i�f�o�b�O�p�j
+	 * [����] x, y: �`��J�n��ʍ��W
+	 * [�o��] �Ȃ�
+	 * [����p] ������`��R�}���h�̎��s
 	 */
 	void DrawRanking(int x, int y);
 
 	/*
-	 * @brief 現在のゲーム結果スコアとランキングデータを score.txt に保存する
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] score.txt ファイルの書き込み・作成
+	 * @brief ���݂̃Q�[�����ʃX�R�A�ƃ����L���O�f�[�^�� score.txt �ɕۑ�����
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] score.txt �t�@�C���̏������݁E�쐬
 	 */
 	void Save();
 
 	/*
-	 * @brief 前回のゲーム結果スコアとランキングデータを score.txt から読み込む
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] score の更新、ranking 配列の更新
+	 * @brief �O��̃Q�[�����ʃX�R�A�ƃ����L���O�f�[�^�� score.txt ����ǂݍ���
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] score �̍X�V�Aranking �z��̍X�V
 	 */
 	void Load();
 
 	/*
-	 * @brief プレイ中の画面左上に「SCORE」テキスト画像と現在のスコア数値を描画する
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] バックバッファへの画像描画
+	 * @brief �v���C���̉�ʍ���ɁuSCORE�v�e�L�X�g�摜�ƌ��݂̃X�R�A���l��`�悷��
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �o�b�N�o�b�t�@�ւ̉摜�`��
 	 */
 	void Draw();
 
 	/*
-	 * @brief 整数値を画像フォントを用いて指定座標に描画する
-	 * [入力] x, y: 描画開始座標, value: 描画する数値（負数対応）
-	 * [出力] なし
-	 * [副作用] バックバッファへの数字画像描画
+	 * @brief �����l���摜�t�H���g��p���Ďw����W�ɕ`�悷��
+	 * [����] x, y: �`��J�n���W, value: �`�悷�鐔�l�i�����Ή��j
+	 * [�o��] �Ȃ�
+	 * [����p] �o�b�N�o�b�t�@�ւ̐����摜�`��
 	 */
 	void DrawNumber(int x, int y, int value, float scale = 1.0f, int minDigits = 1);
 
 	/*
-	 * @brief コンボ数に応じたスコア倍率を適用してスコアを加算する
-	 * [入力] baseScore: 基本スコア, comboCount: 現在のコンボ数
-	 * [出力] なし
-	 * [副作用] 倍率計算後のスコア加算
+	 * @brief �R���{���ɉ������X�R�A�{����K�p���ăX�R�A�����Z����
+	 * [����] baseScore: ��{�X�R�A, comboCount: ���݂̃R���{��
+	 * [�o��] �Ȃ�
+	 * [����p] �{���v�Z��̃X�R�A���Z
 	 */
 	void AddScoreWithCombo(int baseScore, int comboCount);
 
-	// 遷移時受け渡し用のスタティックリザルトスコア管理
+	// �J�ڎ��󂯓n���p�̃X�^�e�B�b�N���U���g�X�R�A�Ǘ�
 	static void SetResultScore(int value);
 	static int GetResultScore();
 
 private:
-	int inputHandle;              // DxLibのネーム入力用キーボードインプットハンドル
-	char playerName[64];          // プレイヤー名の入力テキストバッファ
-	bool nameInputMode;           // 名前入力モードがアクティブかどうかのフラグ
+	int inputHandle;              // DxLib�̃l�[�����͗p�L�[�{�[�h�C���v�b�g�n���h��
+	char playerName[64];          // �v���C���[���̓��̓e�L�X�g�o�b�t�@
+	bool nameInputMode;           // ���O���̓��[�h���A�N�e�B�u���ǂ����̃t���O
 
-	int score;                    // 現在プレイ中のスコア値
+	int score;                    // ���݃v���C���̃X�R�A�l
 
-	int scoreImage;               // （未使用・予約）
-	int numberImg[10];            // 0〜9 のデジタル数字画像アセットハンドル配列
-	int minusImg;                 // マイナス記号の画像アセットハンドル
+	int scoreImage;               // �i���g�p�E�\��j
+	int numberImg[10];            // 0?9 �̃f�W�^�������摜�A�Z�b�g�n���h���z��
+	int minusImg;                 // �}�C�i�X�L���̉摜�A�Z�b�g�n���h��
 
-	int nameIndex;                // （未使用・予約）
-	int scoreTextImage;           // 「SCORE」の文字画像アセットハンドル
+	int nameIndex;                // �i���g�p�E�\��j
+	int scoreTextImage;           // �uSCORE�v�̕����摜�A�Z�b�g�n���h��
 
-	RankData ranking[3];          // ハイスコア上位3名のデータ構造体配列
+	RankData ranking[3];          // �n�C�X�R�A���3���̃f�[�^�\���̔z��
 
-	static int resultScore;       // ゲームシーン終了時点での獲得最終スコアスタティック変数
+	static int resultScore;       // �Q�[���V�[���I�����_�ł̊l���ŏI�X�R�A�X�^�e�B�b�N�ϐ�
 };
+

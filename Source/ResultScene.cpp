@@ -1,4 +1,4 @@
-ï»¿#include"ResultScene.h"
+#include"ResultScene.h"
 #include"Master.h"
 #include"SceneManager.h"
 
@@ -7,29 +7,29 @@ ResultScene::ResultScene()
 	mFlag = true;
 	mnCount = 0;
 	
-	// ã‚¢ã‚»ãƒƒãƒˆãƒªã‚½ãƒ¼ã‚¹ã®ä¸€æ‹¬ãƒ­ãƒ¼ãƒ‰
-	ResultGraphHandle = LoadGraph("Resource/2D/ãƒªã‚¶ãƒ«ãƒˆ.png");
-	rankImage[0] = LoadGraph("Resource/2D/1ä½.png");
-	rankImage[1] = LoadGraph("Resource/2D/2ä½.png");
-	rankImage[2] = LoadGraph("Resource/2D/3ä½.png");
-	rankingTitleImage = LoadGraph("Resource/2D/ãƒ©ãƒ³ã‚­ãƒ³ã‚°.png");
-	yourScoreTextImg = LoadGraph("Resource/2D/ã‚¹ã‚³ã‚¢.png");
-	pointImg = LoadGraph("Resource/2D/ç‚¹.png");
+	// ƒAƒZƒbƒgƒŠƒ\[ƒX‚ÌˆêŠ‡ƒ[ƒh
+	ResultGraphHandle = LoadGraph("Resource/2D/ƒŠƒUƒ‹ƒg.png");
+	rankImage[0] = LoadGraph("Resource/2D/1ˆÊ.png");
+	rankImage[1] = LoadGraph("Resource/2D/2ˆÊ.png");
+	rankImage[2] = LoadGraph("Resource/2D/3ˆÊ.png");
+	rankingTitleImage = LoadGraph("Resource/2D/ƒ‰ƒ“ƒLƒ“ƒO.png");
+	yourScoreTextImg = LoadGraph("Resource/2D/ƒXƒRƒA.png");
+	pointImg = LoadGraph("Resource/2D/“_.png");
 
-	// ã‚¿ã‚¤ãƒˆãƒ«ã¸æˆ»ã‚‹ãƒœã‚¿ãƒ³ã®è¨­å®š
+	// ƒ^ƒCƒgƒ‹‚Ö–ß‚éƒ{ƒ^ƒ“‚ÌÝ’è
 	ResultButton newGameBtn;
 	newGameBtn.type = SelectionManager::Title::title;
-	newGameBtn.graphHandle = LoadGraph("Resource/2D/ã‚¹ã‚¿ãƒ¼ãƒˆãƒœã‚¿ãƒ³1.png");
+	newGameBtn.graphHandle = LoadGraph("Resource/2D/ƒXƒ^[ƒgƒ{ƒ^ƒ“1.png");
 	newGameBtn.x = 920;
 	newGameBtn.y = 50;
 	GetGraphSize(newGameBtn.graphHandle, &newGameBtn.w, &newGameBtn.h);
 	newGameBtn.isHover = false;
 	mButtons.push_back(newGameBtn);
 
-	// çµ‚äº†ãƒœã‚¿ãƒ³ã®è¨­å®š
+	// I—¹ƒ{ƒ^ƒ“‚ÌÝ’è
 	ResultButton exitBtn;
 	exitBtn.type = SelectionManager::Title::titleOUT;
-	exitBtn.graphHandle = LoadGraph("Resource/2D/ã—ã‚…ã†ã‚Šã‚‡ã†ã¼ãŸã‚“ (1).png");
+	exitBtn.graphHandle = LoadGraph("Resource/2D/‚µ‚ã‚¤‚è‚å‚¤‚Ú‚½‚ñ (1).png");
 	exitBtn.x = 960;
 	exitBtn.y = 680;
 	GetGraphSize(exitBtn.graphHandle, &exitBtn.w, &exitBtn.h);
@@ -43,7 +43,7 @@ ResultScene::ResultScene()
 
 ResultScene::~ResultScene()
 {
-	Finalize(); // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç ´æ£„æ™‚ã®ãƒ¡ãƒ¢ãƒªè§£æ”¾æ¼ã‚Œã‚’é˜²ã
+	Finalize(); // ƒIƒuƒWƒFƒNƒg”jŠüŽž‚Ìƒƒ‚ƒŠ‰ð•ú˜R‚ê‚ð–h‚®
 }
 
 void ResultScene::Initialize()
@@ -59,7 +59,7 @@ void ResultScene::Draw()
 
 	DrawRankingUI();
 
-	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æœ€çµ‚ç²å¾—ã‚¹ã‚³ã‚¢ã‚’æç”»
+	// ƒvƒŒƒCƒ„[‚ÌÅIŠl“¾ƒXƒRƒA‚ð•`‰æ
 	DrawExtendGraph(500, 300, 1100, 550, yourScoreTextImg, TRUE);
 	int score = Score::GetResultScore();
 	int temp = score;
@@ -83,7 +83,7 @@ void ResultScene::Draw()
 	int pointX = startX + digitCount * 80;
 	DrawExtendGraph(pointX, 430, pointX + 200, 630, pointImg, TRUE);
 
-	// ãƒ—ãƒ¬ã‚¤ä¸­ã«å›žåŽã—ãŸç‰›ã®ç·æ•°ã‚’æç”»
+	// ƒvƒŒƒC’†‚É‰ñŽû‚µ‚½‹‚Ì‘”‚ð•`‰æ
 
 
 	Scene::Draw();
@@ -96,7 +96,7 @@ void ResultScene::Update()
 {
 	mnCount++;
 
-	// 200ãƒ•ãƒ¬ãƒ¼ãƒ çµŒéŽï¼ˆç´„3.3ç§’ï¼‰å¾Œã€è‡ªå‹•çš„ã«ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ã¸æˆ»ã‚‹ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆå‡¦ç†ã‚’é–‹å§‹
+	// 200ƒtƒŒ[ƒ€Œo‰ßi–ñ3.3•bjŒãAŽ©“®“I‚Éƒ^ƒCƒgƒ‹‰æ–Ê‚Ö–ß‚éƒtƒF[ƒhƒAƒEƒgˆ—‚ðŠJŽn
 	if (mnCount >= 200 && mFadeState != SceneFade_Out)
 	{
 		mFadeState = SceneFade_Out;
@@ -118,10 +118,10 @@ void ResultScene::Update()
 }
 
 /*
- * @brief ã‚¹ã‚³ã‚¢ãƒ©ãƒ³ã‚­ãƒ³ã‚°æƒ…å ±ã®è¡¨ç¤ºç”¨UIã‚’æç”»ã™ã‚‹
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] å„é †ä½ã®æ•°å­—ç”»åƒã‚„ã‚¹ã‚³ã‚¢ãƒ•ã‚©ãƒ³ãƒˆã®æç”»
+ * @brief ƒXƒRƒAƒ‰ƒ“ƒLƒ“ƒOî•ñ‚Ì•\Ž¦—pUI‚ð•`‰æ‚·‚é
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] Še‡ˆÊ‚Ì”Žš‰æ‘œ‚âƒXƒRƒAƒtƒHƒ“ƒg‚Ì•`‰æ
  */
 void ResultScene::DrawRankingUI()
 {
@@ -180,10 +180,10 @@ void ResultScene::DrawRankingUI()
 }
 
 /*
- * @brief ã‚·ãƒ¼ãƒ³çµ‚äº†æ™‚ã®ã‚¢ã‚»ãƒƒãƒˆãƒ»ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯è§£æ”¾å‡¦ç†
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ãƒ­ãƒ¼ãƒ‰ã•ã‚ŒãŸã™ã¹ã¦ã®ç”»åƒã‚¢ã‚»ãƒƒãƒˆã®å‰Šé™¤ã¨BGMã®åœæ­¢
+ * @brief ƒV[ƒ“I—¹Žž‚ÌƒAƒZƒbƒgEƒOƒ‰ƒtƒBƒbƒN‰ð•úˆ—
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ƒ[ƒh‚³‚ê‚½‚·‚×‚Ä‚Ì‰æ‘œƒAƒZƒbƒg‚Ìíœ‚ÆBGM‚Ì’âŽ~
  */
 void ResultScene::Finalize()
 {
@@ -205,3 +205,4 @@ void ResultScene::Finalize()
 
 	Master::mpSoundManager->StopBGM();
 }
+

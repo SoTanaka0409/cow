@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include"Scene.h"
 #include"Dxlib.h"
 #include"Master.h"
@@ -6,16 +6,16 @@
 #include"CowManager.h"
 #include"AnimalManager.h"
 
-// ゲームメインの3Dアクションステージ画面を制御するクラス
+// �Q�[�����C����3D�A�N�V�����X�e�[�W��ʂ𐧌䂷��N���X
 class Scene3D : public Scene
 {
 public: 
-	// ゲーム本編の各フェーズ（演出段階）の定義
+	// �Q�[���{�҂̊e�t�F�[�Y�i���o�i�K�j�̒�`
 	enum Phase
 	{
-		Normal,         // 通常状態
-		TornadoCrisis,  // 竜巻が巨大化して暴れまわる段階
-		MobSpawn,       // 牛などの生物が大量に出現する段階
+		Normal,         // �ʏ���
+		TornadoCrisis,  // ���������剻���Ė\��܂��i�K
+		MobSpawn,       // ���Ȃǂ̐�������ʂɏo������i�K
 	};	
 	
 public:
@@ -23,51 +23,52 @@ public:
 	~Scene3D();
 
 	/*
-	 * @brief 3Dステージシーンの初期設定（マップ、コライダー、プレイヤー、エネミー生成）を行う
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 各オブジェクトのnew、BGM再生開始、コライダー登録
+	 * @brief 3D�X�e�[�W�V�[���̏����ݒ�i�}�b�v�A�R���C�_�[�A�v���C���[�A�G�l�~�[�����j���s��
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �e�I�u�W�F�N�g��new�ABGM�Đ��J�n�A�R���C�_�[�o�^
 	 */
 	void Initialize() override;
 
 	/*
-	 * @brief シーン終了時のクリーンアップ処理（BGM停止など）
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] BGMの停止
+	 * @brief �V�[���I�����̃N���[���A�b�v�����iBGM��~�Ȃǁj
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] BGM�̒�~
 	 */
 	void Finalize() override;
 
 	/*
-	 * @brief バックバッファへのグリッドや各マネージャー、ゲームUIの描画処理
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 画面描画コマンドの実行
+	 * @brief �o�b�N�o�b�t�@�ւ̃O���b�h��e�}�l�[�W���[�A�Q�[��UI�̕`�揈��
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] ��ʕ`��R�}���h�̎��s
 	 */
 	void Draw() override;
 
 	/*
-	 * @brief ステージ全体のオブジェクト更新、制限時間判定、フェード更新を制御
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 各更新関数の呼び出し、制限時間終了時のリザルト遷移要求
+	 * @brief �X�e�[�W�S�̂̃I�u�W�F�N�g�X�V�A�������Ԕ���A�t�F�[�h�X�V�𐧌�
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �e�X�V�֐��̌Ăяo���A�������ԏI�����̃��U���g�J�ڗv��
 	 */
 	void Update() override;
 
 	/*
-	 * @brief ゲームフェーズに応じたカメラワークや竜巻の拡大、牛の降下処理などを実行
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] カメラ更新、Tatumaki状態変更、牛の新規スポーン
+	 * @brief �Q�[���t�F�[�Y�ɉ������J�������[�N�◳���̊g��A���̍~�������Ȃǂ����s
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �J�����X�V�ATatumaki��ԕύX�A���̐V�K�X�|�[��
 	 */
 	void PhaseUpdate();
 
 private:
-	float warningRadius;       // 危険警告エリアの現在半径（未使用・リザーブ）
-	float maxRadius;           // 警告エリアの最大判定半径（未使用・リザーブ）
+	float warningRadius;       // �댯�x���G���A�̌��ݔ��a�i���g�p�E���U�[�u�j
+	float maxRadius;           // �x���G���A�̍ő唻�蔼�a�i���g�p�E���U�[�u�j
 	
-	int mTatumakiSpawnTimer;   // 竜巻の出現制御用タイマー
-	int mMassSpawnTimer;       // 大量出現時の定期スポーン間隔タイマー
-	Phase mpPhase;             // 現在の演出フェーズ状態
-	int mFontBackGraph;        // フェーズ警告テキストの背景に使用する透過画像ハンドル
+	int mTatumakiSpawnTimer;   // �����̏o������p�^�C�}�[
+	int mMassSpawnTimer;       // ��ʏo�����̒���X�|�[���Ԋu�^�C�}�[
+	Phase mpPhase;             // ���݂̉��o�t�F�[�Y���
+	int mFontBackGraph;        // �t�F�[�Y�x���e�L�X�g�̔w�i�Ɏg�p���铧�߉摜�n���h��
 };
+

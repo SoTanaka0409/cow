@@ -1,10 +1,10 @@
-ï»¿#include "SkyBox.h"
+#include "SkyBox.h"
 #include "Model.h"
 
 SkyBox::SkyBox(std::string filename, VECTOR pos)
 	: Object3D(pos)
 {
-	// ã‚¹ã‚«ã‚¤ãƒœãƒƒã‚¯ã‚¹ãƒ¢ãƒ‡ãƒ«ã®é…ç½®åˆæœŸåŒ–
+	// ƒXƒJƒCƒ{ƒbƒNƒXƒ‚ƒfƒ‹‚Ì”z’u‰Šú‰»
 	mpModel = new Model(filename, VGet(0.0f, 0.0f, 0.0f));
 }
 
@@ -28,7 +28,7 @@ void SkyBox::Draw()
 {
 	if (mpModel != nullptr)
 	{
-		// ç©ºãƒ¢ãƒ‡ãƒ«ãŒå…‰æºè¨ˆç®—ã‚„å‘¨å›²ã®å½±ã®å½±éŸ¿ã‚’å—ã‘ã¦æš—ãæ²ˆã¾ãªã„ã‚ˆã†ã«ã€ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°ã‚’ç„¡åŠ¹åŒ–ã—ã¦æç”»ã™ã‚‹
+		// ‹óƒ‚ƒfƒ‹‚ªŒõŒ¹ŒvŽZ‚âŽüˆÍ‚Ì‰e‚Ì‰e‹¿‚ðŽó‚¯‚ÄˆÃ‚­’¾‚Ü‚È‚¢‚æ‚¤‚ÉAƒ‰ƒCƒeƒBƒ“ƒO‚ð–³Œø‰»‚µ‚Ä•`‰æ‚·‚é
 		SetUseLighting(FALSE);
 		mpModel->Draw();
 		SetUseLighting(TRUE);
@@ -50,3 +50,4 @@ void SkyBox::SetModelTexture(std::string filename, int index)
 		mpModel->SetTexture(filename, index);
 	}
 }
+

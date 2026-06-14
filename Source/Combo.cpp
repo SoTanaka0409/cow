@@ -1,4 +1,4 @@
-ï»¿#include "Combo.h"
+#include "Combo.h"
 #include "DxLib.h"
 #include "InputManager.h"
 #include <string>
@@ -7,23 +7,23 @@ Combo::Combo()
 {
 	comboCount = 0;
 	comboTimer = 0.0f;
-	comboMaxTime = 3.0f; // 3ç§’ä»¥å†…ã«æ¬¡ã®ç‰›ã‚’ç²å¾—ã™ã‚Œã°ã‚³ãƒ³ãƒœç¶™ç¶š
+	comboMaxTime = 3.0f; // 3•bˆÈ“à‚ÉŸ‚Ì‹‚ğŠl“¾‚·‚ê‚ÎƒRƒ“ƒ{Œp‘±
 
 	comboImage = LoadGraph("Resource/2D/COMBO.png");
 
 	comboShow = false;
 	comboShowTimer = 0.0f;
 
-	numberImage[0] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°00.png");
-	numberImage[1] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°01.png");
-	numberImage[2] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°02.png");
-	numberImage[3] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°03.png");
-	numberImage[4] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°04.png");
-	numberImage[5] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°05.png");
-	numberImage[6] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°06.png");
-	numberImage[7] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°07.png");
-	numberImage[8] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°08.png");
-	numberImage[9] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°09.png");
+	numberImage[0] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”00.png");
+	numberImage[1] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”01.png");
+	numberImage[2] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”02.png");
+	numberImage[3] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”03.png");
+	numberImage[4] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”04.png");
+	numberImage[5] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”05.png");
+	numberImage[6] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”06.png");
+	numberImage[7] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”07.png");
+	numberImage[8] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”08.png");
+	numberImage[9] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”09.png");
 }
 
 Combo::~Combo()
@@ -38,7 +38,7 @@ Combo::~Combo()
 
 void Combo::Draw()
 {
-	// 1ã‚³ãƒ³ãƒœä»¥ä¸Šã‹ã‚‰ã‚³ãƒ³ãƒœè¡¨ç¤ºã‚’é–‹å§‹ã™ã‚‹
+	// 1ƒRƒ“ƒ{ˆÈã‚©‚çƒRƒ“ƒ{•\¦‚ğŠJn‚·‚é
 	if (comboCount >= 1)
 	{
 		int x = 20;
@@ -71,7 +71,7 @@ void Combo::Draw()
 
 void Combo::Update()
 {
-	// ãƒ‡ãƒãƒƒã‚°ç”¨ã‚­ãƒ¼æ“ä½œ
+	// ƒfƒoƒbƒO—pƒL[‘€ì
 	if (InputManager::CheckDownKey(KEY_INPUT_R))
 	{
 		AddHit();
@@ -81,7 +81,7 @@ void Combo::Update()
 	{
 		comboTimer -= 0.01f;
 
-		// åˆ¶é™æ™‚é–“åˆ‡ã‚Œã«ã‚ˆã‚‹ãƒªã‚»ãƒƒãƒˆ
+		// §ŒÀŠÔØ‚ê‚É‚æ‚éƒŠƒZƒbƒg
 		if (comboTimer <= 0.0f)
 		{
 			Reset();
@@ -96,7 +96,7 @@ void Combo::AddHit()
 
 	if (comboCount > 1000)
 	{
-		comboCount = 1000; // ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã®æœ€å¤§å€¤åˆ¶é™
+		comboCount = 1000; // ƒJƒEƒ“ƒ^[‚ÌÅ‘å’l§ŒÀ
 	}
 }
 
@@ -119,3 +119,4 @@ float Combo::GetMultiplier() const
 	}
 	return 1.0f;
 }
+

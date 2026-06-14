@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include"SceneManager.h"
 #include"SoundManager.h"
 #include"ResourceManager.h"
@@ -33,4 +33,7 @@ public:
 	static bool FeverFlag;                    // 大量出現かつ自動吸引が行われるフィーバー状態の有効化フラグ
 	static int mnCaughtCowCount;              // 回収された牛の総数 (実績やゲーム状態移行に使用)
 	static bool TutrialVacumFlag;             // チュートリアルにおいて吸引操作が完了したかどうかの判定フラグ
+
+	static float mfDeltaTime;                 // 1フレームあたりの経過時間（秒）
+	static float GetDeltaTimeScaler() { return mfDeltaTime * 60.0f; } // 60FPS基準のスケール値
 };

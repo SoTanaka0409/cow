@@ -1,4 +1,4 @@
-ï»¿#include "EffekseerEffect.h"
+#include "EffekseerEffect.h"
 #include <EffekseerForDXLib.h>
 #include "Master.h"
 
@@ -18,13 +18,13 @@ EffekseerEffect::EffekseerEffect(const char* filename, VECTOR initPos, float Eff
 
 EffekseerEffect::~EffekseerEffect()
 {
-	// ãƒ­ãƒ¼ãƒ‰æ¸ˆã¿ã®Effekseerã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚¢ã‚»ãƒƒãƒˆãƒªã‚½ãƒ¼ã‚¹ã‚’ãƒ¡ãƒ¢ãƒªã‹ã‚‰è§£æ”¾ã™ã‚‹
+	// ƒ[ƒhÏ‚İ‚ÌEffekseerƒGƒtƒFƒNƒgƒAƒZƒbƒgƒŠƒ\[ƒX‚ğƒƒ‚ƒŠ‚©‚ç‰ğ•ú‚·‚é
 	DeleteEffekseerEffect(effectResourcehandle);
 }
 
 void EffekseerEffect::Load()
 {
-	// æŒ‡å®šã•ã‚ŒãŸãƒ‘ã‚¹ã‹ã‚‰.efkã‚¨ãƒ•ã‚§ã‚¯ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’ãƒ¡ãƒ¢ãƒªä¸Šã«ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
+	// w’è‚³‚ê‚½ƒpƒX‚©‚ç.efkƒGƒtƒFƒNƒgƒf[ƒ^‚ğƒƒ‚ƒŠã‚Éƒ[ƒh‚·‚é
 	effectResourcehandle = LoadEffekseerEffect(filePath, effectSize);
 }
 
@@ -32,7 +32,7 @@ void EffekseerEffect::Update()
 {
 	if (playingEffectHandle != -1)
 	{
-		// å†ç”Ÿä¸­ã®ã‚¨ãƒ•ã‚§ã‚¯ãƒˆä½ç½®ã€å›è»¢è§’åº¦ã€ã‚¹ã‚±ãƒ¼ãƒ«å€¤ã‚’Effekseerå´ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã¸æ¯ãƒ•ãƒ¬ãƒ¼ãƒ åŒæœŸã™ã‚‹
+		// Ä¶’†‚ÌƒGƒtƒFƒNƒgˆÊ’uA‰ñ“]Šp“xAƒXƒP[ƒ‹’l‚ğEffekseer‘¤ƒCƒ“ƒXƒ^ƒ“ƒX‚Ö–ˆƒtƒŒ[ƒ€“¯Šú‚·‚é
 		SetPosPlayingEffekseer3DEffect(playingEffectHandle, PlayPos.x, PlayPos.y, PlayPos.z);
 		SetRotationPlayingEffekseer3DEffect(playingEffectHandle, mvRotation.x, mvRotation.y, mvRotation.z);
 		SetScalePlayingEffekseer3DEffect(playingEffectHandle, mvScale.x, mvScale.y, mvScale.z);
@@ -45,17 +45,18 @@ void EffekseerEffect::Draw()
 
 void EffekseerEffect::Play()
 {
-	// èª­ã¿è¾¼ã‚“ã ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãƒªã‚½ãƒ¼ã‚¹ã‚’ã‚‚ã¨ã«ã€3Dç©ºé–“ã§å†ç”Ÿã‚’é–‹å§‹ã™ã‚‹
+	// “Ç‚İ‚ñ‚¾ƒGƒtƒFƒNƒgƒŠƒ\[ƒX‚ğ‚à‚Æ‚ÉA3D‹óŠÔ‚ÅÄ¶‚ğŠJn‚·‚é
 	playingEffectHandle = PlayEffekseer3DEffect(effectResourcehandle);
 	SetPosPlayingEffekseer3DEffect(playingEffectHandle, PlayPos.x, PlayPos.y, PlayPos.z);
 }
 
 void EffekseerEffect::Stop()
 {
-	// ç¾åœ¨ã®ã‚¨ãƒ•ã‚§ã‚¯ãƒˆå†ç”ŸçŠ¶æ…‹ã‚’å–å¾—ã—ã€å†ç”Ÿä¸­ã®å ´åˆã®ã¿å¼·åˆ¶åœæ­¢ã‚’ã‹ã‘ã‚‹
+	// Œ»İ‚ÌƒGƒtƒFƒNƒgÄ¶ó‘Ô‚ğæ“¾‚µAÄ¶’†‚Ìê‡‚Ì‚İ‹­§’â~‚ğ‚©‚¯‚é
 	int NowPlayEffect = IsEffekseer3DEffectPlaying(playingEffectHandle);
 	if (NowPlayEffect != -1)
 	{
 		StopEffekseer3DEffect(playingEffectHandle);
 	}
 }
+

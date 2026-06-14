@@ -1,8 +1,8 @@
-﻿#pragma once
+#pragma once
 #include"Dxlib.h"
 #include"Object3D.h"
 
-// プレイヤー（または他のオブジェクト）のレベル・経験値、およびレベルアップUIを処理するクラス
+// �v���C���[�i�܂��͑��̃I�u�W�F�N�g�j�̃��x���E�o���l�A����у��x���A�b�vUI����������N���X
 class Level
 {
 public:
@@ -10,51 +10,52 @@ public:
 	~Level();
 
 	/*
-	 * @brief 経験値バーと現在のレベルを画面左下に描画する
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] レベル文字列、経験値バーの画面描画
+	 * @brief �o���l�o�[�ƌ��݂̃��x������ʍ����ɕ`�悷��
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] ���x��������A�o���l�o�[�̉�ʕ`��
 	 */
 	void Draw();
 
 	/*
-	 * @brief 毎フレームの更新処理（現状なし）
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] なし
+	 * @brief ���t���[���̍X�V�����i����Ȃ��j
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �Ȃ�
 	 */
 	void Update();
 
 	/*
-	 * @brief 経験値を加算し、最大値に達した場合はレベルアップ（およびスキル抽選要求）を行う
-	 * [入力] xp: 加算する経験値量
-	 * [出力] なし
-	 * [副作用] mfxpの加算、レベルアップ(mnNowLevel++)、スキル選択フラグ(SetSkillFlag)の有効化
+	 * @brief �o���l�����Z���A�ő�l�ɒB�����ꍇ�̓��x���A�b�v�i����уX�L�����I�v���j���s��
+	 * [����] xp: ���Z����o���l��
+	 * [�o��] �Ȃ�
+	 * [����p] mfxp�̉��Z�A���x���A�b�v(mnNowLevel++)�A�X�L���I���t���O(SetSkillFlag)�̗L����
 	 */
 	void AddXp(float xp);
 
 	/*
-	 * @brief 次のレベルへ昇格するために必要な最大経験値量を再計算する
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] mfMaxXpの更新
+	 * @brief ���̃��x���֏��i���邽�߂ɕK�v�ȍő�o���l�ʂ��Čv�Z����
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] mfMaxXp�̍X�V
 	 */
 	void SetNextLevel();
 
 private:
 	/*
-	 * @brief 経験値の進捗状況をメーター（バー）として画面に描画する
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 進捗枠線（白）、背景（黒）、進捗バー（緑）の描画
+	 * @brief �o���l�̐i���󋵂����[�^�[�i�o�[�j�Ƃ��ĉ�ʂɕ`�悷��
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �i���g���i���j�A�w�i�i���j�A�i���o�[�i�΁j�̕`��
 	 */
 	void DrawBar();
 
-	Object3D* mpParent;        // レベル管理対象のオブジェクトポインタ（通常はPlayer3D）
-	float mfxp;                // 現在の獲得経験値量
-	float mfMaxXp;             // レベルアップに必要な最大経験値量
-	int mnNowLevel;            // 現在のレベル値
+	Object3D* mpParent;        // ���x���Ǘ��Ώۂ̃I�u�W�F�N�g�|�C���^�i�ʏ��Player3D�j
+	float mfxp;                // ���݂̊l���o���l��
+	float mfMaxXp;             // ���x���A�b�v�ɕK�v�ȍő�o���l��
+	int mnNowLevel;            // ���݂̃��x���l
 
-	VECTOR pos = VGet(20, 800, 0); // 経験値バーの描画開始画面座標
-	VECTOR size = VGet(300, 30, 0); // 経験値バーの幅と高さ
+	VECTOR pos = VGet(20, 800, 0); // �o���l�o�[�̕`��J�n��ʍ��W
+	VECTOR size = VGet(300, 30, 0); // �o���l�o�[�̕��ƍ���
 };
+

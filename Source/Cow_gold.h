@@ -1,33 +1,35 @@
 #pragma once
 #include "CowMove.h"
 
-// ç²å¾—æ™‚ã«é«˜ã‚¹ã‚³ã‚¢ãŠã‚ˆã³ãƒ•ã‚£ãƒ¼ãƒãƒ¼çŠ¶æ…‹ã‚’èª˜ç™ºã™ã‚‹ç‰¹åˆ¥ãªé‡‘ã®ç‰›ï¼ˆã‚¿ã‚°: Cow_goldï¼‰ã‚’åˆ¶å¾¡ã™ã‚‹ã‚¯ãƒ©ã‚¹
+// Šl“¾‚É‚ƒXƒRƒA‚¨‚æ‚ÑƒtƒB[ƒo[ó‘Ô‚ğ—U”­‚·‚é“Á•Ê‚È‹à‚Ì‹iƒ^ƒO: Cow_goldj‚ğ§Œä‚·‚éƒNƒ‰ƒX
 class Cow_gold : public CowMove
 {
 public:
-	// ãƒ•ã‚£ãƒ¼ãƒãƒ¼ä¸­ã«å‡ºç¾ã—ãŸã‹ã©ã†ã‹ã®ãƒ•ãƒ©ã‚°å®šç¾©
+	// ƒtƒB[ƒo[’†‚ÉoŒ»‚µ‚½‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO’è‹`
 	enum Tag_fever
 	{
-		fever,      // ãƒ•ã‚£ãƒ¼ãƒãƒ¼çŠ¶æ…‹ä¸­ã«ã‚¹ãƒãƒ¼ãƒ³ã—ãŸé‡‘ã®ç‰›
-		Nofever,    // é€šå¸¸çŠ¶æ…‹ä¸­ã«ã‚¹ãƒãƒ¼ãƒ³ã—ãŸé‡‘ã®ç‰›
+		fever,      // ƒtƒB[ƒo[ó‘Ô’†‚ÉƒXƒ|[ƒ“‚µ‚½‹à‚Ì‹
+		Nofever,    // ’Êíó‘Ô’†‚ÉƒXƒ|[ƒ“‚µ‚½‹à‚Ì‹
 	};
 
 public:
 	/*
-	 * @brief é‡‘ã®ç‰›ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’åˆæœŸåº§æ¨™ã«é…ç½®ã—ã€ã‚¹ã‚³ã‚¢ãƒ»è¡çªåˆ¤å®šåŠå¾„ãƒ»ãƒ•ã‚£ãƒ¼ãƒãƒ¼çŠ¶æ…‹ã‚’è¨­å®šã™ã‚‹
-	 * [å…¥åŠ›] filename: ãƒ¢ãƒ‡ãƒ«ã®ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹, initPos: åˆæœŸã‚¹ãƒãƒ¼ãƒ³åº§æ¨™, fever: ã‚¹ãƒãƒ¼ãƒ³æ™‚ã®ãƒ•ã‚£ãƒ¼ãƒãƒ¼çŠ¶æ…‹
-	 * [å‡ºåŠ›] ãªã—
-	 * [å‰¯ä½œç”¨] ãªã—
+	 * @brief ‹à‚Ì‹ƒIƒuƒWƒFƒNƒg‚ğ‰ŠúÀ•W‚É”z’u‚µAƒXƒRƒAEÕ“Ë”»’è”¼ŒaEƒtƒB[ƒo[ó‘Ô‚ğİ’è‚·‚é
+	 * [“ü—Í] filename: ƒ‚ƒfƒ‹‚Ìƒtƒ@ƒCƒ‹ƒpƒX, initPos: ‰ŠúƒXƒ|[ƒ“À•W, fever: ƒXƒ|[ƒ“‚ÌƒtƒB[ƒo[ó‘Ô
+	 * [o—Í] ‚È‚µ
+	 * [•›ì—p] ‚È‚µ
 	 */
 	Cow_gold(std::string filename, VECTOR initPos, Tag_fever fever);
 	virtual ~Cow_gold();
 
+	virtual void Reset(VECTOR pos) override;
 	void Update() override;
-	void MoveCow() override;
 	void Die(DeathReason reason) override;
 
+	void SetFever(Tag_fever fever) { mnFever = fever; }
+
 private:
-	Tag_fever mnFever;  // ã‚¹ãƒãƒ¼ãƒ³æ™‚ã®ãƒ•ã‚£ãƒ¼ãƒãƒ¼çŠ¶æ…‹
-	int DeathCount;     // ç”Ÿå­˜ãƒ•ãƒ¬ãƒ¼ãƒ ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼
-	int DeathTimer;     // è‡ªå‹•æ¶ˆæ»…ã¾ã§ã®åˆ¶é™æ™‚é–“ãƒ•ãƒ¬ãƒ¼ãƒ æ•°
+	Tag_fever mnFever;  // ƒXƒ|[ƒ“‚ÌƒtƒB[ƒo[ó‘Ô
+	int DeathCount;     // ¶‘¶ƒtƒŒ[ƒ€ƒJƒEƒ“ƒ^[
+	int DeathTimer;     // ©“®Á–Å‚Ü‚Å‚Ì§ŒÀŠÔƒtƒŒ[ƒ€”
 };

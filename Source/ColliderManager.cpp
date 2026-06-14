@@ -1,4 +1,4 @@
-ï»¿#include "ColliderManager.h"
+#include "ColliderManager.h"
 #include "Collider.h"
 #include "Master.h"
 #include <vector>
@@ -15,7 +15,7 @@ ColliderManager::~ColliderManager()
 
 void ColliderManager::Update()
 {
-	// ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹å…¨ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼é–“ã§ç·å½“ãŸã‚Šå½“ãŸã‚Šåˆ¤å®šè¨ˆç®—ã‚’è¡Œã„ã€è¡çªã‚¤ãƒ™ãƒ³ãƒˆã‚’æ›´æ–°ã™ã‚‹
+	// “o˜^‚³‚ê‚Ä‚¢‚é‘SƒRƒ‰ƒCƒ_[ŠÔ‚Å‘“–‚½‚è“–‚½‚è”»’èŒvZ‚ğs‚¢AÕ“ËƒCƒxƒ“ƒg‚ğXV‚·‚é
 	for (auto itr = mColliderList.begin(); itr != mColliderList.end(); ++itr)
 	{
 		if ((*itr) == nullptr)
@@ -49,7 +49,7 @@ void ColliderManager::Update()
 		}
 	}
 
-	DeleteAllColliderIfNeeded(); // ãƒ•ãƒ¬ãƒ¼ãƒ çµ‚äº†æ™‚ã«ä¸è¦ãªã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ãƒƒãƒ—
+	DeleteAllColliderIfNeeded(); // ƒtƒŒ[ƒ€I—¹‚É•s—v‚ÈƒRƒ‰ƒCƒ_[‚ğƒNƒŠ[ƒ“ƒAƒbƒv
 }
 
 void ColliderManager::Draw()
@@ -62,15 +62,15 @@ void ColliderManager::AddCollider(Collider* Collider)
 }
 
 /*
- * @brief ã™ã¹ã¦ã®ç™»éŒ²æ¸ˆã¿ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å‰Šé™¤ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã€ç®¡ç†ãƒªã‚¹ãƒˆã‚’ç©ºã«ã™ã‚‹
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] å…¨ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã¸ã®å‰Šé™¤ãƒ•ãƒ©ã‚°é€šçŸ¥ã€ãƒªã‚¹ãƒˆã®ã‚¯ãƒªã‚¢
+ * @brief ‚·‚×‚Ä‚Ì“o˜^Ï‚İƒRƒ‰ƒCƒ_[‚Ìíœƒtƒ‰ƒO‚ğ—§‚ÄAŠÇ—ƒŠƒXƒg‚ğ‹ó‚É‚·‚é
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ‘SƒRƒ‰ƒCƒ_[‚Ö‚Ìíœƒtƒ‰ƒO’Ê’mAƒŠƒXƒg‚ÌƒNƒŠƒA
  */
 void ColliderManager::DeleteAllCollider()
 {
-	// ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ç ´æï¼ˆDeleteAllColliderIfNeededã®ä¸¦è¡Œå®Ÿè¡Œã«ã‚ˆã‚‹ã‚¯ãƒ©ãƒƒã‚·ãƒ¥ï¼‰ã‚’å®Œå…¨ã«é˜²ããŸã‚ã€
-	// ãƒ•ãƒ©ã‚°è¨­å®šå¾Œã«ä¸€æ‹¬ã§ã‚¯ãƒªã‚¢ã™ã‚‹å®‰å…¨ãªãƒ­ã‚¸ãƒƒã‚¯ã‚’å®Ÿè£…
+	// ƒCƒeƒŒ[ƒ^”j‘¹iDeleteAllColliderIfNeeded‚Ì•ÀsÀs‚É‚æ‚éƒNƒ‰ƒbƒVƒ…j‚ğŠ®‘S‚É–h‚®‚½‚ßA
+	// ƒtƒ‰ƒOİ’èŒã‚ÉˆêŠ‡‚ÅƒNƒŠƒA‚·‚éˆÀ‘S‚ÈƒƒWƒbƒN‚ğÀ‘•
 	for (auto col : mColliderList)
 	{
 		if (col != nullptr)
@@ -82,18 +82,18 @@ void ColliderManager::DeleteAllCollider()
 }
 
 /*
- * @brief å‰Šé™¤ãƒ•ãƒ©ã‚°(mbDeleteFlag)ãŒçœŸã«è¨­å®šã•ã‚Œã¦ã„ã‚‹ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’ãƒªã‚¹ãƒˆã‹ã‚‰å®‰å…¨ã«é™¤å¤–ã™ã‚‹
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] è©²å½“ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®ãƒªã‚¹ãƒˆé™¤å¤–ã€ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã®å®‰å…¨ãªé€²è¡Œ
+ * @brief íœƒtƒ‰ƒO(mbDeleteFlag)‚ª^‚Éİ’è‚³‚ê‚Ä‚¢‚éƒRƒ‰ƒCƒ_[‚ğƒŠƒXƒg‚©‚çˆÀ‘S‚ÉœŠO‚·‚é
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ŠY“–ƒRƒ‰ƒCƒ_[‚ÌƒŠƒXƒgœŠOAƒCƒeƒŒ[ƒ^‚ÌˆÀ‘S‚Èis
  */
 void ColliderManager::DeleteAllColliderIfNeeded()
 {
-	for (auto itr = mColliderList.begin(); itr != mColliderList.end(); /* ãƒ«ãƒ¼ãƒ—å†…ã§ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã‚’é€²ã‚ã‚‹ */)
+	for (auto itr = mColliderList.begin(); itr != mColliderList.end(); /* ƒ‹[ƒv“à‚ÅƒCƒeƒŒ[ƒ^‚ği‚ß‚é */)
 	{
 		if ((*itr)->IsDeleteFlag())
 		{
-			itr = mColliderList.erase(itr); // å‰Šé™¤å¾Œã®æ¬¡ã®æœ‰åŠ¹è¦ç´ ã®ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã‚’å–å¾—
+			itr = mColliderList.erase(itr); // íœŒã‚ÌŸ‚Ì—LŒø—v‘f‚ÌƒCƒeƒŒ[ƒ^‚ğæ“¾
 		}
 		else
 		{
@@ -106,3 +106,4 @@ void ColliderManager::RemoveCollider(Collider* collider)
 {
 	mColliderList.remove(collider);
 }
+

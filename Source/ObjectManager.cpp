@@ -1,4 +1,4 @@
-ï»¿#include "ObjectManager.h"
+#include "ObjectManager.h"
 #include "Master.h"
 #include "ColliderManager.h"
 
@@ -22,7 +22,7 @@ void ObjectManager::Update()
 		(*itr)->Update();
 	}
 
-	// æç”»é †ï¼ˆZã‚½ãƒ¼ãƒˆï¼‰ã®ãŸã‚ã®åŸºæº–å€¤ã¨ã—ã¦ã€å„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã‚«ãƒ¡ãƒ©ã®è·é›¢ã‚’è¨ˆç®—ã—ã¦ãŠã
+	// •`‰æ‡iZƒ\[ƒgj‚Ì‚½‚ß‚ÌŠî€’l‚Æ‚µ‚ÄAŠeƒIƒuƒWƒFƒNƒg‚ÆƒJƒƒ‰‚Ì‹——£‚ğŒvZ‚µ‚Ä‚¨‚­
 	for (auto itr = mObject3DList.begin(); itr != mObject3DList.end(); itr++)
 	{
 		VECTOR cameraPos = Master::mpCamera->GetPosition();
@@ -30,7 +30,7 @@ void ObjectManager::Update()
 		(*itr)->SetCameraDistance(VSize(VSub(objPos, cameraPos)));
 	}
 
-	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®äº¤å·®ãƒ»ã‚¤ãƒ™ãƒ³ãƒˆé€šçŸ¥ã‚’ä¸€æ‹¬å‡¦ç†ã™ã‚‹
+	// ƒRƒ‰ƒCƒ_[‚ÌŒğ·EƒCƒxƒ“ƒg’Ê’m‚ğˆêŠ‡ˆ—‚·‚é
 	ColliderManager::GetInstance()->Update();
 }
 
@@ -58,6 +58,12 @@ void ObjectManager::AddObject(Object3D* object3D)
 {
 	mObject3DList.push_back(object3D);
 	mTagCache3D[object3D->GetTag()].push_back(object3D);
+}
+
+void ObjectManager::RemoveObjectNoDelete(Object3D* object3D)
+{
+	mObject3DList.remove(object3D);
+	RebuildTagCache3D();
 }
 
 void ObjectManager::DeleteAll3D()
@@ -109,7 +115,7 @@ void ObjectManager::DeleteAll3DIfNeeded()
 			itr++;
 		}
 	}
-	// ãƒªã‚¹ãƒˆè¦ç´ ã«å¤‰æ›´ãŒã‚ã£ãŸå ´åˆã®ã¿ã€æ¤œç´¢é«˜é€ŸåŒ–ç”¨ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’å†æ§‹ç¯‰ã™ã‚‹
+	// ƒŠƒXƒg—v‘f‚É•ÏX‚ª‚ ‚Á‚½ê‡‚Ì‚İAŒŸõ‚‘¬‰»—pƒLƒƒƒbƒVƒ…‚ğÄ\’z‚·‚é
 	if (isDeleted) {
 		RebuildTagCache3D();
 	}
@@ -149,7 +155,7 @@ void ObjectManager::DeleteAll2DIfNeeded()
 			itr++;
 		}
 	}
-	// ãƒªã‚¹ãƒˆè¦ç´ ã«å¤‰æ›´ãŒã‚ã£ãŸå ´åˆã®ã¿ã€æ¤œç´¢é«˜é€ŸåŒ–ç”¨ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’å†æ§‹ç¯‰ã™ã‚‹
+	// ƒŠƒXƒg—v‘f‚É•ÏX‚ª‚ ‚Á‚½ê‡‚Ì‚İAŒŸõ‚‘¬‰»—pƒLƒƒƒbƒVƒ…‚ğÄ\’z‚·‚é
 	if (isDeleted) {
 		RebuildTagCache2D();
 	}

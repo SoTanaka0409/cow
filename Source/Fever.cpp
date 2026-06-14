@@ -1,4 +1,5 @@
-﻿#include "Fever.h"
+#include "ServiceLocator.h"
+#include "Fever.h"
 #include "Cow_gold.h"
 #include "CowManager.h"
 #include "Master.h"
@@ -7,6 +8,7 @@
 #include "Player3D.h"
 #include "Cow.h"
 #include "Utility.h"
+#include "GameConstants.h"
 
 Fever::Fever()
 	: dropTime(0)
@@ -27,13 +29,13 @@ void Fever::AddGauge(int value)
 
 void Fever::StartFever()
 {
-	// プレイヤーの吸引能力を2倍にしてフィーバーの恩恵を与える
-	auto p = Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->GetObject3DByTag(Object3D::Tag3D_player);
+	// ?v???C???[??z???\???2?{?????t?B?[?o?[????b??^????
+	auto p = ServiceLocator::GetPlayer();
 	Player3D* player = dynamic_cast<Player3D*>(p);
 	playerStatus = player->GetStatusAttack();
 	player->SetStatusAttack(playerStatus * 2.0f);
 	mIsFever = true;
-	mTimer = 600; // フィーバー時間を10秒（600フレーム）に設定
+	mTimer = 600; // ?t?B?[?o?[?????10?b?i600?t???[???j????
 	DropCount = 0;
 	dropTime = 60;
 	Master::FeverFlag = true;
@@ -41,17 +43,17 @@ void Fever::StartFever()
 
 void Fever::EndFever()
 {
-	// プレイヤーの吸引能力を元の値に戻す
-	auto p = Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->GetObject3DByTag(Object3D::Tag3D_player);
+	// ?v???C???[??z???\??????l????
+	auto p = ServiceLocator::GetPlayer();
 	Player3D* player = dynamic_cast<Player3D*>(p);
 	player->SetStatusAttack(playerStatus);
 	mIsFever = false;
 	
-	// フィーバー終了時の救済・盛り上げとしてステージ全体に牛と羊を再配備する
+	// ?t?B?[?o?[?I??????~?��E????�O?????X?e?[?W?S??????r???z??????
 	VECTOR spawnPos = Utility::StageSize;
-	Master::mpSceneManager->GetCurrentScene()->mpCowManager->SpawnCow("Resource/3D/GOLDCow/GoldCow.mv1", spawnPos, 50.0f, CowMove::Cow_gold, 1);
-	Master::mpSceneManager->GetCurrentScene()->mpCowManager->SpawnCow("Resource/3D/Cow/uploads_files_3880923_Cow.mv1", spawnPos, 50.0f, CowMove::Cow_1, 10);
-	Master::mpSceneManager->GetCurrentScene()->mpAnimalManager->SpawnAnimal("Resource/3D/Animal/uploads_files_3880923_Sheep.mv1", spawnPos, 50.0f, AnimalMove::Animal_1, 5);
+	ServiceLocator::GetCowManager()->SpawnCow(GameConstants::COW_GOLD.modelPath, spawnPos, 50.0f, CowMove::Cow_gold, 1);
+	ServiceLocator::GetCowManager()->SpawnCow(GameConstants::COW_DEFAULT.modelPath, spawnPos, 50.0f, CowMove::Cow_1, 10);
+	ServiceLocator::GetAnimalManager()->SpawnAnimal(GameConstants::ANIMAL_SHEEP.modelPath, spawnPos, 50.0f, AnimalMove::Animal_1, 5);
 	Master::FeverFlag = false;
 }
 
@@ -61,7 +63,7 @@ void Fever::Update()
 	
 	SetDrawBlendMode(DX_BLENDMODE_ADD, 180);
 
-	// フィーバー中であることを視覚的に強調するため、画面の境界に黄色の枠線を描画する
+	// ?t?B?[?o?[??????�?????o?I???????????A??????E????F??g????`????
 	DrawBox(0, 0, Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT, GetColor(255, 200, 50), FALSE);
 	DrawBox(1, 1, Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT, GetColor(255, 220, 100), FALSE);
 	DrawBox(2, 2, Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT, GetColor(255, 255, 180), FALSE);
@@ -83,15 +85,15 @@ void Fever::Update()
 	DropCount++;
 	mTimer--;
 	
-	// フィーバー期間中、一定周期（約1秒ごと）で金の牛を生成してプレイヤーの獲得チャンスを増やす
+	// ?t?B?[?o?[??????A???????i??1?b????j?????????????v???C???[??l???`?????X????
 	if (DropCount > dropTime)
 	{
 		DropCount = 0;
 		VECTOR spawnPos = Utility::StageSize;
-		Master::mpSceneManager->GetCurrentScene()->mpCowManager->SpawnCow("Resource/3D/GOLDCow/GoldCow.mv1", spawnPos, 50.0f, CowMove::Cow_gold, 2, true);
+		ServiceLocator::GetCowManager()->SpawnCow(GameConstants::COW_GOLD.modelPath, spawnPos, 50.0f, CowMove::Cow_gold, 2, true);
 	}
 
-	// 規定フレーム数が経過したらフィーバー状態を終了する
+	// ?K??t???[???????o???????t?B?[?o?[????I??????
 	if (mTimer <= 0)
 	{
 		EndFever();

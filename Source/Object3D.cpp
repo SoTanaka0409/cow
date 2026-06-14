@@ -1,4 +1,5 @@
-ï»¿#include "Object3D.h"
+#include "ServiceLocator.h"
+#include "Object3D.h"
 #include "Master.h"
 #include "ObjectManager.h"
 #include "Scene.h"
@@ -14,8 +15,8 @@ Object3D::Object3D(VECTOR initPos)
 	, mbDrawFlag(true)
 	, mfRadius(0)
 {
-	// ç”Ÿæˆã—ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç®¡ç†ãƒ»æ›´æ–°ã™ã‚‹ãŸã‚ã€ç¾åœ¨ã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªã‚·ãƒ¼ãƒ³ã®ãƒžãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã¸è‡ªå‹•ç™»éŒ²ã™ã‚‹
-	Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->AddObject(this);
+	// ¶¬‚µ‚½ƒIƒuƒWƒFƒNƒg‚ðŠÇ—EXV‚·‚é‚½‚ßAŒ»Ý‚ÌƒAƒNƒeƒBƒu‚ÈƒV[ƒ“‚Ìƒ}ƒl[ƒWƒƒ[‚ÖŽ©“®“o˜^‚·‚é
+	ServiceLocator::GetObjectManager()->AddObject(this);
 	mpCapsuleCollider = new CapsuleCollider(this, initPos, initPos, 0);
 }
 
@@ -47,3 +48,4 @@ void Object3D::OnTrigger(Collider* collider, Collider* check)
 void Object3D::OnExit(Collider* collider, Collider* check)
 {
 }
+

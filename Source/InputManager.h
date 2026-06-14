@@ -1,6 +1,6 @@
-﻿#pragma once
+#pragma once
 
-// キーボードからの入力状態（単発押し、押し続けなど）を判定するクラス
+// �L�[�{�[�h����̓��͏�ԁi�P�������A���������Ȃǁj�𔻒肷��N���X
 class InputManager
 {
 public:
@@ -8,21 +8,22 @@ public:
 	~InputManager();
 
 	/*
-	 * @brief 指定したキーが今フレームで新しく押されたかを判定する（トリガー入力）
-	 * [入力] KeyCode: 判定対象のキーコード（KEY_INPUT_...）
-	 * [出力] 1: 新しく押された、0: それ以外
-	 * [副作用] mDownBuffer内のキー状態バッファを更新
+	 * @brief �w�肵���L�[�����t���[���ŐV���������ꂽ���𔻒肷��i�g���K�[���́j
+	 * [����] KeyCode: ����Ώۂ̃L�[�R�[�h�iKEY_INPUT_...�j
+	 * [�o��] 1: �V���������ꂽ�A0: ����ȊO
+	 * [����p] mDownBuffer���̃L�[��ԃo�b�t�@���X�V
 	 */
 	static int CheckDownKey(int KeyCode);
 
 	/*
-	 * @brief 指定したキーが現在押されているかを判定する（プレス入力）
-	 * [入力] KeyCode: 判定対象のキーコード
-	 * [出力] 1: 押されている、0: 押されていない
-	 * [副作用] なし
+	 * @brief �w�肵���L�[�����݉�����Ă��邩�𔻒肷��i�v���X���́j
+	 * [����] KeyCode: ����Ώۂ̃L�[�R�[�h
+	 * [�o��] 1: ������Ă���A0: ������Ă��Ȃ�
+	 * [����p] �Ȃ�
 	 */
 	static int CheckPressKey(int KeyCode);
 
 private:
-	static int mDownBuffer[256]; // キーが前フレームで押されていたかを追跡するためのバッファ
+	static int mDownBuffer[256]; // �L�[���O�t���[���ŉ�����Ă�������ǐՂ��邽�߂̃o�b�t�@
 };
+

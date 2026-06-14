@@ -1,3 +1,4 @@
+#include "ServiceLocator.h"
 #include "CowManager.h"
 #include "CowMove.h"
 #include "Player3D.h"
@@ -12,13 +13,20 @@
 #include "CapsuleCollider.h"
 
 CowManager::CowManager()
-	: mnTagCount(0)
 {
 }
 
 CowManager::~CowManager()
 {
 	mCows.clear();
+	for (auto& pair : mPools)
+	{
+		for (auto cow : pair.second)
+		{
+			delete cow;
+		}
+	}
+	mPools.clear();
 }
 
 void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove::Tag_cow tag, int count, bool mfever)
@@ -26,12 +34,12 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 	for (int i = 0; i < count; i++)
 	{
 		
-		// 画面上の同時アクティブ牛数上限を30匹に制限する
+		// 画面丁EE同時アクチE??ブ牛数上限めE0匹に制限すめE
 		if (mCows.size() >= 30)
 		{
 			if (tag == CowMove::Cow_gold)
 			{
-				// 金の牛が出現するスペースを作るため、普通の牛の中でプレイヤーから最も遠いものを安全に破棄する
+				// 釁EE牛が出現するスチEEスを作るため、普送EE牁EE中でプレイヤーから最も遠ぁE??のを宁EEに破?E??めE
 				bool erased = false;
 				float maxDistSq = -1.0f;
 				auto furthestIt = mCows.end();
@@ -58,15 +66,21 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 
 				if (furthestIt != mCows.end())
 				{
-					// 既に削除フラグが立っている牛などはObjectManager側で消されるが
-					(*furthestIt)->Die(CowMove::DEATH_LIMIT);
+					// 既に削除フラグが立ってぁE��牛などはObjectManager側で消されるぁE
+					(*furthestIt)->Die(DEATH_LIMIT);
+					auto cow = *furthestIt;
+					cow->Deactivate();
+					mPools[cow->GetTag_cow()].push_back(cow);
 					mCows.erase(furthestIt);
 					erased = true;
 				}
 				else if (!mCows.empty())
 				{
-					// 全ての牛が画面内の場合は、一番古い牛の削除フラグを立ててリストから除外
-					mCows.front()->Die(CowMove::DEATH_LIMIT);
+					// 全ての牛が画面冁E��どの場合�E、一番古ぁE��のの削除フラグを立ててリストから除夁E
+					mCows.front()->Die(DEATH_LIMIT);
+					auto cow = mCows.front();
+					cow->Deactivate();
+					mPools[cow->GetTag_cow()].push_back(cow);
 					mCows.erase(mCows.begin());
 					erased = true;
 				}
@@ -85,86 +99,88 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 
 		if (tag == CowMove::Cow_1)
 		{
-			auto newCow = new Cow(filename, spawnPos, 1.0f);
-			newCow->SetScale(scale);
-			mCows.push_back(newCow);
+			if (!mPools[tag].empty())
+			{
+				auto cow = mPools[tag].back();
+				mPools[tag].pop_back();
+				cow->Reset(spawnPos);
+				cow->SetScale(scale);
+				mCows.push_back(cow);
+			}
+			else
+			{
+				auto newCow = new Cow(filename, spawnPos, 1.0f);
+				newCow->SetScale(scale);
+				mCows.push_back(newCow);
+			}
 		}
 		else if (tag == CowMove::Cow_2)
 		{
-			auto newCow = new Cow_2(filename, spawnPos);
-			newCow->SetScale(scale);
-			mCows.push_back(newCow);
+			if (!mPools[tag].empty())
+			{
+				auto cow = mPools[tag].back();
+				mPools[tag].pop_back();
+				cow->Reset(spawnPos);
+				cow->SetScale(scale);
+				mCows.push_back(cow);
+			}
+			else
+			{
+				auto newCow = new Cow_2(filename, spawnPos);
+				newCow->SetScale(scale);
+				mCows.push_back(newCow);
+			}
 		}
 		else if (tag == CowMove::Cow_gold)
 		{
 			auto feverMode = mfever ? Cow_gold::fever : Cow_gold::Nofever;
-			auto newCow = new Cow_gold(filename, spawnPos, feverMode);
-			newCow->SetScale(scale);
-			mCows.push_back(newCow);
+			if (!mPools[tag].empty())
+			{
+				auto cow = dynamic_cast<Cow_gold*>(mPools[tag].back());
+				mPools[tag].pop_back();
+				if (cow) cow->SetFever(feverMode);
+				cow->Reset(spawnPos);
+				cow->SetScale(scale);
+				mCows.push_back(cow);
+			}
+			else
+			{
+				auto newCow = new Cow_gold(filename, spawnPos, feverMode);
+				newCow->SetScale(scale);
+				mCows.push_back(newCow);
+			}
+		}
+		else if (tag == CowMove::Cow_T)
+		{
+			if (!mPools[tag].empty())
+			{
+				auto cow = mPools[tag].back();
+				mPools[tag].pop_back();
+				cow->Reset(spawnPos);
+				cow->SetScale(scale);
+				mCows.push_back(cow);
+			}
+			else
+			{
+				auto newCow = new Cow_Tutorial(filename, spawnPos);
+				newCow->SetScale(scale);
+				mCows.push_back(newCow);
+			}
 		}
 	}
 }
 
 void CowManager::Update()
 {
-	judgmentCow();
+	for (auto cow : mCows)
+	{
+		cow->Update();
+	}
 	EraseCow();
 }
 
 void CowManager::Draw()
 {
-}
-
-void CowManager::judgmentCow()
-{
-	auto p = Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->GetObject3DByTag(Object3D::Tag3D_player);
-	Player3D* player = dynamic_cast<Player3D*>(p);
-	if (player == nullptr) return;
-
-	for (auto cow : mCows)
-	{
-		if (cow->IsDead() && !cow->IsJudged())
-		{
-			cow->SetJudged(true);
-			if (cow->GetTag_cow() == CowMove::Tag_cow::Cow_T)
-			{
-				Master::mnTutorialcount++;
-			}
-
-			mnTagCount++;
-			if (mnTagCount == 1)
-			{
-				s.tag1 = cow->GetTag_cow();
-			}
-			else if (mnTagCount == 2 && s.tag1 == cow->GetTag_cow())
-			{
-				s.tag2 = cow->GetTag_cow();
-			}
-			else if (mnTagCount == 3 && s.tag2 == cow->GetTag_cow())
-			{
-				s.tag3 = cow->GetTag_cow();
-				if (s.tag3 == CowMove::Cow_1)
-				{
-					player->mpLevel->AddXp(10);
-				}
-				if (s.tag2 == CowMove::Cow_2)
-				{
-					player->mpLevel->AddXp(20);
-				}
-				if (s.tag3 == CowMove::Cow_3)
-				{
-					player->mpLevel->AddXp(30);
-				}
-			}
-			else
-			{
-				mnTagCount = 0;
-				s.tag1 = CowMove::none;
-				s.tag2 = CowMove::none;
-				s.tag3 = CowMove::none;
-			}
-		}
-	}
 }
 
 void CowManager::EraseCow()
@@ -173,8 +189,11 @@ void CowManager::EraseCow()
 	{
 		for (auto it = mCows.begin(); it != mCows.end();)
 		{
-			if ((*it)->IsDeleteFlag())
+			if ((*it)->GetCowDelete())
 			{
+				auto cow = *it;
+				cow->Deactivate();
+				mPools[cow->GetTag_cow()].push_back(cow);
 				it = mCows.erase(it);
 			}
 			else
@@ -184,3 +203,4 @@ void CowManager::EraseCow()
 		}
 	}
 }
+

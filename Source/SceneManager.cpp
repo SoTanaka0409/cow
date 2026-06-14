@@ -1,4 +1,4 @@
-ï»¿#include"SceneManager.h"
+#include"SceneManager.h"
 #include"Scene3D.h"
 #include"Scene.h"
 #include"TitleScene.h"
@@ -17,12 +17,12 @@ SceneManager::SceneManager()
 
 SceneManager::~SceneManager()
 {
-	Finalize(); // ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç ´æ£„æ™‚ã«ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªã‚·ãƒ¼ãƒ³ã®è§£æ”¾ã‚’ä¿è¨¼ã™ã‚‹
+	Finalize(); // ƒCƒ“ƒXƒ^ƒ“ƒX”jŠüŽž‚ÉƒAƒNƒeƒBƒu‚ÈƒV[ƒ“‚Ì‰ð•ú‚ð•ÛØ‚·‚é
 }
 
 void SceneManager::Initialize()
 {
-	mnNextSceneType = SCENE_TYPE::SCENE_TITLE; // èµ·å‹•æ™‚ã¯ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ã‹ã‚‰é–‹å§‹
+	mnNextSceneType = SCENE_TYPE::SCENE_TITLE; // ‹N“®Žž‚Íƒ^ƒCƒgƒ‹‰æ–Ê‚©‚çŠJŽn
 	ChangeSceneIfNeeded();
 }
 
@@ -43,10 +43,10 @@ void SceneManager::Draw()
 }
 
 /*
- * @brief ç¾åœ¨ã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã‚·ãƒ¼ãƒ³ã‚’å®‰å…¨ã«è§£æ”¾ã—ã€å¾Œç‰‡ä»˜ã‘ã‚’è¡Œã†
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] mpCurrentScene ã® Finalize å‘¼ã³å‡ºã—ã€ãŠã‚ˆã³ãƒ¡ãƒ¢ãƒª delete
+ * @brief Œ»Ý‚ÌƒAƒNƒeƒBƒuƒV[ƒ“‚ðˆÀ‘S‚É‰ð•ú‚µAŒã•Ð•t‚¯‚ðs‚¤
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] mpCurrentScene ‚Ì Finalize ŒÄ‚Ño‚µA‚¨‚æ‚Ñƒƒ‚ƒŠ delete
  */
 void SceneManager::Finalize()
 {
@@ -59,14 +59,14 @@ void SceneManager::Finalize()
 }
 
 /*
- * @brief é·ç§»å…ˆæŒ‡å®šãŒç•°ãªã‚‹å ´åˆã€ç¾åœ¨ã‚·ãƒ¼ãƒ³ã‚’ç ´æ£„ã—æ¬¡ã®ã‚·ãƒ¼ãƒ³ã‚’ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–ã™ã‚‹
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ã‚·ãƒ¼ãƒ³ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ¡ãƒ¢ãƒªè§£æ”¾ãƒ»æ–°è¦å‰²ã‚Šå½“ã¦(new)ã€ãŠã‚ˆã³åˆæœŸåŒ–(Initialize)
+ * @brief ‘JˆÚæŽw’è‚ªˆÙ‚È‚éê‡AŒ»ÝƒV[ƒ“‚ð”jŠü‚µŽŸ‚ÌƒV[ƒ“‚ðƒCƒ“ƒXƒ^ƒ“ƒX‰»‚·‚é
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ƒV[ƒ“ƒIƒuƒWƒFƒNƒg‚Ìƒƒ‚ƒŠ‰ð•úEV‹KŠ„‚è“–‚Ä(new)A‚¨‚æ‚Ñ‰Šú‰»(Initialize)
  */
 void SceneManager::ChangeSceneIfNeeded()
 {
-	// é·ç§»å…ˆãŒå¤‰ã‚ã£ã¦ã„ãªã„å ´åˆã¯ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆã‚’è¡Œã‚ãªã„
+	// ‘JˆÚæ‚ª•Ï‚í‚Á‚Ä‚¢‚È‚¢ê‡‚ÍƒV[ƒ“Ø‚è‘Ö‚¦‚ðs‚í‚È‚¢
 	if (mnSceneType == mnNextSceneType)
 	{
 		return;
@@ -107,3 +107,4 @@ void SceneManager::ChangeSceneIfNeeded()
 		mpCurrentScene->Initialize();
 	}
 }
+

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include"dxlib.h"
 #include"Scene.h"
 #include"Texture.h"
@@ -6,17 +6,17 @@
 #include"vector"
 #include "Score.h"
 
-// リザルト（結果表示）画面内の選択ボタン情報を表す構造体
+// ���U���g�i���ʕ\���j��ʓ��̑I���{�^������\���\����
 struct ResultButton
 {
-	SelectionManager::Title type; // ボタンの識別子（タイトルへ戻る、ゲーム終了など）
-	int graphHandle;              // 描画する画像アセットハンドル
-	int x, y;                     // ボタン左上の描画開始座標
-	int w, h;                     // 画像の横幅と縦幅
-	bool isHover;                 // マウスカーソルがボタン領域内にあるかどうかのフラグ
+	SelectionManager::Title type; // �{�^���̎��ʎq�i�^�C�g���֖߂�A�Q�[���I���Ȃǁj
+	int graphHandle;              // �`�悷��摜�A�Z�b�g�n���h��
+	int x, y;                     // �{�^������̕`��J�n���W
+	int w, h;                     // �摜�̉����Əc��
+	bool isHover;                 // �}�E�X�J�[�\�����{�^���̈���ɂ��邩�ǂ����̃t���O
 };
 
-// ゲーム制限時間終了後に遷移し、最終スコアとランキングボードを表示するシーンクラス
+// �Q�[���������ԏI����ɑJ�ڂ��A�ŏI�X�R�A�ƃ����L���O�{�[�h��\������V�[���N���X
 class ResultScene : public Scene
 {
 public:
@@ -24,73 +24,74 @@ public:
 	virtual ~ResultScene();
 
 	/*
-	 * @brief リザルトシーンのアセット初期設定（最新ランキング読み込み、フェード設定）を行う
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] ランキングデータの読み込み、フェードアルファ設定
+	 * @brief ���U���g�V�[���̃A�Z�b�g�����ݒ�i�ŐV�����L���O�ǂݍ��݁A�t�F�[�h�ݒ�j���s��
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �����L���O�f�[�^�̓ǂݍ��݁A�t�F�[�h�A���t�@�ݒ�
 	 */
 	void Initialize() override;
 
 	/*
-	 * @brief 最終スコアテキスト、獲得数、およびランキングボードの描画
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 画面描画コマンドの実行
+	 * @brief �ŏI�X�R�A�e�L�X�g�A�l�����A����у����L���O�{�[�h�̕`��
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] ��ʕ`��R�}���h�̎��s
 	 */
 	void Draw() override;
 
 	/*
-	 * @brief 一定フレーム経過後（自動的にタイトル画面へ戻るため）のフェードアウト処理
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 経過時間カウントアップ、および自動タイトル遷移のフェード要求
+	 * @brief ���t���[���o�ߌ�i�����I�Ƀ^�C�g����ʂ֖߂邽�߁j�̃t�F�[�h�A�E�g����
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �o�ߎ��ԃJ�E���g�A�b�v�A����ю����^�C�g���J�ڂ̃t�F�[�h�v��
 	 */
 	void Update() override;
 
 	/*
-	 * @brief リザルトシーン終了時のグラフィックリソース（スコア、ランキング画像、背景）解放
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] ロードされた各種画像ハンドルの削除、BGMの停止
+	 * @brief ���U���g�V�[���I�����̃O���t�B�b�N���\�[�X�i�X�R�A�A�����L���O�摜�A�w�i�j���
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] ���[�h���ꂽ�e��摜�n���h���̍폜�ABGM�̒�~
 	 */
 	void Finalize() override;
 
 private:
-	SelectionManager* mnTitleSelect; // 選択マネージャー（予約・未使用）
-	Texture* mpTexture;              // テクスチャオブジェクト（予約・未使用）
+	SelectionManager* mnTitleSelect; // �I���}�l�[�W���[�i�\��E���g�p�j
+	Texture* mpTexture;              // �e�N�X�`���I�u�W�F�N�g�i�\��E���g�p�j
 	Texture* mpTexture2;
 	Texture* mpTexture3;
 
-	int mNewGameX;                   // ボタン座標・サイズ一時保持用（未使用）
+	int mNewGameX;                   // �{�^�����W�E�T�C�Y�ꎞ�ێ��p�i���g�p�j
 	int mNewGameY;
 	int mNewGameW;
 	int mNewGameH;
 
-	bool mbIsHoverNewGame;           // ホバー状態一時フラグ（未使用）
+	bool mbIsHoverNewGame;           // �z�o�[��Ԉꎞ�t���O�i���g�p�j
 
-	std::vector<ResultButton> mButtons; // 画面上に配置されるリザルトボタンのリスト
-	int ResultGraphHandle;              // リザルト背景の画像ハンドル
+	std::vector<ResultButton> mButtons; // ��ʏ�ɔz�u����郊�U���g�{�^���̃��X�g
+	int ResultGraphHandle;              // ���U���g�w�i�̉摜�n���h��
 
-	Score mScore;                       // スコア計算・描画用のオブジェクトインスタンス
+	Score mScore;                       // �X�R�A�v�Z�E�`��p�̃I�u�W�F�N�g�C���X�^���X
 
-	int rankingTitleImage;              // ランキングボードヘッダー画像ハンドル
-	int rankImage[3];                   // 1位、2位、3位のメダル等画像ハンドル
+	int rankingTitleImage;              // �����L���O�{�[�h�w�b�_�[�摜�n���h��
+	int rankImage[3];                   // 1�ʁA2�ʁA3�ʂ̃��_�����摜�n���h��
 
-	int yourScoreImage;                 // スコアフレーム用画像ハンドル（未使用・yourScoreTextImgへ集約）
-	int pointImage;                     // スコア単位「点」の画像ハンドル（未使用・pointImgへ集約）
+	int yourScoreImage;                 // �X�R�A�t���[���p�摜�n���h���i���g�p�EyourScoreTextImg�֏W��j
+	int pointImage;                     // �X�R�A�P�ʁu�_�v�̉摜�n���h���i���g�p�EpointImg�֏W��j
 
 	/*
-	 * @brief ハイスコア上位3名のランキングUIボードを画面左上に描画する
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] ランキングボードヘッダーおよび各順位メダル・スコア値の描画
+	 * @brief �n�C�X�R�A���3���̃����L���OUI�{�[�h����ʍ���ɕ`�悷��
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �����L���O�{�[�h�w�b�_�[����ъe���ʃ��_���E�X�R�A�l�̕`��
 	 */
 	void DrawRankingUI();
 
-	int yourScoreTextImg;               // 「YOUR SCORE」のテキスト画像ハンドル
-	int pointImg;                       // スコア単位「点」の画像ハンドル
+	int yourScoreTextImg;               // �uYOUR SCORE�v�̃e�L�X�g�摜�n���h��
+	int pointImg;                       // �X�R�A�P�ʁu�_�v�̉摜�n���h��
 
-	int mFrameCount;                    // フレームカウンター
-	int mnCount;                        // シーン開始からの経過時間（フレーム数）カウンター
-	bool mFlag;                         // フラグ変数（リザーブ）
+	int mFrameCount;                    // �t���[���J�E���^�[
+	int mnCount;                        // �V�[���J�n����̌o�ߎ��ԁi�t���[�����j�J�E���^�[
+	bool mFlag;                         // �t���O�ϐ��i���U�[�u�j
 };
+

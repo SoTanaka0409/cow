@@ -1,4 +1,6 @@
-ï»¿#include "Camera.h"
+#include "ServiceLocator.h"
+#include "Player3D.h"
+#include "Camera.h"
 #include <cmath>
 #include "Master.h"
 #include "ObjectManager.h"
@@ -34,10 +36,10 @@ void Camera::Initialize()
 {
 	mpTarget = nullptr;
 	
-	// ã‚«ãƒ¡ãƒ©ã®ã‚¯ãƒªãƒƒãƒ”ãƒ³ã‚°è·é›¢ï¼ˆæç”»å¯èƒ½ç¯„å›²ï¼‰ã‚’è¿‘100ã€œé 50000ã®åºƒç¯„å›²ã«è¨­å®š
+	// ƒJƒƒ‰‚ÌƒNƒŠƒbƒsƒ“ƒO‹——£i•`‰æ‰Â”\”ÍˆÍj‚ğ‹ß100?‰“50000‚ÌL”ÍˆÍ‚Éİ’è
 	SetCameraNearFar(100.0f, 50000.0f);
 
-	// æç”»ã•ã‚Œãªã„èƒŒæ™¯éƒ¨åˆ†ã‚’ã‚¯ãƒªã‚¢ã™ã‚‹éš›ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆè‰²ã‚’ç°è‰²ã«è¨­å®š
+	// •`‰æ‚³‚ê‚È‚¢”wŒi•”•ª‚ğƒNƒŠƒA‚·‚éÛ‚ÌƒfƒtƒHƒ‹ƒgF‚ğŠDF‚Éİ’è
 	SetBackgroundColor(128, 128, 128);
 
 	SetCameraPositionAndTarget_UpVecY(mvPosition, mvLookAtPosition);
@@ -46,20 +48,20 @@ void Camera::Initialize()
 
 void Camera::Update()
 {
-	// ã‚¹ã‚­ãƒ«ã‚«ãƒ¼ãƒ‰é¸æŠä¸­ã€ã¾ãŸã¯ãƒ‡ãƒãƒƒã‚°ã®è‡ªç”±ç§»å‹•ã‚«ãƒ¡ãƒ©æ“ä½œä¸­ã¯ã‚²ãƒ¼ãƒ ã‚«ãƒ¡ãƒ©ã®æ›´æ–°ã‚’ã‚¹ã‚­ãƒƒãƒ—
+	// ƒXƒLƒ‹ƒJ[ƒh‘I‘ğ’†A‚Ü‚½‚ÍƒfƒoƒbƒO‚Ì©—RˆÚ“®ƒJƒƒ‰‘€ì’†‚ÍƒQ[ƒ€ƒJƒƒ‰‚ÌXV‚ğƒXƒLƒbƒv
 	if (Master::SelectSkill) return;
 	if (Master::mbIsDebugCamera) return;
 
 	if (mpTarget == nullptr)
 	{
-		mpTarget = Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->GetObject3DByTag(Object3D::Tag3D_player);
+		mpTarget = ServiceLocator::GetPlayer();
 	}
 	
 	UpdateRotate();
 	
 	if (mpTarget != nullptr)
 	{
-		// ã‚«ãƒ¡ãƒ©ã®æ³¨è¦–ç‚¹ã‚’ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®ä¸­å¿ƒã‚„ã‚„ä¸Šã«è¨­å®šã™ã‚‹
+		// ƒJƒƒ‰‚Ì’‹“_‚ğƒvƒŒƒCƒ„[ƒLƒƒƒ‰ƒNƒ^[‚Ì’†S‚â‚âã‚Éİ’è‚·‚é
 		mvLookAtPosition = mpTarget->GetPosition();
 		mvLookAtPosition.y += 340.0f;
 	}
@@ -69,7 +71,7 @@ void Camera::Update()
 	{
 		const float distance = 1000.0f;
 		VECTOR temp;
-		// æ°´å¹³ãƒ»å‚ç›´è§’åº¦å€¤ï¼ˆåº¦æ•°æ³•ï¼‰ã‚’ãƒ©ã‚¸ã‚¢ãƒ³ã«å¤‰æ›ã—ã¦ã‚«ãƒ¡ãƒ©ã®3Dåº§æ¨™ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚’è¨ˆç®—
+		// …•½E‚’¼Šp“x’li“x”–@j‚ğƒ‰ƒWƒAƒ“‚É•ÏŠ·‚µ‚ÄƒJƒƒ‰‚Ì3DÀ•WƒIƒtƒZƒbƒg‚ğŒvZ
 		temp.x = distance * cosf(mfVerticalAngle / 180.0f * 3.14159265f) * sinf(mfHorizontalAngle / 180.0f * DX_PI_F);
 		temp.y = distance * sinf(-mfVerticalAngle / 180.0f * 3.14159265f);
 		temp.z = -(distance * cosf(mfVerticalAngle / 180.0f * DX_PI_F) * cosf(mfHorizontalAngle / 180.0f * DX_PI_F));
@@ -78,7 +80,7 @@ void Camera::Update()
 		{
 			mvPosition = VAdd(temp, mvLookAtPosition);
 			
-			// ç®—å‡ºã—ãŸã‚«ãƒ¡ãƒ©åº§æ¨™ãŠã‚ˆã³æ³¨è¦–ç‚¹ã«ã€ç”»é¢æŒ¯å‹•ã«ã‚ˆã‚‹ã‚ªãƒ•ã‚»ãƒƒãƒˆåº§æ¨™ã‚’åŠ ç®—ã—ã¦åæ˜ 
+			// Zo‚µ‚½ƒJƒƒ‰À•W‚¨‚æ‚Ñ’‹“_‚ÉA‰æ–ÊU“®‚É‚æ‚éƒIƒtƒZƒbƒgÀ•W‚ğ‰ÁZ‚µ‚Ä”½‰f
 			SetCameraPositionAndTarget_UpVecY(VAdd(mvPosition, mvShakePosition), VAdd(mvLookAtPosition, mvShakePosition));
 		}
 	}
@@ -87,17 +89,17 @@ void Camera::Update()
 	mPrevMouseY = mMouseY;
 	GetMousePoint(&mMouseX, &mMouseY);
 
-	// æç”»ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ä½ç½®ã‚„æ–¹å‘ãŒ3Dã‚«ãƒ¡ãƒ©è¦–é‡è§’ã¨åˆã†ã‚ˆã†ã€Effekseerå´ã®3Dç©ºé–“è¨­å®šã¨åŒæœŸã™ã‚‹
+	// •`‰æƒGƒtƒFƒNƒg‚ÌˆÊ’u‚â•ûŒü‚ª3DƒJƒƒ‰‹–ìŠp‚Æ‡‚¤‚æ‚¤AEffekseer‘¤‚Ì3D‹óŠÔİ’è‚Æ“¯Šú‚·‚é
 	Effekseer_Sync3DSetting();
 
-	// ã‚«ãƒ¡ãƒ©ã‹ã‚‰æ³¨è¦–ç‚¹ã¸å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«ã‚’å¹³è¡Œå…‰æºã®å‘ãã¨ã—ã¦è¨­å®šã—ã€é †å…‰è¡¨ç¾ã‚’è¡Œã†
+	// ƒJƒƒ‰‚©‚ç’‹“_‚ÖŒü‚©‚¤ƒxƒNƒgƒ‹‚ğ•½sŒõŒ¹‚ÌŒü‚«‚Æ‚µ‚Äİ’è‚µA‡Œõ•\Œ»‚ğs‚¤
 	VECTOR lightDir = VSub(mvLookAtPosition, mvPosition);
 	SetLightDirection(lightDir);
 }
 
 void Camera::UpdateRotate()
 {
-	// ã‚«ãƒ¡ãƒ©æ°´å¹³å›è»¢è§’ãŠã‚ˆã³å‚ç›´å›è»¢è§’ã®ã‚ªãƒ¼ãƒãƒ¼ãƒ•ãƒ­ãƒ¼ä¿è­·ã¨ç¯„å›²åˆ¶é™
+	// ƒJƒƒ‰…•½‰ñ“]Šp‚¨‚æ‚Ñ‚’¼‰ñ“]Šp‚ÌƒI[ƒo[ƒtƒ[•ÛŒì‚Æ”ÍˆÍ§ŒÀ
 	if (mfHorizontalAngle >= 180.0f)
 	{
 		mfHorizontalAngle -= 360.0f;
@@ -120,14 +122,14 @@ void Camera::UpdateRotate()
 
 	if (Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::SCENE_3D || Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::SCENE_TUTORIAL)
 	{
-		// ã‚¹ã‚­ãƒ«é¸æŠä¸­ã§ãªã„å ´åˆã¯ã‚²ãƒ¼ãƒ ãƒ—ãƒ¬ã‚¤ç”¨ã®ãƒã‚¦ã‚¹ã‚­ãƒ£ãƒ—ãƒãƒ£ã‚’è¡Œã†
+		// ƒXƒLƒ‹‘I‘ğ’†‚Å‚È‚¢ê‡‚ÍƒQ[ƒ€ƒvƒŒƒC—p‚Ìƒ}ƒEƒXƒLƒƒƒvƒ`ƒƒ‚ğs‚¤
 		SetMouseDispFlag(false);
 		GetMousePoint(&mouseX, &mouseY);
 
 		int centerX = 640;
 		int centerY = 200;
 
-		// 0ã‚­ãƒ¼ã§ãƒã‚¦ã‚¹ã®æ‹˜æŸã‚’ãƒ‡ãƒãƒƒã‚°ç›®çš„ã§ä¸€æ™‚è§£é™¤ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
+		// 0ƒL[‚Åƒ}ƒEƒX‚ÌS‘©‚ğƒfƒoƒbƒO–Ú“I‚Åˆê‰ğœ‚Å‚«‚é‚æ‚¤‚É‚·‚é
 		if (!CheckHitKey(KEY_INPUT_0))
 		{
 			SetMousePoint(centerX, centerY);
@@ -137,7 +139,7 @@ void Camera::UpdateRotate()
 
 		if (!mbIsPhaseCameraActive)
 		{
-			// å·¦å³ã®ãƒã‚¦ã‚¹ç§»å‹•é‡ã‚’ã‚«ãƒ¡ãƒ©ã®æ°´å¹³æ—‹å›è§’ï¼ˆãƒ¨ãƒ¼è§’ï¼‰ã«è“„ç©åæ˜ 
+			// ¶‰E‚Ìƒ}ƒEƒXˆÚ“®—Ê‚ğƒJƒƒ‰‚Ì…•½ù‰ñŠpiƒˆ[Špj‚É’~Ï”½‰f
 			mfHorizontalAngle -= deltaX * MOUSE_SENSITIVITY;
 		}
 	}
@@ -159,7 +161,7 @@ void Camera::Shake()
 {
 	if (mfShakeTimeCounter < mfShakeTime)
 	{
-		// æ­£å¼¦æ³¢(sinf)ã¨æ™‚é–“çµŒéã«ã‚ˆã‚‹ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆå€ç‡ã‚’ä¹—ç®—ã—ã¦ã‚«ãƒ¡ãƒ©ã®æºã‚‰ã—é‡ã‚’æ±‚ã‚ã‚‹
+		// ³Œ·”g(sinf)‚ÆŠÔŒo‰ß‚É‚æ‚éƒtƒF[ƒhƒAƒEƒg”{—¦‚ğæZ‚µ‚ÄƒJƒƒ‰‚Ì—h‚ç‚µ—Ê‚ğ‹‚ß‚é
 		mvShakePosition.y = sinf(mfShakeAngle) * (1.0f - (mfShakeTimeCounter / mfShakeTime)) * mfShakeWidth;
 		mvShakePosition.x = 0.0f;
 		mvShakePosition.z = 0.0f;
@@ -208,7 +210,7 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 		return;
 	}
 
-	// æ¼”å‡ºã®é–‹å§‹ã‹ã‚‰3ç§’ï¼ˆ180ãƒ•ãƒ¬ãƒ¼ãƒ ï¼‰ãŒçµŒéã—ãŸã‚‰ã€è‡ªå‹•çš„ã«æ¨™æº–ã‚«ãƒ¡ãƒ©ã¸ã¨æˆ»ã™
+	// ‰‰o‚ÌŠJn‚©‚ç3•bi180ƒtƒŒ[ƒ€j‚ªŒo‰ß‚µ‚½‚çA©“®“I‚É•W€ƒJƒƒ‰‚Ö‚Æ–ß‚·
 	if (phaseTimer > 180)
 	{
 		mbIsPhaseCameraActive = false;
@@ -219,7 +221,7 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 
 	if (phase == (int)GameManager::GamePhase::MassSpawn)
 	{
-		// ç‰›å¤§é‡ç™ºç”Ÿæ¼”å‡ºï¼šã‚«ãƒ¡ãƒ©ã‚’å¼•ãä¸‹ã’ã¤ã¤ã€ç©ºã‚’è¦‹ä¸Šã’ã‚‹ï¼ˆã‚«ãƒ¡ãƒ©ãƒ”ãƒƒãƒè§’ã‚’ä¸‹ã«å‘ã‘ã‚‹ï¼‰
+		// ‹‘å—Ê”­¶‰‰oFƒJƒƒ‰‚ğˆø‚«‰º‚°‚Â‚ÂA‹ó‚ğŒ©ã‚°‚éiƒJƒƒ‰ƒsƒbƒ`Šp‚ğ‰º‚ÉŒü‚¯‚éj
 		targetPos = VAdd(ufoPos, VGet(0.0f, 150.0f, -300.0f));
 		
 		if (phaseTimer < 180)
@@ -234,13 +236,13 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 	}
 	else if (phase == (int)GameManager::GamePhase::TornadoCrisis)
 	{
-		// ç«œå·»ç™ºç”Ÿæ¼”å‡ºï¼šã‚«ãƒ¡ãƒ©é«˜åº¦ã‚’ä¸Šã’ã¦å…¨ä½“ã‚’è¦‹æ¸¡ã—ã€æ³¨è¦–ç‚¹ã‚’ç«œå·»ã«ã™ã‚‹
+		// —³Šª”­¶‰‰oFƒJƒƒ‰‚“x‚ğã‚°‚Ä‘S‘Ì‚ğŒ©“n‚µA’‹“_‚ğ—³Šª‚É‚·‚é
 		targetPos = VAdd(ufoPos, VGet(0.0f, 500.0f, -200.0f));
 		VECTOR toTornado = VSub(tornadoPos, ufoPos);
 		targetLookAt = VAdd(ufoPos, toTornado);
 	}
 
-	// ç¾åœ¨ã®ã‚«ãƒ¡ãƒ©ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’ç·šå½¢è£œé–“ï¼ˆLerpï¼‰ã‚’ç”¨ã„ã¦ç›®æ¨™å€¤ã¸ã‚¹ãƒ ãƒ¼ã‚ºã«é·ç§»ã•ã›ã‚‹
+	// Œ»İ‚ÌƒJƒƒ‰ƒpƒ‰ƒ[ƒ^‚ğüŒ`•âŠÔiLerpj‚ğ—p‚¢‚Ä–Ú•W’l‚ÖƒXƒ€[ƒY‚É‘JˆÚ‚³‚¹‚é
 	float lerpSpeed = 0.1f; 
 	mvPosition = LerpVector(mvPosition, targetPos, lerpSpeed);
 	mvLookAtPosition = LerpVector(mvLookAtPosition, targetLookAt, lerpSpeed);

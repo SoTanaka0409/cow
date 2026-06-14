@@ -1,4 +1,4 @@
-ï»¿#include"SoundManager.h"
+#include"SoundManager.h"
 #include"DxLib.h"
 
 SoundManager::SoundManager()
@@ -9,14 +9,14 @@ SoundManager::SoundManager()
 
 SoundManager::~SoundManager()
 {
-	Finalize(); // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç ´æ£„æ™‚ã®ãƒªã‚½ãƒ¼ã‚¹è§£æ”¾æ¼ã‚Œã‚’é˜²æ­¢
+	Finalize(); // ƒIƒuƒWƒFƒNƒg”jŠü‚ÌƒŠƒ\[ƒX‰ğ•ú˜R‚ê‚ğ–h~
 }
 
 /*
- * @brief ã™ã¹ã¦ã®BGMãŠã‚ˆã³åŠ¹æœéŸ³ã‚¢ã‚»ãƒƒãƒˆã‚’ãƒ—ãƒªãƒ­ãƒ¼ãƒ‰ã™ã‚‹
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] BGMãƒ»SEãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ‡ã‚£ã‚¹ã‚¯ã‹ã‚‰ãƒ¡ãƒ¢ãƒªã«ãƒ­ãƒ¼ãƒ‰ã—ãƒªã‚¹ãƒˆã¸ç™»éŒ²
+ * @brief ‚·‚×‚Ä‚ÌBGM‚¨‚æ‚ÑŒø‰Ê‰¹ƒAƒZƒbƒg‚ğƒvƒŠƒ[ƒh‚·‚é
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] BGMESEƒtƒ@ƒCƒ‹‚ğƒfƒBƒXƒN‚©‚çƒƒ‚ƒŠ‚Éƒ[ƒh‚µƒŠƒXƒg‚Ö“o˜^
  */
 void SoundManager::Initialize()
 {
@@ -26,23 +26,23 @@ void SoundManager::Initialize()
 	LoadBGM(SOUND_BGM::BGM_TUTORIAL, "Resource/BGM/MusMus-BGM-103.mp3");
 	LoadBGM(SOUND_BGM::BGM_RULE, "Resource/BGM/MusMus-BGM-158.mp3");
 
-	LoadSE(SOUND_SE::SE_DECIDE, "Resource/SE/æ±ºå®šãƒœã‚¿ãƒ³ã‚’æŠ¼ã™42.mp3");
-	LoadSE(SOUND_SE::SE_COW, "Resource/SE/ç‰›ã®é³´ãå£°.mp3");
+	LoadSE(SOUND_SE::SE_DECIDE, "Resource/SE/Œˆ’èƒ{ƒ^ƒ“‚ğ‰Ÿ‚·42.mp3");
+	LoadSE(SOUND_SE::SE_COW, "Resource/SE/‹‚Ì–Â‚«º.mp3");
 	LoadSE(SOUND_SE::SE_CHICKEN, "Resource/SE/MusMus-BGM-084");
-	LoadSE(SOUND_SE::SE_TATUMAKI, "Resource/SE/å¤©å€™ãƒ»é¢¨ä¸€å¹ãï¼ˆã—ã‚‰ã‘è¡¨ç¾ï¼‰.mp3");
-	LoadSE(SOUND_SE::SE_KAMINARI, "Resource/SE/å¤©å€™ãƒ»é›·01.mp3");
-	LoadSE(SOUND_SE::SE_TutorialChange, "Resource/SE/ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆ2.mp3");
-	LoadSE(SOUND_SE::SE_BEAM, "Resource/SE/HPå¸åé­”æ³•1.mp3");
-	LoadSE(SOUND_SE::SE_SKILL_STATUS, "Resource/SE/ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ä¸Šæ˜‡é­”æ³•2.mp3");
-	LoadSE(SOUND_SE::SE_SKILL_FOOD, "Resource/SE/ãƒ­ãƒœãƒƒãƒˆèµ·å‹•2.mp3");
-	LoadSE(SOUND_SE::SE_BAITFINAL, "Resource/SE/é«˜é€Ÿç§»å‹•.mp3");
+	LoadSE(SOUND_SE::SE_TATUMAKI, "Resource/SE/“VŒóE•—ˆê‚«i‚µ‚ç‚¯•\Œ»j.mp3");
+	LoadSE(SOUND_SE::SE_KAMINARI, "Resource/SE/“VŒóE—‹01.mp3");
+	LoadSE(SOUND_SE::SE_TutorialChange, "Resource/SE/ƒV[ƒ“Ø‚è‘Ö‚¦2.mp3");
+	LoadSE(SOUND_SE::SE_BEAM, "Resource/SE/HP‹zû–‚–@1.mp3");
+	LoadSE(SOUND_SE::SE_SKILL_STATUS, "Resource/SE/ƒXƒe[ƒ^ƒXã¸–‚–@2.mp3");
+	LoadSE(SOUND_SE::SE_SKILL_FOOD, "Resource/SE/ƒƒ{ƒbƒg‹N“®2.mp3");
+	LoadSE(SOUND_SE::SE_BAITFINAL, "Resource/SE/‚‘¬ˆÚ“®.mp3");
 }
 
 /*
- * @brief èª­ã¿è¾¼ã‚“ã ã™ã¹ã¦ã®ã‚µã‚¦ãƒ³ãƒ‰ãƒãƒ³ãƒ‰ãƒ«ã‚’è§£æ”¾ã™ã‚‹
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ãƒ­ãƒ¼ãƒ‰ã•ã‚ŒãŸå…¨ãƒãƒ³ãƒ‰ãƒ«ã®å‰Šé™¤ã¨ãƒªã‚¹ãƒˆã®ã‚¯ãƒªã‚¢
+ * @brief “Ç‚İ‚ñ‚¾‚·‚×‚Ä‚ÌƒTƒEƒ“ƒhƒnƒ“ƒhƒ‹‚ğ‰ğ•ú‚·‚é
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ƒ[ƒh‚³‚ê‚½‘Sƒnƒ“ƒhƒ‹‚Ìíœ‚ÆƒŠƒXƒg‚ÌƒNƒŠƒA
  */
 void SoundManager::Finalize()
 {
@@ -60,14 +60,14 @@ void SoundManager::Finalize()
 }
 
 /*
- * @brief æŒ‡å®šã•ã‚ŒãŸBGMã®ãƒ«ãƒ¼ãƒ—å†ç”Ÿã‚’é–‹å§‹ã™ã‚‹
- * [å…¥åŠ›] bgm: æ›²ID, isTop: å…ˆé ­ã‹ã‚‰å†ç”Ÿã™ã‚‹ã‹
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] BGMã®å†ç”Ÿã€éŸ³é‡ã®é©ç”¨ã€ç¾åœ¨å†ç”Ÿä¸­æ›²IDã®æ›´æ–°
+ * @brief w’è‚³‚ê‚½BGM‚Ìƒ‹[ƒvÄ¶‚ğŠJn‚·‚é
+ * [“ü—Í] bgm: ‹ÈID, isTop: æ“ª‚©‚çÄ¶‚·‚é‚©
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] BGM‚ÌÄ¶A‰¹—Ê‚Ì“K—pAŒ»İÄ¶’†‹ÈID‚ÌXV
  */
 void SoundManager::PlayBGM(SOUND_BGM bgm, bool isTop)
 {
-	// åŒä¸€æ›²ãŒæ—¢ã«å†ç”Ÿä¸­ã§ã€ã‹ã¤æœ€åˆã‹ã‚‰å†ç”Ÿã—ç›´ã™æŒ‡ç¤ºãŒãªã„å ´åˆã¯å‡¦ç†ã‚’ã‚¹ã‚­ãƒƒãƒ—
+	// “¯ˆê‹È‚ªŠù‚ÉÄ¶’†‚ÅA‚©‚ÂÅ‰‚©‚çÄ¶‚µ’¼‚·w¦‚ª‚È‚¢ê‡‚Íˆ—‚ğƒXƒLƒbƒv
 	if (mnNowPlayingBgm == bgm && !isTop)
 	{
 		return;
@@ -77,7 +77,7 @@ void SoundManager::PlayBGM(SOUND_BGM bgm, bool isTop)
 	{
 		if (it->first == bgm)
 		{
-			ChangeVolumeSoundMem(mMasterBGMVolume, it->second); // æœ€æ–°ã®ãƒã‚¹ã‚¿ãƒ¼ãƒœãƒªãƒ¥ãƒ¼ãƒ ã‚’åæ˜ 
+			ChangeVolumeSoundMem(mMasterBGMVolume, it->second); // ÅV‚Ìƒ}ƒXƒ^[ƒ{ƒŠƒ…[ƒ€‚ğ”½‰f
 			PlaySoundMem(it->second, DX_PLAYTYPE_LOOP, isTop);
 			mnNowPlayingBgm = bgm;
 			break;
@@ -86,10 +86,10 @@ void SoundManager::PlayBGM(SOUND_BGM bgm, bool isTop)
 }
 
 /*
- * @brief åŠ¹æœéŸ³ï¼ˆSEï¼‰ã‚’ãƒãƒƒã‚¯ã‚°ãƒ©ã‚¦ãƒ³ãƒ‰ã§å˜ç™ºå†ç”Ÿã™ã‚‹
- * [å…¥åŠ›] se: åŠ¹æœéŸ³ID
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] SEã®å†ç”Ÿã€ç¾åœ¨å†ç”Ÿä¸­SEã®IDæ›´æ–°
+ * @brief Œø‰Ê‰¹iSEj‚ğƒoƒbƒNƒOƒ‰ƒEƒ“ƒh‚Å’P”­Ä¶‚·‚é
+ * [“ü—Í] se: Œø‰Ê‰¹ID
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] SE‚ÌÄ¶AŒ»İÄ¶’†SE‚ÌIDXV
  */
 void SoundManager::PlaySE(SOUND_SE se)
 {
@@ -105,14 +105,14 @@ void SoundManager::PlaySE(SOUND_SE se)
 }
 
 /*
- * @brief ãƒ‡ã‚£ã‚¹ã‚¯ã‹ã‚‰BGMã‚¢ã‚»ãƒƒãƒˆã‚’èª­ã¿è¾¼ã¿ãƒªã‚¹ãƒˆã¸ç™»éŒ²ã™ã‚‹
- * [å…¥åŠ›] bgm: BGMã®ID, filename: ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ãƒ­ãƒ¼ãƒ‰æˆåŠŸæ™‚ã«BGMãƒªã‚¹ãƒˆã¸ç™»éŒ²ã€åˆæœŸéŸ³é‡ã‚’è¨­å®š
+ * @brief ƒfƒBƒXƒN‚©‚çBGMƒAƒZƒbƒg‚ğ“Ç‚İ‚İƒŠƒXƒg‚Ö“o˜^‚·‚é
+ * [“ü—Í] bgm: BGM‚ÌID, filename: ƒtƒ@ƒCƒ‹ƒpƒX
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ƒ[ƒh¬Œ÷‚ÉBGMƒŠƒXƒg‚Ö“o˜^A‰Šú‰¹—Ê‚ğİ’è
  */
 void SoundManager::LoadBGM(SOUND_BGM bgm, std::string filename)
 {
-	// äºŒé‡èª­ã¿è¾¼ã¿é˜²æ­¢ã®ãŸã‚ã®é‡è¤‡ãƒã‚§ãƒƒã‚¯
+	// “ñd“Ç‚İ‚İ–h~‚Ì‚½‚ß‚Ìd•¡ƒ`ƒFƒbƒN
 	for (auto it = mnBgmHandleList.begin(); it != mnBgmHandleList.end(); it++)
 	{
 		if (it->first == bgm)
@@ -131,10 +131,10 @@ void SoundManager::LoadBGM(SOUND_BGM bgm, std::string filename)
 }
 
 /*
- * @brief ãƒ‡ã‚£ã‚¹ã‚¯ã‹ã‚‰åŠ¹æœéŸ³ã‚¢ã‚»ãƒƒãƒˆã‚’èª­ã¿è¾¼ã¿ãƒªã‚¹ãƒˆã¸ç™»éŒ²ã™ã‚‹
- * [å…¥åŠ›] se: åŠ¹æœéŸ³ID, filename: ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ãƒ­ãƒ¼ãƒ‰æˆåŠŸæ™‚ã«SEãƒªã‚¹ãƒˆã¸ç™»éŒ²ã€åˆæœŸéŸ³é‡ã‚’è¨­å®š
+ * @brief ƒfƒBƒXƒN‚©‚çŒø‰Ê‰¹ƒAƒZƒbƒg‚ğ“Ç‚İ‚İƒŠƒXƒg‚Ö“o˜^‚·‚é
+ * [“ü—Í] se: Œø‰Ê‰¹ID, filename: ƒtƒ@ƒCƒ‹ƒpƒX
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ƒ[ƒh¬Œ÷‚ÉSEƒŠƒXƒg‚Ö“o˜^A‰Šú‰¹—Ê‚ğİ’è
  */
 void SoundManager::LoadSE(SOUND_SE se, std::string filename)
 {
@@ -156,10 +156,10 @@ void SoundManager::LoadSE(SOUND_SE se, std::string filename)
 }
 
 /*
- * @brief ç¾åœ¨å†ç”Ÿã•ã‚Œã¦ã„ã‚‹BGMã‚’åœæ­¢ã™ã‚‹
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] BGMã®åœæ­¢å‡¦ç†
+ * @brief Œ»İÄ¶‚³‚ê‚Ä‚¢‚éBGM‚ğ’â~‚·‚é
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] BGM‚Ì’â~ˆ—
  */
 void SoundManager::StopBGM()
 {
@@ -177,10 +177,10 @@ void SoundManager::StopBGM()
 }
 
 /*
- * @brief ã™ã¹ã¦ã®ç™»éŒ²æ¸ˆã¿BGMã®éŸ³é‡ã‚’å¤‰æ›´ã™ã‚‹
- * [å…¥åŠ›] volume: æ–°ã—ã„éŸ³é‡è¨­å®šå€¤ (0 - 255)
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ç™»éŒ²å…¨BGMã®ãƒœãƒªãƒ¥ãƒ¼ãƒ å¤‰æ›´
+ * @brief ‚·‚×‚Ä‚Ì“o˜^Ï‚İBGM‚Ì‰¹—Ê‚ğ•ÏX‚·‚é
+ * [“ü—Í] volume: V‚µ‚¢‰¹—Êİ’è’l (0 - 255)
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] “o˜^‘SBGM‚Ìƒ{ƒŠƒ…[ƒ€•ÏX
  */
 void SoundManager::SetBGMVolume(int volume)
 {
@@ -191,10 +191,10 @@ void SoundManager::SetBGMVolume(int volume)
 }
 
 /*
- * @brief ã™ã¹ã¦ã®ç™»éŒ²æ¸ˆã¿SEã®éŸ³é‡ã‚’å¤‰æ›´ã™ã‚‹
- * [å…¥åŠ›] volume: æ–°ã—ã„éŸ³é‡è¨­å®šå€¤ (0 - 255)
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ç™»éŒ²å…¨SEã®ãƒœãƒªãƒ¥ãƒ¼ãƒ å¤‰æ›´
+ * @brief ‚·‚×‚Ä‚Ì“o˜^Ï‚İSE‚Ì‰¹—Ê‚ğ•ÏX‚·‚é
+ * [“ü—Í] volume: V‚µ‚¢‰¹—Êİ’è’l (0 - 255)
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] “o˜^‘SSE‚Ìƒ{ƒŠƒ…[ƒ€•ÏX
  */
 void SoundManager::SetSEVolume(int volume)
 {
@@ -205,10 +205,10 @@ void SoundManager::SetSEVolume(int volume)
 }
 
 /*
- * @brief å…¨BGMã®ãƒã‚¹ã‚¿ãƒ¼ãƒœãƒªãƒ¥ãƒ¼ãƒ ã‚’è¨­å®šã™ã‚‹
- * [å…¥åŠ›] volume: è¨­å®šã™ã‚‹åŸºæº–éŸ³é‡ (0 - 255)
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] mMasterBGMVolumeã®æ›´æ–°ãŠã‚ˆã³å…¨BGMã®éŸ³é‡åŒæœŸ
+ * @brief ‘SBGM‚Ìƒ}ƒXƒ^[ƒ{ƒŠƒ…[ƒ€‚ğİ’è‚·‚é
+ * [“ü—Í] volume: İ’è‚·‚éŠî€‰¹—Ê (0 - 255)
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] mMasterBGMVolume‚ÌXV‚¨‚æ‚Ñ‘SBGM‚Ì‰¹—Ê“¯Šú
  */
 void SoundManager::SetMasterBGMVolume(int volume)
 {
@@ -219,10 +219,10 @@ void SoundManager::SetMasterBGMVolume(int volume)
 }
 
 /*
- * @brief å…¨SEã®ãƒã‚¹ã‚¿ãƒ¼ãƒœãƒªãƒ¥ãƒ¼ãƒ ã‚’è¨­å®šã™ã‚‹
- * [å…¥åŠ›] volume: è¨­å®šã™ã‚‹åŸºæº–éŸ³é‡ (0 - 255)
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] mMasterSEVolumeã®æ›´æ–°ãŠã‚ˆã³å…¨SEã®éŸ³é‡åŒæœŸ
+ * @brief ‘SSE‚Ìƒ}ƒXƒ^[ƒ{ƒŠƒ…[ƒ€‚ğİ’è‚·‚é
+ * [“ü—Í] volume: İ’è‚·‚éŠî€‰¹—Ê (0 - 255)
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] mMasterSEVolume‚ÌXV‚¨‚æ‚Ñ‘SSE‚Ì‰¹—Ê“¯Šú
  */
 void SoundManager::SetMasterSEVolume(int volume)
 {
@@ -231,3 +231,4 @@ void SoundManager::SetMasterSEVolume(int volume)
 	mMasterSEVolume = volume;
 	SetSEVolume(mMasterSEVolume);
 }
+

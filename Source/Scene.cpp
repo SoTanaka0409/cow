@@ -1,4 +1,4 @@
-﻿
+
 #include"Scene.h"
 #include"ObjectManager.h"
 #include"Master.h"
@@ -9,12 +9,12 @@
 #include"AnimalManager.h"
 
 /*
- * @brief コンストラクタ
- * @details 各種マネージャークラスの生成とフェード用変数の初期化を行う
+ * @brief �R���X�g���N�^
+ * @details �e��}�l�[�W���[�N���X�̐����ƃt�F�[�h�p�ϐ��̏��������s��
  */
 	Scene::Scene()
 {
-	// 各種コンポーネント・マネージャーのインスタンス化
+	// �e��R���|�[�l���g�E�}�l�[�W���[�̃C���X�^���X��
 	mpObjectManager = new ObjectManager();
 	mpColliderManager = new ColliderManager();
 	mpGameManager = new GameManager();
@@ -22,33 +22,33 @@
 	mpAnimalManager = new AnimalManager();
 	mpFever = new Fever();
 
-	// フェード演出用変数の初期化
+	// �t�F�[�h���o�p�ϐ��̏�����
 	mfFadeAlpha = 0.0f;
 	mfFadeSpeed = 5.0f;
 }
 
 /*
- * @brief デストラクタ
- * @details 生成したマネージャークラスのクリーンアップとメモリ解放を行う（メモリリーク防止）
+ * @brief �f�X�g���N�^
+ * @details ���������}�l�[�W���[�N���X�̃N���[���A�b�v�ƃ�����������s���i���������[�N�h�~�j
  */
 Scene::~Scene()
 {
-	// オブジェクトマネージャーの解放
+	// �I�u�W�F�N�g�}�l�[�W���[�̉��
 	if (mpObjectManager != nullptr)
 	{
 		mpObjectManager->DeleteAll3D();
-		mpObjectManager->DeleteAll2D(); // 2Dテクスチャオブジェクト群を破棄し、シーン切り替え時のメモリリークを防ぐ
+		mpObjectManager->DeleteAll2D(); // 2D�e�N�X�`���I�u�W�F�N�g�Q��j�����A�V�[���؂�ւ����̃��������[�N��h��
 		delete mpObjectManager;
 	}
 
-	// コライダーマネージャーの解放
+	// �R���C�_�[�}�l�[�W���[�̉��
 	if (mpColliderManager != nullptr)
 	{
 		mpColliderManager->DeleteAllCollider();
 		delete mpColliderManager;
 	}
 
-	// その他マネージャー類の解放
+	// ���̑��}�l�[�W���[�ނ̉��
 	if (mpGameManager != nullptr)
 	{
 		delete mpGameManager;
@@ -68,8 +68,8 @@ Scene::~Scene()
 }
 
 /*
- * @brief 描画処理
- * @details 各マネージャーが管理するオブジェクトの描画関数を順次呼び出す
+ * @brief �`�揈��
+ * @details �e�}�l�[�W���[���Ǘ�����I�u�W�F�N�g�̕`��֐��������Ăяo��
  */
 void Scene::Draw()
 {
@@ -79,7 +79,7 @@ void Scene::Draw()
 	}
 	if (mpColliderManager != nullptr)
 	{
-		mpColliderManager->Draw(); // 当たり判定の可視化（デバッグ用など）
+		mpColliderManager->Draw(); // �����蔻��̉����i�f�o�b�O�p�Ȃǁj
 	}
 	if (mpAnimalManager != nullptr)
 	{
@@ -88,8 +88,8 @@ void Scene::Draw()
 }
 
 /*
- * @brief 更新処理
- * @details 各マネージャーのロジック更新（位置計算や状態遷移など）を順次呼び出す
+ * @brief �X�V����
+ * @details �e�}�l�[�W���[�̃��W�b�N�X�V�i�ʒu�v�Z���ԑJ�ڂȂǁj�������Ăяo��
  */
 void Scene::Update()
 {
@@ -112,43 +112,43 @@ void Scene::Update()
 }
 
 /*
- * @brief シーンフェード演出時の黒スクリーンを描画する
- * [入力] fade: 進行するフェード状態 (In / Out / Load)
- * [出力] なし
- * [副作用] アルファブレンドモードの変更、黒い四角形の描画
+ * @brief �V�[���t�F�[�h���o���̍��X�N���[����`�悷��
+ * [����] fade: �i�s����t�F�[�h��� (In / Out / Load)
+ * [�o��] �Ȃ�
+ * [����p] �A���t�@�u�����h���[�h�̕ύX�A�����l�p�`�̕`��
  */
 void Scene::Fade(SceneFade fade)
 {
-	// --- フェードイン（画面がだんだん明るくなる） ---
+	// --- �t�F�[�h�C���i��ʂ����񂾂񖾂邭�Ȃ�j ---
 	if (fade == SceneFade::SceneFade_In)
 	{
-		// 不透明度を減少させる
+		// �s�����x������������
 		mfFadeAlpha -= mfFadeSpeed;
-		if (mfFadeAlpha < 0) mfFadeAlpha = 0; // 下限ガード
+		if (mfFadeAlpha < 0) mfFadeAlpha = 0; // �����K�[�h
 
-		// 完全に透明（0）でなければ、黒いスクリーンを描画して被せる
+		// ���S�ɓ����i0�j�łȂ���΁A�����X�N���[����`�悵�Ĕ킹��
 		if (mfFadeAlpha > 0)
 		{
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)mfFadeAlpha);
-			DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE); // 16:9 画面全体を黒で塗りつぶし
-			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);          // ブレンドモードを通常に戻す
+			DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE); // 16:9 ��ʑS�̂����œh��Ԃ�
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);          // �u�����h���[�h��ʏ�ɖ߂�
 		}
 	}
-	// --- フェードアウト（画面がだんだん暗くなる） ---
+	// --- �t�F�[�h�A�E�g�i��ʂ����񂾂�Â��Ȃ�j ---
 	else if (fade == SceneFade::SceneFade_Out)
 	{
-		// 不透明度を増加させる
+		// �s�����x�𑝉�������
 		mfFadeAlpha += mfFadeSpeed;
-		if (mfFadeAlpha > 255) mfFadeAlpha = 255; // 上限ガード（DXライブラリのアルファ最大値は255）
+		if (mfFadeAlpha > 255) mfFadeAlpha = 255; // ����K�[�h�iDX���C�u�����̃A���t�@�ő�l��255�j
 
-		// 黒いスクリーンを描画
+		// �����X�N���[����`��
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)mfFadeAlpha);
 		DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);          // ブレンドモードを通常に戻す
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);          // �u�����h���[�h��ʏ�ɖ߂�
 	}
-	// --- ロード中（必要に応じて処理を追加可能） ---
+	// --- ���[�h���i�K�v�ɉ����ď�����ǉ��\�j ---
 	else if (fade == SceneFade::SceneFade_Load)
 	{
-		// 現在は何も行わない（固定画面の表示やローディングアイコン描画などを拡張可能）
+		// ���݂͉����s��Ȃ��i�Œ��ʂ̕\���⃍�[�f�B���O�A�C�R���`��Ȃǂ��g���\�j
 	}
 }

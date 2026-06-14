@@ -1,17 +1,17 @@
-ï»¿#pragma once
+#pragma once
 #include "Model.h"
 #include "Dxlib.h"
 #include "Object3D.h"
 
-// èƒŒæ™¯ã«é…ç½®ã•ã‚Œã‚‹å±±ãªã©ã®é™çš„èƒŒæ™¯3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’åˆ¶å¾¡ã™ã‚‹ã‚¯ãƒ©ã‚¹
+// ”wŒi‚É”z’u‚³‚ê‚éR‚È‚Ç‚ÌÃ“I”wŒi3DƒIƒuƒWƒFƒNƒg‚ğ§Œä‚·‚éƒNƒ‰ƒX
 class Mountain : public Object3D
 {
 public:
 	/*
-	 * @brief èƒŒæ™¯ãƒ¢ãƒ‡ãƒ«ã‚’èª­ã¿è¾¼ã¿ã€ä½ç½®ã€æ‹¡å¤§ç‡ã€å›è»¢è§’åº¦ã‚’è¨­å®šã—ã¦åˆæœŸåŒ–ã™ã‚‹
-	 * [å…¥åŠ›] filename: ãƒ¢ãƒ‡ãƒ«ã®ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹, initPos: åˆæœŸåº§æ¨™, scale: æ‹¡å¤§ç‡, angle: å›è»¢è§’åº¦
-	 * [å‡ºåŠ›] ãªã—
-	 * [å‰¯ä½œç”¨] Modelã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãŒå‹•çš„ç¢ºä¿ã•ã‚Œã‚‹
+	 * @brief ”wŒiƒ‚ƒfƒ‹‚ğ“Ç‚İ‚İAˆÊ’uAŠg‘å—¦A‰ñ“]Šp“x‚ğİ’è‚µ‚Ä‰Šú‰»‚·‚é
+	 * [“ü—Í] filename: ƒ‚ƒfƒ‹‚Ìƒtƒ@ƒCƒ‹ƒpƒX, initPos: ‰ŠúÀ•W, scale: Šg‘å—¦, angle: ‰ñ“]Šp“x
+	 * [o—Í] ‚È‚µ
+	 * [•›ì—p] ModelƒCƒ“ƒXƒ^ƒ“ƒX‚ª“®“IŠm•Û‚³‚ê‚é
 	 */
 	Mountain(std::string filename, VECTOR initPos, VECTOR scale, VECTOR angle);
 	virtual ~Mountain();
@@ -24,5 +24,6 @@ public:
 	void SetColor(float r, float g, float b, float a = 1.0f);
 
 private:
-	Model* mpModel;          // åˆ¶å¾¡å¯¾è±¡ã®3Dãƒ¢ãƒ‡ãƒ«ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	Model* mpModel;          // §Œä‘ÎÛ‚Ì3Dƒ‚ƒfƒ‹‚Ö‚Ìƒ|ƒCƒ“ƒ^
 };
+

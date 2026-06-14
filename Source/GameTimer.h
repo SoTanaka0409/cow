@@ -1,16 +1,16 @@
-﻿#pragma once
+#pragma once
 #include"dxlib.h"
 
 
-// ゲーム本編の制限時間タイマーを管理・描画するクラス
+// �Q�[���{�҂̐������ԃ^�C�}�[���Ǘ��E�`�悷��N���X
 class GameTimer 
 {
 public:
-	// タイマーを使用する状況タグ
+	// �^�C�}�[���g�p����󋵃^�O
 	enum Tag_Num
 	{
-		Tag_Game,      // ゲーム本編での使用（タイマー描画あり）
-		Tag_NoGame,    // 非ゲーム中（タイマー描画なし）
+		Tag_Game,      // �Q�[���{�҂ł̎g�p�i�^�C�}�[�`�悠��j
+		Tag_NoGame,    // ��Q�[�����i�^�C�}�[�`��Ȃ��j
 	};
 
 public:
@@ -18,35 +18,36 @@ public:
 	~GameTimer();
 
 	/*
-	 * @brief 毎フレームのタイマー時間経過処理を行う（1000msごとに残時間を1減算）
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] Timeの減算、タイムアップ時の mbFlag / mbStopFlag の有効化、mLastTimeの更新
+	 * @brief ���t���[���̃^�C�}�[���Ԍo�ߏ������s���i1000ms���ƂɎc���Ԃ�1���Z�j
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] Time�̌��Z�A�^�C���A�b�v���� mbFlag / mbStopFlag �̗L�����AmLastTime�̍X�V
 	 */
 	void Update();
 
 	/*
-	 * @brief 画面上部に「LIMIT」テキスト画像と残り秒数の数値を並べて描画する
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] バックバッファへのグラフィック描画
+	 * @brief ��ʏ㕔�ɁuLIMIT�v�e�L�X�g�摜�Ǝc��b���̐��l����ׂĕ`�悷��
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �o�b�N�o�b�t�@�ւ̃O���t�B�b�N�`��
 	 */
 	void Draw();
 
-	// ゲッター・セッター群
+	// �Q�b�^�[�E�Z�b�^�[�Q
 	bool OutTimerFlag() { return mbFlag; }
 	void SetOutTimerFlag(bool flag) { mbFlag = flag; }
 	int GetTime() const { return Time; }
 
 private:
-	int Time;                  // 残り時間（秒）
-	VECTOR mvPosition;         // タイマーUIの描画開始座標
-	bool mbFlag;               // タイムアップ（時間切れ）に達したかどうかのフラグ
-	bool mbStopFlag;           // タイマーの更新処理を停止するフラグ
+	int Time;                  // �c�莞�ԁi�b�j
+	VECTOR mvPosition;         // �^�C�}�[UI�̕`��J�n���W
+	bool mbFlag;               // �^�C���A�b�v�i���Ԑ؂�j�ɒB�������ǂ����̃t���O
+	bool mbStopFlag;           // �^�C�}�[�̍X�V�������~����t���O
 
-	int scoreTextImage;        // 「LIMIT」テキストの画像ハンドル
-	int numberImg[10];         // 残り秒数を描画するための 0〜9 のデジタル数字画像ハンドル
+	int scoreTextImage;        // �uLIMIT�v�e�L�X�g�̉摜�n���h��
+	int numberImg[10];         // �c��b����`�悷�邽�߂� 0?9 �̃f�W�^�������摜�n���h��
 
-	int mLastTime;             // 前回の1秒経過判定時の GetNowCount() の値
-	Tag_Num mnTag;             // タイマーの使用シーンを示す分類タグ
+	int mLastTime;             // �O���1�b�o�ߔ��莞�� GetNowCount() �̒l
+	Tag_Num mnTag;             // �^�C�}�[�̎g�p�V�[�����������ރ^�O
 };
+

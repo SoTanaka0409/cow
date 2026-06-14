@@ -1,7 +1,7 @@
-﻿#pragma once
+#pragma once
 #include"Scene.h"
 
-// ゲームの各種環境設定（BGM音量、SE音量など）の調整を行うシーンクラス
+// �Q�[���̊e����ݒ�iBGM���ʁASE���ʂȂǁj�̒������s���V�[���N���X
 class Rule : public Scene
 {
 public:
@@ -9,52 +9,53 @@ public:
 	~Rule();
 
 	/*
-	 * @brief 設定画面表示用フォントや背景画像の読み込み、音量設定の読み込みを行う
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 各種ハンドル初期化、設定画面専用BGMの再生開始
+	 * @brief �ݒ��ʕ\���p�t�H���g��w�i�摜�̓ǂݍ��݁A���ʐݒ�̓ǂݍ��݂��s��
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �e��n���h���������A�ݒ��ʐ�pBGM�̍Đ��J�n
 	 */
 	void Initialize() override;
 
 	/*
-	 * @brief キー入力（上下キーで項目選択、左右キーで音量変更）およびマウス操作の処理
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 選択インデックス、基準音量設定(Master)の更新、BGM/SEの即時反映
+	 * @brief �L�[���́i�㉺�L�[�ō��ڑI���A���E�L�[�ŉ��ʕύX�j����у}�E�X����̏���
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �I���C���f�b�N�X�A����ʐݒ�(Master)�̍X�V�ABGM/SE�̑������f
 	 */
 	void Update() override;
 
 	/*
-	 * @brief 背景、タイトルロゴ、各設定バーおよび音量数値の描画
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 画面描画コマンドの実行
+	 * @brief �w�i�A�^�C�g�����S�A�e�ݒ�o�[����щ��ʐ��l�̕`��
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] ��ʕ`��R�}���h�̎��s
 	 */
 	void Draw() override;
 
 	/*
-	 * @brief 設定画面で使用した画像・フォントハンドルの一括解放
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] アセットのメモリ解放、BGMの停止
+	 * @brief �ݒ��ʂŎg�p�����摜�E�t�H���g�n���h���̈ꊇ���
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �A�Z�b�g�̃���������ABGM�̒�~
 	 */
 	void Finalize() override;
 
-	// メニュー項目の識別ID
+	// ���j���[���ڂ̎���ID
 	enum MenuType
 	{
-		MENU_BGM,   // BGM音量調整
-		MENU_SE,    // SE音量調整
-		MENU_BACK,  // タイトル画面へ戻る選択肢
+		MENU_BGM,   // BGM���ʒ���
+		MENU_SE,    // SE���ʒ���
+		MENU_BACK,  // �^�C�g����ʂ֖߂�I����
 		MENU_MAX
 	};
 
 private:
-	int mRuleGraph;                 // 設定画面背景の画像アセットハンドル
-	int mFontHandle;                // 設定項目表示用のフォントハンドル
-	int mTitleFontHandle;           // タイトルロゴ表示用のフォントハンドル
+	int mRuleGraph;                 // �ݒ��ʔw�i�̉摜�A�Z�b�g�n���h��
+	int mFontHandle;                // �ݒ荀�ڕ\���p�̃t�H���g�n���h��
+	int mTitleFontHandle;           // �^�C�g�����S�\���p�̃t�H���g�n���h��
 
-	MenuType mSelectedIndex = MENU_BGM; // 現在選択中の設定項目ID
-	int mPlaySeDelay = 0;           // 音量変更時の確認SE連打防止用タイマー
-	int mSceneFrames = 0;           // 誤入力防止用（遷移直後のフレームカウンター）
+	MenuType mSelectedIndex = MENU_BGM; // ���ݑI�𒆂̐ݒ荀��ID
+	int mPlaySeDelay = 0;           // ���ʕύX���̊m�FSE�A�Ŗh�~�p�^�C�}�[
+	int mSceneFrames = 0;           // ����͖h�~�p�i�J�ڒ���̃t���[���J�E���^�[�j
 };
+
