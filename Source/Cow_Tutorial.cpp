@@ -1,4 +1,4 @@
-﻿#include "Cow_Tutorial.h"
+#include "Cow_Tutorial.h"
 
 Cow_Tutorial::Cow_Tutorial(std::string filename, VECTOR initPos)
 	: CowMove(filename, initPos)
@@ -10,25 +10,6 @@ Cow_Tutorial::Cow_Tutorial(std::string filename, VECTOR initPos)
 
 Cow_Tutorial::~Cow_Tutorial()
 {
-	// 親クラスである CowMove のデストラクタで mpModel は安全に破棄されるため、
-	// 多重解放（クラッシュ原因）を防ぐためにここでの手動 delete は行いません。
-}
-
-void Cow_Tutorial::Update()
-{
-	MoveCow();
-
-	if (!(mCurrentState == STATE_VACUUM))
-	{
-		RotationCow();
-	}
-
-	if (mpCowVm != nullptr)
-	{
-		mpCowVm->Update();
-	}
-
-	ColliderMove();
-	CowDied();
-	mpModel->Update();
+	// �e�N���X�ł��� CowMove �̃f�X�g���N�^�� mpModel �͈��S�ɔj������邽�߁A
+	// ���d����i�N���b�V�������j��h�����߂ɂ����ł̎蓮 delete �͍s���܂���B
 }

@@ -1,4 +1,4 @@
-ï»¿#include "CapsuleCollider.h"
+#include "CapsuleCollider.h"
 #include "SphereCollider.h"
 #include "Object3D.h"
 
@@ -18,7 +18,7 @@ void CapsuleCollider::Update(Collider* check)
 {
 	if (check != nullptr)
 	{
-		// åˆ¤å®šç›¸æ‰‹ãŒã‚«ãƒ—ã‚»ãƒ«å‹ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å ´åˆã®äº¤å·®åˆ¤å®šè¨ˆç®—
+		// ”»’è‘Šè‚ªƒJƒvƒZƒ‹Œ^ƒRƒ‰ƒCƒ_[‚Ìê‡‚ÌŒğ·”»’èŒvZ
 		CapsuleCollider* capsule = dynamic_cast<CapsuleCollider*>(check);
 		
 		if (capsule != nullptr)
@@ -32,7 +32,7 @@ void CapsuleCollider::Update(Collider* check)
 				capsule->mfRadius
 			);
 
-			HitCheck(check, isHit); // äº¤å·®çµæœã‚’åŸºåº•ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®ã‚¤ãƒ™ãƒ³ãƒˆå‡¦ç†ã¸é€šçŸ¥
+			HitCheck(check, isHit); // Œğ·Œ‹‰Ê‚ğŠî’êƒRƒ‰ƒCƒ_[‚ÌƒCƒxƒ“ƒgˆ—‚Ö’Ê’m
 		}
 	}
 }
@@ -52,3 +52,4 @@ void CapsuleCollider::OnTrigger()
 void CapsuleCollider::OnExit()
 {
 }
+

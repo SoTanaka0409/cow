@@ -1,4 +1,5 @@
-ï»¿#include "Tatumaki.h"
+#include "ServiceLocator.h"
+#include "Tatumaki.h"
 #include "Player3D.h"
 #include "CapsuleCollider.h"
 #include "SphereCollider.h"
@@ -18,7 +19,7 @@ Tatumaki::Tatumaki(VECTOR pos)
 
 	mEffectTimer = 360;
 
-	// åˆæœŸã‚µã‚¤ã‚ºã‚’é€šå¸¸æ™‚ã®0.5å€ã‚¹ã‚±ãƒ¼ãƒ«ã«è¨­å®šã—ã€é€²è¡Œã«ä¼´ã£ã¦å·¨å¤§åŒ–ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
+	// ‰ŠúƒTƒCƒY‚ğ’Êí‚Ì0.5”{ƒXƒP[ƒ‹‚Éİ’è‚µAis‚É”º‚Á‚Ä‹‘å‰»‚Å‚«‚é‚æ‚¤‚É‚·‚é
 	mIsCrisis = false;
 	mCurrentScaleRatio = 0.5f; 
 	mCurrentRadius = 400.0f;
@@ -26,13 +27,13 @@ Tatumaki::Tatumaki(VECTOR pos)
 
 	Tatu = new EffekseerEffect("Resource/3D/EFK/Tatumaki2.efk", mPos, 200.0f);
 
-	// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ç¸¦æ¨ªæ¯”ã‚’èª¿æ•´ã—ã€ç«œå·»ã¨ã—ã¦ã®ç«‹ä½“æ„Ÿï¼ˆç¸¦é•·ï¼‰ã‚’é«˜ã‚ã‚‹
+	// ƒGƒtƒFƒNƒg‚Ìc‰¡”ä‚ğ’²®‚µA—³Šª‚Æ‚µ‚Ä‚Ì—§‘ÌŠ´ic’·j‚ğ‚‚ß‚é
 	Tatu->SetScale(VGet(1.0f * mCurrentScaleRatio, 1.4f * mCurrentScaleRatio, 1.0f * mCurrentScaleRatio));
 }
 
 Tatumaki::~Tatumaki()
 {
-	// å‹•çš„ã«ãƒ­ãƒ¼ãƒ‰ã•ã‚ŒãŸEffekseerã‚¨ãƒ•ã‚§ã‚¯ãƒˆè³‡æºã‚’ç ´æ£„ã—ã¦ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯ã‚’é˜²ã
+	// “®“I‚Éƒ[ƒh‚³‚ê‚½EffekseerƒGƒtƒFƒNƒg‘Œ¹‚ğ”jŠü‚µ‚Äƒƒ‚ƒŠƒŠ[ƒN‚ğ–h‚®
 	if (Tatu != nullptr)
 	{
 		delete Tatu;
@@ -42,7 +43,7 @@ Tatumaki::~Tatumaki()
 
 void Tatumaki::Update()
 {
-	// ã‚¯ãƒ©ã‚¤ã‚·ã‚¹ï¼ˆå¾ŒåŠæˆ¦ï¼‰çŠ¶æ…‹ã¨é€šå¸¸çŠ¶æ…‹ã®ã‚µã‚¤ã‚ºã‚’è£œå®Œé–¢æ•°(Lerp)ã§æ»‘ã‚‰ã‹ã«é·ç§»ã•ã›ã‚‹
+	// ƒNƒ‰ƒCƒVƒXiŒã”¼íjó‘Ô‚Æ’Êíó‘Ô‚ÌƒTƒCƒY‚ğ•âŠ®ŠÖ”(Lerp)‚ÅŠŠ‚ç‚©‚É‘JˆÚ‚³‚¹‚é
 	float targetScale = mIsCrisis ? 1.0f : 0.5f;
 	float targetRadius = mIsCrisis ? 800.0f : 400.0f;
 	
@@ -52,21 +53,21 @@ void Tatumaki::Update()
 	Tatu->SetScale(VGet(1.0f * mCurrentScaleRatio, 1.4f * mCurrentScaleRatio, 1.0f * mCurrentScaleRatio));
 	mpCapsuleCollider->mfRadius = mCurrentRadius;
 
-	auto p = Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->GetObject3DByTag(Object3D::Tag3D_player);
+	auto p = ServiceLocator::GetPlayer();
 
 	if (p != nullptr)
 	{
-		// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç¾åœ¨ä½ç½®ã¸å°‘ã—ãšã¤å‘ãã‚’è£œæ­£ã—ã¦ã€ç·©ã‚„ã‹ãªãƒ›ãƒ¼ãƒŸãƒ³ã‚°æŒ™å‹•ã‚’å®Ÿç¾ã™ã‚‹
+		// ƒvƒŒƒCƒ„[‚ÌŒ»İˆÊ’u‚Ö­‚µ‚¸‚ÂŒü‚«‚ğ•â³‚µ‚ÄAŠÉ‚â‚©‚Èƒz[ƒ~ƒ“ƒO‹““®‚ğÀŒ»‚·‚é
 		VECTOR playerPos = p->GetPosition();
 		VECTOR targetDir = VSub(playerPos, mPos);
 
-		targetDir.y = 0; // é«˜åº¦æ–¹å‘ã®è¿½å¾“ã¯ä¸è¦ãªãŸã‚ç„¡è¦–ã™ã‚‹
+		targetDir.y = 0; // ‚“x•ûŒü‚Ì’Ç]‚Í•s—v‚È‚½‚ß–³‹‚·‚é
 
 		if (VSize(targetDir) > 0.1f)
 		{
 			targetDir = VNorm(targetDir);
 
-			// æ€¥æ¿€ãªæ—‹å›ã‚’é˜²ãã€é€ƒã’å›ã‚‹ä½™åœ°ã‚’æ®‹ã™ãŸã‚ã€éå¸¸ã«å°ã•ã„ä¿‚æ•°ã§é€²è¡Œæ–¹å‘ã‚’æ··ãœåˆã‚ã›ã‚‹
+			// ‹}Œƒ‚Èù‰ñ‚ğ–h‚¬A“¦‚°‰ñ‚é—]’n‚ğc‚·‚½‚ßA”ñí‚É¬‚³‚¢ŒW”‚Åis•ûŒü‚ğ¬‚º‡‚í‚¹‚é
 			float homingStrength = 0.001f;
 			mVelocity = VAdd(mVelocity, VScale(targetDir, homingStrength));
 			mVelocity = VNorm(mVelocity);
@@ -79,7 +80,7 @@ void Tatumaki::Update()
 	mpCapsuleCollider->mvPosition = VSub(mvPosition, VGet(0, 2000, 0));
 	mpCapsuleCollider->mvPosition2 = VAdd(mvPosition, VGet(0, 2000, 0));
 
-	// ã‚¹ãƒ†ãƒ¼ã‚¸å¤–ï¼ˆè¦‹ãˆãªã„å¢ƒç•Œï¼‰ã«é€ƒã’ã¦ã—ã¾ã‚ãªã„ã‚ˆã†ã€å¢ƒç•Œæ¥è§¦æ™‚ã«é€²è¡Œæ–¹å‘ã‚’åè»¢ã•ã›ã‚‹
+	// ƒXƒe[ƒWŠOiŒ©‚¦‚È‚¢‹«ŠEj‚É“¦‚°‚Ä‚µ‚Ü‚í‚È‚¢‚æ‚¤A‹«ŠEÚG‚Éis•ûŒü‚ğ”½“]‚³‚¹‚é
 	float limit = 5000.0f;
 	if (mPos.x < -limit || mPos.x > limit) { mVelocity.x *= -1; }
 	if (mPos.z < -limit || mPos.z > limit) { mVelocity.z *= -1; }
@@ -91,7 +92,7 @@ void Tatumaki::Update()
 		{ 
 			Tatu->Play(); 
 			
-			// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒè¿‘ãã«ã„ã‚‹å ´åˆã®ã¿ç’°å¢ƒéŸ³ã‚’å†ç”Ÿã—ã€è‡¨å ´æ„Ÿã‚’å‡ºã—ã¤ã¤ä¸è¦ãªSEæ··é›‘ã‚’é˜²ã
+			// ƒvƒŒƒCƒ„[‚ª‹ß‚­‚É‚¢‚éê‡‚Ì‚İŠÂ‹«‰¹‚ğÄ¶‚µA—ÕêŠ´‚ğo‚µ‚Â‚Â•s—v‚ÈSE¬G‚ğ–h‚®
 			if (p != nullptr)
 			{
 				VECTOR diff = VSub(p->GetPosition(), mPos);
@@ -117,7 +118,7 @@ void Tatumaki::Draw()
 
 void Tatumaki::OnEnter(Collider* collider, Collider* check)
 {
-	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒç«œå·»ã®å½“ãŸã‚Šåˆ¤å®šã«æ¥è§¦ã—ãŸå ´åˆã€ã‚¹ãƒ†ãƒ¼ã‚¸ä¸Šã®ãƒ©ãƒ³ãƒ€ãƒ ãªå®‰å…¨åœã«ãƒ¯ãƒ¼ãƒ—ã•ã›ã‚‹
+	// ƒvƒŒƒCƒ„[‚ª—³Šª‚Ì“–‚½‚è”»’è‚ÉÚG‚µ‚½ê‡AƒXƒe[ƒWã‚Ìƒ‰ƒ“ƒ_ƒ€‚ÈˆÀ‘SŒ—‚Éƒ[ƒv‚³‚¹‚é
 	if (collider == mpCapsuleCollider && check->mpParentObject->GetTag() == Tag3D_player)
 	{
 		Player3D* Player = dynamic_cast<Player3D*>(check->mpParentObject);
@@ -128,7 +129,7 @@ void Tatumaki::OnEnter(Collider* collider, Collider* check)
 
 		Player->SetPosition(VGet(warpX, 2000.0f, warpZ));
 
-		// ç«œå·»ã«å·»ãè¾¼ã¾ã‚ŒãŸè¡æ’ƒã‚’è¡¨ç¾ã™ã‚‹ãŸã‚ã«ã‚«ãƒ¡ãƒ©ã‚’æºã‚‰ã™
+		// —³Šª‚ÉŠª‚«‚Ü‚ê‚½ÕŒ‚‚ğ•\Œ»‚·‚é‚½‚ß‚ÉƒJƒƒ‰‚ğ—h‚ç‚·
 		Master::mpCamera->SetupShake(20.0f, 35.0f, 30.0f);
 	}
 }
@@ -140,3 +141,4 @@ void Tatumaki::OnTrigger(Collider* collider, Collider* check)
 void Tatumaki::OnExit(Collider* collider, Collider* check)
 {
 }
+

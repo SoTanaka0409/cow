@@ -1,4 +1,4 @@
-﻿#include "TitleScene.h"
+#include "TitleScene.h"
 #include "DxLib.h"
 #include "Utility.h"
 #include "Master.h"
@@ -8,10 +8,10 @@
 TitleScene::TitleScene()
 	: Scene()
 {
-	mCowVoiceTimer = 180; // 初回に牛が鳴くまでの待機フレーム時間設定
+	mCowVoiceTimer = 180; // ����ɋ������܂ł̑ҋ@�t���[�����Ԑݒ�
 	
-	mnTitleGraphHandle = LoadGraph("Resource/2D/タイトルシーン.png");
-	mnUfoGraphHandle = LoadGraph("Resource/2D/牛とUFO.png");
+	mnTitleGraphHandle = LoadGraph("Resource/2D/�^�C�g���V�[��.png");
+	mnUfoGraphHandle = LoadGraph("Resource/2D/����UFO.png");
 	GetGraphSize(mnUfoGraphHandle, &mUfoW, &mUfoH);
 
 	mUfoX = 540;
@@ -28,48 +28,48 @@ TitleScene::TitleScene()
 	mIsAutoPatrol = false;
 	mAutoPatrolTimer = 0;
 
-	// タイトル画面用のランキングUI用画像をロード
-	rankImage[0] = LoadGraph("Resource/2D/1位.png");
-	rankImage[1] = LoadGraph("Resource/2D/2位.png");
-	rankImage[2] = LoadGraph("Resource/2D/3位.png");
-	rankingTitleImage = LoadGraph("Resource/2D/ランキング.png");
-	pointImg = LoadGraph("Resource/2D/点.png");
+	// �^�C�g����ʗp�̃����L���OUI�p�摜�����[�h
+	rankImage[0] = LoadGraph("Resource/2D/1��.png");
+	rankImage[1] = LoadGraph("Resource/2D/2��.png");
+	rankImage[2] = LoadGraph("Resource/2D/3��.png");
+	rankingTitleImage = LoadGraph("Resource/2D/�����L���O.png");
+	pointImg = LoadGraph("Resource/2D/�_.png");
 	 
-	// インタラクティブな各遷移ボタンのデータをリストに登録
-	// 1. スタートボタン
+	// �C���^���N�e�B�u�Ȋe�J�ڃ{�^���̃f�[�^�����X�g�ɓo�^
+	// 1. �X�^�[�g�{�^��
 	TitleButton newGameBtn;
 	newGameBtn.type = SelectionManager::Title::NewGame;
-	newGameBtn.graphHandle = LoadGraph("Resource/2D/スタートボタン1.png");
+	newGameBtn.graphHandle = LoadGraph("Resource/2D/�X�^�[�g�{�^��1.png");
 	newGameBtn.x = 920;
 	newGameBtn.y = 50;
 	GetGraphSize(newGameBtn.graphHandle, &newGameBtn.w, &newGameBtn.h);
 	newGameBtn.isHover = false;
 	mButtons.push_back(newGameBtn);
 
-	// 2. チュートリアルボタン
+	// 2. �`���[�g���A���{�^��
 	TitleButton tutorialBtn;
 	tutorialBtn.type = SelectionManager::Title::Tutorial;
-	tutorialBtn.graphHandle = LoadGraph("Resource/2D/チュートリアルぼたん.png");
+	tutorialBtn.graphHandle = LoadGraph("Resource/2D/�`���[�g���A���ڂ���.png");
 	tutorialBtn.x = 900;
 	tutorialBtn.y = 250;
 	GetGraphSize(tutorialBtn.graphHandle, &tutorialBtn.w, &tutorialBtn.h);
 	tutorialBtn.isHover = false;
 	mButtons.push_back(tutorialBtn);
 
-	// 3. 操作説明（ルール）ボタン
+	// 3. ��������i���[���j�{�^��
 	TitleButton opeBtn;
 	opeBtn.type = SelectionManager::Title::OperationProcedures;
-	opeBtn.graphHandle = LoadGraph("Resource/2D/せっていぼたん1.png");
+	opeBtn.graphHandle = LoadGraph("Resource/2D/�����Ă��ڂ���1.png");
 	opeBtn.x = 915;
 	opeBtn.y = 450;
 	GetGraphSize(opeBtn.graphHandle, &opeBtn.w, &opeBtn.h);
 	opeBtn.isHover = false;
 	mButtons.push_back(opeBtn);
 
-	// 4. ゲーム終了ボタン
+	// 4. �Q�[���I���{�^��
 	TitleButton exitBtn;
 	exitBtn.type = SelectionManager::Title::titleOUT;
-	exitBtn.graphHandle = LoadGraph("Resource/2D/しゅうりょうぼたん (1).png");
+	exitBtn.graphHandle = LoadGraph("Resource/2D/���イ��傤�ڂ��� (1).png");
 	exitBtn.x = 960;
 	exitBtn.y = 680;
 	GetGraphSize(exitBtn.graphHandle, &exitBtn.w, &exitBtn.h);
@@ -91,8 +91,8 @@ TitleScene::~TitleScene()
 void TitleScene::Initialize()
 {
 	Master::GameFinishFlag = false;
-	SetMouseDispFlag(true); // タイトル画面ではマウスポインタを表示する
-	Master::mpScore->LoadRanking(); // 最新のハイスコアデータをストレージから読み込み
+	SetMouseDispFlag(true); // �^�C�g����ʂł̓}�E�X�|�C���^��\������
+	Master::mpScore->LoadRanking(); // �ŐV�̃n�C�X�R�A�f�[�^���X�g���[�W����ǂݍ���
 	Master::mpCamera->Initialize();
 
 	Master::mpSoundManager->PlayBGM(SoundManager::BGM_TITLE);
@@ -105,7 +105,7 @@ void TitleScene::Draw()
 
 	int ufoDrawY = mUfoY;
 
-	// ドラッグされていない時はサイン波を用いてふわふわ浮かぶアニメーションを行う
+	// �h���b�O����Ă��Ȃ����̓T�C���g��p���Ăӂ�ӂ핂���ԃA�j���[�V�������s��
 	if (!mbIsDraggingUfo)
 	{
 		float ufoWave = sin(mFrameCount * 0.03f) * 20.0f;
@@ -122,7 +122,7 @@ void TitleScene::Draw()
 		TRUE
 	);
 
-	// 各ボタンを描画（マウスホバー時はサイズを少し拡大してアピール）
+	// �e�{�^����`��i�}�E�X�z�o�[���̓T�C�Y�������g�債�ăA�s�[���j
 	for (int i = 0; i < mButtons.size(); i++)
 	{
 		float wave = sin(mFrameCount * 0.05f + (i * 1.5f)) * 10.0f;
@@ -160,8 +160,8 @@ void TitleScene::Update()
 		mCowVoiceTimer--;
 		if (mCowVoiceTimer <= 0)
 		{
-			Master::mpSoundManager->PlaySE(SoundManager::SE_COW); // タイトル画面の賑やかしとして定期的にSE再生
-			mCowVoiceTimer = GetRand(600) + 300; // 次回再生までランダムに間隔を設定 (5秒〜15秒)
+			Master::mpSoundManager->PlaySE(SoundManager::SE_COW); // �^�C�g����ʂ̓��₩���Ƃ��Ē���I��SE�Đ�
+			mCowVoiceTimer = GetRand(600) + 300; // ����Đ��܂Ń����_���ɊԊu��ݒ� (5�b?15�b)
 		}
 	}
 
@@ -181,14 +181,14 @@ void TitleScene::Update()
 	int mouseInput = GetMouseInput();
 	int ufoSize = 360;
 
-	// UFOをクリックした際に自動巡回イースターエッグを発動させる判定
+	// UFO���N���b�N�����ۂɎ�������C�[�X�^�[�G�b�O�𔭓������锻��
 	if ((mouseInput & MOUSE_INPUT_LEFT) != 0)
 	{
 		if (mouseX >= mUfoX && mouseX <= mUfoX + ufoSize &&
 			mouseY >= mUfoY && mouseY <= mUfoY + ufoSize)
 		{
 			mIsAutoPatrol = true;
-			mAutoPatrolTimer = 240; // 4秒間（240フレーム）自動巡回を行う
+			mAutoPatrolTimer = 240; // 4�b�ԁi240�t���[���j����������s��
 			mbIsDraggingUfo = true;
 		}
 	}
@@ -197,7 +197,7 @@ void TitleScene::Update()
 		mbIsDraggingUfo = false;
 	}
 
-	// UFOの自動巡回パス処理（サイン・コサインによる楕円軌道）
+	// UFO�̎�������p�X�����i�T�C���E�R�T�C���ɂ��ȉ~�O���j
 	if (mIsAutoPatrol)
 	{
 		mUfoAngle += 0.02f;
@@ -212,7 +212,7 @@ void TitleScene::Update()
 		}
 	}
 
-	// 各ボタンに対するマウスの当たり判定（ホバー状態の切り替え、クリック時のシーン要求）
+	// �e�{�^���ɑ΂���}�E�X�̓����蔻��i�z�o�[��Ԃ̐؂�ւ��A�N���b�N���̃V�[���v���j
 	if (mbIsDraggingUfo == false)
 	{
 		for (int i = 0; i < mButtons.size(); i++)
@@ -242,7 +242,7 @@ void TitleScene::Update()
 						Master::mpSoundManager->PlaySE(SoundManager::SE_DECIDE);
 						break;
 					case SelectionManager::Title::titleOUT:
-						PostQuitMessage(0); // Windowsアプリケーションとしての安全な終了通知
+						PostQuitMessage(0); // Windows�A�v���P�[�V�����Ƃ��Ă̈��S�ȏI���ʒm
 						break;
 					}
 				}
@@ -255,7 +255,7 @@ void TitleScene::Update()
 	}
 	else
 	{
-		// UFO操作中は誤反応を防ぐため、ボタンのホバー状態を強制解除
+		// UFO���쒆�͌딽����h�����߁A�{�^���̃z�o�[��Ԃ���������
 		for (int i = 0; i < mButtons.size(); i++) {
 			mButtons[i].isHover = false;
 		}
@@ -278,17 +278,17 @@ void TitleScene::Finalize()
 	{
 		DeleteGraph(rankImage[i]);
 	}
-	SetMouseDispFlag(false); // タイトルシーン終了後はマウスポインタを非表示にする
+	SetMouseDispFlag(false); // �^�C�g���V�[���I����̓}�E�X�|�C���^���\���ɂ���
 	DeleteGraph(rankingTitleImage);
 	DeleteGraph(pointImg);
 	Master::mpSoundManager->StopBGM();
 }
 
 /*
- * @brief スコアランキング情報UIの描画処理
- * [入力] なし
- * [出力] なし
- * [副作用] スコアデータから数値フォント画像の描画
+ * @brief �X�R�A�����L���O���UI�̕`�揈��
+ * [����] �Ȃ�
+ * [�o��] �Ȃ�
+ * [����p] �X�R�A�f�[�^���琔�l�t�H���g�摜�̕`��
  */
 void TitleScene::DrawRankingUI()
 {
@@ -345,3 +345,4 @@ void TitleScene::DrawRankingUI()
 		DrawExtendGraph(pointX, drawY, pointX + w, drawY + h, pointImg, TRUE);
 	}
 }
+

@@ -1,5 +1,4 @@
-﻿#include "Animal.h"
-#include "CapsuleCollider.h"
+#include "Animal.h"
 
 Animal::Animal(std::string filename, VECTOR initPos)
 	: AnimalMove(filename, initPos)
@@ -10,18 +9,20 @@ Animal::Animal(std::string filename, VECTOR initPos)
 
 Animal::~Animal()
 {
-	// 親クラスである AnimalMove のデストラクタで mpModel および mpCapsuleCollider は安全に破棄されます。
 }
 
 void Animal::Update()
 {
-	MoveAnimal();
+	MoveCharacter();
 
 	if (!(mCurrentState == STATE_VACUUM))
 	{
-		RotationAnimal();
+		RotationCharacter();
 	}
 
 	ColliderMove();
+	CharacterDied();
 	mpModel->Update();
 }
+
+

@@ -1,4 +1,4 @@
-ï»¿#include "Stage.h"
+#include "Stage.h"
 #include "Master.h"
 
 Stage::Stage(VECTOR initPos, std::string stageModelName, std::string stageCollisionModelName)
@@ -9,7 +9,7 @@ Stage::Stage(VECTOR initPos, std::string stageModelName, std::string stageCollis
 	mnModelHandle = MV1LoadModel(stageModelName.c_str());
 	mnCollisionHandle = MV1LoadModel(stageCollisionModelName.c_str());
 
-	// æç”»ç”¨ã¨åˆ¤å®šç”¨ãƒ¢ãƒ‡ãƒ«ã®ç¸®å°ºã‚’æƒãˆã€åˆ¤å®šå´ã®ã‚³ãƒªã‚¸ãƒ§ãƒ³æƒ…å ±ã‚’æ§‹ç¯‰ã—ã¦ãŠã
+	// •`‰æ—p‚Æ”»’è—pƒ‚ƒfƒ‹‚ÌkÚ‚ğ‘µ‚¦A”»’è‘¤‚ÌƒRƒŠƒWƒ‡ƒ“î•ñ‚ğ\’z‚µ‚Ä‚¨‚­
 	float StageSize = 5.0f;
 	MV1SetScale(mnModelHandle, VGet(StageSize, 0.3f, StageSize));
 	MV1SetScale(mnCollisionHandle, VGet(StageSize, 0.3f, StageSize));
@@ -35,14 +35,14 @@ void Stage::Draw()
 
 bool Stage::CheckHit_Capsule(VECTOR pos1, VECTOR pos2, float r)
 {
-	// æŒ‡å®šã•ã‚ŒãŸã‚«ãƒ—ã‚»ãƒ«å½¢çŠ¶ã¨ã‚¹ãƒ†ãƒ¼ã‚¸ç”¨è¡çªåˆ¤å®šãƒ¢ãƒ‡ãƒ«ã®ç·å½“ãŸã‚Šãƒãƒªã‚´ãƒ³äº¤å·®åˆ¤å®šã‚’è¡Œã†
+	// w’è‚³‚ê‚½ƒJƒvƒZƒ‹Œ`ó‚ÆƒXƒe[ƒW—pÕ“Ë”»’èƒ‚ƒfƒ‹‚Ì‘“–‚½‚èƒ|ƒŠƒSƒ“Œğ·”»’è‚ğs‚¤
 	MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Capsule(mnCollisionHandle, -1, pos1, pos2, r);
 
 	if (result.HitNum >= 1)
 	{
 		for (int i = 0; i < result.HitNum; i++)
 		{
-			// äº¤å·®ã—ã¦ã„ã‚‹ãƒãƒªã‚´ãƒ³è¡¨é¢ã‚’èµ¤è‰²ã®ãƒ¯ã‚¤ãƒ¤ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ ã§ãƒ‡ãƒãƒƒã‚°æç”»ã™ã‚‹
+			// Œğ·‚µ‚Ä‚¢‚éƒ|ƒŠƒSƒ“•\–Ê‚ğÔF‚ÌƒƒCƒ„[ƒtƒŒ[ƒ€‚ÅƒfƒoƒbƒO•`‰æ‚·‚é
 			DrawTriangle3D(
 				result.Dim[i].Position[0],
 				result.Dim[i].Position[1],
@@ -53,7 +53,7 @@ bool Stage::CheckHit_Capsule(VECTOR pos1, VECTOR pos2, float r)
 		}
 	}
 	
-	// å‹•çš„ç¢ºä¿ã•ã‚ŒãŸè¡çªåˆ¤å®šçµæœé…åˆ—ã‚’ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ãƒƒãƒ—ã™ã‚‹
+	// “®“IŠm•Û‚³‚ê‚½Õ“Ë”»’èŒ‹‰Ê”z—ñ‚ğƒNƒŠ[ƒ“ƒAƒbƒv‚·‚é
 	MV1CollResultPolyDimTerminate(result);
 
 	return (result.HitNum >= 1);
@@ -63,7 +63,7 @@ VECTOR Stage::CheckHit_Line(VECTOR pos1, VECTOR pos2)
 {
 	VECTOR ret = VGet(0.0f, 0.0f, 0.0f);
 
-	// ç·šåˆ†ã¨ã‚¹ãƒ†ãƒ¼ã‚¸åœ°å½¢ãƒãƒªã‚´ãƒ³ã¨ã®äº¤å·®ç‚¹æ¤œå‡ºã‚’å®Ÿè¡Œã™ã‚‹
+	// ü•ª‚ÆƒXƒe[ƒW’nŒ`ƒ|ƒŠƒSƒ“‚Æ‚ÌŒğ·“_ŒŸo‚ğÀs‚·‚é
 	auto result = MV1CollCheck_Line(mnCollisionHandle, -1, pos1, pos2);
 
 	if (result.HitFlag)
@@ -78,7 +78,7 @@ VECTOR Stage::CheckHit_LineDebug(VECTOR pos1, VECTOR pos2)
 {
 	VECTOR ret = VGet(0.0f, 0.0f, 0.0f);
 
-	// ç·šåˆ†ã¨ã‚¹ãƒ†ãƒ¼ã‚¸åœ°å½¢ãƒãƒªã‚´ãƒ³ã¨ã®äº¤å·®ç‚¹æ¤œå‡ºã¨ãƒ‡ãƒãƒƒã‚°è¡¨ç¤ºã‚’å®Ÿè¡Œã™ã‚‹
+	// ü•ª‚ÆƒXƒe[ƒW’nŒ`ƒ|ƒŠƒSƒ“‚Æ‚ÌŒğ·“_ŒŸo‚ÆƒfƒoƒbƒO•\¦‚ğÀs‚·‚é
 	auto result = MV1CollCheck_Line(mnCollisionHandle, -1, pos1, pos2);
 
 	if (result.HitFlag)
@@ -93,3 +93,4 @@ VECTOR Stage::CheckHit_LineDebug(VECTOR pos1, VECTOR pos2)
 
 	return ret;
 }
+

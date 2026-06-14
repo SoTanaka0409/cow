@@ -1,4 +1,4 @@
-﻿#include "Cow_2.h"
+#include "Cow_2.h"
 #include "CapsuleCollider.h"
 
 Cow_2::Cow_2(std::string filename, VECTOR initPos)
@@ -12,23 +12,4 @@ Cow_2::Cow_2(std::string filename, VECTOR initPos)
 
 Cow_2::~Cow_2()
 {
-}
-
-void Cow_2::Update()
-{
-	MoveCow();
-
-	if (!(mCurrentState == STATE_VACUUM))
-	{
-		RotationCow();
-	}
-	
-	if (mpCowVm != nullptr)
-	{
-		mpCowVm->Update();
-	}
-
-	ColliderMove();
-	CowDied();
-	mpModel->Update();
 }

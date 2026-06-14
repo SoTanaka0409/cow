@@ -1,4 +1,4 @@
-ï»¿#include "Skill.h"
+#include "Skill.h"
 #include "Player3D.h"
 #include "Texture.h"
 #include "Master.h"
@@ -50,7 +50,7 @@ void Skill::Draw()
 {
 	if (!AddSkillFlag && !mSelectAnim) return;
 
-	// é¸æŠžå®Œäº†å¾Œã®ã‚«ãƒ¼ãƒ‰ãŒä¸Šæ˜‡ãƒ»é€€å‡ºã—ã¦ã„ãæ¼”å‡ºã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
+	// ‘I‘ðŠ®—¹Œã‚ÌƒJ[ƒh‚ªã¸E‘Þo‚µ‚Ä‚¢‚­‰‰oƒAƒjƒ[ƒVƒ‡ƒ“
 	if (mSelectAnim)
 	{
 		if (mSelectedSkill == 1)
@@ -98,7 +98,7 @@ void Skill::Update()
 		}
 	}
 
-	// é¸æŠžã•ã‚ŒãŸã‚«ãƒ¼ãƒ‰ãŒä¸Šç©ºã¸é£›ã‚“ã§æ¶ˆãˆã‚‹æ¼”å‡ºã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
+	// ‘I‘ð‚³‚ê‚½ƒJ[ƒh‚ªã‹ó‚Ö”ò‚ñ‚ÅÁ‚¦‚é‰‰oƒAƒjƒ[ƒVƒ‡ƒ“
 	if (mSelectAnim)
 	{
 		VECTOR target = VGet(mSelectPos.x, -400.0f, 0.0f);
@@ -116,7 +116,7 @@ void Skill::Update()
 		}
 	}
 
-	// ã‚«ãƒ¼ãƒ‰é¸æŠžé–‹å§‹æ™‚ã«ã€ã‚«ãƒ¼ãƒ‰ãŒç”»é¢å¤–ã‹ã‚‰æ»‘ã‚‰ã‹ã«ã‚¹ãƒ©ã‚¤ãƒ‰ã‚¤ãƒ³ã™ã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
+	// ƒJ[ƒh‘I‘ðŠJŽnŽž‚ÉAƒJ[ƒh‚ª‰æ–ÊŠO‚©‚çŠŠ‚ç‚©‚ÉƒXƒ‰ƒCƒhƒCƒ“‚·‚éƒAƒjƒ[ƒVƒ‡ƒ“
 	if (mOpenAnim)
 	{
 		mCard1Y += (450.0f - mCard1Y) * 0.15f;
@@ -141,14 +141,14 @@ void Skill::AddSkill()
 {
 	if (!AddSkillFlag) return;
 	
-	SetMouseDispFlag(true); // ã‚¹ã‚­ãƒ«é¸æŠžä¸­ã¯ãƒžã‚¦ã‚¹ãƒã‚¤ãƒ³ã‚¿ã‚’è¡¨ç¤º
+	SetMouseDispFlag(true); // ƒXƒLƒ‹‘I‘ð’†‚Íƒ}ƒEƒXƒ|ƒCƒ“ƒ^‚ð•\Ž¦
 	Master::SelectSkill = true;
 	int mouseX, mouseY;
 	GetMousePoint(&mouseX, &mouseY);
 
 	mHoverSkill = 0;
 
-	// ã‚¹ã‚­ãƒ«ã‚«ãƒ¼ãƒ‰ã‚’ãƒ›ãƒãƒ¼ã¾ãŸã¯å·¦ã‚¯ãƒªãƒƒã‚¯ã—ãŸéš›ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼è¨ˆç®—ã‚’è¡Œã†ãƒ©ãƒ ãƒ€é–¢æ•°
+	// ƒXƒLƒ‹ƒJ[ƒh‚ðƒzƒo[‚Ü‚½‚Í¶ƒNƒŠƒbƒN‚µ‚½Û‚ÌƒRƒ‰ƒCƒ_[ŒvŽZ‚ðs‚¤ƒ‰ƒ€ƒ_ŠÖ”
 	auto ProcessSkill = [&](Texture* tex, int id) {
 		if (tex == nullptr) return false;
 
@@ -174,7 +174,7 @@ void Skill::AddSkill()
 
 	if (ProcessSkill(mpTexture, 1))
 	{
-		// é€Ÿåº¦ã‚¢ãƒƒãƒ—
+		// ‘¬“xƒAƒbƒv
 		Status_S += 2.0f;
 		mSelectedSkill = 1;
 		mSelectPos = mpTexture->GetPosition();
@@ -186,8 +186,8 @@ void Skill::AddSkill()
 	}
 	else if (ProcessSkill(mpTexture2, 2))
 	{
-		// é¤Œï¼ˆãƒ‡ã‚³ã‚¤ã«ã‚“ã˜ã‚“ï¼‰è¨­ç½®
-		auto b = new Bait("Resource/3D/ç‰›ã®é¤Œ/Carrot.mv1", mpParent->GetPosition());
+		// ‰aiƒfƒRƒC‚É‚ñ‚¶‚ñjÝ’u
+		auto b = new Bait("Resource/3D/‹‚Ì‰a/Carrot.mv1", mpParent->GetPosition());
 		float scale = 5000.0f;
 		b->mpModel->SetScale(VGet(scale, scale, scale));
 
@@ -201,7 +201,7 @@ void Skill::AddSkill()
 	}
 	else if (ProcessSkill(mpTexture3, 3))
 	{
-		// å¸å¼•é€Ÿåº¦ï¼ˆæ”»æ’ƒåŠ›ï¼‰ã‚¢ãƒƒãƒ—
+		// ‹zˆø‘¬“xiUŒ‚—ÍjƒAƒbƒv
 		Status_A += 1.0f;
 		mSelectedSkill = 3;
 		mSelectPos = mpTexture3->GetPosition();
@@ -225,3 +225,4 @@ float Skill::GetStatusDate(StatusTag tag)
 	}
 	return 0.0f;
 }
+

@@ -1,4 +1,5 @@
-﻿#include"Scene3D.h"
+#include "ServiceLocator.h"
+#include"Scene3D.h"
 #include"InputManager.h"
 #include"ObjectManager.h"
 #include"Player3D.h"
@@ -13,9 +14,10 @@
 #include"Mountain.h"
 #include"Tatumaki.h"
 #include"Utility.h"
+#include "GameConstants.h"
 
-Thunder* thunder = nullptr;     // 落雷演出用のアクティブなオブジェクトポインタ
-Tatumaki* tatumaki = nullptr;   // ステージ上を巡回する竜巻オブジェクトポインタ
+Thunder* thunder = nullptr;     // ???????o?p??A?N?e?B?u??I?u?W?F?N?g?|?C???^
+Tatumaki* tatumaki = nullptr;   // ?X?e?[?W???????????I?u?W?F?N?g?|?C???^
 
 Scene3D::Scene3D()
 {
@@ -25,17 +27,17 @@ Scene3D::Scene3D()
 
 Scene3D::~Scene3D()
 {
-	DeleteGraph(mFontBackGraph); // シーン個有の画像リソースのみ解放
-	// ※ mpCowManager や thunder, tatumaki などの Object3D を継承するオブジェクトは、
-	// 基底クラス Scene のデストラクタ内にある ObjectManager によって自動的に delete されるため、
-	// ここでの手動 delete は多重解放（クラッシュ原因）を防ぐため行いません。
+	DeleteGraph(mFontBackGraph); // ?V?[????L??????\?[?X?????
+	// ?? mpCowManager ?? thunder, tatumaki ???? Object3D ??p??????I?u?W?F?N?g??A
+	// ???N???X Scene ??f?X?g???N?^?????? ObjectManager ??????????I?? delete ???????A
+	// ???????�@ delete ????d????i?N???b?V???????j??h??????s???????B
 }
 
 /*
- * @brief 3Dステージシーンの初期設定（マップ、コライダー、プレイヤー、エネミー生成）を行う
- * [入力] なし
- * [出力] なし
- * [副作用] 各オブジェクトのnew、BGM再生開始、コライダー登録
+ * @brief 3D?X?e?[?W?V?[??????????i?}?b?v?A?R???C?_?[?A?v???C???[?A?G?l?~?[?????j??s??
+ * [????] ???
+ * [?o??] ???
+ * [????p] ?e?I?u?W?F?N?g??new?ABGM????J?n?A?R???C?_?[?o?^
  */
 void Scene3D::Initialize()
 {
@@ -46,7 +48,7 @@ void Scene3D::Initialize()
 	Master::mpSoundManager->PlayBGM(SoundManager::BGM_GAME);
 	Master::mpSoundManager->SetBGMVolume(120);
 	
-	// マップ境界沿いに並べる樹木や花などの装飾アセットを一元生成
+	// ?}?b?v???E??????????????????????A?Z?b?g???????
 	for (int i = 0; i < 6; i++)
 	{
 		new Object_Stage("Resource/3D/fanse (2)/Sousyoku/SmallTree1.mv1", VGet(6000, 0, -5000 + 2000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
@@ -73,7 +75,7 @@ void Scene3D::Initialize()
 	 
 	new Object_Stage("Resource/3D/fanse (2)/Sousyoku/Grass2.mv1", VGet(0, 0, 0), 2.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
 
-	// ステージの広がりを表現するため、視界を遮る四方の山（Mountain）を配置
+	// ?X?e?[?W??L?????\????????A???E????l????R?iMountain?j??z?u
 	VECTOR mountainScale = VGet(30.0f, 50.0f, 30.0f);
 	float mountainDist = 13000.0f;
 	auto m1 = new Mountain("Resource/3D/Mountain/uploads_files_2708212_terrain.mv1", VGet(0, 0, mountainDist), mountainScale, VGet(0.0f, DX_PI_F, 0.0f));
@@ -85,7 +87,7 @@ void Scene3D::Initialize()
 	auto m4 = new Mountain("Resource/3D/Mountain/uploads_files_2708212_terrain.mv1", VGet(-mountainDist, 0, 0), mountainScale, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
 	m4->SetColor(0.2f, 0.3f, 0.2f, 1.0f);
 
-	// プレイエリアの外郭境界部にランダムな遮蔽岩（Rock）を配置
+	// ?v???C?G???A??O?s???E????????_????????iRock?j??z?u
 	for (int i = 0; i < 40; i++)
 	{
 		float rockX = (float)(GetRand(15000) - 7500);
@@ -102,7 +104,7 @@ void Scene3D::Initialize()
 		rock->SetColor(0.4f, 0.7f, 0.3f, 1.0f);
 	}
 
-	// プレイエリア境界（ステージ端）を視覚的に分かりやすくするための柵（Fence）の生成
+	// ?v???C?G???A???E?i?X?e?[?W?[?j????o?I??????????????????iFence?j?????
 	for (int i = 0; i < 5; i++)
 	{
 		new Object_Stage("Resource/3D/NewFence/fence1.mv1", VGet(490.0f + 1000 * i, 0.0f, 5050.0f), 12.80f, VGet(0.0f, 0.0f, 0.0f));
@@ -121,13 +123,13 @@ void Scene3D::Initialize()
 	auto Player = new Player3D("Resource/3D/ufo2/uploads_files_2595751_UFO.mv1", VGet(1000.0f, 2000.0f, 0.0f));
 	Player->SetScale(0.6f);
 
-	VECTOR spawnPos = Utility::StageSize; // スポーン判定域（ステージサイズ範囲内）
+	VECTOR spawnPos = Utility::StageSize; // ?X?|?[???????i?X?e?[?W?T?C?Y????j
 
-	// 初期ステージ配置として牛と野生動物をランダム座標へ配置
-	mpCowManager->SpawnCow("Resource/3D/Cow/uploads_files_3880923_Cow.mv1", spawnPos, 50.0f, CowMove::Cow_1, 10);
-	mpCowManager->SpawnCow("Resource/3D/GOLDCow/GoldCow.mv1", spawnPos, 50.0f, CowMove::Cow_gold, 2);
-	mpAnimalManager->SpawnAnimal("Resource/3D/Animal/uploads_files_3881253_Chicken_Low.mv1", spawnPos, 50.0f, AnimalMove::Animal_1, 5);
-	mpAnimalManager->SpawnAnimal("Resource/3D/Animal/uploads_files_3887296_Black_Bear.mv1", spawnPos, 50.0f, AnimalMove::Animal_1, 5);
+	// ?????X?e?[?W?z?u???????????????????_?????W??z?u
+	mpCowManager->SpawnCow(GameConstants::COW_DEFAULT.modelPath, spawnPos, 50.0f, CowMove::Cow_1, 10);
+	mpCowManager->SpawnCow(GameConstants::COW_GOLD.modelPath, spawnPos, 50.0f, CowMove::Cow_gold, 2);
+	mpAnimalManager->SpawnAnimal(GameConstants::ANIMAL_CHICKEN.modelPath, spawnPos, 50.0f, AnimalMove::Animal_1, 5);
+	mpAnimalManager->SpawnAnimal(GameConstants::ANIMAL_BEAR.modelPath, spawnPos, 50.0f, AnimalMove::Animal_1, 5);
 	
 	mpPhase = Normal;
 
@@ -142,7 +144,7 @@ void Scene3D::Initialize()
 		VGet(11500, 0, 11500)
 	);
 	
-	// 見えないマップ境界壁のコリジョンを四方に生成
+	// ????????}?b?v???E???R???W??????l???????
 	new Wall("Resource", VGet(0.0f, 0.0f, 5000.0f), VGet(-5000.0f, 5000.0f, 0.0f), VGet(5000.0f, 0.0f, 0.0f));
 	new Wall("Resource", VGet(0.0f, 0.0f, -5000.0f), VGet(-5000.0f, 5000.0f, 0.0), VGet(5000.0f, 0.0f, 0.0f));
 	new Wall("Resource", VGet(5000.0f, 0.0f, 0.0f), VGet(0.0f, 5000.0f, 5000.0f), VGet(0.0f, 0.0f, -5000.0f));
@@ -151,7 +153,7 @@ void Scene3D::Initialize()
 
 void Scene3D::Update()
 {
-	auto p = Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->GetObject3DByTag(Object3D::Tag3D_player);
+	auto p = ServiceLocator::GetPlayer();
 	Player3D* player = dynamic_cast<Player3D*>(p);
 	
 	Scene::Update();
@@ -161,8 +163,8 @@ void Scene3D::Update()
 	PhaseUpdate();
 	tatumaki->Update();
 
-	// 制限時間タイマーが終了した時点でリザルト遷移のフェードを開始
-	if (Master::mpSceneManager->GetCurrentScene()->mpGameManager->GetGameTimer()->GetTime() <= 0)
+	// ????????^?C?}?[???I?????????_????U???g?J???t?F?[?h??J?n
+	if (ServiceLocator::GetGameManager()->GetGameTimer()->GetTime() <= 0)
 	{
 		mFadeState = SceneFade_Out;
 		mNextScene = SceneManager::SCENE_RESULT;
@@ -170,7 +172,7 @@ void Scene3D::Update()
 
 	if (mFadeState == SceneFade_Out)
 	{
-		// フェードアウトに合わせてBGMの音量を滑らかに下げる
+		// ?t?F?[?h?A?E?g???????BGM????????????????
 		Master::mpSoundManager->SetBGMVolume((Master::mpSoundManager->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
 		if (GetFadeAlpha() >= 255)
 		{
@@ -186,7 +188,7 @@ void Scene3D::Draw()
 	const int count = 51;
 	const float distance = -500.0f;
 	
-	// デバッグ用およびプレイヤー位置把握のためのグリッド線を床に描画
+	// ?f?o?b?O?p????��v???C???[??u?c????????O???b?h???????`??
 	for (int i = 0; i < count; i++)
 	{
 		float base = (count / 2 - i) * -distance;
@@ -211,7 +213,7 @@ void Scene3D::Draw()
 		mpGameManager->GetGameTimer()->Draw();
 	}
 
-	// イベントカメラ起動中、プレイヤーに注意を促すイベントテキスト表示
+	// ?C?x???g?J?????N?????A?v???C???[?????????C?x???g?e?L?X?g?\??
 	if (Master::mpCamera->GetIsPhaseCameraActive())
 	{
 		int currentPhase = (int)mpGameManager->GetCurrentPhase();
@@ -226,13 +228,13 @@ void Scene3D::Draw()
 		if (currentPhase == (int)GameManager::GamePhase::MassSpawn)
 		{
 			SetFontSize(64);
-			DrawFormatString(600, 200, GetColor(255, 100, 100), "牛が大量発生！！");
+			DrawFormatString(600, 200, GetColor(255, 100, 100), "???????????I?I");
 			SetFontSize(16);
 		}
 		else if (currentPhase == (int)GameManager::GamePhase::TornadoCrisis)
 		{
 			SetFontSize(64);
-			DrawFormatString(600, 200, GetColor(255, 100, 100), "竜巻が巨大化！！");
+			DrawFormatString(600, 200, GetColor(255, 100, 100), "???????????I?I");
 			SetFontSize(16);
 		}
 	}
@@ -244,14 +246,14 @@ void Scene3D::Draw()
 }
 
 /*
- * @brief ゲームのフェーズ遷移状況に追従して、カメラワーク、竜巻サイズ、牛の定期降雨イベントを処理する
- * [入力] なし
- * [出力] なし
- * [副作用] カメラ状態更新、竜巻の拡大、牛の新規追加生成(new)
+ * @brief ?Q?[????t?F?[?Y?J??????]????A?J???????[?N?A?????T?C?Y?A???????~?J?C?x???g?????????
+ * [????] ???
+ * [?o??] ???
+ * [????p] ?J???????X?V?A??????g??A????V?K???????(new)
  */
 void Scene3D::PhaseUpdate()
 {
-	auto p = Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->GetObject3DByTag(Object3D::Tag3D_player);
+	auto p = ServiceLocator::GetPlayer();
 	Player3D* player = dynamic_cast<Player3D*>(p);
 	
 	if (player != nullptr && tatumaki != nullptr) {
@@ -260,7 +262,7 @@ void Scene3D::PhaseUpdate()
 
 		tatumaki->SetCrisisMode(currentPhase == (int)GameManager::GamePhase::TornadoCrisis);
 
-		// 大量発生フェーズ中は、一定間隔（60フレーム）でプレイヤー上空から牛を降らせる
+		// ???????t?F?[?Y????A????u?i60?t???[???j??v???C???[???????~?�_??
 		if (currentPhase == (int)GameManager::GamePhase::MassSpawn)
 		{
 			mMassSpawnTimer++;
@@ -269,10 +271,10 @@ void Scene3D::PhaseUpdate()
 				mMassSpawnTimer = 0;
 
 				VECTOR spawnCenter = player->GetPosition();
-				// スポーン時に中心座標(spawnCenter)と落下開始位置(y+2000)、および拡散範囲幅を合成して渡す
+				// ?X?|?[????????S???W(spawnCenter)??????J?n??u(y+2000)?A????��g?U?????????????n??
 				VECTOR spawnArgs = VGet(4000.0f, spawnCenter.y + 2000.0f, 4000.0f);
 
-				mpCowManager->SpawnCow("Resource/3D/Cow/uploads_files_3880923_Cow.mv1", spawnArgs, 50.0f, CowMove::Cow_1, 2);
+				mpCowManager->SpawnCow(GameConstants::COW_DEFAULT.modelPath, spawnArgs, 50.0f, CowMove::Cow_1, 2);
 			}
 		}
 	}
@@ -280,5 +282,5 @@ void Scene3D::PhaseUpdate()
 
 void Scene3D::Finalize()
 {
-	Master::mpSoundManager->StopBGM(); // 次画面に遷移するにあたりゲーム中BGMを止める
+	Master::mpSoundManager->StopBGM(); // ??????J???????????Q?[????BGM??~???
 }

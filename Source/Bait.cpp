@@ -1,4 +1,5 @@
-﻿#include "Bait.h"
+﻿#include "ServiceLocator.h"
+#include "Bait.h"
 #include "Model.h"
 #include "CapsuleCollider.h"
 #include "GameTimer.h"
@@ -53,7 +54,7 @@ void Bait::Update()
 
 	if (mpGameTimer->OutTimerFlag())
 	{
-		const auto& c = Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->GetObject3DListByTag(Object3D::Tag3D_Cow);
+		const auto& c = ServiceLocator::GetObjectManager()->GetObject3DListByTag(Object3D::Tag3D_Cow);
 		for (int i = 0; i < c.size(); i++)
 		{
 			CowMove* cow = dynamic_cast<CowMove*>(c.at(i));

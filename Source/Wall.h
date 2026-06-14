@@ -1,17 +1,17 @@
-﻿#pragma once
+#pragma once
 #include "DxLib.h"
 #include "Object3D.h"
 #include <vector>
 
-// ゲーム内の壁面（平面ポリゴン）を生成・描画するクラス
+// �Q�[�����̕ǖʁi���ʃ|���S���j�𐶐��E�`�悷��N���X
 class Wall : public Object3D
 {
 public:
 	/*
-	 * @brief 壁面のテクスチャ画像と範囲パラメータを設定して初期化する
-	 * [入力] filename: テクスチャ画像へのパス, centerPos: 壁の中心座標, topLeft: 左上端の相対座標, bottomRight: 右下端の相対座標
-	 * [出力] なし
-	 * [副作用] テクスチャがメモリにロードされ、頂点バッファ(mVertex)が設定される
+	 * @brief �ǖʂ̃e�N�X�`���摜�Ɣ͈̓p�����[�^��ݒ肵�ď���������
+	 * [����] filename: �e�N�X�`���摜�ւ̃p�X, centerPos: �ǂ̒��S���W, topLeft: ����[�̑��΍��W, bottomRight: �E���[�̑��΍��W
+	 * [�o��] �Ȃ�
+	 * [����p] �e�N�X�`�����������Ƀ��[�h����A���_�o�b�t�@(mVertex)���ݒ肳���
 	 */
 	Wall(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight);
 	virtual ~Wall();
@@ -20,10 +20,10 @@ public:
 	void Draw() override;
 
 	/*
-	 * @brief 壁を構成する4つの頂点データを取得する
-	 * [入力] なし
-	 * [出力] VERTEX3D構造体のベクター
-	 * [副作用] なし
+	 * @brief �ǂ��\������4�̒��_�f�[�^���擾����
+	 * [����] �Ȃ�
+	 * [�o��] VERTEX3D�\���̂̃x�N�^�[
+	 * [����p] �Ȃ�
 	 */
 	std::vector<VERTEX3D> GetVertex()
 	{
@@ -36,6 +36,7 @@ public:
 	}
 
 private:
-	int mnGraphHandle;      // 壁テクスチャのグラフィックハンドル
-	VERTEX3D mVertex[4];    // 壁面を構成する4つの頂点データ
+	int mnGraphHandle;      // �ǃe�N�X�`���̃O���t�B�b�N�n���h��
+	VERTEX3D mVertex[4];    // �ǖʂ��\������4�̒��_�f�[�^
 };
+

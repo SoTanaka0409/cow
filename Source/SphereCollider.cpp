@@ -1,4 +1,4 @@
-ï»¿#include "SphereCollider.h"
+#include "SphereCollider.h"
 #include"CapsuleCollider.h"
 
 SphereCollider::SphereCollider(Object3D* parent, VECTOR center, float radius)
@@ -17,7 +17,7 @@ void SphereCollider::Update(Collider* check)
 {
 	if (check != nullptr)
 	{
-		// ç›¸æ‰‹ãŒã‚«ãƒ—ã‚»ãƒ«å‹ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å ´åˆã®äº¤å·®åˆ¤å®šè¨ˆç®—
+		// ‘Šè‚ªƒJƒvƒZƒ‹Œ^ƒRƒ‰ƒCƒ_[‚Ìê‡‚ÌŒğ·”»’èŒvZ
 		CapsuleCollider* capsule = dynamic_cast<CapsuleCollider*>(check);
 		if (capsule != nullptr)
 		{
@@ -32,7 +32,7 @@ void SphereCollider::Update(Collider* check)
 			HitCheck(check, isHit);
 		}
 
-		// ç›¸æ‰‹ãŒçƒå‹ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å ´åˆã®äº¤å·®åˆ¤å®šè¨ˆç®—
+		// ‘Šè‚ª‹…Œ^ƒRƒ‰ƒCƒ_[‚Ìê‡‚ÌŒğ·”»’èŒvZ
 		SphereCollider* sphere = dynamic_cast<SphereCollider*>(check);
 		if (sphere != nullptr)
 		{
@@ -51,7 +51,7 @@ void SphereCollider::Update(Collider* check)
 
 void SphereCollider::Draw()
 {
-	// çƒã®æç”»å‡¦ç†
+	// ‹…‚Ì•`‰æˆ—
 	DrawSphere3D(
 		mvPosition,
 		mfRadius,
@@ -76,3 +76,4 @@ void SphereCollider::OnExit()
 {
 
 }
+

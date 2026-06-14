@@ -1,4 +1,4 @@
-ï»¿#include "Texture.h"
+#include "Texture.h"
 #include "DxLib.h"
 
 Texture::Texture(std::string filename, VECTOR centerPosition, int graphsize_x, int graphsize_y, int transFlag)
@@ -9,7 +9,7 @@ Texture::Texture(std::string filename, VECTOR centerPosition, int graphsize_x, i
 	, mnTransFlag(transFlag)
 {
 	mnHandle = LoadGraph(filename.c_str());
-	GetGraphSize(mnHandle, &mnSizeX, &mnSizeY); // æ‹¡å¤§ç¸®å°æç”»ã®åŸºæº–ã«ã™ã‚‹ãŸã‚ã‚ªãƒªã‚¸ãƒŠãƒ«ã‚µã‚¤ã‚ºã‚’å–å¾—
+	GetGraphSize(mnHandle, &mnSizeX, &mnSizeY); // Šg‘åk¬•`‰æ‚ÌŠî€‚É‚·‚é‚½‚ßƒIƒŠƒWƒiƒ‹ƒTƒCƒY‚ğæ“¾
 }
 
 Texture::~Texture()
@@ -18,10 +18,10 @@ Texture::~Texture()
 }
 
 /*
-	* @brief è¨­å®šã•ã‚ŒãŸæŒ‡å®šã‚µã‚¤ã‚º(mNewGameW, mNewGameH)ã§ã€mvPositionã‚’ä¸­å¿ƒã«å¼•ãä¼¸ã°ã—æç”»ã™ã‚‹
-	* [å…¥åŠ›] ãªã—
-	* [å‡ºåŠ›] ãªã—
-	* [å‰¯ä½œç”¨] æŒ‡å®šç¯„å›²ã¸ãƒ†ã‚¯ã‚¹ãƒãƒ£æç”»
+	* @brief İ’è‚³‚ê‚½w’èƒTƒCƒY(mNewGameW, mNewGameH)‚ÅAmvPosition‚ğ’†S‚Éˆø‚«L‚Î‚µ•`‰æ‚·‚é
+	* [“ü—Í] ‚È‚µ
+	* [o—Í] ‚È‚µ
+	* [•›ì—p] w’è”ÍˆÍ‚ÖƒeƒNƒXƒ`ƒƒ•`‰æ
 	*/
 void Texture::Draw()
 {
@@ -35,14 +35,14 @@ void Texture::Draw()
 }
 
 /*
-	* @brief ãƒœã‚¿ãƒ³ãƒ›ãƒãƒ¼æ¼”å‡ºç”¨ãªã©ã«ã€é€šå¸¸ã‚µã‚¤ã‚ºã«ç‰¹å®šã®æ‹¡å¼µå¹…(expand)ã‚’åŠ ãˆã¦æ‹¡å¤§æç”»ã™ã‚‹ï¼ˆç¾åœ¨æœªä½¿ç”¨ï¼‰
-	* [å…¥åŠ›] ãªã—
-	* [å‡ºåŠ›] ãªã—
-	* [å‰¯ä½œç”¨] æŒ‡å®šã•ã‚ŒãŸæ‹¡å¼µé ˜åŸŸã¸æ‹¡å¤§æç”»
+	* @brief ƒ{ƒ^ƒ“ƒzƒo[‰‰o—p‚È‚Ç‚ÉA’ÊíƒTƒCƒY‚É“Á’è‚ÌŠg’£•(expand)‚ğ‰Á‚¦‚ÄŠg‘å•`‰æ‚·‚éiŒ»İ–¢g—pj
+	* [“ü—Í] ‚È‚µ
+	* [o—Í] ‚È‚µ
+	* [•›ì—p] w’è‚³‚ê‚½Šg’£—Ìˆæ‚ÖŠg‘å•`‰æ
 	*/
 void Texture::SizeDraw()
 {
-	int expand = 15; // æ‹¡å¤§è¡¨ç¤ºã™ã‚‹éš›ã®æ‹¡å¼µãƒ”ã‚¯ã‚»ãƒ«æ•°
+	int expand = 15; // Šg‘å•\¦‚·‚éÛ‚ÌŠg’£ƒsƒNƒZƒ‹”
 	int halfW = (mNewGameW + expand) / 2;
 	int halfH = (mNewGameH + expand) / 2;
 
@@ -60,10 +60,10 @@ void Texture::Update()
 }
 
 /*
-	* @brief ä¸­å¿ƒåº§æ¨™ã‚’è»¸ã«ã—ã¦ã€æ¯”ç‡æŒ‡å®š(scale)ã«ã‚ˆã‚‹æ‹¡å¤§ç¸®å°æç”»ã‚’è¡Œã†
-	* [å…¥åŠ›] scale: ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°å€ç‡ï¼ˆ1.0fãŒç­‰å€ï¼‰
-	* [å‡ºåŠ›] ãªã—
-	* [å‰¯ä½œç”¨] æŒ‡å®šã‚µã‚¤ã‚ºã§ãƒ†ã‚¯ã‚¹ãƒãƒ£æç”»
+	* @brief ’†SÀ•W‚ğ²‚É‚µ‚ÄA”ä—¦w’è(scale)‚É‚æ‚éŠg‘åk¬•`‰æ‚ğs‚¤
+	* [“ü—Í] scale: ƒXƒP[ƒŠƒ“ƒO”{—¦i1.0f‚ª“™”{j
+	* [o—Í] ‚È‚µ
+	* [•›ì—p] w’èƒTƒCƒY‚ÅƒeƒNƒXƒ`ƒƒ•`‰æ
 	*/
 void Texture::DrawScale(float scale)
 {
@@ -78,3 +78,4 @@ void Texture::DrawScale(float scale)
 		mnHandle, mnTransFlag
 	);
 }
+

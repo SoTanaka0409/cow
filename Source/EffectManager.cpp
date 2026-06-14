@@ -1,4 +1,4 @@
-ï»¿#include "EffectManager.h"
+#include "EffectManager.h"
 
 EffectManager::EffectManager()
 	: effectResourcehandle(-1)
@@ -13,34 +13,35 @@ EffectManager::~EffectManager()
 
 void EffectManager::Initalize()
 {
-	// DXãƒ©ã‚¤ãƒ–ãƒ©ãƒªå´ã§Direct3D11ã‚’ä½¿ç”¨ã™ã‚‹ã‚ˆã†ã«è¨­å®šã™ã‚‹ï¼ˆEffekseerã®è¦æ±‚ä»•æ§˜ï¼‰
+	// DXƒ‰ƒCƒuƒ‰ƒŠ‘¤‚ÅDirect3D11‚ğg—p‚·‚é‚æ‚¤‚Éİ’è‚·‚éiEffekseer‚Ì—v‹d—lj
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
 
-	// è¡¨ç¤ºå¯èƒ½ãªãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®æœ€å¤§æ•°ã‚’æŒ‡å®šã—ã¦ã€Effekseerã‚·ã‚¹ãƒ†ãƒ ã‚’åˆæœŸåŒ–ã™ã‚‹
+	// •\¦‰Â”\‚Èƒp[ƒeƒBƒNƒ‹‚ÌÅ‘å”‚ğw’è‚µ‚ÄAEffekseerƒVƒXƒeƒ€‚ğ‰Šú‰»‚·‚é
 	if (Effekseer_Init(EffectParticleLimit) == -1)
 	{
 		DxLib_End();
 	}
 
-	// ç”»é¢ãƒ¢ãƒ¼ãƒ‰åˆ‡æ›¿ï¼ˆã‚¦ã‚£ãƒ³ãƒ‰ã‚¦/ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ï¼‰æ™‚ã€Effekseerã®ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‡ãƒã‚¤ã‚¹ãƒªã‚»ãƒƒãƒˆã‚’é˜²ã
+	// ‰æ–Êƒ‚[ƒhØ‘ÖiƒEƒBƒ“ƒhƒE/ƒtƒ‹ƒXƒNƒŠ[ƒ“jAEffekseer‚ÌƒOƒ‰ƒtƒBƒbƒNƒXƒfƒoƒCƒXƒŠƒZƒbƒg‚ğ–h‚®
 	SetChangeScreenModeGraphicsSystemResetFlag(FALSE);
 
-	// DXãƒ©ã‚¤ãƒ–ãƒ©ãƒªã§ã®ãƒ‡ãƒã‚¤ã‚¹å–ªå¤±ãƒ»å¾©å¸°ã¨Effekseerã®å†…éƒ¨ãƒªã‚½ãƒ¼ã‚¹å†ç”Ÿæˆã‚’çµã³ã¤ã‘ã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’è¨­å®šã™ã‚‹
+	// DXƒ‰ƒCƒuƒ‰ƒŠ‚Å‚ÌƒfƒoƒCƒX‘r¸E•œ‹A‚ÆEffekseer‚Ì“à•”ƒŠƒ\[ƒXÄ¶¬‚ğŒ‹‚Ñ‚Â‚¯‚éƒR[ƒ‹ƒoƒbƒN‚ğİ’è‚·‚é
 	Effekseer_SetGraphicsDeviceLostCallbackFunctions();
 
-	// 3Dã‚¨ãƒ•ã‚§ã‚¯ãƒˆæç”»æ™‚ã«å‰å¾Œé–¢ä¿‚ï¼ˆæ·±åº¦å€¤ï¼‰ãŒæ­£ã—ãè€ƒæ…®ã•ã‚Œã‚‹ã‚ˆã†ã€Zãƒãƒƒãƒ•ã‚¡å‡¦ç†ã‚’æœ‰åŠ¹ã«ã™ã‚‹
+	// 3DƒGƒtƒFƒNƒg•`‰æ‚É‘OŒãŠÖŒWi[“x’lj‚ª³‚µ‚­l—¶‚³‚ê‚é‚æ‚¤AZƒoƒbƒtƒ@ˆ—‚ğ—LŒø‚É‚·‚é
 	SetUseZBuffer3D(TRUE);
 	SetWriteZBuffer3D(TRUE);
 }
 
 void EffectManager::Update()
 {
-	// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‘¼ã³å‡ºã—ã€ç¾åœ¨å†ç”Ÿä¸­ã®å…¨Effekseer3Dã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚¹ãƒ†ãƒƒãƒ—ã‚’é€²ã‚ã‚‹
+	// –ˆƒtƒŒ[ƒ€ŒÄ‚Ño‚µAŒ»İÄ¶’†‚Ì‘SEffekseer3DƒGƒtƒFƒNƒg‚ÌƒAƒjƒ[ƒVƒ‡ƒ“ƒXƒeƒbƒv‚ği‚ß‚é
 	UpdateEffekseer3D();
 }
 
 void EffectManager::Draw()
 {
-	// å†ç”Ÿä¸­ã‹ã¤ç”»é¢å†…ã«åã¾ã‚‹Effekseerã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’3Dæç”»ãƒ‘ã‚¹ã¸é€ã‚‹
+	// Ä¶’†‚©‚Â‰æ–Ê“à‚Éû‚Ü‚éEffekseerƒGƒtƒFƒNƒg‚ğ3D•`‰æƒpƒX‚Ö‘—‚é
 	DrawEffekseer3D();
 }
+

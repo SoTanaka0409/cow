@@ -1,18 +1,16 @@
-﻿#pragma once
+#pragma once
 #include "CowMove.h"
 
-// 一般的な牛キャラクター（タグ: Cow_1）を制御するクラス
+// ��ʓI�ȋ��L�����N�^�[�i�^�O: Cow_1�j�𐧌䂷��N���X
 class Cow : public CowMove
 {
 public:
 	/*
-	 * @brief 牛オブジェクトを初期位置に配置し、スコア・経験値を設定する
-	 * [入力] filename: モデルのファイルパス, initPos: 初期座標, num: 回収時の基礎スコア値
-	 * [出力] なし
-	 * [副作用] なし
+	 * @brief ���I�u�W�F�N�g�������ʒu�ɔz�u���A�X�R�A�E�o���l��ݒ肷��
+	 * [����] filename: ���f���̃t�@�C���p�X, initPos: �������W, num: ������̊�b�X�R�A�l
+	 * [�o��] �Ȃ�
+	 * [����p] �Ȃ�
 	 */
 	Cow(std::string filename, VECTOR initPos, float num);
 	virtual ~Cow();
-
-	void Update() override;
 };

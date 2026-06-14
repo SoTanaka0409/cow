@@ -1,4 +1,5 @@
-﻿#include "DxLib.h"
+#include "ServiceLocator.h"
+#include "DxLib.h"
 #include"Master.h"
 #include"Camera.h"
 #include"SceneManager.h"
@@ -29,6 +30,7 @@ bool Master::GameFinishFlag = false;
 int Master::mnCaughtCowCount = 0;
 bool Master::TutrialVacumFlag = false;
 bool Master::FeverFlag = false;
+float Master::mfDeltaTime = 0.01666f;
 
 VECTOR Utility::StageSize= VGet(6000, 0, 6000); // 3D空間におけるステージ全体の広さ境界設定
 
@@ -74,12 +76,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	Master::mpEffectManager->Initalize();
 
+	int previousTime = GetNowCount();
 
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
 		// 描画バッファをリセットし、今フレームの新規描画に備える
 		ClearDrawScreen();
 		int time = GetNowCount();
+
+		Master::mfDeltaTime = (time - previousTime) / 1000.0f;
+		if (Master::mfDeltaTime > 0.1f) Master::mfDeltaTime = 0.1f;
+		previousTime = time;
 
 		// F1キー押下で開発用のデバッグカメラモードへ切り替え
 		if (InputManager::CheckDownKey(KEY_INPUT_F1))
@@ -113,8 +120,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 
 		// 削除フラグが立っているコライダーと3Dオブジェクトをメモリから解放
-		Master::mpSceneManager->GetCurrentScene()->GetCollisionManager()->DeleteAllColliderIfNeeded();
-		Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->DeleteAll3DIfNeeded();
+		ServiceLocator::GetCurrentScene()->GetCollisionManager()->DeleteAllColliderIfNeeded();
+		ServiceLocator::GetObjectManager()->DeleteAll3DIfNeeded();
 
 		// 処理の区切り目として、次フレーム開始前のシーン遷移要求を処理
 		Master::mpSceneManager->ChangeSceneIfNeeded();
@@ -140,3 +147,4 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	return 0;
 }
+
