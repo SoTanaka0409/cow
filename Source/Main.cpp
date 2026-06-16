@@ -126,7 +126,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// 処理の区切り目として、次フレーム開始前のシーン遷移要求を処理
 		Master::mpSceneManager->ChangeSceneIfNeeded();
 	}
-	
+	//new
 	// ゲームループ終了に伴う各グローバルマネージャーの破棄処理
 	Master::mpSceneManager->Finalize();
 	delete Master::mpSceneManager;
