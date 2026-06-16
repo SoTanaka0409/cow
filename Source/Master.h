@@ -34,6 +34,10 @@ public:
 	static int mnCaughtCowCount;              // 回収された牛の総数 (実績やゲーム状態移行に使用)
 	static bool TutrialVacumFlag;             // チュートリアルにおいて吸引操作が完了したかどうかの判定フラグ
 
+
 	static float mfDeltaTime;                 // 1フレームあたりの経過時間（秒）
 	static float GetDeltaTimeScaler() { return mfDeltaTime * 60.0f; } // 60FPS基準のスケール値
+
+
+	
 };

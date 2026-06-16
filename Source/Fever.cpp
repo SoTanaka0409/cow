@@ -25,13 +25,13 @@ Fever::~Fever()
 
 void Fever::AddGauge(int value)
 {
+	
 }
 
 void Fever::StartFever()
 {
 	// ?v???C???[??z???\???2?{?????t?B?[?o?[????b??^????
-	auto p = ServiceLocator::GetPlayer();
-	Player3D* player = dynamic_cast<Player3D*>(p);
+	Player3D* player = ServiceLocator::GetPlayer();
 	playerStatus = player->GetStatusAttack();
 	player->SetStatusAttack(playerStatus * 2.0f);
 	mIsFever = true;
@@ -44,8 +44,7 @@ void Fever::StartFever()
 void Fever::EndFever()
 {
 	// ?v???C???[??z???\??????l????
-	auto p = ServiceLocator::GetPlayer();
-	Player3D* player = dynamic_cast<Player3D*>(p);
+	Player3D* player = ServiceLocator::GetPlayer();
 	player->SetStatusAttack(playerStatus);
 	mIsFever = false;
 	

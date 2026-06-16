@@ -153,8 +153,7 @@ void Scene3D::Initialize()
 
 void Scene3D::Update()
 {
-	auto p = ServiceLocator::GetPlayer();
-	Player3D* player = dynamic_cast<Player3D*>(p);
+	Player3D* player = ServiceLocator::GetPlayer();
 	
 	Scene::Update();
 
@@ -253,8 +252,7 @@ void Scene3D::Draw()
  */
 void Scene3D::PhaseUpdate()
 {
-	auto p = ServiceLocator::GetPlayer();
-	Player3D* player = dynamic_cast<Player3D*>(p);
+	Player3D* player = ServiceLocator::GetPlayer();
 	
 	if (player != nullptr && tatumaki != nullptr) {
 		int currentPhase = (int)mpGameManager->GetCurrentPhase();

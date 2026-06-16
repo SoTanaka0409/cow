@@ -87,8 +87,7 @@ void AnimalMove::CharacterDied()
 {
 	if (mCurrentState != STATE_VACUUM) return;
 
-	auto p = ServiceLocator::GetPlayer();
-	Player3D* player = dynamic_cast<Player3D*>(p);
+	Player3D* player = ServiceLocator::GetPlayer();
 
 	CharacterRotate();
 	if (player != nullptr)
@@ -108,8 +107,7 @@ void AnimalMove::Die(DeathReason reason)
 {
 	if (mDeleteFlag) return;
 
-	auto p = ServiceLocator::GetPlayer();
-	Player3D* player = dynamic_cast<Player3D*>(p);
+	Player3D* player = ServiceLocator::GetPlayer();
 
 	switch (reason)
 	{

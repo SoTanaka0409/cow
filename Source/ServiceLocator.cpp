@@ -18,6 +18,7 @@ Scene* ServiceLocator::GetCurrentScene()
 	return nullptr;
 }
 
+
 ObjectManager* ServiceLocator::GetObjectManager()
 {
 	Scene* scene = GetCurrentScene();

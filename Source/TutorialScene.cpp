@@ -203,8 +203,7 @@ void TutorialScene::UpdateStateComboScore()
 {
 	if (mpTexture3) mpTexture3->Draw();
 
-	auto p = ServiceLocator::GetPlayer();
-	Player3D* player = dynamic_cast<Player3D*>(p);
+	Player3D* player = ServiceLocator::GetPlayer();
 
 	if (player && player->mpCombo->GetCombo() >= 2)
 	{
@@ -230,8 +229,7 @@ void TutorialScene::UpdateStatePhase()
 // 5. ?X?L??????F?v???C???[????????????_???X?L????l?????A???????????????X?e?b?v??
 void TutorialScene::UpdateStateSkill()
 {
-	auto p = ServiceLocator::GetPlayer();
-	Player3D* player = dynamic_cast<Player3D*>(p);
+	Player3D* player = ServiceLocator::GetPlayer();
 
 	if (!player) return;
 

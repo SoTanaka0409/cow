@@ -149,7 +149,6 @@ void Player3D::Play()
 {
 	int mouseInput = GetMouseInput();
 
-	// 左クリック長押し、かつゲージが残っており、フィーバータイム中でない場合
 	if ((mouseInput & MOUSE_INPUT_LEFT) && mVacuumGauge > 0.0f && !Master::FeverFlag)
 	{
 		mIsVacuumActive = true;
@@ -178,8 +177,7 @@ void Player3D::Play()
 		if (mVacuumGauge > VACUUM_GAUGE_MAX) mVacuumGauge = VACUUM_GAUGE_MAX;
 	}
 
-	// フィーバータイム中はゲージに関係なく強制的に吸い込みが常時発動する
-	if (Master::FeverFlag) mIsVacuumActive = true;
+
 }
 
 /*
@@ -364,7 +362,7 @@ void Player3D::MoveEx()
 		currentSpeed = Status(Status_Speed);
 		mvPosition = VAdd(mvPosition, VScale(moveVec, currentSpeed));
 	}
-
+	
 	// --- ポリゴン壁（Wall）との衝突判定およびすべり（壁ずり）処理 ---
 	bool hitwall = false;
 	bool hitwalls = false;
@@ -515,7 +513,8 @@ void Player3D::OnEnter(Collider* collider, Collider* check)
 		}
 	}
 	// --- 「その他動物」のコライダーがプレイヤーの吸い込み範囲に入った場合 ---
-	if (collider == mpCapsuleCollider && check->mpParentObject->GetTag() == Tag3D_Animal)
+	// フィーバー中はAnimalを吸い込まない
+	if (collider == mpCapsuleCollider && check->mpParentObject->GetTag() == Tag3D_Animal && !Master::FeverFlag)
 	{
 		AnimalMove* ani = dynamic_cast<AnimalMove*>(check->mpParentObject);
 		if (ani->GetCurrentState() != STATE_VACUUM)

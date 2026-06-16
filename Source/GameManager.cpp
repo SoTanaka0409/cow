@@ -54,8 +54,7 @@ GameManager::~GameManager()
  */
 void GameManager::GameNextStep(GameStepType type)
 {
-	auto p = ServiceLocator::GetPlayer();
-	Player3D* player = dynamic_cast<Player3D*>(p);
+	Player3D* player = ServiceLocator::GetPlayer();
 	
 	if (GameStepType::game_CowGet == type)
 	{
@@ -112,8 +111,7 @@ void GameManager::Draw()
 
 void GameManager::Update()
 {
-	auto p = ServiceLocator::GetPlayer();
-	Player3D* player = dynamic_cast<Player3D*>(p);
+	Player3D* player = ServiceLocator::GetPlayer();
 	
 	// タイムアップ後のリザルト遷移待ち処理
 	if (GameStepType::game_final == mnType)

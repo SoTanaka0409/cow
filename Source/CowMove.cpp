@@ -76,6 +76,7 @@ void CowMove::Update()
 
 void CowMove::Draw()
 {
+
 	if (mbIsVisible)
 	{
 		CharacterMove::Draw();
@@ -113,6 +114,7 @@ void CowMove::MoveCharacter()
 
 void CowMove::AvoidOtherCows()
 {
+	
 	const auto& cows = ServiceLocator::GetObjectManager()->GetObject3DListByTag(Object3D::Tag3D_Cow);
 	for (int i = 0; i < cows.size(); ++i)
 	{
@@ -268,8 +270,7 @@ void CowMove::CharacterDied()
 {
 	if (mCurrentState == STATE_VACUUM)
 	{
-		auto p = ServiceLocator::GetPlayer();
-		Player3D* player = dynamic_cast<Player3D*>(p);
+		Player3D* player = ServiceLocator::GetPlayer();
 
 		CharacterRotate();
 		if (player != nullptr)
@@ -330,8 +331,7 @@ void CowMove::Die(DeathReason reason)
 {
 	if (mDeleteFlag || mCowtDelete) return;
 
-	auto p = ServiceLocator::GetPlayer();
-	Player3D* player = dynamic_cast<Player3D*>(p);
+	Player3D* player = ServiceLocator::GetPlayer();
 
 	switch (reason)
 	{

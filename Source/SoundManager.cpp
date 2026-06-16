@@ -57,6 +57,7 @@ void SoundManager::Finalize()
 		DeleteSoundMem(it->second);
 	}
 	mnSeHandleList.clear();
+	
 }
 
 /*
