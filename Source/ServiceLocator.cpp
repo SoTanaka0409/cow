@@ -4,7 +4,7 @@
 #include "Scene.h"
 #include "ObjectManager.h"
 #include "Player3D.h"
-#include "CowManager.h"
+
 #include "AnimalManager.h"
 #include "GameManager.h"
 #include "Fever.h"
