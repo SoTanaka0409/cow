@@ -50,7 +50,7 @@ Score::~Score()
 
 void Score::Draw()
 {
-	int x = 100;
+	int x = 20;
 	int y = 100;
 	int width = 200;
 	int height = 100;

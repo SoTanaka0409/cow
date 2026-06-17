@@ -478,7 +478,7 @@ void Player3D::bar()
 {
 	int gaugeWidth = 300;
 	int gaugeHeight = 50;
-	int gaugeX = 50;
+	int gaugeX = 20;
 	int gaugeY = 700;
 
 	// ƒQ[ƒW‚Ì”wŒiiƒOƒŒ[‚ÌÀ•z’cj
