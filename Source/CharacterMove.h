@@ -12,6 +12,7 @@
 class SphereCollider;
 class CapsuleCollider;
 class CharacterState;
+class Player3D;
 
 enum AIState
 {
@@ -30,6 +31,8 @@ enum DeathReason
 class CharacterMove : public Object3D
 {
 public:
+	void SetTargetPlayer(Player3D* player) { mpTargetPlayer = player; }
+	Player3D* GetTargetPlayer() const { return mpTargetPlayer; }
 	CharacterMove(std::string filename, VECTOR initPos);
 	virtual ~CharacterMove();
 
@@ -73,6 +76,7 @@ public:
 	bool GetCharacterDelete() const { return mDeleteFlag; }
 
 protected:
+	Player3D* mpTargetPlayer = nullptr;
 	Model* mpModel;
 
 	AIState mCurrentState;

@@ -1,4 +1,4 @@
-#include "CharacterMove.h"
+﻿#include "CharacterMove.h"
 #include "CharacterState.h"
 #include "Master.h"
 #include "SceneManager.h"
@@ -70,6 +70,7 @@ void CharacterMove::Reset(VECTOR pos)
 {
 	mvPosition = pos;
 	mCurrentState = STATE_IDLE;
+	mpTargetPlayer = nullptr;
 
 	// 現在のStateを一度破棄し、新たに待機状態を作成
 	if (mpCurrentState != nullptr)

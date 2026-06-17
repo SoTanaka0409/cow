@@ -33,10 +33,27 @@ Player3D* ServiceLocator::GetPlayer()
 	ObjectManager* objMgr = GetObjectManager();
 	if (objMgr != nullptr)
 	{
-		// Player3Dとして安全にキャストして返す
 		return dynamic_cast<Player3D*>(objMgr->GetObject3DByTag(Object3D::Tag3D_player));
 	}
 	return nullptr;
+}
+
+std::vector<Player3D*> ServiceLocator::GetPlayers()
+{
+	std::vector<Player3D*> players;
+	ObjectManager* objMgr = GetObjectManager();
+	if (objMgr != nullptr)
+	{
+		const auto& list = objMgr->GetObject3DListByTag(Object3D::Tag3D_player);
+		for (auto obj : list)
+		{
+			if (Player3D* p = dynamic_cast<Player3D*>(obj))
+			{
+				players.push_back(p);
+			}
+		}
+	}
+	return players;
 }
 
 CowManager* ServiceLocator::GetCowManager()

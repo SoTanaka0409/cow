@@ -43,7 +43,7 @@ public:
 	 * [出力] なし
 	 * [副作用] プレイヤー攻撃ステータスの倍加、タイマー設定、フィーバーフラグON
 	 */
-	void StartFever();
+	void StartFever(class Player3D* player);
 
 	/*
 	 * @brief フィーバーを終了し、プレイヤー能力を元に戻してステージ上に通常牛・金牛・羊を補充する
@@ -59,6 +59,7 @@ private:
 	int mGauge;         // フィーバーゲージ蓄積値
 	int mTimer;         // フィーバー状態の残り継続フレーム数
 	bool mIsFever;      // 現在フィーバー状態かどうかのフラグ
-	float playerStatus; // フィーバー開始前のプレイヤー元攻撃ステータス退避用
+	float playerStatus;
+	class Player3D* mpFeverPlayer; // フィーバー開始前のプレイヤー元攻撃ステータス退避用
 };
 

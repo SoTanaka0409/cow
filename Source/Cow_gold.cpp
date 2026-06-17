@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+﻿#include "ServiceLocator.h"
 #include "Cow_gold.h"
 #include "CapsuleCollider.h"
 #include "Player3D.h"
@@ -51,7 +51,7 @@ void Cow_gold::Die(DeathReason reason)
 	{
 		if (this->mnFever == Nofever)
 		{
-			ServiceLocator::GetFever()->StartFever();
+			ServiceLocator::GetFever()->StartFever(mpTargetPlayer);
 		}
 	}
 }

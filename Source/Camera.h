@@ -68,6 +68,7 @@ public:
 
 	// ポジション、注視点などのゲッター・セッター
 	void SetPosition(VECTOR pos) { mvPosition = pos; }
+	void SetTarget(Object3D* target) { mpTarget = target; }
 	VECTOR GetPosition() { return mvPosition; }
 
 	VECTOR GetLookAtPosition() { return mvLookAtPosition; }

@@ -22,6 +22,7 @@
 #include"Combo.h"
 #include"Score.h"
 #include"AnimalMove.h"
+#include"CharacterState.h"
 #include"GameTimer.h"
 #include"GameManager.h"
 
@@ -510,6 +511,7 @@ void Player3D::OnEnter(Collider* collider, Collider* check)
 		CowMove* cow = dynamic_cast<CowMove*>(check->mpParentObject);
 		if (cow->GetCurrentState() != STATE_VACUUM)
 		{
+			cow->SetTargetPlayer(this);
 			cow->IncreaseVacuumTimer();
 			cow->ChangeStateToVacuum(); // 対象を吸引状態（上昇・回転）へ移行させる
 		}
@@ -520,6 +522,7 @@ void Player3D::OnEnter(Collider* collider, Collider* check)
 		AnimalMove* ani = dynamic_cast<AnimalMove*>(check->mpParentObject);
 		if (ani->GetCurrentState() != STATE_VACUUM)
 		{
+			ani->SetTargetPlayer(this);
 			ani->IncreaseVacuumTimer();
 			ani->ChangeStateToVacuum();
 		}
@@ -536,8 +539,10 @@ void Player3D::OnExit(Collider* collider, Collider* check)
 	{
 		CowMove* cow = dynamic_cast<CowMove*>(check->mpParentObject);
 
+		cow->SetTargetPlayer(nullptr);
 		cow->ResetVacuumTimer();            // 蓄積タイマーをリセット
-		cow->SetCurrentState(STATE_WALK); // 状態を通常の徘徊歩行に戻す
+		cow->SetCurrentState(STATE_WALK);
+		cow->ChangeState(new StateWalk()); // 状態を通常の徘徊歩行に戻す
 
 		VECTOR pos = cow->GetPosition();   // 現在の座標を取得（※必要に応じてY座標を接地させる処理を誘発）
 		cow->SetPosition(pos);
@@ -546,7 +551,9 @@ void Player3D::OnExit(Collider* collider, Collider* check)
 	if (collider == mpCapsuleCollider && check->mpParentObject->GetTag() == Tag3D_Animal)
 	{
 		AnimalMove* ani = dynamic_cast<AnimalMove*>(check->mpParentObject);
+		ani->SetTargetPlayer(nullptr);
 		ani->SetCurrentState(STATE_WALK);
+		ani->ChangeState(new StateWalk());
 		ani->SetPosition(ani->GetPosition());
 	}
 }

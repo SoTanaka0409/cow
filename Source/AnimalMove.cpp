@@ -1,4 +1,4 @@
-#include "AnimalMove.h"
+﻿#include "AnimalMove.h"
 #include "GameConstants.h"
 #include "Master.h"
 #include "InputManager.h"
@@ -85,10 +85,9 @@ void AnimalMove::OnExit(Collider* collider, Collider* check)
 
 void AnimalMove::CharacterDied()
 {
-	if (mCurrentState != STATE_VACUUM) return;
+	if (mCurrentState != STATE_VACUUM||ServiceLocator::GetFever()->IsFever()) return;
 
-	auto p = ServiceLocator::GetPlayer();
-	Player3D* player = dynamic_cast<Player3D*>(p);
+	Player3D* player = mpTargetPlayer;
 
 	CharacterRotate();
 	if (player != nullptr)
@@ -108,8 +107,7 @@ void AnimalMove::Die(DeathReason reason)
 {
 	if (mDeleteFlag) return;
 
-	auto p = ServiceLocator::GetPlayer();
-	Player3D* player = dynamic_cast<Player3D*>(p);
+	Player3D* player = mpTargetPlayer;
 
 	switch (reason)
 	{

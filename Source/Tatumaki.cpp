@@ -53,15 +53,26 @@ void Tatumaki::Update()
 	Tatu->SetScale(VGet(1.0f * mCurrentScaleRatio, 1.4f * mCurrentScaleRatio, 1.0f * mCurrentScaleRatio));
 	mpCapsuleCollider->mfRadius = mCurrentRadius;
 
-	auto p = ServiceLocator::GetPlayer();
+		auto players = ServiceLocator::GetPlayers();
+	Player3D* p = nullptr;
+	float minDistSq = -1.0f;
+	for (auto player : players)
+	{
+		VECTOR diff = VSub(player->GetPosition(), mPos);
+		diff.y = 0; // x,z distance only
+		float distSq = VSquareSize(diff);
+		if (minDistSq < 0 || distSq < minDistSq)
+		{
+			minDistSq = distSq;
+			p = player;
+		}
+	}
 
 	if (p != nullptr)
 	{
-		// プレイヤーの現在位置へ少しずつ向きを補正して、緩やかなホーミング挙動を実現する
 		VECTOR playerPos = p->GetPosition();
 		VECTOR targetDir = VSub(playerPos, mPos);
-
-		targetDir.y = 0; // 高度方向の追従は不要なため無視する
+		targetDir.y = 0; // x,z only
 
 		if (VSize(targetDir) > 0.1f)
 		{
