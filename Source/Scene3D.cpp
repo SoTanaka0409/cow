@@ -228,13 +228,13 @@ void Scene3D::Draw()
 		if (currentPhase == (int)GameManager::GamePhase::MassSpawn)
 		{
 			SetFontSize(64);
-			DrawFormatString(600, 200, GetColor(255, 100, 100), "???????????I?I");
+			DrawFormatString(600, 200, GetColor(255, 100, 100), "牛が大量発生!!");
 			SetFontSize(16);
 		}
 		else if (currentPhase == (int)GameManager::GamePhase::TornadoCrisis)
 		{
 			SetFontSize(64);
-			DrawFormatString(600, 200, GetColor(255, 100, 100), "???????????I?I");
+			DrawFormatString(600, 200, GetColor(255, 100, 100), "台風が巨大化!!");
 			SetFontSize(16);
 		}
 	}

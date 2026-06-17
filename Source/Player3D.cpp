@@ -32,7 +32,7 @@ Player3D::Player3D(std::string filename, VECTOR initPos)
 	, mfHorizontalAngle(0.0f)
 	, mfSpeed(35.0f)
 	, mfHp(0)
-	, mfAttack_Speed(6.0f)
+	, mfAttack_Speed(3.0f)
 	, CatchNowCount(0)
 {
 	mIsStunned = false;

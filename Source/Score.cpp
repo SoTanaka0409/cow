@@ -176,9 +176,9 @@ void Score::UpdateNameInput()
 
 
 	GetKeyInputString(playerName, inputHandle);
-	DrawFormatString(300, 100, GetColor(255, 255, 255), "お名前を入力してください");
+	/*DrawFormatString(300, 100, GetColor(255, 255, 255), "お名前を入力してください");
 	DrawFormatString(300, 120, GetColor(255, 255, 255), "入力後、ENTERキーを押してください");
-	DrawFormatString(300, 160, GetColor(255, 255, 0), ">> %s", playerName);
+	DrawFormatString(300, 160, GetColor(255, 255, 0), ">> %s", playerName);*/
 
 	// 入力完了判定（ENTERキー）
 	if (CheckHitKey(KEY_INPUT_RETURN) && strlen(playerName) > 0)
