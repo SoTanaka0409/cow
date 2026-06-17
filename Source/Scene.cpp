@@ -1,4 +1,4 @@
-
+ï»¿
 #include"Scene.h"
 #include"ObjectManager.h"
 #include"Master.h"
@@ -8,13 +8,9 @@
 #include"Fever.h"
 #include"AnimalManager.h"
 
-/*
- * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
- * @details Šeíƒ}ƒl[ƒWƒƒ[ƒNƒ‰ƒX‚Ì¶¬‚ÆƒtƒF[ƒh—p•Ï”‚Ì‰Šú‰»‚ğs‚¤
- */
-	Scene::Scene()
+Scene::Scene()
 {
-	// ŠeíƒRƒ“ƒ|[ƒlƒ“ƒgEƒ}ƒl[ƒWƒƒ[‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‰»
+
 	mpObjectManager = new ObjectManager();
 	mpColliderManager = new ColliderManager();
 	mpGameManager = new GameManager();
@@ -22,33 +18,29 @@
 	mpAnimalManager = new AnimalManager();
 	mpFever = new Fever();
 
-	// ƒtƒF[ƒh‰‰o—p•Ï”‚Ì‰Šú‰»
+
 	mfFadeAlpha = 0.0f;
 	mfFadeSpeed = 5.0f;
 }
 
-/*
- * @brief ƒfƒXƒgƒ‰ƒNƒ^
- * @details ¶¬‚µ‚½ƒ}ƒl[ƒWƒƒ[ƒNƒ‰ƒX‚ÌƒNƒŠ[ƒ“ƒAƒbƒv‚Æƒƒ‚ƒŠ‰ğ•ú‚ğs‚¤iƒƒ‚ƒŠƒŠ[ƒN–h~j
- */
 Scene::~Scene()
 {
-	// ƒIƒuƒWƒFƒNƒgƒ}ƒl[ƒWƒƒ[‚Ì‰ğ•ú
+
 	if (mpObjectManager != nullptr)
 	{
 		mpObjectManager->DeleteAll3D();
-		mpObjectManager->DeleteAll2D(); // 2DƒeƒNƒXƒ`ƒƒƒIƒuƒWƒFƒNƒgŒQ‚ğ”jŠü‚µAƒV[ƒ“Ø‚è‘Ö‚¦‚Ìƒƒ‚ƒŠƒŠ[ƒN‚ğ–h‚®
+		mpObjectManager->DeleteAll2D(); // ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆæ™‚ã®ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯é˜²æ­¢
 		delete mpObjectManager;
 	}
 
-	// ƒRƒ‰ƒCƒ_[ƒ}ƒl[ƒWƒƒ[‚Ì‰ğ•ú
+
 	if (mpColliderManager != nullptr)
 	{
 		mpColliderManager->DeleteAllCollider();
 		delete mpColliderManager;
 	}
 
-	// ‚»‚Ì‘¼ƒ}ƒl[ƒWƒƒ[—Ş‚Ì‰ğ•ú
+
 	if (mpGameManager != nullptr)
 	{
 		delete mpGameManager;
@@ -67,10 +59,6 @@ Scene::~Scene()
 	}
 }
 
-/*
- * @brief •`‰æˆ—
- * @details Šeƒ}ƒl[ƒWƒƒ[‚ªŠÇ—‚·‚éƒIƒuƒWƒFƒNƒg‚Ì•`‰æŠÖ”‚ğ‡ŸŒÄ‚Ño‚·
- */
 void Scene::Draw()
 {
 	if (mpObjectManager != nullptr)
@@ -79,7 +67,7 @@ void Scene::Draw()
 	}
 	if (mpColliderManager != nullptr)
 	{
-		mpColliderManager->Draw(); // “–‚½‚è”»’è‚Ì‰Â‹‰»iƒfƒoƒbƒO—p‚È‚Çj
+		mpColliderManager->Draw(); // ãƒ‡ãƒãƒƒã‚°ç”¨ã®å½“ãŸã‚Šåˆ¤å®šå¯è¦–åŒ–
 	}
 	if (mpAnimalManager != nullptr)
 	{
@@ -87,10 +75,6 @@ void Scene::Draw()
 	}
 }
 
-/*
- * @brief XVˆ—
- * @details Šeƒ}ƒl[ƒWƒƒ[‚ÌƒƒWƒbƒNXViˆÊ’uŒvZ‚âó‘Ô‘JˆÚ‚È‚Çj‚ğ‡ŸŒÄ‚Ño‚·
- */
 void Scene::Update()
 {
 	if (mpObjectManager != nullptr)
@@ -111,44 +95,38 @@ void Scene::Update()
 	}
 }
 
-/*
- * @brief ƒV[ƒ“ƒtƒF[ƒh‰‰o‚Ì•ƒXƒNƒŠ[ƒ“‚ğ•`‰æ‚·‚é
- * [“ü—Í] fade: is‚·‚éƒtƒF[ƒhó‘Ô (In / Out / Load)
- * [o—Í] ‚È‚µ
- * [•›ì—p] ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒhƒ‚[ƒh‚Ì•ÏXA•‚¢lŠpŒ`‚Ì•`‰æ
- */
 void Scene::Fade(SceneFade fade)
 {
-	// --- ƒtƒF[ƒhƒCƒ“i‰æ–Ê‚ª‚¾‚ñ‚¾‚ñ–¾‚é‚­‚È‚éj ---
+	// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³
 	if (fade == SceneFade::SceneFade_In)
 	{
-		// •s“§–¾“x‚ğŒ¸­‚³‚¹‚é
-		mfFadeAlpha -= mfFadeSpeed;
-		if (mfFadeAlpha < 0) mfFadeAlpha = 0; // ‰ºŒÀƒK[ƒh
 
-		// Š®‘S‚É“§–¾i0j‚Å‚È‚¯‚ê‚ÎA•‚¢ƒXƒNƒŠ[ƒ“‚ğ•`‰æ‚µ‚Ä”í‚¹‚é
+		mfFadeAlpha -= mfFadeSpeed;
+		if (mfFadeAlpha < 0) mfFadeAlpha = 0; 
+
+
 		if (mfFadeAlpha > 0)
 		{
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)mfFadeAlpha);
-			DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE); // 16:9 ‰æ–Ê‘S‘Ì‚ğ•‚Å“h‚è‚Â‚Ô‚µ
-			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);          // ƒuƒŒƒ“ƒhƒ‚[ƒh‚ğ’Êí‚É–ß‚·
+			DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE); // ç”»é¢å…¨ä½“ã‚’æš—è»¢
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);          
 		}
 	}
-	// --- ƒtƒF[ƒhƒAƒEƒgi‰æ–Ê‚ª‚¾‚ñ‚¾‚ñˆÃ‚­‚È‚éj ---
+	// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆ
 	else if (fade == SceneFade::SceneFade_Out)
 	{
-		// •s“§–¾“x‚ğ‘‰Á‚³‚¹‚é
-		mfFadeAlpha += mfFadeSpeed;
-		if (mfFadeAlpha > 255) mfFadeAlpha = 255; // ãŒÀƒK[ƒhiDXƒ‰ƒCƒuƒ‰ƒŠ‚ÌƒAƒ‹ƒtƒ@Å‘å’l‚Í255j
 
-		// •‚¢ƒXƒNƒŠ[ƒ“‚ğ•`‰æ
+		mfFadeAlpha += mfFadeSpeed;
+		if (mfFadeAlpha > 255) mfFadeAlpha = 255; // DxLibã®ä»•æ§˜ã«ã‚ˆã‚Šã‚¢ãƒ«ãƒ•ã‚¡å€¤ä¸Šé™ã¯255
+
+
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)mfFadeAlpha);
 		DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);          // ƒuƒŒƒ“ƒhƒ‚[ƒh‚ğ’Êí‚É–ß‚·
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);          
 	}
-	// --- ƒ[ƒh’†i•K—v‚É‰‚¶‚Äˆ—‚ğ’Ç‰Á‰Â”\j ---
+	// ãƒ­ãƒ¼ãƒ‰ä¸­
 	else if (fade == SceneFade::SceneFade_Load)
 	{
-		// Œ»İ‚Í‰½‚às‚í‚È‚¢iŒÅ’è‰æ–Ê‚Ì•\¦‚âƒ[ƒfƒBƒ“ƒOƒAƒCƒRƒ“•`‰æ‚È‚Ç‚ğŠg’£‰Â”\j
+		// å°†æ¥ã®ãƒ­ãƒ¼ãƒ‰ç”»é¢æ‹¡å¼µç”¨ã‚¹ãƒšãƒ¼ã‚¹
 	}
 }

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include"SceneManager.h"
 #include"SoundManager.h"
 #include"ResourceManager.h"
@@ -13,27 +13,27 @@
 #include"EffectManager.h"
 #include"Fever.h"
 
-// ゲーム全体で共有されるマネージャー群やグローバルなゲーム状態フラグを保持するクラス
+// シングルトン回避と各機能へのグローバルアクセスを提供するため静的クラスとして定義
 class Master
 {
 public:
-	static SceneManager* mpSceneManager;      // 画面遷移や現在アクティブなシーンのライフサイクルを管理
-	static SoundManager* mpSoundManager;      // BGMやSEの再生・音量制御などを一括管理
-	static Score* mpScore;                    // ゲームプレイ中の獲得スコアやランキング情報を保持
-	static ResourceManager* mpResourceManager;// 3Dモデルや2D画像などのアセットデータのキャッシュ管理
-	static Camera* mpCamera;                  // プレイヤーを追従するメイン3Dカメラ
-	static DebugCamera* mpDebugCamera;        // 開発検証用の自由移動カメラ
-	static bool mbIsDebugCamera;              // デバッグカメラ有効化フラグ (有効時はメイン入力を遮断)
-	static Level* mpLevel;                    // プレイヤーのレベルや経験値管理システムへのポインタ
-	static EffectManager* mpEffectManager;    // Effekseerエフェクトの生成と寿命管理を行うマネージャー
+	static SceneManager* mpSceneManager;      // シーン切り替えとライフサイクル管理用
+	static SoundManager* mpSoundManager;      // BGM/SEの一括制御用
+	static Score* mpScore;                    // UI表示とリザルト算出のためのスコア情報
+	static ResourceManager* mpResourceManager;// 頻繁なロードによるカクつきを防ぐアセットキャッシュ
+	static Camera* mpCamera;                  // プレイヤー追従用のメインカメラ
+	static DebugCamera* mpDebugCamera;        // デバッグ時の自由視点確認用
+	static bool mbIsDebugCamera;              // 入力遮断とカメラ操作を切り替えるデバッグフラグ
+	static Level* mpLevel;                    // パラメータスケーリング用レベル情報
+	static EffectManager* mpEffectManager;    // Effekseerエフェクトの描画・寿命管理用
 	
-	static bool SelectSkill;                  // スキル選択画面が表示中かどうかのフラグ
-	static int mnTutorialcount;               // チュートリアルにおける対象オブジェクトの回収数カウンター
-	static bool GameFinishFlag;               // ゲーム本編が終了（タイムアップ等）したことを示す状態フラグ
-	static bool FeverFlag;                    // 大量出現かつ自動吸引が行われるフィーバー状態の有効化フラグ
-	static int mnCaughtCowCount;              // 回収された牛の総数 (実績やゲーム状態移行に使用)
-	static bool TutrialVacumFlag;             // チュートリアルにおいて吸引操作が完了したかどうかの判定フラグ
+	static bool SelectSkill;                  // スキル選択中のゲーム進行停止用フラグ
+	static int mnTutorialcount;               // チュートリアルの進行度判定用カウンター
+	static bool GameFinishFlag;               // リザルト移行を制御する終了状態フラグ
+	static bool FeverFlag;                    // 自動吸引と大量出現モードを有効にするフラグ
+	static int mnCaughtCowCount;              // 実績解除とイベント発生判定用の総回収数
+	static bool TutrialVacumFlag;             // チュートリアルでの吸引操作達成フラグ
 
-	static float mfDeltaTime;                 // 1フレームあたりの経過時間（秒）
-	static float GetDeltaTimeScaler() { return mfDeltaTime * 60.0f; } // 60FPS基準のスケール値
+	static float mfDeltaTime;                 // フレームレート変動を吸収するための経過時間(秒)
+	static float GetDeltaTimeScaler() { return mfDeltaTime * 60.0f; } // 60FPS基準の移動量補正スケール
 };

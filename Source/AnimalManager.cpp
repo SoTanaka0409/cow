@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+﻿#include "ServiceLocator.h"
 #include "AnimalManager.h"
 #include "AnimalMove.h"
 #include "Player3D.h"
@@ -7,10 +7,22 @@
 #include "Master.h"
 #include "Animal.h"
 
+/*
+ * @brief 管理オブジェクトの初期化を行う
+ * [入力] なし
+ * [出力] なし
+ * [副作用] なし
+ */
 AnimalManager::AnimalManager()
 {
 }
 
+/*
+ * @brief 管理リストおよびオブジェクトプールの動物を全解放する
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 動物オブジェクトのメモリ解放
+ */
 AnimalManager::~AnimalManager()
 {
 	mAnimals.clear();
@@ -24,6 +36,12 @@ AnimalManager::~AnimalManager()
 	mPools.clear();
 }
 
+/*
+ * @brief 指定された種類の動物を生成またはプールから再利用して配置する
+ * [入力] filename: モデルファイル, pos: 出現基準座標, scale: 拡大率, tag: 動物のタグ, count: 生成数
+ * [出力] なし
+ * [副作用] 動物のメモリ確保およびmAnimalsへの追加、またはプールからの取り出し
+ */
 void AnimalManager::SpawnAnimal(std::string filename, VECTOR pos, float scale, AnimalMove::Tag_animal tag, int count)
 {
 	for (int i = 0; i < count; i++)
@@ -51,6 +69,12 @@ void AnimalManager::SpawnAnimal(std::string filename, VECTOR pos, float scale, A
 	}
 }
 
+/*
+ * @brief 全ての動物の更新処理と不要な動物の削除（プール返却）を行う
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 各動物のUpdate実行とEraseAnimalの実行
+ */
 void AnimalManager::Update()
 {
 	for (auto animal : mAnimals)
@@ -60,10 +84,22 @@ void AnimalManager::Update()
 	EraseAnimal();
 }
 
+/*
+ * @brief 全ての動物の描画を行う（現在は描画処理を外部で行っているため空）
+ * [入力] なし
+ * [出力] なし
+ * [副作用] なし
+ */
 void AnimalManager::Draw()
 {
 }
 
+/*
+ * @brief 削除フラグが立っている動物を非アクティブ化しプールに返却する
+ * [入力] なし
+ * [出力] なし
+ * [副作用] mAnimalsからの削除およびmPoolsへの追加
+ */
 void AnimalManager::EraseAnimal()
 {
 	if (!mAnimals.empty())

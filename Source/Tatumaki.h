@@ -1,76 +1,88 @@
-#pragma once
+ï»¿#pragma once
 #include "Object3D.h"
 #include "EffekseerEffect.h"
 
 class SphereCollider;
 class CapsuleCollider;
 
-// ƒXƒe[ƒWã‚ğ©—¥ˆÚ“®‚µAƒvƒŒƒCƒ„[‚ğŠª‚«‚ñ‚Åƒ‰ƒ“ƒ_ƒ€ˆÊ’u‚Öƒ[ƒv‚³‚¹‚é—³ŠªƒIƒuƒWƒFƒNƒgƒNƒ‰ƒX
 class Tatumaki : public Object3D
 {
 public:
 	/*
-	 * @brief —³Šª‚ğ¶¬‚µAƒRƒ‰ƒCƒ_[‚Ì‰Šú‰»‚ÆƒGƒtƒFƒNƒg‚Ìƒ[ƒh‚ğs‚¤
-	 * [“ü—Í] pos: ¶¬‚Ì‰ŠúÀ•W
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] EffekseerEffect‚ÌƒCƒ“ƒXƒ^ƒ“ƒXŠm•Û
+	 * @brief ç«œå·»ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åˆæœŸåŒ–
+	 * [å…¥åŠ›] pos: ç«œå·»ã®åˆæœŸã‚¹ãƒãƒ¼ãƒ³åº§æ¨™
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] 3Dã‚¨ãƒ•ã‚§ã‚¯ãƒˆ(EffekseerEffect)ã®ãƒªã‚½ãƒ¼ã‚¹ã‚’ãƒ¡ãƒ¢ãƒªã«ãƒ­ãƒ¼ãƒ‰ã—ã€åˆæœŸã‚¹ã‚±ãƒ¼ãƒ«ã‚’è¨­å®šã™ã‚‹
 	 */
 	Tatumaki(VECTOR pos);
 
 	/*
-	 * @brief ƒGƒtƒFƒNƒg“™‚Ì“®“Iƒƒ‚ƒŠ‘Œ¹‚ğ‰ğ•ú‚·‚é
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒGƒtƒFƒNƒgƒIƒuƒWƒFƒNƒg‚Ì”jŠü
+	 * @brief ãƒªã‚½ãƒ¼ã‚¹ã®è§£æ”¾
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] å‹•çš„ç¢ºä¿ã—ãŸEffekseerEffectã®ç ´æ£„ã«ã‚ˆã‚‹ãƒ¡ãƒ¢ãƒªè§£æ”¾ã‚’è¡Œã†
 	 */
 	virtual ~Tatumaki() override;
 
 	/*
-	 * @brief ƒvƒŒƒCƒ„[•ûŒü‚Ö‚Ì’Ç”öˆÚ“®A‹‘å‰»LerpŒvZAƒRƒ‰ƒCƒ_[ˆÊ’u‚Ì’Ç]‚ğs‚¤
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒRƒ‰ƒCƒ_[‚¨‚æ‚ÑƒGƒtƒFƒNƒg‚ÌÀ•WXVAˆê’èŠÔŠu‚Å‚ÌSEÄ¶
+	 * @brief ãƒ•ãƒ¬ãƒ¼ãƒ æ¯ã®è¿½å¾“ãƒ»æ¼”å‡ºæ›´æ–°
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¸ã®ãƒ›ãƒ¼ãƒŸãƒ³ã‚°ç§»å‹•ã€æ®µéšçš„ãªã‚µã‚¤ã‚ºå¤‰æ›´(Lerp)ã€åŠã³ä¸€å®šé–“éš”ã§ã®SEå†ç”Ÿã‚’è¡Œã†
 	 */
 	void Update() override;
 
 	/*
-	 * @brief ƒƒCƒ„[ƒtƒŒ[ƒ€‚È‚Ç‚ÌƒRƒ‰ƒCƒ_[•â••`‰æ‚ğs‚¤iŒ»İ‚Í”ñƒAƒNƒeƒBƒuj
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ‚È‚µ
+	 * @brief æç”»å‡¦ç†
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] æœ¬ã‚¯ãƒ©ã‚¹è‡ªä½“ã®æç”»ã¯è¡Œã‚ãªã„ï¼ˆæç”»ã¯Effekseerå´ã§å‡¦ç†ã•ã‚Œã‚‹ãŸã‚ï¼‰
 	 */
 	void Draw() override;
 
 	/*
-	 * @brief ƒvƒŒƒCƒ„[‚Æ‚ÌÕ“Ë‚ÉAƒvƒŒƒCƒ„[‚ğƒXƒe[ƒWã‚Ìƒ‰ƒ“ƒ_ƒ€ˆÊ’u‚É‚«”ò‚Î‚µƒ[ƒv‚³‚¹‚é
-	 * [“ü—Í] collider: ©g‚ÌƒRƒ‰ƒCƒ_[, check: ‘Šè‚ÌƒRƒ‰ƒCƒ_[
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒvƒŒƒCƒ„[À•W‚Ì‘‚«Š·‚¦AƒJƒƒ‰ƒVƒFƒCƒN‚Ì”­¶
+	 * @brief å½“ãŸã‚Šåˆ¤å®šã¸ã®ä¾µå…¥æ¤œçŸ¥
+	 * [å…¥åŠ›] collider: è‡ªèº«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼, check: æ¥è§¦ã—ãŸç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ¥è§¦æ™‚ã€ä»•æ§˜ã«åŸºã¥ããƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼åº§æ¨™ã‚’å¼·åˆ¶çš„ã«ãƒ©ãƒ³ãƒ€ãƒ ãƒ¯ãƒ¼ãƒ—ã•ã›ã€ã‚«ãƒ¡ãƒ©ã‚’æŒ¯å‹•ã•ã›ã‚‹
 	 */
 	virtual void OnEnter(Collider* collider, Collider* check) override;
+	
+	/*
+	 * @brief å½“ãŸã‚Šåˆ¤å®šå†…ã®æ»åœ¨æ¤œçŸ¥
+	 * [å…¥åŠ›] collider: è‡ªèº«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼, check: æ¥è§¦ã—ãŸç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ãªã—
+	 */
 	virtual void OnTrigger(Collider* collider, Collider* check) override;
+	
+	/*
+	 * @brief å½“ãŸã‚Šåˆ¤å®šã‹ã‚‰ã®é€€å‡ºæ¤œçŸ¥
+	 * [å…¥åŠ›] collider: è‡ªèº«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼, check: æ¥è§¦ã—ãŸç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ãªã—
+	 */
 	virtual void OnExit(Collider* collider, Collider* check) override;
 
 	/*
-	 * @brief —³Šª‚ÌƒNƒ‰ƒCƒVƒXƒ‚[ƒhiŒã”¼í‚È‚Ç‚Ì‹‘å‰»ó‘Ôj‚ğØ‚è‘Ö‚¦‚é
-	 * [“ü—Í] isCrisis: ‹‘å‰»‚·‚éê‡‚Ítrue
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ‚È‚µ
+	 * @brief ç«œå·»ã®å·¨å¤§åŒ–ãƒ¢ãƒ¼ãƒ‰è¨­å®š
+	 * [å…¥åŠ›] isCrisis: å·¨å¤§åŒ–çŠ¶æ…‹ã«ã™ã‚‹å ´åˆã¯true
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] çŠ¶æ…‹ãƒ•ãƒ©ã‚°ã®æ›´æ–°ã€‚æ¬¡å›ã®Updateæ™‚ã«ã‚¹ã‚±ãƒ¼ãƒ«ã¨å½“ãŸã‚Šåˆ¤å®šã®ã‚µã‚¤ã‚ºãŒæ‹¡å¼µã•ã‚Œã‚‹
 	 */
 	void SetCrisisMode(bool isCrisis) { mIsCrisis = isCrisis; }
 
 private:
-	VECTOR mPos;              // —³Šª‚ÌŒ»İÀ•W
-	VECTOR mVelocity;         // ˆÚ“®•ûŒü‚Ì’PˆÊƒxƒNƒgƒ‹
-	int mMoveTimer;           // •ûŒü“]Š·—p‚Ìƒ^ƒCƒ}[i–¢g—pj
-	float mSpeed;             // ˆÚ“®‘¬“x
-	EffekseerEffect* Tatu;    // —³Šª•\Œ»—p‚Ì3DƒGƒtƒFƒNƒg
+	VECTOR mPos;
+	VECTOR mVelocity;
+	int mMoveTimer;
+	float mSpeed;
+	EffekseerEffect* Tatu;
 
-	bool mIsCrisis;           // ‹‘å‰»ó‘Ô‚Å‚ ‚é‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
-	float mCurrentScaleRatio; // ‹‘å‰»‰‰o—p‚ÌLerpƒXƒP[ƒ‹•âŠÔ—¦
-	float mCurrentRadius;     // ƒRƒ‰ƒCƒ_[”¼Œa‚ÌLerp•âŠÔ—pŒ»İ’l
+	bool mIsCrisis;
+	float mCurrentScaleRatio;
+	float mCurrentRadius;
 
-	int mEffectTimer;         // Ÿ‰ñ‚ÌƒGƒtƒFƒNƒgESEÄ¶‚Ü‚Å‚Ìƒ^ƒCƒ}[
-	int mTatumakiSpawnTimer;  // ƒXƒ|[ƒ“§Œä—p‚Ìƒ^ƒCƒ}[i–¢g—pj
+	int mEffectTimer;
+	int mTatumakiSpawnTimer;
 };
-

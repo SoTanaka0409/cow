@@ -340,7 +340,7 @@ void CowMove::Die(DeathReason reason)
 			player->mpCombo->AddHit();
 			player->mpScore->AddScore(mfScore * player->mpCombo->GetMultiplier());
 
-			// コンボロジック
+			// 同種連続キルによるボーナススコア計算
 			if (mntag_cow == CowMove::Tag_cow::Cow_T)
 			{
 				Master::mnTutorialcount++;

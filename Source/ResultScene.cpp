@@ -1,4 +1,4 @@
-#include"ResultScene.h"
+ï»¿#include"ResultScene.h"
 #include"Master.h"
 #include"SceneManager.h"
 
@@ -7,29 +7,26 @@ ResultScene::ResultScene()
 	mFlag = true;
 	mnCount = 0;
 	
-	// ƒAƒZƒbƒgƒŠƒ\[ƒX‚ÌˆêŠ‡ƒ[ƒh
-	ResultGraphHandle = LoadGraph("Resource/2D/ƒŠƒUƒ‹ƒg.png");
-	rankImage[0] = LoadGraph("Resource/2D/1ˆÊ.png");
-	rankImage[1] = LoadGraph("Resource/2D/2ˆÊ.png");
-	rankImage[2] = LoadGraph("Resource/2D/3ˆÊ.png");
-	rankingTitleImage = LoadGraph("Resource/2D/ƒ‰ƒ“ƒLƒ“ƒO.png");
-	yourScoreTextImg = LoadGraph("Resource/2D/ƒXƒRƒA.png");
-	pointImg = LoadGraph("Resource/2D/“_.png");
+	ResultGraphHandle = LoadGraph("Resource/2D/ãƒªã‚¶ãƒ«ãƒˆ.png");
+	rankImage[0] = LoadGraph("Resource/2D/1ä½.png");
+	rankImage[1] = LoadGraph("Resource/2D/2ä½.png");
+	rankImage[2] = LoadGraph("Resource/2D/3ä½.png");
+	rankingTitleImage = LoadGraph("Resource/2D/ãƒ©ãƒ³ã‚­ãƒ³ã‚°.png");
+	yourScoreTextImg = LoadGraph("Resource/2D/ã‚¹ã‚³ã‚¢.png");
+	pointImg = LoadGraph("Resource/2D/ç‚¹.png");
 
-	// ƒ^ƒCƒgƒ‹‚Ö–ß‚éƒ{ƒ^ƒ“‚Ìİ’è
 	ResultButton newGameBtn;
 	newGameBtn.type = SelectionManager::Title::title;
-	newGameBtn.graphHandle = LoadGraph("Resource/2D/ƒXƒ^[ƒgƒ{ƒ^ƒ“1.png");
+	newGameBtn.graphHandle = LoadGraph("Resource/2D/ã‚¹ã‚¿ãƒ¼ãƒˆãƒœã‚¿ãƒ³1.png");
 	newGameBtn.x = 920;
 	newGameBtn.y = 50;
 	GetGraphSize(newGameBtn.graphHandle, &newGameBtn.w, &newGameBtn.h);
 	newGameBtn.isHover = false;
 	mButtons.push_back(newGameBtn);
 
-	// I—¹ƒ{ƒ^ƒ“‚Ìİ’è
 	ResultButton exitBtn;
 	exitBtn.type = SelectionManager::Title::titleOUT;
-	exitBtn.graphHandle = LoadGraph("Resource/2D/‚µ‚ã‚¤‚è‚å‚¤‚Ú‚½‚ñ (1).png");
+	exitBtn.graphHandle = LoadGraph("Resource/2D/ã—ã‚…ã†ã‚Šã‚‡ã†ã¼ãŸã‚“ (1).png");
 	exitBtn.x = 960;
 	exitBtn.y = 680;
 	GetGraphSize(exitBtn.graphHandle, &exitBtn.w, &exitBtn.h);
@@ -43,7 +40,7 @@ ResultScene::ResultScene()
 
 ResultScene::~ResultScene()
 {
-	Finalize(); // ƒIƒuƒWƒFƒNƒg”jŠü‚Ìƒƒ‚ƒŠ‰ğ•ú˜R‚ê‚ğ–h‚®
+	Finalize(); // ãƒªã‚½ãƒ¼ã‚¹ã®è§£æ”¾æ¼ã‚Œã‚’é˜²ããŸã‚æ˜ç¤ºçš„ã«å‘¼ã³å‡ºã—
 }
 
 void ResultScene::Initialize()
@@ -59,7 +56,7 @@ void ResultScene::Draw()
 
 	DrawRankingUI();
 
-	// ƒvƒŒƒCƒ„[‚ÌÅIŠl“¾ƒXƒRƒA‚ğ•`‰æ
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æœ€çµ‚ç²å¾—ã‚¹ã‚³ã‚¢ã‚’ä¸­å¿ƒéƒ¨ã«æç”»ã™ã‚‹
 	DrawExtendGraph(500, 300, 1100, 550, yourScoreTextImg, TRUE);
 	int score = Score::GetResultScore();
 	int temp = score;
@@ -83,9 +80,6 @@ void ResultScene::Draw()
 	int pointX = startX + digitCount * 80;
 	DrawExtendGraph(pointX, 430, pointX + 200, 630, pointImg, TRUE);
 
-	// ƒvƒŒƒC’†‚É‰ñû‚µ‚½‹‚Ì‘”‚ğ•`‰æ
-
-
 	Scene::Draw();
 	if (mFadeState != SceneFade_None) {
 		Scene::Fade(mFadeState);
@@ -96,7 +90,7 @@ void ResultScene::Update()
 {
 	mnCount++;
 
-	// 200ƒtƒŒ[ƒ€Œo‰ßi–ñ3.3•bjŒãA©“®“I‚Éƒ^ƒCƒgƒ‹‰æ–Ê‚Ö–ß‚éƒtƒF[ƒhƒAƒEƒgˆ—‚ğŠJn
+	// å¾…æ©Ÿæ™‚é–“çµŒéå¾Œã€è‡ªå‹•çš„ã«ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ã¸æˆ»ã‚‹ãƒ•ã‚§ãƒ¼ãƒ‰ã‚’é–‹å§‹
 	if (mnCount >= 200 && mFadeState != SceneFade_Out)
 	{
 		mFadeState = SceneFade_Out;
@@ -117,12 +111,7 @@ void ResultScene::Update()
 	Scene::Update();
 }
 
-/*
- * @brief ƒXƒRƒAƒ‰ƒ“ƒLƒ“ƒOî•ñ‚Ì•\¦—pUI‚ğ•`‰æ‚·‚é
- * [“ü—Í] ‚È‚µ
- * [o—Í] ‚È‚µ
- * [•›ì—p] Še‡ˆÊ‚Ì”š‰æ‘œ‚âƒXƒRƒAƒtƒHƒ“ƒg‚Ì•`‰æ
- */
+// [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] ç”»é¢ä¸Šã«ãƒ©ãƒ³ã‚­ãƒ³ã‚°ã‚’æç”»
 void ResultScene::DrawRankingUI()
 {
 	int baseX = 40;
@@ -179,12 +168,7 @@ void ResultScene::DrawRankingUI()
 	}
 }
 
-/*
- * @brief ƒV[ƒ“I—¹‚ÌƒAƒZƒbƒgEƒOƒ‰ƒtƒBƒbƒN‰ğ•úˆ—
- * [“ü—Í] ‚È‚µ
- * [o—Í] ‚È‚µ
- * [•›ì—p] ƒ[ƒh‚³‚ê‚½‚·‚×‚Ä‚Ì‰æ‘œƒAƒZƒbƒg‚Ìíœ‚ÆBGM‚Ì’â~
- */
+// [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] ç”»åƒã‚¢ã‚»ãƒƒãƒˆå‰Šé™¤ã€BGMåœæ­¢
 void ResultScene::Finalize()
 {
 	DeleteGraph(ResultGraphHandle);

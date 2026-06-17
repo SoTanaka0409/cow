@@ -16,6 +16,7 @@
 #include "Player3D.h"
 
 namespace {
+	// 暫定対応: コンボボーナス計算用のグローバル変数群
 	int s_mnTagCount = 0;
 	AnimalMove::Tag_animal s_tag1 = AnimalMove::none;
 	AnimalMove::Tag_animal s_tag2 = AnimalMove::none;
@@ -25,6 +26,7 @@ namespace {
 AnimalMove::AnimalMove(std::string filename, VECTOR initPos)
 	: CharacterMove(filename, initPos)
 {
+	// 基礎パラメータとして羊の定数を適用
 	mfSpeed = GameConstants::ANIMAL_SHEEP.speed;
 	mActionTimer = 60;
 	mfScore = GameConstants::ANIMAL_SHEEP.score;
@@ -59,6 +61,7 @@ void AnimalMove::AddAnimation(AnimationState state, std::string filename)
 
 void AnimalMove::OnEnter(Collider* collider, Collider* check)
 {
+	// 餌オブジェクトへの接触を検知し、誘導フラグを立てる
 	if (collider == mpCapsuleCollider && check->mpParentObject != nullptr)
 	{
 		if (check->mpParentObject->GetTag() == Tag3D_Bait)
@@ -74,6 +77,7 @@ void AnimalMove::OnTrigger(Collider* collider, Collider* check)
 
 void AnimalMove::OnExit(Collider* collider, Collider* check)
 {
+	// 餌の有効範囲外に出たため誘導フラグを解除する
 	if (collider == mpCapsuleCollider && check->mpParentObject != nullptr)
 	{
 		if (check->mpParentObject->GetTag() == Tag3D_Bait)
@@ -85,6 +89,7 @@ void AnimalMove::OnExit(Collider* collider, Collider* check)
 
 void AnimalMove::CharacterDied()
 {
+	// 演出都合上、フィーバー中および吸い込み状態以外では死亡判定を行わない
 	if (mCurrentState != STATE_VACUUM||ServiceLocator::GetFever()->IsFever()) return;
 
 	Player3D* player = mpTargetPlayer;
@@ -95,6 +100,7 @@ void AnimalMove::CharacterDied()
 		mvPosition.y += player->Status(Player3D::Status_AttackS);
 	}
 
+	// プレイヤーへ向けて浮遊し、一定高度に達した段階で捕獲完了とする
 	if (mvPosition.y > mfdeathTime && !mDeleteFlag)
 	{
 		Die(DEATH_VACUUM);
@@ -119,7 +125,7 @@ void AnimalMove::Die(DeathReason reason)
 			player->mpCombo->Reset();
 			player->mpScore->AddScore(mfScore);
 
-			// コンボロジック
+			// 暫定対応: 同種連続捕獲時に追加経験値を付与するためのコンボロジック
 			if (mntag_animal == AnimalMove::Tag_animal::Animal_T)
 			{
 				Master::mnTutorialcount++;

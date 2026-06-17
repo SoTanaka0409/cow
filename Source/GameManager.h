@@ -1,33 +1,30 @@
-#pragma once
+ï»¿#pragma once
 #include"DxLib.h"
 #include<vector>
 
 class GameTimer;
 
-// ƒQ[ƒ€–{•Ò‚É‚¨‚¯‚éisƒtƒF[ƒYi’ÊíA—³Šª‹‘å‰»A‘å—Ê”­¶j‚¨‚æ‚ÑƒXƒeƒbƒv‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+// ã‚¤ãƒ™ãƒ³ãƒˆé€²è¡Œãƒ•ã‚§ãƒ¼ã‚ºã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 class GameManager
 {
 public:
-	// ƒQ[ƒ€–{•Ò‚ÌƒXƒeƒbƒv’iŠK’è‹`
 	enum GameStepType
 	{
-		game_CowGet,    // ’Êí‚Ì‹ƒQƒbƒg
-		game_final,     // ƒ^ƒCƒ€ƒAƒbƒvŒã‚ÌI—¹E‰æ–Ê‘JˆÚ‘Ò‹@‚¿’iŠK
+		game_CowGet,
+		game_final,
 	};
 
-	// ŠeƒXƒeƒbƒv‚Ì—LŒøƒtƒ‰ƒO\‘¢‘Ì
 	struct GameStepData
 	{
 		GameStepType type;
 		bool TrueFlag = true;
 	};
 
-	// is’†ƒCƒxƒ“ƒg‚ÌƒtƒF[ƒYi‰‰o’iŠKj
 	enum class GamePhase
 	{
-		Normal,         // ’Êí
-		MassSpawn,      // ‹‚Ì‘å—Ê”­¶E—‰ºƒtƒF[ƒY
-		TornadoCrisis   // —³Šª‚ª‹‘å‰»‚µ‚Ä“®‚«‰ñ‚éƒtƒF[ƒY
+		Normal,
+		MassSpawn,
+		TornadoCrisis
 	};
 
 public:
@@ -35,59 +32,59 @@ public:
 	~GameManager();
 
 	/*
-	 * @brief w’è‚³‚ê‚½ƒQ[ƒ€ƒtƒF[ƒYƒ^ƒCƒv‚ğæ“¾‚·‚é
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] Œ»İ‚ÌGamePhaseiNormal / MassSpawn / TornadoCrisisj
-	 * [•›ì—p] ‚È‚µ
+	 * ç¾åœ¨ã®ã‚²ãƒ¼ãƒ ãƒ•ã‚§ãƒ¼ã‚ºã‚’å–å¾—ã™ã‚‹
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ç¾åœ¨ã®GamePhase
+	 * [å‰¯ä½œç”¨] ãªã—
 	 */
 	GamePhase GetCurrentPhase() const { return mCurrentPhase; }
 
 	/*
-	 * @brief w’è‚³‚ê‚½ƒQ[ƒ€ƒtƒF[ƒYƒ^ƒCƒv‚ğİ’è‚·‚é
-	 * [“ü—Í] phase: V‚µ‚¢ƒtƒF[ƒYó‘Ô
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] mCurrentPhase ‚ÌXV
+	 * ã‚²ãƒ¼ãƒ ãƒ•ã‚§ãƒ¼ã‚ºã‚’è¨­å®šã—ã‚¤ãƒ™ãƒ³ãƒˆçŠ¶æ…‹ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹
+	 * [å…¥åŠ›] phase: æ–°ã—ã„ãƒ•ã‚§ãƒ¼ã‚ºçŠ¶æ…‹
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] mCurrentPhase ãŒæ›´æ–°ã•ã‚Œã‚‹
 	 */
 	void SetCurrentPhase(GamePhase phase) { mCurrentPhase = phase; }
 
 	/*
-	 * @brief Ÿ‚ÌƒXƒeƒbƒviI—¹‰æ–Ê“™j‚Öó‘Ô‘JˆÚ‚³‚¹AƒXƒRƒAƒ‰ƒ“ƒLƒ“ƒO“o˜^‚ğs‚¤
-	 * [“ü—Í] type: ‘JˆÚæ‚ÌƒXƒeƒbƒvƒ^ƒCƒv
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] mnType‚ÌXVAMaster::GameFinishFlag‚Ì—LŒø‰»AƒXƒRƒA‚Ì’Ç‰ÁEƒl[ƒ€“ü—Í‚ÌŠJn
+	 * ã‚¹ã‚³ã‚¢ç™»éŒ²ã‚’ä¼´ã†çµ‚äº†ã‚¹ãƒ†ãƒƒãƒ—ã¸ã®é·ç§»ã‚’è¡Œã†
+	 * [å…¥åŠ›] type: é·ç§»å…ˆã®ã‚¹ãƒ†ãƒƒãƒ—ã‚¿ã‚¤ãƒ—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] é€²è¡Œã‚¹ãƒ†ãƒƒãƒ—å¤‰æ›´ã€ãƒ•ãƒ©ã‚°æ›´æ–°ã€ãƒãƒ¼ãƒ å…¥åŠ›é–‹å§‹
 	 */
 	void GameNextStep(GameStepType type);
 	 
 	GameStepType GetType() { return mnType; }
 
 	/*
-	 * @brief ƒV[ƒ“ŠJn‚ÌƒtƒF[ƒhƒCƒ“ˆÃ“]‚È‚Ç‚ğ‰æ–Ê‚É•`‰æ‚·‚é
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ˆÃ“]‹éŒ`iDrawBoxj‚Ì•`‰æ
+	 * ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ç­‰ã€ã‚²ãƒ¼ãƒ é€²è¡Œã«å¿…è¦ãªæ¼”å‡ºæç”»ã‚’è¡Œã†
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ç”»é¢ã¸ã®æš—è»¢çŸ©å½¢æç”»
 	 */
 	void Draw();
 
 	/*
-	 * @brief §ŒÀŠÔƒ^ƒCƒ}[‚ÌXVA‚¨‚æ‚ÑŠÔŒo‰ß‚É‚æ‚éƒCƒxƒ“ƒgƒtƒF[ƒYØ‚è‘Ö‚¦‚Ì’Š‘I‚ğs‚¤
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒ^ƒCƒ}[XVAƒtƒF[ƒY‘JˆÚA–¼‘O“ü—Í‚ÌXV
+	 * ã‚²ãƒ¼ãƒ ã®é€²è¡ŒçŠ¶æ…‹ã¨åˆ¶é™æ™‚é–“ã‚’ç›£è¦–ãƒ»æ›´æ–°ã™ã‚‹
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ã‚¿ã‚¤ãƒãƒ¼æ›´æ–°ã€ãƒ•ã‚§ãƒ¼ã‚ºé·ç§»æŠ½é¸å®Ÿè¡Œ
 	 */
 	void Update();
 
 	GameTimer* GetGameTimer() const { return mpGameTimer; }
 
 private:
-	std::vector<GameStepData*> mData; // ŠeƒXƒeƒbƒvƒf[ƒ^‚ÌƒŠƒXƒgiƒƒ‚ƒŠ‰ğ•ú‘ÎÛj
-	GameStepType mnType;              // Œ»İƒAƒNƒeƒBƒu‚ÈƒXƒeƒbƒvƒ^ƒCƒv
-	GamePhase mCurrentPhase;          // Œ»İ‚ÌƒQ[ƒ€“àƒtƒF[ƒY
+	std::vector<GameStepData*> mData; // å‹•çš„ç¢ºä¿ã•ã‚ŒãŸã‚¹ãƒ†ãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿ã®ãƒªã‚¹ãƒˆ
+	GameStepType mnType;
+	GamePhase mCurrentPhase;
 
-	float Fadetimer;                  // ŠJn‚ÌƒtƒF[ƒhƒCƒ“—p•s“§–¾“xƒJƒEƒ“ƒ^
-	bool Fadeflag;                    // ƒtƒF[ƒhƒCƒ“‰‰o’†‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
+	float Fadetimer;                  // ã‚·ãƒ¼ãƒ³é–‹å§‹æ™‚ã®ãƒ•ã‚§ãƒ¼ãƒ‰æ¼”å‡ºç”¨
+	bool Fadeflag;
 	
-	int m_PhaseTimer;                 // ƒtƒF[ƒYØ‚è‘Ö‚¦ŠÔŠuiƒ~ƒŠ•bjŒv‘ª—pŠî€’l
-	int m_PhaseChangeCount;           // ‘O‰ñ‚ÌƒtƒF[ƒYØ‚è‘Ö‚¦‚©‚ç‚ÌŒo‰ß•b”ƒJƒEƒ“ƒ^[
+	int m_PhaseTimer;                 // ãƒ•ã‚§ãƒ¼ã‚ºé·ç§»ã‚¤ãƒ™ãƒ³ãƒˆã®ç™ºç”Ÿã‚¿ã‚¤ãƒŸãƒ³ã‚°åŸºæº–
+	int m_PhaseChangeCount;
 
-	GameTimer* mpGameTimer;           // §ŒÀŠÔ‚ğŠÇ—‚·‚éƒ^ƒCƒ}[ƒIƒuƒWƒFƒNƒgƒ|ƒCƒ“ƒ^
+	GameTimer* mpGameTimer;           // ã‚¿ã‚¤ãƒãƒ¼ç®¡ç†ç”¨ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 };

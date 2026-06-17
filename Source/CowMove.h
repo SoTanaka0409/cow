@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "DxLib.h"
 #include "Object3D.h"
 #include "Model.h"
@@ -9,11 +9,11 @@
 class SphereCollider;
 class CapsuleCollider;
 
-// ステージ上をAI自律移動する牛キャラクターの基底クラス
+// AIによる自律移動と吸い込み判定を管理する基底クラス
 class CowMove : public CharacterMove
 {
 public:
-	// 牛の種類識別用タグ
+	// 個別仕様分岐のための牛種類識別用タグ
 	enum Tag_cow
 	{
 		none,
@@ -26,10 +26,10 @@ public:
 
 public:
 	/*
-	 * @brief 牛キャラクターをロードし、初期状態をセットする
-	 * [入力] filename: モデルのファイルパス, initPos: 初期スポーン座標
+	 * @brief 初期化
+	 * [入力] filename: モデルパス, initPos: 初期配置座標
 	 * [出力] なし
-	 * [副作用] モデルおよび吸引演出用Effekseerエフェクトのインスタンス生成
+	 * [副作用] Effekseerエフェクトのインスタンス生成
 	 */
 	CowMove(std::string filename, VECTOR initPos);
 	virtual ~CowMove();
@@ -38,7 +38,10 @@ public:
 	void Draw() override;
 
 	/*
-	 * @brief AIによる自律徘徊移動や、吸引された際の上昇同期処理などを実行する
+	 * @brief 移動処理
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 座標の更新、AI自律移動および吸引時上昇同期
 	 */
 	virtual void MoveCharacter() override;
 
@@ -65,17 +68,26 @@ public:
 	virtual void OnExit(Collider* collider, Collider* check) override;
 
 	/*
-	 * @brief 吸引され限界高度に達した際、スコア・経験値をプレイヤーに加算して回収（消滅）する
+	 * @brief 限界高度到達時の消滅処理
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] スコア・経験値の加算、エフェクト再生
 	 */
 	virtual void CharacterDied() override;
 
 	/*
-	 * @brief 餌の効果によってアクターに倒された時の回収（消滅）処理
+	 * @brief 餌によるキル処理
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 削除フラグの有効化
 	 */
 	virtual void KilledByBait();
 
 	/*
-	 * @brief 牛の死亡処理を統合
+	 * @brief 死亡時の共通処理
+	 * [入力] reason: 死亡理由
+	 * [出力] なし
+	 * [副作用] コンボ・スコアの計算、削除フラグの有効化
 	 */
 	virtual void Die(DeathReason reason) override;
 
@@ -86,13 +98,13 @@ public:
 	bool GetCowDelete() { return mCowtDelete; }
 
 protected:
-	Tag_cow mntag_cow;                  // 牛のタグ種類
-	float mColliderRadius = 50.0f;      // コライダーの判定半径
+	Tag_cow mntag_cow;                  // 個別仕様分岐のためのタグ
+	float mColliderRadius = 50.0f;      // 衝突判定用の半径制約
 
-	bool mCowtDelete;                   // 吸引消滅エフェクト終了後の完全削除フラグ
-	EffekseerEffect* mpCowVm;           // 吸引時に発生するエフェクト
-	int mEffectTimer;                   // 吸引消滅エフェクトの再生残り時間タイマー
-	bool TutrialVacumFlag;              // チュートリアル判定フラグ
+	bool mCowtDelete;                   // エフェクト終了待機用削除フラグ
+	EffekseerEffect* mpCowVm;           // 吸引演出用エフェクト
+	int mEffectTimer;                   // エフェクト再生完了までの待機フレーム
+	bool TutrialVacumFlag;              // チュートリアル用の特別な判定フラグ
 };
 
 

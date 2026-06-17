@@ -1,4 +1,4 @@
-#include"Scene.h"
+ï»¿#include"Scene.h"
 #include "Rule.h"
 #include "DxLib.h"
 #include "Master.h"
@@ -8,8 +8,8 @@
 Rule::Rule()
 {
 	mRuleGraph = LoadGraph("Resource/2D/settings_bg.png");
-	mTitleFontHandle = CreateFontToHandle("ƒƒCƒŠƒI", 80, 5);
-	mFontHandle = CreateFontToHandle("ƒƒCƒŠƒI", 50, 3);
+	mTitleFontHandle = CreateFontToHandle("ãƒ¡ã‚¤ãƒªã‚ª", 80, 5);
+	mFontHandle = CreateFontToHandle("ãƒ¡ã‚¤ãƒªã‚ª", 50, 3);
 	
 	mSelectedIndex = MENU_BGM;
 	mPlaySeDelay = 0;
@@ -17,7 +17,8 @@ Rule::Rule()
 
 Rule::~Rule()
 {
-	Finalize(); // İ’è‰æ–Ê”jŠü‚ÌƒŠƒ\[ƒXƒNƒŠ[ƒ“ƒAƒbƒv‚ğ•ÛØ
+	// ã‚·ãƒ¼ãƒ³ç ´æ£„æ™‚ã®ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯ã‚’é˜²ããŸã‚æ˜ç¤ºçš„ã«è§£æ”¾ã‚’å‘¼ã¶
+	Finalize();
 }
 
 void Rule::Update()
@@ -42,7 +43,7 @@ void Rule::Update()
 	bool isMouseClicked = (mouseInput & MOUSE_INPUT_LEFT) != 0 && (prevMouseInput & MOUSE_INPUT_LEFT) == 0;
 	bool isMouseHeld = (mouseInput & MOUSE_INPUT_LEFT) != 0;
 
-	// ƒV[ƒ“‘JˆÚ’¼ŒãiŠJn30ƒtƒŒ[ƒ€–¢–j‚Íƒ`ƒƒƒ^ƒŠƒ“ƒO‚âƒNƒŠƒbƒN‚Ì˜A‘ÅŒë“ü—Í‚ğ–h~‚·‚é‚½‚ßƒXƒLƒbƒv
+	// é·ç§»å‰ã®å…¥åŠ›æŒã¡è¶Šã—ã«ã‚ˆã‚‹èª¤æ“ä½œã‚’é˜²ããŸã‚30ãƒ•ãƒ¬ãƒ¼ãƒ å¾…æ©Ÿ
 	if (mSceneFrames < 30)
 	{
 		prevMouseInput = mouseInput;
@@ -55,7 +56,6 @@ void Rule::Update()
 	int gapY = 150;
 	int startX = 400;
 
-	// ƒ}ƒEƒX‚ÌƒJ[ƒ\ƒ‹YÀ•W‚ğŠÄ‹‚µAŒ»İƒzƒo[’†‚Ìİ’è€–Ú‚ğƒtƒH[ƒJƒX‚·‚é
 	for (int i = 0; i < MENU_MAX; i++)
 	{
 		int y = startY + i * gapY;
@@ -68,7 +68,6 @@ void Rule::Update()
 		}
 	}
 
-	// ƒ}ƒEƒXƒhƒ‰ƒbƒO‚Ü‚½‚Íƒz[ƒ‹ƒh’†‚Ì‰¹—ÊƒXƒ‰ƒCƒ_[À•WŒvZ‚Æ‰¹—Ê”½‰f
 	if (isMouseHeld)
 	{
 		if (mSelectedIndex == MENU_BGM || mSelectedIndex == MENU_SE)
@@ -94,7 +93,8 @@ void Rule::Update()
 						if (mPlaySeDelay <= 0)
 						{
 							Master::mpSoundManager->PlaySE(SoundManager::SE_DECIDE);
-							mPlaySeDelay = 10; // •ÏX‰¹SE‚ÌÄ¶•p“x‚ğ10ƒtƒŒ[ƒ€‚²‚Æ‚É—}§
+							// SEãŒé‡ãªã£ã¦çˆ†éŸ³ã«ãªã‚‹ã®ã‚’é˜²ããŸã‚ã€å†ç”Ÿé–“éš”ã‚’åˆ¶é™ã™ã‚‹
+							mPlaySeDelay = 10;
 						}
 					}
 				}
@@ -102,7 +102,6 @@ void Rule::Update()
 		}
 	}
 
-	// u–ß‚évƒ{ƒ^ƒ“—Ìˆæ‚ªƒNƒŠƒbƒN‚³‚ê‚½‚çƒ^ƒCƒgƒ‹‰æ–Ê‘JˆÚ—v‹‚ğ”­s
 	if (isMouseClicked && mSelectedIndex == MENU_BACK)
 	{
 		int y = startY + MENU_BACK * gapY;
@@ -116,7 +115,6 @@ void Rule::Update()
 
 	prevMouseInput = mouseInput;
 
-	// ƒL[ƒ{[ƒhã‰º“ü—Í‚É‚æ‚éƒƒjƒ…[€–Ú‚ÌØ‚è‘Ö‚¦ˆ—
 	if (InputManager::CheckDownKey(KEY_INPUT_UP) || InputManager::CheckDownKey(KEY_INPUT_W))
 	{
 		mSelectedIndex = (MenuType)((int)mSelectedIndex - 1);
@@ -130,7 +128,6 @@ void Rule::Update()
 		Master::mpSoundManager->PlaySE(SoundManager::SE_DECIDE);
 	}
 
-	// ¶‰EƒL[“ü—Í‚É‚æ‚é‰¹—Ê‚Ì‘Œ¸•ÏXˆ—
 	int volChange = 0;
 	if (InputManager::CheckPressKey(KEY_INPUT_LEFT) || InputManager::CheckPressKey(KEY_INPUT_A))  volChange = -2;
 	if (InputManager::CheckPressKey(KEY_INPUT_RIGHT) || InputManager::CheckPressKey(KEY_INPUT_D)) volChange = 2;
@@ -155,7 +152,6 @@ void Rule::Update()
 		}
 	}
 
-	// ƒL[ƒ{[ƒhŒˆ’èƒL[iENTER/SPACEj‚Å‚ÌŒˆ’è€–Úˆ—
 	if (InputManager::CheckDownKey(KEY_INPUT_RETURN) || InputManager::CheckDownKey(KEY_INPUT_SPACE))
 	{
 		if (mSelectedIndex == MENU_BACK)
@@ -169,7 +165,7 @@ void Rule::Update()
 
 void Rule::Draw()
 {
-	// ”wŒi‚Ì”¼“§–¾ˆÃ“]‰‰o‚Ì•`‰æ
+	// å…ƒã®ã‚·ãƒ¼ãƒ³ç”»åƒã‚’é€ã‹ã—ã¦è¨­å®šç”»é¢ã§ã‚ã‚‹ã“ã¨ã‚’å¼·èª¿ã™ã‚‹ãŸã‚ã€åŠé€æ˜ã®æš—è»¢ã‚’é‡ã­ã‚‹
 	DrawExtendGraph(0, -100, 1600, 1000, mRuleGraph, TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
 	DrawBox(0, 0, 1600, 900, GetColor(0, 0, 0), TRUE);
@@ -181,7 +177,6 @@ void Rule::Draw()
 	int gapY = 150;
 	int startX = 400;
 
-	// Šeİ’èƒƒjƒ…[‚¨‚æ‚Ñ‰¹—ÊƒXƒ‰ƒCƒ_[’l‚ÌƒOƒ‰ƒtƒBƒJƒ‹•`‰æ
 	for (int i = 0; i < MENU_MAX; i++)
 	{
 		int y = startY + i * gapY;
@@ -233,4 +228,3 @@ void Rule::Finalize()
 	DeleteFontToHandle(mTitleFontHandle);
 	Master::mpSoundManager->StopBGM();
 }
-
