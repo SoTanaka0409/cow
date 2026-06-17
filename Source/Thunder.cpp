@@ -111,15 +111,20 @@ void Thunder::Update()
 			{
 				mpThunder->Play();
 				
-				auto p = ServiceLocator::GetPlayer();
-				if (p != nullptr)
+								auto players = ServiceLocator::GetPlayers();
+				bool playSound = false;
+				for (auto p : players)
 				{
-					// 落雷発生時の環境音を、プレイヤーの耳元近くのときのみ再生する
 					VECTOR diff = VSub(p->GetPosition(), mPos);
 					if (VSquareSize(diff) < 3000.0f * 3000.0f)
 					{
-						Master::mpSoundManager->PlaySE(SoundManager::SE_KAMINARI);
+						playSound = true;
+						break;
 					}
+				}
+				if (playSound)
+				{
+					Master::mpSoundManager->PlaySE(SoundManager::SE_KAMINARI);
 				}
 			}
 		}

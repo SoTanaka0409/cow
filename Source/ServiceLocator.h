@@ -1,4 +1,5 @@
-#pragma once
+﻿#pragma once
+#include <vector>
 
 class Scene;
 class ObjectManager;
@@ -14,6 +15,7 @@ public:
 	static Scene* GetCurrentScene();
 	static ObjectManager* GetObjectManager();
 	static Player3D* GetPlayer();
+	static std::vector<Player3D*> GetPlayers();
 	static CowManager* GetCowManager();
 	static AnimalManager* GetAnimalManager();
 	static GameManager* GetGameManager();

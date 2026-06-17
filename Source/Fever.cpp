@@ -13,6 +13,7 @@
 Fever::Fever()
 	: dropTime(0)
 	, DropCount(0)
+	, mpFeverPlayer(nullptr)
 {
 	mGauge = 0;
 	mTimer = 0;
@@ -27,11 +28,10 @@ void Fever::AddGauge(int value)
 {
 }
 
-void Fever::StartFever()
+void Fever::StartFever(Player3D* player)
 {
-	// ?v???C???[??z???\???2?{?????t?B?[?o?[????b??^????
-	auto p = ServiceLocator::GetPlayer();
-	Player3D* player = dynamic_cast<Player3D*>(p);
+	if (player == nullptr) return;
+	mpFeverPlayer = player;
 	playerStatus = player->GetStatusAttack();
 	player->SetStatusAttack(playerStatus * 2.0f);
 	mIsFever = true;
@@ -43,10 +43,11 @@ void Fever::StartFever()
 
 void Fever::EndFever()
 {
-	// ?v???C???[??z???\??????l????
-	auto p = ServiceLocator::GetPlayer();
-	Player3D* player = dynamic_cast<Player3D*>(p);
-	player->SetStatusAttack(playerStatus);
+	if (mpFeverPlayer != nullptr)
+	{
+		mpFeverPlayer->SetStatusAttack(playerStatus);
+		mpFeverPlayer = nullptr;
+	}
 	mIsFever = false;
 	
 	// ?t?B?[?o?[?I??????~?ƒÏE????ƒO?????X?e?[?W?S??????r???z??????

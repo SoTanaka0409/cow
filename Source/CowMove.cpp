@@ -1,4 +1,4 @@
-#include "CowMove.h"
+﻿#include "CowMove.h"
 #include "GameConstants.h"
 #include "Master.h"
 #include "InputManager.h"
@@ -268,8 +268,7 @@ void CowMove::CharacterDied()
 {
 	if (mCurrentState == STATE_VACUUM)
 	{
-		auto p = ServiceLocator::GetPlayer();
-		Player3D* player = dynamic_cast<Player3D*>(p);
+		Player3D* player = mpTargetPlayer;
 
 		CharacterRotate();
 		if (player != nullptr)
@@ -330,8 +329,7 @@ void CowMove::Die(DeathReason reason)
 {
 	if (mDeleteFlag || mCowtDelete) return;
 
-	auto p = ServiceLocator::GetPlayer();
-	Player3D* player = dynamic_cast<Player3D*>(p);
+	Player3D* player = mpTargetPlayer;
 
 	switch (reason)
 	{
