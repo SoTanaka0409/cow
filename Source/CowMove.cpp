@@ -1,4 +1,4 @@
-#include "CowMove.h"
+﻿#include "CowMove.h"
 #include "GameConstants.h"
 #include "Master.h"
 #include "InputManager.h"
@@ -76,7 +76,6 @@ void CowMove::Update()
 
 void CowMove::Draw()
 {
-
 	if (mbIsVisible)
 	{
 		CharacterMove::Draw();
@@ -114,7 +113,6 @@ void CowMove::MoveCharacter()
 
 void CowMove::AvoidOtherCows()
 {
-	
 	const auto& cows = ServiceLocator::GetObjectManager()->GetObject3DListByTag(Object3D::Tag3D_Cow);
 	for (int i = 0; i < cows.size(); ++i)
 	{
@@ -270,7 +268,7 @@ void CowMove::CharacterDied()
 {
 	if (mCurrentState == STATE_VACUUM)
 	{
-		Player3D* player = ServiceLocator::GetPlayer();
+		Player3D* player = mpTargetPlayer;
 
 		CharacterRotate();
 		if (player != nullptr)
@@ -331,7 +329,7 @@ void CowMove::Die(DeathReason reason)
 {
 	if (mDeleteFlag || mCowtDelete) return;
 
-	Player3D* player = ServiceLocator::GetPlayer();
+	Player3D* player = mpTargetPlayer;
 
 	switch (reason)
 	{
@@ -342,7 +340,7 @@ void CowMove::Die(DeathReason reason)
 			player->mpCombo->AddHit();
 			player->mpScore->AddScore(mfScore * player->mpCombo->GetMultiplier());
 
-			// コンボロジック
+			// 同種連続キルによるボーナススコア計算
 			if (mntag_cow == CowMove::Tag_cow::Cow_T)
 			{
 				Master::mnTutorialcount++;

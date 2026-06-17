@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+ï»¿#include "ServiceLocator.h"
 #include "Thunder.h"
 #include <cmath>
 #include "CapsuleCollider.h"
@@ -14,9 +14,10 @@ Thunder::Thunder(VECTOR pos)
 {
 	mHasStunned = false;
 	mPos = pos;
-	mWarningTimer = 60;   // 1•bŠÔ‚ÌŒxƒtƒF[ƒY
-	mStrikeTimer = 20;    // 0.33•bŠÔ‚Ì——‹ƒtƒF[ƒY
-	mIntervalTimer = 180; // ——‹I—¹‚©‚çŸ‰ñ—\’›‚Ü‚Å‚ÌŠÔŠuŠÔi3•bj
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒå›é¿è¡Œå‹•ã‚’ã¨ã‚Œã‚‹ã‚ˆã†ã€è½ä¸‹å‰ã«1ç§’é–“ã®çŒ¶äºˆã‚’è¨­ã‘ã‚‹
+	mWarningTimer = 60;
+	mStrikeTimer = 20;
+	mIntervalTimer = 180;
 
 	mState = IDLE;
 	mActive = true;
@@ -32,7 +33,7 @@ Thunder::Thunder(VECTOR pos)
 
 Thunder::~Thunder()
 {
-	// “®“IŠm•Û‚³‚ê‚½EffekseerƒGƒtƒFƒNƒg‘Œ¹‚ğ”jŠü‚µ‚Äƒƒ‚ƒŠƒŠ[ƒN‚ğ–h‚®
+	// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã¯è‡ªå‰ç®¡ç†ã®ãŸã‚æ‰‹å‹•ã§è§£æ”¾ã™ã‚‹
 	if (mpThunder != nullptr)
 	{
 		delete mpThunder;
@@ -82,7 +83,6 @@ void Thunder::Update()
 		mIntervalTimer--;
 		if (mIntervalTimer <= 0)
 		{
-			// ——‹‚Ì”­¶’n“_‚ğƒXƒe[ƒW“à‚ÌL”ÍˆÍ‚©‚çƒ‰ƒ“ƒ_ƒ€‚É‘I’è‚·‚é
 			float range = 3000.0f;
 			mPos.x = (float)(GetRand((int)range * 2) - (int)range);
 			mPos.z = (float)(GetRand((int)range * 2) - (int)range);
@@ -111,15 +111,20 @@ void Thunder::Update()
 			{
 				mpThunder->Play();
 				
-				auto p = ServiceLocator::GetPlayer();
-				if (p != nullptr)
+				auto players = ServiceLocator::GetPlayers();
+				bool playSound = false;
+				for (auto p : players)
 				{
-					// ——‹”­¶‚ÌŠÂ‹«‰¹‚ğAƒvƒŒƒCƒ„[‚Ì¨Œ³‹ß‚­‚Ì‚Æ‚«‚Ì‚İÄ¶‚·‚é
 					VECTOR diff = VSub(p->GetPosition(), mPos);
 					if (VSquareSize(diff) < 3000.0f * 3000.0f)
 					{
-						Master::mpSoundManager->PlaySE(SoundManager::SE_KAMINARI);
+						playSound = true;
+						break;
 					}
+				}
+				if (playSound)
+				{
+					Master::mpSoundManager->PlaySE(SoundManager::SE_KAMINARI);
 				}
 			}
 		}
@@ -129,7 +134,7 @@ void Thunder::Update()
 		mStrikeTimer--;
 		if (mStrikeTimer <= 0)
 		{
-			mIntervalTimer = 120; // Ÿ‰ñ——‹‚Ü‚Å‚ÌƒCƒ“ƒ^[ƒoƒ‹‚ğ2•b‚Éİ’è
+			mIntervalTimer = 120;
 			mState = IDLE;
 		}
 		break;
@@ -139,7 +144,7 @@ void Thunder::Update()
 	{
 		mStunEffectTimer--;
 
-		// ƒXƒ^ƒ“’†‚Ì¯ƒGƒtƒFƒNƒg‚ª“ªã‚Å‰ñ“]‚µ‘±‚¯‚é‚æ‚¤AüŠú“I‚ÉÄƒgƒŠƒK[‚·‚é
+		// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®å†ç”Ÿæ™‚é–“ãŒçŸ­ã„ãŸã‚ã€ã‚¹ã‚¿ãƒ³æœŸé–“ä¸­ã¯å®šæœŸçš„ã«å†ç”Ÿã—ç›´ã™
 		if (mStunEffectTimer > 0 && mStunEffectTimer % 30 == 0)
 		{
 			if (mpStun != nullptr)
@@ -172,7 +177,8 @@ bool Thunder::CheckHit(VECTOR playerPos, float range)
 void Thunder::OnEnter(Collider* collider, Collider* check)
 {
 	if (mState != STRIKE) return;
-	if (mHasStunned) return; // 1‰ñ‚Ì——‹ƒtƒF[ƒY‚Å•¡”‰ñƒXƒ^ƒ“‚·‚é‚Ì‚ğ–h~
+	// å¤šæ®µãƒ’ãƒƒãƒˆã«ã‚ˆã‚‹ç†ä¸å°½ãªã‚¹ã‚¿ãƒ³å»¶é•·ã‚’é˜²ããŸã‚
+	if (mHasStunned) return;
 
 	if (check->mpParentObject->GetTag() == Tag3D_player)
 	{
@@ -180,16 +186,15 @@ void Thunder::OnEnter(Collider* collider, Collider* check)
 		if (player != nullptr)
 		{
 			mHasStunned = true;
-			mStunEffectTimer = 120; // 2•bŠÔƒXƒ^ƒ“
+			mStunEffectTimer = 120;
 
 			VECTOR playerPos = player->GetPosition();
 			mpStun->SetPosition(playerPos);
 			mpStun->Play();
 
-			// ƒvƒŒƒCƒ„[‚ÉƒXƒ^ƒ“ó‘Ô‚ğ“K—p‚µAƒRƒ“ƒgƒ[ƒ‹•s”\‚É‚·‚é
 			player->ApplyStun(120);
 
-			// ——‹‚ÌÕŒ‚‚ğƒvƒŒƒCƒ„[‚É“`‚¦‚é‚½‚ß‚ÉƒJƒƒ‰‚ğ—h‚ç‚·
+			// è½é›·ã®å¨åŠ›ã‚’è¦–è¦šçš„ã«å¼·èª¿ã™ã‚‹ãŸã‚ã‚«ãƒ¡ãƒ©ã‚·ã‚§ã‚¤ã‚¯ã‚’ç™ºç”Ÿã•ã›ã‚‹
 			Master::mpCamera->SetupShake(30.0f, 45.0f, 40.0f);
 		}
 	}
@@ -202,4 +207,3 @@ void Thunder::OnTrigger(Collider* collider, Collider* check)
 void Thunder::OnExit(Collider* collider, Collider* check)
 {
 }
-

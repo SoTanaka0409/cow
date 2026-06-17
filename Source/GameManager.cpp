@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+ï»¿#include "ServiceLocator.h"
 #include"GameManager.h"
 #include"Master.h"
 #include"SceneManager.h"
@@ -16,7 +16,6 @@ GameManager::GameManager()
 {
 	mpGameTimer = nullptr;
 	
-	// ŠeisƒXƒeƒbƒvƒf[ƒ^‚Ì’è‹`‚Æ“o˜^
 	auto data = new GameStepData;
 	data->type = GameStepType::game_CowGet;
 	data->TrueFlag = true;
@@ -47,10 +46,10 @@ GameManager::~GameManager()
 }
 
 /*
- * @brief Ÿ‚ÌƒXƒeƒbƒviI—¹‰æ–Ê“™j‚Öó‘Ô‘JˆÚ‚³‚¹AƒXƒRƒAƒ‰ƒ“ƒLƒ“ƒO“o˜^‚ğs‚¤
- * [“ü—Í] type: ‘JˆÚæ‚ÌƒXƒeƒbƒvID
- * [o—Í] ‚È‚µ
- * [•›ì—p] mnType‚ÌXVAMaster::GameFinishFlag‚Ì—LŒø‰»AƒXƒRƒA‚Ì’Ç‰ÁEƒl[ƒ€“ü—Í‚ÌŠJn
+ * ã‚¹ã‚³ã‚¢ç™»éŒ²ã‚’ä¼´ã†çµ‚äº†ã‚¹ãƒ†ãƒƒãƒ—ã¸ã®é·ç§»ã‚’è¡Œã†
+ * [å…¥åŠ›] type: é·ç§»å…ˆã®ã‚¹ãƒ†ãƒƒãƒ—ID
+ * [å‡ºåŠ›] ãªã—
+ * [å‰¯ä½œç”¨] é€²è¡Œã‚¹ãƒ†ãƒƒãƒ—å¤‰æ›´ã€ãƒ•ãƒ©ã‚°æ›´æ–°ã€ãƒãƒ¼ãƒ å…¥åŠ›é–‹å§‹
  */
 void GameManager::GameNextStep(GameStepType type)
 {
@@ -66,17 +65,16 @@ void GameManager::GameNextStep(GameStepType type)
 		Master::GameFinishFlag = true;
 		if (player != nullptr)
 		{
-			// ƒvƒŒƒC’†ƒXƒRƒA‚ğƒ}ƒXƒ^[‚É“o˜^‚µAƒ‰ƒ“ƒLƒ“ƒO‚Ö”½‰f
 			Master::mpScore->AddScore(player->mpScore->GetScore());
 			Master::mpScore->SetResultScore(player->mpScore->GetScore());
 			player->mpScore->AddRanking();
 
-			// –¼‘O“ü—Í‚ÍƒXƒLƒbƒv‚µ‚Ä©“®ƒZ[ƒu
+			// åå‰å…¥åŠ›ã¯ã‚¹ã‚­ãƒƒãƒ—ã—ã¦è‡ªå‹•ã‚»ãƒ¼ãƒ–ã™ã‚‹ä»•æ§˜ã®ãŸã‚
 			player->mpScore->Save();
 			player->mpScore->SaveRanking();
 		}
 
-		// ƒŠƒUƒ‹ƒg‰æ–Ê‚Ö‚ÌƒtƒF[ƒhƒAƒEƒg‚ğŠJn
+		// ãƒªã‚¶ãƒ«ãƒˆç”»é¢ã¸ã®ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆã‚’é–‹å§‹ã™ã‚‹
 		Master::mpSceneManager->GetCurrentScene()->mFadeState = Scene::SceneFade_Out;
 		Master::mpSceneManager->GetCurrentScene()->mNextScene = SceneManager::SCENE_RESULT;
 
@@ -85,21 +83,21 @@ void GameManager::GameNextStep(GameStepType type)
 }
 
 /*
- * @brief ŠJn‚ÌƒtƒF[ƒhƒCƒ“ˆÃ“]‹éŒ`‚ğ‰æ–Ê‚É•`‰æ‚·‚é
- * [“ü—Í] ‚È‚µ
- * [o—Í] ‚È‚µ
- * [•›ì—p] ‰æ–Ê‘Sˆæ‚ÖDrawBox‚É‚æ‚é•“h‚è•`‰æ
+ * ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ç­‰ã€ã‚²ãƒ¼ãƒ é€²è¡Œã«å¿…è¦ãªæ¼”å‡ºæç”»ã‚’è¡Œã†
+ * [å…¥åŠ›] ãªã—
+ * [å‡ºåŠ›] ãªã—
+ * [å‰¯ä½œç”¨] ç”»é¢å…¨åŸŸã¸DrawBoxã«ã‚ˆã‚‹é»’å¡—ã‚Šæç”»
  */
 void GameManager::Draw()
 {
 	if (Fadeflag)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(Fadetimer));
-		// ƒEƒBƒ“ƒhƒE‘S‰æ–Ê‚ğãY—í‚ÉƒJƒo[‚·‚é‚æ‚¤‚É Utility ’è”‚Ì‰ğ‘œ“x‚ğg—p
+		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å…¨ç”»é¢ã‚’ã‚«ãƒãƒ¼ã™ã‚‹ãŸã‚ Utility å®šæ•°ã®è§£åƒåº¦ã‚’ä½¿ç”¨ã™ã‚‹
 		DrawBox(0, 0, Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT, GetColor(0, 0, 0), TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-		Fadetimer -= 2.0f; // ™X‚É–¾‚é‚­‚·‚é
+		Fadetimer -= 2.0f;
 
 		if (Fadetimer <= 0.0f)
 		{
@@ -113,13 +111,11 @@ void GameManager::Update()
 {
 	Player3D* player = ServiceLocator::GetPlayer();
 	
-	// ƒ^ƒCƒ€ƒAƒbƒvŒã‚ÌƒŠƒUƒ‹ƒg‘JˆÚ‘Ò‚¿ˆ—
 	if (GameStepType::game_final == mnType)
 	{
-		// GameNextStep‚ÅƒtƒF[ƒhƒAƒEƒgİ’èÏ‚İ‚È‚½‚ßA‚±‚±‚Å‚Í‰½‚à‚µ‚È‚¢
 	}
 	
-	// ƒQ[ƒ€–{•Òis’†F§ŒÀŠÔƒ^ƒCƒ}[ŠÇ—‚¨‚æ‚Ñƒ‰ƒ“ƒ_ƒ€ƒtƒF[ƒYØ‚è‘Ö‚¦ˆ—
+	// åˆ¶é™æ™‚é–“ã‚¿ã‚¤ãƒãƒ¼ç®¡ç†ãŠã‚ˆã³ãƒ©ãƒ³ãƒ€ãƒ ãƒ•ã‚§ãƒ¼ã‚ºåˆ‡ã‚Šæ›¿ãˆå‡¦ç†
 	if (GameStepType::game_CowGet == mnType)
 	{
 		if (!mpGameTimer)
@@ -142,18 +138,17 @@ void GameManager::Update()
 
 		int Timer = GetNowCount();
 
-		// 1000msi1•bj‚²‚Æ‚ÉƒJƒEƒ“ƒ^[‚ğ1i‚ß‚é
 		if (Timer - m_PhaseTimer >= 1000)
 		{
 			m_PhaseTimer = Timer;
 			m_PhaseChangeCount++;
 		}
 		
-		// 30•b‚²‚Æ‚ÉƒQ[ƒ€‚ÌƒtƒF[ƒYi‰‰oj‚ğƒ‰ƒ“ƒ_ƒ€‚É•ÏX‚·‚é
+		// 30ç§’ã”ã¨ã«ã‚²ãƒ¼ãƒ ã®ãƒ•ã‚§ãƒ¼ã‚ºï¼ˆæ¼”å‡ºï¼‰ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«å¤‰æ›´ã™ã‚‹åˆ¶ç´„
 		if (m_PhaseChangeCount >= 30)
 		{
 			m_PhaseChangeCount = 0;
-			int m_Num = rand() % 2 + 1; // 1?2‚Ì—”‚ğæ“¾
+			int m_Num = rand() % 2 + 1;
 			
 			if (m_Num == 1)
 			{
@@ -170,4 +165,3 @@ void GameManager::Update()
 		}
 	}
 }
-

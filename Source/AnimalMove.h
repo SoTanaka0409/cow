@@ -1,14 +1,14 @@
-#pragma once
+﻿#pragma once
 #include "CharacterMove.h"
 
 class SphereCollider;
 class CapsuleCollider;
 
-// �X�e�[�W��������ړ������ʓ����iAI���ڃA�N�^�[�j�̃N���X
+// 自律移動と捕獲（吸い込み）状態を管理する動物の基底クラス
 class AnimalMove : public CharacterMove
 {
 public:
-	// �����̎�ގ��ʗp�^�O
+	// コンボボーナス計算に用いる動物種別
 	enum Tag_animal
 	{
 		none,
@@ -20,9 +20,21 @@ public:
 	};
 
 public:
+	/*
+	 * @brief 動物オブジェクトの生成
+	 * [入力] filename: モデルパス, initPos: 初期座標
+	 * [出力] なし
+	 * [副作用] ステータス初期化
+	 */
 	AnimalMove(std::string filename, VECTOR initPos);
 	virtual ~AnimalMove();
 
+	/*
+	 * @brief キャラクターの移動処理
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 座標の更新
+	 */
 	virtual void MoveCharacter() override;
 	virtual void Reset(VECTOR pos) override;
 
@@ -39,5 +51,5 @@ public:
 	Tag_animal GetTag_animal() { return mntag_animal; }
 
 protected:
-	Tag_animal mntag_animal;            // �^�O
+	Tag_animal mntag_animal;
 };

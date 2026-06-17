@@ -1,4 +1,4 @@
-#include "Score.h"
+ï»¿#include "Score.h"
 #include <stdio.h>
 #include <string.h>
 #include "DxLib.h"
@@ -20,26 +20,26 @@ Score::Score()
 	}
 
 	scoreTextImage = LoadGraph("Resource/2D/SCORE.png");
-	minusImg = LoadGraph("Resource/2D/ƒ}ƒCƒiƒX.png");
+	minusImg = LoadGraph("Resource/2D/ãƒã‚¤ãƒŠã‚¹.png");
 
-	// ƒXƒRƒA•`‰æ—pƒfƒWƒ^ƒ‹”š‰æ‘œƒAƒZƒbƒg‚Ìƒ[ƒhiÀİ‚·‚é³‚µ‚¢ƒAƒZƒbƒgƒpƒX‚ğİ’èj
-	numberImg[0] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”00.png");
-	numberImg[1] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”01.png");
-	numberImg[2] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”02.png");
-	numberImg[3] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”03.png");
-	numberImg[4] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”04.png");
-	numberImg[5] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”05.png");
-	numberImg[6] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”06.png");
-	numberImg[7] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”07.png");
-	numberImg[8] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”08.png");
-	numberImg[9] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”09.png");
+	// ã‚¹ã‚³ã‚¢æç”»ç”¨ã‚¢ã‚»ãƒƒãƒˆãƒ­ãƒ¼ãƒ‰
+	numberImg[0] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°00.png");
+	numberImg[1] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°01.png");
+	numberImg[2] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°02.png");
+	numberImg[3] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°03.png");
+	numberImg[4] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°04.png");
+	numberImg[5] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°05.png");
+	numberImg[6] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°06.png");
+	numberImg[7] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°07.png");
+	numberImg[8] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°08.png");
+	numberImg[9] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°09.png");
 
 	LoadRanking();
 }
 
 Score::~Score()
 {
-	// “Ç‚İ‚İÏ‚İƒOƒ‰ƒtƒBƒbƒNƒnƒ“ƒhƒ‹‚Ì‰ğ•ú˜R‚ê‚ğ–h~
+	// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ãƒãƒ³ãƒ‰ãƒ«ã®ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯é˜²æ­¢
 	DeleteGraph(scoreTextImage);
 	DeleteGraph(minusImg);
 	for (int i = 0; i < 10; i++)
@@ -50,12 +50,12 @@ Score::~Score()
 
 void Score::Draw()
 {
-	int x = 100;
+	int x = 20;
 	int y = 100;
 	int width = 200;
 	int height = 100;
 
-	// ‰æ–Ê¶ã‚ÉuSCOREvƒeƒLƒXƒg‚ğ•`‰æ
+
 	DrawExtendGraph(
 		x,
 		y,
@@ -65,7 +65,7 @@ void Score::Draw()
 		TRUE
 	);
 
-	// Œ»İ‚Ì‡ŒvƒXƒRƒA‚ğ”š‰æ‘œ‚Å‰E‘¤‚É•`‰æ
+
 	int drawX = x + 220;
 	int temp = score;
 	int digit[10];
@@ -109,7 +109,7 @@ void Score::AddScore(int value)
 	score += value;
 	if (score < 0)
 	{
-		score = 0; // ƒXƒRƒA‚ª•‰‚Ì’l‚ÉŒ¸­‚·‚é‚Ì‚ğ–h~
+		score = 0; // è² ã®ã‚¹ã‚³ã‚¢ã‚’é˜²æ­¢
 	}
 }
 
@@ -165,7 +165,7 @@ void Score::StartNameInput()
 	nameIndex = 0;
 	playerName[0] = '\0';
 
-	// •¶š“ü—Í—“‚ğƒAƒNƒeƒBƒu‰»‚µAƒL[ƒ{[ƒh“ü—Í‚ğŠJn‚·‚é
+	// DxLibã®ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰å…¥åŠ›ã‚·ã‚¹ãƒ†ãƒ ã‚’æœ‰åŠ¹åŒ–
 	inputHandle = MakeKeyInput(0, 0, 64, 1);
 	SetActiveKeyInput(inputHandle);
 }
@@ -174,13 +174,13 @@ void Score::UpdateNameInput()
 {
 	if (!nameInputMode) return;
 
-	// “ü—Í’†‚Ì•¶š‚ğplayerName‚Éæ“¾‚µA‰æ–Ê‚Éƒl[ƒ€ƒGƒ“ƒgƒŠ[—p‚Ì•\¦‚ğ•`‰æ
-	GetKeyInputString(playerName, inputHandle);
-	DrawFormatString(300, 100, GetColor(255, 255, 255), "‚¨–¼‘O‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
-	DrawFormatString(300, 120, GetColor(255, 255, 255), "“ü—ÍŒãAENTERƒL[‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢");
-	DrawFormatString(300, 160, GetColor(255, 255, 0), ">> %s", playerName);
 
-	// ‰½‚©•¶š‚ª“ü—Í‚³‚ê‚Ä‚¢‚éó‘Ô‚ÅENTER‚ª‰Ÿ‚³‚ê‚½‚ç“ü—Íó•t‚ğI—¹
+	GetKeyInputString(playerName, inputHandle);
+	/*DrawFormatString(300, 100, GetColor(255, 255, 255), "ãŠåå‰ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„");
+	DrawFormatString(300, 120, GetColor(255, 255, 255), "å…¥åŠ›å¾Œã€ENTERã‚­ãƒ¼ã‚’æŠ¼ã—ã¦ãã ã•ã„");
+	DrawFormatString(300, 160, GetColor(255, 255, 0), ">> %s", playerName);*/
+
+	// å…¥åŠ›å®Œäº†åˆ¤å®šï¼ˆENTERã‚­ãƒ¼ï¼‰
 	if (CheckHitKey(KEY_INPUT_RETURN) && strlen(playerName) > 0)
 	{
 		nameInputMode = false;
@@ -201,18 +201,18 @@ void Score::AddRanking()
 	int target = score;
 	nameIndex = -1;
 
-	// ãˆÊ3ˆÊ‚Ì’†‚É¡‰ñ‚ÌƒXƒRƒA‚ªŠ„‚è‚ß‚éˆÊ’u‚ª‚ ‚é‚©’Tõ
+	// ä¸Šä½3ä½ä»¥å†…ã«ãƒ©ãƒ³ã‚¯ã‚¤ãƒ³ã—ãŸã‹åˆ¤å®š
 	for (int i = 0; i < 3; i++)
 	{
 		if (target > ranking[i].score)
 		{
-			// ‰ºˆÊ‚Ì‡ˆÊ‚ğ1‚Â‚¸‚ÂŒJ‚è‰º‚°‚é
+			// é †ä½ã®ç¹°ã‚Šä¸‹ã’
 			for (int j = 2; j > i; j--)
 			{
 				ranking[j] = ranking[j - 1];
 			}
 
-			// ¡‰ñ‚ÌƒvƒŒƒCƒ„[‚Æ‚µ‚Ä‰¼“o˜^iŒã‚Éƒl[ƒ€“ü—Í’l‚ÅŠm’èj
+			// ä»®å"PLAYER"ã§ç™»éŒ²ã€‚ãƒãƒ¼ãƒ ã‚¨ãƒ³ãƒˆãƒªãƒ¼å¾Œã«ç¢ºå®šã™ã‚‹
 			strcpy_s(ranking[i].name, "PLAYER");
 			ranking[i].score = target;
 			nameIndex = i;
@@ -230,7 +230,7 @@ void Score::DrawRanking(int x, int y)
 			x,
 			y + 30 + i * 20,
 			GetColor(255, 255, 255),
-			"%dˆÊ  %s : %d",
+			"%dä½  %s : %d",
 			i + 1,
 			ranking[i].name,
 			ranking[i].score
@@ -267,7 +267,7 @@ void Score::LoadRanking()
 	}
 	else
 	{
-		// ƒtƒ@ƒCƒ‹‚ª‘¶İ‚µ‚È‚¢ê‡‚ÍANONEiƒXƒRƒA0j‚Åƒ_ƒ~[ƒf[ƒ^‚ğì¬‚µ‚Ä‰ŠúƒZ[ƒu‚ğs‚¤
+		// ãƒ©ãƒ³ã‚­ãƒ³ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ãŒãªã„å ´åˆã¯ãƒ€ãƒŸãƒ¼ãƒ‡ãƒ¼ã‚¿ã§æ–°è¦ä½œæˆ
 		for (int i = 0; i < 3; i++)
 		{
 			strcpy_s(ranking[i].name, "NONE");
@@ -279,7 +279,7 @@ void Score::LoadRanking()
 
 void Score::AddScoreWithCombo(int baseScore, int comboCount)
 {
-	// 1ƒRƒ“ƒ{‚É‚Â‚«Šî–{“_‚Ì20%‚Ìƒ{[ƒiƒX”{—¦‚ğ‰ÁZ‚·‚é
+	// ã‚³ãƒ³ãƒœãƒœãƒ¼ãƒŠã‚¹: 1ã‚³ãƒ³ãƒœã‚ãŸã‚Š20%åŠ ç®—
 	float multiplier = 1.0f + comboCount * 0.2f;
 	int finalScore = static_cast<int>(baseScore * multiplier);
 

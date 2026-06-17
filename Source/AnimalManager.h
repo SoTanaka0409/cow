@@ -1,9 +1,4 @@
-#pragma once
-
-#include <vector>
-#include <string>
-#include <map>
-#pragma once
+﻿#pragma once
 
 #include <vector>
 #include <string>
@@ -22,24 +17,31 @@ public:
 	 * @brief 指定された種類の動物をランダムな位置に複数生成する
 	 * [入力] filename: モデルのファイルパス, pos: 出現中心基準座標, scale: モデルの拡大率, tag: 動物の種類識別タグ, count: 生成個数
 	 * [出力] なし
-	 * [副作用] 動的メモリ確保された動物オブジェクトが管理リストに追加される
+	 * [副作用] 動的メモリ確保された動物オブジェクトが管理リストに追加される、またはプールから復帰する
 	 */
 	void SpawnAnimal(std::string filename, VECTOR pos, float scale, AnimalMove::Tag_animal tag, int count);
 
 	/*
-	 * @brief 管理している動物の当たり判定判定および不要な動物の解放処理を行う
+	 * @brief 管理している全ての動物の更新および不要な動物の解放処理を行う
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 各動物のUpdate実行と、削除フラグの立った動物のプール返却
+	 */
+	void Update();
+
+	/*
+	 * @brief 管理している動物の描画処理を行う
 	 * [入力] なし
 	 * [出力] なし
 	 * [副作用] なし
 	 */
-	void Update();
 	void Draw();
 
 	/*
-	 * @brief 削除フラグ(mbDeleteFlag)が立っている動物オブジェクトを管理リストから除外する
+	 * @brief 削除フラグ(mbDeleteFlag)が立っている動物オブジェクトを管理リストから除外しプールへ返す
 	 * [入力] なし
 	 * [出力] なし
-	 * [副作用] リストからのポインタ除外
+	 * [副作用] リストからのポインタ除外、プールへの追加
 	 */
 	void EraseAnimal();
 

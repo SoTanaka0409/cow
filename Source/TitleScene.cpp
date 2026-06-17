@@ -1,4 +1,4 @@
-#include "TitleScene.h"
+ï»¿#include "TitleScene.h"
 #include "DxLib.h"
 #include "Utility.h"
 #include "Master.h"
@@ -8,10 +8,10 @@
 TitleScene::TitleScene()
 	: Scene()
 {
-	mCowVoiceTimer = 180; // ‰‰ñ‚É‹‚ª–Â‚­‚Ü‚Å‚Ì‘Ò‹@ƒtƒŒ[ƒ€ŽžŠÔÝ’è
+	mCowVoiceTimer = 180; // åˆå›žå†ç”Ÿã¾ã§ã®å¾…æ©Ÿãƒ•ãƒ¬ãƒ¼ãƒ è¨­å®š
 	
-	mnTitleGraphHandle = LoadGraph("Resource/2D/ƒ^ƒCƒgƒ‹ƒV[ƒ“.png");
-	mnUfoGraphHandle = LoadGraph("Resource/2D/‹‚ÆUFO.png");
+	mnTitleGraphHandle = LoadGraph("Resource/2D/ã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³.png");
+	mnUfoGraphHandle = LoadGraph("Resource/2D/ç‰›ã¨UFO.png");
 	GetGraphSize(mnUfoGraphHandle, &mUfoW, &mUfoH);
 
 	mUfoX = 540;
@@ -28,48 +28,36 @@ TitleScene::TitleScene()
 	mIsAutoPatrol = false;
 	mAutoPatrolTimer = 0;
 
-	// ƒ^ƒCƒgƒ‹‰æ–Ê—p‚Ìƒ‰ƒ“ƒLƒ“ƒOUI—p‰æ‘œ‚ðƒ[ƒh
-	rankImage[0] = LoadGraph("Resource/2D/1ˆÊ.png");
-	rankImage[1] = LoadGraph("Resource/2D/2ˆÊ.png");
-	rankImage[2] = LoadGraph("Resource/2D/3ˆÊ.png");
-	rankingTitleImage = LoadGraph("Resource/2D/ƒ‰ƒ“ƒLƒ“ƒO.png");
-	pointImg = LoadGraph("Resource/2D/“_.png");
-	 
-	// ƒCƒ“ƒ^ƒ‰ƒNƒeƒBƒu‚ÈŠe‘JˆÚƒ{ƒ^ƒ“‚Ìƒf[ƒ^‚ðƒŠƒXƒg‚É“o˜^
-	// 1. ƒXƒ^[ƒgƒ{ƒ^ƒ“
 	TitleButton newGameBtn;
 	newGameBtn.type = SelectionManager::Title::NewGame;
-	newGameBtn.graphHandle = LoadGraph("Resource/2D/ƒXƒ^[ƒgƒ{ƒ^ƒ“1.png");
+	newGameBtn.graphHandle = LoadGraph("Resource/2D/ã‚¹ã‚¿ãƒ¼ãƒˆãƒœã‚¿ãƒ³1.png");
 	newGameBtn.x = 920;
 	newGameBtn.y = 50;
 	GetGraphSize(newGameBtn.graphHandle, &newGameBtn.w, &newGameBtn.h);
 	newGameBtn.isHover = false;
 	mButtons.push_back(newGameBtn);
 
-	// 2. ƒ`ƒ…[ƒgƒŠƒAƒ‹ƒ{ƒ^ƒ“
 	TitleButton tutorialBtn;
 	tutorialBtn.type = SelectionManager::Title::Tutorial;
-	tutorialBtn.graphHandle = LoadGraph("Resource/2D/ƒ`ƒ…[ƒgƒŠƒAƒ‹‚Ú‚½‚ñ.png");
+	tutorialBtn.graphHandle = LoadGraph("Resource/2D/ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«ã¼ãŸã‚“.png");
 	tutorialBtn.x = 900;
 	tutorialBtn.y = 250;
 	GetGraphSize(tutorialBtn.graphHandle, &tutorialBtn.w, &tutorialBtn.h);
 	tutorialBtn.isHover = false;
 	mButtons.push_back(tutorialBtn);
 
-	// 3. ‘€ìà–¾iƒ‹[ƒ‹jƒ{ƒ^ƒ“
 	TitleButton opeBtn;
 	opeBtn.type = SelectionManager::Title::OperationProcedures;
-	opeBtn.graphHandle = LoadGraph("Resource/2D/‚¹‚Á‚Ä‚¢‚Ú‚½‚ñ1.png");
+	opeBtn.graphHandle = LoadGraph("Resource/2D/ã›ã£ã¦ã„ã¼ãŸã‚“1.png");
 	opeBtn.x = 915;
 	opeBtn.y = 450;
 	GetGraphSize(opeBtn.graphHandle, &opeBtn.w, &opeBtn.h);
 	opeBtn.isHover = false;
 	mButtons.push_back(opeBtn);
 
-	// 4. ƒQ[ƒ€I—¹ƒ{ƒ^ƒ“
 	TitleButton exitBtn;
 	exitBtn.type = SelectionManager::Title::titleOUT;
-	exitBtn.graphHandle = LoadGraph("Resource/2D/‚µ‚ã‚¤‚è‚å‚¤‚Ú‚½‚ñ (1).png");
+	exitBtn.graphHandle = LoadGraph("Resource/2D/ã—ã‚…ã†ã‚Šã‚‡ã†ã¼ãŸã‚“ (1).png");
 	exitBtn.x = 960;
 	exitBtn.y = 680;
 	GetGraphSize(exitBtn.graphHandle, &exitBtn.w, &exitBtn.h);
@@ -82,6 +70,13 @@ TitleScene::TitleScene()
 
 	mbIsHoverNewGame = false;
 	mFrameCount = 0;
+
+	// ãƒ©ãƒ³ã‚­ãƒ³ã‚°è¡¨ç¤ºç”¨ã®ç”»åƒã‚’ãƒ­ãƒ¼ãƒ‰ï¼ˆDxLibåˆæœŸåŒ–å¾Œã§ãªã„ã¨å¤±æ•—ã™ã‚‹ãŸã‚ã“ã“ã§è¡Œã†ï¼‰
+	rankImage[0] = LoadGraph("Resource/2D/1ä½.png");
+	rankImage[1] = LoadGraph("Resource/2D/2ä½.png");
+	rankImage[2] = LoadGraph("Resource/2D/3ä½.png");
+	rankingTitleImage = LoadGraph("Resource/2D/ãƒ©ãƒ³ã‚­ãƒ³ã‚°.png");
+	pointImg = LoadGraph("Resource/2D/ç‚¹.png");
 }
 
 TitleScene::~TitleScene()
@@ -91,8 +86,8 @@ TitleScene::~TitleScene()
 void TitleScene::Initialize()
 {
 	Master::GameFinishFlag = false;
-	SetMouseDispFlag(true); // ƒ^ƒCƒgƒ‹‰æ–Ê‚Å‚Íƒ}ƒEƒXƒ|ƒCƒ“ƒ^‚ð•\Ž¦‚·‚é
-	Master::mpScore->LoadRanking(); // ÅV‚ÌƒnƒCƒXƒRƒAƒf[ƒ^‚ðƒXƒgƒŒ[ƒW‚©‚ç“Ç‚Ýž‚Ý
+	SetMouseDispFlag(true); // ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒãƒœã‚¿ãƒ³æ“ä½œã§ãã‚‹ã‚ˆã†ã«ãƒžã‚¦ã‚¹ã‚’è¡¨ç¤º
+	Master::mpScore->LoadRanking(); // ãƒ©ãƒ³ã‚­ãƒ³ã‚°è¡¨ç¤ºç”¨ã«ä¿å­˜ã•ã‚ŒãŸã‚¹ã‚³ã‚¢ã‚’ãƒ­ãƒ¼ãƒ‰
 	Master::mpCamera->Initialize();
 
 	Master::mpSoundManager->PlayBGM(SoundManager::BGM_TITLE);
@@ -105,7 +100,7 @@ void TitleScene::Draw()
 
 	int ufoDrawY = mUfoY;
 
-	// ƒhƒ‰ƒbƒO‚³‚ê‚Ä‚¢‚È‚¢Žž‚ÍƒTƒCƒ“”g‚ð—p‚¢‚Ä‚Ó‚í‚Ó‚í•‚‚©‚ÔƒAƒjƒ[ƒVƒ‡ƒ“‚ðs‚¤
+	// ãƒ‰ãƒ©ãƒƒã‚°ä¸­ä»¥å¤–ã¯ã‚µã‚¤ãƒ³æ³¢ã§UFOã®æµ®éŠã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’é©ç”¨ã™ã‚‹
 	if (!mbIsDraggingUfo)
 	{
 		float ufoWave = sin(mFrameCount * 0.03f) * 20.0f;
@@ -122,7 +117,7 @@ void TitleScene::Draw()
 		TRUE
 	);
 
-	// Šeƒ{ƒ^ƒ“‚ð•`‰æiƒ}ƒEƒXƒzƒo[Žž‚ÍƒTƒCƒY‚ð­‚µŠg‘å‚µ‚ÄƒAƒs[ƒ‹j
+	// ãƒ›ãƒãƒ¼æ™‚ã«ãƒœã‚¿ãƒ³ã‚’æ‹¡å¤§æç”»ã—ã€è¦–è¦šçš„ãªãƒ•ã‚£ãƒ¼ãƒ‰ãƒãƒƒã‚¯ã‚’ä¸Žãˆã‚‹
 	for (int i = 0; i < mButtons.size(); i++)
 	{
 		float wave = sin(mFrameCount * 0.05f + (i * 1.5f)) * 10.0f;
@@ -160,8 +155,8 @@ void TitleScene::Update()
 		mCowVoiceTimer--;
 		if (mCowVoiceTimer <= 0)
 		{
-			Master::mpSoundManager->PlaySE(SoundManager::SE_COW); // ƒ^ƒCƒgƒ‹‰æ–Ê‚Ì“ö‚â‚©‚µ‚Æ‚µ‚Ä’èŠú“I‚ÉSEÄ¶
-			mCowVoiceTimer = GetRand(600) + 300; // ŽŸ‰ñÄ¶‚Ü‚Åƒ‰ƒ“ƒ_ƒ€‚ÉŠÔŠu‚ðÝ’è (5•b?15•b)
+			Master::mpSoundManager->PlaySE(SoundManager::SE_COW); // ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ã®æ¼”å‡ºã¨ã—ã¦å®šæœŸçš„ã«å†ç”Ÿ
+			mCowVoiceTimer = GetRand(600) + 300; // å†ç”Ÿé–“éš”ã‚’ãƒ©ãƒ³ãƒ€ãƒ åŒ–ã—å˜èª¿ã•ã‚’é˜²ã
 		}
 	}
 
@@ -181,14 +176,14 @@ void TitleScene::Update()
 	int mouseInput = GetMouseInput();
 	int ufoSize = 360;
 
-	// UFO‚ðƒNƒŠƒbƒN‚µ‚½Û‚ÉŽ©“®„‰ñƒC[ƒXƒ^[ƒGƒbƒO‚ð”­“®‚³‚¹‚é”»’è
+	// UFOã‚¯ãƒªãƒƒã‚¯æ™‚ã«éš ã—è¦ç´ ã®è‡ªå‹•å·¡å›žãƒ¢ãƒ¼ãƒ‰ã‚’èµ·å‹•ã™ã‚‹
 	if ((mouseInput & MOUSE_INPUT_LEFT) != 0)
 	{
 		if (mouseX >= mUfoX && mouseX <= mUfoX + ufoSize &&
 			mouseY >= mUfoY && mouseY <= mUfoY + ufoSize)
 		{
 			mIsAutoPatrol = true;
-			mAutoPatrolTimer = 240; // 4•bŠÔi240ƒtƒŒ[ƒ€jŽ©“®„‰ñ‚ðs‚¤
+			mAutoPatrolTimer = 240; // 4ç§’é–“ï¼ˆ240ãƒ•ãƒ¬ãƒ¼ãƒ ï¼‰è‡ªå‹•å·¡å›žã‚’è¡Œã†
 			mbIsDraggingUfo = true;
 		}
 	}
@@ -197,7 +192,7 @@ void TitleScene::Update()
 		mbIsDraggingUfo = false;
 	}
 
-	// UFO‚ÌŽ©“®„‰ñƒpƒXˆ—iƒTƒCƒ“EƒRƒTƒCƒ“‚É‚æ‚é‘È‰~‹O“¹j
+	// æ¥•å††è»Œé“ã®æ•°å¼ã‚’ç”¨ã„ã¦UFOã‚’è‡ªå‹•å·¡å›žã•ã›ã‚‹
 	if (mIsAutoPatrol)
 	{
 		mUfoAngle += 0.02f;
@@ -212,7 +207,7 @@ void TitleScene::Update()
 		}
 	}
 
-	// Šeƒ{ƒ^ƒ“‚É‘Î‚·‚éƒ}ƒEƒX‚Ì“–‚½‚è”»’èiƒzƒo[ó‘Ô‚ÌØ‚è‘Ö‚¦AƒNƒŠƒbƒNŽž‚ÌƒV[ƒ“—v‹j
+	// UFOæ“ä½œä¸­ä»¥å¤–ã«ãƒœã‚¿ãƒ³ã®ãƒžã‚¦ã‚¹åˆ¤å®šã¨ã‚·ãƒ¼ãƒ³é·ç§»è¦æ±‚ã‚’è¡Œã†
 	if (mbIsDraggingUfo == false)
 	{
 		for (int i = 0; i < mButtons.size(); i++)
@@ -242,7 +237,7 @@ void TitleScene::Update()
 						Master::mpSoundManager->PlaySE(SoundManager::SE_DECIDE);
 						break;
 					case SelectionManager::Title::titleOUT:
-						PostQuitMessage(0); // WindowsƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚Æ‚µ‚Ä‚ÌˆÀ‘S‚ÈI—¹’Ê’m
+						PostQuitMessage(0); // OSã«ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³çµ‚äº†è¦æ±‚ã‚’é€ä¿¡
 						break;
 					}
 				}
@@ -255,7 +250,7 @@ void TitleScene::Update()
 	}
 	else
 	{
-		// UFO‘€ì’†‚ÍŒë”½‰ž‚ð–h‚®‚½‚ßAƒ{ƒ^ƒ“‚Ìƒzƒo[ó‘Ô‚ð‹­§‰ðœ
+		// UFOãƒ‰ãƒ©ãƒƒã‚°ä¸­ã®ãƒœã‚¿ãƒ³èª¤åå¿œã‚’é˜²ããŸã‚ãƒ›ãƒãƒ¼çŠ¶æ…‹ã‚’è§£é™¤
 		for (int i = 0; i < mButtons.size(); i++) {
 			mButtons[i].isHover = false;
 		}
@@ -278,18 +273,13 @@ void TitleScene::Finalize()
 	{
 		DeleteGraph(rankImage[i]);
 	}
-	SetMouseDispFlag(false); // ƒ^ƒCƒgƒ‹ƒV[ƒ“I—¹Œã‚Íƒ}ƒEƒXƒ|ƒCƒ“ƒ^‚ð”ñ•\Ž¦‚É‚·‚é
+	SetMouseDispFlag(false); // ã‚²ãƒ¼ãƒ ä¸­ã®èª¤æ“ä½œã‚’é˜²ããŸã‚ãƒžã‚¦ã‚¹ã‚’éžè¡¨ç¤ºåŒ–
 	DeleteGraph(rankingTitleImage);
 	DeleteGraph(pointImg);
 	Master::mpSoundManager->StopBGM();
 }
 
-/*
- * @brief ƒXƒRƒAƒ‰ƒ“ƒLƒ“ƒOî•ñUI‚Ì•`‰æˆ—
- * [“ü—Í] ‚È‚µ
- * [o—Í] ‚È‚µ
- * [•›ì—p] ƒXƒRƒAƒf[ƒ^‚©‚ç”’lƒtƒHƒ“ƒg‰æ‘œ‚Ì•`‰æ
- */
+// [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] ç”»é¢ä¸Šã«ãƒ©ãƒ³ã‚­ãƒ³ã‚°æ•°å€¤ã¨ã‚¢ã‚¤ã‚³ãƒ³ã‚’æç”»
 void TitleScene::DrawRankingUI()
 {
 	int baseX = 40;

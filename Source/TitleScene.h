@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Scene.h"
 #include"Texture.h"
 #include "SelectionManager.h"
@@ -6,99 +6,73 @@
 #include "Score.h"
 #include "SceneManager.h"
 
-// ƒ^ƒCƒgƒ‹‰æ–Ê‚Ìƒ{ƒ^ƒ“î•ñ‚Æó‘ÔiˆÊ’uAƒTƒCƒYAƒzƒo[‚È‚Çj‚ğ•Û‚·‚é\‘¢‘Ì
+// UIçŠ¶æ…‹ç®¡ç†ã¨æç”»ç”¨ã®ãƒ‡ãƒ¼ã‚¿ã‚’ã¾ã¨ã‚ã‚‹ãŸã‚ã®æ§‹é€ ä½“
 struct TitleButton
 {
-	SelectionManager::Title type; // ƒ{ƒ^ƒ“‚Ì¯•ÊqiƒQ[ƒ€ŠJnAƒ`ƒ…[ƒgƒŠƒAƒ‹‚È‚Çj
-	int graphHandle;              // •`‰æ‚·‚é‰æ‘œƒnƒ“ƒhƒ‹
-	int x, y;                     // ƒ{ƒ^ƒ“¶ã‚Ì•`‰æŠJnÀ•W
-	int w, h;                     // ‰æ‘œ‚Ì‰¡•‚Æc•
-	bool isHover;                 // ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ªƒ{ƒ^ƒ“—Ìˆæ‚Éæ‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚Ì”»’èƒtƒ‰ƒO
+	SelectionManager::Title type;
+	int graphHandle;
+	int x, y;
+	int w, h;
+	bool isHover;
 };
 
-// ƒQ[ƒ€‹N“®‚ÉÅ‰‚É“Ç‚İ‚Ü‚ê‚éƒ^ƒCƒgƒ‹‰æ–Ê‚ÌƒV[ƒ“ƒNƒ‰ƒX
+// ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³èµ·å‹•æ™‚ã®åˆæœŸç”»é¢
 class TitleScene : public Scene
 {
 public:
 	TitleScene();
 	virtual ~TitleScene();
 
-	/*
-	 * @brief ƒ^ƒCƒgƒ‹ƒV[ƒ“‚ÌƒAƒZƒbƒg‰Šúİ’èiƒ‰ƒ“ƒLƒ“ƒO“Ç‚İ‚İAƒ^ƒCƒgƒ‹BGMÄ¶j‚ğs‚¤
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒXƒRƒA‚Ì“Ç‚İ‚İABGM‚Ìƒ‹[ƒvÄ¶ŠJn
-	 */
+	// [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] ã‚¢ã‚»ãƒƒãƒˆåˆæœŸåŒ–ã€ã‚¹ã‚³ã‚¢èª­ã¿è¾¼ã¿ã€BGMå†ç”Ÿ
 	virtual void Initialize() override;
 
-	/*
-	 * @brief ƒ}ƒEƒX“ü—ÍAƒhƒ‰ƒbƒOAƒ{ƒ^ƒ“ƒzƒo[A‚¨‚æ‚ÑƒV[ƒ“‘JˆÚƒtƒF[ƒh‚Ì–ˆƒtƒŒ[ƒ€XV
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒ}ƒEƒXÀ•W‚ÉŠî‚Ã‚­ó‘Ô’lAUFOÀ•WAƒtƒF[ƒhƒAƒ‹ƒtƒ@’l‚È‚Ç‚ÌXV
-	 */
+	// [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] ãƒã‚¦ã‚¹å…¥åŠ›ã‚„UIçŠ¶æ…‹ã€ãƒ•ã‚§ãƒ¼ãƒ‰æ›´æ–°
 	virtual void Update() override;
 
-	/*
-	 * @brief ƒ^ƒCƒgƒ‹”wŒiA‚Ó‚í‚Ó‚í“®‚­UFOAŠe‘I‘ğƒ{ƒ^ƒ“A‚¨‚æ‚Ñƒ‰ƒ“ƒLƒ“ƒOƒ{[ƒh‚Ì•`‰æ
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ‰æ–Ê•`‰æƒRƒ}ƒ“ƒh‚ÌÀs
-	 */
+	// [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] èƒŒæ™¯ã‚„UIã€UFOã®æç”»ã‚³ãƒãƒ³ãƒ‰ç™ºè¡Œ
 	virtual void Draw() override;
 
-	/*
-	 * @brief ƒ^ƒCƒgƒ‹ƒV[ƒ“I—¹‚ÌƒŠƒ\[ƒXi”wŒi‰æ‘œAƒ{ƒ^ƒ“‰æ‘œAƒ‰ƒ“ƒLƒ“ƒO‰æ‘œj‰ğ•ú
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] Šeíƒ[ƒh‰æ‘œƒnƒ“ƒhƒ‹‚ÌíœABGM‚Ì’â~
-	 */
+	// [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] ãƒªã‚½ãƒ¼ã‚¹ã®è§£æ”¾ã€BGMåœæ­¢
 	virtual void Finalize() override;
 
 private:
-	int mFrameCount;              // ƒTƒCƒ“”g‚È‚Ç‚ğ—p‚¢‚½‚Ó‚í‚Ó‚í‰‰o‚â’èŠúƒ^ƒCƒ}[—p‚ÌƒtƒŒ[ƒ€ƒJƒEƒ“ƒ^[
+	int mFrameCount; // æ¼”å‡ºã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ç”¨ã®ã‚¿ã‚¤ãƒãƒ¼
 
-	int mnTitleGraphHandle;       // ƒ^ƒCƒgƒ‹”wŒi‰æ‘œƒnƒ“ƒhƒ‹
-	int mnNewGame;                // ƒQ[ƒ€ŠJnƒ{ƒ^ƒ“‚Ì‰æ‘œƒnƒ“ƒhƒ‹i–¢g—pEƒ{ƒ^ƒ“\‘¢‘Ì‚ÖˆÚsj
-	int mnTutorial;               // ƒ`ƒ…[ƒgƒŠƒAƒ‹ƒ{ƒ^ƒ“‚Ì‰æ‘œƒnƒ“ƒhƒ‹i–¢g—pEƒ{ƒ^ƒ“\‘¢‘Ì‚ÖˆÚsj
-	int mnOperationProcedures;    // İ’èà–¾ƒ{ƒ^ƒ“‚Ì‰æ‘œƒnƒ“ƒhƒ‹i–¢g—pEƒ{ƒ^ƒ“\‘¢‘Ì‚ÖˆÚsj
+	int mnTitleGraphHandle;
+	int mnNewGame;
+	int mnTutorial;
+	int mnOperationProcedures;
 
-	int rankingTitleImage;        // ƒ‰ƒ“ƒLƒ“ƒOƒ{[ƒh‚Ìƒ^ƒCƒgƒ‹‰æ‘œƒnƒ“ƒhƒ‹
-	int pointImg;                 // “_‚Ì‰æ‘œƒnƒ“ƒhƒ‹
+	int rankingTitleImage;
+	int pointImg;
 
-	SelectionManager* mnTitleSelect; // ‘I‘ğƒ}ƒl[ƒWƒƒ[i–¢g—pEƒ{ƒ^ƒ“ƒŠƒXƒg‚ÖˆÚsj
-	Texture* mpTexture;           // ƒeƒNƒXƒ`ƒƒƒIƒuƒWƒFƒNƒgi–¢g—pEƒ{ƒ^ƒ“\‘¢‘Ì‚ÖˆÚsj
+	SelectionManager* mnTitleSelect;
+	Texture* mpTexture;
 	Texture* mpTexture2;
 	Texture* mpTexture3;
 
-	int mNewGameX;                // ƒQ[ƒ€ŠJnƒ{ƒ^ƒ“‰Šú”z’uXi–¢g—pEƒ{ƒ^ƒ“\‘¢‘Ì‚ÖˆÚsj
-	int mNewGameY;                // ƒQ[ƒ€ŠJnƒ{ƒ^ƒ“‰Šú”z’uYi–¢g—pEƒ{ƒ^ƒ“\‘¢‘Ì‚ÖˆÚsj
-	int mNewGameW;                // ƒQ[ƒ€ŠJnƒ{ƒ^ƒ“‚Ì‰¡•
-	int mNewGameH;                // ƒQ[ƒ€ŠJnƒ{ƒ^ƒ“‚Ìc•
+	int mNewGameX;
+	int mNewGameY;
+	int mNewGameW;
+	int mNewGameH;
 
-	bool mbIsHoverNewGame;        // ŠJnƒ{ƒ^ƒ“‚Éƒzƒo[‚µ‚Ä‚¢‚é‚©i–¢g—pEƒ{ƒ^ƒ“\‘¢‘Ì‚ÖˆÚsj
+	bool mbIsHoverNewGame;
 
-	std::vector<TitleButton> mButtons; // ƒ^ƒCƒgƒ‹‰æ–Êã‚Ì‚·‚×‚Ä‚ÌƒCƒ“ƒ^ƒ‰ƒNƒeƒBƒuƒ{ƒ^ƒ“‚ÌƒŠƒXƒg
+	std::vector<TitleButton> mButtons;
 
-	/*
-	 * @brief ƒnƒCƒXƒRƒAãˆÊ3–¼‚Ìƒ‰ƒ“ƒLƒ“ƒOUIƒ{[ƒh‚ğ‰æ–Ê¶ã‚É•`‰æ‚·‚é
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒ‰ƒ“ƒLƒ“ƒO•¶š‰æ‘œ‚¨‚æ‚ÑƒXƒRƒA”’l‚Ì•`‰æ
-	 */
+	// [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] ä¸Šä½3åã®ã‚¹ã‚³ã‚¢UIã‚’æç”»
 	void DrawRankingUI();
 
-	int rankImage[3];             // 1ˆÊA2ˆÊA3ˆÊ‚Ìƒƒ_ƒ‹“™‚Ì‰æ‘œƒnƒ“ƒhƒ‹
+	int rankImage[3];
 
-	int mnUfoGraphHandle;         // ƒ^ƒCƒgƒ‹‰æ–Ê‚Åƒhƒ‰ƒbƒO‰Â”\‚ÈƒC[ƒXƒ^[ƒGƒbƒOUFO‚Ì‰æ‘œƒnƒ“ƒhƒ‹
-	int mUfoX, mUfoY;             // UFO‚ÌŒ»İ‰æ–ÊÀ•W
-	int mUfoW, mUfoH;             // UFO‰æ‘œ‚Ì•‚Æ‚‚³
-	bool mbIsDraggingUfo;         // ƒ}ƒEƒX¶ƒNƒŠƒbƒN‚ÅUFO‚ªƒhƒ‰ƒbƒO‘€ì’†‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
-	int mOffsetX, mOffsetY;       // ƒhƒ‰ƒbƒO‚ÉƒNƒŠƒbƒN‚µ‚½‰ÓŠ‚ÆUFO¶ãÀ•W‚Ì‘Š‘ÎƒIƒtƒZƒbƒg’l
-	int mCowVoiceTimer;           // ƒ^ƒCƒgƒ‹‰æ–Ê‚Å’èŠú“I‚É‹‚Ì–Â‚«º‚ğÄ¶‚·‚é‚½‚ß‚ÌŠÔŠuƒ^ƒCƒ}[
-	float mUfoVX, mUfoVY;         // UFO‚Ì©“®„‰ñ‚ÌˆÚ“®‘¬“xƒxƒNƒgƒ‹
-	float mUfoAngle;              // UFO‚Ì©“®‰~‹O“¹„‰ñ‚ÌŠp“xƒpƒ‰ƒ[ƒ^
-	bool  mIsAutoPatrol;          // ƒNƒŠƒbƒN‚³‚ê‚½Œã‚É‰~‹O“¹‚Å©“®„‰ñ‚·‚éƒ‚[ƒh‚Ì—LŒø‰»ƒtƒ‰ƒO
-	int mAutoPatrolTimer;         // ©“®„‰ñƒ‚[ƒh‚Ì—LŒøŠÔƒJƒEƒ“ƒ^[
+	int mnUfoGraphHandle;
+	int mUfoX, mUfoY;
+	int mUfoW, mUfoH;
+	bool mbIsDraggingUfo;
+	int mOffsetX, mOffsetY;
+	int mCowVoiceTimer;
+	float mUfoVX, mUfoVY;
+	float mUfoAngle;
+	bool  mIsAutoPatrol;
+	int mAutoPatrolTimer;
 };
-

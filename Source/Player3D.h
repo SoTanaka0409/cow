@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "DxLib.h"
 #include <string>
 #include "Object3D.h"
@@ -13,18 +13,18 @@
 
 class CapsuleCollider;
 
-// 3D‹óŠÔã‚ÌƒvƒŒƒCƒ„[ƒLƒƒƒ‰ƒNƒ^[‚ğ§Œä‚·‚éƒNƒ‰ƒX
 class Player3D : public Object3D
 {
 private:
-	bool mbVacuumFlag = true;       // ‹zˆøƒr[ƒ€‚ğg—p‰Â”\‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
+	// ä»•æ§˜ã«ã‚ˆã‚Šå¸å¼•ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã®ã‚ªãƒ³ã‚ªãƒ•ã‚’åˆ¶å¾¡ã™ã‚‹
+	bool mbVacuumFlag = true;
 public:
-	// ƒvƒŒƒCƒ„[‚Ì‹­‰»ƒXƒe[ƒ^ƒXID’è‹`
+	// ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹IDï¼ˆUIã‚„ã‚¹ã‚­ãƒ«åŠ ç®—åˆ¤å®šã«ä½¿ç”¨ï¼‰
 	enum StatusID
 	{
-		Status_Hp,                  // HPƒXƒe[ƒ^ƒX
-		Status_AttackS,             // UŒ‚i‹zˆøj‘¬“xƒXƒe[ƒ^ƒX
-		Status_Speed,               // ˆÚ“®‘¬“xƒXƒe[ƒ^ƒX
+		Status_Hp,
+		Status_AttackS,
+		Status_Speed,
 	};
 
 	bool GetVacuumFlag() const
@@ -34,10 +34,9 @@ public:
 
 public:
 	/*
-	 * @brief ƒvƒŒƒCƒ„[ƒIƒuƒWƒFƒNƒg‚ğƒ[ƒh‚µA‰ŠúƒXƒe[ƒ^ƒX‚ÆƒTƒuƒVƒXƒeƒ€‚ğ‰Šú‰»‚·‚é
-	 * [“ü—Í] filename: ƒ‚ƒfƒ‹‚Ìƒtƒ@ƒCƒ‹ƒpƒX, initPos: ‰ŠúƒXƒ|[ƒ“À•W
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] Šeƒ}ƒl[ƒWƒƒ[iScore, Level, Skill, Comboj‚âƒRƒ‰ƒCƒ_[‚Ìƒ[ƒh
+	 * [å…¥åŠ›] filename: ãƒ¢ãƒ‡ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹, initPos: åˆæœŸåº§æ¨™
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] å„ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼(Score, Levelç­‰)ã¨ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®ç”Ÿæˆ
 	 */
 	Player3D(std::string filename, VECTOR initPos);
 	virtual ~Player3D();
@@ -46,74 +45,65 @@ public:
 	void Update() override;
 
 	/*
-	 * @brief “ü—Íî•ñ‚ğŒ³‚ÉƒvƒŒƒCƒ„[‚ÌˆÚ“®‚¨‚æ‚ÑƒJƒƒ‰•ûŒüŠî€‚ÌˆÚ“®ƒxƒNƒgƒ‹‚ğŒvZ‚·‚é
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] À•W(mvPosition)‚ÌXV
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] mvPositionã®æ›´æ–°
 	 */
 	void MoveEx();
 
 	/*
-	 * @brief ƒ}ƒEƒX“ü—Í‚È‚Ç‚ğƒ`ƒFƒbƒN‚µ‚ÄA‹zˆø’†ó‘Ô‚Ìƒtƒ‰ƒO‚âƒQ[ƒWÁ”ï—Ê‚ğXV‚·‚é
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] mIsVacuumActiveƒtƒ‰ƒO‚¨‚æ‚ÑmVacuumGauge’l‚ÌXV
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] mIsVacuumActiveã¨mVacuumGaugeã®æ›´æ–°
 	 */
 	void Play();
 
 	/*
-	 * @brief ‹zˆø’†‚©‚Ç‚¤‚©‚É‰‚¶‚ÄƒvƒŒƒCƒ„[‚ÌƒRƒ‰ƒCƒ_[‚ÌƒTƒCƒY‚ÆˆÊ’u‚ğXV‚·‚é
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] mpCapsuleCollider‚ÌˆÊ’uA”¼ŒaA‚¨‚æ‚Ñƒr[ƒ€ƒGƒtƒFƒNƒg‚ÌXV
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] mpCapsuleColliderã¨ãƒ“ãƒ¼ãƒ ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®æ›´æ–°
 	 */
 	void ColliderUpdate();
 
 	/*
-	 * @brief ƒvƒŒƒCƒ„[‚ªƒXƒe[ƒWŠO‚Éo‚Ä‚µ‚Ü‚Á‚½ê‡‚Ì”»’è‚Æ•œ‹Aˆ—‚ğs‚¤
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒL[“ü—Í‚É‚æ‚éÀ•WƒŠƒZƒbƒg
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ç”»é¢å¤–æ™‚ã®åº§æ¨™ãƒªã‚»ãƒƒãƒˆ
 	 */
 	void ScreenOutCheck();
 
 	/*
-	 * @brief ˆÚ“®ƒxƒNƒgƒ‹‚ÌŒü‚«‚É‡‚í‚¹‚ÄƒvƒŒƒCƒ„[ƒ‚ƒfƒ‹‚ğŠŠ‚ç‚©‚É‰ñ“]‚³‚¹‚é
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒ‚ƒfƒ‹‰ñ“]Šp“x‚ÌXV
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] mvRotationã®æ›´æ–°
 	 */
 	void RotationByMove();
 
 	/*
-	 * @brief ƒvƒŒƒCƒ„[‚ª•Û‚·‚éƒTƒuƒ‚ƒWƒ…[ƒ‹iƒŒƒxƒ‹AƒXƒRƒAAƒ‚ƒfƒ‹‚È‚Çj‚ÌXV‚ğ•`‰æ‚Æ‹¤‚És‚¤
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒTƒuƒ‚ƒWƒ…[ƒ‹‚ÌUpdate/DrawŒÄ‚Ño‚µ
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ã‚µãƒ–ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã®Update/Drawå‘¼ã³å‡ºã—
 	 */
 	void ManagerUpdate();
 
 	/*
-	 * @brief ‰æ–Êã‚ÉƒvƒŒƒCƒ„[‚Ì‹zˆøƒQ[ƒWUI‚È‚Ç‚ğ•`‰æ‚·‚é
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ‚È‚µ
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] UIæç”»
 	 */
 	void bar();
 
 	/*
-	 * @brief ƒfƒoƒbƒO—p‚Ì“ü—Íˆ—iXP‹­§’Ç‰Á‚È‚Çj‚ğs‚¤
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒfƒoƒbƒO‚Ì‚İƒŒƒxƒ‹ã¸‚È‚Ç‚Ìó‘Ô•Ï‰»
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ãƒ‡ãƒãƒƒã‚°æ™‚ã®çŠ¶æ…‹å¤‰åŒ–
 	 */
 	void test();
 
 	/*
-	 * @brief ƒXƒe[ƒ^ƒXID‚ÉŠî‚Ã‚«AƒvƒŒƒCƒ„[‚ÌŒ»İ‚Ì‹­‰»”’l‚ğŒvZ‚µ‚Ä•Ô‚·
-	 * [“ü—Í] id: ƒXƒe[ƒ^ƒXID
-	 * [o—Í] ŠY“–ƒXƒe[ƒ^ƒX‚ÌÅI“I‚È”’l
-	 * [•›ì—p] ‚È‚µ
+	 * [å…¥åŠ›] id: ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ID
+	 * [å‡ºåŠ›] ã‚¹ã‚­ãƒ«è£œæ­£å¾Œã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹å€¤
+	 * [å‰¯ä½œç”¨] ãªã—
 	 */
 	float Status(StatusID id);
 
@@ -131,64 +121,63 @@ public:
 	void SetScale(float scale);
 
 	/*
-	 * @brief ƒvƒŒƒCƒ„[‚É‹CâiƒXƒ^ƒ“jó‘Ô‚ğ“K—p‚µAƒ^ƒCƒ}[‚ğŠJn‚·‚é
-	 * [“ü—Í] stunTime: ‹CâŠÔiƒtƒŒ[ƒ€”j
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] mIsStunnedƒtƒ‰ƒO‚ğ^‚É‚µA‘€ì•s”\ŠÔ‚ª”­¶‚·‚é
+	 * [å…¥åŠ›] stunTime: æ°—çµ¶æ™‚é–“ï¼ˆãƒ•ãƒ¬ãƒ¼ãƒ æ•°ï¼‰
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] mIsStunnedã‚’trueã«ã—ã€æ“ä½œä¸èƒ½æ™‚é–“ã‚’ç™ºç”Ÿã•ã›ã‚‹
 	 */
 	void ApplyStun(int stunTime);
 
 	void PlaySkillEffect();
 
 public:
-	Model* mpModel;                 // 3Dƒ‚ƒfƒ‹§ŒäƒNƒ‰ƒX
-	Skill* mpSkill;                 // ƒXƒLƒ‹§ŒäƒNƒ‰ƒX
-	Level* mpLevel;                 // ƒŒƒxƒ‹EXPŠÇ—ƒNƒ‰ƒX
-	Combo* mpCombo;                 // ƒRƒ“ƒ{”§ŒäƒNƒ‰ƒX
-	Score* mpScore;                 // ƒXƒRƒA•\¦E‰ÁZƒNƒ‰ƒX
+	Model* mpModel;
+	Skill* mpSkill;
+	Level* mpLevel;
+	Combo* mpCombo;
+	Score* mpScore;
 
 private:
-	float mfSpeed;                  // Šî–{ˆÚ“®‘¬“x
-	float mfHp;                     // ƒvƒŒƒCƒ„[‚Ì‘Ì—Í
-	float mfAttack_Speed;           // ‹z‚¢‚İ‚Ì‹zˆø‘¬“x
-	float mfTargetAngle;            // ˆÚ“®•ûŒü‚É‚æ‚é–Ú•W‰ñ“]Šp“x
-	float mfAngle;                  // Œ»İ‚ÌƒvƒŒƒCƒ„[ƒ‚ƒfƒ‹‚ÌŒü‚«Šp“x
-	const float ROTATE_SPEED = 0.2f; // ŠŠ‚ç‚©‚Èƒ‚ƒfƒ‹‰ñ“]—p•âŠÔ‘¬“x
-	const float JUMP_POWER = 30.0f;  // ƒWƒƒƒ“ƒv‚Ì‰‘¬i–¢g—pj
-	bool mIsOutOfBounds = false;    // ‰æ–ÊŠO‚Éo‚Ä‚µ‚Ü‚Á‚Ä‚¢‚é‚©‚Ìƒtƒ‰ƒO
-	int mnLighGraph;                // ‹zˆøƒr[ƒ€—pƒeƒNƒXƒ`ƒƒƒnƒ“ƒhƒ‹
+	float mfSpeed;
+	float mfHp;
+	float mfAttack_Speed;
+	float mfTargetAngle;
+	float mfAngle;
+	const float ROTATE_SPEED = 0.2f;
+	const float JUMP_POWER = 30.0f;
+	bool mIsOutOfBounds = false;
+	int mnLighGraph;
 
-	bool mIsCowInVacuumRange;       // ‹zˆø”ÍˆÍ“à‚É‹‚ª‘¶İ‚·‚é‚©‚Ìƒtƒ‰ƒO
-	const float VACUUM_RADIUS = 300.0f;  // ’Êí‚Ì‹zˆø”»’è”ÍˆÍ‚Ì”¼Œa
-	const int VACUUM_REQUIRE_TIME = 120; // ‹zˆøŠJn‚Ü‚Å‚Ì‘Ò‹@ƒtƒŒ[ƒ€
+	bool mIsCowInVacuumRange;
+	const float VACUUM_RADIUS = 300.0f;
+	const int VACUUM_REQUIRE_TIME = 120;
 
-	float mVacuumGauge = 100.0f;    // ‹zˆøƒQ[ƒW‚ÌŒ»İ’l
-	const float VACUUM_GAUGE_MAX = 100.0f; // ‹zˆøƒQ[ƒW‚ÌÅ‘å’l
-	const float VACUUM_COST_PER_FRAME = 0.2f; // 1ƒtƒŒ[ƒ€‚ ‚½‚è‚ÌƒQ[ƒWÁ”ï—Ê
-	const float VACUUM_RECOVER_PER_FRAME = 0.4f; // 1ƒtƒŒ[ƒ€‚ ‚½‚è‚ÌƒQ[ƒW©‘R‰ñ•œ—Ê
-	bool mIsVacuumActive = false;   // ‹z‚¢‚İƒr[ƒ€‚ğ•úË‚µ‚Ä‚¢‚é‚©‚Ìƒtƒ‰ƒO
+	float mVacuumGauge = 100.0f;
+	const float VACUUM_GAUGE_MAX = 100.0f;
+	const float VACUUM_COST_PER_FRAME = 0.2f;
+	const float VACUUM_RECOVER_PER_FRAME = 0.4f;
+	bool mIsVacuumActive = false;
 
-	int CatchNowCount;              // Œ»İ‚ÌƒZƒbƒVƒ‡ƒ“‚Å‹zˆø‚µ‚½‹‚Ì‘”
-	float currentSpeed;             // Œ»İ‚ÌˆÚ“®‘¬“xÀ’l
+	int CatchNowCount;
+	float currentSpeed;
 
-	VECTOR UpMoveVector;            // ã•ûŒüˆÚ“®—pƒxƒNƒgƒ‹
-	VECTOR moveVec = VGet(0.0f, 0.0f, 0.0f); // ˆÚ“®•ûŒü“ü—ÍƒxƒNƒgƒ‹
-	VECTOR oldmoveVec;              // ‘OƒtƒŒ[ƒ€‚ÌˆÚ“®ƒxƒNƒgƒ‹
-	VECTOR hitPos = VGet(0.0f, 0.0f, 0.0f); // ƒXƒe[ƒWŒğ·À•W‚ÌˆêŠi”[—p
+	VECTOR UpMoveVector;
+	VECTOR moveVec = VGet(0.0f, 0.0f, 0.0f);
+	VECTOR oldmoveVec;
+	VECTOR hitPos = VGet(0.0f, 0.0f, 0.0f);
 
-	float mfHorizontalAngle;        // ƒJƒƒ‰…•½ù‰ñŠp“x
-	float mfVerticalAngle;          // ƒJƒƒ‰‚’¼ù‰ñŠp“x
+	float mfHorizontalAngle;
+	float mfVerticalAngle;
 
-	const int SIZE_RAND_MAX = 800;  // ƒGƒtƒFƒNƒgƒ‰ƒ“ƒ_ƒ€ƒTƒCƒY‚ÌÅ‘å
-	const int SIZE_RAND_MIN = 400;  // ƒGƒtƒFƒNƒgƒ‰ƒ“ƒ_ƒ€ƒTƒCƒY‚ÌÅ¬
-	const int VISIBLE_TIME_RAND_MAX = 30; // ƒGƒtƒFƒNƒg•\¦ƒtƒŒ[ƒ€Å‘å
-	const int VISIBLE_TIME_RAND_MIN = 5;  // ƒGƒtƒFƒNƒg•\¦ƒtƒŒ[ƒ€Å¬
+	const int SIZE_RAND_MAX = 800;
+	const int SIZE_RAND_MIN = 400;
+	const int VISIBLE_TIME_RAND_MAX = 30;
+	const int VISIBLE_TIME_RAND_MIN = 5;
 
-	EffekseerEffect* mpSpeed;       // ˆÚ“®‘¬“xã¸‚ÌƒGƒtƒFƒNƒg
-	EffekseerEffect* mpBeam;        // ‹z‚¢‚İƒr[ƒ€—pEffekseerƒGƒtƒFƒNƒg
-	int mEffectTimer;               // ƒGƒtƒFƒNƒg’èŠúÄ¶—pƒJƒEƒ“ƒ^
+	EffekseerEffect* mpSpeed;
+	EffekseerEffect* mpBeam;
+	int mEffectTimer;
 
-	bool mIsStunned;                // ƒXƒ^ƒ“’†‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
-	int mStunTimer;                 // ƒXƒ^ƒ“‚Ìc‚èƒtƒŒ[ƒ€ŠÔ
+	bool mIsStunned;
+	int mStunTimer;
 };
 

@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+﻿#include "ServiceLocator.h"
 #include "Cow_gold.h"
 #include "CapsuleCollider.h"
 #include "Player3D.h"
@@ -17,6 +17,7 @@ Cow_gold::Cow_gold(std::string filename, VECTOR initPos, Tag_fever fever)
 	SetTag_cow(CowMove::Cow_gold);
 	mfXp = 20;
 	mfScore = 30;
+	// プレイヤーが捕獲しやすいように当たり判定を大きめに設定
 	mColliderRadius = 150.0f;
 }
 
@@ -35,7 +36,7 @@ void Cow_gold::Update()
 	DeathCount++;
 	CowMove::Update();
 
-	// フィーバー用金の牛で、フィーバーが終了したか生存時間を超えた場合は自動消滅させる
+	// フィーバー終了時や寿命超過で画面内に残り続けるのを防ぐため消滅させる
 	if (mnFever == fever && (ServiceLocator::GetFever()->IsFever() == false || DeathCount >= DeathTimer))
 	{
 		Die(DEATH_LIMIT);
@@ -44,15 +45,16 @@ void Cow_gold::Update()
 
 void Cow_gold::Die(DeathReason reason)
 {
+	// 二重解放や不整合を防ぐため、既に消滅処理中なら弾く
 	if (mDeleteFlag || mCowtDelete) return;
 	CowMove::Die(reason);
 
+	// プレイヤーの直接的アクション（吸引・エサ）で捕獲された場合のみ発動させる
 	if (reason == DEATH_VACUUM || reason == DEATH_BAIT)
 	{
 		if (this->mnFever == Nofever)
 		{
-			ServiceLocator::GetFever()->StartFever();
+			ServiceLocator::GetFever()->StartFever(mpTargetPlayer);
 		}
 	}
 }
-

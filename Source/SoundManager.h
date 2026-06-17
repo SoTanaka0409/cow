@@ -1,125 +1,138 @@
-#pragma once
+ï»¿#pragma once
 #include<string>
 #include<vector>
 
-// ƒQ[ƒ€“à‚Ì‰¹‹¿iBGM‚¨‚æ‚ÑŒø‰Ê‰¹j‚Ìƒ[ƒhEÄ¶E‰¹—Ê§Œä‚ðˆêŠ‡ŠÇ—‚·‚éƒNƒ‰ƒX
+// ã‚²ãƒ¼ãƒ å†…BGMã¨SEã®äºŒé‡å†ç”Ÿé˜²æ­¢ã‚„éŸ³é‡ã®ä¸€æ‹¬åˆ¶å¾¡ã‚’è¡Œã†ãŸã‚ã®ç®¡ç†ã‚¯ãƒ©ã‚¹
 class SoundManager
 {
 public:
-	// Ä¶‰Â”\‚ÈBGM‚ÌID’è‹`
-	enum SOUND_BGM
-	{
-		BGM_TITLE = 0,   // ƒ^ƒCƒgƒ‹‰æ–Ê
-		BGM_GAME,        // ƒQ[ƒ€ƒƒCƒ“‰æ–Ê
-		BGM_RESULT,      // ƒŠƒUƒ‹ƒgiŒ‹‰Ê•\Ž¦j‰æ–Ê
-		BGM_TUTORIAL,    // ƒ`ƒ…[ƒgƒŠƒAƒ‹‰æ–Ê
-		BGM_RULE,        // ‘€ìà–¾‰æ–Ê
-	};
+    // ã‚·ãƒ¼ãƒ³é·ç§»æ™‚ã®BGMåˆ‡ã‚Šæ›¿ãˆç”¨ID
+    enum SOUND_BGM
+    {
+        BGM_TITLE = 0,
+        BGM_GAME,
+        BGM_RESULT,
+        BGM_TUTORIAL,
+        BGM_RULE,
+    };
 
-	// Ä¶‰Â”\‚ÈŒø‰Ê‰¹iSEj‚ÌID’è‹`
-	enum SOUND_SE
-	{
-		SE_DECIDE = 0,        // ƒƒjƒ…[“™‚ÌŒˆ’è‰¹
-		SE_COW,               // ‹‚Ì–Â‚«ºi‹zˆøŽžE’ÊíŽžj
-		SE_BEAM,              // UFO‚Ì‹zˆøƒr[ƒ€•úŽË‰¹
-		SE_SKILL_STATUS,      // ƒXƒLƒ‹‚É‚æ‚éƒXƒe[ƒ^ƒXƒAƒbƒvŽžŒø‰Ê‰¹
-		SE_SKILL_FOOD,        // ƒXƒLƒ‹‚É‚æ‚éƒGƒT“Š‰ºŽž‚Ì‹N“®‰¹
-		SE_CHICKEN,           // ƒjƒƒgƒŠ‚Ì–Â‚«º
-		SE_TATUMAKI,          // ƒXƒLƒ‹i—³Šªj”­“®Žž‚Ì•—Ø‰¹
-		SE_KAMINARI,          // ƒXƒLƒ‹i—Ž—‹j”­“®Žž‚Ì—‹–Â‰¹
-		SE_TutorialChange,    // ƒ`ƒ…[ƒgƒŠƒAƒ‹‚Ìisó‹µ•Ï‰»Žž‚ÌŒø‰Ê‰¹
-		SE_BAITFINAL,        // ƒGƒT“Š‰ºŠ®—¹Žž‚ÌŒø‰Ê‰¹
-	};
+    // å„ç¨®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³åŠ¹æžœéŸ³å‘¼ã³å‡ºã—ç”¨ID
+    enum SOUND_SE
+    {
+        SE_DECIDE = 0,
+        SE_COW,
+        SE_BEAM,
+        SE_SKILL_STATUS,
+        SE_SKILL_FOOD,
+        SE_CHICKEN,
+        SE_TATUMAKI,
+        SE_KAMINARI,
+        SE_TutorialChange,
+        SE_BAITFINAL,
+    };
 
-	SoundManager();
-	~SoundManager();
+    SoundManager();
+    ~SoundManager();
 
-	/*
-	 * @brief Žg—p‚·‚é‚·‚×‚Ä‚ÌBGMESEƒAƒZƒbƒg‚ðˆêŠ‡‚ÅƒvƒŠƒ[ƒh‚·‚é
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ŠeƒTƒEƒ“ƒhƒŠƒ\[ƒX‚ªƒ[ƒh‚³‚êAƒnƒ“ƒhƒ‹ƒŠƒXƒg‚É“o˜^‚³‚ê‚é
-	 */
-	void Initialize();
+    /*
+     * ã‚²ãƒ¼ãƒ ãƒ—ãƒ¬ã‚¤ä¸­ã®ãƒ­ãƒ¼ãƒ‰é…å»¶ã‚’é˜²ããŸã‚å…¨éŸ³æºã‚’åˆæœŸåŒ–æ™‚ã«èª­ã¿è¾¼ã‚€
+     * [å…¥åŠ›] ãªã—
+     * [å‡ºåŠ›] ãªã—
+     * [å‰¯ä½œç”¨] å„ãƒãƒ³ãƒ‰ãƒ«ãƒªã‚¹ãƒˆã«ã‚µã‚¦ãƒ³ãƒ‰ãƒªã‚½ãƒ¼ã‚¹ã‚’ç™»éŒ²
+     */
+    void Initialize();
 
-	/*
-	 * @brief “Ç‚Ýž‚ñ‚¾‚·‚×‚Ä‚ÌƒTƒEƒ“ƒhƒŠƒ\[ƒX‚ðƒƒ‚ƒŠ‚©‚ç‰ð•ú‚·‚é
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] BGMESEƒnƒ“ƒhƒ‹‚ª‚·‚×‚Äíœ‚³‚êAŠeƒnƒ“ƒhƒ‹ƒŠƒXƒg‚ªƒNƒŠƒA‚³‚ê‚é
-	 */
-	void Finalize();
+    /*
+     * ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯ã‚’é˜²ããŸã‚ã®å…¨ã‚µã‚¦ãƒ³ãƒ‰ãƒªã‚½ãƒ¼ã‚¹è§£æ”¾
+     * [å…¥åŠ›] ãªã—
+     * [å‡ºåŠ›] ãªã—
+     * [å‰¯ä½œç”¨] BGMãƒ»SEãƒãƒ³ãƒ‰ãƒ«ã®å‰Šé™¤ã¨ãƒªã‚¹ãƒˆã®ã‚¯ãƒªã‚¢
+     */
+    void Finalize();
 
-	/*
-	 * @brief Žw’è‚³‚ê‚½BGM‚Ìƒ‹[ƒvÄ¶‚ðŠJŽn‚·‚éiŠù‚ÉÄ¶’†‚Ìê‡‚Í“ñdÄ¶‚ð–hŽ~j
-	 * [“ü—Í] bgm: Ä¶‚·‚éBGM‚ÌID, IsTop: true‚Ìê‡‚Í‹È‚Ìæ“ª‚©‚çÄ¶‚·‚é
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] Žw’èBGM‚ÌÄ¶ŠJŽnAmnNowPlayingBgm‚ÌXV
-	 */
-	void PlayBGM(SOUND_BGM bgm, bool IsTop = true);
+    /*
+     * BGMã®å†ç”Ÿã¨ã€åŒä¸€æ›²ã®äºŒé‡å†ç”Ÿé˜²æ­¢ã‚’åˆ¶å¾¡ã™ã‚‹
+     * [å…¥åŠ›] bgm: å†ç”Ÿã™ã‚‹BGMID, IsTop: trueã§å…ˆé ­ã‹ã‚‰å†ç”Ÿ
+     * [å‡ºåŠ›] ãªã—
+     * [å‰¯ä½œç”¨] BGMå†ç”Ÿé–‹å§‹ã€mnNowPlayingBgmã®æ›´æ–°
+     */
+    void PlayBGM(SOUND_BGM bgm, bool IsTop = true);
 
-	/*
-	 * @brief Žw’è‚³‚ê‚½SE‚ð’P”­iƒoƒbƒNƒOƒ‰ƒEƒ“ƒhjÄ¶‚·‚é
-	 * [“ü—Í] se: Ä¶‚·‚éSE‚ÌID
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] SE‚ÌÄ¶ŠJŽnAmnNowPlayingSe‚ÌXV
-	 */
-	void PlaySE(SOUND_SE se);
+    /*
+     * åŠ¹æžœéŸ³ã‚’ãƒãƒƒã‚¯ã‚°ãƒ©ã‚¦ãƒ³ãƒ‰ã§ä¸¦åˆ—å†ç”Ÿã™ã‚‹
+     * [å…¥åŠ›] se: å†ç”Ÿã™ã‚‹SEã®ID
+     * [å‡ºåŠ›] ãªã—
+     * [å‰¯ä½œç”¨] SEå†ç”Ÿé–‹å§‹ã€mnNowPlayingSeã®æ›´æ–°
+     */
+    void PlaySE(SOUND_SE se);
 
-	/*
-	 * @brief ŒÂ•Ê‚ÉBGMƒAƒZƒbƒg‚ð“Ç‚Ýž‚ÝAƒŠƒXƒg‚É“o˜^‚·‚é
-	 * [“ü—Í] bgm: “o˜^ID, filename: ƒtƒ@ƒCƒ‹ƒpƒX
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒ[ƒh¬Œ÷Žž‚ÉBGMƒnƒ“ƒhƒ‹ƒŠƒXƒg‚É“o˜^
-	 */
-	void LoadBGM(SOUND_BGM bgm, std::string filename);
+    /*
+     * éŸ³æºã®äºŒé‡ãƒ­ãƒ¼ãƒ‰ã‚’é˜²ãŽã¤ã¤BGMã‚’ãƒ¡ãƒ¢ãƒªã«é…ç½®ã™ã‚‹
+     * [å…¥åŠ›] bgm: ç™»éŒ²ID, filename: ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
+     * [å‡ºåŠ›] ãªã—
+     * [å‰¯ä½œç”¨] ãƒãƒ³ãƒ‰ãƒ«å–å¾—ã¨ãƒªã‚¹ãƒˆã¸ã®è¿½åŠ 
+     */
+    void LoadBGM(SOUND_BGM bgm, std::string filename);
 
-	/*
-	 * @brief ŒÂ•Ê‚ÉSEƒAƒZƒbƒg‚ð“Ç‚Ýž‚ÝAƒŠƒXƒg‚É“o˜^‚·‚é
-	 * [“ü—Í] se: “o˜^ID, filename: ƒtƒ@ƒCƒ‹ƒpƒX
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒ[ƒh¬Œ÷Žž‚ÉSEƒnƒ“ƒhƒ‹ƒŠƒXƒg‚É“o˜^
-	 */
-	void LoadSE(SOUND_SE se, std::string filename);
+    /*
+     * éŸ³æºã®äºŒé‡ãƒ­ãƒ¼ãƒ‰ã‚’é˜²ãŽã¤ã¤SEã‚’ãƒ¡ãƒ¢ãƒªã«é…ç½®ã™ã‚‹
+     * [å…¥åŠ›] se: ç™»éŒ²ID, filename: ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
+     * [å‡ºåŠ›] ãªã—
+     * [å‰¯ä½œç”¨] ãƒãƒ³ãƒ‰ãƒ«å–å¾—ã¨ãƒªã‚¹ãƒˆã¸ã®è¿½åŠ 
+     */
+    void LoadSE(SOUND_SE se, std::string filename);
 
-	/*
-	 * @brief Œ»ÝÄ¶’†‚ÌBGM‚ÌÄ¶‚ð’âŽ~‚·‚é
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] Ä¶’†‚ÌBGMƒƒ‚ƒŠ‚ÌÄ¶’âŽ~
-	 */
-	void StopBGM();
+    /*
+     * ã‚·ãƒ¼ãƒ³çµ‚äº†æ™‚ãªã©ã«ç¾åœ¨å†ç”Ÿä¸­ã®BGMã‚’æ­¢ã‚ã‚‹
+     * [å…¥åŠ›] ãªã—
+     * [å‡ºåŠ›] ãªã—
+     * [å‰¯ä½œç”¨] å†ç”Ÿä¸­ã®BGMã‚’åœæ­¢
+     */
+    void StopBGM();
 
-	/*
-	 * @brief “Ç‚Ýž‚ÝÏ‚Ý‚·‚×‚Ä‚ÌBGM‚ÌÄ¶‰¹—Ê‚ðˆêŽžÝ’è‚·‚é
-	 * [“ü—Í] volume: ‰¹—Ê’l (0 - 255)
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] “o˜^BGM‚ÌÄ¶‰¹—Ê•ÏX
-	 */
-	void SetBGMVolume(int volume);
+    /*
+     * ãƒ­ãƒ¼ãƒ‰æ¸ˆã¿å…¨BGMã«éŸ³é‡ã‚’ä¸€æ‹¬é©ç”¨ã™ã‚‹
+     * [å…¥åŠ›] volume: éŸ³é‡å€¤(0-255)
+     * [å‡ºåŠ›] ãªã—
+     * [å‰¯ä½œç”¨] ãƒãƒ³ãƒ‰ãƒ«ã‚’é€šã˜ãŸBGMéŸ³é‡å¤‰æ›´
+     */
+    void SetBGMVolume(int volume);
 
-	/*
-	 * @brief “Ç‚Ýž‚ÝÏ‚Ý‚·‚×‚Ä‚ÌSE‚ÌÄ¶‰¹—Ê‚ðˆêŽžÝ’è‚·‚é
-	 * [“ü—Í] volume: ‰¹—Ê’l (0 - 255)
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] “o˜^SE‚ÌÄ¶‰¹—Ê•ÏX
-	 */
-	void SetSEVolume(int volume);
+    /*
+     * ãƒ­ãƒ¼ãƒ‰æ¸ˆã¿å…¨SEã«éŸ³é‡ã‚’ä¸€æ‹¬é©ç”¨ã™ã‚‹
+     * [å…¥åŠ›] volume: éŸ³é‡å€¤(0-255)
+     * [å‡ºåŠ›] ãªã—
+     * [å‰¯ä½œç”¨] ãƒãƒ³ãƒ‰ãƒ«ã‚’é€šã˜ãŸSEéŸ³é‡å¤‰æ›´
+     */
+    void SetSEVolume(int volume);
 
-	// Šî€‰¹—Êiƒ}ƒXƒ^[‰¹—Êj‚ÌƒQƒbƒ^[EƒZƒbƒ^[ŒQ
-	int GetMasterBGMVolume() const { return mMasterBGMVolume; }
-	int GetMasterSEVolume() const { return mMasterSEVolume; }
-	void SetMasterBGMVolume(int volume);
-	void SetMasterSEVolume(int volume);
+    int GetMasterBGMVolume() const { return mMasterBGMVolume; }
+    int GetMasterSEVolume() const { return mMasterSEVolume; }
+
+    /*
+     * ã‚·ã‚¹ãƒ†ãƒ è¨­å®šãªã©ã§ä¸€æ‹¬å¤‰æ›´ã•ã‚Œã‚‹BGMãƒžã‚¹ã‚¿ãƒ¼éŸ³é‡ã‚’é©ç”¨ã™ã‚‹
+     * [å…¥åŠ›] volume: åŸºæº–éŸ³é‡(0-255)
+     * [å‡ºåŠ›] ãªã—
+     * [å‰¯ä½œç”¨] mMasterBGMVolumeæ›´æ–°ã€å…¨BGMã¸éŸ³é‡åæ˜ 
+     */
+    void SetMasterBGMVolume(int volume);
+
+    /*
+     * ã‚·ã‚¹ãƒ†ãƒ è¨­å®šãªã©ã§ä¸€æ‹¬å¤‰æ›´ã•ã‚Œã‚‹SEãƒžã‚¹ã‚¿ãƒ¼éŸ³é‡ã‚’é©ç”¨ã™ã‚‹
+     * [å…¥åŠ›] volume: åŸºæº–éŸ³é‡(0-255)
+     * [å‡ºåŠ›] ãªã—
+     * [å‰¯ä½œç”¨] mMasterSEVolumeæ›´æ–°ã€å…¨SEã¸éŸ³é‡åæ˜ 
+     */
+    void SetMasterSEVolume(int volume);
 
 private:
-	int mMasterBGMVolume = 255;  // ‘SBGM‚ÌŠî€‰¹—Ê (0 - 255)
-	int mMasterSEVolume = 255;   // ‘SSE‚ÌŠî€‰¹—Ê (0 - 255)
+    int mMasterBGMVolume = 255;
+    int mMasterSEVolume = 255;
 
-	SOUND_BGM mnNowPlayingBgm;   // Œ»ÝÄ¶’†‚ÌBGM ID (–¢Ä¶Žž‚Í-1)
-	SOUND_SE mnNowPlayingSe;     // ’¼‹ß‚ÅÄ¶‚³‚ê‚½SE ID (–¢Ä¶Žž‚Í-1)
+    // åœæ­¢å‡¦ç†ã‚„äºŒé‡å†ç”Ÿé˜²æ­¢ã®åˆ¤å®šã«ç”¨ã„ã‚‹çŠ¶æ…‹ä¿æŒ
+    SOUND_BGM mnNowPlayingBgm;
+    SOUND_SE mnNowPlayingSe;
 
-	std::vector<std::pair<SOUND_BGM, int>> mnBgmHandleList; // ƒ[ƒh‚³‚ê‚½BGMƒAƒZƒbƒg‚Ìƒnƒ“ƒhƒ‹ƒŠƒXƒg
-	std::vector<std::pair<SOUND_SE, int>> mnSeHandleList;   // ƒ[ƒh‚³‚ê‚½SEƒAƒZƒbƒg‚Ìƒnƒ“ƒhƒ‹ƒŠƒXƒg
+    std::vector<std::pair<SOUND_BGM, int>> mnBgmHandleList;
+    std::vector<std::pair<SOUND_SE, int>> mnSeHandleList;
 };
-

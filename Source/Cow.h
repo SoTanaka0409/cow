@@ -1,15 +1,15 @@
-#pragma once
+ï»¿#pragma once
 #include "CowMove.h"
 
-// ˆê”Ê“I‚È‹ƒLƒƒƒ‰ƒNƒ^[iƒ^ƒO: Cow_1j‚ð§Œä‚·‚éƒNƒ‰ƒX
+// ã‚¿ã‚°Cow_1ã®æ¨™æº–ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼å®šç¾©ï¼ˆåŸºæœ¬è¡Œå‹•ã¯CowMoveã«æº–æ‹ ï¼‰
 class Cow : public CowMove
 {
 public:
 	/*
-	 * @brief ‹ƒIƒuƒWƒFƒNƒg‚ð‰ŠúˆÊ’u‚É”z’u‚µAƒXƒRƒAEŒoŒ±’l‚ðÝ’è‚·‚é
-	 * [“ü—Í] filename: ƒ‚ƒfƒ‹‚Ìƒtƒ@ƒCƒ‹ƒpƒX, initPos: ‰ŠúÀ•W, num: ‰ñŽûŽž‚ÌŠî‘bƒXƒRƒA’l
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ‚È‚µ
+	 * @brief ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåˆæœŸåŒ–
+	 * [å…¥åŠ›] filename: ãƒ¢ãƒ‡ãƒ«ãƒ‘ã‚¹, initPos: åˆæœŸé…ç½®åº§æ¨™, num: åŸºç¤Žã‚¹ã‚³ã‚¢å€¤
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ã‚¹ã‚³ã‚¢ã¨çµŒé¨“å€¤ã®è¨­å®š
 	 */
 	Cow(std::string filename, VECTOR initPos, float num);
 	virtual ~Cow();

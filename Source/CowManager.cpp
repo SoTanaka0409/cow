@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+﻿#include "ServiceLocator.h"
 #include "CowManager.h"
 #include "CowMove.h"
 #include "Player3D.h"
@@ -12,10 +12,22 @@
 #include "Cow_gold.h"
 #include "CapsuleCollider.h"
 
+/*
+ * @brief 管理オブジェクトの初期化を行う
+ * [入力] なし
+ * [出力] なし
+ * [副作用] なし
+ */
 CowManager::CowManager()
 {
 }
 
+/*
+ * @brief 管理リストおよびオブジェクトプールの牛を全解放する
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 牛オブジェクトのメモリ解放
+ */
 CowManager::~CowManager()
 {
 	mCows.clear();
@@ -29,17 +41,22 @@ CowManager::~CowManager()
 	mPools.clear();
 }
 
+/*
+ * @brief 指定された種類の牛を生成またはプールから再利用して配置する
+ * [入力] filename: モデルファイル, pos: 出現基準座標, scale: 拡大率, tag: 牛のタグ, count: 生成数, mfever: フィーバーフラグ
+ * [出力] なし
+ * [副作用] 牛のメモリ確保およびmCowsへの追加、またはプールからの取り出し
+ */
 void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove::Tag_cow tag, int count, bool mfever)
 {
 	for (int i = 0; i < count; i++)
 	{
-		
-		// 画面丁EE同時アクチE??ブ牛数上限めE0匹に制限すめE
+		// パフォーマンス維持のため、同時出現数を最大30匹に制限する
 		if (mCows.size() >= 30)
 		{
 			if (tag == CowMove::Cow_gold)
 			{
-				// 釁EE牛が出現するスチEEスを作るため、普送EE牁EE中でプレイヤーから最も遠ぁE??のを宁EEに破?E??めE
+				// 金の牛を確実に出現させるため、プレイヤーから最も遠い普通の牛を優先して破棄し枠を空ける
 				bool erased = false;
 				float maxDistSq = -1.0f;
 				auto furthestIt = mCows.end();
@@ -66,7 +83,7 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 
 				if (furthestIt != mCows.end())
 				{
-					// 既に削除フラグが立ってぁE��牛などはObjectManager側で消されるぁE
+					// 既に削除フラグが立っている牛などはObjectManager側で消される
 					(*furthestIt)->Die(DEATH_LIMIT);
 					auto cow = *furthestIt;
 					cow->Deactivate();
@@ -76,7 +93,7 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 				}
 				else if (!mCows.empty())
 				{
-					// 全ての牛が画面冁E��どの場合�E、一番古ぁE��のの削除フラグを立ててリストから除夁E
+					// 全ての牛が画面内などの場合、一番古いものの削除フラグを立ててリストから除外する
 					mCows.front()->Die(DEATH_LIMIT);
 					auto cow = mCows.front();
 					cow->Deactivate();
@@ -170,6 +187,12 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 	}
 }
 
+/*
+ * @brief 全ての牛の更新処理と不要な牛の削除（プール返却）を行う
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 各牛のUpdate実行とEraseCowの実行
+ */
 void CowManager::Update()
 {
 	for (auto cow : mCows)
@@ -179,10 +202,22 @@ void CowManager::Update()
 	EraseCow();
 }
 
+/*
+ * @brief 全ての牛の描画を行う（現在は描画処理を外部で行っているため空）
+ * [入力] なし
+ * [出力] なし
+ * [副作用] なし
+ */
 void CowManager::Draw()
 {
 }
 
+/*
+ * @brief 削除フラグが立っている牛を非アクティブ化しプールに返却する
+ * [入力] なし
+ * [出力] なし
+ * [副作用] mCowsからの削除およびmPoolsへの追加
+ */
 void CowManager::EraseCow()
 {
 	if (!mCows.empty())
@@ -203,4 +238,3 @@ void CowManager::EraseCow()
 		}
 	}
 }
-

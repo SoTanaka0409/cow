@@ -1,35 +1,68 @@
-#pragma once
+﻿#pragma once
 #include "CowMove.h"
 
-// �l�����ɍ��X�R�A����уt�B�[�o�[��Ԃ�U��������ʂȋ��̋��i�^�O: Cow_gold�j�𐧌䂷��N���X
+// 獲得時に高スコア加算とフィーバー状態移行を行う特殊キャラクター制御クラス
 class Cow_gold : public CowMove
 {
 public:
-	// �t�B�[�o�[���ɏo���������ǂ����̃t���O��`
+	// スポーン時のゲーム状態。フィーバー連鎖を制御するために使用
 	enum Tag_fever
 	{
-		fever,      // �t�B�[�o�[��Ԓ��ɃX�|�[���������̋�
-		Nofever,    // �ʏ��Ԓ��ɃX�|�[���������̋�
+		fever,      // 連鎖終了判定用（フィーバー中スポーン）
+		Nofever,    // フィーバー開始判定用（通常時スポーン）
 	};
 
 public:
 	/*
-	 * @brief ���̋��I�u�W�F�N�g���������W�ɔz�u���A�X�R�A�E�Փ˔��蔼�a�E�t�B�[�o�[��Ԃ�ݒ肷��
-	 * [����] filename: ���f���̃t�@�C���p�X, initPos: �����X�|�[�����W, fever: �X�|�[�����̃t�B�[�o�[���
-	 * [�o��] �Ȃ�
-	 * [����p] �Ȃ�
+	 * @brief 固有パラメータ（スコア、判定半径等）で初期化する
+	 * [入力] filename: モデルファイルパス, initPos: 初期座標, fever: スポーン時状態
+	 * [出力] なし
+	 * [副作用] なし
 	 */
 	Cow_gold(std::string filename, VECTOR initPos, Tag_fever fever);
+
+	/*
+	 * @brief デストラクタ
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] なし
+	 */
 	virtual ~Cow_gold();
 
+	/*
+	 * @brief オブジェクト再利用時に生存時間を初期化する
+	 * [入力] pos: 再配置座標
+	 * [出力] なし
+	 * [副作用] 生存タイマーが0にリセットされる
+	 */
 	virtual void Reset(VECTOR pos) override;
+
+	/*
+	 * @brief 生存時間の更新とフィーバー終了時の自動消滅判定を行う
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 制限時間超過などでオブジェクトが消滅(Die)する
+	 */
 	void Update() override;
+
+	/*
+	 * @brief プレイヤーによる捕獲時にフィーバー状態を開始させる
+	 * [入力] reason: 消滅理由
+	 * [出力] なし
+	 * [副作用] 全体状態がフィーバー状態へ移行する
+	 */
 	void Die(DeathReason reason) override;
 
+	/*
+	 * @brief フィーバー状態の動的変更（プールからの再利用時などに使用）
+	 * [入力] fever: 新しいフィーバー状態
+	 * [出力] なし
+	 * [副作用] なし
+	 */
 	void SetFever(Tag_fever fever) { mnFever = fever; }
 
 private:
-	Tag_fever mnFever;  // �X�|�[�����̃t�B�[�o�[���
-	int DeathCount;     // �����t���[���J�E���^�[
-	int DeathTimer;     // �������ł܂ł̐������ԃt���[����
+	Tag_fever mnFever;  // フィーバー連鎖制御用の状態フラグ
+	int DeathCount;     // 画面内滞留時間の計測用
+	int DeathTimer;     // 画面残りによるメモリ圧迫や進行妨害を防ぐための寿命
 };
