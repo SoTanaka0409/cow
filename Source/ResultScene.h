@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include"dxlib.h"
 #include"Scene.h"
 #include"Texture.h"
@@ -6,92 +6,67 @@
 #include"vector"
 #include "Score.h"
 
-// ƒŠƒUƒ‹ƒgiŒ‹‰Ê•\¦j‰æ–Ê“à‚Ì‘I‘ğƒ{ƒ^ƒ“î•ñ‚ğ•\‚·\‘¢‘Ì
+// ãƒªã‚¶ãƒ«ãƒˆç”»é¢ã«ãŠã‘ã‚‹ãƒœã‚¿ãƒ³ã®UIçŠ¶æ…‹ã¨æç”»ãƒ‡ãƒ¼ã‚¿ã‚’ä¿æŒã™ã‚‹æ§‹é€ ä½“
 struct ResultButton
 {
-	SelectionManager::Title type; // ƒ{ƒ^ƒ“‚Ì¯•Êqiƒ^ƒCƒgƒ‹‚Ö–ß‚éAƒQ[ƒ€I—¹‚È‚Çj
-	int graphHandle;              // •`‰æ‚·‚é‰æ‘œƒAƒZƒbƒgƒnƒ“ƒhƒ‹
-	int x, y;                     // ƒ{ƒ^ƒ“¶ã‚Ì•`‰æŠJnÀ•W
-	int w, h;                     // ‰æ‘œ‚Ì‰¡•‚Æc•
-	bool isHover;                 // ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ªƒ{ƒ^ƒ“—Ìˆæ“à‚É‚ ‚é‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
+	SelectionManager::Title type;
+	int graphHandle;
+	int x, y;
+	int w, h;
+	bool isHover;
 };
 
-// ƒQ[ƒ€§ŒÀŠÔI—¹Œã‚É‘JˆÚ‚µAÅIƒXƒRƒA‚Æƒ‰ƒ“ƒLƒ“ƒOƒ{[ƒh‚ğ•\¦‚·‚éƒV[ƒ“ƒNƒ‰ƒX
+// ã‚²ãƒ¼ãƒ çµ‚äº†æ™‚ã«æœ€çµ‚ã‚¹ã‚³ã‚¢ã¨ãƒ©ãƒ³ã‚­ãƒ³ã‚°ã‚’è¡¨ç¤ºã™ã‚‹ã‚·ãƒ¼ãƒ³
 class ResultScene : public Scene
 {
 public:
 	ResultScene();
 	virtual ~ResultScene();
 
-	/*
-	 * @brief ƒŠƒUƒ‹ƒgƒV[ƒ“‚ÌƒAƒZƒbƒg‰Šúİ’èiÅVƒ‰ƒ“ƒLƒ“ƒO“Ç‚İ‚İAƒtƒF[ƒhİ’èj‚ğs‚¤
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒ‰ƒ“ƒLƒ“ƒOƒf[ƒ^‚Ì“Ç‚İ‚İAƒtƒF[ƒhƒAƒ‹ƒtƒ@İ’è
-	 */
+	// [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] æœ€æ–°ãƒ©ãƒ³ã‚­ãƒ³ã‚°ã®ãƒ­ãƒ¼ãƒ‰ã¨ãƒ•ã‚§ãƒ¼ãƒ‰åˆæœŸåŒ–
 	void Initialize() override;
 
-	/*
-	 * @brief ÅIƒXƒRƒAƒeƒLƒXƒgAŠl“¾”A‚¨‚æ‚Ñƒ‰ƒ“ƒLƒ“ƒOƒ{[ƒh‚Ì•`‰æ
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ‰æ–Ê•`‰æƒRƒ}ƒ“ƒh‚ÌÀs
-	 */
+	// [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] èƒŒæ™¯ã€ã‚¹ã‚³ã‚¢ã€ãƒ©ãƒ³ã‚­ãƒ³ã‚°UIã®æç”»ã‚³ãƒãƒ³ãƒ‰å®Ÿè¡Œ
 	void Draw() override;
 
-	/*
-	 * @brief ˆê’èƒtƒŒ[ƒ€Œo‰ßŒãi©“®“I‚Éƒ^ƒCƒgƒ‹‰æ–Ê‚Ö–ß‚é‚½‚ßj‚ÌƒtƒF[ƒhƒAƒEƒgˆ—
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] Œo‰ßŠÔƒJƒEƒ“ƒgƒAƒbƒvA‚¨‚æ‚Ñ©“®ƒ^ƒCƒgƒ‹‘JˆÚ‚ÌƒtƒF[ƒh—v‹
-	 */
+	// [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] ä¸€å®šæ™‚é–“çµŒéå¾Œã«ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ã¸ã®é·ç§»ã‚’è¦æ±‚
 	void Update() override;
 
-	/*
-	 * @brief ƒŠƒUƒ‹ƒgƒV[ƒ“I—¹‚ÌƒOƒ‰ƒtƒBƒbƒNƒŠƒ\[ƒXiƒXƒRƒAAƒ‰ƒ“ƒLƒ“ƒO‰æ‘œA”wŒij‰ğ•ú
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒ[ƒh‚³‚ê‚½Šeí‰æ‘œƒnƒ“ƒhƒ‹‚ÌíœABGM‚Ì’â~
-	 */
+	// [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] ä½¿ç”¨ã—ãŸç”»åƒãƒãƒ³ãƒ‰ãƒ«ã®ç ´æ£„ã¨BGMåœæ­¢
 	void Finalize() override;
 
 private:
-	SelectionManager* mnTitleSelect; // ‘I‘ğƒ}ƒl[ƒWƒƒ[i—\–ñE–¢g—pj
-	Texture* mpTexture;              // ƒeƒNƒXƒ`ƒƒƒIƒuƒWƒFƒNƒgi—\–ñE–¢g—pj
+	SelectionManager* mnTitleSelect;
+	Texture* mpTexture;
 	Texture* mpTexture2;
 	Texture* mpTexture3;
 
-	int mNewGameX;                   // ƒ{ƒ^ƒ“À•WEƒTƒCƒYˆê•Û—pi–¢g—pj
+	int mNewGameX;
 	int mNewGameY;
 	int mNewGameW;
 	int mNewGameH;
 
-	bool mbIsHoverNewGame;           // ƒzƒo[ó‘Ôˆêƒtƒ‰ƒOi–¢g—pj
+	bool mbIsHoverNewGame;
 
-	std::vector<ResultButton> mButtons; // ‰æ–Êã‚É”z’u‚³‚ê‚éƒŠƒUƒ‹ƒgƒ{ƒ^ƒ“‚ÌƒŠƒXƒg
-	int ResultGraphHandle;              // ƒŠƒUƒ‹ƒg”wŒi‚Ì‰æ‘œƒnƒ“ƒhƒ‹
+	std::vector<ResultButton> mButtons;
+	int ResultGraphHandle;
 
-	Score mScore;                       // ƒXƒRƒAŒvZE•`‰æ—p‚ÌƒIƒuƒWƒFƒNƒgƒCƒ“ƒXƒ^ƒ“ƒX
+	Score mScore;
 
-	int rankingTitleImage;              // ƒ‰ƒ“ƒLƒ“ƒOƒ{[ƒhƒwƒbƒ_[‰æ‘œƒnƒ“ƒhƒ‹
-	int rankImage[3];                   // 1ˆÊA2ˆÊA3ˆÊ‚Ìƒƒ_ƒ‹“™‰æ‘œƒnƒ“ƒhƒ‹
+	int rankingTitleImage;
+	int rankImage[3];
 
-	int yourScoreImage;                 // ƒXƒRƒAƒtƒŒ[ƒ€—p‰æ‘œƒnƒ“ƒhƒ‹i–¢g—pEyourScoreTextImg‚ÖW–ñj
-	int pointImage;                     // ƒXƒRƒA’PˆÊu“_v‚Ì‰æ‘œƒnƒ“ƒhƒ‹i–¢g—pEpointImg‚ÖW–ñj
+	int yourScoreImage;
+	int pointImage;
 
-	/*
-	 * @brief ƒnƒCƒXƒRƒAãˆÊ3–¼‚Ìƒ‰ƒ“ƒLƒ“ƒOUIƒ{[ƒh‚ğ‰æ–Ê¶ã‚É•`‰æ‚·‚é
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒ‰ƒ“ƒLƒ“ƒOƒ{[ƒhƒwƒbƒ_[‚¨‚æ‚ÑŠe‡ˆÊƒƒ_ƒ‹EƒXƒRƒA’l‚Ì•`‰æ
-	 */
+	// [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] ä¸Šä½3åã®ã‚¹ã‚³ã‚¢ã¨ãƒ¡ãƒ€ãƒ«ã‚’æç”»
 	void DrawRankingUI();
 
-	int yourScoreTextImg;               // uYOUR SCOREv‚ÌƒeƒLƒXƒg‰æ‘œƒnƒ“ƒhƒ‹
-	int pointImg;                       // ƒXƒRƒA’PˆÊu“_v‚Ì‰æ‘œƒnƒ“ƒhƒ‹
+	int yourScoreTextImg;
+	int pointImg;
 
-	int mFrameCount;                    // ƒtƒŒ[ƒ€ƒJƒEƒ“ƒ^[
-	int mnCount;                        // ƒV[ƒ“ŠJn‚©‚ç‚ÌŒo‰ßŠÔiƒtƒŒ[ƒ€”jƒJƒEƒ“ƒ^[
-	bool mFlag;                         // ƒtƒ‰ƒO•Ï”iƒŠƒU[ƒuj
+	int mFrameCount; // UIã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³åˆ¶å¾¡ç”¨ã‚¿ã‚¤ãƒãƒ¼
+	int mnCount;     // è‡ªå‹•é·ç§»ç”¨ã®çµŒéæ™‚é–“ã‚¿ã‚¤ãƒãƒ¼
+	bool mFlag;
 };
 

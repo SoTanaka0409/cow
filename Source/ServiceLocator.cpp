@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+﻿#include "ServiceLocator.h"
 #include "Master.h"
 #include "SceneManager.h"
 #include "Scene.h"
@@ -11,6 +11,7 @@
 
 Scene* ServiceLocator::GetCurrentScene()
 {
+	// 未初期化時のクラッシュを防ぐためポインタの有効性を検証
 	if (Master::mpSceneManager != nullptr)
 	{
 		return Master::mpSceneManager->GetCurrentScene();
@@ -30,6 +31,7 @@ ObjectManager* ServiceLocator::GetObjectManager()
 
 Player3D* ServiceLocator::GetPlayer()
 {
+	// タグ検索によりプレイヤーオブジェクトを動的に特定
 	ObjectManager* objMgr = GetObjectManager();
 	if (objMgr != nullptr)
 	{
@@ -40,6 +42,7 @@ Player3D* ServiceLocator::GetPlayer()
 
 std::vector<Player3D*> ServiceLocator::GetPlayers()
 {
+	// マルチプレイ対応等を考慮し、存在する全プレイヤーを収集
 	std::vector<Player3D*> players;
 	ObjectManager* objMgr = GetObjectManager();
 	if (objMgr != nullptr)

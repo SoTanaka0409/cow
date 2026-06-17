@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+ï»¿#include "ServiceLocator.h"
 #include"Player3D.h"
 #include"Model.h"
 #include"ModelAnimation.h"
@@ -26,30 +26,22 @@
 #include"GameTimer.h"
 #include"GameManager.h"
 
-/*
- * @brief ƒRƒ“ƒXƒgƒ‰ƒNƒ^
- * @param filename ƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
- * @param initPos ‰Šú”z’uÀ•W
- */
 Player3D::Player3D(std::string filename, VECTOR initPos)
 	: Object3D(initPos)
 	, mfVerticalAngle(0.0f)
 	, mfHorizontalAngle(0.0f)
-	, mfSpeed(35.0f)        // Šî–{ˆÚ“®‘¬“x
+	, mfSpeed(35.0f)
 	, mfHp(0)
-	, mfAttack_Speed(6.0f)  // ‹z‚¢‚İiã¸j‘¬“x‚ÌŠî–{’l
+	, mfAttack_Speed(6.0f)
 	, CatchNowCount(0)
 {
-	// ó‘Ôƒtƒ‰ƒOEƒ^ƒCƒ}[‚Ì‰Šú‰»
 	mIsStunned = false;
 	mStunTimer = 0;
 	mEffectTimer = 80;
 	mfRadius = 100;
 
-	// ƒ^ƒO‚Ìİ’è
 	SetTag(Object3D::Tag3D_player);
 
-	// ŠeíƒRƒ“ƒ|[ƒlƒ“ƒgEŠÇ—ƒNƒ‰ƒX‚Ì¶¬
 	mpModel = new Model(filename, initPos, false);
 	mpLevel = new Level(this);
 	mpLevel->SetNextLevel();
@@ -57,29 +49,22 @@ Player3D::Player3D(std::string filename, VECTOR initPos)
 	mpCombo = new Combo();
 	mpScore = new Score();
 
-	// ƒJƒƒ‰‚Ì‰Šú‰»
 	Master::mpCamera->Initialize();
 
-	// UI—pƒOƒ‰ƒtƒBƒbƒN‚Ì“Ç‚İ‚İ
 	mnLighGraph = LoadGraph("Resource/2D/green_beam_transparent.png");
 
-	// ‰ŠúƒRƒ‰ƒCƒ_[‚Ìİ’èiƒvƒŒƒCƒ„[‚Ì‘«Œ³‚©‚ç©g‚ÌˆÊ’u‚ğŒ‹‚ÔƒJƒvƒZƒ‹j
 	mpCapsuleCollider->mvPosition = VGet(mvPosition.x, 0, mvPosition.z);
 	mpCapsuleCollider->mvPosition2 = mvPosition;
 	mpCapsuleCollider->mfRadius = mfRadius;
 
-	// ‹z‚¢‚İƒr[ƒ€ƒGƒtƒFƒNƒgiEffekseerj‚Ìİ’è
+	// Yè»¸æ–¹å‘ã«ã‚¹ã‚±ãƒ¼ãƒ«ã‚’ä¼¸ã°ã—çœŸä¸‹ã«å‘ã‘ã‚‹
 	mpBeam = new EffekseerEffect("Resource/3D/EFK/Beam.efk", mvPosition, 80.0f);
-	mpBeam->SetRotation(VGet(DX_PI_F / -2.0f, 0.0f, 0.0f)); // ^‰º‚ğŒü‚­‚æ‚¤‚É‰ñ“]•â³
-	mpBeam->SetScale(VGet(1.0f, 1.0f, 4.0f));             // c’·‚ÉƒXƒP[ƒ‹‚ğL‚Î‚·
+	mpBeam->SetRotation(VGet(DX_PI_F / -2.0f, 0.0f, 0.0f));
+	mpBeam->SetScale(VGet(1.0f, 1.0f, 4.0f));
 
-	// ƒXƒs[ƒhƒAƒbƒvƒAƒCƒeƒ€g—p‚ÌƒGƒtƒFƒNƒgİ’è
 	mpSpeed = new EffekseerEffect("Resource/3D/EFK/UseSpItem.efk", VGet(0, 0, 0), 100.0f);
 }
 
-/*
- * @brief ƒfƒXƒgƒ‰ƒNƒ^
- */
 Player3D::~Player3D()
 {
 	if (mpModel) { delete mpModel; mpModel = nullptr; }
@@ -91,15 +76,12 @@ Player3D::~Player3D()
 	if (mpSpeed) { delete mpSpeed; mpSpeed = nullptr; }
 }
 
-/*
- * @brief XVˆ—
- */
 void Player3D::Update()
 {
-	// ƒfƒoƒbƒOƒJƒƒ‰‚ª—LŒø‚Èê‡‚ÍƒvƒŒƒCƒ„[‚Ì‹““®‚ğ‚·‚×‚Ä’â~
+	// ãƒ‡ãƒãƒƒã‚°ã‚«ãƒ¡ãƒ©ãŒæœ‰åŠ¹ãªå ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æŒ™å‹•ã‚’ã™ã¹ã¦åœæ­¢
 	if (Master::mbIsDebugCamera) return;
 
-	// --- ƒXƒ^ƒ“i‹Câjó‘Ô‚ÌŠÇ— ---
+	// --- ã‚¹ã‚¿ãƒ³ï¼ˆæ°—çµ¶ï¼‰çŠ¶æ…‹ã®ç®¡ç† ---
 	if (mIsStunned)
 	{
 		mStunTimer--;
@@ -109,63 +91,54 @@ void Player3D::Update()
 		}
 	}
 
-	// ”ÍˆÍ“àŒŸ’mƒtƒ‰ƒO‚ğ–ˆƒtƒŒ[ƒ€ƒŠƒZƒbƒg
 	mIsCowInVacuumRange = false;
 
-	// ƒTƒuƒ}ƒl[ƒWƒƒ[EŠeUIŠÖ˜A‚ÌXVˆ—
 	ManagerUpdate();
 
-	// ƒQ[ƒ€I—¹A‚Ü‚½‚ÍƒXƒe[ƒWŠO—‰º‚ÌˆÊ’uƒŠƒZƒbƒgib’è‚Å‹ó’†‚Ö‘Ş”ğj
+	// ã‚¹ãƒ†ãƒ¼ã‚¸å¤–è½ä¸‹æ™‚ãªã©ã¯å¾©å¸°ã®ãŸã‚ã«ç©ºä¸­ã¸é€€é¿
 	if (Master::GameFinishFlag || mIsOutOfBounds)
 	{
 		mvPosition = VGet(0, 2000, 0);
 		return;
 	}
 
-	// --- ’ÊíiƒXƒ^ƒ“‚µ‚Ä‚¢‚È‚¢ê‡j‚Ìs“®XV ---
 	if (!mIsStunned)
 	{
-		MoveEx();          // ˆÚ“®“ü—Í‚Æ•ÇÕ“Ë
-		RotationByMove();  // ˆÚ“®•ûŒü‚Ö‚Ìù‰ñ
-		ColliderUpdate();  // ‹z‚¢‚İ”ÍˆÍEƒGƒtƒFƒNƒg“¯Šú
-		Play();            // ƒ}ƒEƒX“ü—Í‚É‚æ‚é‹z‚¢‚İ§Œä
+		MoveEx();
+		RotationByMove();
+		ColliderUpdate();
+		Play();
 	}
-	// --- ƒXƒ^ƒ“’†‚ÌƒtƒH[ƒ‹ƒoƒbƒN ---
+	// --- ã‚¹ã‚¿ãƒ³ä¸­ã®ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯ ---
 	else
 	{
-		// ƒXƒ^ƒ“’†‚Ìê‡‚Å‚àAƒRƒ‰ƒCƒ_[‚ÌˆÊ’u‚Æ‘å‚«‚³‚ğ”ñƒAƒNƒeƒBƒuó‘Ôi’Êíó‘Ôj‚ÉXV‚·‚é•K—v‚ª‚ ‚éB
-		// ‚»‚¤‚µ‚È‚¢‚ÆA‹z‚¢‚İ’†‚ÉƒXƒ^ƒ“‚µ‚½ê‡‚ÉA‹‘å‚È‹z‚¢‚İ”»’èiƒRƒ‰ƒCƒ_[j‚ª‚»‚Ìê‚Éc‚Á‚½‚Ü‚Ü‚É‚È‚Á‚Ä‚µ‚Ü‚¤B
+		// å¸ã„è¾¼ã¿åˆ¤å®šãŒæ®‹ã‚‹ã®ã‚’é˜²ããŸã‚ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’ãƒªã‚»ãƒƒãƒˆ
 		mIsVacuumActive = false;
 		ColliderUpdate();
 	}
 
-	// ƒXƒe[ƒWŠO‚Éo‚Ä‚¢‚È‚¢‚©‚Ìƒ`ƒFƒbƒN
+	// ã‚¹ãƒ†ãƒ¼ã‚¸å¤–ã«å‡ºã¦ã„ãªã„ã‹ã®ãƒã‚§ãƒƒã‚¯
 	ScreenOutCheck();
 }
 
-/*
- * @brief ‹z‚¢‚İƒ{ƒ^ƒ“iƒ}ƒEƒX“ü—Íj‚ÆƒQ[ƒW‚Ì‘Œ¸ŠÇ—
- */
 void Player3D::Play()
 {
 	int mouseInput = GetMouseInput();
 
-	// ¶ƒNƒŠƒbƒN’·‰Ÿ‚µA‚©‚ÂƒQ[ƒW‚ªc‚Á‚Ä‚¨‚èAƒtƒB[ƒo[ƒ^ƒCƒ€’†‚Å‚È‚¢ê‡
 	if ((mouseInput & MOUSE_INPUT_LEFT) && mVacuumGauge > 0.0f && !Master::FeverFlag)
 	{
 		mIsVacuumActive = true;
-		mVacuumGauge -= VACUUM_COST_PER_FRAME; // ƒQ[ƒWÁ”ï
+		mVacuumGauge -= VACUUM_COST_PER_FRAME;
 
 		if (mVacuumGauge < 0.0f) mVacuumGauge = 0.0f;
 	}
-	// ƒ{ƒ^ƒ“‚ğ—£‚µ‚Ä‚¢‚éA‚Ü‚½‚ÍƒQ[ƒW‚ª‹ó‚Ìê‡i©“®‰ñ•œj
 	else
 	{
 		mIsVacuumActive = false;
 
 		float recoverySpeed = VACUUM_RECOVER_PER_FRAME;
 
-		// ƒ‰ƒXƒgƒXƒp[ƒgˆ—Fc‚èŠÔ‚ª60•bˆÈ‰º‚È‚çƒQ[ƒW‚Ì‰ñ•œ‘¬“x‚ª2”{‚É‚È‚é
+		// ãƒ©ã‚¹ãƒˆã‚¹ãƒ‘ãƒ¼ãƒˆæ™‚ã¯ã‚²ãƒ¼ã‚¸å›å¾©é€Ÿåº¦ã‚’ä¸Šã’ã¦é›£æ˜“åº¦ã‚’ç·©å’Œã™ã‚‹
 		if (Master::mpSceneManager && Master::mpSceneManager->GetCurrentScene() && ServiceLocator::GetGameManager())
 		{
 			auto timer = ServiceLocator::GetGameManager()->GetGameTimer();
@@ -179,24 +152,19 @@ void Player3D::Play()
 		if (mVacuumGauge > VACUUM_GAUGE_MAX) mVacuumGauge = VACUUM_GAUGE_MAX;
 	}
 
-	// ƒtƒB[ƒo[ƒ^ƒCƒ€’†‚ÍƒQ[ƒW‚ÉŠÖŒW‚È‚­‹­§“I‚É‹z‚¢‚İ‚ªí”­“®‚·‚é
+	// ãƒ•ã‚£ãƒ¼ãƒãƒ¼çŠ¶æ…‹ã®ä»•æ§˜ã‚’æº€ãŸã™ãŸã‚å¼·åˆ¶ç™ºå‹•
 	if (Master::FeverFlag) mIsVacuumActive = true;
 }
 
-/*
- * @brief ‹z‚¢‚İ”­“®ó‘Ô‚É‰‚¶‚½ƒRƒ‰ƒCƒ_[•ÏŒ`‚ÆƒGƒtƒFƒNƒg‚Ì“¯Šú
- */
 void Player3D::ColliderUpdate()
 {
-	// --- ‹z‚¢‚İ”­“®’†FƒRƒ‰ƒCƒ_[‚ğ’´‹‘å‰» ---
 	if (mIsVacuumActive)
 	{
-		// Y²•ûŒü‚É‘å‚«‚Èc’·‚ÌƒJƒvƒZƒ‹‚ğì‚èAã‹ó‚Ì‹‚Ü‚Å”»’è‚ª“Í‚­‚æ‚¤‚É‚·‚é
+		// ä¸Šç©ºã®ç‰›ã¾ã§åˆ¤å®šãŒå±Šãã‚ˆã†ã«Yè»¸æ–¹å‘ã«ã‚«ãƒ—ã‚»ãƒ«ã‚’åºƒã’ã‚‹
 		mpCapsuleCollider->mvPosition = VGet(mvPosition.x, -1000, mvPosition.z);
 		mpCapsuleCollider->mvPosition2 = VGet(mvPosition.x, 3000, mvPosition.z);
-		mpCapsuleCollider->mfRadius = VACUUM_RADIUS; // ’è”‚Å’è‚ß‚ç‚ê‚½‹z‚¢‚İ”¼Œa‚ÖŠg’£
+		mpCapsuleCollider->mfRadius = VACUUM_RADIUS;
 
-		// ˆê’èüŠúi80ƒtƒŒ[ƒ€‚²‚Æj‚ÅEffekseer‚Ìƒr[ƒ€ƒGƒtƒFƒNƒg‚ğƒ‹[ƒvÄ¶
 		mEffectTimer--;
 		if (mEffectTimer <= 0)
 		{
@@ -207,12 +175,11 @@ void Player3D::ColliderUpdate()
 			mEffectTimer = 80;
 		}
 	}
-	// --- ’ÊíF‹z‚¢‚İ”»’è‚ğƒŠƒZƒbƒg ---
 	else
 	{
 		mpCapsuleCollider->mvPosition = VGet(mvPosition.x, -1000, mvPosition.z);
 		mpCapsuleCollider->mvPosition2 = mvPosition;
-		mpCapsuleCollider->mfRadius = 0.0f; // ”¼Œa‚ğ0‚É‚µ‚ÄÚG”»’è‚ğÁ‚·
+		mpCapsuleCollider->mfRadius = 0.0f;
 
 		if (mpBeam != nullptr && mpBeam->IsPlaying())
 		{
@@ -221,7 +188,7 @@ void Player3D::ColliderUpdate()
 		mEffectTimer = 0;
 	}
 
-	// ŠeíƒGƒtƒFƒNƒg‚ÌÀ•W’Ç]‚ÆXVˆ—
+	// å„ç¨®ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®åº§æ¨™è¿½å¾“ã¨æ›´æ–°å‡¦ç†
 	if (mpBeam != nullptr)
 	{
 		mpBeam->SetPosition(mvPosition);
@@ -235,9 +202,6 @@ void Player3D::ColliderUpdate()
 	}
 }
 
-/*
- * @brief ƒXƒe[ƒWŠOi‰æ–ÊŠOj‚Ö‚ÌN“üƒ`ƒFƒbƒN‚Æ•œ‹Aˆ—
- */
 void Player3D::ScreenOutCheck()
 {
 	if (mvPosition.x > Utility::StageSize.x || mvPosition.x < -Utility::StageSize.x ||
@@ -245,7 +209,7 @@ void Player3D::ScreenOutCheck()
 	{
 		mIsOutOfBounds = true;
 
-		// ‹~Ï‘[’uF‰æ–ÊŠO‚ÅƒXƒy[ƒXƒL[‚ğ‰Ÿ‚·‚Æ’†‰›ã‹ó‚ÉƒŠƒXƒ|[ƒ“‚·‚é
+		// é€²è¡Œä¸èƒ½å›é¿ã®ãŸã‚ã‚­ãƒ¼å…¥åŠ›ã§å¾©å¸°ã•ã›ã‚‹
 		if (CheckHitKey(KEY_INPUT_SPACE))
 		{
 			SetPosition(VGet(0, 2000, 0));
@@ -258,20 +222,17 @@ void Player3D::ScreenOutCheck()
 	}
 }
 
-/*
- * @brief ƒfƒoƒbƒO—p“ü—ÍƒeƒXƒg
- */
 void Player3D::test()
 {
 	if (InputManager::CheckDownKey(KEY_INPUT_5))
 	{
-		mpLevel->AddXp(20);         // ŒoŒ±’l•t—^
-		mpSkill->SetSkillFlag(true); // ƒXƒLƒ‹UI/Œø‰Ê‚Ì‹­§ŠJ•ú
+		mpLevel->AddXp(20);
+		mpSkill->SetSkillFlag(true); // ã‚¹ã‚­ãƒ«UI/åŠ¹æœã®å¼·åˆ¶é–‹æ”¾
 	}
 }
 
 /*
- * @brief ƒvƒŒƒCƒ„[‚É•R‚Ã‚­ŠeíƒTƒuƒVƒXƒeƒ€‚ÌˆêŠ‡•`‰æEXVŒÄ‚Ño‚µ
+ * @brief ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ç´ã¥ãå„ç¨®ã‚µãƒ–ã‚·ã‚¹ãƒ†ãƒ ã®ä¸€æ‹¬æç”»ãƒ»æ›´æ–°å‘¼ã³å‡ºã—
  */
 void Player3D::ManagerUpdate()
 {
@@ -287,26 +248,21 @@ void Player3D::ManagerUpdate()
 	test();
 }
 
-/*
- * @brief •`‰æi3D‹óŠÔã‚Ì•â•UI•`‰æ‚È‚Çj
- */
 void Player3D::Draw()
 {
-	// --- ’n–Ê‚É‹z‚¢‚İ”ÍˆÍ‚ğ¦‚·ƒT[ƒNƒ‹i‰~j‚ğ•`‰æ‚·‚éˆ— ---
-	const int DIV = 32; // ‰~‚Ì•ªŠ„”i‘å‚«‚­‚·‚é‚Ù‚ÇŠŠ‚ç‚©‚È^‰~‚É‚È‚éj
+	const int DIV = 32;
 	unsigned int color;
 
-	// ”ÍˆÍ“à‚Éƒ^[ƒQƒbƒgi‹j‚ğ‘¨‚¦‚Ä‚¢‚é‚©‚Å‰~‚ÌF‚ğ•Ï‰»‚³‚¹‚é
+	// ãƒ­ãƒƒã‚¯ã‚ªãƒ³çŠ¶æ…‹ã«å¿œã˜ã¦ã‚µãƒ¼ã‚¯ãƒ«ã®è‰²ã‚’å¤‰æ›´ã™ã‚‹
 	if (mIsCowInVacuumRange == true)
 	{
-		color = GetColor(255, 0, 0); // ÔFiƒƒbƒNƒIƒ“ó‘Ôj
+		color = GetColor(255, 0, 0);
 	}
 	else
 	{
-		color = GetColor(0, 255, 0); // —ÎFi’Êíó‘Ôj
+		color = GetColor(0, 255, 0);
 	}
 
-	// 32•ªŠ„‚µ‚½“_‚ğDrawLine3D‚Å‡‚É‚Â‚È‚¬AƒvƒŒƒCƒ„[‚Ì‘«Œ³iY=0•t‹ßj‚É‰~‚ğ•`‚­
 	for (int i = 0; i < DIV; i++) {
 		float angle1 = (float)i / DIV * DX_PI_F * 2.0f;
 		float angle2 = (float)(i + 1) / DIV * DX_PI_F * 2.0f;
@@ -317,56 +273,45 @@ void Player3D::Draw()
 		DrawLine3D(p1, p2, color);
 	}
 
-	// ‹z‚¢‚İƒQ[ƒWUIi2Dƒo[j‚Ì•`‰æ
 	bar();
 }
 
-/*
- * @brief ˆÚ“®“ü—Íˆ—iƒJƒƒ‰‚ÌŒü‚«‚ğŠî€‚É‚µ‚½3DˆÚ“® • •Ç‚Æ‚ÌƒXƒ‰ƒCƒhÕ“Ë”»’èj
- */
 void Player3D::MoveEx()
 {
-	mvOldPosition = mvPosition; // Õ“Ë‘O‚ÌŒ»İÀ•W‚ğ•Û‘¶
+	mvOldPosition = mvPosition;
 	moveVec = VGet(0.0f, 0.0f, 0.0f);
 
-	VECTOR UpMoveVector = VGet(0.0f, 0.0f, 0.0f);   // ƒJƒƒ‰Šî€‚Ì‘O•ûƒxƒNƒgƒ‹
-	VECTOR leftMoveVector = VGet(0.0f, 0.0f, 0.0f); // ƒJƒƒ‰Šî€‚Ì¶•ûŒüƒxƒNƒgƒ‹
+	VECTOR UpMoveVector = VGet(0.0f, 0.0f, 0.0f);
+	VECTOR leftMoveVector = VGet(0.0f, 0.0f, 0.0f);
 
-	// --- ƒJƒƒ‰‚Ì‹üƒxƒNƒgƒ‹‚©‚çˆÚ“®•ûŒü‚ğZo ---
+	// ã‚«ãƒ¡ãƒ©è¦–ç‚¹ã‚’åŸºæº–ã¨ã—ãŸç§»å‹•æ–¹å‘ã®ç®—å‡º
 	{
-		// ’‹“_‚©‚çƒJƒƒ‰ˆÊ’u‚ğˆø‚«Z‚µ‚ÄƒJƒƒ‰‚ÌŒü‚«i‹üj‚ğæ“¾A‘å’n‚Ì…•½ˆÚ“®‚É‚·‚é‚½‚ßY‚ğƒŠƒZƒbƒg
 		UpMoveVector = VSub(Master::mpCamera->GetLookAtPosition(), Master::mpCamera->GetPosition());
 		UpMoveVector.y = 0.0f;
 
-		// ‘O•ûƒxƒNƒgƒ‹‚Æ¢ŠE‚ÌYãŒü‚«ƒxƒNƒgƒ‹‚ÌŠOÏiƒNƒƒXÏj‚ğ‚Æ‚èA’¼Œğ‚·‚é¶Œü‚«ƒxƒNƒgƒ‹‚ğZo
 		leftMoveVector = VCross(UpMoveVector, VGet(0.0f, 1.0f, 0.0f));
 		leftMoveVector.y = 0.0f;
 
-		// ’PˆÊƒxƒNƒgƒ‹‰»i’·‚³‚ğ1‚É‚·‚éj
 		UpMoveVector = VNorm(UpMoveVector);
 		leftMoveVector = VNorm(leftMoveVector);
 	}
 
-	// WASDƒL[“ü—Í‚É‰‚¶‚ÄˆÚ“®ƒxƒNƒgƒ‹‚ğ‡¬
 	if (CheckHitKey(KEY_INPUT_A)) moveVec = VAdd(moveVec, leftMoveVector);
 	if (CheckHitKey(KEY_INPUT_D)) moveVec = VAdd(moveVec, VScale(leftMoveVector, -1.0f));
 	if (CheckHitKey(KEY_INPUT_W)) moveVec = VAdd(moveVec, UpMoveVector);
 	if (CheckHitKey(KEY_INPUT_S)) moveVec = VAdd(moveVec, VScale(UpMoveVector, -1.0f));
 
-	// ‚¢‚¸‚ê‚©‚ÌƒL[‚ª‰Ÿ‚³‚ê‚ÄˆÚ“®‚ª”­¶‚µ‚Ä‚¢‚éê‡
 	bool isMove = (moveVec.x != 0.0f || moveVec.z != 0.0f);
 	if (isMove)
 	{
 		moveVec = VNorm(moveVec);
-		mfTargetAngle = atan2f(moveVec.x, moveVec.z); // ˆÚ“®ƒxƒNƒgƒ‹‚©‚ç–Ú•W‚Ì‰ñ“]Šp“xiƒ‰ƒWƒAƒ“j‚ğZo
+		mfTargetAngle = atan2f(moveVec.x, moveVec.z);
 		oldmoveVec = moveVec;
 
-		// ƒpƒbƒVƒuƒXƒLƒ‹“™‚Ìã¸’l‚ğ‰Á–¡‚µ‚½Œ»İ‚ÌÅIˆÚ“®‘¬“x‚ğæ“¾‚µ‚ÄˆÚ“®
 		currentSpeed = Status(Status_Speed);
 		mvPosition = VAdd(mvPosition, VScale(moveVec, currentSpeed));
 	}
 
-	// --- ƒ|ƒŠƒSƒ“•ÇiWallj‚Æ‚ÌÕ“Ë”»’è‚¨‚æ‚Ñ‚·‚×‚èi•Ç‚¸‚èjˆ— ---
 	bool hitwall = false;
 	bool hitwalls = false;
 	const auto& walls = ServiceLocator::GetObjectManager()->GetObject3DListByTag(Object3D::Tag3D_Wall);
@@ -379,7 +324,6 @@ void Player3D::MoveEx()
 			{
 				std::vector<VERTEX3D> vertex = wall->GetVertex();
 
-				// ƒvƒŒƒCƒ„[‚ÌƒJƒvƒZƒ‹‚Æ•Çi2‚Â‚ÌOŠpŒ`ƒ|ƒŠƒSƒ“j‚Ì“–‚½‚è”»’è
 				if (HitCheck_Capsule_Triangle(
 					mvPosition, VAdd(mvPosition, VGet(0.0f, 200.0f, 0.0f)), 80.0f,
 					vertex.at(0).pos, vertex.at(1).pos, vertex.at(2).pos) ||
@@ -391,18 +335,17 @@ void Player3D::MoveEx()
 					hitwall = true;
 					VECTOR slide = VGet(0.0f, 0.0f, 0.0f);
 
-					// –@ü‚Æ‚Ì“àÏ‚ğ—p‚¢‚Ä•Ç‚É‰ˆ‚Á‚Äi‚Ş‚·‚×‚èƒxƒNƒgƒ‹‚ğŒvZ
+					// æ³•ç·šã‹ã‚‰å£ãšã‚Šç§»å‹•ç”¨ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¨ˆç®—
 					float a = VDot(VScale(moveVec, -1.0f), vertex.at(0).norm);
 					slide = VAdd(moveVec, VScale(vertex.at(0).norm, a));
 
-					// 1–‡–Ú‚Ì•Ç‚ÉÕ“ËFˆÊ’u‚ğ–ß‚µ‚Ä‚©‚ç•Ç“`‚¢‚Ì•ûŒü‚É‘¬“x‚ğ“K—p
 					if (hitwall == true && hitwalls == false)
 					{
 						mvPosition = mvOldPosition;
 						mvPosition = VAdd(mvPosition, VScale(slide, mfSpeed));
 						hitwalls = true;
 					}
-					// •¡”‚Ì•Ç‚ÌŒ„ŠÔ‚É‹²‚Ü‚ê‚½ê‡FŠ®‘S‚Éis‚ğ§ŒÀ‚µ‚Ä–„‚Ü‚è‚ğ–h~
+					// æŒŸã¾ã‚Šé˜²æ­¢ã®ãŸã‚é€²è¡Œã‚’åˆ¶é™ã™ã‚‹
 					else if (hitwalls == true)
 					{
 						mvPosition = mvOldPosition;
@@ -416,15 +359,10 @@ void Player3D::MoveEx()
 	mpModel->SetRotation(mvRotation);
 }
 
-/*
- * @brief ƒXƒLƒ‹‰ÁZ’l‚ğŠÜ‚ß‚½ƒvƒŒƒCƒ„[‚Ì“®“IƒXƒe[ƒ^ƒXæ“¾
- * @param id æ“¾‚µ‚½‚¢ƒXƒe[ƒ^ƒX‚Ìí—ŞiUŒ‚‘¬“x / HP / ˆÚ“®‘¬“xj
- */
 float Player3D::Status(StatusID id)
 {
 	if (id == Status_AttackS)
 	{
-		// Šî‘b‹z‚¢‚İ‘¬“x + ƒXƒLƒ‹‚É‚æ‚éã¸’l
 		return mfAttack_Speed + mpSkill->GetStatusDate(Skill::Status_AttackSpeed);
 	}
 	if (id == Status_Hp)
@@ -433,25 +371,19 @@ float Player3D::Status(StatusID id)
 	}
 	if (id == Status_Speed)
 	{
-		// Šî‘bˆÚ“®‘¬“x + ƒXƒLƒ‹‚É‚æ‚éã¸’l
 		return mfSpeed + mpSkill->GetStatusDate(Skill::Status_Speed);
 	}
 	return 0.0f;
 }
 
-/*
- * @brief ˆÚ“®•ûŒü‚ÖŠŠ‚ç‚©‚ÉƒLƒƒƒ‰ƒNƒ^[‚ÌŒü‚«‚ğù‰ñ‚³‚¹‚éˆ—iüŒ`•âŠÔ•—j
- */
 void Player3D::RotationByMove()
 {
-	// Œ»İ‚ÌŠp“x‚ÆˆÚ“®“ü—Í‚©‚ç‹‚ß‚½–Ú•WŠp“x‚Ì·•ª‚ğZo
 	float subAngle = mfTargetAngle - mfAngle;
 
-	// Šp“x‚Ì•s˜A‘±“_i-180“x?180“x‚Ì‹«ŠEüj‚ğŒ×‚¢‚¾ê‡‚ÌÅ’Zƒ‹[ƒg•â³
+	// è§’åº¦ã®å¢ƒç•Œç·šã‚’è·¨ã„ã å ´åˆã®æœ€çŸ­ãƒ«ãƒ¼ãƒˆè£œæ­£
 	if (subAngle < -DX_PI_F) subAngle += DX_TWO_PI_F;
 	if (subAngle > DX_PI_F)  subAngle -= DX_TWO_PI_F;
 
-	// –ˆƒtƒŒ[ƒ€ˆê’è‚Ì’è”iROTATE_SPEEDj‚¸‚Â–Ú•WŠp“x‚Ö‚Æ‹ß‚Ã‚¯‚é
 	if (subAngle > 0.0f)
 	{
 		subAngle -= ROTATE_SPEED;
@@ -463,16 +395,14 @@ void Player3D::RotationByMove()
 		if (subAngle > 0.0f) subAngle = 0.0f;
 	}
 
-	// •â³‚³‚ê‚½Šp“x‚ğ“K—p
 	mfAngle = mfTargetAngle - subAngle;
 
-	// ƒ‚ƒfƒ‹‚Ì‰Šú•ûŒü‚É‡‚í‚¹‚Ä180“xiDX_PI_Fj”½“]‚µ‚Ä”½‰f
 	mvRotation.y = mfAngle + DX_PI_F;
 	mpModel->SetRotation(mvRotation);
 }
 
 /*
- * @brief ‰æ–Ê‰º•”‚É•\¦‚·‚é‹z‚¢‚İƒQ[ƒWi2D UIj‚Ì•`‰æ
+ * @brief ç”»é¢ä¸‹éƒ¨ã«è¡¨ç¤ºã™ã‚‹å¸ã„è¾¼ã¿ã‚²ãƒ¼ã‚¸ï¼ˆ2D UIï¼‰ã®æç”»
  */
 void Player3D::bar()
 {
@@ -481,31 +411,24 @@ void Player3D::bar()
 	int gaugeX = 50;
 	int gaugeY = 700;
 
-	// ƒQ[ƒW‚Ì”wŒiiƒOƒŒ[‚ÌÀ•z’cj
 	DrawBox(gaugeX, gaugeY, gaugeX + gaugeWidth, gaugeY + gaugeHeight, GetColor(100, 100, 100), TRUE);
 
-	// Œ»İ‚ÌƒQ[ƒW—Ê‚É‰‚¶‚½‘O–Êƒo[‚Ì‰¡•‚ğŒvZ
 	int currentWidth = (int)((mVacuumGauge / VACUUM_GAUGE_MAX) * gaugeWidth);
 	if (currentWidth < 0) currentWidth = 0;
 	if (currentWidth > gaugeWidth) currentWidth = gaugeWidth;
 
-	// ’Êí‚ÍƒVƒAƒ“AƒQ[ƒW‚ª‹ó‚Ì‚Í’ˆÓŠ«‹N‚Ì‚½‚ßÔF‚É‚·‚é
+	// ã‚²ãƒ¼ã‚¸ãŒç©ºã®æ™‚ã¯è­¦å‘Šã¨ã—ã¦èµ¤è‰²è¡¨ç¤º
 	unsigned int gaugeColor = GetColor(0, 255, 255);
 	if (mVacuumGauge <= 0.0f) gaugeColor = GetColor(255, 0, 0);
 
 	DrawBox(gaugeX, gaugeY, gaugeX + currentWidth, gaugeY + gaugeHeight, gaugeColor, TRUE);
 
-	// ”’‚¢ŠO˜g‚Ì•`‰æ‚ÆƒeƒLƒXƒg‚É‚æ‚éƒp[ƒZƒ“ƒe[ƒW•\‹L
 	DrawBox(gaugeX, gaugeY, gaugeX + gaugeWidth, gaugeY + gaugeHeight, GetColor(255, 255, 255), FALSE);
 	DrawFormatString(gaugeX, gaugeY - 30, GetColor(255, 255, 255), "Vacuum Gauge: %.1f%%", mVacuumGauge);
 }
 
-/*
- * @brief ƒRƒ‰ƒCƒ_[ÚGŠJn‚ÌƒR[ƒ‹ƒoƒbƒNi‹‚â‚»‚Ì‘¼“®•¨‚Ì‹zˆøŠJnj
- */
 void Player3D::OnEnter(Collider* collider, Collider* check)
 {
-	// --- u‹v‚ÌƒRƒ‰ƒCƒ_[‚ªƒvƒŒƒCƒ„[‚Ì‹z‚¢‚İ”ÍˆÍ‚É“ü‚Á‚½ê‡ ---
 	if (collider == mpCapsuleCollider && check->mpParentObject->GetTag() == Tag3D_Cow)
 	{
 		CowMove* cow = dynamic_cast<CowMove*>(check->mpParentObject);
@@ -513,10 +436,10 @@ void Player3D::OnEnter(Collider* collider, Collider* check)
 		{
 			cow->SetTargetPlayer(this);
 			cow->IncreaseVacuumTimer();
-			cow->ChangeStateToVacuum(); // ‘ÎÛ‚ğ‹zˆøó‘Ôiã¸E‰ñ“]j‚ÖˆÚs‚³‚¹‚é
+			cow->ChangeStateToVacuum();
 		}
 	}
-	// --- u‚»‚Ì‘¼“®•¨v‚ÌƒRƒ‰ƒCƒ_[‚ªƒvƒŒƒCƒ„[‚Ì‹z‚¢‚İ”ÍˆÍ‚É“ü‚Á‚½ê‡ ---
+
 	if (collider == mpCapsuleCollider && check->mpParentObject->GetTag() == Tag3D_Animal)
 	{
 		AnimalMove* ani = dynamic_cast<AnimalMove*>(check->mpParentObject);
@@ -529,25 +452,22 @@ void Player3D::OnEnter(Collider* collider, Collider* check)
 	}
 }
 
-/*
- * @brief ƒRƒ‰ƒCƒ_[ÚGI—¹‚ÌƒR[ƒ‹ƒoƒbƒNi‹zˆø”ÍˆÍŠO‚É“¦‚°‚ç‚ê‚½A‚Ü‚½‚Íƒ{ƒ^ƒ“‚ğ—£‚µ‚½Û‚ÌƒNƒŠ[ƒ“ƒAƒbƒvj
- */
 void Player3D::OnExit(Collider* collider, Collider* check)
 {
-	// --- ‹‚ª”ÍˆÍŠO‚Éo‚½A‚Ü‚½‚Í‹z‚¢‚İ‚ğ’†’f‚µ‚½ê‡F’nã‚Ö–ß‚· ---
+	// å¸ã„è¾¼ã¿ä¸­æ–­æ™‚ã¯å¯¾è±¡ã‚’åœ°ä¸Šã§ã®å¾˜å¾ŠçŠ¶æ…‹ã«æˆ»ã™
 	if (collider == mpCapsuleCollider && check->mpParentObject->GetTag() == Tag3D_Cow)
 	{
 		CowMove* cow = dynamic_cast<CowMove*>(check->mpParentObject);
 
 		cow->SetTargetPlayer(nullptr);
-		cow->ResetVacuumTimer();            // ’~Ïƒ^ƒCƒ}[‚ğƒŠƒZƒbƒg
+		cow->ResetVacuumTimer();
 		cow->SetCurrentState(STATE_WALK);
-		cow->ChangeState(new StateWalk()); // ó‘Ô‚ğ’Êí‚Ìœpœj•às‚É–ß‚·
+		cow->ChangeState(new StateWalk());
 
-		VECTOR pos = cow->GetPosition();   // Œ»İ‚ÌÀ•W‚ğæ“¾i¦•K—v‚É‰‚¶‚ÄYÀ•W‚ğÚ’n‚³‚¹‚éˆ—‚ğ—U”­j
+		VECTOR pos = cow->GetPosition();
 		cow->SetPosition(pos);
 	}
-	// --- ‚»‚Ì‘¼“®•¨‚ª”ÍˆÍŠO‚Éo‚½A‚Ü‚½‚Í‹z‚¢‚İ‚ğ’†’f‚µ‚½ê‡ ---
+
 	if (collider == mpCapsuleCollider && check->mpParentObject->GetTag() == Tag3D_Animal)
 	{
 		AnimalMove* ani = dynamic_cast<AnimalMove*>(check->mpParentObject);
@@ -558,34 +478,21 @@ void Player3D::OnExit(Collider* collider, Collider* check)
 	}
 }
 
-/*
- * @brief ƒRƒ‰ƒCƒ_[ÚGŒp‘±’†‚ÌƒR[ƒ‹ƒoƒbƒNiŒ»İ‚Í–¢g—pj
- */
 void Player3D::OnTrigger(Collider* collider, Collider* check)
 {
 }
 
-/*
- * @brief ƒ‚ƒfƒ‹‚ÌƒXƒP[ƒ‹‚ğİ’è
- */
 void Player3D::SetScale(float scale)
 {
 	mpModel->SetScale(scale);
 }
 
-/*
- * @brief ŠO•”i“G‚ÌUŒ‚‚È‚Çj‚©‚çƒXƒ^ƒ“ó‘Ô‚ğ•t—^‚³‚ê‚éˆ—
- * @param stunTime ƒXƒ^ƒ“‚ª‘±‚·‚éƒtƒŒ[ƒ€”
- */
 void Player3D::ApplyStun(int stunTime)
 {
 	mIsStunned = true;
 	mStunTimer = stunTime;
 }
 
-/*
- * @brief ˆÚ“®‘¬“xƒAƒbƒv‚È‚Ç‚ÌƒXƒLƒ‹”­“®‚ÉƒGƒtƒFƒNƒg‚ğÄ¶‚·‚é
- */
 void Player3D::PlaySkillEffect()
 {
 	if (mpSpeed != nullptr)

@@ -1,6 +1,6 @@
-#pragma once
+﻿#pragma once
 
-// �A���Ŋl�����l�������ۂɃ{�[�i�X�X�R�A��t�^����R���{�V�X�e���N���X
+// ボーナススコア計算やUI表示のためコンボ状態を管理する
 class Combo
 {
 public:
@@ -8,34 +8,34 @@ public:
 	~Combo();
 
 	/*
-	 * @brief ���݂̃R���{������ʍ����ȂǂɃf�W�^�������摜�ŕ`�悷��
-	 * [����] �Ȃ�
-	 * [�o��] �Ȃ�
-	 * [����p] �Ȃ�
+	 * @brief コンボ数とロゴをUIとして描画する
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] なし
 	 */
 	void Draw();
 
 	/*
-	 * @brief �R���{�L�������^�C�}�[�̌��Z����ю��Ԑ؂ꎞ�̃��Z�b�g�Ď����s��
-	 * [����] �Ȃ�
-	 * [�o��] �Ȃ�
-	 * [����p] �^�C�}�[�o�߂ɂ��Reset�̌Ăяo��
+	 * @brief コンボ継続判定のため毎フレーム状態を更新する
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 時間切れ時にReset()を呼び出しコンボ状態を破棄
 	 */
 	void Update();
 
 	/*
-	 * @brief �R���{�q�b�g����1���Z���A�L���ێ��^�C�}�[���ő�l(3�b)�Ƀ��Z�b�g����
-	 * [����] �Ȃ�
-	 * [�o��] �Ȃ�
-	 * [����p] �R���{�J�E���g(comboCount)���Z�A�^�C�}�[��
+	 * @brief 獲物獲得時にコンボ状態を更新・維持する
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] comboCountをインクリメントし、タイマーを初期値に戻す
 	 */
 	void AddHit();
 
 	/*
-	 * @brief �R���{���I���i���Z�b�g�j���A�J�E���g��0�ɂ���
-	 * [����] �Ȃ�
-	 * [�o��] �Ȃ�
-	 * [����p] comboCount��0�Ƀ��Z�b�g
+	 * @brief コンボ猶予時間超過などの理由で状態を初期化する
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] comboCountを0にリセット
 	 */
 	void Reset();
 
@@ -43,13 +43,13 @@ public:
 	float GetMultiplier() const;
 
 private:
-	int comboCount;             // ���݂̘A���q�b�g��
-	float comboTimer;           // �R���{�ێ��p�̎c�莞�ԃ^�C�}�[
-	float comboMaxTime;         // �R���{�ێ��̍ő�K�莞�ԁi3�b�j
+	int comboCount;             // スコア倍率計算の基準となる連続ヒット数
+	float comboTimer;           // 0以下でコンボを終了させるための監視用タイマー
+	float comboMaxTime;         // 難易度調整の基準となるコンボ維持猶予時間
 
-	int comboImage;             // "COMBO" ���S�̃O���t�B�b�N�n���h��
-	bool comboShow;             // �\�����t���O
-	float comboShowTimer;       // �\���c�莞��
-	int numberImage[10];        // 0?9�̃f�W�^�������e�N�X�`���n���h���z��
+	int comboImage;             // 描画負荷軽減のため保持しておくロゴ画像ハンドル
+	bool comboShow;             // UIの表示/非表示を切り替えるためのフラグ
+	float comboShowTimer;       // アニメーションなどの表示演出を管理する時間
+	int numberImage[10];        // 描画負荷軽減のため保持しておく数字画像ハンドル配列
 };
 

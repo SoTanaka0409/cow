@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Scene.h"
 #include "ModelUtility.h"
 #include "CowManager.h"
@@ -8,86 +8,56 @@
 class Camera;
 class Combo;
 
-// ƒvƒŒƒCƒ„[‚ÉˆÚ“®‚âƒr[ƒ€‹zˆøAƒRƒ“ƒ{AƒXƒLƒ‹‚È‚Ç‚ÌŠî–{‘€ì‚ğ‰ğà‚·‚éƒ`ƒ…[ƒgƒŠƒAƒ‹ƒV[ƒ“ƒNƒ‰ƒX
+// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«åŸºæœ¬æ“ä½œã¨ã‚²ãƒ¼ãƒ ã‚·ã‚¹ãƒ†ãƒ ã‚’è§£èª¬ã™ã‚‹ã‚·ãƒ¼ãƒ³
 class TutorialScene : public Scene
 {
 public:
-	// ƒ`ƒ…[ƒgƒŠƒAƒ‹‚ÌŠeisƒXƒeƒbƒv‚ğ•\‚·’è‹`
+	// é€²è¡Œãƒ•ã‚§ãƒ¼ã‚ºã‚’ç®¡ç†ã™ã‚‹ã‚¹ãƒ†ãƒ¼ãƒˆå®šç¾©
 	enum State
 	{
-		STATE_MOVE,         // 1. ˆÚ“®‘€ì‚Ì‰ğàƒXƒeƒbƒv
-		STATE_BEAM,         // 2. ‹zˆøƒr[ƒ€‚ÆƒQ[ƒW‚Ì‰ğàƒXƒeƒbƒv
-		STATE_COMBO_SCORE,  // 3. ƒXƒRƒAEƒRƒ“ƒ{”{—¦‚Ì‰ğàƒXƒeƒbƒv
-		STATE_PHASE,        // 4. ƒQ[ƒ€“àƒtƒF[ƒY‚Ì‰ğàƒXƒeƒbƒv
-		STATE_SKILL,        // 5. ƒ‰ƒ“ƒ_ƒ€ƒXƒLƒ‹‚Ì‰ğàƒXƒeƒbƒv
-		STATE_FEVER,        // 6. ƒtƒB[ƒo[ƒ‚[ƒh‚Ì‘ÌŒ±ƒXƒeƒbƒv
-		STATE_END           // I—¹ˆ—‚Æƒ^ƒCƒgƒ‹‚Ö–ß‚é‘Ò‹@ƒXƒeƒbƒv
+		STATE_MOVE,
+		STATE_BEAM,
+		STATE_COMBO_SCORE,
+		STATE_PHASE,
+		STATE_SKILL,
+		STATE_FEVER,
+		STATE_END
 	};
 
-	// ƒtƒB[ƒo[‘ÌŒ±’†‚ÌƒXƒeƒbƒvó‘Ô’è‹`
+	// ãƒ•ã‚£ãƒ¼ãƒãƒ¼ãƒ¢ãƒ¼ãƒ‰ä½“é¨“ä¸­ã®ã‚µãƒ–ã‚¹ãƒ†ãƒ¼ãƒˆ
 	enum State_fever
 	{
-		FEVER_1,            // ƒS[ƒ‹ƒh‹‚ÌoŒ»E–¢‹zˆø
-		FEVER_2,            // ƒtƒB[ƒo[”­“®’†
-		FEVER_3,            // iƒŠƒU[ƒuj
+		FEVER_1,
+		FEVER_2,
+		FEVER_3,
 	};
 
 	TutorialScene();
 	virtual ~TutorialScene();
 
-	/*
-	 * @brief ƒ`ƒ…[ƒgƒŠƒAƒ‹—p‚ÌƒtƒHƒ“ƒg“Ç‚İ‚İ‚âŠeƒXƒeƒbƒvà–¾—pƒeƒNƒXƒ`ƒƒ‚Ì¶¬AƒvƒŒƒCƒ„[”z’u‚ğs‚¤
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒeƒNƒXƒ`ƒƒƒAƒZƒbƒg‚ÌnewAƒvƒŒƒCƒ„[Eƒ}ƒbƒváŠQ•¨‚Ì¶¬ABGMÄ¶
-	 */
+	// [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚¢ã‚»ãƒƒãƒˆèª­è¾¼ã€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆé…ç½®ã€BGMå†ç”Ÿ
 	void Initialize() override;
 
-	/*
-	 * @brief Œ»İ‚ÌƒXƒeƒbƒv(State)‚É‰‚¶‚½‘€ìƒ`ƒFƒbƒNA‚¨‚æ‚ÑƒJƒƒ‰EƒtƒF[ƒhXV‚ğs‚¤
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ŠeƒXƒeƒbƒvXVŠÖ”‚ÌÀsAƒtƒF[ƒhƒAƒ‹ƒtƒ@’lXV
-	 */
+	// [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] ã‚¹ãƒ†ãƒ¼ãƒˆã«åŸºã¥ãæ“ä½œåˆ¤å®šã¨ãƒ•ã‚§ãƒ¼ãƒ‰æ›´æ–°
 	void Update() override;
 
-	/*
-	 * @brief ƒV[ƒ“•`‰æ‚¨‚æ‚ÑŒ»İƒAƒNƒeƒBƒu‚È‘€ìà–¾ƒeƒLƒXƒg“™‚Ì•`‰æˆ—
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ‰æ–Ê•`‰æƒRƒ}ƒ“ƒh‚ÌÀs
-	 */
+	// [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] ç”»é¢ã«ãƒ†ã‚­ã‚¹ãƒˆã¨3Dç©ºé–“ã‚’æç”»
 	void Draw() override;
 
-	/*
-	 * @brief ƒ`ƒ…[ƒgƒŠƒAƒ‹I—¹‚ÌŒãˆ—iBGM’â~‚È‚Çj
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] BGM’â~
-	 */
+	// [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] BGMåœæ­¢ãªã©çµ‚äº†å‡¦ç†
 	void Finalize() override;
 
 	void SetCamera(Camera* camera);
-	void OnCowSucked() { mIsCowSucked = true; } // ‹‚Ì‰ñû¬Œ÷‚ğ’m‚ç‚¹‚éƒR[ƒ‹ƒoƒbƒNŠÖ”
+	void OnCowSucked() { mIsCowSucked = true; } // å›åæˆåŠŸã‚’å¤–éƒ¨ã‹ã‚‰å—ã‘å–ã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
 
 private:
-	/*
-	 * @brief ƒ}ƒbƒv‹«ŠE‰ˆ‚¢‚É•À‚×‚é÷–Ø‚Ì¶¬‚Æ”z’u
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] Object_Stage ƒIƒuƒWƒFƒNƒgŒQ‚Ì¶¬
-	 */
+	// [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] å¢ƒç•Œç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’é…ç½®
 	void CreateFences();
 
-	/*
-	 * @brief ƒvƒŒƒC‹«ŠE•Ç‚ÌƒCƒ“ƒrƒWƒuƒ‹ƒRƒ‰ƒCƒ_[‚ğ¶¬‚µ”z’u‚·‚é
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] Wall ƒIƒuƒWƒFƒNƒg‚Ì¶¬
-	 */
+	// [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] é ˜åŸŸå¤–åˆ¤å®šç”¨ã®é€æ˜å£ã‚’ç”Ÿæˆ
 	void CreateWalls();
 
-	// Šeƒ`ƒ…[ƒgƒŠƒAƒ‹isƒXƒeƒbƒv‚É‘Î‰‚µ‚½ó‘ÔXVƒƒWƒbƒNŒQ
+	// å„ã‚¹ãƒ†ãƒ¼ãƒˆã®æ›´æ–°ãƒ­ã‚¸ãƒƒã‚¯
 	void UpdateStateMove();
 	void UpdateStateBeam();
 	void UpdateStateComboScore();
@@ -96,38 +66,31 @@ private:
 	void UpdateStateFever();
 	void UpdateStateEnd();
 
-	/*
-	 * @brief ‰æ–Êã•”‚É‘€ìw¦‚È‚Ç‚ÌˆÄ“àƒeƒLƒXƒg‚ğ•`‰æ‚·‚é
-	 * [“ü—Í] text: •\¦‚·‚é“ú–{Œê•¶š—ñ, yOffset: YÀ•W‚Ì’²®’l
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] •¶šƒtƒHƒ“ƒg‚Ì•`‰æ
-	 */
+	// [å…¥åŠ›] text:è¡¨ç¤ºæ–‡å­—, yOffset:Yåº§æ¨™ã‚ªãƒ•ã‚»ãƒƒãƒˆ [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] æ¡ˆå†…ãƒ†ã‚­ã‚¹ãƒˆã®æç”»
 	void DrawTutorialText(const char* text, int yOffset = 0);
 
-	int COW_COUNT;                  // ‹‚Ì–Ú•W‰ñû”iƒŠƒU[ƒuj
-	int fontHandle;                 // ‘€ìw¦•\¦—p‚Ì“ú–{ŒêƒtƒHƒ“ƒgƒnƒ“ƒhƒ‹
-	int timerCount;                 // ˆê’èŠÔŒo‰ß‘Ò‹@‚È‚Ç‚Å”Ä—p“I‚Ég—p‚·‚éƒ^ƒCƒ}[
+	int COW_COUNT;
+	int fontHandle; // æ¡ˆå†…ç”¨ãƒ•ã‚©ãƒ³ãƒˆ
+	int timerCount; // æ±ç”¨å¾…æ©Ÿã‚¿ã‚¤ãƒãƒ¼
 
-	State mState = STATE_MOVE;      // Œ»İis’†‚Ìƒ`ƒ…[ƒgƒŠƒAƒ‹ƒXƒeƒbƒv
-	State_fever mfeverstate;        // ƒtƒB[ƒo[ó‘Ô‚ÌƒTƒuƒXƒeƒbƒv
+	State mState = STATE_MOVE;
+	State_fever mfeverstate;
 
-	// Še‘€ìà–¾‚É‘Î‰‚µ‚½‰æ‘œiƒeƒNƒXƒ`ƒƒjƒ|ƒCƒ“ƒ^
-	Texture* mpTexture;             // ˆÚ“®à–¾—p‰æ‘œ
-	Texture* mpTexture2;            // ƒr[ƒ€à–¾—p‰æ‘œ
-	Texture* mpTexture3;            // ƒRƒ“ƒ{à–¾—p‰æ‘œ
-	Texture* mpTexture4;            // ƒtƒF[ƒYà–¾—p‰æ‘œ
-	Texture* mpTexture5;            // ƒXƒLƒ‹à–¾—p‰æ‘œ
-	Texture* mpTexture6;            // ƒtƒB[ƒo[à–¾—p‰æ‘œ
+	Texture* mpTexture;
+	Texture* mpTexture2;
+	Texture* mpTexture3;
+	Texture* mpTexture4;
+	Texture* mpTexture5;
+	Texture* mpTexture6;
 
-	int mouseX;                     // ƒ}ƒEƒXÀ•WiƒŠƒU[ƒuj
+	int mouseX;
 
-	Thunder* thunder;               // ——‹—piƒŠƒU[ƒuj
-	Camera* mpCamera = nullptr;     // 3DƒJƒƒ‰ƒIƒuƒWƒFƒNƒg‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	Combo* mpCombo = nullptr;       // ƒRƒ“ƒ{•\¦—piƒŠƒU[ƒuj
+	Thunder* thunder;
+	Camera* mpCamera = nullptr;
+	Combo* mpCombo = nullptr;
 
-	bool mIsCowSucked = false;      // ‹‚ğ1•C‚Å‚à‹zˆø‚µ‚½‚©‚Ç‚¤‚©‚Ì”»’èƒtƒ‰ƒO
+	bool mIsCowSucked = false;
 	bool CowDelete;
-	bool mbSkillFlag{};             // ƒXƒLƒ‹”­“®ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚©‚ğ”»’è‚·‚éƒtƒ‰ƒO
+	bool mbSkillFlag{};
 	bool mbfeverFlag{};
 };
-

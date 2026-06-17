@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include"DxLib.h"
 #include"GameManager.h"
 #include"CowManager.h"
@@ -8,17 +8,17 @@
 class ObjectManager;
 class ColliderManager;
 
-// ƒ^ƒCƒgƒ‹AƒQ[ƒ€–{•ÒAƒŠƒUƒ‹ƒg‚È‚Ç‚ÌŠeƒQ[ƒ€ƒV[ƒ“‚ªŒp³‚·‚é’ŠÛŠî’êƒNƒ‰ƒX
+// å„ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã®æŠ½è±¡åŸºåº•ã‚¯ãƒ©ã‚¹
 class Scene
 {
 public:
-	// ƒtƒF[ƒhƒCƒ“EƒtƒF[ƒhƒAƒEƒgó‘Ô‚Ì’è‹`
+	// ãƒ•ã‚§ãƒ¼ãƒ‰çŠ¶æ…‹
 	enum SceneFade
 	{
-		SceneFade_In,   // ˆÃ“]ó‘Ô‚©‚ç‰æ–Ê‚ª™X‚É–¾‚é‚­‚È‚é
-		SceneFade_Out,  // ‰æ–Ê‚ª™X‚ÉˆÃ“]‚·‚é
-		SceneFade_None, // ƒtƒF[ƒhˆ—‚È‚µi’Êíj
-		SceneFade_Load, // ƒ[ƒh’†‚ÌƒtƒF[ƒhó‘Ô
+		SceneFade_In,   // æš—è»¢ã‹ã‚‰æ˜è»¢
+		SceneFade_Out,  // æ˜è»¢ã‹ã‚‰æš—è»¢
+		SceneFade_None, // ãƒ•ã‚§ãƒ¼ãƒ‰ãªã—
+		SceneFade_Load, // ãƒ­ãƒ¼ãƒ‰ä¸­
 	};
 	
 public:
@@ -26,63 +26,52 @@ public:
 	virtual ~Scene();
 
 	/*
-	 * @brief ŠeƒV[ƒ“‚²‚Æ‚Ì‰Šú‰»ˆ—‚ğs‚¤ƒˆ‰¼‘zŠÖ”
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ŠeƒV[ƒ“ˆË‘¶‚ÌƒIƒuƒWƒFƒNƒg¶¬AƒŠƒ\[ƒX‰Šúİ’è
+	 * @brief ã‚·ãƒ¼ãƒ³åˆæœŸåŒ–
+	 * [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] ãƒªã‚½ãƒ¼ã‚¹åˆæœŸåŒ–
 	 */
 	virtual void Initialize() = 0;
 
 	/*
-	 * @brief ƒV[ƒ“‘JˆÚ‚ÌƒtƒF[ƒhƒCƒ“EƒAƒEƒg•`‰æˆ—‚ğs‚¤
-	 * [“ü—Í] fade: ƒtƒF[ƒh‚Ì‘JˆÚó‘Ôw’è
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ˆÃ“]—p‚Ì•‚¢‹éŒ`‚ğ•`‰æAƒtƒF[ƒhƒAƒ‹ƒtƒ@’l(mfFadeAlpha)‚ğXV
+	 * @brief ãƒ•ã‚§ãƒ¼ãƒ‰æç”»
+	 * [å…¥åŠ›] fade: ãƒ•ã‚§ãƒ¼ãƒ‰çŠ¶æ…‹ [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] ç”»é¢æç”»ã€ã‚¢ãƒ«ãƒ•ã‚¡å€¤æ›´æ–°
 	 */
 	virtual void Fade(SceneFade fade);
 
 	/*
-	 * @brief ƒV[ƒ““à‚ÌƒRƒ‰ƒCƒ_[EƒIƒuƒWƒFƒNƒg‚¨‚æ‚ÑƒQ[ƒ€ƒVƒXƒeƒ€‚ÌXVˆ—
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] “o˜^ƒRƒ‰ƒCƒ_[EƒIƒuƒWƒFƒNƒg‚ÌUpdate‚ÌÀs
+	 * @brief ã‚·ãƒ¼ãƒ³å†…è¦ç´ ã®æ›´æ–°
+	 * [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] å„ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®Updateå‘¼ã³å‡ºã—
 	 */
 	virtual void Update();
 
 	/*
-	 * @brief ƒV[ƒ““à‚ÌƒIƒuƒWƒFƒNƒgEƒRƒ‰ƒCƒ_[‚Ì•`‰æˆ—
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒoƒbƒNƒoƒbƒtƒ@‚Ö‚ÌƒIƒuƒWƒFƒNƒg•`‰æ
+	 * @brief ã‚·ãƒ¼ãƒ³å†…è¦ç´ ã®æç”»
+	 * [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] å„ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®Drawå‘¼ã³å‡ºã—
 	 */
 	virtual void Draw();
 
 	/*
-	 * @brief ƒV[ƒ“I—¹‚ÌŒãˆ—EƒAƒZƒbƒg”jŠü‚ğs‚¤ƒˆ‰¼‘zŠÖ”
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒV[ƒ“ŒÂ•Ê‚Ì“®“IƒIƒuƒWƒFƒNƒg‚Ì‰ğ•ú
+	 * @brief ã‚·ãƒ¼ãƒ³çµ‚äº†å‡¦ç†
+	 * [å…¥åŠ›] ãªã— [å‡ºåŠ›] ãªã— [å‰¯ä½œç”¨] ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç­‰ã®è§£æ”¾
 	 */
 	virtual void Finalize() = 0;
 
-	// ƒQƒbƒ^[EƒZƒbƒ^[ŒQ
+	// ã‚²ãƒƒã‚¿ãƒ¼ãƒ»ã‚»ãƒƒã‚¿ãƒ¼ç¾¤
 	ObjectManager* GetObjectManager() { return mpObjectManager; }
 	ColliderManager* GetCollisionManager() { return mpColliderManager; }
 	float GetFadeAlpha() const { return mfFadeAlpha; }
 	void SetFadeAlpha(float alpha) { mfFadeAlpha = alpha; }
 	
-	SceneFade mFadeState = SceneFade_None; // Œ»İ‚ÌƒtƒF[ƒhƒtƒF[ƒY
-	int mNextScene = 0;                    // ‘JˆÚæ‚ÌƒV[ƒ“ID
+	SceneFade mFadeState = SceneFade_None; // ãƒ•ã‚§ãƒ¼ãƒ‰çŠ¶æ…‹
+	int mNextScene = 0;                    // æ¬¡ã®ã‚·ãƒ¼ãƒ³ID
 
-	Fever* mpFever;                        // ƒtƒB[ƒo[ƒ‚[ƒhŠÇ—ƒVƒXƒeƒ€‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	AnimalManager* mpAnimalManager;        // ƒXƒe[ƒWã‚Ìˆê”ÊƒAƒjƒ}ƒ‹‚ÌŠÇ—ƒ}ƒl[ƒWƒƒ[
-	CowManager* mpCowManager;              // ƒXƒe[ƒWã‚Ì‹‚ÌŠÇ—ƒ}ƒl[ƒWƒƒ[
-	GameManager* mpGameManager;            // ƒQ[ƒ€–{•Ò‚ÌI—¹ğŒ‚âƒ^ƒCƒ}[‚È‚Ç‚ğ§Œä‚·‚éƒVƒXƒeƒ€
+	Fever* mpFever;                        // ãƒ•ã‚£ãƒ¼ãƒãƒ¼ç®¡ç†
+	AnimalManager* mpAnimalManager;        // ã‚¢ãƒ‹ãƒãƒ«ç®¡ç†
+	CowManager* mpCowManager;              // ç‰›ç®¡ç†
+	GameManager* mpGameManager;            // ã‚²ãƒ¼ãƒ é€²è¡Œç®¡ç†
 
 private:
-	ObjectManager* mpObjectManager;        // 3D/2D‚ÌƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚ğˆêŠ‡XVE•`‰æEŠÇ—‚·‚éƒ}ƒl[ƒWƒƒ[
-	ColliderManager* mpColliderManager;    // ƒV[ƒ““à‚ÌƒRƒ‰ƒCƒ_[”»’èEXV‚ğˆ—‚·‚éƒ}ƒl[ƒWƒƒ[
-	float mfFadeAlpha;                     // ƒtƒF[ƒhˆÃ“]—p‚Ì•s“§–¾“x (0 - 255)
-	float mfFadeSpeed;                     // 1ƒtƒŒ[ƒ€‚ ‚½‚è‚ÌƒtƒF[ƒhƒAƒ‹ƒtƒ@•Ï‰»‘¬“x
+	ObjectManager* mpObjectManager;        // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç®¡ç†
+	ColliderManager* mpColliderManager;    // ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ç®¡ç†
+	float mfFadeAlpha;                     // ãƒ•ã‚§ãƒ¼ãƒ‰ä¸é€æ˜åº¦ (0-255)
+	float mfFadeSpeed;                     // ãƒ•ã‚§ãƒ¼ãƒ‰é€Ÿåº¦
 };
-

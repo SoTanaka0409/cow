@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "DxLib.h"
 #include "Object3D.h"
 #include "EffekseerEffect.h"
@@ -6,92 +6,91 @@
 class SphereCollider;
 class CapsuleCollider;
 
-// ƒXƒe[ƒWã‚Éƒ‰ƒ“ƒ_ƒ€‚É——‹‚ğ”­¶‚³‚¹AƒvƒŒƒCƒ„[‚Éˆê“I‚ÈƒXƒ^ƒ“‚ğ—^‚¦‚éŠÂ‹«ƒgƒ‰ƒbƒvƒNƒ‰ƒX
+// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç§»å‹•ã‚’åˆ¶é™ã™ã‚‹ãŸã‚ã€ãƒ©ãƒ³ãƒ€ãƒ ä½ç½®ã«è½é›·ã‚’ç™ºç”Ÿã•ã›ã‚‹ãƒˆãƒ©ãƒƒãƒ—
 class Thunder : public Object3D
 {
 public:
-	// ——‹‚Ìƒ‰ƒCƒtƒTƒCƒNƒ‹ó‘Ô
 	enum State
 	{
-		IDLE,      // ——‹‚ª”­¶‚µ‚Ä‚¢‚È‚¢‘Ò‹@ŠÔó‘Ô
-		WARNING,   // ’n–Ê‚ÉŒxƒGƒtƒFƒNƒg‚ğ•\¦‚µ‚Ä‚¢‚é—\’›ó‘Ô
-		STRIKE,    // ÀÛ‚É——‹ƒGƒtƒFƒNƒg‚Æ”»’è‚ğ”­¶‚³‚¹‚Ä‚¢‚é——‹ó‘Ô
-		END        // I—¹i–¢g—pj
+		IDLE,
+		WARNING,
+		STRIKE,
+		END
 	};
 
 public:
 	/*
-	 * @brief ——‹ƒgƒ‰ƒbƒv‚ğ‰ŠúˆÊ’u‚Å¶¬‚µAŠeíƒGƒtƒFƒNƒg‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğì¬‚·‚é
-	 * [“ü—Í] pos: ¶¬À•Wi‰Šúó‘Ô‚Í”ñƒAƒNƒeƒBƒuj
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ŠeíEffekseerEffectƒCƒ“ƒXƒ^ƒ“ƒX‚Ìnew
+	 * @brief è½é›·ãƒˆãƒ©ãƒƒãƒ—ã‚’åˆæœŸä½ç½®ã§ç”Ÿæˆã—ã€å„ç¨®ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ä½œæˆã™ã‚‹
+	 * [å…¥åŠ›] pos: ç”Ÿæˆåº§æ¨™ï¼ˆåˆæœŸçŠ¶æ…‹ã¯éã‚¢ã‚¯ãƒ†ã‚£ãƒ–ï¼‰
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] å„ç¨®EffekseerEffectã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®new
 	 */
 	Thunder(VECTOR pos);
 
 	/*
-	 * @brief ƒ[ƒh‚µ‚½ƒGƒtƒFƒNƒg‘Œ¹‚ğˆÀ‘S‚É‰ğ•ú‚·‚é
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒGƒtƒFƒNƒg‘Œ¹‚Ì”jŠü
+	 * @brief ãƒ­ãƒ¼ãƒ‰ã—ãŸã‚¨ãƒ•ã‚§ã‚¯ãƒˆè³‡æºã‚’å®‰å…¨ã«è§£æ”¾ã™ã‚‹
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ã‚¨ãƒ•ã‚§ã‚¯ãƒˆè³‡æºã®ç ´æ£„
 	 */
 	virtual ~Thunder() override;
 
 	/*
-	 * @brief ó‘Ôƒ}ƒVƒ“‚ÌXVAÀ•WˆÚ“®AƒvƒŒƒCƒ„[‚ÌÕ“ËŒŸ’mA‚¨‚æ‚ÑƒXƒ^ƒ“—pƒGƒtƒFƒNƒg‚ÌisXV‚ğs‚¤
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ——‹À•W‚Ìƒ‰ƒ“ƒ_ƒ€XVAó‘Ô•ÏXAƒGƒtƒFƒNƒgÄ¶
+	 * @brief çŠ¶æ…‹ãƒã‚·ãƒ³ã®æ›´æ–°ã€åº§æ¨™ç§»å‹•ã€ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è¡çªæ¤œçŸ¥ã€ãŠã‚ˆã³ã‚¹ã‚¿ãƒ³ç”¨ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®é€²è¡Œæ›´æ–°ã‚’è¡Œã†
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] è½é›·åº§æ¨™ã®ãƒ©ãƒ³ãƒ€ãƒ æ›´æ–°ã€çŠ¶æ…‹å¤‰æ›´ã€ã‚¨ãƒ•ã‚§ã‚¯ãƒˆå†ç”Ÿ
 	 */
 	void Update() override;
 
 	/*
-	 * @brief ——‹ƒRƒ‰ƒCƒ_[‚Ì‰Â‹‰»ƒfƒoƒbƒO•`‰æiŒ»İ‚ÍƒRƒƒ“ƒgƒAƒEƒgj
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ‚È‚µ
+	 * @brief è½é›·ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å¯è¦–åŒ–ãƒ‡ãƒãƒƒã‚°æç”»ï¼ˆç¾åœ¨ã¯ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆï¼‰
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ãªã—
 	 */
 	void Draw() override;
 
 	/*
-	 * @brief ——‹‚Ì‰Ò“­ó‘Ô‚ğæ“¾‚·‚é
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‰Ò“­’†‚È‚çtrue
-	 * [•›ì—p] ‚È‚µ
+	 * @brief è½é›·ã®ç¨¼åƒçŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ç¨¼åƒä¸­ãªã‚‰true
+	 * [å‰¯ä½œç”¨] ãªã—
 	 */
 	bool IsActive() const;
 
 	/*
-	 * @brief w’èˆÊ’u‚É‘Î‚·‚é“–‚½‚è”»’è‚ğs‚¤iŒ»İ‚Í–¢g—pAOnEnter‚Åˆ—j
-	 * [“ü—Í] playerPos: ƒvƒŒƒCƒ„[À•W, range: ”»’è”¼Œa
-	 * [o—Í] ƒqƒbƒg‚µ‚½ê‡‚Ítrue
-	 * [•›ì—p] ‚È‚µ
+	 * @brief æŒ‡å®šä½ç½®ã«å¯¾ã™ã‚‹å½“ãŸã‚Šåˆ¤å®šã‚’è¡Œã†ï¼ˆç¾åœ¨ã¯æœªä½¿ç”¨ã€OnEnterã§å‡¦ç†ï¼‰
+	 * [å…¥åŠ›] playerPos: ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼åº§æ¨™, range: åˆ¤å®šåŠå¾„
+	 * [å‡ºåŠ›] ãƒ’ãƒƒãƒˆã—ãŸå ´åˆã¯true
+	 * [å‰¯ä½œç”¨] ãªã—
 	 */
 	bool CheckHit(VECTOR playerPos, float range);
 
 	/*
-	 * @brief ——‹”»’è‚ª”­¶‚µ‚Ä‚¢‚éuŠÔ‚ÉƒvƒŒƒCƒ„[‚ÆÚG‚µ‚½ê‡AƒvƒŒƒCƒ„[‚ğˆê’èŠÔƒXƒ^ƒ“‚³‚¹‚é
-	 * [“ü—Í] collider: ©g‚ÌƒRƒ‰ƒCƒ_[, check: ‘Šè‚ÌƒRƒ‰ƒCƒ_[
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒvƒŒƒCƒ„[‚ÌƒXƒ^ƒ““K—pAƒXƒ^ƒ“ƒGƒtƒFƒNƒg‚ÌÄ¶AƒJƒƒ‰ƒVƒFƒCƒN
+	 * @brief è½é›·åˆ¤å®šãŒç™ºç”Ÿã—ã¦ã„ã‚‹ç¬é–“ã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨æ¥è§¦ã—ãŸå ´åˆã€ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ä¸€å®šæ™‚é–“ã‚¹ã‚¿ãƒ³ã•ã›ã‚‹
+	 * [å…¥åŠ›] collider: è‡ªèº«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼, check: ç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚¹ã‚¿ãƒ³é©ç”¨ã€ã‚¹ã‚¿ãƒ³ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®å†ç”Ÿã€ã‚«ãƒ¡ãƒ©ã‚·ã‚§ã‚¤ã‚¯
 	 */
 	virtual void OnEnter(Collider* collider, Collider* check) override;
 	virtual void OnTrigger(Collider* collider, Collider* check) override;
 	virtual void OnExit(Collider* collider, Collider* check) override;
 
 private:
-	VECTOR mPos;                // ——‹‚Ìƒ^[ƒQƒbƒgi’n–Êj’†SÀ•W
-	int mWarningTimer;          // ŒxƒGƒtƒFƒNƒg‚Ì•\¦c‚èƒtƒŒ[ƒ€
-	int mStrikeTimer;           // ——‹ƒGƒtƒFƒNƒg‚Æ”»’è‚Ìc‚èŒp‘±ƒtƒŒ[ƒ€
-	State mState;               // Œ»İ‚Ì——‹ó‘Ô
-	int mIntervalTimer;         // Ÿ‚Ì——‹”­¶‚Ü‚Å‚Ì‘Ò‹@c‚èƒtƒŒ[ƒ€
-	bool mActive;               // ƒAƒNƒeƒBƒuƒtƒ‰ƒO
+	VECTOR mPos;
+	int mWarningTimer;
+	int mStrikeTimer;
+	State mState;
+	int mIntervalTimer;
+	bool mActive;
 
 public:
-	EffekseerEffect* mpThunder; // ——‹‚ÌuŠÔƒGƒtƒFƒNƒg
-	EffekseerEffect* mpWarning; // ’n–Ê‚ÌŒxƒT[ƒNƒ‹ƒGƒtƒFƒNƒg
-	EffekseerEffect* mpStun;    // ƒvƒŒƒCƒ„[‚Ì“ªã‚Å‰ñ“]‚·‚éƒXƒ^ƒ“ƒGƒtƒFƒNƒg
+	EffekseerEffect* mpThunder;
+	EffekseerEffect* mpWarning;
+	EffekseerEffect* mpStun;
 
-	bool mHasStunned;           // “¯ˆê——‹ƒtƒF[ƒY“à‚ÅƒvƒŒƒCƒ„[‚ğƒXƒ^ƒ“‚³‚¹‚½‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
-	int mStunEffectTimer;       // ƒXƒ^ƒ“ƒXƒ^[ƒGƒtƒFƒNƒg‚ÌÄ¶c‚èŠÔƒ^ƒCƒ}[
+	// å¤šæ®µãƒ’ãƒƒãƒˆã«ã‚ˆã‚‹ã‚¹ã‚¿ãƒ³ã®æ°¸ç¶šåŒ–ã‚’é˜²ããŸã‚ã®ãƒ•ãƒ©ã‚°
+	bool mHasStunned;
+	int mStunEffectTimer;
 };
-

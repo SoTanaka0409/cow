@@ -1,4 +1,4 @@
-#include "Combo.h"
+ï»¿#include "Combo.h"
 #include "DxLib.h"
 #include "InputManager.h"
 #include <string>
@@ -7,23 +7,23 @@ Combo::Combo()
 {
 	comboCount = 0;
 	comboTimer = 0.0f;
-	comboMaxTime = 3.0f; // 3•bˆÈ“à‚ÉŸ‚Ì‹‚ğŠl“¾‚·‚ê‚ÎƒRƒ“ƒ{Œp‘±
+	comboMaxTime = 3.0f; // é›£æ˜“åº¦èª¿æ•´ã®ãŸã‚ã‚³ãƒ³ãƒœçŒ¶äºˆã¯3ç§’ã«å›ºå®š
 
 	comboImage = LoadGraph("Resource/2D/COMBO.png");
 
 	comboShow = false;
 	comboShowTimer = 0.0f;
 
-	numberImage[0] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”00.png");
-	numberImage[1] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”01.png");
-	numberImage[2] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”02.png");
-	numberImage[3] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”03.png");
-	numberImage[4] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”04.png");
-	numberImage[5] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”05.png");
-	numberImage[6] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”06.png");
-	numberImage[7] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”07.png");
-	numberImage[8] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”08.png");
-	numberImage[9] = LoadGraph("Resource/2D/ƒRƒ“ƒ{”09.png");
+	numberImage[0] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°00.png");
+	numberImage[1] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°01.png");
+	numberImage[2] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°02.png");
+	numberImage[3] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°03.png");
+	numberImage[4] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°04.png");
+	numberImage[5] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°05.png");
+	numberImage[6] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°06.png");
+	numberImage[7] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°07.png");
+	numberImage[8] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°08.png");
+	numberImage[9] = LoadGraph("Resource/2D/ã‚³ãƒ³ãƒœæ•°09.png");
 }
 
 Combo::~Combo()
@@ -38,7 +38,7 @@ Combo::~Combo()
 
 void Combo::Draw()
 {
-	// 1ƒRƒ“ƒ{ˆÈã‚©‚çƒRƒ“ƒ{•\¦‚ğŠJn‚·‚é
+	// 0ã‚³ãƒ³ãƒœæ™‚ã¯è¡¨ç¤ºã‚’çœç•¥ã—UIã®ç…©é›‘åŒ–ã‚’é˜²ã
 	if (comboCount >= 1)
 	{
 		int x = 20;
@@ -71,7 +71,7 @@ void Combo::Draw()
 
 void Combo::Update()
 {
-	// ƒfƒoƒbƒO—pƒL[‘€ì
+	// TODO: ãƒªãƒªãƒ¼ã‚¹æ™‚ã«å‰Šé™¤ï¼ˆãƒ‡ãƒãƒƒã‚°ç”¨åŠ ç®—ã‚·ãƒ§ãƒ¼ãƒˆã‚«ãƒƒãƒˆï¼‰
 	if (InputManager::CheckDownKey(KEY_INPUT_R))
 	{
 		AddHit();
@@ -81,7 +81,7 @@ void Combo::Update()
 	{
 		comboTimer -= 0.01f;
 
-		// §ŒÀŠÔØ‚ê‚É‚æ‚éƒŠƒZƒbƒg
+		// ã‚³ãƒ³ãƒœçŒ¶äºˆæ™‚é–“ã‚’è¶…éã—ãŸãŸã‚çŠ¶æ…‹ã‚’ç ´æ£„ã™ã‚‹
 		if (comboTimer <= 0.0f)
 		{
 			Reset();
@@ -96,7 +96,7 @@ void Combo::AddHit()
 
 	if (comboCount > 1000)
 	{
-		comboCount = 1000; // ƒJƒEƒ“ƒ^[‚ÌÅ‘å’l§ŒÀ
+		comboCount = 1000; // æç”»é ˜åŸŸã®ã‚ªãƒ¼ãƒãƒ¼ãƒ•ãƒ­ãƒ¼ã‚’é˜²ããŸã‚ã®ä¸Šé™å€¤
 	}
 }
 

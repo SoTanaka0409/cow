@@ -1,4 +1,4 @@
-#include "Stage.h"
+ï»¿#include "Stage.h"
 #include "Master.h"
 
 Stage::Stage(VECTOR initPos, std::string stageModelName, std::string stageCollisionModelName)
@@ -9,7 +9,7 @@ Stage::Stage(VECTOR initPos, std::string stageModelName, std::string stageCollis
 	mnModelHandle = MV1LoadModel(stageModelName.c_str());
 	mnCollisionHandle = MV1LoadModel(stageCollisionModelName.c_str());
 
-	// •`‰æ—p‚Æ”»’è—pƒ‚ƒfƒ‹‚ÌkÚ‚ğ‘µ‚¦A”»’è‘¤‚ÌƒRƒŠƒWƒ‡ƒ“î•ñ‚ğ\’z‚µ‚Ä‚¨‚­
+	// å®Ÿè¡Œæ™‚ã®è² è·ã‚’è»½æ¸›ã™ã‚‹ãŸã‚ã€åˆæœŸåŒ–æ™‚ã«ãƒãƒªã‚´ãƒ³æƒ…å ±ã‚’äº‹å‰æ§‹ç¯‰ã—ã¦ãŠã
 	float StageSize = 5.0f;
 	MV1SetScale(mnModelHandle, VGet(StageSize, 0.3f, StageSize));
 	MV1SetScale(mnCollisionHandle, VGet(StageSize, 0.3f, StageSize));
@@ -35,14 +35,12 @@ void Stage::Draw()
 
 bool Stage::CheckHit_Capsule(VECTOR pos1, VECTOR pos2, float r)
 {
-	// w’è‚³‚ê‚½ƒJƒvƒZƒ‹Œ`ó‚ÆƒXƒe[ƒW—pÕ“Ë”»’èƒ‚ƒfƒ‹‚Ì‘“–‚½‚èƒ|ƒŠƒSƒ“Œğ·”»’è‚ğs‚¤
 	MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Capsule(mnCollisionHandle, -1, pos1, pos2, r);
 
 	if (result.HitNum >= 1)
 	{
 		for (int i = 0; i < result.HitNum; i++)
 		{
-			// Œğ·‚µ‚Ä‚¢‚éƒ|ƒŠƒSƒ“•\–Ê‚ğÔF‚ÌƒƒCƒ„[ƒtƒŒ[ƒ€‚ÅƒfƒoƒbƒO•`‰æ‚·‚é
 			DrawTriangle3D(
 				result.Dim[i].Position[0],
 				result.Dim[i].Position[1],
@@ -53,7 +51,7 @@ bool Stage::CheckHit_Capsule(VECTOR pos1, VECTOR pos2, float r)
 		}
 	}
 	
-	// “®“IŠm•Û‚³‚ê‚½Õ“Ë”»’èŒ‹‰Ê”z—ñ‚ğƒNƒŠ[ƒ“ƒAƒbƒv‚·‚é
+	// ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯ã‚’é˜²ããŸã‚ã€å‹•çš„ç¢ºä¿ã•ã‚ŒãŸåˆ¤å®šçµæœã¯å¿…ãšè§£æ”¾ã™ã‚‹
 	MV1CollResultPolyDimTerminate(result);
 
 	return (result.HitNum >= 1);
@@ -63,7 +61,6 @@ VECTOR Stage::CheckHit_Line(VECTOR pos1, VECTOR pos2)
 {
 	VECTOR ret = VGet(0.0f, 0.0f, 0.0f);
 
-	// ü•ª‚ÆƒXƒe[ƒW’nŒ`ƒ|ƒŠƒSƒ“‚Æ‚ÌŒğ·“_ŒŸo‚ğÀs‚·‚é
 	auto result = MV1CollCheck_Line(mnCollisionHandle, -1, pos1, pos2);
 
 	if (result.HitFlag)
@@ -78,7 +75,6 @@ VECTOR Stage::CheckHit_LineDebug(VECTOR pos1, VECTOR pos2)
 {
 	VECTOR ret = VGet(0.0f, 0.0f, 0.0f);
 
-	// ü•ª‚ÆƒXƒe[ƒW’nŒ`ƒ|ƒŠƒSƒ“‚Æ‚ÌŒğ·“_ŒŸo‚ÆƒfƒoƒbƒO•\¦‚ğÀs‚·‚é
 	auto result = MV1CollCheck_Line(mnCollisionHandle, -1, pos1, pos2);
 
 	if (result.HitFlag)
@@ -93,4 +89,3 @@ VECTOR Stage::CheckHit_LineDebug(VECTOR pos1, VECTOR pos2)
 
 	return ret;
 }
-
