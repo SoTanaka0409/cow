@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "Scene.h"
 #include"Texture.h"
 #include "SelectionManager.h"
@@ -36,43 +36,43 @@ public:
 	virtual void Finalize() override;
 
 private:
-	int mFrameCount; // 演出アニメーション用のタイマー
+	int frameCount; // 演出アニメーション用のタイマー
 
-	int mnTitleGraphHandle;
-	int mnNewGame;
-	int mnTutorial;
-	int mnOperationProcedures;
+	int titleGraphHandle;
+	int newGame;
+	int tutorial;
+	int operationProcedures;
 
 	int rankingTitleImage;
 	int pointImg;
 
-	SelectionManager* mnTitleSelect;
-	Texture* mpTexture;
-	Texture* mpTexture2;
-	Texture* mpTexture3;
+	SelectionManager* titleSelect;
+	Texture* texture;
+	Texture* texture2;
+	Texture* texture3;
 
-	int mNewGameX;
-	int mNewGameY;
-	int mNewGameW;
-	int mNewGameH;
+	int newGameX;
+	int newGameY;
+	int newGameW;
+	int newGameH;
 
-	bool mbIsHoverNewGame;
+	bool isHoverNewGame;
 
-	std::vector<TitleButton> mButtons;
+	std::vector<TitleButton> buttons;
 
 	// [入力] なし [出力] なし [副作用] 上位3名のスコアUIを描画
 	void DrawRankingUI();
 
 	int rankImage[3];
 
-	int mnUfoGraphHandle;
-	int mUfoX, mUfoY;
-	int mUfoW, mUfoH;
-	bool mbIsDraggingUfo;
-	int mOffsetX, mOffsetY;
-	int mCowVoiceTimer;
-	float mUfoVX, mUfoVY;
-	float mUfoAngle;
-	bool  mIsAutoPatrol;
-	int mAutoPatrolTimer;
+	int ufoGraphHandle;
+	int ufoX, ufoY;
+	int ufoW, ufoH;
+	bool isDraggingUfo;
+	int offsetX, offsetY;
+	int cowVoiceTimer;
+	float ufoVX, ufoVY;
+	float ufoAngle;
+	bool  isAutoPatrol;
+	int autoPatrolTimer;
 };

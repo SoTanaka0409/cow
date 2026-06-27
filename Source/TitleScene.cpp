@@ -1,4 +1,4 @@
-﻿#include "TitleScene.h"
+#include "TitleScene.h"
 #include "DxLib.h"
 #include "Utility.h"
 #include "Master.h"
@@ -8,25 +8,25 @@
 TitleScene::TitleScene()
 	: Scene()
 {
-	mCowVoiceTimer = 180; // 初回再生までの待機フレーム設定
+	cowVoiceTimer = 180; // 初回再生までの待機フレーム設定
 	
-	mnTitleGraphHandle = LoadGraph("Resource/2D/タイトルシーン.png");
-	mnUfoGraphHandle = LoadGraph("Resource/2D/牛とUFO.png");
-	GetGraphSize(mnUfoGraphHandle, &mUfoW, &mUfoH);
+	titleGraphHandle = LoadGraph("Resource/2D/タイトルシーン.png");
+	ufoGraphHandle = LoadGraph("Resource/2D/牛とUFO.png");
+	GetGraphSize(ufoGraphHandle, &ufoW, &ufoH);
 
-	mUfoX = 540;
-	mUfoY = 30;
+	ufoX = 540;
+	ufoY = 30;
 
-	mbIsDraggingUfo = false;
-	mOffsetX = 0;
-	mOffsetY = 0;
+	isDraggingUfo = false;
+	offsetX = 0;
+	offsetY = 0;
 
-	mUfoVX = 2.0f;
-	mUfoVY = 1.5f;
+	ufoVX = 2.0f;
+	ufoVY = 1.5f;
 
-	mUfoAngle = 0.0f;
-	mIsAutoPatrol = false;
-	mAutoPatrolTimer = 0;
+	ufoAngle = 0.0f;
+	isAutoPatrol = false;
+	autoPatrolTimer = 0;
 
 	TitleButton newGameBtn;
 	newGameBtn.type = SelectionManager::Title::NewGame;
@@ -35,7 +35,7 @@ TitleScene::TitleScene()
 	newGameBtn.y = 50;
 	GetGraphSize(newGameBtn.graphHandle, &newGameBtn.w, &newGameBtn.h);
 	newGameBtn.isHover = false;
-	mButtons.push_back(newGameBtn);
+	buttons.push_back(newGameBtn);
 
 	TitleButton tutorialBtn;
 	tutorialBtn.type = SelectionManager::Title::Tutorial;
@@ -44,7 +44,7 @@ TitleScene::TitleScene()
 	tutorialBtn.y = 250;
 	GetGraphSize(tutorialBtn.graphHandle, &tutorialBtn.w, &tutorialBtn.h);
 	tutorialBtn.isHover = false;
-	mButtons.push_back(tutorialBtn);
+	buttons.push_back(tutorialBtn);
 
 	TitleButton opeBtn;
 	opeBtn.type = SelectionManager::Title::OperationProcedures;
@@ -53,7 +53,7 @@ TitleScene::TitleScene()
 	opeBtn.y = 450;
 	GetGraphSize(opeBtn.graphHandle, &opeBtn.w, &opeBtn.h);
 	opeBtn.isHover = false;
-	mButtons.push_back(opeBtn);
+	buttons.push_back(opeBtn);
 
 	TitleButton exitBtn;
 	exitBtn.type = SelectionManager::Title::titleOUT;
@@ -62,14 +62,14 @@ TitleScene::TitleScene()
 	exitBtn.y = 680;
 	GetGraphSize(exitBtn.graphHandle, &exitBtn.w, &exitBtn.h);
 	exitBtn.isHover = false;
-	mButtons.push_back(exitBtn);
+	buttons.push_back(exitBtn);
 
-	mFadeState = SceneFade_In;
+	fadeState = SceneFade_In;
 	SetFadeAlpha(255.0f);
-	mNextScene = SceneManager::SCENE_TITLE;
+	nextScene = SceneManager::SCENE_TITLE;
 
-	mbIsHoverNewGame = false;
-	mFrameCount = 0;
+	isHoverNewGame = false;
+	frameCount = 0;
 
 	// ランキング表示用の画像をロード（DxLib初期化後でないと失敗するためここで行う）
 	rankImage[0] = LoadGraph("Resource/2D/1位.png");
@@ -85,88 +85,88 @@ TitleScene::~TitleScene()
 
 void TitleScene::Initialize()
 {
-	Master::GameFinishFlag = false;
+	Master::gameFinishFlag = false;
 	SetMouseDispFlag(true); // ユーザーがボタン操作できるようにマウスを表示
-	Master::mpScore->LoadRanking(); // ランキング表示用に保存されたスコアをロード
-	Master::mpCamera->Initialize();
+	Master::score->LoadRanking(); // ランキング表示用に保存されたスコアをロード
+	Master::camera->Initialize();
 
-	Master::mpSoundManager->PlayBGM(SoundManager::BGM_TITLE);
+	Master::soundManager->PlayBGM(SoundManager::BGM_TITLE);
 }
 
 void TitleScene::Draw()
 {
 	Scene::Draw();
-	DrawExtendGraph(0, 0, 1600, 900, mnTitleGraphHandle, FALSE);
+	DrawExtendGraph(0, 0, 1600, 900, titleGraphHandle, FALSE);
 
-	int ufoDrawY = mUfoY;
+	int ufoDrawY = ufoY;
 
 	// ドラッグ中以外はサイン波でUFOの浮遊アニメーションを適用する
-	if (!mbIsDraggingUfo)
+	if (!isDraggingUfo)
 	{
-		float ufoWave = sin(mFrameCount * 0.03f) * 20.0f;
+		float ufoWave = sin(frameCount * 0.03f) * 20.0f;
 		ufoDrawY += (int)ufoWave;
 	}
 
 	int ufoSize = 360;
 	DrawExtendGraph(
-		mUfoX,
+		ufoX,
 		ufoDrawY,
-		mUfoX + ufoSize,
+		ufoX + ufoSize,
 		ufoDrawY + ufoSize,
-		mnUfoGraphHandle,
+		ufoGraphHandle,
 		TRUE
 	);
 
 	// ホバー時にボタンを拡大描画し、視覚的なフィードバックを与える
-	for (int i = 0; i < mButtons.size(); i++)
+	for (int i = 0; i < buttons.size(); i++)
 	{
-		float wave = sin(mFrameCount * 0.05f + (i * 1.5f)) * 10.0f;
-		int drawY = mButtons[i].y + (int)wave;
+		float wave = sin(frameCount * 0.05f + (i * 1.5f)) * 10.0f;
+		int drawY = buttons[i].y + (int)wave;
 
-		if (mButtons[i].isHover == true)
+		if (buttons[i].isHover == true)
 		{
 			int expand = 15;
 			DrawExtendGraph(
-				mButtons[i].x - expand,
+				buttons[i].x - expand,
 				drawY - expand,
-				mButtons[i].x + mButtons[i].w + expand,
-				drawY + mButtons[i].h + expand,
-				mButtons[i].graphHandle, TRUE);
+				buttons[i].x + buttons[i].w + expand,
+				drawY + buttons[i].h + expand,
+				buttons[i].graphHandle, TRUE);
 		}
 		else
 		{
-			DrawGraph(mButtons[i].x, drawY, mButtons[i].graphHandle, TRUE);
+			DrawGraph(buttons[i].x, drawY, buttons[i].graphHandle, TRUE);
 		}
 	}
 
 	
 	DrawRankingUI();
-	if (mFadeState != SceneFade_None) {
-		Scene::Fade(mFadeState);
+	if (fadeState != SceneFade_None) {
+		Scene::Fade(fadeState);
 	}
 }
 
 void TitleScene::Update()
 {
-	mFrameCount++;
+	frameCount++;
 
-	if (mFadeState != SceneFade_Out)
+	if (fadeState != SceneFade_Out)
 	{
-		mCowVoiceTimer--;
-		if (mCowVoiceTimer <= 0)
+		cowVoiceTimer--;
+		if (cowVoiceTimer <= 0)
 		{
-			Master::mpSoundManager->PlaySE(SoundManager::SE_COW); // タイトル画面の演出として定期的に再生
-			mCowVoiceTimer = GetRand(600) + 300; // 再生間隔をランダム化し単調さを防ぐ
+			Master::soundManager->PlaySE(SoundManager::SE_COW); // タイトル画面の演出として定期的に再生
+			cowVoiceTimer = GetRand(600) + 300; // 再生間隔をランダム化し単調さを防ぐ
 		}
 	}
 
-	if (mFadeState == SceneFade_Out)
+	if (fadeState == SceneFade_Out)
 	{
-		Master::mpSoundManager->SetBGMVolume((Master::mpSoundManager->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
+		Master::soundManager->SetBGMVolume((Master::soundManager->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
 		if (GetFadeAlpha() >= 255)
 		{
 			SetFadeAlpha(255);
-			Master::mpSceneManager->SetNextScene((SceneManager::SCENE_TYPE)mNextScene);
+			Master::sceneManager->SetNextScene((SceneManager::SCENE_TYPE)nextScene);
 		}
 		return;
 	}
@@ -179,62 +179,62 @@ void TitleScene::Update()
 	// UFOクリック時に隠し要素の自動巡回モードを起動する
 	if ((mouseInput & MOUSE_INPUT_LEFT) != 0)
 	{
-		if (mouseX >= mUfoX && mouseX <= mUfoX + ufoSize &&
-			mouseY >= mUfoY && mouseY <= mUfoY + ufoSize)
+		if (mouseX >= ufoX && mouseX <= ufoX + ufoSize &&
+			mouseY >= ufoY && mouseY <= ufoY + ufoSize)
 		{
-			mIsAutoPatrol = true;
-			mAutoPatrolTimer = 240; // 4秒間（240フレーム）自動巡回を行う
-			mbIsDraggingUfo = true;
+			isAutoPatrol = true;
+			autoPatrolTimer = 240; // 4秒間（240フレーム）自動巡回を行う
+			isDraggingUfo = true;
 		}
 	}
 	else
 	{
-		mbIsDraggingUfo = false;
+		isDraggingUfo = false;
 	}
 
 	// 楕円軌道の数式を用いてUFOを自動巡回させる
-	if (mIsAutoPatrol)
+	if (isAutoPatrol)
 	{
-		mUfoAngle += 0.02f;
-		mUfoX = 800 - (ufoSize / 2) + (int)(cos(mUfoAngle) * 400.0f);
-		mUfoY = 450 - (ufoSize / 2) + (int)(sin(mUfoAngle) * 200.0f);
+		ufoAngle += 0.02f;
+		ufoX = 800 - (ufoSize / 2) + (int)(cos(ufoAngle) * 400.0f);
+		ufoY = 450 - (ufoSize / 2) + (int)(sin(ufoAngle) * 200.0f);
 
-		mAutoPatrolTimer--;
-		if (mAutoPatrolTimer <= 0)
+		autoPatrolTimer--;
+		if (autoPatrolTimer <= 0)
 		{
-			mAutoPatrolTimer = 0;
-			mIsAutoPatrol = false;
+			autoPatrolTimer = 0;
+			isAutoPatrol = false;
 		}
 	}
 
 	// UFO操作中以外にボタンのマウス判定とシーン遷移要求を行う
-	if (mbIsDraggingUfo == false)
+	if (isDraggingUfo == false)
 	{
-		for (int i = 0; i < mButtons.size(); i++)
+		for (int i = 0; i < buttons.size(); i++)
 		{
-			if (mouseX >= mButtons[i].x && mouseX <= mButtons[i].x + mButtons[i].w &&
-				mouseY >= mButtons[i].y && mouseY <= mButtons[i].y + mButtons[i].h)
+			if (mouseX >= buttons[i].x && mouseX <= buttons[i].x + buttons[i].w &&
+				mouseY >= buttons[i].y && mouseY <= buttons[i].y + buttons[i].h)
 			{
-				mButtons[i].isHover = true;
+				buttons[i].isHover = true;
 
 				if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0)
 				{
-					switch (mButtons[i].type)
+					switch (buttons[i].type)
 					{
 					case SelectionManager::Title::NewGame:
-						mNextScene = SceneManager::SCENE_3D;
-						mFadeState = SceneFade_Out;
-						Master::mpSoundManager->PlaySE(SoundManager::SE_DECIDE);
+						nextScene = SceneManager::SCENE_3D;
+						fadeState = SceneFade_Out;
+						Master::soundManager->PlaySE(SoundManager::SE_DECIDE);
 						break;
 					case SelectionManager::Title::Tutorial:
-						mNextScene = SceneManager::SCENE_TUTORIAL;
-						mFadeState = SceneFade_Out;
-						Master::mpSoundManager->PlaySE(SoundManager::SE_DECIDE);
+						nextScene = SceneManager::SCENE_TUTORIAL;
+						fadeState = SceneFade_Out;
+						Master::soundManager->PlaySE(SoundManager::SE_DECIDE);
 						break;
 					case SelectionManager::Title::OperationProcedures:
-						mNextScene = SceneManager::SCENE_RULE;
-						mFadeState = SceneFade_Out;
-						Master::mpSoundManager->PlaySE(SoundManager::SE_DECIDE);
+						nextScene = SceneManager::SCENE_RULE;
+						fadeState = SceneFade_Out;
+						Master::soundManager->PlaySE(SoundManager::SE_DECIDE);
 						break;
 					case SelectionManager::Title::titleOUT:
 						PostQuitMessage(0); // OSにアプリケーション終了要求を送信
@@ -244,15 +244,15 @@ void TitleScene::Update()
 			}
 			else
 			{
-				mButtons[i].isHover = false;
+				buttons[i].isHover = false;
 			}
 		}
 	}
 	else
 	{
 		// UFOドラッグ中のボタン誤反応を防ぐためホバー状態を解除
-		for (int i = 0; i < mButtons.size(); i++) {
-			mButtons[i].isHover = false;
+		for (int i = 0; i < buttons.size(); i++) {
+			buttons[i].isHover = false;
 		}
 	}
 
@@ -261,12 +261,12 @@ void TitleScene::Update()
 
 void TitleScene::Finalize()
 {
-	DeleteGraph(mnTitleGraphHandle);
-	DeleteGraph(mnUfoGraphHandle);
+	DeleteGraph(titleGraphHandle);
+	DeleteGraph(ufoGraphHandle);
 
-	for (int i = 0; i < mButtons.size(); i++)
+	for (int i = 0; i < buttons.size(); i++)
 	{
-		DeleteGraph(mButtons[i].graphHandle);
+		DeleteGraph(buttons[i].graphHandle);
 	}
 
 	for (int i = 0; i < 3; i++)
@@ -276,7 +276,7 @@ void TitleScene::Finalize()
 	SetMouseDispFlag(false); // ゲーム中の誤操作を防ぐためマウスを非表示化
 	DeleteGraph(rankingTitleImage);
 	DeleteGraph(pointImg);
-	Master::mpSoundManager->StopBGM();
+	Master::soundManager->StopBGM();
 }
 
 // [入力] なし [出力] なし [副作用] 画面上にランキング数値とアイコンを描画
@@ -296,7 +296,7 @@ void TitleScene::DrawRankingUI()
 
 	for (int i = 0; i < 3; i++)
 	{
-		const Score::RankData& data = Master::mpScore->GetRanking(i);
+		const Score::RankData& data = Master::score->GetRanking(i);
 		int y = baseY + 60 + i * 80;
 
 		DrawExtendGraph(
@@ -313,7 +313,7 @@ void TitleScene::DrawRankingUI()
 		int h = (int)(80 * scale);
 		int drawY = y - 10 + (80 - h) / 2;
 
-		Master::mpScore->DrawNumber(
+		Master::score->DrawNumber(
 			baseX + 180,
 			drawY,
 			data.score,

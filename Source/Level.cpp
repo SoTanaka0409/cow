@@ -1,13 +1,13 @@
-﻿#include"Level.h"
+#include"Level.h"
 #include"Master.h"
 #include"Player3D.h"
 
 Level::Level(Object3D* obj)
 	: mfxp(0.0f)
-	, mfMaxXp(1.0f)
-	, mnNowLevel(1)
+	, maxXp(1.0f)
+	, nowLevel(1)
 {
-	this->mpParent = obj;
+	this->parent = obj;
 }
 
 Level::~Level()
@@ -17,7 +17,7 @@ Level::~Level()
 void Level::Draw()
 {
 	DrawBar();
-	DrawFormatString(20, 765, GetColor(255, 255, 255), "Level : %d", mnNowLevel);
+	DrawFormatString(20, 765, GetColor(255, 255, 255), "Level : %d", nowLevel);
 }
 
 void Level::Update()
@@ -34,17 +34,17 @@ void Level::AddXp(float xp)
 {
 	mfxp += xp;
 
-	if (mfxp >= mfMaxXp)
+	if (mfxp >= maxXp)
 	{
-		mnNowLevel++;
+		nowLevel++;
 		mfxp = 0;
 		SetNextLevel();
 		
 		// プレイヤーの強化段階を進めるため、レベルアップ特典のスキル抽選フラグを有効化する
-		if (mpParent->GetTag() == Object3D::Tag3D_player)
+		if (parent->GetTag() == Object3D::Tag3D_player)
 		{
-			auto player = dynamic_cast<Player3D*>(mpParent);
-			player->mpSkill->SetSkillFlag(true);
+			auto player = dynamic_cast<Player3D*>(parent);
+			player->skill->SetSkillFlag(true);
 		}
 	}
 }
@@ -53,11 +53,11 @@ void Level::AddXp(float xp)
  * @brief レベル昇格に必要な目標経験値を設定する
  * [入力] なし
  * [出力] なし
- * [副作用] mfMaxXp の更新（レベルが高くなるほど必要経験値が増加）
+ * [副作用] maxXp の更新（レベルが高くなるほど必要経験値が増加）
  */
 void Level::SetNextLevel()
 {
-	mfMaxXp = 50.0f * mnNowLevel;
+	maxXp = 50.0f * nowLevel;
 }
 
 /*
@@ -68,7 +68,7 @@ void Level::SetNextLevel()
  */
 void Level::DrawBar()
 {
-	float bar = mfxp / mfMaxXp;
+	float bar = mfxp / maxXp;
 	if (bar > 1.0f) bar = 1.0f;
 	if (bar < 0.0f) bar = 0.0f;
 

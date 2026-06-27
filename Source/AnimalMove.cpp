@@ -1,4 +1,4 @@
-﻿#include "AnimalMove.h"
+#include "AnimalMove.h"
 #include "GameConstants.h"
 #include "Master.h"
 #include "InputManager.h"
@@ -27,11 +27,11 @@ AnimalMove::AnimalMove(std::string filename, VECTOR initPos)
 	: CharacterMove(filename, initPos)
 {
 	// 基礎パラメータとして羊の定数を適用
-	mfSpeed = GameConstants::ANIMAL_SHEEP.speed;
-	mActionTimer = 60;
-	mfScore = GameConstants::ANIMAL_SHEEP.score;
-	mfXp = GameConstants::ANIMAL_SHEEP.xp;
-	mbBaitFlag = false;
+	speed = GameConstants::ANIMAL_SHEEP.speed;
+	actionTimer = 60;
+	score = GameConstants::ANIMAL_SHEEP.score;
+	xp = GameConstants::ANIMAL_SHEEP.xp;
+	baitFlag = false;
 	mfdeathTime = GameConstants::ANIMAL_SHEEP.deathTimeHeight;
 	SetTag(Object3D::Tag3D_Animal);
 }
@@ -44,9 +44,9 @@ void AnimalMove::Reset(VECTOR pos)
 {
 	CharacterMove::Reset(pos);
 
-	if (mpCapsuleCollider != nullptr)
+	if (capsuleCollider != nullptr)
 	{
-		mpCapsuleCollider->mvPosition = pos;
+		capsuleCollider->mvPosition = pos;
 	}
 }
 
@@ -62,11 +62,11 @@ void AnimalMove::AddAnimation(AnimationState state, std::string filename)
 void AnimalMove::OnEnter(Collider* collider, Collider* check)
 {
 	// 餌オブジェクトへの接触を検知し、誘導フラグを立てる
-	if (collider == mpCapsuleCollider && check->mpParentObject != nullptr)
+	if (collider == capsuleCollider && check->parentObject != nullptr)
 	{
-		if (check->mpParentObject->GetTag() == Tag3D_Bait)
+		if (check->parentObject->GetTag() == Tag3D_Bait)
 		{
-			mbBaitFlag = true;
+			baitFlag = true;
 		}
 	}
 }
@@ -78,11 +78,11 @@ void AnimalMove::OnTrigger(Collider* collider, Collider* check)
 void AnimalMove::OnExit(Collider* collider, Collider* check)
 {
 	// 餌の有効範囲外に出たため誘導フラグを解除する
-	if (collider == mpCapsuleCollider && check->mpParentObject != nullptr)
+	if (collider == capsuleCollider && check->parentObject != nullptr)
 	{
-		if (check->mpParentObject->GetTag() == Tag3D_Bait)
+		if (check->parentObject->GetTag() == Tag3D_Bait)
 		{
-			mbBaitFlag = false;
+			baitFlag = false;
 		}
 	}
 }
@@ -90,9 +90,9 @@ void AnimalMove::OnExit(Collider* collider, Collider* check)
 void AnimalMove::CharacterDied()
 {
 	// 演出都合上、フィーバー中および吸い込み状態以外では死亡判定を行わない
-	if (mCurrentState != STATE_VACUUM||ServiceLocator::GetFever()->IsFever()) return;
+	if (currentState != STATE_VACUUM||ServiceLocator::GetFever()->IsFever()) return;
 
-	Player3D* player = mpTargetPlayer;
+	Player3D* player = targetPlayer;
 
 	CharacterRotate();
 	if (player != nullptr)
@@ -101,19 +101,19 @@ void AnimalMove::CharacterDied()
 	}
 
 	// プレイヤーへ向けて浮遊し、一定高度に達した段階で捕獲完了とする
-	if (mvPosition.y > mfdeathTime && !mDeleteFlag)
+	if (mvPosition.y > mfdeathTime && !deleteFlag)
 	{
 		Die(DEATH_VACUUM);
 	}
 
-	mpModel->SetPosition(mvPosition);
+	model->SetPosition(mvPosition);
 }
 
 void AnimalMove::Die(DeathReason reason)
 {
-	if (mDeleteFlag) return;
+	if (deleteFlag) return;
 
-	Player3D* player = mpTargetPlayer;
+	Player3D* player = targetPlayer;
 
 	switch (reason)
 	{
@@ -121,14 +121,14 @@ void AnimalMove::Die(DeathReason reason)
 	case DEATH_BAIT:
 		if (player != nullptr)
 		{
-			player->mpLevel->AddXp(mfXp);
-			player->mpCombo->Reset();
-			player->mpScore->AddScore(mfScore);
+			player->level->AddXp(xp);
+			player->combo->Reset();
+			player->score->AddScore(score);
 
 			// 暫定対応: 同種連続捕獲時に追加経験値を付与するためのコンボロジック
 			if (mntag_animal == AnimalMove::Tag_animal::Animal_T)
 			{
-				Master::mnTutorialcount++;
+				Master::tutorialCount++;
 			}
 
 			s_mnTagCount++;
@@ -143,9 +143,9 @@ void AnimalMove::Die(DeathReason reason)
 			else if (s_mnTagCount == 3 && s_tag2 == mntag_animal)
 			{
 				s_tag3 = mntag_animal;
-				if (s_tag3 == AnimalMove::Animal_1) player->mpLevel->AddXp(10);
-				if (s_tag2 == AnimalMove::Animal_2) player->mpLevel->AddXp(20);
-				if (s_tag3 == AnimalMove::Animal_3) player->mpLevel->AddXp(30);
+				if (s_tag3 == AnimalMove::Animal_1) player->level->AddXp(10);
+				if (s_tag2 == AnimalMove::Animal_2) player->level->AddXp(20);
+				if (s_tag3 == AnimalMove::Animal_3) player->level->AddXp(30);
 			}
 			else
 			{
@@ -155,11 +155,11 @@ void AnimalMove::Die(DeathReason reason)
 				s_tag3 = AnimalMove::none;
 			}
 		}
-		mDeleteFlag = true;
+		deleteFlag = true;
 		break;
 
 	case DEATH_LIMIT:
-		mDeleteFlag = true;
+		deleteFlag = true;
 		break;
 	}
 }

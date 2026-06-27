@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include"DxLib.h"
 #include<vector>
 
@@ -17,7 +17,7 @@ public:
 	struct GameStepData
 	{
 		GameStepType type;
-		bool TrueFlag = true;
+		bool trueFlag = true;
 	};
 
 	enum class GamePhase
@@ -37,15 +37,15 @@ public:
 	 * [出力] 現在のGamePhase
 	 * [副作用] なし
 	 */
-	GamePhase GetCurrentPhase() const { return mCurrentPhase; }
+	GamePhase GetCurrentPhase() const { return currentPhase; }
 
 	/*
 	 * ゲームフェーズを設定しイベント状態を切り替える
 	 * [入力] phase: 新しいフェーズ状態
 	 * [出力] なし
-	 * [副作用] mCurrentPhase が更新される
+	 * [副作用] currentPhase が更新される
 	 */
-	void SetCurrentPhase(GamePhase phase) { mCurrentPhase = phase; }
+	void SetCurrentPhase(GamePhase phase) { currentPhase = phase; }
 
 	/*
 	 * スコア登録を伴う終了ステップへの遷移を行う
@@ -55,7 +55,7 @@ public:
 	 */
 	void GameNextStep(GameStepType type);
 	 
-	GameStepType GetType() { return mnType; }
+	GameStepType GetType() { return type; }
 
 	/*
 	 * フェードイン等、ゲーム進行に必要な演出描画を行う
@@ -73,18 +73,18 @@ public:
 	 */
 	void Update();
 
-	GameTimer* GetGameTimer() const { return mpGameTimer; }
+	GameTimer* GetGameTimer() const { return gameTimer; }
 
 private:
-	std::vector<GameStepData*> mData; // 動的確保されたステップデータのリスト
-	GameStepType mnType;
-	GamePhase mCurrentPhase;
+	std::vector<GameStepData*> gameStepDataList; // 動的確保されたステップデータのリスト
+	GameStepType type;
+	GamePhase currentPhase;
 
 	float Fadetimer;                  // シーン開始時のフェード演出用
 	bool Fadeflag;
 	
-	int m_PhaseTimer;                 // フェーズ遷移イベントの発生タイミング基準
-	int m_PhaseChangeCount;
+	int phaseTimer;                 // フェーズ遷移イベントの発生タイミング基準
+	int phaseChangeCount;
 
-	GameTimer* mpGameTimer;           // タイマー管理用インスタンス
+	GameTimer* gameTimer;           // タイマー管理用インスタンス
 };

@@ -11,69 +11,69 @@ Skill::Skill(Object3D* parent)
 	, Status_S(0.0f)
 	, tag(None)
 	, AddSkillFlag(false)
-	, mHoverSkill(0)
-	, mSelectAnim(false)
-	, mSelectedSkill(0)
-	, mSelectScale(1.0f)
+	, hoverSkill(0)
+	, selectAnim(false)
+	, selectedSkill(0)
+	, selectScale(1.0f)
 {
-	this->mpParent = parent;
+	this->parent = parent;
 
-	mPos1 = VGet(200.0f, 450.0f, 0.0f);
-	mPos2 = VGet(800.0f, 450.0f, 0.0f);
-	mPos3 = VGet(1400.0f, 450.0f, 0.0f);
+	pos1 = VGet(200.0f, 450.0f, 0.0f);
+	pos2 = VGet(800.0f, 450.0f, 0.0f);
+	pos3 = VGet(1400.0f, 450.0f, 0.0f);
 
-	mpTexture = new Texture("Resource/2D/Speed.png", mPos1, 300, 500, true);
-	mpTexture2 = new Texture("Resource/2D/food.png", mPos2, 300, 500, true);
-	mpTexture3 = new Texture("Resource/2D/Kyuusyuu.png", mPos3, 300, 500, true);
+	texture = new Texture("Resource/2D/Speed.png", pos1, 300, 500, true);
+	texture2 = new Texture("Resource/2D/food.png", pos2, 300, 500, true);
+	texture3 = new Texture("Resource/2D/Kyuusyuu.png", pos3, 300, 500, true);
 }
 
 Skill::~Skill()
 {
-	if (mpTexture != nullptr)
+	if (texture != nullptr)
 	{
-		delete mpTexture;
-		mpTexture = nullptr;
+		delete texture;
+		texture = nullptr;
 	}
-	if (mpTexture2 != nullptr)
+	if (texture2 != nullptr)
 	{
-		delete mpTexture2;
-		mpTexture2 = nullptr;
+		delete texture2;
+		texture2 = nullptr;
 	}
-	if (mpTexture3 != nullptr)
+	if (texture3 != nullptr)
 	{
-		delete mpTexture3;
-		mpTexture3 = nullptr;
+		delete texture3;
+		texture3 = nullptr;
 	}
 }
 
 void Skill::Draw()
 {
-	if (!AddSkillFlag && !mSelectAnim) return;
+	if (!AddSkillFlag && !selectAnim) return;
 
 	// 選択完了後のカードが上昇・退出していく演出アニメーション
-	if (mSelectAnim)
+	if (selectAnim)
 	{
-		if (mSelectedSkill == 1)
+		if (selectedSkill == 1)
 		{
-			mpTexture->SetPosition(mSelectPos);
-			mpTexture->Draw();
+			texture->SetPosition(selectPos);
+			texture->Draw();
 		}
-		else if (mSelectedSkill == 2)
+		else if (selectedSkill == 2)
 		{
-			mpTexture2->SetPosition(mSelectPos);
-			mpTexture2->Draw();
+			texture2->SetPosition(selectPos);
+			texture2->Draw();
 		}
-		else if (mSelectedSkill == 3)
+		else if (selectedSkill == 3)
 		{
-			mpTexture3->SetPosition(mSelectPos);
-			mpTexture3->Draw();
+			texture3->SetPosition(selectPos);
+			texture3->Draw();
 		}
 		return;
 	}
 
-	mpTexture->Draw();
-	mpTexture2->Draw();
-	mpTexture3->Draw();
+	texture->Draw();
+	texture2->Draw();
+	texture3->Draw();
 }
 
 void Skill::Update()
@@ -83,56 +83,56 @@ void Skill::Update()
 		AddSkill();
 	}
 
-	if (!AddSkillFlag && !mSelectAnim)
+	if (!AddSkillFlag && !selectAnim)
 	{
-		Master::SelectSkill = false;
+		Master::selectSkill = false;
 	}
 
-	if (mFlash)
+	if (flash)
 	{
-		mFlashAlpha -= 20;
-		if (mFlashAlpha <= 0)
+		flashAlpha -= 20;
+		if (flashAlpha <= 0)
 		{
-			mFlashAlpha = 0;
-			mFlash = false;
+			flashAlpha = 0;
+			flash = false;
 		}
 	}
 
 	// 選択されたカードが上空へ飛んで消える演出アニメーション
-	if (mSelectAnim)
+	if (selectAnim)
 	{
-		VECTOR target = VGet(mSelectPos.x, -400.0f, 0.0f);
-		mSelectPos.y += (target.y - mSelectPos.y) * 0.08f;
+		VECTOR target = VGet(selectPos.x, -400.0f, 0.0f);
+		selectPos.y += (target.y - selectPos.y) * 0.08f;
 
-		if (mSelectPos.y <= -350.0f)
+		if (selectPos.y <= -350.0f)
 		{
-			mpTexture->SetPosition(mPos1);
-			mpTexture2->SetPosition(mPos2);
-			mpTexture3->SetPosition(mPos3);
+			texture->SetPosition(pos1);
+			texture2->SetPosition(pos2);
+			texture3->SetPosition(pos3);
 
-			mSelectAnim = false;
+			selectAnim = false;
 			AddSkillFlag = false;
-			Master::SelectSkill = false;
+			Master::selectSkill = false;
 		}
 	}
 
 	// カード選択開始時に、カードが画面外から滑らかにスライドインするアニメーション
-	if (mOpenAnim)
+	if (openAnim)
 	{
-		mCard1Y += (450.0f - mCard1Y) * 0.15f;
-		mCard2Y += (450.0f - mCard2Y) * 0.15f;
-		mCard3Y += (450.0f - mCard3Y) * 0.15f;
+		card1Y += (450.0f - card1Y) * 0.15f;
+		card2Y += (450.0f - card2Y) * 0.15f;
+		card3Y += (450.0f - card3Y) * 0.15f;
 
-		mpTexture->SetPosition(VGet(200.0f, mCard1Y, 0.0f));
-		mpTexture2->SetPosition(VGet(800.0f, mCard2Y, 0.0f));
-		mpTexture3->SetPosition(VGet(1400.0f, mCard3Y, 0.0f));
+		texture->SetPosition(VGet(200.0f, card1Y, 0.0f));
+		texture2->SetPosition(VGet(800.0f, card2Y, 0.0f));
+		texture3->SetPosition(VGet(1400.0f, card3Y, 0.0f));
 
-		if (std::abs(mCard1Y - 450.0f) < 1.0f)
+		if (std::abs(card1Y - 450.0f) < 1.0f)
 		{
-			mCard1Y = 450.0f;
-			mCard2Y = 450.0f;
-			mCard3Y = 450.0f;
-			mOpenAnim = false;
+			card1Y = 450.0f;
+			card2Y = 450.0f;
+			card3Y = 450.0f;
+			openAnim = false;
 		}
 	}
 }
@@ -142,11 +142,11 @@ void Skill::AddSkill()
 	if (!AddSkillFlag) return;
 	
 	SetMouseDispFlag(true); // スキル選択中はマウスポインタを表示
-	Master::SelectSkill = true;
+	Master::selectSkill = true;
 	int mouseX, mouseY;
 	GetMousePoint(&mouseX, &mouseY);
 
-	mHoverSkill = 0;
+	hoverSkill = 0;
 
 	// スキルカードをホバーまたは左クリックした際のコライダー計算を行うラムダ関数
 	auto ProcessSkill = [&](Texture* tex, int id) {
@@ -163,7 +163,7 @@ void Skill::AddSkill()
 
 		if (mouseX >= left && mouseX <= right && mouseY >= top && mouseY <= bottom)
 		{
-			mHoverSkill = id;
+			hoverSkill = id;
 			if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0)
 			{
 				return true;
@@ -172,43 +172,43 @@ void Skill::AddSkill()
 		return false;
 	};
 
-	if (ProcessSkill(mpTexture, 1))
+	if (ProcessSkill(texture, 1))
 	{
 		// 速度アップ
 		Status_S += 2.0f;
-		mSelectedSkill = 1;
-		mSelectPos = mpTexture->GetPosition();
-		mSelectAnim = true;
-		mFlash = true;
-		mFlashAlpha = 255;
-		Master::mpSoundManager->PlaySE(SoundManager::SE_SKILL_STATUS);
+		selectedSkill = 1;
+		selectPos = texture->GetPosition();
+		selectAnim = true;
+		flash = true;
+		flashAlpha = 255;
+		Master::soundManager->PlaySE(SoundManager::SE_SKILL_STATUS);
 		SetMouseDispFlag(false);
 	}
-	else if (ProcessSkill(mpTexture2, 2))
+	else if (ProcessSkill(texture2, 2))
 	{
 		// 餌（デコイにんじん）設置
-		auto b = new Bait("Resource/3D/牛の餌/Carrot.mv1", mpParent->GetPosition());
+		auto b = new Bait("Resource/3D/牛の餌/Carrot.mv1", parent->GetPosition());
 		float scale = 5000.0f;
-		b->mpModel->SetScale(VGet(scale, scale, scale));
+		b->model->SetScale(VGet(scale, scale, scale));
 
-		mSelectedSkill = 2;
-		mSelectPos = mpTexture2->GetPosition();
-		mSelectAnim = true;
-		mFlash = true;
-		mFlashAlpha = 255;
-		Master::mpSoundManager->PlaySE(SoundManager::SE_SKILL_FOOD);
+		selectedSkill = 2;
+		selectPos = texture2->GetPosition();
+		selectAnim = true;
+		flash = true;
+		flashAlpha = 255;
+		Master::soundManager->PlaySE(SoundManager::SE_SKILL_FOOD);
 		SetMouseDispFlag(false);
 	}
-	else if (ProcessSkill(mpTexture3, 3))
+	else if (ProcessSkill(texture3, 3))
 	{
 		// 吸引速度（攻撃力）アップ
 		Status_A += 1.0f;
-		mSelectedSkill = 3;
-		mSelectPos = mpTexture3->GetPosition();
-		mSelectAnim = true;
-		mFlash = true;
-		mFlashAlpha = 255;
-		Master::mpSoundManager->PlaySE(SoundManager::SE_SKILL_STATUS);
+		selectedSkill = 3;
+		selectPos = texture3->GetPosition();
+		selectAnim = true;
+		flash = true;
+		flashAlpha = 255;
+		Master::soundManager->PlaySE(SoundManager::SE_SKILL_STATUS);
 		SetMouseDispFlag(false);
 	}
 }

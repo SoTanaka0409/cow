@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "Object3D.h"
 #include <string>
 
@@ -43,6 +43,6 @@ public:
 	VECTOR CheckHit_LineDebug(VECTOR pos1, VECTOR pos2);
 
 private:
-	int mnModelHandle;
-	int mnCollisionHandle;
+	int modelHandle;
+	int collisionHandle;
 };

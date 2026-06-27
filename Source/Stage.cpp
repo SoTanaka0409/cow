@@ -1,4 +1,4 @@
-﻿#include "Stage.h"
+#include "Stage.h"
 #include "Master.h"
 
 Stage::Stage(VECTOR initPos, std::string stageModelName, std::string stageCollisionModelName)
@@ -6,22 +6,22 @@ Stage::Stage(VECTOR initPos, std::string stageModelName, std::string stageCollis
 {
 	SetTag(Object3D::Tag3D_Stage);
 
-	mnModelHandle = MV1LoadModel(stageModelName.c_str());
-	mnCollisionHandle = MV1LoadModel(stageCollisionModelName.c_str());
+	modelHandle = MV1LoadModel(stageModelName.c_str());
+	collisionHandle = MV1LoadModel(stageCollisionModelName.c_str());
 
 	// 実行時の負荷を軽減するため、初期化時にポリゴン情報を事前構築しておく
 	float StageSize = 5.0f;
-	MV1SetScale(mnModelHandle, VGet(StageSize, 0.3f, StageSize));
-	MV1SetScale(mnCollisionHandle, VGet(StageSize, 0.3f, StageSize));
-	MV1SetPosition(mnCollisionHandle, initPos);
-	MV1SetPosition(mnModelHandle, initPos);
-	MV1SetupCollInfo(mnCollisionHandle);
+	MV1SetScale(modelHandle, VGet(StageSize, 0.3f, StageSize));
+	MV1SetScale(collisionHandle, VGet(StageSize, 0.3f, StageSize));
+	MV1SetPosition(collisionHandle, initPos);
+	MV1SetPosition(modelHandle, initPos);
+	MV1SetupCollInfo(collisionHandle);
 }
 
 Stage::~Stage()
 {
-	MV1DeleteModel(mnModelHandle);
-	MV1DeleteModel(mnCollisionHandle);
+	MV1DeleteModel(modelHandle);
+	MV1DeleteModel(collisionHandle);
 }
 
 void Stage::Update()
@@ -30,12 +30,12 @@ void Stage::Update()
 
 void Stage::Draw()
 {
-	MV1DrawModel(mnModelHandle);
+	MV1DrawModel(modelHandle);
 }
 
 bool Stage::CheckHit_Capsule(VECTOR pos1, VECTOR pos2, float r)
 {
-	MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Capsule(mnCollisionHandle, -1, pos1, pos2, r);
+	MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Capsule(collisionHandle, -1, pos1, pos2, r);
 
 	if (result.HitNum >= 1)
 	{
@@ -61,7 +61,7 @@ VECTOR Stage::CheckHit_Line(VECTOR pos1, VECTOR pos2)
 {
 	VECTOR ret = VGet(0.0f, 0.0f, 0.0f);
 
-	auto result = MV1CollCheck_Line(mnCollisionHandle, -1, pos1, pos2);
+	auto result = MV1CollCheck_Line(collisionHandle, -1, pos1, pos2);
 
 	if (result.HitFlag)
 	{
@@ -75,7 +75,7 @@ VECTOR Stage::CheckHit_LineDebug(VECTOR pos1, VECTOR pos2)
 {
 	VECTOR ret = VGet(0.0f, 0.0f, 0.0f);
 
-	auto result = MV1CollCheck_Line(mnCollisionHandle, -1, pos1, pos2);
+	auto result = MV1CollCheck_Line(collisionHandle, -1, pos1, pos2);
 
 	if (result.HitFlag)
 	{

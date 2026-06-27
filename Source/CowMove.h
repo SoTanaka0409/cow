@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "DxLib.h"
 #include "Object3D.h"
 #include "Model.h"
@@ -94,17 +94,17 @@ public:
 	void SetTag_cow(Tag_cow tag) { mntag_cow = tag; }
 	Tag_cow GetTag_cow() { return mntag_cow; }
 
-	void SetColliderRadius(float radius) { mColliderRadius = radius; }
-	bool GetCowDelete() { return mCowtDelete; }
+	void SetColliderRadius(float radius) { colliderRadius = radius; }
+	bool GetCowDelete() { return cowtDelete; }
 
 protected:
 	Tag_cow mntag_cow;                  // 個別仕様分岐のためのタグ
-	float mColliderRadius = 50.0f;      // 衝突判定用の半径制約
+	float colliderRadius = 50.0f;      // 衝突判定用の半径制約
 
-	bool mCowtDelete;                   // エフェクト終了待機用削除フラグ
-	EffekseerEffect* mpCowVm;           // 吸引演出用エフェクト
-	int mEffectTimer;                   // エフェクト再生完了までの待機フレーム
-	bool TutrialVacumFlag;              // チュートリアル用の特別な判定フラグ
+	bool cowtDelete;                   // エフェクト終了待機用削除フラグ
+	EffekseerEffect* cowVm;           // 吸引演出用エフェクト
+	int effectTimer;                   // エフェクト再生完了までの待機フレーム
+	bool tutorialVacuumFlag;              // チュートリアル用の特別な判定フラグ
 };
 
 

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include"Scene.h"
 #include"Dxlib.h"
 #include"Master.h"
@@ -56,8 +56,8 @@ private:
 	float warningRadius;       // 警告エリア現在半径 (予約)
 	float maxRadius;           // 警告エリア最大半径 (予約)
 	
-	int mTatumakiSpawnTimer;   // 竜巻出現タイマー
-	int mMassSpawnTimer;       // 大量出現の間隔タイマー
-	Phase mpPhase;             // 現在のフェーズ
-	int mFontBackGraph;        // 警告テキスト背景用ハンドル
+	int tatumakiSpawnTimer;   // 竜巻出現タイマー
+	int massSpawnTimer;       // 大量出現の間隔タイマー
+	Phase phase;             // 現在のフェーズ
+	int fontBackGraph;        // 警告テキスト背景用ハンドル
 };

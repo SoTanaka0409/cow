@@ -7,7 +7,7 @@ CapsuleCollider::CapsuleCollider(Object3D* parent, VECTOR pos1, VECTOR pos2, flo
 {
 	mvPosition = pos1;
 	mvPosition2 = pos2;
-	mfRadius = radius;
+	radius = radius;
 }
 
 CapsuleCollider::~CapsuleCollider()
@@ -26,10 +26,10 @@ void CapsuleCollider::Update(Collider* check)
 			bool isHit = HitCheck_Capsule_Capsule(
 				this->mvPosition,
 				this->mvPosition2,
-				this->mfRadius,
+				this->radius,
 				capsule->mvPosition,
 				capsule->mvPosition2,
-				capsule->mfRadius
+				capsule->radius
 			);
 
 			HitCheck(check, isHit); // 交差結果を基底コライダーのイベント処理へ通知

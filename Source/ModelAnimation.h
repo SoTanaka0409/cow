@@ -32,26 +32,26 @@ public:
 	 */
 	void ChangeAnimation(AnimationState state, int index = 1);
 
-	void SetLoop(bool isLoop) { mbLoop = isLoop; }
-	void SetLoopFinishState(AnimationState state) { mnLoopFinishState = state; }
+	void SetLoop(bool isLoop) { loop = isLoop; }
+	void SetLoopFinishState(AnimationState state) { loopFinishState = state; }
 	void SetAnimationBlend(bool isBlend);
 
-	AnimationState GetNowState() { return mnState; }
-	bool IsLoopFinish() { return mbLoopFinish; }
+	AnimationState GetNowState() { return state; }
+	bool IsLoopFinish() { return loopFinish; }
 
-	void SetAnimationCount(float count) { mfAnimationCount = count; }
+	void SetAnimationCount(float count) { animationCount = count; }
 
 private:
-	int mnModelHandle;                  // DXライブラリの3Dモデルハンドル
-	float mfAnimationTime;              // 現在再生中のアニメーション時刻（秒）
-	float mfAnimationCount;             // 再生時間を進める速度係数
-	int mnAnimationIndex;               // 現在のアニメーションのインデックス
-	float mfOldAnimationTime;           // ブレンド移行前の古いアニメーションの時刻（秒）
-	int mnOldAnimationIndex;            // 古いアニメーションのインデックス
-	float mfAnimBlendRate;              // 新旧アニメーションのブレンド比率 (0.0?1.0)
-	AnimationState mnState;             // 現在のアニメーション状態
-	bool mbLoop;                        // ループ再生するかどうか
-	AnimationState mnLoopFinishState;   // 非ループアニメーション終了後に遷移する状態
-	bool mbLoopFinish;                  // アニメーションが1周完了したかどうか
+	int modelHandle;                  // DXライブラリの3Dモデルハンドル
+	float animationTime;              // 現在再生中のアニメーション時刻（秒）
+	float animationCount;             // 再生時間を進める速度係数
+	int animationIndex;               // 現在のアニメーションのインデックス
+	float oldAnimationTime;           // ブレンド移行前の古いアニメーションの時刻（秒）
+	int oldAnimationIndex;            // 古いアニメーションのインデックス
+	float animBlendRate;              // 新旧アニメーションのブレンド比率 (0.0?1.0)
+	AnimationState state;             // 現在のアニメーション状態
+	bool loop;                        // ループ再生するかどうか
+	AnimationState loopFinishState;   // 非ループアニメーション終了後に遷移する状態
+	bool loopFinish;                  // アニメーションが1周完了したかどうか
 };
 

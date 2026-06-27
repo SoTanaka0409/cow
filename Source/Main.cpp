@@ -1,4 +1,4 @@
-﻿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include "DxLib.h"
 #include"Master.h"
 #include"Camera.h"
@@ -14,23 +14,23 @@
 #include"InputManager.h"
 #include <EffekseerForDXLib.h>
 
-SceneManager* Master::mpSceneManager = new SceneManager();
-Camera* Master::mpCamera = new Camera();
-DebugCamera* Master::mpDebugCamera = new DebugCamera();
-bool Master::mbIsDebugCamera = false;
-ResourceManager* Master::mpResourceManager = new ResourceManager();
-SoundManager* Master::mpSoundManager = new SoundManager();
+SceneManager* Master::sceneManager = new SceneManager();
+Camera* Master::camera = new Camera();
+DebugCamera* Master::debugCamera = new DebugCamera();
+bool Master::isDebugCamera = false;
+ResourceManager* Master::resourceManager = new ResourceManager();
+SoundManager* Master::soundManager = new SoundManager();
 
-EffectManager* Master::mpEffectManager = new EffectManager();
+EffectManager* Master::effectManager = new EffectManager();
 
-Score* Master::mpScore = nullptr;
-bool Master::SelectSkill = false;
-int Master::mnTutorialcount = 0;
-bool Master::GameFinishFlag = false;
-int Master::mnCaughtCowCount = 0;
-bool Master::TutrialVacumFlag = false;
-bool Master::FeverFlag = false;
-float Master::mfDeltaTime = 0.01666f;
+Score* Master::score = nullptr;
+bool Master::selectSkill = false;
+int Master::tutorialCount = 0;
+bool Master::gameFinishFlag = false;
+int Master::caughtCowCount = 0;
+bool Master::tutorialVacuumFlag = false;
+bool Master::feverFlag = false;
+float Master::deltaTime = 0.01666f;
 
 VECTOR Utility::StageSize= VGet(6000, 0, 6000); // 3D空間の境界制約としてステージサイズを定義
 
@@ -54,7 +54,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		return -1;
 	}
 
-	Master::mpScore = new Score(); // DxLib初期化前だと画像読み込みが失敗する制約があるためここで生成
+	Master::score = new Score(); // DxLib初期化前だと画像読み込みが失敗する制約があるためここで生成
 
 	SRand(GetNowCount());
 
@@ -65,16 +65,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetUseZBufferFlag(true);
 	SetWriteZBufferFlag(true);
 
-	Master::mpSoundManager->Initialize(); // 再生遅延を防ぐため全音源データをプリロードする
+	Master::soundManager->Initialize(); // 再生遅延を防ぐため全音源データをプリロードする
 
 	// 初期シーンを構築する
-	Master::mpSceneManager->Initialize();
+	Master::sceneManager->Initialize();
 	
 	// 描画用の各カメラを初期化する
-	Master::mpCamera->Initialize();
-	Master::mpDebugCamera->Initialize();
+	Master::camera->Initialize();
+	Master::debugCamera->Initialize();
 
-	Master::mpEffectManager->Initalize();
+	Master::effectManager->Initalize();
 
 	int previousTime = GetNowCount();
 
@@ -84,32 +84,32 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ClearDrawScreen();
 		int time = GetNowCount();
 
-		Master::mfDeltaTime = (time - previousTime) / 1000.0f;
-		if (Master::mfDeltaTime > 0.1f) Master::mfDeltaTime = 0.1f;
+		Master::deltaTime = (time - previousTime) / 1000.0f;
+		if (Master::deltaTime > 0.1f) Master::deltaTime = 0.1f;
 		previousTime = time;
 
 		// 開発効率化のためF1キーでデバッグカメラをトグル
 		if (InputManager::CheckDownKey(KEY_INPUT_F1))
 		{
-			Master::mbIsDebugCamera = !Master::mbIsDebugCamera;
-			if (Master::mbIsDebugCamera) {
-				Master::mpDebugCamera->Initialize();
+			Master::isDebugCamera = !Master::isDebugCamera;
+			if (Master::isDebugCamera) {
+				Master::debugCamera->Initialize();
 			}
 		}
 
-		if (Master::mbIsDebugCamera) {
-			Master::mpDebugCamera->Update();
+		if (Master::isDebugCamera) {
+			Master::debugCamera->Update();
 		} else {
-			Master::mpCamera->Update();
+			Master::camera->Update();
 		}
 
-		Master::mpEffectManager->Update();
+		Master::effectManager->Update();
 
-		Master::mpSceneManager->Update();
+		Master::sceneManager->Update();
 		
-		Master::mpSceneManager->Draw();
+		Master::sceneManager->Draw();
 		
-		Master::mpEffectManager->Draw();
+		Master::effectManager->Draw();
 
 		// 描画のちらつきを防ぐためフリップする
 		ScreenFlip();
@@ -124,23 +124,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ServiceLocator::GetObjectManager()->DeleteAll3DIfNeeded();
 
 		// フレーム終了時に安全にシーン遷移を行う
-		Master::mpSceneManager->ChangeSceneIfNeeded();
+		Master::sceneManager->ChangeSceneIfNeeded();
 	}
 	// アプリケーション終了に伴うリソース解放
-	Master::mpSceneManager->Finalize();
-	delete Master::mpSceneManager;
-	Master::mpSoundManager->Finalize();
-	delete Master::mpSoundManager;
-	Master::mpCamera->Finalize();
-	delete Master::mpCamera;
-	delete Master::mpDebugCamera;
-	delete Master::mpResourceManager;
+	Master::sceneManager->Finalize();
+	delete Master::sceneManager;
+	Master::soundManager->Finalize();
+	delete Master::soundManager;
+	Master::camera->Finalize();
+	delete Master::camera;
+	delete Master::debugCamera;
+	delete Master::resourceManager;
 
 	ColliderManager::GetInstance()->Finalize();
 	
 	Effkseer_End();
 
-	delete Master::mpScore;
+	delete Master::score;
 
 	DxLib_End(); // DxLibの内部リソースを解放
 

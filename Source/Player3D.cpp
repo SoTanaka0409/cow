@@ -28,81 +28,81 @@
 
 Player3D::Player3D(std::string filename, VECTOR initPos)
 	: Object3D(initPos)
-	, mfVerticalAngle(0.0f)
-	, mfHorizontalAngle(0.0f)
-	, mfSpeed(35.0f)
-	, mfHp(0)
-	, mfAttack_Speed(3.0f)
-	, CatchNowCount(0)
+	, verticalAngle(0.0f)
+	, horizontalAngle(0.0f)
+	, speed(35.0f)
+	, hp(0)
+	, attack_Speed(3.0f)
+	, catchNowCount(0)
 {
-	mIsStunned = false;
-	mStunTimer = 0;
-	mEffectTimer = 80;
-	mfRadius = 100;
+	isStunned = false;
+	stunTimer = 0;
+	effectTimer = 80;
+	radius = 100;
 
 	SetTag(Object3D::Tag3D_player);
 
-	mpModel = new Model(filename, initPos, false);
-	mpLevel = new Level(this);
-	mpLevel->SetNextLevel();
-	mpSkill = new Skill(this);
-	mpCombo = new Combo();
-	mpScore = new Score();
+	model = new Model(filename, initPos, false);
+	level = new Level(this);
+	level->SetNextLevel();
+	skill = new Skill(this);
+	combo = new Combo();
+	score = new Score();
 
-	Master::mpCamera->Initialize();
+	Master::camera->Initialize();
 
-	mnLighGraph = LoadGraph("Resource/2D/green_beam_transparent.png");
+	lighGraph = LoadGraph("Resource/2D/green_beam_transparent.png");
 
-	mpCapsuleCollider->mvPosition = VGet(mvPosition.x, 0, mvPosition.z);
-	mpCapsuleCollider->mvPosition2 = mvPosition;
-	mpCapsuleCollider->mfRadius = mfRadius;
+	capsuleCollider->mvPosition = VGet(mvPosition.x, 0, mvPosition.z);
+	capsuleCollider->mvPosition2 = mvPosition;
+	capsuleCollider->radius = radius;
 
 	// Y軸方向にスケールを伸ばし真下に向ける
-	mpBeam = new EffekseerEffect("Resource/3D/EFK/Beam.efk", mvPosition, 80.0f);
-	mpBeam->SetRotation(VGet(DX_PI_F / -2.0f, 0.0f, 0.0f));
-	mpBeam->SetScale(VGet(1.0f, 1.0f, 4.0f));
+	beam = new EffekseerEffect("Resource/3D/EFK/Beam.efk", mvPosition, 80.0f);
+	beam->SetRotation(VGet(DX_PI_F / -2.0f, 0.0f, 0.0f));
+	beam->SetScale(VGet(1.0f, 1.0f, 4.0f));
 
-	mpSpeed = new EffekseerEffect("Resource/3D/EFK/UseSpItem.efk", VGet(0, 0, 0), 100.0f);
+	speedEffect = new EffekseerEffect("Resource/3D/EFK/UseSpItem.efk", VGet(0, 0, 0), 100.0f);
 }
 
 Player3D::~Player3D()
 {
-	if (mpModel) { delete mpModel; mpModel = nullptr; }
-	if (mpLevel) { delete mpLevel; mpLevel = nullptr; }
-	if (mpSkill) { delete mpSkill; mpSkill = nullptr; }
-	if (mpCombo) { delete mpCombo; mpCombo = nullptr; }
-	if (mpScore) { delete mpScore; mpScore = nullptr; }
-	if (mpBeam) { delete mpBeam;  mpBeam = nullptr; }
-	if (mpSpeed) { delete mpSpeed; mpSpeed = nullptr; }
+	if (model) { delete model; model = nullptr; }
+	if (level) { delete level; level = nullptr; }
+	if (skill) { delete skill; skill = nullptr; }
+	if (combo) { delete combo; combo = nullptr; }
+	if (score) { delete score; score = nullptr; }
+	if (beam) { delete beam;  beam = nullptr; }
+	if (speedEffect) { delete speedEffect; speedEffect = nullptr; }
 }
 
 void Player3D::Update()
 {
 	// デバッグカメラが有効な場合はプレイヤーの挙動をすべて停止
-	if (Master::mbIsDebugCamera) return;
+	if (Master::isDebugCamera) return;
 
 	// --- スタン（気絶）状態の管理 ---
-	if (mIsStunned)
+	if (isStunned)
 	{
-		mStunTimer--;
-		if (mStunTimer <= 0)
+		stunTimer--;
+		if (stunTimer <= 0)
 		{
-			mIsStunned = false;
+			isStunned = false;
 		}
 	}
 
-	mIsCowInVacuumRange = false;
+	isCowInVacuumRange = false;
 
 	ManagerUpdate();
 
 	// ステージ外落下時などは復帰のために空中へ退避
-	if (Master::GameFinishFlag || mIsOutOfBounds)
+	if (Master::gameFinishFlag || isOutOfBounds)
 	{
 		mvPosition = VGet(0, 2000, 0);
 		return;
 	}
 
-	if (!mIsStunned)
+	if (!isStunned)
 	{
 		MoveEx();
 		RotationByMove();
@@ -113,7 +113,7 @@ void Player3D::Update()
 	else
 	{
 		// 吸い込み判定が残るのを防ぐためコライダーをリセット
-		mIsVacuumActive = false;
+		isVacuumActive = false;
 		ColliderUpdate();
 	}
 
@@ -125,21 +125,21 @@ void Player3D::Play()
 {
 	int mouseInput = GetMouseInput();
 
-	if ((mouseInput & MOUSE_INPUT_LEFT) && mVacuumGauge > 0.0f && !Master::FeverFlag)
+	if ((mouseInput & MOUSE_INPUT_LEFT) && vacuumGauge > 0.0f && !Master::feverFlag)
 	{
-		mIsVacuumActive = true;
-		mVacuumGauge -= VACUUM_COST_PER_FRAME;
+		isVacuumActive = true;
+		vacuumGauge -= VACUUM_COST_PER_FRAME;
 
-		if (mVacuumGauge < 0.0f) mVacuumGauge = 0.0f;
+		if (vacuumGauge < 0.0f) vacuumGauge = 0.0f;
 	}
 	else
 	{
-		mIsVacuumActive = false;
+		isVacuumActive = false;
 
 		float recoverySpeed = VACUUM_RECOVER_PER_FRAME;
 
 		// ラストスパート時はゲージ回復速度を上げて難易度を緩和する
-		if (Master::mpSceneManager && Master::mpSceneManager->GetCurrentScene() && ServiceLocator::GetGameManager())
+		if (Master::sceneManager && Master::sceneManager->GetCurrentScene() && ServiceLocator::GetGameManager())
 		{
 			auto timer = ServiceLocator::GetGameManager()->GetGameTimer();
 			if (timer && timer->GetTime() <= 60)
@@ -148,57 +148,57 @@ void Player3D::Play()
 			}
 		}
 
-		mVacuumGauge += recoverySpeed;
-		if (mVacuumGauge > VACUUM_GAUGE_MAX) mVacuumGauge = VACUUM_GAUGE_MAX;
+		vacuumGauge += recoverySpeed;
+		if (vacuumGauge > VACUUM_GAUGE_MAX) vacuumGauge = VACUUM_GAUGE_MAX;
 	}
 
 	// フィーバー状態の仕様を満たすため強制発動
-	if (Master::FeverFlag) mIsVacuumActive = true;
+	if (Master::feverFlag) isVacuumActive = true;
 }
 
 void Player3D::ColliderUpdate()
 {
-	if (mIsVacuumActive)
+	if (isVacuumActive)
 	{
 		// 上空の牛まで判定が届くようにY軸方向にカプセルを広げる
-		mpCapsuleCollider->mvPosition = VGet(mvPosition.x, -1000, mvPosition.z);
-		mpCapsuleCollider->mvPosition2 = VGet(mvPosition.x, 3000, mvPosition.z);
-		mpCapsuleCollider->mfRadius = VACUUM_RADIUS;
+		capsuleCollider->mvPosition = VGet(mvPosition.x, -1000, mvPosition.z);
+		capsuleCollider->mvPosition2 = VGet(mvPosition.x, 3000, mvPosition.z);
+		capsuleCollider->radius = VACUUM_RADIUS;
 
-		mEffectTimer--;
-		if (mEffectTimer <= 0)
+		effectTimer--;
+		if (effectTimer <= 0)
 		{
-			if (mpBeam != nullptr)
+			if (beam != nullptr)
 			{
-				mpBeam->Play();
+				beam->Play();
 			}
-			mEffectTimer = 80;
+			effectTimer = 80;
 		}
 	}
 	else
 	{
-		mpCapsuleCollider->mvPosition = VGet(mvPosition.x, -1000, mvPosition.z);
-		mpCapsuleCollider->mvPosition2 = mvPosition;
-		mpCapsuleCollider->mfRadius = 0.0f;
+		capsuleCollider->mvPosition = VGet(mvPosition.x, -1000, mvPosition.z);
+		capsuleCollider->mvPosition2 = mvPosition;
+		capsuleCollider->radius = 0.0f;
 
-		if (mpBeam != nullptr && mpBeam->IsPlaying())
+		if (beam != nullptr && beam->IsPlaying())
 		{
-			mpBeam->Stop();
+			beam->Stop();
 		}
-		mEffectTimer = 0;
+		effectTimer = 0;
 	}
 
 	// 各種エフェクトの座標追従と更新処理
-	if (mpBeam != nullptr)
+	if (beam != nullptr)
 	{
-		mpBeam->SetPosition(mvPosition);
-		mpBeam->Update();
+		beam->SetPosition(mvPosition);
+		beam->Update();
 	}
 
-	if (mpSpeed != nullptr)
+	if (speedEffect != nullptr)
 	{
-		mpSpeed->SetPosition(mvPosition);
-		mpSpeed->Update();
+		speedEffect->SetPosition(mvPosition);
+		speedEffect->Update();
 	}
 }
 
@@ -207,18 +207,18 @@ void Player3D::ScreenOutCheck()
 	if (mvPosition.x > Utility::StageSize.x || mvPosition.x < -Utility::StageSize.x ||
 		mvPosition.z > Utility::StageSize.z || mvPosition.z < -Utility::StageSize.z)
 	{
-		mIsOutOfBounds = true;
+		isOutOfBounds = true;
 
 		// 進行不能回避のためキー入力で復帰させる
 		if (CheckHitKey(KEY_INPUT_SPACE))
 		{
 			SetPosition(VGet(0, 2000, 0));
-			mIsOutOfBounds = false;
+			isOutOfBounds = false;
 		}
 	}
 	else
 	{
-		mIsOutOfBounds = false;
+		isOutOfBounds = false;
 	}
 }
 
@@ -226,8 +226,8 @@ void Player3D::test()
 {
 	if (InputManager::CheckDownKey(KEY_INPUT_5))
 	{
-		mpLevel->AddXp(20);
-		mpSkill->SetSkillFlag(true); // スキルUI/効果の強制開放
+		level->AddXp(20);
+		skill->SetSkillFlag(true); // スキルUI/効果の強制開放
 	}
 }
 
@@ -236,15 +236,15 @@ void Player3D::test()
  */
 void Player3D::ManagerUpdate()
 {
-	mpLevel->Draw();
-	mpLevel->Update();
-	mpModel->Update();
-	mpModel->Draw();
-	mpSkill->Update();
-	mpSkill->Draw();
-	mpCombo->Draw();
-	mpCombo->Update();
-	mpScore->Draw();
+	level->Draw();
+	level->Update();
+	model->Update();
+	model->Draw();
+	skill->Update();
+	skill->Draw();
+	combo->Draw();
+	combo->Update();
+	score->Draw();
 	test();
 }
 
@@ -254,7 +254,7 @@ void Player3D::Draw()
 	unsigned int color;
 
 	// ロックオン状態に応じてサークルの色を変更する
-	if (mIsCowInVacuumRange == true)
+	if (isCowInVacuumRange == true)
 	{
 		color = GetColor(255, 0, 0);
 	}
@@ -286,7 +286,7 @@ void Player3D::MoveEx()
 
 	// カメラ視点を基準とした移動方向の算出
 	{
-		UpMoveVector = VSub(Master::mpCamera->GetLookAtPosition(), Master::mpCamera->GetPosition());
+		UpMoveVector = VSub(Master::camera->GetLookAtPosition(), Master::camera->GetPosition());
 		UpMoveVector.y = 0.0f;
 
 		leftMoveVector = VCross(UpMoveVector, VGet(0.0f, 1.0f, 0.0f));
@@ -305,11 +305,11 @@ void Player3D::MoveEx()
 	if (isMove)
 	{
 		moveVec = VNorm(moveVec);
-		mfTargetAngle = atan2f(moveVec.x, moveVec.z);
+		targetAngle = atan2f(moveVec.x, moveVec.z);
 		oldmoveVec = moveVec;
 
 		currentSpeed = Status(Status_Speed);
-		mvPosition = VAdd(mvPosition, VScale(moveVec, currentSpeed));
+		mvPosition = VAdd(mvPosition, VScale(moveVec, currentSpeed * Master::GetDeltaTimeScaler()));
 	}
 
 	bool hitwall = false;
@@ -342,7 +342,7 @@ void Player3D::MoveEx()
 					if (hitwall == true && hitwalls == false)
 					{
 						mvPosition = mvOldPosition;
-						mvPosition = VAdd(mvPosition, VScale(slide, mfSpeed));
+						mvPosition = VAdd(mvPosition, VScale(slide, speed * Master::GetDeltaTimeScaler()));
 						hitwalls = true;
 					}
 					// 挟まり防止のため進行を制限する
@@ -355,30 +355,30 @@ void Player3D::MoveEx()
 		}
 	}
 
-	mpModel->SetPosition(mvPosition);
-	mpModel->SetRotation(mvRotation);
+	model->SetPosition(mvPosition);
+	model->SetRotation(mvRotation);
 }
 
 float Player3D::Status(StatusID id)
 {
 	if (id == Status_AttackS)
 	{
-		return mfAttack_Speed + mpSkill->GetStatusDate(Skill::Status_AttackSpeed);
+		return attack_Speed + skill->GetStatusDate(Skill::Status_AttackSpeed);
 	}
 	if (id == Status_Hp)
 	{
-		return mfHp;
+		return hp;
 	}
 	if (id == Status_Speed)
 	{
-		return mfSpeed + mpSkill->GetStatusDate(Skill::Status_Speed);
+		return speed + skill->GetStatusDate(Skill::Status_Speed);
 	}
 	return 0.0f;
 }
 
 void Player3D::RotationByMove()
 {
-	float subAngle = mfTargetAngle - mfAngle;
+	float subAngle = targetAngle - angle;
 
 	// 角度の境界線を跨いだ場合の最短ルート補正
 	if (subAngle < -DX_PI_F) subAngle += DX_TWO_PI_F;
@@ -395,10 +395,10 @@ void Player3D::RotationByMove()
 		if (subAngle > 0.0f) subAngle = 0.0f;
 	}
 
-	mfAngle = mfTargetAngle - subAngle;
+	angle = targetAngle - subAngle;
 
-	mvRotation.y = mfAngle + DX_PI_F;
-	mpModel->SetRotation(mvRotation);
+	mvRotation.y = angle + DX_PI_F;
+	model->SetRotation(mvRotation);
 }
 
 /*
@@ -413,25 +413,25 @@ void Player3D::bar()
 
 	DrawBox(gaugeX, gaugeY, gaugeX + gaugeWidth, gaugeY + gaugeHeight, GetColor(100, 100, 100), TRUE);
 
-	int currentWidth = (int)((mVacuumGauge / VACUUM_GAUGE_MAX) * gaugeWidth);
+	int currentWidth = (int)((vacuumGauge / VACUUM_GAUGE_MAX) * gaugeWidth);
 	if (currentWidth < 0) currentWidth = 0;
 	if (currentWidth > gaugeWidth) currentWidth = gaugeWidth;
 
 	// ゲージが空の時は警告として赤色表示
 	unsigned int gaugeColor = GetColor(0, 255, 255);
-	if (mVacuumGauge <= 0.0f) gaugeColor = GetColor(255, 0, 0);
+	if (vacuumGauge <= 0.0f) gaugeColor = GetColor(255, 0, 0);
 
 	DrawBox(gaugeX, gaugeY, gaugeX + currentWidth, gaugeY + gaugeHeight, gaugeColor, TRUE);
 
 	DrawBox(gaugeX, gaugeY, gaugeX + gaugeWidth, gaugeY + gaugeHeight, GetColor(255, 255, 255), FALSE);
-	DrawFormatString(gaugeX, gaugeY - 30, GetColor(255, 255, 255), "Vacuum Gauge: %.1f%%", mVacuumGauge);
+	DrawFormatString(gaugeX, gaugeY - 30, GetColor(255, 255, 255), "Vacuum Gauge: %.1f%%", vacuumGauge);
 }
 
 void Player3D::OnEnter(Collider* collider, Collider* check)
 {
-	if (collider == mpCapsuleCollider && check->mpParentObject->GetTag() == Tag3D_Cow)
+	if (collider == capsuleCollider && check->parentObject->GetTag() == Tag3D_Cow)
 	{
-		CowMove* cow = dynamic_cast<CowMove*>(check->mpParentObject);
+		CowMove* cow = dynamic_cast<CowMove*>(check->parentObject);
 		if (cow->GetCurrentState() != STATE_VACUUM)
 		{
 			cow->SetTargetPlayer(this);
@@ -440,9 +440,9 @@ void Player3D::OnEnter(Collider* collider, Collider* check)
 		}
 	}
 
-	if (collider == mpCapsuleCollider && check->mpParentObject->GetTag() == Tag3D_Animal)
+	if (collider == capsuleCollider && check->parentObject->GetTag() == Tag3D_Animal)
 	{
-		AnimalMove* ani = dynamic_cast<AnimalMove*>(check->mpParentObject);
+		AnimalMove* ani = dynamic_cast<AnimalMove*>(check->parentObject);
 		if (ani->GetCurrentState() != STATE_VACUUM)
 		{
 			ani->SetTargetPlayer(this);
@@ -455,9 +455,9 @@ void Player3D::OnEnter(Collider* collider, Collider* check)
 void Player3D::OnExit(Collider* collider, Collider* check)
 {
 	// 吸い込み中断時は対象を地上での徘徊状態に戻す
-	if (collider == mpCapsuleCollider && check->mpParentObject->GetTag() == Tag3D_Cow)
+	if (collider == capsuleCollider && check->parentObject->GetTag() == Tag3D_Cow)
 	{
-		CowMove* cow = dynamic_cast<CowMove*>(check->mpParentObject);
+		CowMove* cow = dynamic_cast<CowMove*>(check->parentObject);
 
 		cow->SetTargetPlayer(nullptr);
 		cow->ResetVacuumTimer();
@@ -468,9 +468,9 @@ void Player3D::OnExit(Collider* collider, Collider* check)
 		cow->SetPosition(pos);
 	}
 
-	if (collider == mpCapsuleCollider && check->mpParentObject->GetTag() == Tag3D_Animal)
+	if (collider == capsuleCollider && check->parentObject->GetTag() == Tag3D_Animal)
 	{
-		AnimalMove* ani = dynamic_cast<AnimalMove*>(check->mpParentObject);
+		AnimalMove* ani = dynamic_cast<AnimalMove*>(check->parentObject);
 		ani->SetTargetPlayer(nullptr);
 		ani->SetCurrentState(STATE_WALK);
 		ani->ChangeState(new StateWalk());
@@ -484,19 +484,19 @@ void Player3D::OnTrigger(Collider* collider, Collider* check)
 
 void Player3D::SetScale(float scale)
 {
-	mpModel->SetScale(scale);
+	model->SetScale(scale);
 }
 
 void Player3D::ApplyStun(int stunTime)
 {
-	mIsStunned = true;
-	mStunTimer = stunTime;
+	isStunned = true;
+	stunTimer = stunTime;
 }
 
 void Player3D::PlaySkillEffect()
 {
-	if (mpSpeed != nullptr)
+	if (speedEffect != nullptr)
 	{
-		mpSpeed->Play();
+		speedEffect->Play();
 	}
 }

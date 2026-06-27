@@ -38,22 +38,22 @@ public:
 	void SetRotation(VECTOR rot) { mvRotation = rot; }
 	VECTOR GETRotation() { return mvRotation; }
 
-	void SetDeleteFlag(bool flag) { mbDeleteFlag = flag; }
-	bool IsDeleteFlag() { return mbDeleteFlag; }
+	void SetDeleteFlag(bool flag) { deleteFlag = flag; }
+	bool IsDeleteFlag() { return deleteFlag; }
 
-	void SetDrawFlag(bool flag) { mbDrawFlag = flag; }
-	bool IsDrawFlag() { return mbDrawFlag; }
+	void SetDrawFlag(bool flag) { drawFlag = flag; }
+	bool IsDrawFlag() { return drawFlag; }
 
-	void SetTag(Tag2D tag) { mnTag = tag; }
-	Tag2D GetTag() { return mnTag; }
+	void SetTag(Tag2D tag) { tag = tag; }
+	Tag2D GetTag() { return tag; }
 
 protected:
 	VECTOR mvPosition;  // 画面上の配置座標
 	VECTOR mvRotation;  // 回転角度
 
 private:
-	bool mbDeleteFlag;  // 削除フラグ（trueでマネージャーから破棄される）
-	Tag2D mnTag;        // オブジェクト識別タグ
-	bool mbDrawFlag;    // 描画を実行するかどうかのフラグ
+	bool deleteFlag;  // 削除フラグ（trueでマネージャーから破棄される）
+	Tag2D tag;        // オブジェクト識別タグ
+	bool drawFlag;    // 描画を実行するかどうかのフラグ
 };
 

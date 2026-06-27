@@ -74,7 +74,7 @@ public:
 	void DeleteAllCollider();
 
 	/*
-	 * @brief 削除フラグ(mbDeleteFlag)が真に設定されているコライダーを管理リストから自動除外する
+	 * @brief 削除フラグ(deleteFlag)が真に設定されているコライダーを管理リストから自動除外する
 	 * [入力] なし
 	 * [出力] なし
 	 * [副作用] mColliderListからの削除
@@ -89,10 +89,10 @@ public:
 	 */
 	void RemoveCollider(Collider* collider);
 	
-	std::list<Collider*>& GetColliderList() { return mColliderList; }
+	std::list<Collider*>& GetColliderList() { return colliderList; }
 
 private:
-	std::list<Collider*> mColliderList; // 判定対象となるアクティブな全コライダーの管理リスト
+	std::list<Collider*> colliderList; // 判定対象となるアクティブな全コライダーの管理リスト
 
 	static ColliderManager* Instance;  // シングルトン管理用の静的インスタンスポインタ
 };

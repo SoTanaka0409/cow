@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include"dxlib.h"
 #include"Scene.h"
 #include"Texture.h"
@@ -36,22 +36,22 @@ public:
 	void Finalize() override;
 
 private:
-	SelectionManager* mnTitleSelect;
-	Texture* mpTexture;
-	Texture* mpTexture2;
-	Texture* mpTexture3;
+	SelectionManager* titleSelect;
+	Texture* texture;
+	Texture* texture2;
+	Texture* texture3;
 
-	int mNewGameX;
-	int mNewGameY;
-	int mNewGameW;
-	int mNewGameH;
+	int newGameX;
+	int newGameY;
+	int newGameW;
+	int newGameH;
 
-	bool mbIsHoverNewGame;
+	bool isHoverNewGame;
 
-	std::vector<ResultButton> mButtons;
+	std::vector<ResultButton> buttons;
 	int ResultGraphHandle;
 
-	Score mScore;
+	Score score;
 
 	int rankingTitleImage;
 	int rankImage[3];
@@ -65,8 +65,8 @@ private:
 	int yourScoreTextImg;
 	int pointImg;
 
-	int mFrameCount; // UIアニメーション制御用タイマー
-	int mnCount;     // 自動遷移用の経過時間タイマー
-	bool mFlag;
+	int frameCount; // UIアニメーション制御用タイマー
+	int count;     // 自動遷移用の経過時間タイマー
+	bool flag;
 };
 

@@ -1,58 +1,58 @@
-﻿#include "Object_Stage.h"
+#include "Object_Stage.h"
 
 Object_Stage::Object_Stage(std::string filename, VECTOR initPos, float scale, VECTOR angle)
 	: Object3D(initPos)
 {
-	mpModel = new Model(filename, initPos);
-	mpModel->SetScale(scale);
-	mpModel->SetRotation(angle);
+	model = new Model(filename, initPos);
+	model->SetScale(scale);
+	model->SetRotation(angle);
 }
 
 Object_Stage::~Object_Stage()
 {
-	if (mpModel != nullptr)
+	if (model != nullptr)
 	{
-		delete mpModel;
-		mpModel = nullptr;
+		delete model;
+		model = nullptr;
 	}
 }
 
 void Object_Stage::Update()
 {
-	if (mpModel != nullptr)
+	if (model != nullptr)
 	{
-		mpModel->Update();
+		model->Update();
 	}
 }
 
 void Object_Stage::Draw()
 {
-	if (mpModel != nullptr)
+	if (model != nullptr)
 	{
-		mpModel->Draw();
+		model->Draw();
 	}
 }
 
 void Object_Stage::SetScale(float scale)
 {
-	if (mpModel != nullptr)
+	if (model != nullptr)
 	{
-		mpModel->SetScale(scale);
+		model->SetScale(scale);
 	}
 }
 
 void Object_Stage::SetRotation(VECTOR angle)
 {
-	if (mpModel != nullptr)
+	if (model != nullptr)
 	{
-		mpModel->SetRotation(angle);
+		model->SetRotation(angle);
 	}
 }
 
 void Object_Stage::SetColor(float r, float g, float b, float a)
 {
-	if (mpModel != nullptr)
+	if (model != nullptr)
 	{
-		mpModel->SetColor(r, g, b, a);
+		model->SetColor(r, g, b, a);
 	}
 }

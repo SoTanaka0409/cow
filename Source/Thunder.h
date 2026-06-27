@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "DxLib.h"
 #include "Object3D.h"
 #include "EffekseerEffect.h"
@@ -78,19 +78,19 @@ public:
 	virtual void OnExit(Collider* collider, Collider* check) override;
 
 private:
-	VECTOR mPos;
-	int mWarningTimer;
-	int mStrikeTimer;
-	State mState;
-	int mIntervalTimer;
-	bool mActive;
+	VECTOR pos;
+	int warningTimer;
+	int strikeTimer;
+	State state;
+	int intervalTimer;
+	bool active;
 
 public:
-	EffekseerEffect* mpThunder;
-	EffekseerEffect* mpWarning;
-	EffekseerEffect* mpStun;
+	EffekseerEffect* thunder;
+	EffekseerEffect* warning;
+	EffekseerEffect* stun;
 
 	// 多段ヒットによるスタンの永続化を防ぐためのフラグ
-	bool mHasStunned;
-	int mStunEffectTimer;
+	bool hasStunned;
+	int stunEffectTimer;
 };

@@ -1,13 +1,13 @@
-﻿#include"GameTimer.h"
+#include"GameTimer.h"
 
 GameTimer::GameTimer(VECTOR pos, int timer, Tag_Num num)
 	: Time(timer)
 	, mvPosition(pos)
-	, mbFlag(false)
-	, mbStopFlag(false)
-	, mnTag(num)
+	, flag(false)
+	, stopFlag(false)
+	, tag(num)
 {
-	mLastTime = GetNowCount();
+	lastTime = GetNowCount();
 
 	scoreTextImage = LoadGraph("Resource/2D/rimit.png"); // 描画負荷軽減のため予め読み込む
 
@@ -36,7 +36,7 @@ GameTimer::~GameTimer()
 
 void GameTimer::Draw()
 {
-	if (mnTag == Tag_NoGame) return;
+	if (tag == Tag_NoGame) return;
 
 	// 解像度変更を考慮し、基準座標(mvPosition)からの相対位置で描画
 	DrawExtendGraph(
@@ -85,22 +85,22 @@ void GameTimer::Draw()
 
 void GameTimer::Update()
 {
-	if (mbStopFlag) return;
+	if (stopFlag) return;
 
 	int now = GetNowCount();
 
 	// フレームレート非依存で時間を計測するためGetNowCountの差分を使用
-	if (now - mLastTime >= 1000)
+	if (now - lastTime >= 1000)
 	{
-		mLastTime = now;
+		lastTime = now;
 		Time--;
 
 		// 0未満の表示やマイナス値によるバグを防ぐため0で下限ストップ
 		if (Time <= 0)
 		{
 			Time = 0;
-			mbFlag = true;
-			mbStopFlag = true;
+			flag = true;
+			stopFlag = true;
 		}
 	}
 }

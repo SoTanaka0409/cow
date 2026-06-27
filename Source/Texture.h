@@ -46,20 +46,20 @@ public:
 	// セッター・ゲッター群
 	void SetPosition(VECTOR centerPosition) { mvPosition = centerPosition; }
 	VECTOR GetPosition() { return mvPosition; }
-	int GetSizeX() { return mnSizeX; }
-	int GetSizeY() { return mnSizeY; }
-	int GetWidth() { return mNewGameW; }
-	int GetHeight() { return mNewGameH; }
+	int GetSizeX() { return sizeX; }
+	int GetSizeY() { return sizeY; }
+	int GetWidth() { return newGameW; }
+	int GetHeight() { return newGameH; }
 
 private:
-	int mnHandle;       // ロードした画像のグラフィックハンドル
+	int handle;       // ロードした画像のグラフィックハンドル
 	VECTOR mvPosition;  // 画面描画時の中心座標
-	int mnSizeX;        // 画像ファイル本来の横幅
-	int mnSizeY;        // 画像ファイル本来の縦幅
-	bool mnTransFlag;   // 背景の透過（透過チャンネル）を有効にするかどうかのフラグ
+	int sizeX;        // 画像ファイル本来の横幅
+	int sizeY;        // 画像ファイル本来の縦幅
+	bool transFlag;   // 背景の透過（透過チャンネル）を有効にするかどうかのフラグ
 
-	int mNewGameW;      // 指定された描画用の横幅
-	int mNewGameH;      // 指定された描画用の縦幅
+	int newGameW;      // 指定された描画用の横幅
+	int newGameH;      // 指定された描画用の縦幅
 };
 
 #endif

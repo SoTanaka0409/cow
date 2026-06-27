@@ -26,7 +26,7 @@ enum AnimationState
 // アニメーション状態とDXライブラリの登録ハンドルのマッピング情報構造体
 struct AnimationInfo
 {
-	AnimationState mState;    // アニメーション状態
-	int mnAnimationHandle;    // アタッチされているアニメーションのハンドル
+	AnimationState state;    // アニメーション状態
+	int animationHandle;    // アタッチされているアニメーションのハンドル
 };
 

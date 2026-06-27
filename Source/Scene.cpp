@@ -1,4 +1,4 @@
-﻿
+
 #include"Scene.h"
 #include"ObjectManager.h"
 #include"Master.h"
@@ -11,87 +11,87 @@
 Scene::Scene()
 {
 
-	mpObjectManager = new ObjectManager();
-	mpColliderManager = new ColliderManager();
-	mpGameManager = new GameManager();
-	mpCowManager = new CowManager();
-	mpAnimalManager = new AnimalManager();
-	mpFever = new Fever();
+	objectManager = new ObjectManager();
+	colliderManager = new ColliderManager();
+	gameManager = new GameManager();
+	cowManager = new CowManager();
+	animalManager = new AnimalManager();
+	fever = new Fever();
 
 
-	mfFadeAlpha = 0.0f;
-	mfFadeSpeed = 5.0f;
+	fadeAlpha = 0.0f;
+	fadeSpeed = 5.0f;
 }
 
 Scene::~Scene()
 {
 
-	if (mpObjectManager != nullptr)
+	if (objectManager != nullptr)
 	{
-		mpObjectManager->DeleteAll3D();
-		mpObjectManager->DeleteAll2D(); // シーン切り替え時のメモリリーク防止
-		delete mpObjectManager;
+		objectManager->DeleteAll3D();
+		objectManager->DeleteAll2D(); // シーン切り替え時のメモリリーク防止
+		delete objectManager;
 	}
 
 
-	if (mpColliderManager != nullptr)
+	if (colliderManager != nullptr)
 	{
-		mpColliderManager->DeleteAllCollider();
-		delete mpColliderManager;
+		colliderManager->DeleteAllCollider();
+		delete colliderManager;
 	}
 
 
-	if (mpGameManager != nullptr)
+	if (gameManager != nullptr)
 	{
-		delete mpGameManager;
+		delete gameManager;
 	}
-	if (mpCowManager != nullptr)
+	if (cowManager != nullptr)
 	{
-		delete mpCowManager;
+		delete cowManager;
 	}
-	if (mpFever != nullptr)
+	if (fever != nullptr)
 	{
-		delete mpFever;
+		delete fever;
 	}
-	if (mpAnimalManager != nullptr)
+	if (animalManager != nullptr)
 	{
-		delete mpAnimalManager;
+		delete animalManager;
 	}
 }
 
 void Scene::Draw()
 {
-	if (mpObjectManager != nullptr)
+	if (objectManager != nullptr)
 	{
-		mpObjectManager->Draw();
+		objectManager->Draw();
 	}
-	if (mpColliderManager != nullptr)
+	if (colliderManager != nullptr)
 	{
-		mpColliderManager->Draw(); // デバッグ用の当たり判定可視化
+		colliderManager->Draw(); // デバッグ用の当たり判定可視化
 	}
-	if (mpAnimalManager != nullptr)
+	if (animalManager != nullptr)
 	{
-		mpAnimalManager->Draw();
+		animalManager->Draw();
 	}
 }
 
 void Scene::Update()
 {
-	if (mpObjectManager != nullptr)
+	if (objectManager != nullptr)
 	{
-		mpObjectManager->Update();
+		objectManager->Update();
 	}
-	if (mpColliderManager != nullptr)
+	if (colliderManager != nullptr)
 	{
-		mpColliderManager->Update();
+		colliderManager->Update();
 	}
-	if (mpFever != nullptr)
+	if (fever != nullptr)
 	{
-		mpFever->Update();
+		fever->Update();
 	}
-	if (mpAnimalManager != nullptr)
+	if (animalManager != nullptr)
 	{
-		mpAnimalManager->Update();
+		animalManager->Update();
 	}
 }
 
@@ -101,13 +101,13 @@ void Scene::Fade(SceneFade fade)
 	if (fade == SceneFade::SceneFade_In)
 	{
 
-		mfFadeAlpha -= mfFadeSpeed;
-		if (mfFadeAlpha < 0) mfFadeAlpha = 0; 
+		fadeAlpha -= fadeSpeed;
+		if (fadeAlpha < 0) fadeAlpha = 0; 
 
 
-		if (mfFadeAlpha > 0)
+		if (fadeAlpha > 0)
 		{
-			SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)mfFadeAlpha);
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)fadeAlpha);
 			DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE); // 画面全体を暗転
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);          
 		}
@@ -116,11 +116,11 @@ void Scene::Fade(SceneFade fade)
 	else if (fade == SceneFade::SceneFade_Out)
 	{
 
-		mfFadeAlpha += mfFadeSpeed;
-		if (mfFadeAlpha > 255) mfFadeAlpha = 255; // DxLibの仕様によりアルファ値上限は255
+		fadeAlpha += fadeSpeed;
+		if (fadeAlpha > 255) fadeAlpha = 255; // DxLibの仕様によりアルファ値上限は255
 
 
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)mfFadeAlpha);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)fadeAlpha);
 		DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);          
 	}

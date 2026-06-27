@@ -24,9 +24,9 @@ public:
 	virtual void OnEnter(Collider* collider, Collider* check) override;
 
 public:
-	Model* mpModel;          // 餌の3Dモデルへのポインタ
+	Model* model;          // 餌の3Dモデルへのポインタ
 
 private:
-	GameTimer* mpGameTimer;  // 有効時間をカウントするタイマーオブジェクトへのポインタ
+	GameTimer* gameTimer;  // 有効時間をカウントするタイマーオブジェクトへのポインタ
 };
 

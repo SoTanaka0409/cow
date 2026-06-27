@@ -77,50 +77,50 @@ public:
 		AddSkillFlag = flag;
 		if (flag)
 		{
-			mpTexture->SetPosition(mPos1);
-			mpTexture2->SetPosition(mPos2);
-			mpTexture3->SetPosition(mPos3);
+			texture->SetPosition(pos1);
+			texture2->SetPosition(pos2);
+			texture3->SetPosition(pos3);
 
-			mSelectScale = 1.0f;
-			mSelectAnim = false;
-			mSelectedSkill = 0;
+			selectScale = 1.0f;
+			selectAnim = false;
+			selectedSkill = 0;
 
-			mOpenAnim = true;
+			openAnim = true;
 
-			mCard1Y = 1400.0f;
-			mCard2Y = 1500.0f;
-			mCard3Y = 1600.0f;
+			card1Y = 1400.0f;
+			card2Y = 1500.0f;
+			card3Y = 1600.0f;
 		}
 	}
 
 	bool AddSkillFlag;          // スキル選択画面が現在オープンしているかどうかのフラグ
 
 private:
-	Object3D* mpParent;         // 親アクター
+	Object3D* parent;         // 親アクター
 	SkillTag tag;               // スキルタグ
-	Texture* mpTexture;         // カード1（速度アップ）のテクスチャ
-	Texture* mpTexture2;        // カード2（餌にんじん）のテクスチャ
-	Texture* mpTexture3;        // カード3（吸引力アップ）のテクスチャ
+	Texture* texture;         // カード1（速度アップ）のテクスチャ
+	Texture* texture2;        // カード2（餌にんじん）のテクスチャ
+	Texture* texture3;        // カード3（吸引力アップ）のテクスチャ
 	float StatusDate;           // パラメータ一時変数
 	float Status_A;             // 吸引速度の合計強化値
 	float Status_S;             // 移動速度の合計強化値
 
-	int mHoverSkill;            // マウスがホバーしているカードの番号 (1?3)
-	int mFlashAlpha;            // 選択時のフラッシュ効果用アルファ値
-	bool mFlash;                // フラッシュ効果がアクティブかどうかのフラグ
+	int hoverSkill;            // マウスがホバーしているカードの番号 (1?3)
+	int flashAlpha;            // 選択時のフラッシュ効果用アルファ値
+	bool flash;                // フラッシュ効果がアクティブかどうかのフラグ
 
-	bool mSelectAnim;           // カードが画面外へフェードアウトするアニメーション中かどうかのフラグ
-	int mSelectedSkill;         // 選択されたカード番号
-	float mSelectScale;         // 選択アニメーション時のカードスケール
-	VECTOR mSelectPos;          // 選択されたカードの表示現在位置
+	bool selectAnim;           // カードが画面外へフェードアウトするアニメーション中かどうかのフラグ
+	int selectedSkill;         // 選択されたカード番号
+	float selectScale;         // 選択アニメーション時のカードスケール
+	VECTOR selectPos;          // 選択されたカードの表示現在位置
 
-	VECTOR mPos1;               // カード1の標準配置座標
-	VECTOR mPos2;               // カード2の標準配置座標
-	VECTOR mPos3;               // カード3の標準配置座標
+	VECTOR pos1;               // カード1の標準配置座標
+	VECTOR pos2;               // カード2の標準配置座標
+	VECTOR pos3;               // カード3の標準配置座標
 
-	bool mOpenAnim;             // カードが下からスライドインする登場アニメーション中かどうかのフラグ
-	float mCard1Y;              // カード1の現在Y座標
-	float mCard2Y;              // カード2の現在Y座標
-	float mCard3Y;              // カード3の 現在Y座標
+	bool openAnim;             // カードが下からスライドインする登場アニメーション中かどうかのフラグ
+	float card1Y;              // カード1の現在Y座標
+	float card2Y;              // カード2の現在Y座標
+	float card3Y;              // カード3の 現在Y座標
 };
 

@@ -70,10 +70,10 @@ public:
 	void SetColor(float r, float g, float b, float a = 1.0f);
 
 private:
-	int mnHandle;                 // DXライブラリの3Dモデルハンドル
+	int handle;                 // DXライブラリの3Dモデルハンドル
 	VECTOR mvPosition;            // 配置座標
 	VECTOR mvRotation;            // 回転値（ラジアン）
-	float mfScale;                // スケール
-	int mnChangeTextureHandle;    // テクスチャ差し替え時のグラフィックハンドル
+	float scale;                // スケール
+	int changeTextureHandle;    // テクスチャ差し替え時のグラフィックハンドル
 };
 

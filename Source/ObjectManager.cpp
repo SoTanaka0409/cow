@@ -1,4 +1,4 @@
-﻿#include "ObjectManager.h"
+#include "ObjectManager.h"
 #include "Master.h"
 #include "ColliderManager.h"
 
@@ -30,20 +30,20 @@ ObjectManager::~ObjectManager()
  */
 void ObjectManager::Update()
 {
-	for (auto itr = mObject3DList.begin(); itr != mObject3DList.end(); itr++)
+	for (auto itr = object3DList.begin(); itr != object3DList.end(); itr++)
 	{
 		(*itr)->Update();
 	}
 
-	for (auto itr = mObject2DList.begin(); itr != mObject2DList.end(); itr++)
+	for (auto itr = object2DList.begin(); itr != object2DList.end(); itr++)
 	{
 		(*itr)->Update();
 	}
 
 	// 半透明描画時のZソートで必要となるため、カメラとの距離を算出する
-	for (auto itr = mObject3DList.begin(); itr != mObject3DList.end(); itr++)
+	for (auto itr = object3DList.begin(); itr != object3DList.end(); itr++)
 	{
-		VECTOR cameraPos = Master::mpCamera->GetPosition();
+		VECTOR cameraPos = Master::camera->GetPosition();
 		VECTOR objPos = (*itr)->GetPosition();
 		(*itr)->SetCameraDistance(VSize(VSub(objPos, cameraPos)));
 	}
@@ -60,7 +60,7 @@ void ObjectManager::Update()
  */
 void ObjectManager::Draw()
 {
-	for (auto itr = mObject3DList.begin(); itr != mObject3DList.end(); itr++)
+	for (auto itr = object3DList.begin(); itr != object3DList.end(); itr++)
 	{
 		if ((*itr)->IsDrawFlag())
 		{
@@ -69,7 +69,7 @@ void ObjectManager::Draw()
 	}
 	ColliderManager::GetInstance()->Draw();
 
-	for (auto itr = mObject2DList.begin(); itr != mObject2DList.end(); itr++)
+	for (auto itr = object2DList.begin(); itr != object2DList.end(); itr++)
 	{
 		if ((*itr)->IsDrawFlag())
 		{
@@ -86,8 +86,8 @@ void ObjectManager::Draw()
  */
 void ObjectManager::AddObject(Object3D* object3D)
 {
-	mObject3DList.push_back(object3D);
-	mTagCache3D[object3D->GetTag()].push_back(object3D);
+	object3DList.push_back(object3D);
+	tagCache3D[object3D->GetTag()].push_back(object3D);
 }
 
 /*
@@ -98,7 +98,7 @@ void ObjectManager::AddObject(Object3D* object3D)
  */
 void ObjectManager::RemoveObjectNoDelete(Object3D* object3D)
 {
-	mObject3DList.remove(object3D);
+	object3DList.remove(object3D);
 	RebuildTagCache3D();
 }
 
@@ -110,8 +110,8 @@ void ObjectManager::RemoveObjectNoDelete(Object3D* object3D)
  */
 void ObjectManager::DeleteAll3D()
 {
-	if (mObject3DList.empty()) return;
-	for (auto itr = mObject3DList.begin(); itr != mObject3DList.end();)
+	if (object3DList.empty()) return;
+	for (auto itr = object3DList.begin(); itr != object3DList.end();)
 	{
 		(*itr)->SetDeleteFlag(true);
 		itr++;
@@ -129,11 +129,11 @@ void ObjectManager::DeleteAll3D()
 Object3D* ObjectManager::GetObject3DByTag(Object3D::Tag3D tag)
 {
 	auto itr = std::find_if(
-		mObject3DList.begin(),
-		mObject3DList.end(),
+		object3DList.begin(),
+		object3DList.end(),
 		[&](Object3D* obj) { return obj->GetTag() == tag; }
 	);
-	if (itr != mObject3DList.end())
+	if (itr != object3DList.end())
 	{
 		return (*itr);
 	}
@@ -148,7 +148,7 @@ Object3D* ObjectManager::GetObject3DByTag(Object3D::Tag3D tag)
  */
 const std::vector<Object3D*>& ObjectManager::GetObject3DListByTag(Object3D::Tag3D tag)
 {
-	return mTagCache3D[tag];
+	return tagCache3D[tag];
 }
 
 /*
@@ -160,13 +160,13 @@ const std::vector<Object3D*>& ObjectManager::GetObject3DListByTag(Object3D::Tag3
 void ObjectManager::DeleteAll3DIfNeeded()
 {
 	bool isDeleted = false;
-	if (mObject3DList.empty()) return;
-	for (auto itr = mObject3DList.begin(); itr != mObject3DList.end();)
+	if (object3DList.empty()) return;
+	for (auto itr = object3DList.begin(); itr != object3DList.end();)
 	{
 		if ((*itr)->IsDeleteFlag())
 		{
 			Object3D* temp = *itr;
-			itr = mObject3DList.erase(itr);
+			itr = object3DList.erase(itr);
 			delete temp;
 			isDeleted = true;
 		}
@@ -189,8 +189,8 @@ void ObjectManager::DeleteAll3DIfNeeded()
  */
 void ObjectManager::AddObject(Object2D* object2D)
 {
-	mObject2DList.push_back(object2D);
-	mTagCache2D[object2D->GetTag()].push_back(object2D);
+	object2DList.push_back(object2D);
+	tagCache2D[object2D->GetTag()].push_back(object2D);
 }
 
 /*
@@ -201,13 +201,13 @@ void ObjectManager::AddObject(Object2D* object2D)
  */
 void ObjectManager::DeleteAll2D()
 {
-	for (auto itr = mObject2DList.begin(); itr != mObject2DList.end();)
+	for (auto itr = object2DList.begin(); itr != object2DList.end();)
 	{
 		Object2D* temp = *itr;
-		itr = mObject2DList.erase(itr);
+		itr = object2DList.erase(itr);
 		delete temp;
 	}
-	mTagCache2D.clear();
+	tagCache2D.clear();
 }
 
 /*
@@ -219,12 +219,12 @@ void ObjectManager::DeleteAll2D()
 void ObjectManager::DeleteAll2DIfNeeded()
 {
 	bool isDeleted = false;
-	for (auto itr = mObject2DList.begin(); itr != mObject2DList.end();)
+	for (auto itr = object2DList.begin(); itr != object2DList.end();)
 	{
 		if ((*itr)->IsDeleteFlag())
 		{
 			Object2D* temp = *itr;
-			itr = mObject2DList.erase(itr);
+			itr = object2DList.erase(itr);
 			delete temp;
 			isDeleted = true;
 		}
@@ -248,12 +248,12 @@ void ObjectManager::DeleteAll2DIfNeeded()
 Object2D* ObjectManager::GetObject2DByTag(Object2D::Tag2D tag)
 {
 	auto itr = std::find_if(
-		mObject2DList.begin(),
-		mObject2DList.end(),
+		object2DList.begin(),
+		object2DList.end(),
 		[&](Object2D* obj) { return obj->GetTag() == tag; }
 	);
 
-	if (itr != mObject2DList.end())
+	if (itr != object2DList.end())
 	{
 		return (*itr);
 	}
@@ -268,7 +268,7 @@ Object2D* ObjectManager::GetObject2DByTag(Object2D::Tag2D tag)
  */
 const std::vector<Object2D*>& ObjectManager::GetObject2DListByTag(Object2D::Tag2D tag)
 {
-	return mTagCache2D[tag];
+	return tagCache2D[tag];
 }
 
 /*
@@ -279,9 +279,9 @@ const std::vector<Object2D*>& ObjectManager::GetObject2DListByTag(Object2D::Tag2
  */
 void ObjectManager::RebuildTagCache3D()
 {
-	mTagCache3D.clear();
-	for (auto obj : mObject3DList) {
-		mTagCache3D[obj->GetTag()].push_back(obj);
+	tagCache3D.clear();
+	for (auto obj : object3DList) {
+		tagCache3D[obj->GetTag()].push_back(obj);
 	}
 }
 
@@ -293,8 +293,8 @@ void ObjectManager::RebuildTagCache3D()
  */
 void ObjectManager::RebuildTagCache2D()
 {
-	mTagCache2D.clear();
-	for (auto obj : mObject2DList) {
-		mTagCache2D[obj->GetTag()].push_back(obj);
+	tagCache2D.clear();
+	for (auto obj : object2DList) {
+		tagCache2D[obj->GetTag()].push_back(obj);
 	}
 }

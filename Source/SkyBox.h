@@ -49,6 +49,6 @@ public:
 	void SetModelTexture(std::string filename, int index = 0);
 
 private:
-	Model* mpModel;          // スカイボックスを構成する3Dモデルへのポインタ
+	Model* model;          // スカイボックスを構成する3Dモデルへのポインタ
 };
 

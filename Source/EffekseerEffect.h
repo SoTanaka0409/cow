@@ -72,7 +72,7 @@ public:
 	void SetScale(VECTOR scale) { mvScale = scale; }
 	VECTOR GetScale() { return mvScale; }
 
-	void SetLoop(bool mfLoop) { LoopFlag = mfLoop; }
+	void SetLoop(bool loop) { LoopFlag = loop; }
 
 	/*
 	 * @brief 現在エフェクトが再生中であるかを判定する

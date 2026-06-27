@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "Object3D.h"
 #include "EffekseerEffect.h"
 
@@ -70,19 +70,19 @@ public:
 	 * [出力] なし
 	 * [副作用] 状態フラグの更新。次回のUpdate時にスケールと当たり判定のサイズが拡張される
 	 */
-	void SetCrisisMode(bool isCrisis) { mIsCrisis = isCrisis; }
+	void SetCrisisMode(bool isCrisis) { isCrisis = isCrisis; }
 
 private:
-	VECTOR mPos;
-	VECTOR mVelocity;
-	int mMoveTimer;
-	float mSpeed;
+	VECTOR pos;
+	VECTOR velocity;
+	int moveTimer;
+	float speed;
 	EffekseerEffect* Tatu;
 
-	bool mIsCrisis;
-	float mCurrentScaleRatio;
-	float mCurrentRadius;
+	bool isCrisis;
+	float currentScaleRatio;
+	float currentRadius;
 
-	int mEffectTimer;
-	int mTatumakiSpawnTimer;
+	int effectTimer;
+	int tatumakiSpawnTimer;
 };

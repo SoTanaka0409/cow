@@ -1,11 +1,11 @@
-﻿#include "Cow_Tutorial.h"
+#include "Cow_Tutorial.h"
 
 Cow_Tutorial::Cow_Tutorial(std::string filename, VECTOR initPos)
 	: CowMove(filename, initPos)
 {
-	mfScore = 30;
+	score = 30;
 	// 短時間でレベルアップを体験させるため経験値を高く設定
-	mfXp = 150;
+	xp = 150;
 	SetTag_cow(CowMove::Cow_T);
 }
 

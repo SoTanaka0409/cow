@@ -1,9 +1,9 @@
-﻿#include"SoundManager.h"
+#include"SoundManager.h"
 #include"DxLib.h"
 
 SoundManager::SoundManager()
-    : mnNowPlayingBgm((SOUND_BGM)-1)
-    , mnNowPlayingSe((SOUND_SE)-1)
+    : nowPlayingBgm((SOUND_BGM)-1)
+    , nowPlayingSe((SOUND_SE)-1)
 {
 }
 
@@ -47,17 +47,17 @@ void SoundManager::Initialize()
  */
 void SoundManager::Finalize()
 {
-    for (auto it = mnBgmHandleList.begin(); it != mnBgmHandleList.end(); it++)
+    for (auto it = bgmHandleList.begin(); it != bgmHandleList.end(); it++)
     {
         DeleteSoundMem(it->second);
     }
-    mnBgmHandleList.clear();
+    bgmHandleList.clear();
 
-    for (auto it = mnSeHandleList.begin(); it != mnSeHandleList.end(); it++)
+    for (auto it = seHandleList.begin(); it != seHandleList.end(); it++)
     {
         DeleteSoundMem(it->second);
     }
-    mnSeHandleList.clear();
+    seHandleList.clear();
 }
 
 /*
@@ -69,19 +69,19 @@ void SoundManager::Finalize()
 void SoundManager::PlayBGM(SOUND_BGM bgm, bool isTop)
 {
     // 同一曲が指定された場合、曲の不自然な再開を防ぐため処理をスキップ
-    if (mnNowPlayingBgm == bgm && !isTop)
+    if (nowPlayingBgm == bgm && !isTop)
     {
         return;
     }
 
-    for (auto it = mnBgmHandleList.begin(); it != mnBgmHandleList.end(); it++)
+    for (auto it = bgmHandleList.begin(); it != bgmHandleList.end(); it++)
     {
         if (it->first == bgm)
         {
             // 設定されている最新のマスター音量で再生を開始する
-            ChangeVolumeSoundMem(mMasterBGMVolume, it->second);
+            ChangeVolumeSoundMem(masterBGMVolume, it->second);
             PlaySoundMem(it->second, DX_PLAYTYPE_LOOP, isTop);
-            mnNowPlayingBgm = bgm;
+            nowPlayingBgm = bgm;
             break;
         }
     }
@@ -95,13 +95,13 @@ void SoundManager::PlayBGM(SOUND_BGM bgm, bool isTop)
  */
 void SoundManager::PlaySE(SOUND_SE se)
 {
-    for (auto it = mnSeHandleList.begin(); it != mnSeHandleList.end(); it++)
+    for (auto it = seHandleList.begin(); it != seHandleList.end(); it++)
     {
         if (it->first == se)
         {
             // SEは複数同時に鳴る可能性があるため並列再生を指定
             PlaySoundMem(it->second, DX_PLAYTYPE_BACK);
-            mnNowPlayingSe = se;
+            nowPlayingSe = se;
             break;
         }
     }
@@ -116,7 +116,7 @@ void SoundManager::PlaySE(SOUND_SE se)
 void SoundManager::LoadBGM(SOUND_BGM bgm, std::string filename)
 {
     // 無駄なメモリ消費を防ぐため、既に登録済みの場合はスキップ
-    for (auto it = mnBgmHandleList.begin(); it != mnBgmHandleList.end(); it++)
+    for (auto it = bgmHandleList.begin(); it != bgmHandleList.end(); it++)
     {
         if (it->first == bgm)
         {
@@ -130,8 +130,8 @@ void SoundManager::LoadBGM(SOUND_BGM bgm, std::string filename)
     {
         return;
     }
-    ChangeVolumeSoundMem(mMasterBGMVolume, handle);
-    mnBgmHandleList.push_back(std::pair<SOUND_BGM, int>(bgm, handle));
+    ChangeVolumeSoundMem(masterBGMVolume, handle);
+    bgmHandleList.push_back(std::pair<SOUND_BGM, int>(bgm, handle));
 }
 
 /*
@@ -143,7 +143,7 @@ void SoundManager::LoadBGM(SOUND_BGM bgm, std::string filename)
 void SoundManager::LoadSE(SOUND_SE se, std::string filename)
 {
     // 無駄なメモリ消費を防ぐため、既に登録済みの場合はスキップ
-    for (auto it = mnSeHandleList.begin(); it != mnSeHandleList.end(); it++)
+    for (auto it = seHandleList.begin(); it != seHandleList.end(); it++)
     {
         if (it->first == se)
         {
@@ -157,8 +157,8 @@ void SoundManager::LoadSE(SOUND_SE se, std::string filename)
     {
         return;
     }
-    ChangeVolumeSoundMem(mMasterSEVolume, handle);
-    mnSeHandleList.push_back(std::pair<SOUND_SE, int>(se, handle));
+    ChangeVolumeSoundMem(masterSEVolume, handle);
+    seHandleList.push_back(std::pair<SOUND_SE, int>(se, handle));
 }
 
 /*
@@ -169,9 +169,9 @@ void SoundManager::LoadSE(SOUND_SE se, std::string filename)
  */
 void SoundManager::StopBGM()
 {
-    for (auto it = mnBgmHandleList.begin(); it != mnBgmHandleList.end(); it++)
+    for (auto it = bgmHandleList.begin(); it != bgmHandleList.end(); it++)
     {
-        if (it->first == mnNowPlayingBgm)
+        if (it->first == nowPlayingBgm)
         {
             // DxLib側で既に停止している場合のエラーを回避
             if (CheckSoundMem(it->second))
@@ -191,7 +191,7 @@ void SoundManager::StopBGM()
  */
 void SoundManager::SetBGMVolume(int volume)
 {
-    for (auto it = mnBgmHandleList.begin(); it != mnBgmHandleList.end(); it++)
+    for (auto it = bgmHandleList.begin(); it != bgmHandleList.end(); it++)
     {
         ChangeVolumeSoundMem(volume, it->second);
     }
@@ -205,7 +205,7 @@ void SoundManager::SetBGMVolume(int volume)
  */
 void SoundManager::SetSEVolume(int volume)
 {
-    for (auto it = mnSeHandleList.begin(); it != mnSeHandleList.end(); it++)
+    for (auto it = seHandleList.begin(); it != seHandleList.end(); it++)
     {
         ChangeVolumeSoundMem(volume, it->second);
     }
@@ -222,8 +222,8 @@ void SoundManager::SetMasterBGMVolume(int volume)
     // DxLibの音量指定範囲(0-255)外の値を防ぐためのクランプ
     if (volume < 0) volume = 0;
     if (volume > 255) volume = 255;
-    mMasterBGMVolume = volume;
-    SetBGMVolume(mMasterBGMVolume);
+    masterBGMVolume = volume;
+    SetBGMVolume(masterBGMVolume);
 }
 
 /*
@@ -237,6 +237,6 @@ void SoundManager::SetMasterSEVolume(int volume)
     // DxLibの音量指定範囲(0-255)外の値を防ぐためのクランプ
     if (volume < 0) volume = 0;
     if (volume > 255) volume = 255;
-    mMasterSEVolume = volume;
-    SetSEVolume(mMasterSEVolume);
+    masterSEVolume = volume;
+    SetSEVolume(masterSEVolume);
 }

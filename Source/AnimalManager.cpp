@@ -1,4 +1,4 @@
-﻿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include "AnimalManager.h"
 #include "AnimalMove.h"
 #include "Player3D.h"
@@ -25,15 +25,15 @@ AnimalManager::AnimalManager()
  */
 AnimalManager::~AnimalManager()
 {
-	mAnimals.clear();
-	for (auto& pair : mPools)
+	animals.clear();
+	for (auto& pair : pools)
 	{
 		for (auto animal : pair.second)
 		{
 			delete animal;
 		}
 	}
-	mPools.clear();
+	pools.clear();
 }
 
 /*
@@ -51,19 +51,19 @@ void AnimalManager::SpawnAnimal(std::string filename, VECTOR pos, float scale, A
 		VECTOR spawnPos = VGet(randX, 0.0f, randZ);
 		if (tag == AnimalMove::Animal_1)
 		{
-			if (!mPools[tag].empty())
+			if (!pools[tag].empty())
 			{
-				auto animal = mPools[tag].back();
-				mPools[tag].pop_back();
+				auto animal = pools[tag].back();
+				pools[tag].pop_back();
 				animal->Reset(spawnPos);
 				animal->SetScale(scale);
-				mAnimals.push_back(animal);
+				animals.push_back(animal);
 			}
 			else
 			{
 				auto newAnimal = new Animal(filename, spawnPos);
 				newAnimal->SetScale(scale);
-				mAnimals.push_back(newAnimal);
+				animals.push_back(newAnimal);
 			}
 		}
 	}
@@ -77,7 +77,7 @@ void AnimalManager::SpawnAnimal(std::string filename, VECTOR pos, float scale, A
  */
 void AnimalManager::Update()
 {
-	for (auto animal : mAnimals)
+	for (auto animal : animals)
 	{
 		animal->Update();
 	}
@@ -102,16 +102,16 @@ void AnimalManager::Draw()
  */
 void AnimalManager::EraseAnimal()
 {
-	if (!mAnimals.empty())
+	if (!animals.empty())
 	{
-		for (auto it = mAnimals.begin(); it != mAnimals.end();)
+		for (auto it = animals.begin(); it != animals.end();)
 		{
 			if ((*it)->GetCharacterDelete())
 			{
 				auto animal = *it;
 				animal->Deactivate();
-				mPools[animal->GetTag_animal()].push_back(animal);
-				it = mAnimals.erase(it);
+				pools[animal->GetTag_animal()].push_back(animal);
+				it = animals.erase(it);
 			}
 			else
 			{

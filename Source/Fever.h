@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 // ゲーム内のフィーバー状態（一定時間吸引強化・金牛の連続出現）を管理するクラス
 class Fever
@@ -56,10 +56,10 @@ public:
 private:
 	int dropTime;       // 難易度およびスコア調整のための金牛スポーン間隔
 	int DropCount;      // スポーン周期を管理するためのフレームカウンター
-	int mGauge;         // UI表示やフィーバー発動判定に用いるゲージ蓄積値
-	int mTimer;         // フィーバー終了判定に用いる残り継続フレーム数
-	bool mIsFever;      // 他クラスから状態を参照・分岐させるためのフラグ
+	int gauge;         // UI表示やフィーバー発動判定に用いるゲージ蓄積値
+	int timer;         // フィーバー終了判定に用いる残り継続フレーム数
+	bool isFever;      // 他クラスから状態を参照・分岐させるためのフラグ
 	float playerStatus;
-	class Player3D* mpFeverPlayer; // 終了時にステータスを復元するための対象プレイヤーポインタ
+	class Player3D* feverPlayer; // 終了時にステータスを復元するための対象プレイヤーポインタ
 };
 

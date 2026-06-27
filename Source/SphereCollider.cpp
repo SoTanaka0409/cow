@@ -5,7 +5,7 @@ SphereCollider::SphereCollider(Object3D* parent, VECTOR center, float radius)
 	: Collider(parent)
 {
 	mvPosition = center;
-	mfRadius = radius;
+	radius = radius;
 }
 
 SphereCollider::~SphereCollider()
@@ -23,10 +23,10 @@ void SphereCollider::Update(Collider* check)
 		{
 			bool isHit = HitCheck_Sphere_Capsule(
 				this->mvPosition,
-				this->mfRadius,
+				this->radius,
 				capsule->mvPosition,
 				capsule->mvPosition2,
-				capsule->mfRadius
+				capsule->radius
 			);
 
 			HitCheck(check, isHit);
@@ -38,9 +38,9 @@ void SphereCollider::Update(Collider* check)
 		{
 			bool isHit = HitCheck_Sphere_Sphere(
 				this->mvPosition,
-				this->mfRadius,
+				this->radius,
 				sphere->mvPosition,
-				sphere->mfRadius
+				sphere->radius
 			);
 		
 
@@ -54,7 +54,7 @@ void SphereCollider::Draw()
 	// ‹…‚Ì•`‰æˆ—
 	DrawSphere3D(
 		mvPosition,
-		mfRadius,
+		radius,
 		8,
 		GetColor(255, 255, 255),
 		GetColor(255, 255, 255),

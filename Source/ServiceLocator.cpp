@@ -1,4 +1,4 @@
-﻿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include "Master.h"
 #include "SceneManager.h"
 #include "Scene.h"
@@ -12,9 +12,9 @@
 Scene* ServiceLocator::GetCurrentScene()
 {
 	// 未初期化時のクラッシュを防ぐためポインタの有効性を検証
-	if (Master::mpSceneManager != nullptr)
+	if (Master::sceneManager != nullptr)
 	{
-		return Master::mpSceneManager->GetCurrentScene();
+		return Master::sceneManager->GetCurrentScene();
 	}
 	return nullptr;
 }
@@ -65,7 +65,7 @@ CowManager* ServiceLocator::GetCowManager()
 	Scene* scene = GetCurrentScene();
 	if (scene != nullptr)
 	{
-		return scene->mpCowManager;
+		return scene->cowManager;
 	}
 	return nullptr;
 }
@@ -75,7 +75,7 @@ AnimalManager* ServiceLocator::GetAnimalManager()
 	Scene* scene = GetCurrentScene();
 	if (scene != nullptr)
 	{
-		return scene->mpAnimalManager;
+		return scene->animalManager;
 	}
 	return nullptr;
 }
@@ -85,7 +85,7 @@ GameManager* ServiceLocator::GetGameManager()
 	Scene* scene = GetCurrentScene();
 	if (scene != nullptr)
 	{
-		return scene->mpGameManager;
+		return scene->gameManager;
 	}
 	return nullptr;
 }
@@ -95,7 +95,7 @@ Fever* ServiceLocator::GetFever()
 	Scene* scene = GetCurrentScene();
 	if (scene != nullptr)
 	{
-		return scene->mpFever;
+		return scene->fever;
 	}
 	return nullptr;
 }

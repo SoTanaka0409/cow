@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "Scene.h"
 #include "ModelUtility.h"
 #include "CowManager.h"
@@ -48,7 +48,7 @@ public:
 	void Finalize() override;
 
 	void SetCamera(Camera* camera);
-	void OnCowSucked() { mIsCowSucked = true; } // 回収成功を外部から受け取るコールバック
+	void OnCowSucked() { isCowSucked = true; } // 回収成功を外部から受け取るコールバック
 
 private:
 	// [入力] なし [出力] なし [副作用] 境界用オブジェクトを配置
@@ -73,24 +73,24 @@ private:
 	int fontHandle; // 案内用フォント
 	int timerCount; // 汎用待機タイマー
 
-	State mState = STATE_MOVE;
+	State state = STATE_MOVE;
 	State_fever mfeverstate;
 
-	Texture* mpTexture;
-	Texture* mpTexture2;
-	Texture* mpTexture3;
-	Texture* mpTexture4;
-	Texture* mpTexture5;
-	Texture* mpTexture6;
+	Texture* texture;
+	Texture* texture2;
+	Texture* texture3;
+	Texture* texture4;
+	Texture* texture5;
+	Texture* texture6;
 
 	int mouseX;
 
 	Thunder* thunder;
-	Camera* mpCamera = nullptr;
-	Combo* mpCombo = nullptr;
+	Camera* camera = nullptr;
+	Combo* combo = nullptr;
 
-	bool mIsCowSucked = false;
+	bool isCowSucked = false;
 	bool CowDelete;
-	bool mbSkillFlag{};
+	bool skillFlag{};
 	bool mbfeverFlag{};
 };

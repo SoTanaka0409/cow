@@ -24,6 +24,6 @@ public:
 	void SetColor(float r, float g, float b, float a = 1.0f);
 
 private:
-	Model* mpModel;          // 制御対象の3Dモデルへのポインタ
+	Model* model;          // 制御対象の3Dモデルへのポインタ
 };
 

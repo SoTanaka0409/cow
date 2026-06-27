@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include"Scene.h"
 
 // シーン遷移およびライフサイクルを管理するクラス
@@ -64,18 +64,18 @@ public:
 	 */
 	void ChangeSceneIfNeeded();
 
-	void SetNextScene(SCENE_TYPE next) { mnNextSceneType = next; }
+	void SetNextScene(SCENE_TYPE next) { nextSceneType = next; }
 	void SetSceneHard(bool Hard) { SceneHard = Hard; }
 	bool GetSceneHard() { return SceneHard; }
 	void SetSceneNormal(bool Normal) { SceneNormal = Normal; }
 	bool GetSceneNormal() { return SceneNormal; }
-	Scene* GetCurrentScene() { return mpCurrentScene; }
-	SCENE_TYPE GetSceneType() const { return mnSceneType; }
+	Scene* GetCurrentScene() { return currentScene; }
+	SCENE_TYPE GetSceneType() const { return sceneType; }
 
 private:
-	SCENE_TYPE mnSceneType;
-	SCENE_TYPE mnNextSceneType;
-	Scene* mpCurrentScene;
+	SCENE_TYPE sceneType;
+	SCENE_TYPE nextSceneType;
+	Scene* currentScene;
 
 	bool SceneHard;
 	bool SceneNormal;

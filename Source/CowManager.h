@@ -14,11 +14,11 @@ public:
 
 	/*
 	 * @brief 指定された種類の牛をランダムな位置に複数生成する（最大30匹制限あり）
-	 * [入力] filename: モデルのファイルパス, pos: 出現中心基準座標, scale: モデルの拡大率, tag: 牛の種類識別タグ, count: 生成個数, mfever: フィーバー中かどうか
+	 * [入力] filename: モデルのファイルパス, pos: 出現中心基準座標, scale: モデルの拡大率, tag: 牛の種類識別タグ, count: 生成個数, fever: フィーバー中かどうか
 	 * [出力] なし
 	 * [副作用] 動的メモリ確保された牛オブジェクトが管理リストに追加されるか、プールから復帰する
 	 */
-	void SpawnCow(std::string filename, VECTOR pos, float scale, CowMove::Tag_cow tag, int count, bool mfever = false);
+	void SpawnCow(std::string filename, VECTOR pos, float scale, CowMove::Tag_cow tag, int count, bool fever = false);
 
 	/*
 	 * @brief 管理している全ての牛の更新および不要な牛のリスト整理を行う
@@ -37,7 +37,7 @@ public:
 	void Draw();
 
 	/*
-	 * @brief 削除フラグ(mbDeleteFlag)が立っている牛オブジェクトを管理リストから除外しプールへ返す
+	 * @brief 削除フラグ(deleteFlag)が立っている牛オブジェクトを管理リストから除外しプールへ返す
 	 * [入力] なし
 	 * [出力] なし
 	 * [副作用] リストからのポインタ除外、プールへの追加
@@ -45,6 +45,6 @@ public:
 	void EraseCow();
 
 private:
-	std::vector<CowMove*>mCows;         // 生成された牛オブジェクトのポインタ配列
-	std::map<CowMove::Tag_cow, std::vector<CowMove*>> mPools; // オブジェクトプール
+	std::vector<CowMove*>cows;         // 生成された牛オブジェクトのポインタ配列
+	std::map<CowMove::Tag_cow, std::vector<CowMove*>> pools; // オブジェクトプール
 };

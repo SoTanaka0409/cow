@@ -24,12 +24,12 @@ public:
 
 public:
 	// カメラからの距離を設定する
-	void SetCameraDistance(float distance) { mfCurrentCameraDistance = distance; }
+	void SetCameraDistance(float distance) { currentCameraDistance = distance; }
 
 	// カメラからの距離を基準に遠い順（Z値の降順）でソートするための比較関数
 	struct CompareZOrder {
 		bool operator()(Object3D* a, Object3D* b) const {
-			return a->mfCurrentCameraDistance > b->mfCurrentCameraDistance;
+			return a->currentCameraDistance > b->currentCameraDistance;
 		}
 	};
 
@@ -83,25 +83,25 @@ public:
 	void SetRotation(VECTOR rot) { mvRotation = rot; }
 	VECTOR GETRotation() { return mvRotation; }
 
-	void SetDeleteFlag(bool flag) { mbDeleteFlag = flag; }
-	bool IsDeleteFlag() { return mbDeleteFlag; }
+	void SetDeleteFlag(bool flag) { deleteFlag = flag; }
+	bool IsDeleteFlag() { return deleteFlag; }
 
-	void SetDrawFlag(bool flag) { mbDrawFlag = flag; }
-	bool IsDrawFlag() { return mbDrawFlag; }
+	void SetDrawFlag(bool flag) { drawFlag = flag; }
+	bool IsDrawFlag() { return drawFlag; }
 
-	void SetTag(Tag3D tag) { mnTag = tag; }
-	Tag3D GetTag() { return mnTag; }
+	void SetTag(Tag3D tag) { tag = tag; }
+	Tag3D GetTag() { return tag; }
 
 protected:
 	VECTOR mvPosition;                  // 現在の座標
 	VECTOR mvRotation;                  // 回転角度
 	VECTOR mvOldPosition;               // 1フレーム前の座標
-	CapsuleCollider* mpCapsuleCollider; // 所有するカプセルコライダー
-	float mfRadius;                     // 簡易的な衝突半径
+	CapsuleCollider* capsuleCollider; // 所有するカプセルコライダー
+	float radius;                     // 簡易的な衝突半径
 
 private:
-	bool mbDeleteFlag;                  // 削除フラグ（trueでマネージャーから破棄される）
-	Tag3D mnTag;                        // オブジェクト識別タグ
-	bool mbDrawFlag;                    // 描画フラグ
-	float mfCurrentCameraDistance;      // カメラからこのオブジェクトまでの距離
+	bool deleteFlag;                  // 削除フラグ（trueでマネージャーから破棄される）
+	Tag3D tag;                        // オブジェクト識別タグ
+	bool drawFlag;                    // 描画フラグ
+	float currentCameraDistance;      // カメラからこのオブジェクトまでの距離
 };

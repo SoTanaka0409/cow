@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include<string>
 #include<vector>
 
@@ -106,8 +106,8 @@ public:
      */
     void SetSEVolume(int volume);
 
-    int GetMasterBGMVolume() const { return mMasterBGMVolume; }
-    int GetMasterSEVolume() const { return mMasterSEVolume; }
+    int GetMasterBGMVolume() const { return masterBGMVolume; }
+    int GetMasterSEVolume() const { return masterSEVolume; }
 
     /*
      * システム設定などで一括変更されるBGMマスター音量を適用する
@@ -126,13 +126,13 @@ public:
     void SetMasterSEVolume(int volume);
 
 private:
-    int mMasterBGMVolume = 255;
-    int mMasterSEVolume = 255;
+    int masterBGMVolume = 255;
+    int masterSEVolume = 255;
 
     // 停止処理や二重再生防止の判定に用いる状態保持
-    SOUND_BGM mnNowPlayingBgm;
-    SOUND_SE mnNowPlayingSe;
+    SOUND_BGM nowPlayingBgm;
+    SOUND_SE nowPlayingSe;
 
-    std::vector<std::pair<SOUND_BGM, int>> mnBgmHandleList;
-    std::vector<std::pair<SOUND_SE, int>> mnSeHandleList;
+    std::vector<std::pair<SOUND_BGM, int>> bgmHandleList;
+    std::vector<std::pair<SOUND_SE, int>> seHandleList;
 };

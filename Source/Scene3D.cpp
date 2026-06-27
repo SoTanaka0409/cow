@@ -1,4 +1,4 @@
-﻿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include"Scene3D.h"
 #include"InputManager.h"
 #include"ObjectManager.h"
@@ -21,14 +21,14 @@ Tatumaki* tatumaki = nullptr;   // ?X?e?[?W???????????I?u?W?F?N?g?|?C???^
 
 Scene3D::Scene3D()
 {
-	mMassSpawnTimer = 0;
-	mFontBackGraph = LoadGraph("Resource/2D/fontback.png");
+	massSpawnTimer = 0;
+	fontBackGraph = LoadGraph("Resource/2D/fontback.png");
 }
 
 Scene3D::~Scene3D()
 {
-	DeleteGraph(mFontBackGraph); // ?V?[????L??????\?[?X?????
-	// ?? mpCowManager ?? thunder, tatumaki ???? Object3D ??p??????I?u?W?F?N?g??A
+	DeleteGraph(fontBackGraph); // ?V?[????L??????\?[?X?????
+	// ?? cowManager ?? thunder, tatumaki ???? Object3D ??p??????I?u?W?F?N?g??A
 	// ???N???X Scene ??f?X?g???N?^?????? ObjectManager ??????????I?? delete ???????A
 	// ???????蓮 delete ????d????i?N???b?V???????j??h??????s???????B
 }
@@ -41,12 +41,12 @@ Scene3D::~Scene3D()
  */
 void Scene3D::Initialize()
 {
-	Master::mnCaughtCowCount = 0;
-	mFadeState = SceneFade_In;
+	Master::caughtCowCount = 0;
+	fadeState = SceneFade_In;
 	SetFadeAlpha(255.0f);
 
-	Master::mpSoundManager->PlayBGM(SoundManager::BGM_GAME);
-	Master::mpSoundManager->SetBGMVolume(120);
+	Master::soundManager->PlayBGM(SoundManager::BGM_GAME);
+	Master::soundManager->SetBGMVolume(120);
 	
 	// ?}?b?v???E??????????????????????A?Z?b?g???????
 	for (int i = 0; i < 6; i++)
@@ -126,12 +126,12 @@ void Scene3D::Initialize()
 	VECTOR spawnPos = Utility::StageSize; // スポーン初期位置
 
 	// 初期ステージの生物を配置
-	mpCowManager->SpawnCow(GameConstants::COW_DEFAULT.modelPath, spawnPos, 50.0f, CowMove::Cow_1, 10);
-	mpCowManager->SpawnCow(GameConstants::COW_GOLD.modelPath, spawnPos, 50.0f, CowMove::Cow_gold, 2);
-	mpAnimalManager->SpawnAnimal(GameConstants::ANIMAL_CHICKEN.modelPath, spawnPos, 50.0f, AnimalMove::Animal_1, 5);
-	mpAnimalManager->SpawnAnimal(GameConstants::ANIMAL_BEAR.modelPath, spawnPos, 50.0f, AnimalMove::Animal_1, 5);
+	cowManager->SpawnCow(GameConstants::COW_DEFAULT.modelPath, spawnPos, 50.0f, CowMove::Cow_1, 10);
+	cowManager->SpawnCow(GameConstants::COW_GOLD.modelPath, spawnPos, 50.0f, CowMove::Cow_gold, 2);
+	animalManager->SpawnAnimal(GameConstants::ANIMAL_CHICKEN.modelPath, spawnPos, 50.0f, AnimalMove::Animal_1, 5);
+	animalManager->SpawnAnimal(GameConstants::ANIMAL_BEAR.modelPath, spawnPos, 50.0f, AnimalMove::Animal_1, 5);
 	
-	mpPhase = Normal;
+	phase = Normal;
 
 	auto skybox = new SkyBox("Resource/3D/SkyBox/SkyBox.mv1", VGet(0, 0, 0));
 	skybox->SetScale(30.0f);
@@ -157,26 +157,26 @@ void Scene3D::Update()
 	
 	Scene::Update();
 
-	mpCowManager->Update();
-	mpGameManager->Update();
+	cowManager->Update();
+	gameManager->Update();
 	PhaseUpdate();
 	tatumaki->Update();
 
 	// 制限時間終了でリザルト画面へのフェード開始
 	if (ServiceLocator::GetGameManager()->GetGameTimer()->GetTime() <= 0)
 	{
-		mFadeState = SceneFade_Out;
-		mNextScene = SceneManager::SCENE_RESULT;
+		fadeState = SceneFade_Out;
+		nextScene = SceneManager::SCENE_RESULT;
 	}
 
-	if (mFadeState == SceneFade_Out)
+	if (fadeState == SceneFade_Out)
 	{
 		// フェードアウトに合わせてBGMをフェードアウト
-		Master::mpSoundManager->SetBGMVolume((Master::mpSoundManager->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
+		Master::soundManager->SetBGMVolume((Master::soundManager->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
 		if (GetFadeAlpha() >= 255)
 		{
 			SetFadeAlpha(255);
-			Master::mpSceneManager->SetNextScene((SceneManager::SCENE_TYPE)mNextScene);
+			Master::sceneManager->SetNextScene((SceneManager::SCENE_TYPE)nextScene);
 		}
 	}
 }
@@ -205,22 +205,22 @@ void Scene3D::Draw()
 		);
 	}
 	
-	mpCowManager->Draw();
+	cowManager->Draw();
   
-	if (mpGameManager->GetGameTimer() && !(mpGameManager->GetGameTimer()->OutTimerFlag()))
+	if (gameManager->GetGameTimer() && !(gameManager->GetGameTimer()->OutTimerFlag()))
 	{
-		mpGameManager->GetGameTimer()->Draw();
+		gameManager->GetGameTimer()->Draw();
 	}
 
 	// イベントフェーズに応じた警告テキスト表示
-	if (Master::mpCamera->GetIsPhaseCameraActive())
+	if (Master::camera->GetIsPhaseCameraActive())
 	{
-		int currentPhase = (int)mpGameManager->GetCurrentPhase();
+		int currentPhase = (int)gameManager->GetCurrentPhase();
 		
 		if (currentPhase == (int)GameManager::GamePhase::MassSpawn || currentPhase == (int)GameManager::GamePhase::TornadoCrisis)
 		{
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
-			DrawExtendGraph(0, 0, 1920, 1080, mFontBackGraph, TRUE);
+			DrawExtendGraph(0, 0, 1920, 1080, fontBackGraph, TRUE);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		}
 
@@ -238,9 +238,9 @@ void Scene3D::Draw()
 		}
 	}
 
-	if (mFadeState != SceneFade_None)
+	if (fadeState != SceneFade_None)
 	{
-		Scene::Fade(mFadeState);
+		Scene::Fade(fadeState);
 	}
 }
 
@@ -253,24 +253,24 @@ void Scene3D::PhaseUpdate()
 	Player3D* player = ServiceLocator::GetPlayer();
 	
 	if (player != nullptr && tatumaki != nullptr) {
-		int currentPhase = (int)mpGameManager->GetCurrentPhase();
-		Master::mpCamera->UpdateCameraByPhase(currentPhase, player->GetPosition(), tatumaki->GetPosition());
+		int currentPhase = (int)gameManager->GetCurrentPhase();
+		Master::camera->UpdateCameraByPhase(currentPhase, player->GetPosition(), tatumaki->GetPosition());
 
 		tatumaki->SetCrisisMode(currentPhase == (int)GameManager::GamePhase::TornadoCrisis);
 
 		// 大量出現フェーズ時、60フレーム間隔で牛をスポーン
 		if (currentPhase == (int)GameManager::GamePhase::MassSpawn)
 		{
-			mMassSpawnTimer++;
-			if (mMassSpawnTimer >= 60)
+			massSpawnTimer++;
+			if (massSpawnTimer >= 60)
 			{
-				mMassSpawnTimer = 0;
+				massSpawnTimer = 0;
 
 				VECTOR spawnCenter = player->GetPosition();
 				// スポーン位置をプレイヤー上空(y+2000)に設定
 				VECTOR spawnArgs = VGet(4000.0f, spawnCenter.y + 2000.0f, 4000.0f);
 
-				mpCowManager->SpawnCow(GameConstants::COW_DEFAULT.modelPath, spawnArgs, 50.0f, CowMove::Cow_1, 2);
+				cowManager->SpawnCow(GameConstants::COW_DEFAULT.modelPath, spawnArgs, 50.0f, CowMove::Cow_1, 2);
 			}
 		}
 	}
@@ -278,5 +278,5 @@ void Scene3D::PhaseUpdate()
 
 void Scene3D::Finalize()
 {
-	Master::mpSoundManager->StopBGM(); // シーン終了時にBGMを停止
+	Master::soundManager->StopBGM(); // シーン終了時にBGMを停止
 }

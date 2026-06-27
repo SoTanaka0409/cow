@@ -1,7 +1,7 @@
-﻿#include"InputManager.h"
+#include"InputManager.h"
 #include"DxLib.h"
 
-int InputManager::mDownBuffer[256] = { 0 };
+int InputManager::downBuffer[256] = { 0 };
 
 InputManager::InputManager()
 {
@@ -23,13 +23,13 @@ int InputManager::CheckDownKey(int KeyCode)
     int keyState = CheckHitKey(KeyCode);
     
     // 長押しによる連続処理を防ぐためのトリガー判定
-    if (mDownBuffer[KeyCode] == 0 && keyState == 1)
+    if (downBuffer[KeyCode] == 0 && keyState == 1)
     {
         result = 1;
     }
 
     // 次フレームのトリガー判定用に状態を記録
-    mDownBuffer[KeyCode] = keyState;
+    downBuffer[KeyCode] = keyState;
     return result;
 }
 

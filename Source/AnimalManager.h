@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <vector>
 #include <string>
@@ -38,7 +38,7 @@ public:
 	void Draw();
 
 	/*
-	 * @brief 削除フラグ(mbDeleteFlag)が立っている動物オブジェクトを管理リストから除外しプールへ返す
+	 * @brief 削除フラグ(deleteFlag)が立っている動物オブジェクトを管理リストから除外しプールへ返す
 	 * [入力] なし
 	 * [出力] なし
 	 * [副作用] リストからのポインタ除外、プールへの追加
@@ -46,6 +46,6 @@ public:
 	void EraseAnimal();
 
 private:
-	std::vector<AnimalMove*> mAnimals;  // 生成された動物オブジェクトのポインタ配列
-	std::map<AnimalMove::Tag_animal, std::vector<AnimalMove*>> mPools; // オブジェクトプール
+	std::vector<AnimalMove*> animals;  // 生成された動物オブジェクトのポインタ配列
+	std::map<AnimalMove::Tag_animal, std::vector<AnimalMove*>> pools; // オブジェクトプール
 };

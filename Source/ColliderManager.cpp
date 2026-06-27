@@ -16,7 +16,7 @@ ColliderManager::~ColliderManager()
 void ColliderManager::Update()
 {
 	// 登録されている全コライダー間で総当たり当たり判定計算を行い、衝突イベントを更新する
-	for (auto itr = mColliderList.begin(); itr != mColliderList.end(); ++itr)
+	for (auto itr = colliderList.begin(); itr != colliderList.end(); ++itr)
 	{
 		if ((*itr) == nullptr)
 		{
@@ -28,7 +28,7 @@ void ColliderManager::Update()
 			continue;
 		}
 
-		for (auto itr_check = mColliderList.begin(); itr_check != mColliderList.end(); ++itr_check)
+		for (auto itr_check = colliderList.begin(); itr_check != colliderList.end(); ++itr_check)
 		{
 			if (itr == itr_check)
 			{
@@ -58,7 +58,7 @@ void ColliderManager::Draw()
 
 void ColliderManager::AddCollider(Collider* Collider)
 {
-	mColliderList.push_back(Collider);
+	colliderList.push_back(Collider);
 }
 
 /*
@@ -71,29 +71,29 @@ void ColliderManager::DeleteAllCollider()
 {
 	// イテレータ破損（DeleteAllColliderIfNeededの並行実行によるクラッシュ）を完全に防ぐため、
 	// フラグ設定後に一括でクリアする安全なロジックを実装
-	for (auto col : mColliderList)
+	for (auto col : colliderList)
 	{
 		if (col != nullptr)
 		{
 			col->SetDeleteFlag(true);
 		}
 	}
-	mColliderList.clear();
+	colliderList.clear();
 }
 
 /*
- * @brief 削除フラグ(mbDeleteFlag)が真に設定されているコライダーをリストから安全に除外する
+ * @brief 削除フラグ(deleteFlag)が真に設定されているコライダーをリストから安全に除外する
  * [入力] なし
  * [出力] なし
  * [副作用] 該当コライダーのリスト除外、イテレータの安全な進行
  */
 void ColliderManager::DeleteAllColliderIfNeeded()
 {
-	for (auto itr = mColliderList.begin(); itr != mColliderList.end(); /* ループ内でイテレータを進める */)
+	for (auto itr = colliderList.begin(); itr != colliderList.end(); /* ループ内でイテレータを進める */)
 	{
 		if ((*itr)->IsDeleteFlag())
 		{
-			itr = mColliderList.erase(itr); // 削除後の次の有効要素のイテレータを取得
+			itr = colliderList.erase(itr); // 削除後の次の有効要素のイテレータを取得
 		}
 		else
 		{
@@ -104,6 +104,6 @@ void ColliderManager::DeleteAllColliderIfNeeded()
 
 void ColliderManager::RemoveCollider(Collider* collider)
 {
-	mColliderList.remove(collider);
+	colliderList.remove(collider);
 }
 

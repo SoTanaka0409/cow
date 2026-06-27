@@ -6,10 +6,10 @@ class Cow_gold : public CowMove
 {
 public:
 	// スポーン時のゲーム状態。フィーバー連鎖を制御するために使用
-	enum Tag_fever
+	enum TagFever
 	{
-		fever,      // 連鎖終了判定用（フィーバー中スポーン）
-		Nofever,    // フィーバー開始判定用（通常時スポーン）
+		Fever,      // 連鎖終了判定用（フィーバー中スポーン）
+		NoFever,    // フィーバー開始判定用（通常時スポーン）
 	};
 
 public:
@@ -19,7 +19,7 @@ public:
 	 * [出力] なし
 	 * [副作用] なし
 	 */
-	Cow_gold(std::string filename, VECTOR initPos, Tag_fever fever);
+	Cow_gold(std::string filename, VECTOR initPos, TagFever feverTag);
 
 	/*
 	 * @brief デストラクタ
@@ -59,10 +59,10 @@ public:
 	 * [出力] なし
 	 * [副作用] なし
 	 */
-	void SetFever(Tag_fever fever) { mnFever = fever; }
+	void SetFever(TagFever tag) { feverTag = tag; }
 
 private:
-	Tag_fever mnFever;  // フィーバー連鎖制御用の状態フラグ
+	TagFever feverTag;  // フィーバー連鎖制御用の状態フラグ
 	int DeathCount;     // 画面内滞留時間の計測用
 	int DeathTimer;     // 画面残りによるメモリ圧迫や進行妨害を防ぐための寿命
 };

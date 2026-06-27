@@ -8,24 +8,24 @@
 
 Object3D::Object3D(VECTOR initPos)
 	: mvPosition(initPos)
-	, mpCapsuleCollider(nullptr)
+	, capsuleCollider(nullptr)
 	, mvRotation(VGet(0.0f, 0.0f, 0.0f))
-	, mbDeleteFlag(false)
-	, mnTag(Tag3D::None3D)
-	, mbDrawFlag(true)
-	, mfRadius(0)
+	, deleteFlag(false)
+	, tag(Tag3D::None3D)
+	, drawFlag(true)
+	, radius(0)
 {
 	// 生成したオブジェクトを管理・更新するため、現在のアクティブなシーンのマネージャーへ自動登録する
 	ServiceLocator::GetObjectManager()->AddObject(this);
-	mpCapsuleCollider = new CapsuleCollider(this, initPos, initPos, 0);
+	capsuleCollider = new CapsuleCollider(this, initPos, initPos, 0);
 }
 
 Object3D::~Object3D()
 {
-	if (mpCapsuleCollider != nullptr)
+	if (capsuleCollider != nullptr)
 	{
-		delete mpCapsuleCollider;
-		mpCapsuleCollider = nullptr;
+		delete capsuleCollider;
+		capsuleCollider = nullptr;
 	}
 }
 

@@ -2,23 +2,23 @@
 #include "DxLib.h"
 
 Texture::Texture(std::string filename, VECTOR centerPosition, int graphsize_x, int graphsize_y, int transFlag)
-	: mnHandle(-1)
+	: handle(-1)
 	, mvPosition(centerPosition)
-	, mNewGameW(graphsize_x)
-	, mNewGameH(graphsize_y)
-	, mnTransFlag(transFlag)
+	, newGameW(graphsize_x)
+	, newGameH(graphsize_y)
+	, transFlag(transFlag)
 {
-	mnHandle = LoadGraph(filename.c_str());
-	GetGraphSize(mnHandle, &mnSizeX, &mnSizeY); // 拡大縮小描画の基準にするためオリジナルサイズを取得
+	handle = LoadGraph(filename.c_str());
+	GetGraphSize(handle, &sizeX, &sizeY); // 拡大縮小描画の基準にするためオリジナルサイズを取得
 }
 
 Texture::~Texture()
 {
-	DeleteGraph(mnHandle);
+	DeleteGraph(handle);
 }
 
 /*
-	* @brief 設定された指定サイズ(mNewGameW, mNewGameH)で、mvPositionを中心に引き伸ばし描画する
+	* @brief 設定された指定サイズ(newGameW, newGameH)で、mvPositionを中心に引き伸ばし描画する
 	* [入力] なし
 	* [出力] なし
 	* [副作用] 指定範囲へテクスチャ描画
@@ -26,11 +26,11 @@ Texture::~Texture()
 void Texture::Draw()
 {
 	DrawExtendGraph(
-		static_cast<int>(mvPosition.x - (mNewGameW / 2)),
-		static_cast<int>(mvPosition.y - (mNewGameH / 2)),
-		static_cast<int>(mvPosition.x + (mNewGameW / 2)),
-		static_cast<int>(mvPosition.y + (mNewGameH / 2)),
-		mnHandle, mnTransFlag
+		static_cast<int>(mvPosition.x - (newGameW / 2)),
+		static_cast<int>(mvPosition.y - (newGameH / 2)),
+		static_cast<int>(mvPosition.x + (newGameW / 2)),
+		static_cast<int>(mvPosition.y + (newGameH / 2)),
+		handle, transFlag
 	);
 }
 
@@ -43,15 +43,15 @@ void Texture::Draw()
 void Texture::SizeDraw()
 {
 	int expand = 15; // 拡大表示する際の拡張ピクセル数
-	int halfW = (mNewGameW + expand) / 2;
-	int halfH = (mNewGameH + expand) / 2;
+	int halfW = (newGameW + expand) / 2;
+	int halfH = (newGameH + expand) / 2;
 
 	DrawExtendGraph(
 		static_cast<int>(mvPosition.x - halfW),
 		static_cast<int>(mvPosition.y - halfH),
 		static_cast<int>(mvPosition.x + halfW),
 		static_cast<int>(mvPosition.y + halfH),
-		mnHandle, mnTransFlag
+		handle, transFlag
 	);
 }
 
@@ -67,15 +67,15 @@ void Texture::Update()
 	*/
 void Texture::DrawScale(float scale)
 {
-	float halfW = (mNewGameW * scale) / 2.0f;
-	float halfH = (mNewGameH * scale) / 2.0f;
+	float halfW = (newGameW * scale) / 2.0f;
+	float halfH = (newGameH * scale) / 2.0f;
 
 	DrawExtendGraph(
 		static_cast<int>(mvPosition.x - halfW),
 		static_cast<int>(mvPosition.y - halfH),
 		static_cast<int>(mvPosition.x + halfW),
 		static_cast<int>(mvPosition.y + halfH),
-		mnHandle, mnTransFlag
+		handle, transFlag
 	);
 }
 

@@ -1,12 +1,12 @@
-﻿#include"Model.h"
+#include"Model.h"
 #include"Master.h"
 
 Model::Model(std::string filename, VECTOR initPos, bool isSeparateAnimation)
     : mvPosition(initPos)
-    , mfScale(1.0f)
-    , mnChangeTextureHandle(-1)
+    , scale(1.0f)
+    , changeTextureHandle(-1)
 {
-    mnHandle = Master::mpResourceManager->LoadModel(filename.c_str());
+    handle = Master::resourceManager->LoadModel(filename.c_str());
    
 }
 
@@ -15,30 +15,30 @@ Model::Model(std::string filename, VECTOR initPos, bool isSeparateAnimation)
 Model::~Model()
 {
     
-    if (mnChangeTextureHandle != -1)
+    if (changeTextureHandle != -1)
     {
-        DeleteGraph(mnChangeTextureHandle);
+        DeleteGraph(changeTextureHandle);
     }
-    MV1DeleteModel(mnHandle);
+    MV1DeleteModel(handle);
 }
 
 void Model::Update()
 {
    
-    MV1SetPosition(mnHandle, mvPosition);
-    MV1SetRotationXYZ(mnHandle, mvRotation);
+    MV1SetPosition(handle, mvPosition);
+    MV1SetRotationXYZ(handle, mvRotation);
 }
 
 void Model::Draw()
 {
-    MV1SetUseDrawMulAlphaColor(mnHandle, FALSE);
-    MV1DrawModel(mnHandle);
+    MV1SetUseDrawMulAlphaColor(handle, FALSE);
+    MV1DrawModel(handle);
 }
 
 
 void Model::SetScale(VECTOR scale)
 {
-    MV1SetScale(mnHandle, scale);
+    MV1SetScale(handle, scale);
 }
 void Model::SetScale(float scale)
 {
@@ -47,19 +47,19 @@ void Model::SetScale(float scale)
 
 void Model::SetTexture(std::string filename, int index)
 {
-    if (mnChangeTextureHandle != -1)
+    if (changeTextureHandle != -1)
     {
-        DeleteGraph(mnChangeTextureHandle);
+        DeleteGraph(changeTextureHandle);
     }
-    mnChangeTextureHandle = Master::mpResourceManager->LoadGraphics(filename);
-    MV1SetTextureGraphHandle(mnHandle, index, mnChangeTextureHandle, FALSE);
+    changeTextureHandle = Master::resourceManager->LoadGraphics(filename);
+    MV1SetTextureGraphHandle(handle, index, changeTextureHandle, FALSE);
 }
 
 void Model::SetColor(float r, float g, float b, float a)
 {
-    int matNum = MV1GetMaterialNum(mnHandle);
+    int matNum = MV1GetMaterialNum(handle);
     for (int i = 0; i < matNum; ++i)
     {
-        MV1SetMaterialDifColor(mnHandle, i, GetColorF(r, g, b, a));
+        MV1SetMaterialDifColor(handle, i, GetColorF(r, g, b, a));
     }
 }

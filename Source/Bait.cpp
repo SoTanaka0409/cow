@@ -1,4 +1,4 @@
-﻿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include "Bait.h"
 #include "Model.h"
 #include "CapsuleCollider.h"
@@ -12,47 +12,47 @@
 Bait::Bait(std::string filename, VECTOR pos)
 	: Object3D(pos)
 {
-	mpModel = new Model(filename, pos, false);
-	mpGameTimer = new GameTimer(pos, 5, GameTimer::Tag_NoGame);
+	model = new Model(filename, pos, false);
+	gameTimer = new GameTimer(pos, 5, GameTimer::Tag_NoGame);
 	SetTag(Tag3D_Bait);
 	
-	mpCapsuleCollider->mvPosition = mvPosition;
-	mpCapsuleCollider->mvPosition2 = VAdd(mvPosition, VGet(0.0f, 100.0f, 0.0f));
-	mpCapsuleCollider->mfRadius = 1500.0f;
+	capsuleCollider->mvPosition = mvPosition;
+	capsuleCollider->mvPosition2 = VAdd(mvPosition, VGet(0.0f, 100.0f, 0.0f));
+	capsuleCollider->radius = 1500.0f;
 }
 
 Bait::~Bait()
 {
-	if (mpModel != nullptr)
+	if (model != nullptr)
 	{
-		delete mpModel;
-		mpModel = nullptr;
+		delete model;
+		model = nullptr;
 	}
-	if (mpGameTimer != nullptr)
+	if (gameTimer != nullptr)
 	{
-		delete mpGameTimer;
-		mpGameTimer = nullptr;
+		delete gameTimer;
+		gameTimer = nullptr;
 	}
 }
 
 void Bait::Draw()
 {
-	mpModel->Draw();
+	model->Draw();
 }
 
 void Bait::Update()
 {
-	mpModel->Update();
-	mpGameTimer->Update();
+	model->Update();
+	gameTimer->Update();
 
 	if (mvPosition.y >= 0.0f)
 	{
 		mvPosition.y -= 40.0f;
 	}
-	mpCapsuleCollider->mvPosition = mvPosition;
-	mpCapsuleCollider->mvPosition2 = VAdd(mvPosition, VGet(0.0f, 100.0f, 0.0f));
+	capsuleCollider->mvPosition = mvPosition;
+	capsuleCollider->mvPosition2 = VAdd(mvPosition, VGet(0.0f, 100.0f, 0.0f));
 
-	if (mpGameTimer->OutTimerFlag())
+	if (gameTimer->OutTimerFlag())
 	{
 		const auto& c = ServiceLocator::GetObjectManager()->GetObject3DListByTag(Object3D::Tag3D_Cow);
 		for (int i = 0; i < c.size(); i++)
@@ -61,24 +61,24 @@ void Bait::Update()
 			if (cow != nullptr && cow->GetBaitFlag())
 			{
 				cow->KilledByBait();
-				Master::mpSoundManager->PlaySE(SoundManager::SE_BAITFINAL);
+				Master::soundManager->PlaySE(SoundManager::SE_BAITFINAL);
 			}
 		}
 
 		SetDeleteFlag(true);
-		mpCapsuleCollider->SetDeleteFlag(true);
+		capsuleCollider->SetDeleteFlag(true);
 	}
-	mpModel->SetPosition(mvPosition);
+	model->SetPosition(mvPosition);
 }
 
 void Bait::OnEnter(Collider* collider, Collider* check)
 {
-	if (collider == mpCapsuleCollider && check->mpParentObject != nullptr)
+	if (collider == capsuleCollider && check->parentObject != nullptr)
 	{
-		if (check->mpParentObject->GetTag() == Tag3D_Cow)
+		if (check->parentObject->GetTag() == Tag3D_Cow)
 		{
-			CowMove* cow = dynamic_cast<CowMove*>(check->mpParentObject);
-			if (mpGameTimer->OutTimerFlag() && cow != nullptr)
+			CowMove* cow = dynamic_cast<CowMove*>(check->parentObject);
+			if (gameTimer->OutTimerFlag() && cow != nullptr)
 			{
 				cow->KilledByBait();
 			}

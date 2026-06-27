@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 // DxLibのキー入力をラップし、フレーム間の状態変化を管理する
 class InputManager
@@ -25,5 +25,5 @@ public:
 
 private:
     // トリガー判定に必要な前フレームのキー状態を保持
-    static int mDownBuffer[256];
+    static int downBuffer[256];
 };

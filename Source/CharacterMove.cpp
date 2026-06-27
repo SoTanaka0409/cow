@@ -13,81 +13,81 @@
 
 CharacterMove::CharacterMove(std::string filename, VECTOR initPos)
 	: Object3D(initPos)
-	, mCurrentState(STATE_IDLE)
-	, mpCurrentState(new StateIdle())
-	, mActionTimer(60)
-	, mfSpeed(10.0f)
-	, mfTargetAngle(0.0f)
-	, mfAngle(0.0f)
+	, currentState(STATE_IDLE)
+	, characterState(new StateIdle())
+	, actionTimer(60)
+	, speed(10.0f)
+	, targetAngle(0.0f)
+	, angle(0.0f)
 	, moveVec(VGet(0.0f, 0.0f, 0.0f))
 	, oldmoveVec(VGet(0.0f, 0.0f, 0.0f))
 	, hitPos(VGet(0.0f, 0.0f, 0.0f))
-	, mVacuumTimer(0)
-	, mDeleteFlag(false)
+	, vacuumTimer(0)
+	, deleteFlag(false)
 	, mfdeathTime(1000.0f)
-	, mfScore(0.0f)
-	, mfXp(0.0f)
-	, mbBaitFlag(false)
-	, mbIsVisible(true)
+	, score(0.0f)
+	, xp(0.0f)
+	, baitFlag(false)
+	, isVisible(true)
 {
-	mpModel = new Model(filename, initPos, false);
+	model = new Model(filename, initPos, false);
 
 	// 初期向きをランダムに分散させる
 	mvRotation.y = (float)GetRand(359) * (DX_PI_F / 180.0f);
-	mpModel->SetRotation(mvRotation);
+	model->SetRotation(mvRotation);
 }
 
 CharacterMove::~CharacterMove()
 {
-	if (mpModel != nullptr)
+	if (model != nullptr)
 	{
-		delete mpModel;
-		mpModel = nullptr;
+		delete model;
+		model = nullptr;
 	}
-	if (mpCurrentState != nullptr)
+	if (characterState != nullptr)
 	{
-		delete mpCurrentState;
-		mpCurrentState = nullptr;
+		delete characterState;
+		characterState = nullptr;
 	}
 }
 
 void CharacterMove::Reset(VECTOR pos)
 {
 	mvPosition = pos;
-	mCurrentState = STATE_IDLE;
-	mpTargetPlayer = nullptr;
+	currentState = STATE_IDLE;
+	targetPlayer = nullptr;
 
 	// 現在のStateを一度破棄し、新たに待機状態を作成
-	if (mpCurrentState != nullptr)
+	if (characterState != nullptr)
 	{
-		delete mpCurrentState;
+		delete characterState;
 	}
-	mpCurrentState = new StateIdle();
+	characterState = new StateIdle();
 
-	mActionTimer = 60;
+	actionTimer = 60;
 	mvRotation.y = (float)GetRand(359) * (DX_PI_F / 180.0f);
 	moveVec = VGet(0.0f, 0.0f, 0.0f);
 	oldmoveVec = VGet(0.0f, 0.0f, 0.0f);
-	mVacuumTimer = 0;
-	mDeleteFlag = false;
-	mbBaitFlag = false;
-	mbIsVisible = true;
+	vacuumTimer = 0;
+	deleteFlag = false;
+	baitFlag = false;
+	isVisible = true;
 	SetDrawFlag(true); // 描画を有効化
 
 	// 管理クラス(ObjectManager)に自身を再度登録
-	Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->AddObject(this);
+	Master::sceneManager->GetCurrentScene()->GetObjectManager()->AddObject(this);
 
-	if (mpModel != nullptr)
+	if (model != nullptr)
 	{
-		mpModel->SetPosition(pos);
-		mpModel->SetRotation(mvRotation);
+		model->SetPosition(pos);
+		model->SetRotation(mvRotation);
 	}
 
 	// 当たり判定（コライダー）を再度有効化して登録
-	if (mpCapsuleCollider != nullptr)
+	if (capsuleCollider != nullptr)
 	{
-		mpCapsuleCollider->SetDeleteFlag(false);
-		ColliderManager::GetInstance()->AddCollider(mpCapsuleCollider);
+		capsuleCollider->SetDeleteFlag(false);
+		ColliderManager::GetInstance()->AddCollider(capsuleCollider);
 	}
 }
 
@@ -97,17 +97,17 @@ void CharacterMove::Reset(VECTOR pos)
 // ==============================================================================
 void CharacterMove::Deactivate()
 {
-	mbIsVisible = false;
+	isVisible = false;
 	SetDrawFlag(false); // 描画を無効化
 
 	// 当たり判定を無効化
-	if (mpCapsuleCollider != nullptr)
+	if (capsuleCollider != nullptr)
 	{
-		mpCapsuleCollider->SetDeleteFlag(true);
+		capsuleCollider->SetDeleteFlag(true);
 	}
 
 	// deleteはせず、Updateの更新対象リストからのみ外す（再利用のため）
-	Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->RemoveObjectNoDelete(this);
+	Master::sceneManager->GetCurrentScene()->GetObjectManager()->RemoveObjectNoDelete(this);
 }
 
 void CharacterMove::Update()
@@ -115,57 +115,57 @@ void CharacterMove::Update()
 	MoveCharacter();
 	CharacterDied();
 
-	if (mCurrentState != STATE_VACUUM)
+	if (currentState != STATE_VACUUM)
 	{
 		RotationCharacter();
 	}
 
 	ColliderMove();
-	mpModel->Update();
+	model->Update();
 }
 
 void CharacterMove::Draw()
 {
-	mpModel->Draw();
+	model->Draw();
 }
 
 void CharacterMove::MoveCharacter()
 {
-	if (mCurrentState == STATE_VACUUM) return;
+	if (currentState == STATE_VACUUM) return;
 
 	mvOldPosition = mvPosition;
 
 	UpdateWanderAI();
 	CheckWallCollision();
 
-	mpModel->SetPosition(mvPosition);
+	model->SetPosition(mvPosition);
 }
 
 void CharacterMove::UpdateWanderAI()
 {
-	if (mpCurrentState != nullptr)
+	if (characterState != nullptr)
 	{
-		mpCurrentState->Update(this);
+		characterState->Update(this);
 	}
 }
 
 void CharacterMove::ChangeState(CharacterState* newState)
 {
-	if (mpCurrentState != nullptr)
+	if (characterState != nullptr)
 	{
-		mpCurrentState->Exit(this);
-		delete mpCurrentState;
+		characterState->Exit(this);
+		delete characterState;
 	}
-	mpCurrentState = newState;
-	if (mpCurrentState != nullptr)
+	characterState = newState;
+	if (characterState != nullptr)
 	{
-		mpCurrentState->Enter(this);
+		characterState->Enter(this);
 	}
 }
 
 void CharacterMove::ChangeStateToVacuum()
 {
-	mCurrentState = STATE_VACUUM;
+	currentState = STATE_VACUUM;
 	ChangeState(new StateVacuum());
 }
 
@@ -205,7 +205,7 @@ void CharacterMove::CheckWallCollision()
 					if (hitwall && !hitwalls)
 					{
 						mvPosition = mvOldPosition;
-						mvPosition = VAdd(mvPosition, VScale(slide, mfSpeed));
+						mvPosition = VAdd(mvPosition, VScale(slide, speed * Master::GetDeltaTimeScaler()));
 						hitwalls = true;
 					}
 					// 複数壁に挟まれた場合は進行を止める
@@ -221,11 +221,11 @@ void CharacterMove::CheckWallCollision()
 
 void CharacterMove::ColliderMove()
 {
-	if (mpCapsuleCollider != nullptr)
+	if (capsuleCollider != nullptr)
 	{
-		mpCapsuleCollider->mvPosition = mvPosition;
-		mpCapsuleCollider->mvPosition2 = VAdd(mvPosition, VGet(0.0f, 150.0f, 0.0f));
-		mpCapsuleCollider->mfRadius = 50.0f;
+		capsuleCollider->mvPosition = mvPosition;
+		capsuleCollider->mvPosition2 = VAdd(mvPosition, VGet(0.0f, 150.0f, 0.0f));
+		capsuleCollider->radius = 50.0f;
 	}
 }
 
@@ -237,7 +237,7 @@ void CharacterMove::RotationCharacter()
 
 		// モデルの正面方向の仕様に合わせて180度反転させる
 		mvRotation.y = targetAngle + DX_PI_F;
-		mpModel->SetRotation(mvRotation);
+		model->SetRotation(mvRotation);
 	}
 }
 
@@ -249,14 +249,14 @@ void CharacterMove::CharacterRotate()
 	{
 		mvRotation.y -= DX_PI_F * 2.0f;
 	}
-	mpModel->SetRotation(mvRotation);
+	model->SetRotation(mvRotation);
 }
 
 void CharacterMove::SetScale(float scale)
 {
-	if (mpModel != nullptr)
+	if (model != nullptr)
 	{
-		mpModel->SetScale(scale);
+		model->SetScale(scale);
 	}
 }
 
@@ -267,7 +267,7 @@ void CharacterMove::CharacterDied()
 
 void CharacterMove::Die(DeathReason reason)
 {
-	if (mDeleteFlag) return;
+	if (deleteFlag) return;
 
 	switch (reason)
 	{

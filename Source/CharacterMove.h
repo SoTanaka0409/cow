@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #pragma warning(push)
 #pragma warning(disable : 4819)
@@ -31,8 +31,8 @@ enum DeathReason
 class CharacterMove : public Object3D
 {
 public:
-	void SetTargetPlayer(Player3D* player) { mpTargetPlayer = player; }
-	Player3D* GetTargetPlayer() const { return mpTargetPlayer; }
+	void SetTargetPlayer(Player3D* player) { targetPlayer = player; }
+	Player3D* GetTargetPlayer() const { return targetPlayer; }
 	CharacterMove(std::string filename, VECTOR initPos);
 	virtual ~CharacterMove();
 
@@ -96,8 +96,8 @@ public:
 	void AddAnimation(AnimationState state, std::string filename) {}
 	void SetScale(float scale);
 
-	AIState GetCurrentState() const { return mCurrentState; }
-	void SetCurrentState(AIState state) { mCurrentState = state; }
+	AIState GetCurrentState() const { return currentState; }
+	void SetCurrentState(AIState state) { currentState = state; }
 
 	/*
 	 * [入力] newState: 新しい状態クラスのポインタ
@@ -113,33 +113,33 @@ public:
 	 */
 	void ChangeStateToVacuum();
 
-	void SetActionTimer(int timer) { mActionTimer = timer; }
-	void DecreaseActionTimer() { mActionTimer--; }
-	int GetActionTimer() const { return mActionTimer; }
+	void SetActionTimer(int timer) { actionTimer = timer; }
+	void DecreaseActionTimer() { actionTimer--; }
+	int GetActionTimer() const { return actionTimer; }
 
 	void SetMoveVec(VECTOR vec) { moveVec = vec; }
 	VECTOR GetMoveVec() const { return moveVec; }
-	float GetSpeed() const { return mfSpeed; }
+	float GetSpeed() const { return speed; }
 
-	void IncreaseVacuumTimer() { mVacuumTimer++; }
-	void ResetVacuumTimer() { mVacuumTimer = 0; }
-	int GetVacuumTimer() const { return mVacuumTimer; }
+	void IncreaseVacuumTimer() { vacuumTimer++; }
+	void ResetVacuumTimer() { vacuumTimer = 0; }
+	int GetVacuumTimer() const { return vacuumTimer; }
 
-	bool GetBaitFlag() const { return mbBaitFlag; }
-	bool GetCharacterDelete() const { return mDeleteFlag; }
+	bool GetBaitFlag() const { return baitFlag; }
+	bool GetCharacterDelete() const { return deleteFlag; }
 
 protected:
-	Player3D* mpTargetPlayer = nullptr;
-	Model* mpModel;
+	Player3D* targetPlayer = nullptr;
+	Model* model;
 
-	AIState mCurrentState;
-	CharacterState* mpCurrentState;
+	AIState currentState;
+	CharacterState* characterState;
 
-	int mActionTimer;
-	float mfSpeed;
+	int actionTimer;
+	float speed;
 
-	float mfTargetAngle;
-	float mfAngle;
+	float targetAngle;
+	float angle;
 	const float ROTATE_SPEED = 0.2f;
 
 	VECTOR UpMoveVector;
@@ -147,12 +147,12 @@ protected:
 	VECTOR oldmoveVec;
 	VECTOR hitPos;
 
-	int mVacuumTimer;
-	bool mDeleteFlag;
+	int vacuumTimer;
+	bool deleteFlag;
 	float mfdeathTime;
 
-	float mfScore;
-	float mfXp;
-	bool mbBaitFlag;
-	bool mbIsVisible;
+	float score;
+	float xp;
+	bool baitFlag;
+	bool isVisible;
 };

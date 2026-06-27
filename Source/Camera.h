@@ -68,7 +68,7 @@ public:
 
 	// ポジション、注視点などのゲッター・セッター
 	void SetPosition(VECTOR pos) { mvPosition = pos; }
-	void SetTarget(Object3D* target) { mpTarget = target; }
+	void SetTarget(Object3D* target) { target = target; }
 	VECTOR GetPosition() { return mvPosition; }
 
 	VECTOR GetLookAtPosition() { return mvLookAtPosition; }
@@ -98,43 +98,43 @@ public:
 	void SetupShake(float time, float width, float angleSpeed, float stepTime = 1.0f);
 
 	// フェーズごとの演出用特殊カメラが有効化されているかの判定ゲッター
-	bool GetIsPhaseCameraActive() const { return mbIsPhaseCameraActive; }
+	bool GetIsPhaseCameraActive() const { return isPhaseCameraActive; }
 
 private:
-	float mfHorizontalAngle;  // カメラの水平回転角（ラジアン）
-	float mfVerticalAngle;    // カメラの垂直回転角（ラジアン）
+	float horizontalAngle;  // カメラの水平回転角（ラジアン）
+	float verticalAngle;    // カメラの垂直回転角（ラジアン）
 
-	bool mbIsPhaseCameraActive; // フェーズ専用カメラが有効かどうかのフラグ
+	bool isPhaseCameraActive; // フェーズ専用カメラが有効かどうかのフラグ
 
 	VECTOR mvPosition;        // カメラの基準位置座標
 	VECTOR mvLookAtPosition;  // カメラの注視点（ルックアット）座標
 	VECTOR dir;               // カメラの視線向きベクトル
 
-	Object3D* mpTarget;       // 注視対象となる3Dオブジェクトへのポインタ
+	Object3D* target;       // 注視対象となる3Dオブジェクトへのポインタ
 
 	const float ROTATE_SPEED = 0.2f; // カメラ回転の追従速度係数
-	float mfTargetAngle;      // 目標とする水平回転角度
-	float mfAngle;            // 現在の補間中水平回転角度
+	float targetAngle;      // 目標とする水平回転角度
+	float angle;            // 現在の補間中水平回転角度
 	int centerX;              // 画面中心のX座標
 	int centerY;              // 画面中心のY座標
 
 	int mouseX, mouseY;       // マウスの現在位置座標（一時変数）
 
-	int mMouseX = 0;          // 現在フレームでのマウス位置X
-	int mMouseY = 0;          // 現在フレームでのマウス位置Y
+	int currentMouseX = 0;          // 現在フレームでのマウス位置X
+	int currentMouseY = 0;          // 現在フレームでのマウス位置Y
 
-	int mPrevMouseX = 0;      // 1フレーム前でのマウス位置X
-	int mPrevMouseY = 0;      // 1フレーム前でのマウス位置Y
+	int prevMouseX = 0;      // 1フレーム前でのマウス位置X
+	int prevMouseY = 0;      // 1フレーム前でのマウス位置Y
 
-	int mnShakeTime;          // シェイク持続時間フレームカウンタ
-	int mnShakeTimeCount;     // シェイク経過フレームカウンタ
+	int shakeTimeFrames;          // シェイク持続時間フレームカウンタ
+	int shakeTimeCount;     // シェイク経過フレームカウンタ
 
-	float mfShakeAngle;       // シェイク計算用の正弦波角度カウンタ
-	float mfShakeTimeCounter; // シェイクのフェードアウト用時間カウンタ
-	float mfShakeTime;        // 設定されたシェイク時間
-	float mfShakeWidth;       // 設定された最大揺れ幅
-	float mfShakeAngleSpeed;  // 設定された揺れの周期速度
-	float mfStepTime;         // 毎フレームのシェイク時間減算幅
+	float shakeAngle;       // シェイク計算用の正弦波角度カウンタ
+	float shakeTimeCounter; // シェイクのフェードアウト用時間カウンタ
+	float shakeTime;        // 設定されたシェイク時間
+	float shakeWidth;       // 設定された最大揺れ幅
+	float shakeAngleSpeed;  // 設定された揺れの周期速度
+	float stepTime;         // 毎フレームのシェイク時間減算幅
 	VECTOR mvShakePosition;   // シェイク計算によって加算されるカメラオフセット座標値
 };
 

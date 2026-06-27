@@ -5,8 +5,8 @@
 #include "InputManager.h"
 
 DebugCamera::DebugCamera()
-	: mfHorizontalAngle(0.0f)
-	, mfVerticalAngle(-30.0f)
+	: horizontalAngle(0.0f)
+	, verticalAngle(-30.0f)
 	, mvPosition(VGet(0.0f, 1000.0f, 0.0f))
 {
 }
@@ -18,16 +18,16 @@ DebugCamera::~DebugCamera()
 void DebugCamera::Initialize()
 {
 	// カメラの初期位置をゲーム中カメラの位置から引き継ぎ、スムーズに切り替えできるようにする
-	if (Master::mpCamera != nullptr)
+	if (Master::camera != nullptr)
 	{
-		mvPosition = Master::mpCamera->GetPosition();
+		mvPosition = Master::camera->GetPosition();
 	}
 	else
 	{
 		mvPosition = VGet(0.0f, 1000.0f, 0.0f);
 	}
-	mfHorizontalAngle = 0.0f;
-	mfVerticalAngle = -30.0f;
+	horizontalAngle = 0.0f;
+	verticalAngle = -30.0f;
 }
 
 void DebugCamera::Update()
@@ -44,9 +44,9 @@ void DebugCamera::Update()
 	
 	float dist = 1000.0f;
 	VECTOR target;
-	target.x = mvPosition.x + dist * cosf(mfVerticalAngle * DX_PI_F / 180.0f) * sinf(mfHorizontalAngle * DX_PI_F / 180.0f);
-	target.y = mvPosition.y + dist * sinf(-mfVerticalAngle * DX_PI_F / 180.0f);
-	target.z = mvPosition.z - dist * cosf(mfVerticalAngle * DX_PI_F / 180.0f) * cosf(mfHorizontalAngle * DX_PI_F / 180.0f);
+	target.x = mvPosition.x + dist * cosf(verticalAngle * DX_PI_F / 180.0f) * sinf(horizontalAngle * DX_PI_F / 180.0f);
+	target.y = mvPosition.y + dist * sinf(-verticalAngle * DX_PI_F / 180.0f);
+	target.z = mvPosition.z - dist * cosf(verticalAngle * DX_PI_F / 180.0f) * cosf(horizontalAngle * DX_PI_F / 180.0f);
 
 	{
 		// カメラの視線ベクトルから前進移動成分を求める
@@ -83,9 +83,9 @@ void DebugCamera::Update()
 	mvPosition = VAdd(mvPosition, moveVec);
 
 	// 最新の座標をもとにカメラの注視点を再計算する
-	target.x = mvPosition.x + dist * cosf(mfVerticalAngle * DX_PI_F / 180.0f) * sinf(mfHorizontalAngle * DX_PI_F / 180.0f);
-	target.y = mvPosition.y + dist * sinf(-mfVerticalAngle * DX_PI_F / 180.0f);
-	target.z = mvPosition.z - dist * cosf(mfVerticalAngle * DX_PI_F / 180.0f) * cosf(mfHorizontalAngle * DX_PI_F / 180.0f);
+	target.x = mvPosition.x + dist * cosf(verticalAngle * DX_PI_F / 180.0f) * sinf(horizontalAngle * DX_PI_F / 180.0f);
+	target.y = mvPosition.y + dist * sinf(-verticalAngle * DX_PI_F / 180.0f);
+	target.z = mvPosition.z - dist * cosf(verticalAngle * DX_PI_F / 180.0f) * cosf(horizontalAngle * DX_PI_F / 180.0f);
 
 	// DXライブラリのカメラに、再計算されたデバッグ用カメラの位置と注視点を反映させる
 	SetCameraPositionAndTarget_UpVecY(mvPosition, target);
@@ -94,27 +94,27 @@ void DebugCamera::Update()
 void DebugCamera::UpdateRotate()
 {
 	// 角度値が範囲外（±180度）にオーバーフローしないようにラップ処理を行う
-	if (mfHorizontalAngle >= 180.0f)
+	if (horizontalAngle >= 180.0f)
 	{
-		mfHorizontalAngle -= 360.0f;
+		horizontalAngle -= 360.0f;
 	}
-	if (mfHorizontalAngle <= -180.0f)
+	if (horizontalAngle <= -180.0f)
 	{
-		mfHorizontalAngle += 360.0f;
+		horizontalAngle += 360.0f;
 	}
 
-	if (mfVerticalAngle >= 80.0f)
+	if (verticalAngle >= 80.0f)
 	{
-		mfVerticalAngle = 80.0f;
+		verticalAngle = 80.0f;
 	}
-	if (mfVerticalAngle <= -80.0f)
+	if (verticalAngle <= -80.0f)
 	{
-		mfVerticalAngle = -80.0f;
+		verticalAngle = -80.0f;
 	}
 
 	const float MOUSE_SENSITIVITY = 0.05f;
 
-	if (Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::SCENE_3D || Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::SCENE_TUTORIAL)
+	if (Master::sceneManager->GetSceneType() == SceneManager::SCENE_TYPE::SCENE_3D || Master::sceneManager->GetSceneType() == SceneManager::SCENE_TYPE::SCENE_TUTORIAL)
 	{
 		int mouseX, mouseY;
 		GetMousePoint(&mouseX, &mouseY);
@@ -131,8 +131,8 @@ void DebugCamera::UpdateRotate()
 		int deltaX = mouseX - centerX;
 		int deltaY = mouseY - centerY;
 
-		mfHorizontalAngle -= deltaX * MOUSE_SENSITIVITY;
-		mfVerticalAngle += deltaY * MOUSE_SENSITIVITY;
+		horizontalAngle -= deltaX * MOUSE_SENSITIVITY;
+		verticalAngle += deltaY * MOUSE_SENSITIVITY;
 	}
 }
 

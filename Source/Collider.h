@@ -27,21 +27,21 @@ public:
 	virtual void OnExit();
 
 	// ゲッター・セッター群
-	void SetDeleteFlag(bool flag) { mbDeleteFlag = flag; }
-	bool IsDeleteFlag() { return mbDeleteFlag; }
-	Object3D* GetParentObject() { return mpParentObject; }
-	void InvalidateParent() { mpParentObject = nullptr; }
+	void SetDeleteFlag(bool flag) { deleteFlag = flag; }
+	bool IsDeleteFlag() { return deleteFlag; }
+	Object3D* GetParentObject() { return parentObject; }
+	void InvalidateParent() { parentObject = nullptr; }
 
 public:
-	Object3D* mpParentObject;      // このコライダーを所有する親3Dオブジェクト
+	Object3D* parentObject;      // このコライダーを所有する親3Dオブジェクト
 
 	VECTOR mvPosition;             // コライダーの基準位置座標1（球の中心、またはカプセルの始点）
 	VECTOR mvPosition2;            // コライダーの基準位置座標2（カプセルの終点）
-	float mfRadius;                // コライダーの半径
+	float radius;                // コライダーの半径
 
-	bool mbDeleteFlag;             // コライダーの削除フラグ（trueでマネージャーから除外）
+	bool deleteFlag;             // コライダーの削除フラグ（trueでマネージャーから除外）
 
 protected:
-	std::vector<Collider*> mCollisionList; // 現在このコライダーに衝突し続けている他のコライダーのリスト
+	std::vector<Collider*> collisionList; // 現在このコライダーに衝突し続けている他のコライダーのリスト
 };
 

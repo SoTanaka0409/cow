@@ -40,7 +40,7 @@ public:
 
 private:
 	VECTOR mvPosition;        // デバッグカメラの現在座標
-	float mfHorizontalAngle;  // 水平（左右ヨー）回転角度
-	float mfVerticalAngle;    // 垂直（上下ピッチ）回転角度
+	float horizontalAngle;  // 水平（左右ヨー）回転角度
+	float verticalAngle;    // 垂直（上下ピッチ）回転角度
 };
 

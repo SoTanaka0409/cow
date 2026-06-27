@@ -7,9 +7,9 @@
 Object2D::Object2D(VECTOR initPos)
 	: mvPosition(initPos)
 	, mvRotation(VGet(0.0f, 0.0f, 0.0f))
-	, mbDeleteFlag(false)
-	, mnTag(Tag2D::None2D)
-	, mbDrawFlag(true)
+	, deleteFlag(false)
+	, tag(Tag2D::None2D)
+	, drawFlag(true)
 {
 	// 生成したオブジェクトを管理・更新するため、現在のアクティブなシーンのマネージャーへ自動で登録する
 	ServiceLocator::GetObjectManager()->AddObject(this);

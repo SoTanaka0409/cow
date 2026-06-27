@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include"DxLib.h"
 #include"GameManager.h"
 #include"CowManager.h"
@@ -56,22 +56,22 @@ public:
 	virtual void Finalize() = 0;
 
 	// ゲッター・セッター群
-	ObjectManager* GetObjectManager() { return mpObjectManager; }
-	ColliderManager* GetCollisionManager() { return mpColliderManager; }
-	float GetFadeAlpha() const { return mfFadeAlpha; }
-	void SetFadeAlpha(float alpha) { mfFadeAlpha = alpha; }
+	ObjectManager* GetObjectManager() { return objectManager; }
+	ColliderManager* GetCollisionManager() { return colliderManager; }
+	float GetFadeAlpha() const { return fadeAlpha; }
+	void SetFadeAlpha(float alpha) { fadeAlpha = alpha; }
 	
-	SceneFade mFadeState = SceneFade_None; // フェード状態
-	int mNextScene = 0;                    // 次のシーンID
+	SceneFade fadeState = SceneFade_None; // フェード状態
+	int nextScene = 0;                    // 次のシーンID
 
-	Fever* mpFever;                        // フィーバー管理
-	AnimalManager* mpAnimalManager;        // アニマル管理
-	CowManager* mpCowManager;              // 牛管理
-	GameManager* mpGameManager;            // ゲーム進行管理
+	Fever* fever;                        // フィーバー管理
+	AnimalManager* animalManager;        // アニマル管理
+	CowManager* cowManager;              // 牛管理
+	GameManager* gameManager;            // ゲーム進行管理
 
 private:
-	ObjectManager* mpObjectManager;        // オブジェクト管理
-	ColliderManager* mpColliderManager;    // コライダー管理
-	float mfFadeAlpha;                     // フェード不透明度 (0-255)
-	float mfFadeSpeed;                     // フェード速度
+	ObjectManager* objectManager;        // オブジェクト管理
+	ColliderManager* colliderManager;    // コライダー管理
+	float fadeAlpha;                     // フェード不透明度 (0-255)
+	float fadeSpeed;                     // フェード速度
 };

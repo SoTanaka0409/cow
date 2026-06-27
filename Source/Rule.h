@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include"Scene.h"
 
 // プレイヤー環境に合わせた音量調整を提供するため、設定シーンを分離
@@ -49,13 +49,13 @@ public:
 	};
 
 private:
-	int mRuleGraph;
-	int mFontHandle;
-	int mTitleFontHandle;
+	int ruleGraph;
+	int fontHandle;
+	int titleFontHandle;
 
-	MenuType mSelectedIndex = MENU_BGM;
+	MenuType selectedIndex = MENU_BGM;
 	// 音量スライダー操作時にSEが毎フレーム鳴るのを防ぐためのインターバル
-	int mPlaySeDelay = 0;
+	int playSeDelay = 0;
 	// シーン遷移直後の入力持ち越しによる誤動作を防ぐため
-	int mSceneFrames = 0;
+	int sceneFrames = 0;
 };

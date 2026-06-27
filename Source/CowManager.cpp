@@ -30,40 +30,40 @@ CowManager::CowManager()
  */
 CowManager::~CowManager()
 {
-	mCows.clear();
-	for (auto& pair : mPools)
+	cows.clear();
+	for (auto& pair : pools)
 	{
 		for (auto cow : pair.second)
 		{
 			delete cow;
 		}
 	}
-	mPools.clear();
+	pools.clear();
 }
 
 /*
  * @brief 指定された種類の牛を生成またはプールから再利用して配置する
- * [入力] filename: モデルファイル, pos: 出現基準座標, scale: 拡大率, tag: 牛のタグ, count: 生成数, mfever: フィーバーフラグ
+ * [入力] filename: モデルファイル, pos: 出現基準座標, scale: 拡大率, tag: 牛のタグ, count: 生成数, fever: フィーバーフラグ
  * [出力] なし
  * [副作用] 牛のメモリ確保およびmCowsへの追加、またはプールからの取り出し
  */
-void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove::Tag_cow tag, int count, bool mfever)
+void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove::Tag_cow tag, int count, bool fever)
 {
 	for (int i = 0; i < count; i++)
 	{
 		// パフォーマンス維持のため、同時出現数を最大30匹に制限する
-		if (mCows.size() >= 30)
+		if (cows.size() >= 30)
 		{
 			if (tag == CowMove::Cow_gold)
 			{
 				// 金の牛を確実に出現させるため、プレイヤーから最も遠い普通の牛を優先して破棄し枠を空ける
 				bool erased = false;
 				float maxDistSq = -1.0f;
-				auto furthestIt = mCows.end();
+				auto furthestIt = cows.end();
 				
-				VECTOR playerPos = Master::mpCamera->GetPosition();
+				VECTOR playerPos = Master::camera->GetPosition();
 
-				for (auto it = mCows.begin(); it != mCows.end(); ++it)
+				for (auto it = cows.begin(); it != cows.end(); ++it)
 				{
 					if ((*it)->GetTag_cow() != CowMove::Cow_gold)
 					{
@@ -81,24 +81,24 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 					}
 				}
 
-				if (furthestIt != mCows.end())
+				if (furthestIt != cows.end())
 				{
 					// 既に削除フラグが立っている牛などはObjectManager側で消される
 					(*furthestIt)->Die(DEATH_LIMIT);
 					auto cow = *furthestIt;
 					cow->Deactivate();
-					mPools[cow->GetTag_cow()].push_back(cow);
-					mCows.erase(furthestIt);
+					pools[cow->GetTag_cow()].push_back(cow);
+					cows.erase(furthestIt);
 					erased = true;
 				}
-				else if (!mCows.empty())
+				else if (!cows.empty())
 				{
 					// 全ての牛が画面内などの場合、一番古いものの削除フラグを立ててリストから除外する
-					mCows.front()->Die(DEATH_LIMIT);
-					auto cow = mCows.front();
+					cows.front()->Die(DEATH_LIMIT);
+					auto cow = cows.front();
 					cow->Deactivate();
-					mPools[cow->GetTag_cow()].push_back(cow);
-					mCows.erase(mCows.begin());
+					pools[cow->GetTag_cow()].push_back(cow);
+					cows.erase(cows.begin());
 					erased = true;
 				}
 
@@ -116,72 +116,72 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 
 		if (tag == CowMove::Cow_1)
 		{
-			if (!mPools[tag].empty())
+			if (!pools[tag].empty())
 			{
-				auto cow = mPools[tag].back();
-				mPools[tag].pop_back();
+				auto cow = pools[tag].back();
+				pools[tag].pop_back();
 				cow->Reset(spawnPos);
 				cow->SetScale(scale);
-				mCows.push_back(cow);
+				cows.push_back(cow);
 			}
 			else
 			{
 				auto newCow = new Cow(filename, spawnPos, 1.0f);
 				newCow->SetScale(scale);
-				mCows.push_back(newCow);
+				cows.push_back(newCow);
 			}
 		}
 		else if (tag == CowMove::Cow_2)
 		{
-			if (!mPools[tag].empty())
+			if (!pools[tag].empty())
 			{
-				auto cow = mPools[tag].back();
-				mPools[tag].pop_back();
+				auto cow = pools[tag].back();
+				pools[tag].pop_back();
 				cow->Reset(spawnPos);
 				cow->SetScale(scale);
-				mCows.push_back(cow);
+				cows.push_back(cow);
 			}
 			else
 			{
 				auto newCow = new Cow_2(filename, spawnPos);
 				newCow->SetScale(scale);
-				mCows.push_back(newCow);
+				cows.push_back(newCow);
 			}
 		}
 		else if (tag == CowMove::Cow_gold)
 		{
-			auto feverMode = mfever ? Cow_gold::fever : Cow_gold::Nofever;
-			if (!mPools[tag].empty())
+			auto feverMode = fever ? Cow_gold::Fever : Cow_gold::NoFever;
+			if (!pools[tag].empty())
 			{
-				auto cow = dynamic_cast<Cow_gold*>(mPools[tag].back());
-				mPools[tag].pop_back();
+				auto cow = dynamic_cast<Cow_gold*>(pools[tag].back());
+				pools[tag].pop_back();
 				if (cow) cow->SetFever(feverMode);
 				cow->Reset(spawnPos);
 				cow->SetScale(scale);
-				mCows.push_back(cow);
+				cows.push_back(cow);
 			}
 			else
 			{
 				auto newCow = new Cow_gold(filename, spawnPos, feverMode);
 				newCow->SetScale(scale);
-				mCows.push_back(newCow);
+				cows.push_back(newCow);
 			}
 		}
 		else if (tag == CowMove::Cow_T)
 		{
-			if (!mPools[tag].empty())
+			if (!pools[tag].empty())
 			{
-				auto cow = mPools[tag].back();
-				mPools[tag].pop_back();
+				auto cow = pools[tag].back();
+				pools[tag].pop_back();
 				cow->Reset(spawnPos);
 				cow->SetScale(scale);
-				mCows.push_back(cow);
+				cows.push_back(cow);
 			}
 			else
 			{
 				auto newCow = new Cow_Tutorial(filename, spawnPos);
 				newCow->SetScale(scale);
-				mCows.push_back(newCow);
+				cows.push_back(newCow);
 			}
 		}
 	}
@@ -195,7 +195,7 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
  */
 void CowManager::Update()
 {
-	for (auto cow : mCows)
+	for (auto cow : cows)
 	{
 		cow->Update();
 	}
@@ -220,16 +220,16 @@ void CowManager::Draw()
  */
 void CowManager::EraseCow()
 {
-	if (!mCows.empty())
+	if (!cows.empty())
 	{
-		for (auto it = mCows.begin(); it != mCows.end();)
+		for (auto it = cows.begin(); it != cows.end();)
 		{
 			if ((*it)->GetCowDelete())
 			{
 				auto cow = *it;
 				cow->Deactivate();
-				mPools[cow->GetTag_cow()].push_back(cow);
-				it = mCows.erase(it);
+				pools[cow->GetTag_cow()].push_back(cow);
+				it = cows.erase(it);
 			}
 			else
 			{

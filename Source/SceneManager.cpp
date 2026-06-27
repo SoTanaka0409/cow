@@ -1,4 +1,4 @@
-﻿#include"SceneManager.h"
+#include"SceneManager.h"
 #include"Scene3D.h"
 #include"Scene.h"
 #include"TitleScene.h"
@@ -7,9 +7,9 @@
 #include "Rule.h"
 
 SceneManager::SceneManager()
-	: mnSceneType(SCENE_TYPE::SCENE_NONE)
-	, mnNextSceneType(SCENE_TYPE::SCENE_NONE)
-	, mpCurrentScene(nullptr)
+	: sceneType(SCENE_TYPE::SCENE_NONE)
+	, nextSceneType(SCENE_TYPE::SCENE_NONE)
+	, currentScene(nullptr)
 	, SceneHard(false)
 	, SceneNormal(false)
 {
@@ -24,23 +24,23 @@ SceneManager::~SceneManager()
 void SceneManager::Initialize()
 {
 	// 仕様上起動時はタイトル画面から開始する
-	mnNextSceneType = SCENE_TYPE::SCENE_TITLE;
+	nextSceneType = SCENE_TYPE::SCENE_TITLE;
 	ChangeSceneIfNeeded();
 }
 
 void SceneManager::Update()
 {
-	if (mpCurrentScene != nullptr)
+	if (currentScene != nullptr)
 	{
-		mpCurrentScene->Update();
+		currentScene->Update();
 	}
 }
 
 void SceneManager::Draw()
 {
-	if (mpCurrentScene != nullptr)
+	if (currentScene != nullptr)
 	{
-		mpCurrentScene->Draw();
+		currentScene->Draw();
 	}
 }
 
@@ -48,15 +48,15 @@ void SceneManager::Draw()
  * 現在のアクティブシーンを安全に解放し、後片付けを行う
  * [入力] なし
  * [出力] なし
- * [副作用] mpCurrentScene の Finalize 呼び出し、およびメモリ delete
+ * [副作用] currentScene の Finalize 呼び出し、およびメモリ delete
  */
 void SceneManager::Finalize()
 {
-	if (mpCurrentScene != nullptr)
+	if (currentScene != nullptr)
 	{
-		mpCurrentScene->Finalize();
-		delete mpCurrentScene;
-		mpCurrentScene = nullptr;
+		currentScene->Finalize();
+		delete currentScene;
+		currentScene = nullptr;
 	}
 }
 
@@ -69,43 +69,43 @@ void SceneManager::Finalize()
 void SceneManager::ChangeSceneIfNeeded()
 {
 	// 遷移先が変わっていない場合はシーン切り替えを行わない
-	if (mnSceneType == mnNextSceneType)
+	if (sceneType == nextSceneType)
 	{
 		return;
 	}
 
-	if (mpCurrentScene != nullptr)
+	if (currentScene != nullptr)
 	{
-		mpCurrentScene->Finalize();
-		delete mpCurrentScene;
-		mpCurrentScene = nullptr;
+		currentScene->Finalize();
+		delete currentScene;
+		currentScene = nullptr;
 	}
 
-	mnSceneType = mnNextSceneType;
+	sceneType = nextSceneType;
 
-	switch (mnSceneType)
+	switch (sceneType)
 	{
 	case SCENE_TYPE::SCENE_3D:
-		mpCurrentScene = new Scene3D();
+		currentScene = new Scene3D();
 		break;
 	case SCENE_TYPE::SCENE_TITLE:
-		mpCurrentScene = new TitleScene();
+		currentScene = new TitleScene();
 		break;
 	case SCENE_TYPE::SCENE_TUTORIAL:
-		mpCurrentScene = new TutorialScene();
+		currentScene = new TutorialScene();
 		break;
 	case SCENE_TYPE::SCENE_RESULT:
-		mpCurrentScene = new ResultScene();
+		currentScene = new ResultScene();
 		break;
 	case SCENE_TYPE::SCENE_RULE:
-		mpCurrentScene = new Rule();
+		currentScene = new Rule();
 		break;
 	default:
 		break;
 	}
 
-	if (mpCurrentScene != nullptr)
+	if (currentScene != nullptr)
 	{
-		mpCurrentScene->Initialize();
+		currentScene->Initialize();
 	}
 }

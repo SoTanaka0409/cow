@@ -1,11 +1,11 @@
-﻿#include"ResultScene.h"
+#include"ResultScene.h"
 #include"Master.h"
 #include"SceneManager.h"
 
 ResultScene::ResultScene()
 {
-	mFlag = true;
-	mnCount = 0;
+	flag = true;
+	count = 0;
 	
 	ResultGraphHandle = LoadGraph("Resource/2D/リザルト.png");
 	rankImage[0] = LoadGraph("Resource/2D/1位.png");
@@ -22,7 +22,7 @@ ResultScene::ResultScene()
 	newGameBtn.y = 50;
 	GetGraphSize(newGameBtn.graphHandle, &newGameBtn.w, &newGameBtn.h);
 	newGameBtn.isHover = false;
-	mButtons.push_back(newGameBtn);
+	buttons.push_back(newGameBtn);
 
 	ResultButton exitBtn;
 	exitBtn.type = SelectionManager::Title::titleOUT;
@@ -31,11 +31,11 @@ ResultScene::ResultScene()
 	exitBtn.y = 680;
 	GetGraphSize(exitBtn.graphHandle, &exitBtn.w, &exitBtn.h);
 	exitBtn.isHover = false;
-	mButtons.push_back(exitBtn);
+	buttons.push_back(exitBtn);
 
-	Master::mpSoundManager->PlayBGM(SoundManager::BGM_RESULT);
-	Master::mpSoundManager->SetBGMVolume(120);
-	Master::mpScore;
+	Master::soundManager->PlayBGM(SoundManager::BGM_RESULT);
+	Master::soundManager->SetBGMVolume(120);
+	Master::score;
 }
 
 ResultScene::~ResultScene()
@@ -45,9 +45,9 @@ ResultScene::~ResultScene()
 
 void ResultScene::Initialize()
 {
-	mFadeState = SceneFade_In;
+	fadeState = SceneFade_In;
 	SetFadeAlpha(255.0f);
-	Master::mpScore->LoadRanking();
+	Master::score->LoadRanking();
 }
 
 void ResultScene::Draw()
@@ -75,35 +75,35 @@ void ResultScene::Draw()
 		startX = 850 - (digitCount - 3) * 40;
 	}
 
-	Master::mpScore->DrawNumber(startX, 490, score, 1.0f, 4);
+	Master::score->DrawNumber(startX, 490, score, 1.0f, 4);
 	
 	int pointX = startX + digitCount * 80;
 	DrawExtendGraph(pointX, 430, pointX + 200, 630, pointImg, TRUE);
 
 	Scene::Draw();
-	if (mFadeState != SceneFade_None) {
-		Scene::Fade(mFadeState);
+	if (fadeState != SceneFade_None) {
+		Scene::Fade(fadeState);
 	}
 }
 
 void ResultScene::Update()
 {
-	mnCount++;
+	count++;
 
 	// 待機時間経過後、自動的にタイトル画面へ戻るフェードを開始
-	if (mnCount >= 200 && mFadeState != SceneFade_Out)
+	if (count >= 200 && fadeState != SceneFade_Out)
 	{
-		mFadeState = SceneFade_Out;
-		mNextScene = SceneManager::SCENE_TITLE;
+		fadeState = SceneFade_Out;
+		nextScene = SceneManager::SCENE_TITLE;
 	}
 
-	if (mFadeState == SceneFade_Out)
+	if (fadeState == SceneFade_Out)
 	{
-		Master::mpSoundManager->SetBGMVolume((Master::mpSoundManager->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
+		Master::soundManager->SetBGMVolume((Master::soundManager->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
 		if (GetFadeAlpha() >= 255)
 		{
 			SetFadeAlpha(255);
-			Master::mpSceneManager->SetNextScene((SceneManager::SCENE_TYPE)mNextScene);
+			Master::sceneManager->SetNextScene((SceneManager::SCENE_TYPE)nextScene);
 		}
 		return;
 	}
@@ -128,7 +128,7 @@ void ResultScene::DrawRankingUI()
 
 	for (int i = 0; i < 3; i++)
 	{
-		const Score::RankData& data = Master::mpScore->GetRanking(i);
+		const Score::RankData& data = Master::score->GetRanking(i);
 		int y = baseY + 60 + i * 80;
 
 		DrawExtendGraph(
@@ -145,7 +145,7 @@ void ResultScene::DrawRankingUI()
 		int h = (int)(80 * scale);
 		int drawY = y - 10 + (80 - h) / 2;
 
-		Master::mpScore->DrawNumber(
+		Master::score->DrawNumber(
 			baseX + 180,
 			drawY,
 			data.score,
@@ -173,9 +173,9 @@ void ResultScene::Finalize()
 {
 	DeleteGraph(ResultGraphHandle);
 
-	for (int i = 0; i < mButtons.size(); i++)
+	for (int i = 0; i < buttons.size(); i++)
 	{
-		DeleteGraph(mButtons[i].graphHandle);
+		DeleteGraph(buttons[i].graphHandle);
 	}
 
 	for (int i = 0; i < 3; i++)
@@ -187,6 +187,6 @@ void ResultScene::Finalize()
 	DeleteGraph(yourScoreTextImg);
 	DeleteGraph(pointImg);
 
-	Master::mpSoundManager->StopBGM();
+	Master::soundManager->StopBGM();
 }
 

@@ -1,14 +1,14 @@
-﻿#include "Cow.h"
+#include "Cow.h"
 #include "CapsuleCollider.h"
 #include "Master.h"
 
 Cow::Cow(std::string filename, VECTOR initPos, float num)
 	: CowMove(filename, initPos)
 {
-	mfScore = num;
-	mfXp = 10;
+	score = num;
+	xp = 10;
 	SetTag_cow(CowMove::Cow_1);
-	mCurrentState = STATE_IDLE;
+	currentState = STATE_IDLE;
 }
 
 Cow::~Cow()

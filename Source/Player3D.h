@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "DxLib.h"
 #include <string>
 #include "Object3D.h"
@@ -17,7 +17,7 @@ class Player3D : public Object3D
 {
 private:
 	// 仕様により吸引アクションのオンオフを制御する
-	bool mbVacuumFlag = true;
+	bool vacuumFlag = true;
 public:
 	// ステータスID（UIやスキル加算判定に使用）
 	enum StatusID
@@ -29,7 +29,7 @@ public:
 
 	bool GetVacuumFlag() const
 	{
-		return mbVacuumFlag;
+		return vacuumFlag;
 	}
 
 public:
@@ -107,8 +107,8 @@ public:
 	 */
 	float Status(StatusID id);
 
-	void SetStatusAttack(float f) { mfAttack_Speed = f; }
-	float GetStatusAttack() { return mfAttack_Speed; }
+	void SetStatusAttack(float f) { attack_Speed = f; }
+	float GetStatusAttack() { return attack_Speed; }
 
 	void AddAnimation(AnimationState state, std::string filename);
 
@@ -116,7 +116,7 @@ public:
 	virtual void OnTrigger(Collider* collider, Collider* check) override;
 	virtual void OnExit(Collider* collider, Collider* check) override;
 
-	CapsuleCollider* GetCollisionCollider() { return mpCapsuleCollider; }
+	CapsuleCollider* GetCollisionCollider() { return capsuleCollider; }
 
 	void SetScale(float scale);
 
@@ -130,34 +130,34 @@ public:
 	void PlaySkillEffect();
 
 public:
-	Model* mpModel;
-	Skill* mpSkill;
-	Level* mpLevel;
-	Combo* mpCombo;
-	Score* mpScore;
+	Model* model;
+	Skill* skill;
+	Level* level;
+	Combo* combo;
+	Score* score;
 
 private:
-	float mfSpeed;
-	float mfHp;
-	float mfAttack_Speed;
-	float mfTargetAngle;
-	float mfAngle;
+	float speed;
+	float hp;
+	float attack_Speed;
+	float targetAngle;
+	float angle;
 	const float ROTATE_SPEED = 0.2f;
 	const float JUMP_POWER = 30.0f;
-	bool mIsOutOfBounds = false;
-	int mnLighGraph;
+	bool isOutOfBounds = false;
+	int lighGraph;
 
-	bool mIsCowInVacuumRange;
+	bool isCowInVacuumRange;
 	const float VACUUM_RADIUS = 300.0f;
 	const int VACUUM_REQUIRE_TIME = 120;
 
-	float mVacuumGauge = 100.0f;
+	float vacuumGauge = 100.0f;
 	const float VACUUM_GAUGE_MAX = 100.0f;
 	const float VACUUM_COST_PER_FRAME = 0.2f;
 	const float VACUUM_RECOVER_PER_FRAME = 0.4f;
-	bool mIsVacuumActive = false;
+	bool isVacuumActive = false;
 
-	int CatchNowCount;
+	int catchNowCount;
 	float currentSpeed;
 
 	VECTOR UpMoveVector;
@@ -165,19 +165,19 @@ private:
 	VECTOR oldmoveVec;
 	VECTOR hitPos = VGet(0.0f, 0.0f, 0.0f);
 
-	float mfHorizontalAngle;
-	float mfVerticalAngle;
+	float horizontalAngle;
+	float verticalAngle;
 
 	const int SIZE_RAND_MAX = 800;
 	const int SIZE_RAND_MIN = 400;
 	const int VISIBLE_TIME_RAND_MAX = 30;
 	const int VISIBLE_TIME_RAND_MIN = 5;
 
-	EffekseerEffect* mpSpeed;
-	EffekseerEffect* mpBeam;
-	int mEffectTimer;
+	EffekseerEffect* speedEffect;
+	EffekseerEffect* beam;
+	int effectTimer;
 
-	bool mIsStunned;
-	int mStunTimer;
+	bool isStunned;
+	int stunTimer;
 };
 

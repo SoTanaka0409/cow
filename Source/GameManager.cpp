@@ -1,4 +1,4 @@
-﻿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include"GameManager.h"
 #include"Master.h"
 #include"SceneManager.h"
@@ -11,37 +11,37 @@
 GameManager::GameManager()
 	: Fadetimer(300.0f)
 	, Fadeflag(true)
-	, mCurrentPhase(GamePhase::Normal)
-	, mnType(GameStepType::game_CowGet)
+	, currentPhase(GamePhase::Normal)
+	, type(GameStepType::game_CowGet)
 {
-	mpGameTimer = nullptr;
+	gameTimer = nullptr;
 	
 	auto data = new GameStepData;
 	data->type = GameStepType::game_CowGet;
-	data->TrueFlag = true;
-	mData.push_back(data);
+	data->trueFlag = true;
+	gameStepDataList.push_back(data);
 
 	data = new GameStepData;
 	data->type = GameStepType::game_final;
-	data->TrueFlag = true;
-	mData.push_back(data);
+	data->trueFlag = true;
+	gameStepDataList.push_back(data);
 
-	m_PhaseTimer = GetNowCount();
-	m_PhaseChangeCount = 0;
+	phaseTimer = GetNowCount();
+	phaseChangeCount = 0;
 }
 
 GameManager::~GameManager()
 {
-	for (auto data : mData)
+	for (auto data : gameStepDataList)
 	{
 		delete data;
 	}
-	mData.clear();
+	gameStepDataList.clear();
 
-	if (mpGameTimer != nullptr)
+	if (gameTimer != nullptr)
 	{
-		delete mpGameTimer;
-		mpGameTimer = nullptr;
+		delete gameTimer;
+		gameTimer = nullptr;
 	}
 }
 
@@ -58,27 +58,27 @@ void GameManager::GameNextStep(GameStepType type)
 	if (GameStepType::game_CowGet == type)
 	{
 		Fadeflag = true;
-		mnType = type;
+		type = type;
 	}
 	if (GameStepType::game_final == type)
 	{
-		Master::GameFinishFlag = true;
+		Master::gameFinishFlag = true;
 		if (player != nullptr)
 		{
-			Master::mpScore->AddScore(player->mpScore->GetScore());
-			Master::mpScore->SetResultScore(player->mpScore->GetScore());
-			player->mpScore->AddRanking();
+			Master::score->AddScore(player->score->GetScore());
+			Master::score->SetResultScore(player->score->GetScore());
+			player->score->AddRanking();
 
 			// 名前入力はスキップして自動セーブする仕様のため
-			player->mpScore->Save();
-			player->mpScore->SaveRanking();
+			player->score->Save();
+			player->score->SaveRanking();
 		}
 
 		// リザルト画面へのフェードアウトを開始する
-		Master::mpSceneManager->GetCurrentScene()->mFadeState = Scene::SceneFade_Out;
-		Master::mpSceneManager->GetCurrentScene()->mNextScene = SceneManager::SCENE_RESULT;
+		Master::sceneManager->GetCurrentScene()->fadeState = Scene::SceneFade_Out;
+		Master::sceneManager->GetCurrentScene()->nextScene = SceneManager::SCENE_RESULT;
 
-		mnType = type;
+		type = type;
 	}
 }
 
@@ -111,56 +111,56 @@ void GameManager::Update()
 {
 	Player3D* player = ServiceLocator::GetPlayer();
 	
-	if (GameStepType::game_final == mnType)
+	if (GameStepType::game_final == type)
 	{
 	}
 	
 	// 制限時間タイマー管理およびランダムフェーズ切り替え処理
-	if (GameStepType::game_CowGet == mnType)
+	if (GameStepType::game_CowGet == type)
 	{
-		if (!mpGameTimer)
+		if (!gameTimer)
 		{
-			mpGameTimer = new GameTimer(VGet(0, 0, 0), 60, GameTimer::Tag_Game);
+			gameTimer = new GameTimer(VGet(0, 0, 0), 60, GameTimer::Tag_Game);
 		}
 
-		if (mpGameTimer)
+		if (gameTimer)
 		{
-			if (mpGameTimer->OutTimerFlag())
+			if (gameTimer->OutTimerFlag())
 			{
-				mpGameTimer->SetOutTimerFlag(false);
+				gameTimer->SetOutTimerFlag(false);
 				GameNextStep(GameManager::game_final);
 			}
 			else
 			{
-				mpGameTimer->Update();
+				gameTimer->Update();
 			}
 		}
 
 		int Timer = GetNowCount();
 
-		if (Timer - m_PhaseTimer >= 1000)
+		if (Timer - phaseTimer >= 1000)
 		{
-			m_PhaseTimer = Timer;
-			m_PhaseChangeCount++;
+			phaseTimer = Timer;
+			phaseChangeCount++;
 		}
 		
 		// 30秒ごとにゲームのフェーズ（演出）をランダムに変更する制約
-		if (m_PhaseChangeCount >= 30)
+		if (phaseChangeCount >= 30)
 		{
-			m_PhaseChangeCount = 0;
-			int m_Num = rand() % 2 + 1;
+			phaseChangeCount = 0;
+			int num = rand() % 2 + 1;
 			
-			if (m_Num == 1)
+			if (num == 1)
 			{
-				mCurrentPhase = GamePhase::TornadoCrisis;
+				currentPhase = GamePhase::TornadoCrisis;
 			}
-			else if (m_Num == 2)
+			else if (num == 2)
 			{
-				mCurrentPhase = GamePhase::MassSpawn;
+				currentPhase = GamePhase::MassSpawn;
 			}
 			else
 			{
-				mCurrentPhase = GamePhase::Normal;
+				currentPhase = GamePhase::Normal;
 			}
 		}
 	}

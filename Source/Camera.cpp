@@ -10,20 +10,20 @@
 #include "GameManager.h"
 
 Camera::Camera()
-	: mfHorizontalAngle(0.0f)
-	, mfVerticalAngle(-55.0f)
-	, mbIsPhaseCameraActive(false)
+	: horizontalAngle(0.0f)
+	, verticalAngle(-55.0f)
+	, isPhaseCameraActive(false)
 	, mvPosition(VGet(0.0f, 0.0f, 0.0f))
 	, mvLookAtPosition(VGet(0.0f, 0.0f, 0.0f))
-	, mpTarget(nullptr)
-	, mnShakeTime(0)
-	, mnShakeTimeCount(0)
-	, mfShakeAngle(0.0f)
-	, mfShakeTimeCounter(0.0f)
-	, mfShakeTime(0.0f)
-	, mfShakeWidth(0.0f)
-	, mfShakeAngleSpeed(0.0f)
-	, mfStepTime(0.0f)
+	, target(nullptr)
+	, shakeTimeFrames(0)
+	, shakeTimeCount(0)
+	, shakeAngle(0.0f)
+	, shakeTimeCounter(0.0f)
+	, shakeTime(0.0f)
+	, shakeWidth(0.0f)
+	, shakeAngleSpeed(0.0f)
+	, stepTime(0.0f)
 	, mvShakePosition(VGet(0.0f, 0.0f, 0.0f))
 {
 }
@@ -34,7 +34,7 @@ Camera::~Camera()
 
 void Camera::Initialize()
 {
-	mpTarget = nullptr;
+	target = nullptr;
 	
 	// カメラのクリッピング距離（描画可能範囲）を近100?遠50000の広範囲に設定
 	SetCameraNearFar(100.0f, 50000.0f);
@@ -49,20 +49,20 @@ void Camera::Initialize()
 void Camera::Update()
 {
 	// スキルカード選択中、またはデバッグの自由移動カメラ操作中はゲームカメラの更新をスキップ
-	if (Master::SelectSkill) return;
-	if (Master::mbIsDebugCamera) return;
+	if (Master::selectSkill) return;
+	if (Master::isDebugCamera) return;
 
-	if (mpTarget == nullptr)
+	if (target == nullptr)
 	{
-		mpTarget = ServiceLocator::GetPlayer();
+		target = ServiceLocator::GetPlayer();
 	}
 	
 	UpdateRotate();
 	
-	if (mpTarget != nullptr)
+	if (target != nullptr)
 	{
 		// カメラの注視点をプレイヤーキャラクターの中心やや上に設定する
-		mvLookAtPosition = mpTarget->GetPosition();
+		mvLookAtPosition = target->GetPosition();
 		mvLookAtPosition.y += 340.0f;
 	}
 	
@@ -72,11 +72,11 @@ void Camera::Update()
 		const float distance = 1000.0f;
 		VECTOR temp;
 		// 水平・垂直角度値（度数法）をラジアンに変換してカメラの3D座標オフセットを計算
-		temp.x = distance * cosf(mfVerticalAngle / 180.0f * 3.14159265f) * sinf(mfHorizontalAngle / 180.0f * DX_PI_F);
-		temp.y = distance * sinf(-mfVerticalAngle / 180.0f * 3.14159265f);
-		temp.z = -(distance * cosf(mfVerticalAngle / 180.0f * DX_PI_F) * cosf(mfHorizontalAngle / 180.0f * DX_PI_F));
+		temp.x = distance * cosf(verticalAngle / 180.0f * 3.14159265f) * sinf(horizontalAngle / 180.0f * DX_PI_F);
+		temp.y = distance * sinf(-verticalAngle / 180.0f * 3.14159265f);
+		temp.z = -(distance * cosf(verticalAngle / 180.0f * DX_PI_F) * cosf(horizontalAngle / 180.0f * DX_PI_F));
 		
-		if (!mbIsPhaseCameraActive)
+		if (!isPhaseCameraActive)
 		{
 			mvPosition = VAdd(temp, mvLookAtPosition);
 			
@@ -85,9 +85,9 @@ void Camera::Update()
 		}
 	}
 
-	mPrevMouseX = mMouseX;
-	mPrevMouseY = mMouseY;
-	GetMousePoint(&mMouseX, &mMouseY);
+	prevMouseX = currentMouseX;
+	prevMouseY = currentMouseY;
+	GetMousePoint(&currentMouseX, &currentMouseY);
 
 	// 描画エフェクトの位置や方向が3Dカメラ視野角と合うよう、Effekseer側の3D空間設定と同期する
 	Effekseer_Sync3DSetting();
@@ -100,27 +100,27 @@ void Camera::Update()
 void Camera::UpdateRotate()
 {
 	// カメラ水平回転角および垂直回転角のオーバーフロー保護と範囲制限
-	if (mfHorizontalAngle >= 180.0f)
+	if (horizontalAngle >= 180.0f)
 	{
-		mfHorizontalAngle -= 360.0f;
+		horizontalAngle -= 360.0f;
 	}
-	if (mfHorizontalAngle <= -180.0f)
+	if (horizontalAngle <= -180.0f)
 	{
-		mfHorizontalAngle += 360.0f;
+		horizontalAngle += 360.0f;
 	}
 
-	if (mfVerticalAngle >= 80.0f)
+	if (verticalAngle >= 80.0f)
 	{
-		mfVerticalAngle = 80.0f;
+		verticalAngle = 80.0f;
 	}
-	if (mfVerticalAngle <= -80.0f)
+	if (verticalAngle <= -80.0f)
 	{
-		mfVerticalAngle = -80.0f;
+		verticalAngle = -80.0f;
 	}
 
 	const float MOUSE_SENSITIVITY = 0.05f;
 
-	if (Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::SCENE_3D || Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::SCENE_TUTORIAL)
+	if (Master::sceneManager->GetSceneType() == SceneManager::SCENE_TYPE::SCENE_3D || Master::sceneManager->GetSceneType() == SceneManager::SCENE_TYPE::SCENE_TUTORIAL)
 	{
 		// スキル選択中でない場合はゲームプレイ用のマウスキャプチャを行う
 		SetMouseDispFlag(false);
@@ -137,18 +137,18 @@ void Camera::UpdateRotate()
 
 		int deltaX = mouseX - centerX;
 
-		if (!mbIsPhaseCameraActive)
+		if (!isPhaseCameraActive)
 		{
 			// 左右のマウス移動量をカメラの水平旋回角（ヨー角）に蓄積反映
-			mfHorizontalAngle -= deltaX * MOUSE_SENSITIVITY;
+			horizontalAngle -= deltaX * MOUSE_SENSITIVITY;
 		}
 	}
 }
 
 bool Camera::IsMouseMoved()
 {
-	int moveX = abs(mMouseX - mPrevMouseX);
-	int moveY = abs(mMouseY - mPrevMouseY);
+	int moveX = abs(currentMouseX - prevMouseX);
+	int moveY = abs(currentMouseY - prevMouseY);
 
 	return moveX > 0.05f || moveY > 0.05f;
 }
@@ -159,15 +159,15 @@ void Camera::Finalize()
 
 void Camera::Shake()
 {
-	if (mfShakeTimeCounter < mfShakeTime)
+	if (shakeTimeCounter < shakeTime)
 	{
 		// 正弦波(sinf)と時間経過によるフェードアウト倍率を乗算してカメラの揺らし量を求める
-		mvShakePosition.y = sinf(mfShakeAngle) * (1.0f - (mfShakeTimeCounter / mfShakeTime)) * mfShakeWidth;
+		mvShakePosition.y = sinf(shakeAngle) * (1.0f - (shakeTimeCounter / shakeTime)) * shakeWidth;
 		mvShakePosition.x = 0.0f;
 		mvShakePosition.z = 0.0f;
 
-		mfShakeAngle += mfShakeAngleSpeed * mfStepTime;
-		mfShakeTimeCounter += mfStepTime;
+		shakeAngle += shakeAngleSpeed * stepTime;
+		shakeTimeCounter += stepTime;
 	}
 	else
 	{
@@ -177,16 +177,16 @@ void Camera::Shake()
 
 void Camera::SetupShake(float time, float width, float angleSpeed, float stepTime)
 {
-	mfShakeTimeCounter = 0.0f;
-	mfShakeTime = time;
-	mfShakeWidth = width;
-	mfShakeAngleSpeed = angleSpeed;
-	mfStepTime = stepTime;
+	shakeTimeCounter = 0.0f;
+	shakeTime = time;
+	shakeWidth = width;
+	shakeAngleSpeed = angleSpeed;
+	stepTime = stepTime;
 }
 
 void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 {
-	if (Master::mbIsDebugCamera) return;
+	if (Master::isDebugCamera) return;
 
 	static int lastPhase = -1;
 	static int phaseTimer = 0;
@@ -206,18 +206,18 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 
 	if (phase == (int)GameManager::GamePhase::Normal)
 	{
-		mbIsPhaseCameraActive = false;
+		isPhaseCameraActive = false;
 		return;
 	}
 
 	// 演出の開始から3秒（180フレーム）が経過したら、自動的に標準カメラへと戻す
 	if (phaseTimer > 180)
 	{
-		mbIsPhaseCameraActive = false;
+		isPhaseCameraActive = false;
 		return;
 	}
 	
-	mbIsPhaseCameraActive = true;
+	isPhaseCameraActive = true;
 
 	if (phase == (int)GameManager::GamePhase::MassSpawn)
 	{
