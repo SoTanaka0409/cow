@@ -11,25 +11,25 @@ Collider::Collider(Object3D* parent)
 	, mbDeleteFlag(false)
 {
 	assert(parent);
-	ColliderManager::GetInstance()->AddCollider(this); // ¶¬Žž‚ÉŽ©“®‚Åƒ}ƒl[ƒWƒƒ[‚Ö“o˜^
+	ColliderManager::GetInstance()->AddCollider(this); // ç”Ÿæˆæ™‚ã«è‡ªå‹•ã§ãƒžãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã¸ç™»éŒ²
 }
 
 Collider::~Collider()
 {
-	ColliderManager::GetInstance()->RemoveCollider(this); // ”jŠüŽž‚ÉŽ©“®‚Åƒ}ƒl[ƒWƒƒ[‚©‚ç“o˜^‰ðœ
+	ColliderManager::GetInstance()->RemoveCollider(this); // ç ´æ£„æ™‚ã«è‡ªå‹•ã§ãƒžãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‹ã‚‰ç™»éŒ²è§£é™¤
 }
 
 /*
- * @brief •Ê‚ÌƒRƒ‰ƒCƒ_[‚Æ‚ÌŠô‰½Šw“I‚ÈŒð·ó‘Ô‚ðŒ³‚ÉA“KØ‚ÈƒRƒŠƒWƒ‡ƒ“ƒCƒxƒ“ƒg‚ð’Ê’m‚·‚é
- * [“ü—Í] check: ”»’è‘ÎÛ‚Ì‘ŠŽèƒRƒ‰ƒCƒ_[, isHit: “–‚½‚è”»’è‚ÌŒð·ŒvŽZŒ‹‰Ê
- * [o—Í] ‚È‚µ
- * [•›ì—p] mCollisionList‚Ì‘}“üEíœAOnEnter / OnTrigger / OnExit ‚ÌeƒAƒNƒ^[‚Ö‚ÌƒR[ƒ‹ƒoƒbƒN’Ê’m
+ * @brief åˆ¥ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã¨ã®å¹¾ä½•å­¦çš„ãªäº¤å·®çŠ¶æ…‹ã‚’å…ƒã«ã€é©åˆ‡ãªã‚³ãƒªã‚¸ãƒ§ãƒ³ã‚¤ãƒ™ãƒ³ãƒˆã‚’é€šçŸ¥ã™ã‚‹
+ * [å…¥åŠ›] check: åˆ¤å®šå¯¾è±¡ã®ç›¸æ‰‹ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼, isHit: å½“ãŸã‚Šåˆ¤å®šã®äº¤å·®è¨ˆç®—çµæžœ
+ * [å‡ºåŠ›] ãªã—
+ * [å‰¯ä½œç”¨] mCollisionListã®æŒ¿å…¥ãƒ»å‰Šé™¤ã€OnEnter / OnTrigger / OnExit ã®è¦ªã‚¢ã‚¯ã‚¿ãƒ¼ã¸ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é€šçŸ¥
  */
 void Collider::HitCheck(Collider* check, bool isHit)
 {
 	if (isHit)
 	{
-		// Šù‚É‘OƒtƒŒ[ƒ€‚Å“¯‚¶‘ŠŽè‚ÆÕ“Ë‚µ‚Ä‚¢‚½‚©‚ðŒŸõ
+		// æ—¢ã«å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã§åŒã˜ç›¸æ‰‹ã¨è¡çªã—ã¦ã„ãŸã‹ã‚’æ¤œç´¢
 		auto itr = std::find_if(
 			mCollisionList.begin(),
 			mCollisionList.end(),
@@ -38,7 +38,7 @@ void Collider::HitCheck(Collider* check, bool isHit)
 
 		if (itr != mCollisionList.end())
 		{
-			// ‘OƒtƒŒ[ƒ€‚©‚çÕ“Ë‚ªŒp‘±‚µ‚Ä‚¢‚é‚½‚ßAOnTriggeri‘ØÝƒCƒxƒ“ƒgj‚ð’Ê’m
+			// å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã‹ã‚‰è¡çªãŒç¶™ç¶šã—ã¦ã„ã‚‹ãŸã‚ã€OnTriggerï¼ˆæ»žåœ¨ã‚¤ãƒ™ãƒ³ãƒˆï¼‰ã‚’é€šçŸ¥
 			if (this->mpParentObject != nullptr)
 			{
 				mpParentObject->OnTrigger(this, check);
@@ -46,7 +46,7 @@ void Collider::HitCheck(Collider* check, bool isHit)
 		}
 		else
 		{
-			// V‹K‚ÌÕ“Ë‚ª”­¶‚µ‚½‚½‚ßAƒŠƒXƒg‚É“o˜^‚µ‚Ä OnEnteriŠJŽnƒCƒxƒ“ƒgj‚ð’Ê’m
+			// æ–°è¦ã®è¡çªãŒç™ºç”Ÿã—ãŸãŸã‚ã€ãƒªã‚¹ãƒˆã«ç™»éŒ²ã—ã¦ OnEnterï¼ˆé–‹å§‹ã‚¤ãƒ™ãƒ³ãƒˆï¼‰ã‚’é€šçŸ¥
 			mCollisionList.push_back(check);
 			if (this->mpParentObject != nullptr)
 			{
@@ -56,7 +56,7 @@ void Collider::HitCheck(Collider* check, bool isHit)
 	}
 	else
 	{
-		// Õ“Ë‚µ‚Ä‚¢‚È‚¢ê‡A‘OƒtƒŒ[ƒ€‚Ü‚ÅÕ“Ë‚µ‚Ä‚¢‚½‚©‚Ìó‘Ô‚ðƒ`ƒFƒbƒN‚·‚é
+		// è¡çªã—ã¦ã„ãªã„å ´åˆã€å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã¾ã§è¡çªã—ã¦ã„ãŸã‹ã®çŠ¶æ…‹ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹
 		auto itr = std::find_if(
 			mCollisionList.begin(),
 			mCollisionList.end(),
@@ -65,7 +65,7 @@ void Collider::HitCheck(Collider* check, bool isHit)
 
 		if (itr != mCollisionList.end())
 		{
-			// Õ“Ë‚ªØ‚ê‚½i—£’E‚µ‚½juŠÔ‚Ì‚½‚ßAOnExitiI—¹ƒCƒxƒ“ƒgj‚ð’Ê’m‚µƒŠƒXƒg‚©‚çœŠO‚·‚é
+			// è¡çªãŒåˆ‡ã‚ŒãŸï¼ˆé›¢è„±ã—ãŸï¼‰çž¬é–“ã®ãŸã‚ã€OnExitï¼ˆçµ‚äº†ã‚¤ãƒ™ãƒ³ãƒˆï¼‰ã‚’é€šçŸ¥ã—ãƒªã‚¹ãƒˆã‹ã‚‰é™¤å¤–ã™ã‚‹
 			if (this->mpParentObject != nullptr)
 			{
 				this->mpParentObject->OnExit(this, check);
@@ -73,10 +73,6 @@ void Collider::HitCheck(Collider* check, bool isHit)
 			mCollisionList.erase(itr);
 		}
 	}
-}
-
-void Collider::Update(Collider* check)
-{
 }
 
 void Collider::Draw()

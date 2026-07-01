@@ -1,4 +1,4 @@
-﻿#include "Stage.h"
+#include "Stage.h"
 #include "Master.h"
 
 Stage::Stage(VECTOR initPos, std::string stageModelName, std::string stageCollisionModelName)
@@ -6,8 +6,8 @@ Stage::Stage(VECTOR initPos, std::string stageModelName, std::string stageCollis
 {
 	SetTag(Object3D::Tag3D_Stage);
 
-	mnModelHandle = MV1LoadModel(stageModelName.c_str());
-	mnCollisionHandle = MV1LoadModel(stageCollisionModelName.c_str());
+	mnModelHandle = Master::mpResourceManager->LoadModel(stageModelName);
+	mnCollisionHandle = Master::mpResourceManager->LoadModel(stageCollisionModelName);
 
 	// 実行時の負荷を軽減するため、初期化時にポリゴン情報を事前構築しておく
 	float StageSize = 5.0f;

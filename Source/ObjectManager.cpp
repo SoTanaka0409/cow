@@ -1,4 +1,4 @@
-﻿#include "ObjectManager.h"
+#include "ObjectManager.h"
 #include "Master.h"
 #include "ColliderManager.h"
 
@@ -30,22 +30,22 @@ ObjectManager::~ObjectManager()
  */
 void ObjectManager::Update()
 {
-	for (auto itr = mObject3DList.begin(); itr != mObject3DList.end(); itr++)
+	for (size_t i = 0; i < mObject3DList.size(); ++i)
 	{
-		(*itr)->Update();
+		mObject3DList[i]->Update();
 	}
 
-	for (auto itr = mObject2DList.begin(); itr != mObject2DList.end(); itr++)
+	for (size_t i = 0; i < mObject2DList.size(); ++i)
 	{
-		(*itr)->Update();
+		mObject2DList[i]->Update();
 	}
 
 	// 半透明描画時のZソートで必要となるため、カメラとの距離を算出する
-	for (auto itr = mObject3DList.begin(); itr != mObject3DList.end(); itr++)
+	for (size_t i = 0; i < mObject3DList.size(); ++i)
 	{
 		VECTOR cameraPos = Master::mpCamera->GetPosition();
-		VECTOR objPos = (*itr)->GetPosition();
-		(*itr)->SetCameraDistance(VSize(VSub(objPos, cameraPos)));
+		VECTOR objPos = mObject3DList[i]->GetPosition();
+		mObject3DList[i]->SetCameraDistance(VSize(VSub(objPos, cameraPos)));
 	}
 
 	// 座標更新が全て完了した後に衝突判定を行うためここで一括処理する
@@ -60,20 +60,20 @@ void ObjectManager::Update()
  */
 void ObjectManager::Draw()
 {
-	for (auto itr = mObject3DList.begin(); itr != mObject3DList.end(); itr++)
+	for (size_t i = 0; i < mObject3DList.size(); ++i)
 	{
-		if ((*itr)->IsDrawFlag())
+		if (mObject3DList[i]->IsDrawFlag())
 		{
-			(*itr)->Draw();
+			mObject3DList[i]->Draw();
 		}
 	}
 	ColliderManager::GetInstance()->Draw();
 
-	for (auto itr = mObject2DList.begin(); itr != mObject2DList.end(); itr++)
+	for (size_t i = 0; i < mObject2DList.size(); ++i)
 	{
-		if ((*itr)->IsDrawFlag())
+		if (mObject2DList[i]->IsDrawFlag())
 		{
-			(*itr)->Draw();
+			mObject2DList[i]->Draw();
 		}
 	}
 }
@@ -98,7 +98,11 @@ void ObjectManager::AddObject(Object3D* object3D)
  */
 void ObjectManager::RemoveObjectNoDelete(Object3D* object3D)
 {
-	mObject3DList.remove(object3D);
+	auto itr = std::find(mObject3DList.begin(), mObject3DList.end(), object3D);
+	if (itr != mObject3DList.end())
+	{
+		mObject3DList.erase(itr);
+	}
 	RebuildTagCache3D();
 }
 
@@ -111,10 +115,9 @@ void ObjectManager::RemoveObjectNoDelete(Object3D* object3D)
 void ObjectManager::DeleteAll3D()
 {
 	if (mObject3DList.empty()) return;
-	for (auto itr = mObject3DList.begin(); itr != mObject3DList.end();)
+	for (size_t i = 0; i < mObject3DList.size(); ++i)
 	{
-		(*itr)->SetDeleteFlag(true);
-		itr++;
+		mObject3DList[i]->SetDeleteFlag(true);
 	}
 
 	DeleteAll3DIfNeeded();
@@ -161,20 +164,22 @@ void ObjectManager::DeleteAll3DIfNeeded()
 {
 	bool isDeleted = false;
 	if (mObject3DList.empty()) return;
-	for (auto itr = mObject3DList.begin(); itr != mObject3DList.end();)
+
+	auto newEnd = std::remove_if(mObject3DList.begin(), mObject3DList.end(), [](Object3D* obj) {
+		if (obj->IsDeleteFlag())
+		{
+			delete obj;
+			return true;
+		}
+		return false;
+	});
+
+	if (newEnd != mObject3DList.end())
 	{
-		if ((*itr)->IsDeleteFlag())
-		{
-			Object3D* temp = *itr;
-			itr = mObject3DList.erase(itr);
-			delete temp;
-			isDeleted = true;
-		}
-		else
-		{
-			itr++;
-		}
+		mObject3DList.erase(newEnd, mObject3DList.end());
+		isDeleted = true;
 	}
+
 	// 毎フレームのキャッシュ構築負荷を避けるため、要素変更時のみ再構築する
 	if (isDeleted) {
 		RebuildTagCache3D();
@@ -201,12 +206,11 @@ void ObjectManager::AddObject(Object2D* object2D)
  */
 void ObjectManager::DeleteAll2D()
 {
-	for (auto itr = mObject2DList.begin(); itr != mObject2DList.end();)
+	for (size_t i = 0; i < mObject2DList.size(); ++i)
 	{
-		Object2D* temp = *itr;
-		itr = mObject2DList.erase(itr);
-		delete temp;
+		delete mObject2DList[i];
 	}
+	mObject2DList.clear();
 	mTagCache2D.clear();
 }
 
@@ -219,20 +223,21 @@ void ObjectManager::DeleteAll2D()
 void ObjectManager::DeleteAll2DIfNeeded()
 {
 	bool isDeleted = false;
-	for (auto itr = mObject2DList.begin(); itr != mObject2DList.end();)
+	auto newEnd = std::remove_if(mObject2DList.begin(), mObject2DList.end(), [](Object2D* obj) {
+		if (obj->IsDeleteFlag())
+		{
+			delete obj;
+			return true;
+		}
+		return false;
+	});
+
+	if (newEnd != mObject2DList.end())
 	{
-		if ((*itr)->IsDeleteFlag())
-		{
-			Object2D* temp = *itr;
-			itr = mObject2DList.erase(itr);
-			delete temp;
-			isDeleted = true;
-		}
-		else
-		{
-			itr++;
-		}
+		mObject2DList.erase(newEnd, mObject2DList.end());
+		isDeleted = true;
 	}
+
 	// 毎フレームのキャッシュ構築負荷を避けるため、要素変更時のみ再構築する
 	if (isDeleted) {
 		RebuildTagCache2D();

@@ -1,6 +1,5 @@
-﻿#pragma once
+#pragma once
 
-#include<list>
 #include<vector>
 #include<map>
 #include"Object3D.h"
@@ -137,9 +136,9 @@ public:
 	void RebuildTagCache2D();
 
 private:
-	std::list<Object3D*> mObject3DList;
+	std::vector<Object3D*> mObject3DList;
 	std::map<Object3D::Tag3D, std::vector<Object3D*>> mTagCache3D;
 	
-	std::list<Object2D*> mObject2DList;
+	std::vector<Object2D*> mObject2DList;
 	std::map<Object2D::Tag2D, std::vector<Object2D*>> mTagCache2D;
 };

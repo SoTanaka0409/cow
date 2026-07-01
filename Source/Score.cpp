@@ -1,7 +1,9 @@
-﻿#include "Score.h"
+#include "Score.h"
 #include <stdio.h>
 #include <string.h>
 #include "DxLib.h"
+#include "Utility.h"
+#include "Master.h"
 
 int Score::resultScore = 0;
 
@@ -19,38 +21,31 @@ Score::Score()
 		ranking[i].score = 0;
 	}
 
-	scoreTextImage = LoadGraph("Resource/2D/SCORE.png");
-	minusImg = LoadGraph("Resource/2D/マイナス.png");
+	scoreTextImage = Master::mpResourceManager->LoadGraphics("Resource/2D/SCORE.png");
+	minusImg = Master::mpResourceManager->LoadGraphics("Resource/2D/マイナス.png");
 
 	// スコア描画用アセットロード
-	numberImg[0] = LoadGraph("Resource/2D/コンボ数00.png");
-	numberImg[1] = LoadGraph("Resource/2D/コンボ数01.png");
-	numberImg[2] = LoadGraph("Resource/2D/コンボ数02.png");
-	numberImg[3] = LoadGraph("Resource/2D/コンボ数03.png");
-	numberImg[4] = LoadGraph("Resource/2D/コンボ数04.png");
-	numberImg[5] = LoadGraph("Resource/2D/コンボ数05.png");
-	numberImg[6] = LoadGraph("Resource/2D/コンボ数06.png");
-	numberImg[7] = LoadGraph("Resource/2D/コンボ数07.png");
-	numberImg[8] = LoadGraph("Resource/2D/コンボ数08.png");
-	numberImg[9] = LoadGraph("Resource/2D/コンボ数09.png");
+	numberImg[0] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数00.png");
+	numberImg[1] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数01.png");
+	numberImg[2] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数02.png");
+	numberImg[3] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数03.png");
+	numberImg[4] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数04.png");
+	numberImg[5] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数05.png");
+	numberImg[6] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数06.png");
+	numberImg[7] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数07.png");
+	numberImg[8] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数08.png");
+	numberImg[9] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数09.png");
 
 	LoadRanking();
 }
 
 Score::~Score()
 {
-	// グラフィックハンドルのメモリリーク防止
-	DeleteGraph(scoreTextImage);
-	DeleteGraph(minusImg);
-	for (int i = 0; i < 10; i++)
-	{
-		DeleteGraph(numberImg[i]);
-	}
 }
 
 void Score::Draw()
 {
-	int x = 20;
+	int x = Utility::UI_BASE_X;
 	int y = 100;
 	int width = 200;
 	int height = 100;
@@ -66,42 +61,7 @@ void Score::Draw()
 	);
 
 
-	int drawX = x + 220;
-	int temp = score;
-	int digit[10];
-	int digitCount = 0;
-
-	if (temp == 0)
-	{
-		digit[digitCount++] = 0;
-	}
-	else
-	{
-		while (temp > 0)
-		{
-			digit[digitCount] = temp % 10;
-			temp /= 10;
-			digitCount++;
-		}
-	}
-
-	while (digitCount < 4)
-	{
-		digit[digitCount++] = 0;
-	}
-
-	for (int i = digitCount - 1; i >= 0; i--)
-	{
-		DrawExtendGraph(
-			drawX,
-			y,
-			drawX + 80,
-			y + 80,
-			numberImg[digit[i]],
-			TRUE
-		);
-		drawX += 80;
-	}
+	DrawNumber(Utility::UI_DIGIT_X, y, score, 1.0f, 4);
 }
 
 void Score::AddScore(int value)

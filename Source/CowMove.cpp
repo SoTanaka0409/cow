@@ -24,7 +24,6 @@ namespace {
 
 CowMove::CowMove(std::string filename, VECTOR initPos)
 	: CharacterMove(filename, initPos)
-	, mCowtDelete(false)
 {
 	mfdeathTime = GameConstants::COW_DEFAULT.deathTimeHeight;
 	mfScore = GameConstants::COW_DEFAULT.score;
@@ -51,7 +50,7 @@ void CowMove::Reset(VECTOR pos)
 {
 	CharacterMove::Reset(pos);
 
-	mCowtDelete = false;
+	mDeleteFlag = false;
 	mEffectTimer = 0;
 	if (mpCowVm != nullptr)
 	{
@@ -322,12 +321,12 @@ void CowMove::KilledByBait()
 {
 	mbIsVisible = false;
 	Die(DEATH_BAIT);
-	mCowtDelete = true;
+	mDeleteFlag = true;
 }
 
 void CowMove::Die(DeathReason reason)
 {
-	if (mDeleteFlag || mCowtDelete) return;
+	if (mDeleteFlag) return;
 
 	Player3D* player = mpTargetPlayer;
 
@@ -369,7 +368,7 @@ void CowMove::Die(DeathReason reason)
 				s_tag3Cow = CowMove::none;
 			}
 		}
-		mCowtDelete = true;
+		mDeleteFlag = true;
 		break;
 
 	case DEATH_BAIT:
@@ -379,11 +378,11 @@ void CowMove::Die(DeathReason reason)
 			player->mpCombo->AddHit();
 			player->mpScore->AddScore(mfScore * player->mpCombo->GetMultiplier());
 		}
-		mCowtDelete = true;
+		mDeleteFlag = true;
 		break;
 
 	case DEATH_LIMIT:
-		mCowtDelete = true;
+		mDeleteFlag = true;
 		break;
 	}
 }

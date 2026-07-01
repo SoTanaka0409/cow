@@ -1,4 +1,4 @@
-﻿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include"Player3D.h"
 #include"Model.h"
 #include"ModelAnimation.h"
@@ -51,7 +51,7 @@ Player3D::Player3D(std::string filename, VECTOR initPos)
 
 	Master::mpCamera->Initialize();
 
-	mnLighGraph = LoadGraph("Resource/2D/green_beam_transparent.png");
+	mnLighGraph = Master::mpResourceManager->LoadGraphics("Resource/2D/green_beam_transparent.png");
 
 	mpCapsuleCollider->mvPosition = VGet(mvPosition.x, 0, mvPosition.z);
 	mpCapsuleCollider->mvPosition2 = mvPosition;

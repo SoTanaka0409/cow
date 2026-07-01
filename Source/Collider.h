@@ -4,7 +4,7 @@
 
 class Object3D;
 
-// ƒQ[ƒ€“à‚Ì3D“–‚½‚è”»’èƒIƒuƒWƒFƒNƒg‚ÌŠî’êƒRƒ‰ƒCƒ_[ƒNƒ‰ƒX
+// ã‚²ãƒ¼ãƒ å†…ã®3Då½“ãŸã‚Šåˆ¤å®šã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åŸºåº•ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚¯ãƒ©ã‚¹
 class Collider
 {
 public:
@@ -12,36 +12,35 @@ public:
 	virtual ~Collider();
 
 	/*
-	 * @brief •Ê‚ÌƒRƒ‰ƒCƒ_[‚Æ‚ÌÕ“Ëó‘Ô‚ğ”»’è‚µAOnEnter/OnTrigger/OnExitƒCƒxƒ“ƒg‚ğ”­s‚·‚é
-	 * [“ü—Í] check: ”»’è‘ÎÛ‚Ì•ÊƒRƒ‰ƒCƒ_[, isHit: Õ“Ë‚µ‚½‚©‚Ç‚¤‚©‚ÌŒ‹‰Ê
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] mCollisionList‚ÌXVAeƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚Ö‚ÌÕ“ËƒR[ƒ‹ƒoƒbƒN’Ê’m
+	 * @brief åˆ¥ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã¨ã®è¡çªçŠ¶æ…‹ã‚’åˆ¤å®šã—ã€OnEnter/OnTrigger/OnExitã‚¤ãƒ™ãƒ³ãƒˆã‚’ç™ºè¡Œã™ã‚‹
+	 * [å…¥åŠ›] check: åˆ¤å®šå¯¾è±¡ã®åˆ¥ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼, isHit: è¡çªã—ãŸã‹ã©ã†ã‹ã®çµæœ
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] mCollisionListã®æ›´æ–°ã€è¦ªã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¸ã®è¡çªã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é€šçŸ¥
 	 */
 	void HitCheck(Collider* check, bool isHit);
 
-	virtual void Update(Collider* check);
 	virtual void Draw();
 
 	virtual void OnEnter();
 	virtual void OnTrigger();
 	virtual void OnExit();
 
-	// ƒQƒbƒ^[EƒZƒbƒ^[ŒQ
+	// ã‚²ãƒƒã‚¿ãƒ¼ãƒ»ã‚»ãƒƒã‚¿ãƒ¼ç¾¤
 	void SetDeleteFlag(bool flag) { mbDeleteFlag = flag; }
 	bool IsDeleteFlag() { return mbDeleteFlag; }
 	Object3D* GetParentObject() { return mpParentObject; }
 	void InvalidateParent() { mpParentObject = nullptr; }
 
 public:
-	Object3D* mpParentObject;      // ‚±‚ÌƒRƒ‰ƒCƒ_[‚ğŠ—L‚·‚ée3DƒIƒuƒWƒFƒNƒg
+	Object3D* mpParentObject;      // ã“ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’æ‰€æœ‰ã™ã‚‹è¦ª3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
-	VECTOR mvPosition;             // ƒRƒ‰ƒCƒ_[‚ÌŠî€ˆÊ’uÀ•W1i‹…‚Ì’†SA‚Ü‚½‚ÍƒJƒvƒZƒ‹‚Ìn“_j
-	VECTOR mvPosition2;            // ƒRƒ‰ƒCƒ_[‚ÌŠî€ˆÊ’uÀ•W2iƒJƒvƒZƒ‹‚ÌI“_j
-	float mfRadius;                // ƒRƒ‰ƒCƒ_[‚Ì”¼Œa
+	VECTOR mvPosition;             // ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®åŸºæº–ä½ç½®åº§æ¨™1ï¼ˆçƒã®ä¸­å¿ƒã€ã¾ãŸã¯ã‚«ãƒ—ã‚»ãƒ«ã®å§‹ç‚¹ï¼‰
+	VECTOR mvPosition2;            // ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®åŸºæº–ä½ç½®åº§æ¨™2ï¼ˆã‚«ãƒ—ã‚»ãƒ«ã®çµ‚ç‚¹ï¼‰
+	float mfRadius;                // ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®åŠå¾„
 
-	bool mbDeleteFlag;             // ƒRƒ‰ƒCƒ_[‚Ìíœƒtƒ‰ƒOitrue‚Åƒ}ƒl[ƒWƒƒ[‚©‚çœŠOj
+	bool mbDeleteFlag;             // ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å‰Šé™¤ãƒ•ãƒ©ã‚°ï¼ˆtrueã§ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‹ã‚‰é™¤å¤–ï¼‰
 
 protected:
-	std::vector<Collider*> mCollisionList; // Œ»İ‚±‚ÌƒRƒ‰ƒCƒ_[‚ÉÕ“Ë‚µ‘±‚¯‚Ä‚¢‚é‘¼‚ÌƒRƒ‰ƒCƒ_[‚ÌƒŠƒXƒg
+	std::vector<Collider*> mCollisionList; // ç¾åœ¨ã“ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã«è¡çªã—ç¶šã‘ã¦ã„ã‚‹ä»–ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®ãƒªã‚¹ãƒˆ
 };
 

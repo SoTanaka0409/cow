@@ -1,4 +1,4 @@
-﻿#include"ResultScene.h"
+#include"ResultScene.h"
 #include"Master.h"
 #include"SceneManager.h"
 
@@ -7,17 +7,17 @@ ResultScene::ResultScene()
 	mFlag = true;
 	mnCount = 0;
 	
-	ResultGraphHandle = LoadGraph("Resource/2D/リザルト.png");
-	rankImage[0] = LoadGraph("Resource/2D/1位.png");
-	rankImage[1] = LoadGraph("Resource/2D/2位.png");
-	rankImage[2] = LoadGraph("Resource/2D/3位.png");
-	rankingTitleImage = LoadGraph("Resource/2D/ランキング.png");
-	yourScoreTextImg = LoadGraph("Resource/2D/スコア.png");
-	pointImg = LoadGraph("Resource/2D/点.png");
+	ResultGraphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/リザルト.png");
+	rankImage[0] = Master::mpResourceManager->LoadGraphics("Resource/2D/1位.png");
+	rankImage[1] = Master::mpResourceManager->LoadGraphics("Resource/2D/2位.png");
+	rankImage[2] = Master::mpResourceManager->LoadGraphics("Resource/2D/3位.png");
+	rankingTitleImage = Master::mpResourceManager->LoadGraphics("Resource/2D/ランキング.png");
+	yourScoreTextImg = Master::mpResourceManager->LoadGraphics("Resource/2D/スコア.png");
+	pointImg = Master::mpResourceManager->LoadGraphics("Resource/2D/点.png");
 
 	ResultButton newGameBtn;
 	newGameBtn.type = SelectionManager::Title::title;
-	newGameBtn.graphHandle = LoadGraph("Resource/2D/スタートボタン1.png");
+	newGameBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/スタートボタン1.png");
 	newGameBtn.x = 920;
 	newGameBtn.y = 50;
 	GetGraphSize(newGameBtn.graphHandle, &newGameBtn.w, &newGameBtn.h);
@@ -26,7 +26,7 @@ ResultScene::ResultScene()
 
 	ResultButton exitBtn;
 	exitBtn.type = SelectionManager::Title::titleOUT;
-	exitBtn.graphHandle = LoadGraph("Resource/2D/しゅうりょうぼたん (1).png");
+	exitBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/しゅうりょうぼたん (1).png");
 	exitBtn.x = 960;
 	exitBtn.y = 680;
 	GetGraphSize(exitBtn.graphHandle, &exitBtn.w, &exitBtn.h);
@@ -171,22 +171,6 @@ void ResultScene::DrawRankingUI()
 // [入力] なし [出力] なし [副作用] 画像アセット削除、BGM停止
 void ResultScene::Finalize()
 {
-	DeleteGraph(ResultGraphHandle);
-
-	for (int i = 0; i < mButtons.size(); i++)
-	{
-		DeleteGraph(mButtons[i].graphHandle);
-	}
-
-	for (int i = 0; i < 3; i++)
-	{
-		DeleteGraph(rankImage[i]);
-	}
-
-	DeleteGraph(rankingTitleImage);
-	DeleteGraph(yourScoreTextImg);
-	DeleteGraph(pointImg);
-
 	Master::mpSoundManager->StopBGM();
 }
 

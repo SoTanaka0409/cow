@@ -1,6 +1,8 @@
-﻿#include "Combo.h"
+#include "Combo.h"
 #include "DxLib.h"
 #include "InputManager.h"
+#include "Master.h"
+#include "Utility.h"
 #include <string>
 
 Combo::Combo()
@@ -9,31 +11,14 @@ Combo::Combo()
 	comboTimer = 0.0f;
 	comboMaxTime = 3.0f; // 難易度調整のためコンボ猶予は3秒に固定
 
-	comboImage = LoadGraph("Resource/2D/COMBO.png");
+	comboImage = Master::mpResourceManager->LoadGraphics("Resource/2D/COMBO.png");
 
 	comboShow = false;
 	comboShowTimer = 0.0f;
-
-	numberImage[0] = LoadGraph("Resource/2D/コンボ数00.png");
-	numberImage[1] = LoadGraph("Resource/2D/コンボ数01.png");
-	numberImage[2] = LoadGraph("Resource/2D/コンボ数02.png");
-	numberImage[3] = LoadGraph("Resource/2D/コンボ数03.png");
-	numberImage[4] = LoadGraph("Resource/2D/コンボ数04.png");
-	numberImage[5] = LoadGraph("Resource/2D/コンボ数05.png");
-	numberImage[6] = LoadGraph("Resource/2D/コンボ数06.png");
-	numberImage[7] = LoadGraph("Resource/2D/コンボ数07.png");
-	numberImage[8] = LoadGraph("Resource/2D/コンボ数08.png");
-	numberImage[9] = LoadGraph("Resource/2D/コンボ数09.png");
 }
 
 Combo::~Combo()
 {
-	DeleteGraph(comboImage);
-
-	for (int i = 0; i < 10; i++)
-	{
-		DeleteGraph(numberImage[i]);
-	}
 }
 
 void Combo::Draw()
@@ -41,29 +26,21 @@ void Combo::Draw()
 	// 0コンボ時は表示を省略しUIの煩雑化を防ぐ
 	if (comboCount >= 1)
 	{
-		int x = 20;
+		int x = Utility::UI_BASE_X;
 		int y = 200;
 		int width = 200;
 		int height = 100;
 
 		DrawExtendGraph(x, y, x + width, y + height, comboImage, TRUE);
 
-		std::string comboStr = std::to_string(comboCount);
-		int nmX = 220;
-		int nmY = 200;
-		int nmWidth = 100;
-		int nmHeight = 100;
-
-		for (int i = 0; i < comboStr.size(); i++)
+		if (Master::mpScore)
 		{
-			int digit = comboStr[i] - '0';
-			DrawExtendGraph(
-				nmX + i * 80,
-				nmY,
-				nmX + i * 80 + nmWidth,
-				nmY + nmHeight,
-				numberImage[digit],
-				TRUE
+			Master::mpScore->DrawNumber(
+				Utility::UI_DIGIT_X,
+				y,
+				comboCount,
+				1.25f,
+				1
 			);
 		}
 	}

@@ -17,24 +17,7 @@ AnimalManager::AnimalManager()
 {
 }
 
-/*
- * @brief 管理リストおよびオブジェクトプールの動物を全解放する
- * [入力] なし
- * [出力] なし
- * [副作用] 動物オブジェクトのメモリ解放
- */
-AnimalManager::~AnimalManager()
-{
-	mAnimals.clear();
-	for (auto& pair : mPools)
-	{
-		for (auto animal : pair.second)
-		{
-			delete animal;
-		}
-	}
-	mPools.clear();
-}
+
 
 /*
  * @brief 指定された種類の動物を生成またはプールから再利用して配置する
@@ -57,66 +40,16 @@ void AnimalManager::SpawnAnimal(std::string filename, VECTOR pos, float scale, A
 				mPools[tag].pop_back();
 				animal->Reset(spawnPos);
 				animal->SetScale(scale);
-				mAnimals.push_back(animal);
+				mCreatures.push_back(animal);
 			}
 			else
 			{
 				auto newAnimal = new Animal(filename, spawnPos);
 				newAnimal->SetScale(scale);
-				mAnimals.push_back(newAnimal);
+				mCreatures.push_back(newAnimal);
 			}
 		}
 	}
 }
 
-/*
- * @brief 全ての動物の更新処理と不要な動物の削除（プール返却）を行う
- * [入力] なし
- * [出力] なし
- * [副作用] 各動物のUpdate実行とEraseAnimalの実行
- */
-void AnimalManager::Update()
-{
-	for (auto animal : mAnimals)
-	{
-		animal->Update();
-	}
-	EraseAnimal();
-}
 
-/*
- * @brief 全ての動物の描画を行う（現在は描画処理を外部で行っているため空）
- * [入力] なし
- * [出力] なし
- * [副作用] なし
- */
-void AnimalManager::Draw()
-{
-}
-
-/*
- * @brief 削除フラグが立っている動物を非アクティブ化しプールに返却する
- * [入力] なし
- * [出力] なし
- * [副作用] mAnimalsからの削除およびmPoolsへの追加
- */
-void AnimalManager::EraseAnimal()
-{
-	if (!mAnimals.empty())
-	{
-		for (auto it = mAnimals.begin(); it != mAnimals.end();)
-		{
-			if ((*it)->GetCharacterDelete())
-			{
-				auto animal = *it;
-				animal->Deactivate();
-				mPools[animal->GetTag_animal()].push_back(animal);
-				it = mAnimals.erase(it);
-			}
-			else
-			{
-				it++;
-			}
-		}
-	}
-}

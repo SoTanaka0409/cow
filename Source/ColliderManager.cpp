@@ -1,7 +1,11 @@
 #include "ColliderManager.h"
 #include "Collider.h"
+#include "CapsuleCollider.h"
+#include "SphereCollider.h"
+#include "DxLib.h"
 #include "Master.h"
 #include <vector>
+#include <algorithm>
 
 ColliderManager* ColliderManager::Instance = nullptr;
 
@@ -15,41 +19,25 @@ ColliderManager::~ColliderManager()
 
 void ColliderManager::Update()
 {
-	// “o˜^‚³‚ê‚Ä‚¢‚é‘SƒRƒ‰ƒCƒ_[ŠÔ‚Å‘“–‚½‚è“–‚½‚è”»’èŒvZ‚ğs‚¢AÕ“ËƒCƒxƒ“ƒg‚ğXV‚·‚é
-	for (auto itr = mColliderList.begin(); itr != mColliderList.end(); ++itr)
+	for (size_t i = 0; i < mColliderList.size(); ++i)
 	{
-		if ((*itr) == nullptr)
+		auto colA = mColliderList[i];
+		if (colA == nullptr || colA->IsDeleteFlag()) continue;
+
+		for (size_t j = i + 1; j < mColliderList.size(); ++j)
 		{
-			continue;
-		}
+			auto colB = mColliderList[j];
+			if (colB == nullptr || colB->IsDeleteFlag()) continue;
 
-		if ((*itr)->IsDeleteFlag())
-		{
-			continue;
-		}
-
-		for (auto itr_check = mColliderList.begin(); itr_check != mColliderList.end(); ++itr_check)
-		{
-			if (itr == itr_check)
-			{
-				continue;
-			}
-
-			if ((*itr_check) == nullptr)
-			{
-				continue;
-			}
-
-			if ((*itr_check)->IsDeleteFlag())
-			{
-				continue;
-			}
-
-			(*itr)->Update((*itr_check));
+			bool isHit = CheckCollision(colA, colB);
+			
+			// Aã¨Bã®åŒæ–¹ã«åˆ¤å®šçµæœã‚’é€šçŸ¥ã™ã‚‹
+			colA->HitCheck(colB, isHit);
+			colB->HitCheck(colA, isHit);
 		}
 	}
 
-	DeleteAllColliderIfNeeded(); // ƒtƒŒ[ƒ€I—¹‚É•s—v‚ÈƒRƒ‰ƒCƒ_[‚ğƒNƒŠ[ƒ“ƒAƒbƒv
+	DeleteAllColliderIfNeeded(); // ãƒ•ãƒ¬ãƒ¼ãƒ çµ‚äº†æ™‚ã«ä¸è¦ãªã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ãƒƒãƒ—
 }
 
 void ColliderManager::Draw()
@@ -62,48 +50,78 @@ void ColliderManager::AddCollider(Collider* Collider)
 }
 
 /*
- * @brief ‚·‚×‚Ä‚Ì“o˜^Ï‚İƒRƒ‰ƒCƒ_[‚Ìíœƒtƒ‰ƒO‚ğ—§‚ÄAŠÇ—ƒŠƒXƒg‚ğ‹ó‚É‚·‚é
- * [“ü—Í] ‚È‚µ
- * [o—Í] ‚È‚µ
- * [•›ì—p] ‘SƒRƒ‰ƒCƒ_[‚Ö‚Ìíœƒtƒ‰ƒO’Ê’mAƒŠƒXƒg‚ÌƒNƒŠƒA
+ * @brief ã™ã¹ã¦ã®ç™»éŒ²æ¸ˆã¿ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®å‰Šé™¤ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã€ç®¡ç†ãƒªã‚¹ãƒˆã‚’ç©ºã«ã™ã‚‹
+ * [å…¥åŠ›] ãªã—
+ * [å‡ºåŠ›] ãªã—
+ * [å‰¯ä½œç”¨] å…¨ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã¸ã®å‰Šé™¤ãƒ•ãƒ©ã‚°é€šçŸ¥ã€ãƒªã‚¹ãƒˆã®ã‚¯ãƒªã‚¢
  */
 void ColliderManager::DeleteAllCollider()
 {
-	// ƒCƒeƒŒ[ƒ^”j‘¹iDeleteAllColliderIfNeeded‚Ì•ÀsÀs‚É‚æ‚éƒNƒ‰ƒbƒVƒ…j‚ğŠ®‘S‚É–h‚®‚½‚ßA
-	// ƒtƒ‰ƒOİ’èŒã‚ÉˆêŠ‡‚ÅƒNƒŠƒA‚·‚éˆÀ‘S‚ÈƒƒWƒbƒN‚ğÀ‘•
-	for (auto col : mColliderList)
+	for (size_t i = 0; i < mColliderList.size(); ++i)
 	{
-		if (col != nullptr)
+		if (mColliderList[i] != nullptr)
 		{
-			col->SetDeleteFlag(true);
+			mColliderList[i]->SetDeleteFlag(true);
 		}
 	}
 	mColliderList.clear();
 }
 
 /*
- * @brief íœƒtƒ‰ƒO(mbDeleteFlag)‚ª^‚Éİ’è‚³‚ê‚Ä‚¢‚éƒRƒ‰ƒCƒ_[‚ğƒŠƒXƒg‚©‚çˆÀ‘S‚ÉœŠO‚·‚é
- * [“ü—Í] ‚È‚µ
- * [o—Í] ‚È‚µ
- * [•›ì—p] ŠY“–ƒRƒ‰ƒCƒ_[‚ÌƒŠƒXƒgœŠOAƒCƒeƒŒ[ƒ^‚ÌˆÀ‘S‚Èis
+ * @brief å‰Šé™¤ãƒ•ãƒ©ã‚°(mbDeleteFlag)ãŒçœŸã«è¨­å®šã•ã‚Œã¦ã„ã‚‹ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’ãƒªã‚¹ãƒˆã‹ã‚‰å®‰å…¨ã«é™¤å¤–ã™ã‚‹
+ * [å…¥åŠ›] ãªã—
+ * [å‡ºåŠ›] ãªã—
+ * [å‰¯ä½œç”¨] è©²å½“ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®ãƒªã‚¹ãƒˆé™¤å¤–ã€ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ã®å®‰å…¨ãªé€²è¡Œ
  */
 void ColliderManager::DeleteAllColliderIfNeeded()
 {
-	for (auto itr = mColliderList.begin(); itr != mColliderList.end(); /* ƒ‹[ƒv“à‚ÅƒCƒeƒŒ[ƒ^‚ği‚ß‚é */)
+	auto newEnd = std::remove_if(mColliderList.begin(), mColliderList.end(), [](Collider* col) {
+		return col->IsDeleteFlag();
+	});
+
+	if (newEnd != mColliderList.end())
 	{
-		if ((*itr)->IsDeleteFlag())
-		{
-			itr = mColliderList.erase(itr); // íœŒã‚ÌŸ‚Ì—LŒø—v‘f‚ÌƒCƒeƒŒ[ƒ^‚ğæ“¾
-		}
-		else
-		{
-			itr++;
-		}
+		mColliderList.erase(newEnd, mColliderList.end());
 	}
 }
 
 void ColliderManager::RemoveCollider(Collider* collider)
 {
-	mColliderList.remove(collider);
+	auto itr = std::find(mColliderList.begin(), mColliderList.end(), collider);
+	if (itr != mColliderList.end())
+	{
+		mColliderList.erase(itr);
+	}
+}
+
+bool ColliderManager::CheckCollision(Collider* colA, Collider* colB)
+{
+	CapsuleCollider* capA = dynamic_cast<CapsuleCollider*>(colA);
+	SphereCollider* sphA = dynamic_cast<SphereCollider*>(colA);
+	CapsuleCollider* capB = dynamic_cast<CapsuleCollider*>(colB);
+	SphereCollider* sphB = dynamic_cast<SphereCollider*>(colB);
+
+	if (capA && capB)
+	{
+		return HitCheck_Capsule_Capsule(capA->mvPosition, capA->mvPosition2, capA->mfRadius,
+										capB->mvPosition, capB->mvPosition2, capB->mfRadius);
+	}
+	else if (sphA && sphB)
+	{
+		return HitCheck_Sphere_Sphere(sphA->mvPosition, sphA->mfRadius,
+									  sphB->mvPosition, sphB->mfRadius);
+	}
+	else if (capA && sphB)
+	{
+		return HitCheck_Sphere_Capsule(sphB->mvPosition, sphB->mfRadius,
+									   capA->mvPosition, capA->mvPosition2, capA->mfRadius);
+	}
+	else if (sphA && capB)
+	{
+		return HitCheck_Sphere_Capsule(sphA->mvPosition, sphA->mfRadius,
+									   capB->mvPosition, capB->mvPosition2, capB->mfRadius);
+	}
+
+	return false;
 }
 

@@ -1,4 +1,4 @@
-﻿#include"Scene.h"
+#include"Scene.h"
 #include "Rule.h"
 #include "DxLib.h"
 #include "Master.h"
@@ -7,7 +7,7 @@
 
 Rule::Rule()
 {
-	mRuleGraph = LoadGraph("Resource/2D/settings_bg.png");
+	mRuleGraph = Master::mpResourceManager->LoadGraphics("Resource/2D/settings_bg.png");
 	mTitleFontHandle = CreateFontToHandle("メイリオ", 80, 5);
 	mFontHandle = CreateFontToHandle("メイリオ", 50, 3);
 	
@@ -223,7 +223,6 @@ void Rule::Initialize()
 
 void Rule::Finalize()
 {
-	DeleteGraph(mRuleGraph);
 	DeleteFontToHandle(mFontHandle);
 	DeleteFontToHandle(mTitleFontHandle);
 	Master::mpSoundManager->StopBGM();

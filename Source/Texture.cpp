@@ -1,5 +1,6 @@
 #include "Texture.h"
 #include "DxLib.h"
+#include "Master.h"
 
 Texture::Texture(std::string filename, VECTOR centerPosition, int graphsize_x, int graphsize_y, int transFlag)
 	: mnHandle(-1)
@@ -8,20 +9,20 @@ Texture::Texture(std::string filename, VECTOR centerPosition, int graphsize_x, i
 	, mNewGameH(graphsize_y)
 	, mnTransFlag(transFlag)
 {
-	mnHandle = LoadGraph(filename.c_str());
-	GetGraphSize(mnHandle, &mnSizeX, &mnSizeY); // �g��k���`��̊�ɂ��邽�߃I���W�i���T�C�Y���擾
+	mnHandle = Master::mpResourceManager->LoadGraphics(filename.c_str());
+	GetGraphSize(mnHandle, &mnSizeX, &mnSizeY); // 拡大縮小描画の基準にするためオリジナルサイズを取得
 }
 
 Texture::~Texture()
 {
-	DeleteGraph(mnHandle);
+
 }
 
 /*
-	* @brief �ݒ肳�ꂽ�w��T�C�Y(mNewGameW, mNewGameH)�ŁAmvPosition�𒆐S�Ɉ����L�΂��`�悷��
-	* [����] �Ȃ�
-	* [�o��] �Ȃ�
-	* [����p] �w��͈͂փe�N�X�`���`��
+	* @brief 設定された指定サイズ(mNewGameW, mNewGameH)で、mvPositionを中心に引き伸ばし描画する
+	* [入力] なし
+	* [出力] なし
+	* [副作用] 指定範囲へテクスチャ描画
 	*/
 void Texture::Draw()
 {
@@ -35,14 +36,14 @@ void Texture::Draw()
 }
 
 /*
-	* @brief �{�^���z�o�[���o�p�ȂǂɁA�ʏ�T�C�Y�ɓ���̊g����(expand)�������Ċg��`�悷��i���ݖ��g�p�j
-	* [����] �Ȃ�
-	* [�o��] �Ȃ�
-	* [����p] �w�肳�ꂽ�g���̈�֊g��`��
+	* @brief ボタンホバー演出用などに、通常サイズに特定の拡張幅(expand)を加えて拡大描画する（現在未使用）
+	* [入力] なし
+	* [出力] なし
+	* [副作用] 指定された拡張領域へ拡大描画
 	*/
 void Texture::SizeDraw()
 {
-	int expand = 15; // �g��\������ۂ̊g���s�N�Z����
+	int expand = 15; // 拡大表示する際の拡張ピクセル数
 	int halfW = (mNewGameW + expand) / 2;
 	int halfH = (mNewGameH + expand) / 2;
 
@@ -60,10 +61,10 @@ void Texture::Update()
 }
 
 /*
-	* @brief ���S���W�����ɂ��āA�䗦�w��(scale)�ɂ��g��k���`����s��
-	* [����] scale: �X�P�[�����O�{���i1.0f�����{�j
-	* [�o��] �Ȃ�
-	* [����p] �w��T�C�Y�Ńe�N�X�`���`��
+	* @brief 中心座標を軸にして、比率指定(scale)による拡大縮小描画を行う
+	* [入力] scale: スケーリング倍率（1.0fが等倍）
+	* [出力] なし
+	* [副作用] 指定サイズでテクスチャ描画
 	*/
 void Texture::DrawScale(float scale)
 {

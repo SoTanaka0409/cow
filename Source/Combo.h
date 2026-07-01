@@ -50,6 +50,4 @@ private:
 	int comboImage;             // 描画負荷軽減のため保持しておくロゴ画像ハンドル
 	bool comboShow;             // UIの表示/非表示を切り替えるためのフラグ
 	float comboShowTimer;       // アニメーションなどの表示演出を管理する時間
-	int numberImage[10];        // 描画負荷軽減のため保持しておく数字画像ハンドル配列
 };
-

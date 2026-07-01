@@ -13,45 +13,9 @@ SphereCollider::~SphereCollider()
 
 }
 
-void SphereCollider::Update(Collider* check)
-{
-	if (check != nullptr)
-	{
-		// 相手がカプセル型コライダーの場合の交差判定計算
-		CapsuleCollider* capsule = dynamic_cast<CapsuleCollider*>(check);
-		if (capsule != nullptr)
-		{
-			bool isHit = HitCheck_Sphere_Capsule(
-				this->mvPosition,
-				this->mfRadius,
-				capsule->mvPosition,
-				capsule->mvPosition2,
-				capsule->mfRadius
-			);
-
-			HitCheck(check, isHit);
-		}
-
-		// 相手が球型コライダーの場合の交差判定計算
-		SphereCollider* sphere = dynamic_cast<SphereCollider*>(check);
-		if (sphere != nullptr)
-		{
-			bool isHit = HitCheck_Sphere_Sphere(
-				this->mvPosition,
-				this->mfRadius,
-				sphere->mvPosition,
-				sphere->mfRadius
-			);
-		
-
-			HitCheck(check, isHit);
-		}
-	}
-}
-
 void SphereCollider::Draw()
 {
-	// 球の描画処理
+	// 逅�縺ｮ謠冗判蜃ｦ逅�
 	DrawSphere3D(
 		mvPosition,
 		mfRadius,

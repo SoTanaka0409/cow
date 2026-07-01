@@ -46,7 +46,7 @@ void Cow_gold::Update()
 void Cow_gold::Die(DeathReason reason)
 {
 	// 二重解放や不整合を防ぐため、既に消滅処理中なら弾く
-	if (mDeleteFlag || mCowtDelete) return;
+	if (mDeleteFlag) return;
 	CowMove::Die(reason);
 
 	// プレイヤーの直接的アクション（吸引・エサ）で捕獲された場合のみ発動させる

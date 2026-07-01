@@ -45,9 +45,7 @@ private:
 	bool mbStopFlag;           // ポーズ中やリザルト画面での時間進行を止めるフラグ
 
 	int scoreTextImage;        // 毎フレームのロードを防ぐためのLIMIT画像ハンドル
-	int numberImg[10];         // 描画負荷軽減のための数字画像ハンドル配列
 
 	int mLastTime;             // 1秒経過を判定するための前回計測時間
 	Tag_Num mnTag;             // チュートリアルと本編で描画処理を分けるためのタグ
 };
-

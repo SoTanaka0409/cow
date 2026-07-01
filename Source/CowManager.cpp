@@ -22,24 +22,7 @@ CowManager::CowManager()
 {
 }
 
-/*
- * @brief 管理リストおよびオブジェクトプールの牛を全解放する
- * [入力] なし
- * [出力] なし
- * [副作用] 牛オブジェクトのメモリ解放
- */
-CowManager::~CowManager()
-{
-	mCows.clear();
-	for (auto& pair : mPools)
-	{
-		for (auto cow : pair.second)
-		{
-			delete cow;
-		}
-	}
-	mPools.clear();
-}
+
 
 /*
  * @brief 指定された種類の牛を生成またはプールから再利用して配置する
@@ -52,18 +35,18 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 	for (int i = 0; i < count; i++)
 	{
 		// パフォーマンス維持のため、同時出現数を最大30匹に制限する
-		if (mCows.size() >= 30)
+		if (mCreatures.size() >= 30)
 		{
 			if (tag == CowMove::Cow_gold)
 			{
 				// 金の牛を確実に出現させるため、プレイヤーから最も遠い普通の牛を優先して破棄し枠を空ける
 				bool erased = false;
 				float maxDistSq = -1.0f;
-				auto furthestIt = mCows.end();
+				auto furthestIt = mCreatures.end();
 				
 				VECTOR playerPos = Master::mpCamera->GetPosition();
 
-				for (auto it = mCows.begin(); it != mCows.end(); ++it)
+				for (auto it = mCreatures.begin(); it != mCreatures.end(); ++it)
 				{
 					if ((*it)->GetTag_cow() != CowMove::Cow_gold)
 					{
@@ -81,24 +64,24 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 					}
 				}
 
-				if (furthestIt != mCows.end())
+				if (furthestIt != mCreatures.end())
 				{
 					// 既に削除フラグが立っている牛などはObjectManager側で消される
 					(*furthestIt)->Die(DEATH_LIMIT);
 					auto cow = *furthestIt;
 					cow->Deactivate();
 					mPools[cow->GetTag_cow()].push_back(cow);
-					mCows.erase(furthestIt);
+					mCreatures.erase(furthestIt);
 					erased = true;
 				}
-				else if (!mCows.empty())
+				else if (!mCreatures.empty())
 				{
 					// 全ての牛が画面内などの場合、一番古いものの削除フラグを立ててリストから除外する
-					mCows.front()->Die(DEATH_LIMIT);
-					auto cow = mCows.front();
+					mCreatures.front()->Die(DEATH_LIMIT);
+					auto cow = mCreatures.front();
 					cow->Deactivate();
 					mPools[cow->GetTag_cow()].push_back(cow);
-					mCows.erase(mCows.begin());
+					mCreatures.erase(mCreatures.begin());
 					erased = true;
 				}
 
@@ -122,13 +105,13 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 				mPools[tag].pop_back();
 				cow->Reset(spawnPos);
 				cow->SetScale(scale);
-				mCows.push_back(cow);
+				mCreatures.push_back(cow);
 			}
 			else
 			{
 				auto newCow = new Cow(filename, spawnPos, 1.0f);
 				newCow->SetScale(scale);
-				mCows.push_back(newCow);
+				mCreatures.push_back(newCow);
 			}
 		}
 		else if (tag == CowMove::Cow_2)
@@ -139,13 +122,13 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 				mPools[tag].pop_back();
 				cow->Reset(spawnPos);
 				cow->SetScale(scale);
-				mCows.push_back(cow);
+				mCreatures.push_back(cow);
 			}
 			else
 			{
 				auto newCow = new Cow_2(filename, spawnPos);
 				newCow->SetScale(scale);
-				mCows.push_back(newCow);
+				mCreatures.push_back(newCow);
 			}
 		}
 		else if (tag == CowMove::Cow_gold)
@@ -158,13 +141,13 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 				if (cow) cow->SetFever(feverMode);
 				cow->Reset(spawnPos);
 				cow->SetScale(scale);
-				mCows.push_back(cow);
+				mCreatures.push_back(cow);
 			}
 			else
 			{
 				auto newCow = new Cow_gold(filename, spawnPos, feverMode);
 				newCow->SetScale(scale);
-				mCows.push_back(newCow);
+				mCreatures.push_back(newCow);
 			}
 		}
 		else if (tag == CowMove::Cow_T)
@@ -175,66 +158,16 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 				mPools[tag].pop_back();
 				cow->Reset(spawnPos);
 				cow->SetScale(scale);
-				mCows.push_back(cow);
+				mCreatures.push_back(cow);
 			}
 			else
 			{
 				auto newCow = new Cow_Tutorial(filename, spawnPos);
 				newCow->SetScale(scale);
-				mCows.push_back(newCow);
+				mCreatures.push_back(newCow);
 			}
 		}
 	}
 }
 
-/*
- * @brief 全ての牛の更新処理と不要な牛の削除（プール返却）を行う
- * [入力] なし
- * [出力] なし
- * [副作用] 各牛のUpdate実行とEraseCowの実行
- */
-void CowManager::Update()
-{
-	for (auto cow : mCows)
-	{
-		cow->Update();
-	}
-	EraseCow();
-}
 
-/*
- * @brief 全ての牛の描画を行う（現在は描画処理を外部で行っているため空）
- * [入力] なし
- * [出力] なし
- * [副作用] なし
- */
-void CowManager::Draw()
-{
-}
-
-/*
- * @brief 削除フラグが立っている牛を非アクティブ化しプールに返却する
- * [入力] なし
- * [出力] なし
- * [副作用] mCowsからの削除およびmPoolsへの追加
- */
-void CowManager::EraseCow()
-{
-	if (!mCows.empty())
-	{
-		for (auto it = mCows.begin(); it != mCows.end();)
-		{
-			if ((*it)->GetCowDelete())
-			{
-				auto cow = *it;
-				cow->Deactivate();
-				mPools[cow->GetTag_cow()].push_back(cow);
-				it = mCows.erase(it);
-			}
-			else
-			{
-				it++;
-			}
-		}
-	}
-}

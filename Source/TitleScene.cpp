@@ -1,4 +1,4 @@
-﻿#include "TitleScene.h"
+#include "TitleScene.h"
 #include "DxLib.h"
 #include "Utility.h"
 #include "Master.h"
@@ -10,8 +10,8 @@ TitleScene::TitleScene()
 {
 	mCowVoiceTimer = 180; // 初回再生までの待機フレーム設定
 	
-	mnTitleGraphHandle = LoadGraph("Resource/2D/タイトルシーン.png");
-	mnUfoGraphHandle = LoadGraph("Resource/2D/牛とUFO.png");
+	mnTitleGraphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/タイトルシーン.png");
+	mnUfoGraphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/牛とUFO.png");
 	GetGraphSize(mnUfoGraphHandle, &mUfoW, &mUfoH);
 
 	mUfoX = 540;
@@ -30,7 +30,7 @@ TitleScene::TitleScene()
 
 	TitleButton newGameBtn;
 	newGameBtn.type = SelectionManager::Title::NewGame;
-	newGameBtn.graphHandle = LoadGraph("Resource/2D/スタートボタン1.png");
+	newGameBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/スタートボタン1.png");
 	newGameBtn.x = 920;
 	newGameBtn.y = 50;
 	GetGraphSize(newGameBtn.graphHandle, &newGameBtn.w, &newGameBtn.h);
@@ -39,7 +39,7 @@ TitleScene::TitleScene()
 
 	TitleButton tutorialBtn;
 	tutorialBtn.type = SelectionManager::Title::Tutorial;
-	tutorialBtn.graphHandle = LoadGraph("Resource/2D/チュートリアルぼたん.png");
+	tutorialBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/チュートリアルぼたん.png");
 	tutorialBtn.x = 900;
 	tutorialBtn.y = 250;
 	GetGraphSize(tutorialBtn.graphHandle, &tutorialBtn.w, &tutorialBtn.h);
@@ -48,7 +48,7 @@ TitleScene::TitleScene()
 
 	TitleButton opeBtn;
 	opeBtn.type = SelectionManager::Title::OperationProcedures;
-	opeBtn.graphHandle = LoadGraph("Resource/2D/せっていぼたん1.png");
+	opeBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/せっていぼたん1.png");
 	opeBtn.x = 915;
 	opeBtn.y = 450;
 	GetGraphSize(opeBtn.graphHandle, &opeBtn.w, &opeBtn.h);
@@ -57,7 +57,7 @@ TitleScene::TitleScene()
 
 	TitleButton exitBtn;
 	exitBtn.type = SelectionManager::Title::titleOUT;
-	exitBtn.graphHandle = LoadGraph("Resource/2D/しゅうりょうぼたん (1).png");
+	exitBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/しゅうりょうぼたん (1).png");
 	exitBtn.x = 960;
 	exitBtn.y = 680;
 	GetGraphSize(exitBtn.graphHandle, &exitBtn.w, &exitBtn.h);
@@ -72,11 +72,11 @@ TitleScene::TitleScene()
 	mFrameCount = 0;
 
 	// ランキング表示用の画像をロード（DxLib初期化後でないと失敗するためここで行う）
-	rankImage[0] = LoadGraph("Resource/2D/1位.png");
-	rankImage[1] = LoadGraph("Resource/2D/2位.png");
-	rankImage[2] = LoadGraph("Resource/2D/3位.png");
-	rankingTitleImage = LoadGraph("Resource/2D/ランキング.png");
-	pointImg = LoadGraph("Resource/2D/点.png");
+	rankImage[0] = Master::mpResourceManager->LoadGraphics("Resource/2D/1位.png");
+	rankImage[1] = Master::mpResourceManager->LoadGraphics("Resource/2D/2位.png");
+	rankImage[2] = Master::mpResourceManager->LoadGraphics("Resource/2D/3位.png");
+	rankingTitleImage = Master::mpResourceManager->LoadGraphics("Resource/2D/ランキング.png");
+	pointImg = Master::mpResourceManager->LoadGraphics("Resource/2D/点.png");
 }
 
 TitleScene::~TitleScene()
