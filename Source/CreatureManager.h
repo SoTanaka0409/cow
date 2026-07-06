@@ -1,7 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include <vector>
 #include <map>
+#include <utility>
 
 // 動的生成されたキャラクター（牛・動物）のリストとプールを一元管理するテンプレートクラス
 template <typename TMove, typename TTag>
@@ -79,6 +80,30 @@ public:
 protected:
 	// 派生クラスでタグ取得処理を実装する
 	virtual TTag GetTag(TMove* creature) = 0;
+
+	/*
+	 * @brief プールからの復帰または新規生成を行い、リストに追加する共通処理
+	 * [入力] tag: 識別タグ, spawnPos: 出現座標, scale: 拡大率, args: コンストラクタ引数
+	 * [出力] 生成または復帰したオブジェクトのポインタ
+	 */
+	template <typename TConcrete, typename... Args>
+	TConcrete* SpawnAndInit(TTag tag, VECTOR spawnPos, float scale, Args&&... args)
+	{
+		TConcrete* creature = nullptr;
+		if (!mPools[tag].empty())
+		{
+			creature = static_cast<TConcrete*>(mPools[tag].back());
+			mPools[tag].pop_back();
+			creature->Reset(spawnPos);
+		}
+		else
+		{
+			creature = new TConcrete(std::forward<Args>(args)...);
+		}
+		creature->SetScale(scale);
+		mCreatures.push_back(creature);
+		return creature;
+	}
 
 	std::vector<TMove*> mCreatures;
 	std::map<TTag, std::vector<TMove*>> mPools;

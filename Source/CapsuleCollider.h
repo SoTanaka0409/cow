@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Collider.h"
 
 // カプセル形状（線分＋半径）の当たり判定コライダークラス

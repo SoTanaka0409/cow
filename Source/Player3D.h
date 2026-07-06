@@ -146,6 +146,7 @@ private:
 	const float JUMP_POWER = 30.0f;
 	bool mIsOutOfBounds = false;
 	int mnLighGraph;
+	int mnGaugeFrameGraph;
 
 	bool mIsCowInVacuumRange;
 	const float VACUUM_RADIUS = 300.0f;

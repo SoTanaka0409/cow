@@ -1,4 +1,4 @@
-#include"ResultScene.h"
+﻿#include"ResultScene.h"
 #include"Master.h"
 #include"SceneManager.h"
 

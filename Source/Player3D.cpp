@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+﻿#include "ServiceLocator.h"
 #include"Player3D.h"
 #include"Model.h"
 #include"ModelAnimation.h"
@@ -52,6 +52,7 @@ Player3D::Player3D(std::string filename, VECTOR initPos)
 	Master::mpCamera->Initialize();
 
 	mnLighGraph = Master::mpResourceManager->LoadGraphics("Resource/2D/green_beam_transparent.png");
+	mnGaugeFrameGraph = Master::mpResourceManager->LoadGraphics("Resource/2D/cow_frame.png");
 
 	mpCapsuleCollider->mvPosition = VGet(mvPosition.x, 0, mvPosition.z);
 	mpCapsuleCollider->mvPosition2 = mvPosition;
@@ -423,7 +424,9 @@ void Player3D::bar()
 
 	DrawBox(gaugeX, gaugeY, gaugeX + currentWidth, gaugeY + gaugeHeight, gaugeColor, TRUE);
 
-	DrawBox(gaugeX, gaugeY, gaugeX + gaugeWidth, gaugeY + gaugeHeight, GetColor(255, 255, 255), FALSE);
+	// 牛柄フレームを描画（元の白い枠線 DrawBox の代わり）
+	DrawExtendGraph(gaugeX - 10, gaugeY - 10, gaugeX + gaugeWidth + 10, gaugeY + gaugeHeight + 10, mnGaugeFrameGraph, TRUE);
+
 	DrawFormatString(gaugeX, gaugeY - 30, GetColor(255, 255, 255), "Vacuum Gauge: %.1f%%", mVacuumGauge);
 }
 

@@ -50,7 +50,8 @@ private:
 	 */
 	void DrawBar();
 
-	Object3D* mpParent;        // スキル付与などの副作用を適用するための対象オブジェクトポインタ
+	Object3D* mpParent;
+	int mnGaugeFrameGraph;        // スキル付与などの副作用を適用するための対象オブジェクトポインタ
 	float mfxp;                // レベルアップ判定の基準となる現在の獲得経験値量
 	float mfMaxXp;             // 難易度曲線を形成するための次レベル要求経験値
 	int mnNowLevel;            // プレイヤーの強さや要求経験値計算の基準となるレベル値

@@ -1,4 +1,4 @@
-﻿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include "AnimalManager.h"
 #include "AnimalMove.h"
 #include "Player3D.h"
@@ -34,20 +34,7 @@ void AnimalManager::SpawnAnimal(std::string filename, VECTOR pos, float scale, A
 		VECTOR spawnPos = VGet(randX, 0.0f, randZ);
 		if (tag == AnimalMove::Animal_1)
 		{
-			if (!mPools[tag].empty())
-			{
-				auto animal = mPools[tag].back();
-				mPools[tag].pop_back();
-				animal->Reset(spawnPos);
-				animal->SetScale(scale);
-				mCreatures.push_back(animal);
-			}
-			else
-			{
-				auto newAnimal = new Animal(filename, spawnPos);
-				newAnimal->SetScale(scale);
-				mCreatures.push_back(newAnimal);
-			}
+			SpawnAndInit<Animal>(tag, spawnPos, scale, filename, spawnPos);
 		}
 	}
 }

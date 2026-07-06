@@ -1,4 +1,4 @@
-﻿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include "CowManager.h"
 #include "CowMove.h"
 #include "Player3D.h"
@@ -99,73 +99,21 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 
 		if (tag == CowMove::Cow_1)
 		{
-			if (!mPools[tag].empty())
-			{
-				auto cow = mPools[tag].back();
-				mPools[tag].pop_back();
-				cow->Reset(spawnPos);
-				cow->SetScale(scale);
-				mCreatures.push_back(cow);
-			}
-			else
-			{
-				auto newCow = new Cow(filename, spawnPos, 1.0f);
-				newCow->SetScale(scale);
-				mCreatures.push_back(newCow);
-			}
+			SpawnAndInit<Cow>(tag, spawnPos, scale, filename, spawnPos, 1.0f);
 		}
 		else if (tag == CowMove::Cow_2)
 		{
-			if (!mPools[tag].empty())
-			{
-				auto cow = mPools[tag].back();
-				mPools[tag].pop_back();
-				cow->Reset(spawnPos);
-				cow->SetScale(scale);
-				mCreatures.push_back(cow);
-			}
-			else
-			{
-				auto newCow = new Cow_2(filename, spawnPos);
-				newCow->SetScale(scale);
-				mCreatures.push_back(newCow);
-			}
+			SpawnAndInit<Cow_2>(tag, spawnPos, scale, filename, spawnPos);
 		}
 		else if (tag == CowMove::Cow_gold)
 		{
 			auto feverMode = mfever ? Cow_gold::fever : Cow_gold::Nofever;
-			if (!mPools[tag].empty())
-			{
-				auto cow = dynamic_cast<Cow_gold*>(mPools[tag].back());
-				mPools[tag].pop_back();
-				if (cow) cow->SetFever(feverMode);
-				cow->Reset(spawnPos);
-				cow->SetScale(scale);
-				mCreatures.push_back(cow);
-			}
-			else
-			{
-				auto newCow = new Cow_gold(filename, spawnPos, feverMode);
-				newCow->SetScale(scale);
-				mCreatures.push_back(newCow);
-			}
+			auto cow = SpawnAndInit<Cow_gold>(tag, spawnPos, scale, filename, spawnPos, feverMode);
+			cow->SetFever(feverMode);
 		}
 		else if (tag == CowMove::Cow_T)
 		{
-			if (!mPools[tag].empty())
-			{
-				auto cow = mPools[tag].back();
-				mPools[tag].pop_back();
-				cow->Reset(spawnPos);
-				cow->SetScale(scale);
-				mCreatures.push_back(cow);
-			}
-			else
-			{
-				auto newCow = new Cow_Tutorial(filename, spawnPos);
-				newCow->SetScale(scale);
-				mCreatures.push_back(newCow);
-			}
+			SpawnAndInit<Cow_Tutorial>(tag, spawnPos, scale, filename, spawnPos);
 		}
 	}
 }

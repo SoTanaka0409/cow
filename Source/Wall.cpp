@@ -1,4 +1,4 @@
-#include "Wall.h"
+﻿#include "Wall.h"
 #include "DxLib.h"
 #include "Master.h"
 
