@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include"Dxlib.h"
 #include"Object3D.h"
+#include"Utility.h"
 
 // プレイヤーの成長状態(レベル・経験値)および進行度UIを管理するクラス
 class Level
@@ -56,7 +57,7 @@ private:
 	float mfMaxXp;             // 難易度曲線を形成するための次レベル要求経験値
 	int mnNowLevel;            // プレイヤーの強さや要求経験値計算の基準となるレベル値
 
-	VECTOR pos = VGet(20, 800, 0); // 解像度に合わせたUI配置の基準座標
-	VECTOR size = VGet(300, 30, 0); // 視認性を確保するためのバーの寸法
+	VECTOR pos = VGet(Utility::UI_BASE_X, Utility::UI_LEVEL_Y, 0); // 解像度に合わせたUI配置の基準座標
+	VECTOR size = VGet(Utility::UI_LEVEL_W, Utility::UI_LEVEL_H, 0); // 視認性を確保するためのバーの寸法
 };
 

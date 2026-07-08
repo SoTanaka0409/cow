@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <vector>
 #include <map>
@@ -9,8 +9,17 @@ template <typename TMove, typename TTag>
 class CreatureManager
 {
 public:
+	CreatureManager()
+	{
+		mCreatures.reserve(500);
+	}
+
 	virtual ~CreatureManager()
 	{
+		for (auto creature : mCreatures)
+		{
+			delete creature;
+		}
 		mCreatures.clear();
 		for (auto& pair : mPools)
 		{

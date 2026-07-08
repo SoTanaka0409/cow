@@ -32,14 +32,7 @@ public:
 	 * [出力] ColliderManagerクラスの静的インスタンスへのポインタ
 	 * [副作用] なし
 	 */
-	static ColliderManager* GetInstance()
-	{
-		if (Instance == nullptr)
-		{
-			Instance = new ColliderManager();
-		}
-		return Instance;
-	}
+	static ColliderManager* GetInstance();
 
 	/*
 	 * @brief シングルトンインスタンスを安全に解放し、後片付けを行う
@@ -47,16 +40,8 @@ public:
 	 * [出力] なし
 	 * [副作用] 静的インスタンス(Instance)のdelete
 	 */
-	static void Finalize()
-	{
-		if (Instance != nullptr)
-		{
-			delete Instance;
-			Instance = nullptr;
-		}
-	}
+	static void Finalize();
 
-public:
 	/*
 	 * @brief コライダーを管理リストに追加する
 	 * [入力] Collider: 追加するコライダーオブジェクトへのポインタ

@@ -222,7 +222,7 @@ void TitleScene::Update()
 					switch (mButtons[i].type)
 					{
 					case SelectionManager::Title::NewGame:
-						mNextScene = SceneManager::SCENE_3D;
+						mNextScene = SceneManager::SCENE_LOADING;
 						mFadeState = SceneFade_Out;
 						Master::mpSoundManager->PlaySE(SoundManager::SE_DECIDE);
 						break;

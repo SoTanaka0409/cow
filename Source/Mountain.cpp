@@ -1,4 +1,4 @@
-#include "Mountain.h"
+﻿#include "Mountain.h"
 
 Mountain::Mountain(std::string filename, VECTOR initPos, VECTOR scale, VECTOR angle)
 	: Object3D(initPos)

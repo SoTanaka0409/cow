@@ -60,6 +60,16 @@ Wall::Wall(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottom
 	mVertex[3].norm = norm;
 }
 
+std::vector<VERTEX3D> Wall::GetVertex()
+{
+	std::vector<VERTEX3D> result;
+	result.push_back(mVertex[0]);
+	result.push_back(mVertex[1]);
+	result.push_back(mVertex[2]);
+	result.push_back(mVertex[3]);
+	return result;
+}
+
 Wall::~Wall()
 {
 

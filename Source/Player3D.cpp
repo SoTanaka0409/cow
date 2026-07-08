@@ -68,13 +68,13 @@ Player3D::Player3D(std::string filename, VECTOR initPos)
 
 Player3D::~Player3D()
 {
-	if (mpModel) { delete mpModel; mpModel = nullptr; }
-	if (mpLevel) { delete mpLevel; mpLevel = nullptr; }
-	if (mpSkill) { delete mpSkill; mpSkill = nullptr; }
-	if (mpCombo) { delete mpCombo; mpCombo = nullptr; }
-	if (mpScore) { delete mpScore; mpScore = nullptr; }
-	if (mpBeam) { delete mpBeam;  mpBeam = nullptr; }
-	if (mpSpeed) { delete mpSpeed; mpSpeed = nullptr; }
+	Utility::SafeDelete(mpModel);
+	Utility::SafeDelete(mpLevel);
+	Utility::SafeDelete(mpSkill);
+	Utility::SafeDelete(mpCombo);
+	Utility::SafeDelete(mpScore);
+	Utility::SafeDelete(mpBeam);
+	Utility::SafeDelete(mpSpeed);
 }
 
 void Player3D::Update()
@@ -407,10 +407,10 @@ void Player3D::RotationByMove()
  */
 void Player3D::bar()
 {
-	int gaugeWidth = 300;
-	int gaugeHeight = 50;
-	int gaugeX = 20;
-	int gaugeY = 700;
+	int gaugeWidth = Utility::UI_VACUUM_W;
+	int gaugeHeight = Utility::UI_VACUUM_H;
+	int gaugeX = Utility::UI_BASE_X;
+	int gaugeY = Utility::UI_VACUUM_Y;
 
 	DrawBox(gaugeX, gaugeY, gaugeX + gaugeWidth, gaugeY + gaugeHeight, GetColor(100, 100, 100), TRUE);
 

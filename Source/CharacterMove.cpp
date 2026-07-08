@@ -75,7 +75,13 @@ void CharacterMove::Reset(VECTOR pos)
 	SetDrawFlag(true); // 描画を有効化
 
 	// 管理クラス(ObjectManager)に自身を再度登録
-	Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->AddObject(this);
+	if (auto scene = Master::mpSceneManager->GetCurrentScene())
+	{
+		if (auto objMgr = scene->GetObjectManager())
+		{
+			objMgr->AddObject(this);
+		}
+	}
 
 	if (mpModel != nullptr)
 	{
@@ -107,7 +113,13 @@ void CharacterMove::Deactivate()
 	}
 
 	// deleteはせず、Updateの更新対象リストからのみ外す（再利用のため）
-	Master::mpSceneManager->GetCurrentScene()->GetObjectManager()->RemoveObjectNoDelete(this);
+	if (auto scene = Master::mpSceneManager->GetCurrentScene())
+	{
+		if (auto objMgr = scene->GetObjectManager())
+		{
+			objMgr->RemoveObjectNoDelete(this);
+		}
+	}
 }
 
 void CharacterMove::Update()

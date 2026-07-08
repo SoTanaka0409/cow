@@ -17,7 +17,7 @@ Level::~Level()
 void Level::Draw()
 {
 	DrawBar();
-	DrawFormatString(20, 765, GetColor(255, 255, 255), "Level : %d", mnNowLevel);
+	DrawFormatString(Utility::UI_BASE_X, Utility::UI_LEVEL_Y - 35, GetColor(255, 255, 255), "Level : %d", mnNowLevel);
 }
 
 void Level::Update()

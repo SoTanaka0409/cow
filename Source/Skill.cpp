@@ -1,10 +1,31 @@
-#include "Skill.h"
+ï»¿ï¿½ï½¿#include "Skill.h"
 #include "Player3D.h"
 #include "Texture.h"
 #include "Master.h"
 #include "InputManager.h"
 #include "Bait.h"
 #include <cmath>
+
+void Skill::SetSkillFlag(bool flag)
+{
+	AddSkillFlag = flag;
+	if (flag)
+	{
+		mpTexture->SetPosition(mPos1);
+		mpTexture2->SetPosition(mPos2);
+		mpTexture3->SetPosition(mPos3);
+
+		mSelectScale = 1.0f;
+		mSelectAnim = false;
+		mSelectedSkill = 0;
+
+		mOpenAnim = true;
+
+		mCard1Y = 1400.0f;
+		mCard2Y = 1500.0f;
+		mCard3Y = 1600.0f;
+	}
+}
 
 Skill::Skill(Object3D* parent)
 	: Status_A(0.0f)
@@ -50,7 +71,7 @@ void Skill::Draw()
 {
 	if (!AddSkillFlag && !mSelectAnim) return;
 
-	// ‘I‘ðŠ®—¹Œã‚ÌƒJ[ƒh‚ªã¸E‘Þo‚µ‚Ä‚¢‚­‰‰oƒAƒjƒ[ƒVƒ‡ƒ“
+	// é¸æŠžå®Œäº†å¾Œã®ã‚«ãƒ¼ãƒ‰ãŒä¸Šæ˜‡ãƒ»é€€å‡ºã—ã¦ã„ãæ¼”å‡ºã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
 	if (mSelectAnim)
 	{
 		if (mSelectedSkill == 1)
@@ -98,7 +119,7 @@ void Skill::Update()
 		}
 	}
 
-	// ‘I‘ð‚³‚ê‚½ƒJ[ƒh‚ªã‹ó‚Ö”ò‚ñ‚ÅÁ‚¦‚é‰‰oƒAƒjƒ[ƒVƒ‡ƒ“
+	// é¸æŠžã•ã‚ŒãŸã‚«ãƒ¼ãƒ‰ãŒä¸Šç©ºã¸é£›ã‚“ã§æ¶ˆãˆã‚‹æ¼”å‡ºã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
 	if (mSelectAnim)
 	{
 		VECTOR target = VGet(mSelectPos.x, -400.0f, 0.0f);
@@ -116,7 +137,7 @@ void Skill::Update()
 		}
 	}
 
-	// ƒJ[ƒh‘I‘ðŠJŽnŽž‚ÉAƒJ[ƒh‚ª‰æ–ÊŠO‚©‚çŠŠ‚ç‚©‚ÉƒXƒ‰ƒCƒhƒCƒ“‚·‚éƒAƒjƒ[ƒVƒ‡ƒ“
+	// ã‚«ãƒ¼ãƒ‰é¸æŠžé–‹å§‹æ™‚ã«ã€ã‚«ãƒ¼ãƒ‰ãŒç”»é¢å¤–ã‹ã‚‰æ»‘ã‚‰ã‹ã«ã‚¹ãƒ©ã‚¤ãƒ‰ã‚¤ãƒ³ã™ã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
 	if (mOpenAnim)
 	{
 		mCard1Y += (450.0f - mCard1Y) * 0.15f;
@@ -141,14 +162,14 @@ void Skill::AddSkill()
 {
 	if (!AddSkillFlag) return;
 	
-	SetMouseDispFlag(true); // ƒXƒLƒ‹‘I‘ð’†‚Íƒ}ƒEƒXƒ|ƒCƒ“ƒ^‚ð•\Ž¦
+	SetMouseDispFlag(true); // ã‚¹ã‚­ãƒ«é¸æŠžä¸­ã¯ãƒžã‚¦ã‚¹ãƒã‚¤ãƒ³ã‚¿ã‚’è¡¨ç¤º
 	Master::SelectSkill = true;
 	int mouseX, mouseY;
 	GetMousePoint(&mouseX, &mouseY);
 
 	mHoverSkill = 0;
 
-	// ƒXƒLƒ‹ƒJ[ƒh‚ðƒzƒo[‚Ü‚½‚Í¶ƒNƒŠƒbƒN‚µ‚½Û‚ÌƒRƒ‰ƒCƒ_[ŒvŽZ‚ðs‚¤ƒ‰ƒ€ƒ_ŠÖ”
+	// ã‚¹ã‚­ãƒ«ã‚«ãƒ¼ãƒ‰ã‚’ãƒ›ãƒãƒ¼ã¾ãŸã¯å·¦ã‚¯ãƒªãƒƒã‚¯ã—ãŸéš›ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼è¨ˆç®—ã‚’è¡Œã†ãƒ©ãƒ ãƒ€é–¢æ•°
 	auto ProcessSkill = [&](Texture* tex, int id) {
 		if (tex == nullptr) return false;
 
@@ -174,7 +195,7 @@ void Skill::AddSkill()
 
 	if (ProcessSkill(mpTexture, 1))
 	{
-		// ‘¬“xƒAƒbƒv
+		// é€Ÿåº¦ã‚¢ãƒƒãƒ—
 		Status_S += 2.0f;
 		mSelectedSkill = 1;
 		mSelectPos = mpTexture->GetPosition();
@@ -186,8 +207,8 @@ void Skill::AddSkill()
 	}
 	else if (ProcessSkill(mpTexture2, 2))
 	{
-		// ‰aiƒfƒRƒC‚É‚ñ‚¶‚ñjÝ’u
-		auto b = new Bait("Resource/3D/‹‚Ì‰a/Carrot.mv1", mpParent->GetPosition());
+		// é¤Œï¼ˆãƒ‡ã‚³ã‚¤ã«ã‚“ã˜ã‚“ï¼‰è¨­ç½®
+		auto b = new Bait("Resource/3D/ç‰›ã®é¤Œ/Carrot.mv1", mpParent->GetPosition());
 		float scale = 5000.0f;
 		b->mpModel->SetScale(VGet(scale, scale, scale));
 
@@ -201,7 +222,7 @@ void Skill::AddSkill()
 	}
 	else if (ProcessSkill(mpTexture3, 3))
 	{
-		// ‹zˆø‘¬“xiUŒ‚—ÍjƒAƒbƒv
+		// å¸å¼•é€Ÿåº¦ï¼ˆæ”»æ’ƒåŠ›ï¼‰ã‚¢ãƒƒãƒ—
 		Status_A += 1.0f;
 		mSelectedSkill = 3;
 		mSelectPos = mpTexture3->GetPosition();

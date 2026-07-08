@@ -90,7 +90,8 @@ void AnimalMove::OnExit(Collider* collider, Collider* check)
 void AnimalMove::CharacterDied()
 {
 	// 演出都合上、フィーバー中および吸い込み状態以外では死亡判定を行わない
-	if (mCurrentState != STATE_VACUUM||ServiceLocator::GetFever()->IsFever()) return;
+	auto fv = ServiceLocator::GetFever();
+	if (mCurrentState != STATE_VACUUM || (fv && fv->IsFever())) return;
 
 	Player3D* player = mpTargetPlayer;
 

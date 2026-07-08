@@ -5,6 +5,7 @@
 #include"TutorialScene.h"
 #include"ResultScene.h"
 #include "Rule.h"
+#include "LoadingScene.h"
 
 SceneManager::SceneManager()
 	: mnSceneType(SCENE_TYPE::SCENE_NONE)
@@ -85,6 +86,9 @@ void SceneManager::ChangeSceneIfNeeded()
 
 	switch (mnSceneType)
 	{
+	case SCENE_TYPE::SCENE_LOADING:
+		mpCurrentScene = new LoadingScene();
+		break;
 	case SCENE_TYPE::SCENE_3D:
 		mpCurrentScene = new Scene3D();
 		break;

@@ -120,8 +120,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 
 		// メモリリークを防ぐため破棄要求のあるオブジェクトを解放
-		ServiceLocator::GetCurrentScene()->GetCollisionManager()->DeleteAllColliderIfNeeded();
-		ServiceLocator::GetObjectManager()->DeleteAll3DIfNeeded();
+		if (auto scene = ServiceLocator::GetCurrentScene())
+		{
+			scene->GetCollisionManager()->DeleteAllColliderIfNeeded();
+		}
+		if (auto objMgr = ServiceLocator::GetObjectManager())
+		{
+			objMgr->DeleteAll3DIfNeeded();
+		}
 
 		// フレーム終了時に安全にシーン遷移を行う
 		Master::mpSceneManager->ChangeSceneIfNeeded();

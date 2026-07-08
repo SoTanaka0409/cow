@@ -46,9 +46,9 @@ Score::~Score()
 void Score::Draw()
 {
 	int x = Utility::UI_BASE_X;
-	int y = 100;
-	int width = 200;
-	int height = 100;
+	int y = Utility::UI_SCORE_Y;
+	int width = Utility::UI_PANEL_W;
+	int height = Utility::UI_PANEL_H;
 
 
 	DrawExtendGraph(

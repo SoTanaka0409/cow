@@ -1,17 +1,17 @@
-#pragma once
+ï»¿#pragma once
 #include "DxLib.h"
 #include "Object3D.h"
 #include <vector>
 
-// ƒQ[ƒ€“à‚Ì•Ç–Êi•½–Êƒ|ƒŠƒSƒ“j‚ğ¶¬E•`‰æ‚·‚éƒNƒ‰ƒX
+// ã‚²ãƒ¼ãƒ å†…ã®å£é¢ï¼ˆå››è§’å½¢ãƒãƒªã‚´ãƒ³ï¼‰ã‚’ç”Ÿæˆãƒ»æç”»ã™ã‚‹ã‚¯ãƒ©ã‚¹
 class Wall : public Object3D
 {
 public:
 	/*
-	 * @brief •Ç–Ê‚ÌƒeƒNƒXƒ`ƒƒ‰æ‘œ‚Æ”ÍˆÍƒpƒ‰ƒ[ƒ^‚ğİ’è‚µ‚Ä‰Šú‰»‚·‚é
-	 * [“ü—Í] filename: ƒeƒNƒXƒ`ƒƒ‰æ‘œ‚Ö‚ÌƒpƒX, centerPos: •Ç‚Ì’†SÀ•W, topLeft: ¶ã’[‚Ì‘Š‘ÎÀ•W, bottomRight: ‰E‰º’[‚Ì‘Š‘ÎÀ•W
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒeƒNƒXƒ`ƒƒ‚ªƒƒ‚ƒŠ‚Éƒ[ƒh‚³‚êA’¸“_ƒoƒbƒtƒ@(mVertex)‚ªİ’è‚³‚ê‚é
+	 * @brief å£é¢ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”»åƒã¨ç¯„å›²ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’è¨­å®šã—ã¦åˆæœŸåŒ–ã™ã‚‹
+	 * [å…¥åŠ›] filename: ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”»åƒã¸ã®ãƒ‘ã‚¹, centerPos: å£ã®ä¸­å¿ƒåº§æ¨™, topLeft: å·¦ä¸Šã®ç›¸å¯¾åº§æ¨™, bottomRight: å³ä¸‹ã®ç›¸å¯¾åº§æ¨™
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ãƒ†ã‚¯ã‚¹ãƒãƒ£ãŒãƒ­ãƒ¼ãƒ‰æ™‚ã«ãƒ­ãƒ¼ãƒ‰ã•ã‚Œã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡(mVertex)ãŒè¨­å®šã•ã‚Œã‚‹
 	 */
 	Wall(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight);
 	virtual ~Wall();
@@ -20,23 +20,14 @@ public:
 	void Draw() override;
 
 	/*
-	 * @brief •Ç‚ğ\¬‚·‚é4‚Â‚Ì’¸“_ƒf[ƒ^‚ğæ“¾‚·‚é
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] VERTEX3D\‘¢‘Ì‚ÌƒxƒNƒ^[
-	 * [•›ì—p] ‚È‚µ
+	 * @brief å£ã‚’æ§‹æˆã™ã‚‹4ã¤ã®é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] VERTEX3Dæ§‹é€ ä½“ã®ãƒ™ã‚¯ã‚¿ãƒ¼
+	 * [å‰¯ä½œç”¨] ãªã—
 	 */
-	std::vector<VERTEX3D> GetVertex()
-	{
-		std::vector<VERTEX3D> result;
-		result.push_back(mVertex[0]);
-		result.push_back(mVertex[1]);
-		result.push_back(mVertex[2]);
-		result.push_back(mVertex[3]);
-		return result;
-	}
+	std::vector<VERTEX3D> GetVertex();
 
 private:
-	int mnGraphHandle;      // •ÇƒeƒNƒXƒ`ƒƒ‚ÌƒOƒ‰ƒtƒBƒbƒNƒnƒ“ƒhƒ‹
-	VERTEX3D mVertex[4];    // •Ç–Ê‚ğ\¬‚·‚é4‚Â‚Ì’¸“_ƒf[ƒ^
+	int mnGraphHandle;      // å£ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ãƒãƒ³ãƒ‰ãƒ«
+	VERTEX3D mVertex[4];    // å£é¢ã‚’æ§‹æˆã™ã‚‹4ã¤ã®é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
 };
-

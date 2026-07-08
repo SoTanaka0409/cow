@@ -25,9 +25,9 @@ void GameTimer::Draw()
 	// 解像度変更を考慮し、基準座標(mvPosition)からの相対位置で描画
 	DrawExtendGraph(
 		static_cast<int>(mvPosition.x + Utility::UI_BASE_X),
-		static_cast<int>(mvPosition.y),
-		static_cast<int>(mvPosition.x + Utility::UI_BASE_X + 200),
-		static_cast<int>(mvPosition.y + 90),
+		static_cast<int>(mvPosition.y + Utility::UI_TIMER_Y),
+		static_cast<int>(mvPosition.x + Utility::UI_BASE_X + Utility::UI_PANEL_W),
+		static_cast<int>(mvPosition.y + Utility::UI_TIMER_Y + Utility::UI_PANEL_H),
 		scoreTextImage,
 		TRUE
 	);
@@ -36,7 +36,7 @@ void GameTimer::Draw()
 	{
 		Master::mpScore->DrawNumber(
 			static_cast<int>(mvPosition.x + Utility::UI_DIGIT_X),
-			static_cast<int>(mvPosition.y),
+			static_cast<int>(mvPosition.y + Utility::UI_TIMER_Y),
 			Time,
 			1.0f,
 			1

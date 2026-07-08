@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Model.h"
 #include "Dxlib.h"
 #include "Object3D.h"

@@ -10,6 +10,8 @@
  */
 ObjectManager::ObjectManager()
 {
+	mObject3DList.reserve(1000);
+	mObject2DList.reserve(100);
 }
 
 /*
@@ -30,22 +32,22 @@ ObjectManager::~ObjectManager()
  */
 void ObjectManager::Update()
 {
-	for (size_t i = 0; i < mObject3DList.size(); ++i)
+	for (auto obj : mObject3DList)
 	{
-		mObject3DList[i]->Update();
+		obj->Update();
 	}
 
-	for (size_t i = 0; i < mObject2DList.size(); ++i)
+	for (auto obj : mObject2DList)
 	{
-		mObject2DList[i]->Update();
+		obj->Update();
 	}
 
 	// 半透明描画時のZソートで必要となるため、カメラとの距離を算出する
-	for (size_t i = 0; i < mObject3DList.size(); ++i)
+	for (auto obj : mObject3DList)
 	{
 		VECTOR cameraPos = Master::mpCamera->GetPosition();
-		VECTOR objPos = mObject3DList[i]->GetPosition();
-		mObject3DList[i]->SetCameraDistance(VSize(VSub(objPos, cameraPos)));
+		VECTOR objPos = obj->GetPosition();
+		obj->SetCameraDistance(VSize(VSub(objPos, cameraPos)));
 	}
 
 	// 座標更新が全て完了した後に衝突判定を行うためここで一括処理する
@@ -60,20 +62,20 @@ void ObjectManager::Update()
  */
 void ObjectManager::Draw()
 {
-	for (size_t i = 0; i < mObject3DList.size(); ++i)
+	for (auto obj : mObject3DList)
 	{
-		if (mObject3DList[i]->IsDrawFlag())
+		if (obj->IsDrawFlag())
 		{
-			mObject3DList[i]->Draw();
+			obj->Draw();
 		}
 	}
 	ColliderManager::GetInstance()->Draw();
 
-	for (size_t i = 0; i < mObject2DList.size(); ++i)
+	for (auto obj : mObject2DList)
 	{
-		if (mObject2DList[i]->IsDrawFlag())
+		if (obj->IsDrawFlag())
 		{
-			mObject2DList[i]->Draw();
+			obj->Draw();
 		}
 	}
 }
@@ -115,9 +117,9 @@ void ObjectManager::RemoveObjectNoDelete(Object3D* object3D)
 void ObjectManager::DeleteAll3D()
 {
 	if (mObject3DList.empty()) return;
-	for (size_t i = 0; i < mObject3DList.size(); ++i)
+	for (auto obj : mObject3DList)
 	{
-		mObject3DList[i]->SetDeleteFlag(true);
+		obj->SetDeleteFlag(true);
 	}
 
 	DeleteAll3DIfNeeded();
@@ -206,9 +208,9 @@ void ObjectManager::AddObject(Object2D* object2D)
  */
 void ObjectManager::DeleteAll2D()
 {
-	for (size_t i = 0; i < mObject2DList.size(); ++i)
+	for (auto obj : mObject2DList)
 	{
-		delete mObject2DList[i];
+		delete obj;
 	}
 	mObject2DList.clear();
 	mTagCache2D.clear();

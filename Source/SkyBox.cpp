@@ -1,4 +1,4 @@
-#include "SkyBox.h"
+﻿#include "SkyBox.h"
 #include "Model.h"
 
 SkyBox::SkyBox(std::string filename, VECTOR pos)

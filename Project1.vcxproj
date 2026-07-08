@@ -170,6 +170,7 @@
     <ClCompile Include="Source\Floor.cpp" />
     <ClCompile Include="Source\GameManager.cpp" />
     <ClCompile Include="Source\GameTimer.cpp" />
+    <ClCompile Include="Source\LoadingScene.cpp" />
     <ClCompile Include="Source\InputManager.cpp" />
     <ClCompile Include="Source\Level.cpp" />
     <ClCompile Include="Source\ServiceLocator.cpp" />
@@ -197,6 +198,8 @@
     <ClCompile Include="Source\SphereCollider.cpp" />
     <ClCompile Include="Source\Stage.cpp" />
     <ClCompile Include="Source\Tatumaki.cpp" />
+    <ClCompile Include="Source\Utility.cpp" />
+    <ClCompile Include="Source\Wall.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Thunder.cpp" />
     <ClCompile Include="Source\TitleScene.cpp" />
@@ -228,6 +231,7 @@
     <ClInclude Include="Source\GameManager.h" />
     <ClInclude Include="Source\GameTimer.h" />
     <ClInclude Include="Source\InputManager.h" />
+    <ClInclude Include="Source\LoadingScene.h" />
     <ClInclude Include="Source\Level.h" />
     <ClInclude Include="Source\Master.h" />
     <ClInclude Include="Source\Model.h" />

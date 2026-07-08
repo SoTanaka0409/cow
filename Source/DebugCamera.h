@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "DxLib.h"
 
 // ƒfƒoƒbƒO—p‚ÌˆêlÌ‹“_iƒXƒyƒNƒeƒCƒ^[j‚Ì©—RˆÚ“®ƒJƒƒ‰§ŒäƒNƒ‰ƒX

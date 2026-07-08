@@ -37,7 +37,8 @@ void Cow_gold::Update()
 	CowMove::Update();
 
 	// フィーバー終了時や寿命超過で画面内に残り続けるのを防ぐため消滅させる
-	if (mnFever == fever && (ServiceLocator::GetFever()->IsFever() == false || DeathCount >= DeathTimer))
+	auto fv = ServiceLocator::GetFever();
+	if (mnFever == fever && (fv == nullptr || fv->IsFever() == false || DeathCount >= DeathTimer))
 	{
 		Die(DEATH_LIMIT);
 	}
@@ -54,7 +55,10 @@ void Cow_gold::Die(DeathReason reason)
 	{
 		if (this->mnFever == Nofever)
 		{
-			ServiceLocator::GetFever()->StartFever(mpTargetPlayer);
+			if (auto fv = ServiceLocator::GetFever())
+			{
+				fv->StartFever(mpTargetPlayer);
+			}
 		}
 	}
 }

@@ -27,9 +27,9 @@ void Combo::Draw()
 	if (comboCount >= 1)
 	{
 		int x = Utility::UI_BASE_X;
-		int y = 200;
-		int width = 200;
-		int height = 100;
+		int y = Utility::UI_COMBO_Y;
+		int width = Utility::UI_PANEL_W;
+		int height = Utility::UI_PANEL_H;
 
 		DrawExtendGraph(x, y, x + width, y + height, comboImage, TRUE);
 

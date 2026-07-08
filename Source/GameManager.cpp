@@ -75,8 +75,11 @@ void GameManager::GameNextStep(GameStepType type)
 		}
 
 		// リザルト画面へのフェードアウトを開始する
-		Master::mpSceneManager->GetCurrentScene()->mFadeState = Scene::SceneFade_Out;
-		Master::mpSceneManager->GetCurrentScene()->mNextScene = SceneManager::SCENE_RESULT;
+		if (auto scene = Master::mpSceneManager->GetCurrentScene())
+		{
+			scene->mFadeState = Scene::SceneFade_Out;
+			scene->mNextScene = SceneManager::SCENE_RESULT;
+		}
 
 		mnType = type;
 	}

@@ -52,6 +52,20 @@ int ResourceManager::LoadModel(std::string pathName)
 	return MV1DuplicateModel(handle); // オリジナルは保管し、複製側をゲーム側で使用させる
 }
 
+void ResourceManager::PreloadModel(std::string pathName)
+{
+	for (int i = 0; i < resourceMapList.size(); i++)
+	{
+		if (resourceMapList.at(i).first == pathName) return;
+	}
+
+	int handle = MV1LoadModel(pathName.c_str());
+	if (handle != -1)
+	{
+		resourceMapList.push_back(std::pair<std::string, int>(pathName, handle));
+	}
+}
+
 /*
  * @brief 2D画像ファイルをキャッシュ読み込みする（二重ロード時は既存のハンドルを返す）
  * [入力] pathName: 画像ファイルのファイルパス
@@ -76,6 +90,20 @@ int ResourceManager::LoadGraphics(std::string pathName)
 
 	graphicResourceMapList.push_back(std::pair<std::string, int>(pathName, handle));
 	return handle;
+}
+
+void ResourceManager::PreloadGraphics(std::string pathName)
+{
+	for (int i = 0; i < graphicResourceMapList.size(); i++)
+	{
+		if (graphicResourceMapList.at(i).first == pathName) return;
+	}
+
+	int handle = LoadGraph(pathName.c_str());
+	if (handle != -1)
+	{
+		graphicResourceMapList.push_back(std::pair<std::string, int>(pathName, handle));
+	}
 }
 
 /*

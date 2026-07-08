@@ -11,10 +11,29 @@ ColliderManager* ColliderManager::Instance = nullptr;
 
 ColliderManager::ColliderManager()
 {
+	mColliderList.reserve(1000);
 }
 
 ColliderManager::~ColliderManager()
 {
+}
+
+ColliderManager* ColliderManager::GetInstance()
+{
+	if (Instance == nullptr)
+	{
+		Instance = new ColliderManager();
+	}
+	return Instance;
+}
+
+void ColliderManager::Finalize()
+{
+	if (Instance != nullptr)
+	{
+		delete Instance;
+		Instance = nullptr;
+	}
 }
 
 void ColliderManager::Update()

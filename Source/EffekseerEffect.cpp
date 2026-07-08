@@ -1,4 +1,4 @@
-#include "EffekseerEffect.h"
+﻿#include "EffekseerEffect.h"
 #include <EffekseerForDXLib.h>
 #include "Master.h"
 
