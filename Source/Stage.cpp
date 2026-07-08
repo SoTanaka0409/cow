@@ -4,12 +4,12 @@
 Stage::Stage(VECTOR initPos, std::string stageModelName, std::string stageCollisionModelName)
 	: Object3D(initPos)
 {
-	SetTag(Object3D::Tag3D_Stage);
+	SetTag(Object3D::kTag3dStage);
 
 	mnModelHandle = Master::mpResourceManager->LoadModel(stageModelName);
 	mnCollisionHandle = Master::mpResourceManager->LoadModel(stageCollisionModelName);
 
-	// 実行時の負荷を軽減するため、初期化時にポリゴン情報を事前構築しておく
+	// 螳溯｡梧凾縺ｮ雋闕ｷ繧定ｻｽ貂帙☆繧九◆繧√∝・譛溷喧譎ゅ↓繝昴Μ繧ｴ繝ｳ諠・ｱ繧剃ｺ句燕讒狗ｯ峨＠縺ｦ縺翫￥
 	float StageSize = 5.0f;
 	MV1SetScale(mnModelHandle, VGet(StageSize, 0.3f, StageSize));
 	MV1SetScale(mnCollisionHandle, VGet(StageSize, 0.3f, StageSize));
@@ -51,7 +51,7 @@ bool Stage::CheckHit_Capsule(VECTOR pos1, VECTOR pos2, float r)
 		}
 	}
 	
-	// メモリリークを防ぐため、動的確保された判定結果は必ず解放する
+	// 繝｡繝｢繝ｪ繝ｪ繝ｼ繧ｯ繧帝亟縺舌◆繧√∝虚逧・｢ｺ菫昴＆繧後◆蛻､螳夂ｵ先棡縺ｯ蠢・★隗｣謾ｾ縺吶ｋ
 	MV1CollResultPolyDimTerminate(result);
 
 	return (result.HitNum >= 1);

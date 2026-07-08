@@ -5,36 +5,36 @@
 #include "Utility.h"
 #include "Master.h"
 
-int Score::resultScore = 0;
+int Score::result_score_ = 0;
 
 Score::Score()
 {
-	score = 0;
-	strcpy_s(playerName, sizeof(playerName), "NO NAME");
-	nameIndex = 0;
-	nameInputMode = false;
-	inputHandle = -1;
+	score_ = 0;
+	strcpy_s(player_name_, sizeof(player_name_), "NO NAME");
+	name_index_ = 0;
+	name_input_mode_ = false;
+	input_handle_ = -1;
 
 	for (int i = 0; i < 3; i++)
 	{
-		strcpy_s(ranking[i].name, sizeof(ranking[i].name), "NONE");
-		ranking[i].score = 0;
+		strcpy_s(ranking_[i].name_, sizeof(ranking_[i].name_), "NONE");
+		ranking_[i].score_ = 0;
 	}
 
-	scoreTextImage = Master::mpResourceManager->LoadGraphics("Resource/2D/SCORE.png");
-	minusImg = Master::mpResourceManager->LoadGraphics("Resource/2D/マイナス.png");
+	score_text_image_ = Master::mpResourceManager->LoadGraphics("Resource/2D/SCORE.png");
+	minus_img_ = Master::mpResourceManager->LoadGraphics("Resource/2D/マイナス.png");
 
 	// スコア描画用アセットロード
-	numberImg[0] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数00.png");
-	numberImg[1] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数01.png");
-	numberImg[2] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数02.png");
-	numberImg[3] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数03.png");
-	numberImg[4] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数04.png");
-	numberImg[5] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数05.png");
-	numberImg[6] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数06.png");
-	numberImg[7] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数07.png");
-	numberImg[8] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数08.png");
-	numberImg[9] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数09.png");
+	number_img_[0] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数00.png");
+	number_img_[1] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数01.png");
+	number_img_[2] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数02.png");
+	number_img_[3] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数03.png");
+	number_img_[4] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数04.png");
+	number_img_[5] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数05.png");
+	number_img_[6] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数06.png");
+	number_img_[7] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数07.png");
+	number_img_[8] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数08.png");
+	number_img_[9] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数09.png");
 
 	LoadRanking();
 }
@@ -45,58 +45,56 @@ Score::~Score()
 
 void Score::Draw()
 {
-	int x = Utility::UI_BASE_X;
-	int y = Utility::UI_SCORE_Y;
-	int width = Utility::UI_PANEL_W;
-	int height = Utility::UI_PANEL_H;
-
+	int x = Utility::kUiBaseX;
+	int y = Utility::kUiScoreY;
+	int width = Utility::kUiPanelW;
+	int height = Utility::kUiPanelH;
 
 	DrawExtendGraph(
 		x,
 		y,
 		x + width,
 		y + height,
-		scoreTextImage,
+		score_text_image_,
 		TRUE
 	);
 
-
-	DrawNumber(Utility::UI_DIGIT_X, y, score, 1.0f, 4);
+	DrawNumber(Utility::kUiDigitX, y, score_, 1.0f, 4);
 }
 
 void Score::AddScore(int value)
 {
-	score += value;
-	if (score < 0)
+	score_ += value;
+	if (score_ < 0)
 	{
-		score = 0; // 負のスコアを防止
+		score_ = 0; // 負のスコアを防止
 	}
 }
 
 void Score::ResetScore()
 {
-	score = 0;
+	score_ = 0;
 }
 
 int Score::GetScore() const
 {
-	return score;
+	return score_;
 }
 
 const char* Score::GetName() const
 {
-	return playerName;
+	return player_name_;
 }
 
 void Score::Save()
 {
 	FILE* fp = nullptr;
-	if (fopen_s(&fp, "score.txt", "w") == 0)
+	if (fopen_s(&fp, "score_.txt", "w") == 0)
 	{
-		fprintf(fp, "%d\n", resultScore);
+		fprintf(fp, "%d\n", result_score_);
 		for (int i = 0; i < 3; i++)
 		{
-			fprintf(fp, "%s %d\n", ranking[i].name, ranking[i].score);
+			fprintf(fp, "%s %d\n", ranking_[i].name_, ranking_[i].score_);
 		}
 		fclose(fp);
 	}
@@ -105,12 +103,12 @@ void Score::Save()
 void Score::Load()
 {
 	FILE* fp = nullptr;
-	if (fopen_s(&fp, "score.txt", "r") == 0)
+	if (fopen_s(&fp, "score_.txt", "r") == 0)
 	{
-		if (fscanf_s(fp, "%d", &score) != 1) score = 0;
+		if (fscanf_s(fp, "%d", &score_) != 1) score_ = 0;
 		for (int i = 0; i < 3; i++)
 		{
-			if (fscanf_s(fp, "%s %d", ranking[i].name, (unsigned)_countof(ranking[i].name), &ranking[i].score) != 2)
+			if (fscanf_s(fp, "%s %d", ranking_[i].name_, (unsigned)_countof(ranking_[i].name_), &ranking_[i].score_) != 2)
 			{
 				break;
 			}
@@ -121,61 +119,60 @@ void Score::Load()
 
 void Score::StartNameInput()
 {
-	nameInputMode = true;
-	nameIndex = 0;
-	playerName[0] = '\0';
+	name_input_mode_ = true;
+	name_index_ = 0;
+	player_name_[0] = '\0';
 
 	// DxLibのキーボード入力システムを有効化
-	inputHandle = MakeKeyInput(0, 0, 64, 1);
-	SetActiveKeyInput(inputHandle);
+	input_handle_ = MakeKeyInput(0, 0, 64, 1);
+	SetActiveKeyInput(input_handle_);
 }
 
 void Score::UpdateNameInput()
 {
-	if (!nameInputMode) return;
+	if (!name_input_mode_) return;
 
-
-	GetKeyInputString(playerName, inputHandle);
+	GetKeyInputString(player_name_, input_handle_);
 	/*DrawFormatString(300, 100, GetColor(255, 255, 255), "お名前を入力してください");
-	DrawFormatString(300, 120, GetColor(255, 255, 255), "入力後、ENTERキーを押してください");
-	DrawFormatString(300, 160, GetColor(255, 255, 0), ">> %s", playerName);*/
+	DrawFormatString(300, 120, GetColor(255, 255, 255), "入力後はENTERキーを押してください");
+	DrawFormatString(300, 160, GetColor(255, 255, 0), ">> %s", player_name_);*/
 
 	// 入力完了判定（ENTERキー）
-	if (CheckHitKey(KEY_INPUT_RETURN) && strlen(playerName) > 0)
+	if (CheckHitKey(KEY_INPUT_RETURN) && strlen(player_name_) > 0)
 	{
-		nameInputMode = false;
-		if (nameIndex >= 0 && nameIndex < 3)
+		name_input_mode_ = false;
+		if (name_index_ >= 0 && name_index_ < 3)
 		{
-			strcpy_s(ranking[nameIndex].name, sizeof(ranking[nameIndex].name), playerName);
+			strcpy_s(ranking_[name_index_].name_, sizeof(ranking_[name_index_].name_), player_name_);
 		}
 	}
 }
 
 bool Score::IsNameInputFinished() const
 {
-	return !nameInputMode;
+	return !name_input_mode_;
 }
 
 void Score::AddRanking()
 {
-	int target = score;
-	nameIndex = -1;
+	int target = score_;
+	name_index_ = -1;
 
-	// 上位3位以内にランクインしたか判定
+	// 上位3枠以内にランクインした場合確定
 	for (int i = 0; i < 3; i++)
 	{
-		if (target > ranking[i].score)
+		if (target > ranking_[i].score_)
 		{
-			// 順位の繰り下げ
+			// 後続を一つ下へ
 			for (int j = 2; j > i; j--)
 			{
-				ranking[j] = ranking[j - 1];
+				ranking_[j] = ranking_[j - 1];
 			}
 
-			// 仮名"PLAYER"で登録。ネームエントリー後に確定する
-			strcpy_s(ranking[i].name, "PLAYER");
-			ranking[i].score = target;
-			nameIndex = i;
+			// 仮に"PLAYER"で登録、ネームエントリー後に確定する
+			strcpy_s(ranking_[i].name_, "PLAYER");
+			ranking_[i].score_ = target;
+			name_index_ = i;
 			break;
 		}
 	}
@@ -190,10 +187,10 @@ void Score::DrawRanking(int x, int y)
 			x,
 			y + 30 + i * 20,
 			GetColor(255, 255, 255),
-			"%d位  %s : %d",
+			"%d位 %s : %d",
 			i + 1,
-			ranking[i].name,
-			ranking[i].score
+			ranking_[i].name_,
+			ranking_[i].score_
 		);
 	}
 }
@@ -205,7 +202,7 @@ void Score::SaveRanking()
 	{
 		for (int i = 0; i < 3; i++)
 		{
-			fprintf(fp, "%s %d\n", ranking[i].name, ranking[i].score);
+			fprintf(fp, "%s %d\n", ranking_[i].name_, ranking_[i].score_);
 		}
 		fclose(fp);
 	}
@@ -218,7 +215,7 @@ void Score::LoadRanking()
 	{
 		for (int i = 0; i < 3; i++)
 		{
-			if (fscanf_s(fp, "%s %d", ranking[i].name, (unsigned)_countof(ranking[i].name), &ranking[i].score) != 2)
+			if (fscanf_s(fp, "%s %d", ranking_[i].name_, (unsigned)_countof(ranking_[i].name_), &ranking_[i].score_) != 2)
 			{
 				break;
 			}
@@ -230,8 +227,8 @@ void Score::LoadRanking()
 		// ランキングファイルがない場合はダミーデータで新規作成
 		for (int i = 0; i < 3; i++)
 		{
-			strcpy_s(ranking[i].name, "NONE");
-			ranking[i].score = 0;
+			strcpy_s(ranking_[i].name_, "NONE");
+			ranking_[i].score_ = 0;
 		}
 		SaveRanking();
 	}
@@ -239,20 +236,20 @@ void Score::LoadRanking()
 
 void Score::AddScoreWithCombo(int baseScore, int comboCount)
 {
-	// コンボボーナス: 1コンボあたり20%加算
+	// コンボボーナス: 1コンボあたり20%増加
 	float multiplier = 1.0f + comboCount * 0.2f;
 	int finalScore = static_cast<int>(baseScore * multiplier);
 
-	score += finalScore;
-	if (score < 0)
+	score_ += finalScore;
+	if (score_ < 0)
 	{
-		score = 0;
+		score_ = 0;
 	}
 }
 
 void Score::Initialize()
 {
-	score = 0;
+	score_ = 0;
 }
 
 void Score::DrawNumber(int x, int y, int value, float scale, int minDigits)
@@ -297,7 +294,7 @@ void Score::DrawNumber(int x, int y, int value, float scale, int minDigits)
 			y,
 			drawX + w,
 			y + h,
-			minusImg,
+			minus_img_,
 			TRUE
 		);
 		drawX += w;
@@ -310,7 +307,7 @@ void Score::DrawNumber(int x, int y, int value, float scale, int minDigits)
 			y,
 			drawX + w,
 			y + h,
-			numberImg[digit[i]],
+			number_img_[digit[i]],
 			TRUE
 		);
 		drawX += w;
@@ -319,16 +316,15 @@ void Score::DrawNumber(int x, int y, int value, float scale, int minDigits)
 
 const Score::RankData& Score::GetRanking(int index) const
 {
-	return ranking[index];
+	return ranking_[index];
 }
 
 void Score::SetResultScore(int value)
 {
-	resultScore = value;
+	result_score_ = value;
 }
 
 int Score::GetResultScore()
 {
-	return resultScore;
+	return result_score_;
 }
-

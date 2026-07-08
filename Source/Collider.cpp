@@ -4,73 +4,73 @@
 #include <cassert>
 
 Collider::Collider(Object3D* parent)
-	: mpParentObject(parent)
-	, mvPosition(VGet(0.0f, 0.0f, 0.0f))
-	, mvPosition2(VGet(0.0f, 0.0f, 0.0f))
-	, mfRadius(0.0f)
-	, mbDeleteFlag(false)
+	: parent_object_(parent)
+	, position_(VGet(0.0f, 0.0f, 0.0f))
+	, position2_(VGet(0.0f, 0.0f, 0.0f))
+	, radius_(0.0f)
+	, delete_flag_(false)
 {
 	assert(parent);
-	ColliderManager::GetInstance()->AddCollider(this); // 生成時に自動でマネージャーへ登録
+	ColliderManager::GetInstance()->AddCollider(this); // 逕滓・譎ゅ↓閾ｪ蜍輔〒繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｸ逋ｻ骭ｲ
 }
 
 Collider::~Collider()
 {
-	ColliderManager::GetInstance()->RemoveCollider(this); // 破棄時に自動でマネージャーから登録解除
+	ColliderManager::GetInstance()->RemoveCollider(this); // 遐ｴ譽・凾縺ｫ閾ｪ蜍輔〒繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺九ｉ逋ｻ骭ｲ隗｣髯､
 }
 
 /*
- * @brief 別のコライダーとの幾何学的な交差状態を元に、適切なコリジョンイベントを通知する
- * [入力] check: 判定対象の相手コライダー, isHit: 当たり判定の交差計算結果
- * [出力] なし
- * [副作用] mCollisionListの挿入・削除、OnEnter / OnTrigger / OnExit の親アクターへのコールバック通知
+ * @brief 蛻･縺ｮ繧ｳ繝ｩ繧､繝繝ｼ縺ｨ縺ｮ蟷ｾ菴募ｭｦ逧・↑莠､蟾ｮ迥ｶ諷九ｒ蜈・↓縲・←蛻・↑繧ｳ繝ｪ繧ｸ繝ｧ繝ｳ繧､繝吶Φ繝医ｒ騾夂衍縺吶ｋ
+ * [蜈･蜉嫋 check: 蛻､螳壼ｯｾ雎｡縺ｮ逶ｸ謇九さ繝ｩ繧､繝繝ｼ, isHit: 蠖薙◆繧雁愛螳壹・莠､蟾ｮ險育ｮ礼ｵ先棡
+ * [蜃ｺ蜉嫋 縺ｪ縺・
+ * [蜑ｯ菴懃畑] mCollisionList縺ｮ謖ｿ蜈･繝ｻ蜑企勁縲＾nEnter / OnTrigger / OnExit 縺ｮ隕ｪ繧｢繧ｯ繧ｿ繝ｼ縺ｸ縺ｮ繧ｳ繝ｼ繝ｫ繝舌ャ繧ｯ騾夂衍
  */
 void Collider::HitCheck(Collider* check, bool isHit)
 {
 	if (isHit)
 	{
-		// 既に前フレームで同じ相手と衝突していたかを検索
+		// 譌｢縺ｫ蜑阪ヵ繝ｬ繝ｼ繝縺ｧ蜷後§逶ｸ謇九→陦晉ｪ√＠縺ｦ縺・◆縺九ｒ讀懃ｴ｢
 		auto itr = std::find_if(
-			mCollisionList.begin(),
-			mCollisionList.end(),
+			collision_list_.begin(),
+			collision_list_.end(),
 			[&](Collider* col) { return col == check; }
 		);
 
-		if (itr != mCollisionList.end())
+		if (itr != collision_list_.end())
 		{
-			// 前フレームから衝突が継続しているため、OnTrigger（滞在イベント）を通知
-			if (this->mpParentObject != nullptr)
+			// 蜑阪ヵ繝ｬ繝ｼ繝縺九ｉ陦晉ｪ√′邯咏ｶ壹＠縺ｦ縺・ｋ縺溘ａ縲＾nTrigger・域ｻ槫惠繧､繝吶Φ繝茨ｼ峨ｒ騾夂衍
+			if (this->parent_object_ != nullptr)
 			{
-				mpParentObject->OnTrigger(this, check);
+				parent_object_->OnTrigger(this, check);
 			}
 		}
 		else
 		{
-			// 新規の衝突が発生したため、リストに登録して OnEnter（開始イベント）を通知
-			mCollisionList.push_back(check);
-			if (this->mpParentObject != nullptr)
+			// 譁ｰ隕上・陦晉ｪ√′逋ｺ逕溘＠縺溘◆繧√√Μ繧ｹ繝医↓逋ｻ骭ｲ縺励※ OnEnter・磯幕蟋九う繝吶Φ繝茨ｼ峨ｒ騾夂衍
+			collision_list_.push_back(check);
+			if (this->parent_object_ != nullptr)
 			{
-				mpParentObject->OnEnter(this, check);
+				parent_object_->OnEnter(this, check);
 			}
 		}
 	}
 	else
 	{
-		// 衝突していない場合、前フレームまで衝突していたかの状態をチェックする
+		// 陦晉ｪ√＠縺ｦ縺・↑縺・ｴ蜷医∝燕繝輔Ξ繝ｼ繝縺ｾ縺ｧ陦晉ｪ√＠縺ｦ縺・◆縺九・迥ｶ諷九ｒ繝√ぉ繝・け縺吶ｋ
 		auto itr = std::find_if(
-			mCollisionList.begin(),
-			mCollisionList.end(),
+			collision_list_.begin(),
+			collision_list_.end(),
 			[&](Collider* col) { return col == check; }
 		);
 
-		if (itr != mCollisionList.end())
+		if (itr != collision_list_.end())
 		{
-			// 衝突が切れた（離脱した）瞬間のため、OnExit（終了イベント）を通知しリストから除外する
-			if (this->mpParentObject != nullptr)
+			// 陦晉ｪ√′蛻・ｌ縺滂ｼ磯屬閼ｱ縺励◆・臥椪髢薙・縺溘ａ縲＾nExit・育ｵゆｺ・う繝吶Φ繝茨ｼ峨ｒ騾夂衍縺励Μ繧ｹ繝医°繧蛾勁螟悶☆繧・
+			if (this->parent_object_ != nullptr)
 			{
-				this->mpParentObject->OnExit(this, check);
+				this->parent_object_->OnExit(this, check);
 			}
-			mCollisionList.erase(itr);
+			collision_list_.erase(itr);
 		}
 	}
 }
@@ -90,4 +90,3 @@ void Collider::OnTrigger()
 void Collider::OnExit()
 {
 }
-

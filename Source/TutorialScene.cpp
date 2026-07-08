@@ -56,7 +56,7 @@ void TutorialScene::Initialize()
 		VGet(11500, 0, 11500)
 	);
 	
-	Master::mpSoundManager->PlayBGM(SoundManager::BGM_TUTORIAL);
+	Master::mpSoundManager->PlayBGM(SoundManager::kBgmTutorial);
 	auto Player = new Player3D("Resource/3D/ufo2/uploads_files_2595751_UFO.mv1", VGet(0.0f, 1000.0f, 0.0f));
 	Player->SetScale(0.6f);
 
@@ -172,11 +172,11 @@ void TutorialScene::UpdateStateMove()
 
 	if (CheckHitKey(KEY_INPUT_W) || CheckHitKey(KEY_INPUT_A) || CheckHitKey(KEY_INPUT_S) || CheckHitKey(KEY_INPUT_D))
 	{
-		Master::mpSoundManager->PlaySE(SoundManager::SE_TutorialChange);
+		Master::mpSoundManager->PlaySE(SoundManager::kSeTutorialChange);
 		mState = STATE_BEAM;
 		
 		VECTOR spawnPos = VGet(0, 0.0f, 1000.0f);
-		mpCowManager->SpawnCow(GameConstants::COW_DEFAULT.modelPath, spawnPos, 50.0f, CowMove::Cow_1, 1);
+		mpCowManager->SpawnCow(GameConstants::kCowDefault.model_path, spawnPos, 50.0f, CowMove::kCow1, 1);
 	}
 }
 
@@ -187,12 +187,12 @@ void TutorialScene::UpdateStateBeam()
 
 	if (GetMouseInput() & MOUSE_INPUT_LEFT)
 	{
-		Master::mpSoundManager->PlaySE(SoundManager::SE_TutorialChange);
+		Master::mpSoundManager->PlaySE(SoundManager::kSeTutorialChange);
 		mState = STATE_COMBO_SCORE;
 
 		// コンボ説明用として複数の牛をスポーンさせる
-		mpCowManager->SpawnCow(GameConstants::COW_DEFAULT.modelPath, VGet(500, 0.0f, 1000.0f), 50.0f, CowMove::Cow_1, 2);
-		mpCowManager->SpawnCow(GameConstants::COW_DEFAULT.modelPath, VGet(-500, 0.0f, 1000.0f), 50.0f, CowMove::Cow_1, 2);
+		mpCowManager->SpawnCow(GameConstants::kCowDefault.model_path, VGet(500, 0.0f, 1000.0f), 50.0f, CowMove::kCow1, 2);
+		mpCowManager->SpawnCow(GameConstants::kCowDefault.model_path, VGet(-500, 0.0f, 1000.0f), 50.0f, CowMove::kCow1, 2);
 	}
 }
 
@@ -205,7 +205,7 @@ void TutorialScene::UpdateStateComboScore()
 
 	if (player && player->mpCombo->GetCombo() >= 2)
 	{
-		Master::mpSoundManager->PlaySE(SoundManager::SE_TutorialChange);
+		Master::mpSoundManager->PlaySE(SoundManager::kSeTutorialChange);
 		mState = STATE_PHASE;
 		timerCount = 0; 
 	}
@@ -219,7 +219,7 @@ void TutorialScene::UpdateStatePhase()
 	timerCount++;
 	if (timerCount > 180)
 	{
-		Master::mpSoundManager->PlaySE(SoundManager::SE_TutorialChange);
+		Master::mpSoundManager->PlaySE(SoundManager::kSeTutorialChange);
 		mState = STATE_SKILL;
 	}
 }
@@ -241,10 +241,10 @@ void TutorialScene::UpdateStateSkill()
 	{
 		mbSkillFlag = false;
 		mState = STATE_FEVER;
-		Master::mpSoundManager->PlaySE(SoundManager::SE_TutorialChange);
+		Master::mpSoundManager->PlaySE(SoundManager::kSeTutorialChange);
 		
 		// フィーバーモード用にゴールド牛を配置する
-		auto g = new Cow_gold("Resource/3D/GOLDCow/GoldCow.mv1", VGet(1000, 0, 1000), Cow_gold::Nofever);
+		auto g = new Cow_gold("Resource/3D/GOLDCow/GoldCow.mv1", VGet(1000, 0, 1000), Cow_gold::kNoFever);
 		g->SetScale(100);
 	}
 }

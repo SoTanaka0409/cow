@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "CharacterMove.h"
 
 class SphereCollider;
@@ -9,14 +9,14 @@ class AnimalMove : public CharacterMove
 {
 public:
 	// コンボボーナス計算に用いる動物種別
-	enum Tag_animal
+	enum TagAnimal
 	{
-		none,
-		Animal_1,
-		Animal_2,
-		Animal_3,
-		Animal_gold,
-		Animal_T,
+		kNone,
+		kAnimal1,
+		kAnimal2,
+		kAnimal3,
+		kAnimalGold,
+		kAnimalT,
 	};
 
 public:
@@ -47,9 +47,9 @@ public:
 	virtual void CharacterDied() override;
 	virtual void Die(DeathReason reason) override;
 
-	void SetTag_animal(Tag_animal tag) { mntag_animal = tag; }
-	Tag_animal GetTag_animal() { return mntag_animal; }
+	void SetTag_animal(TagAnimal tag) { tag_animal_ = tag; }
+	TagAnimal GetTag_animal() { return tag_animal_; }
 
 protected:
-	Tag_animal mntag_animal;
+	TagAnimal tag_animal_;
 };

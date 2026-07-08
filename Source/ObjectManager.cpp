@@ -3,10 +3,10 @@
 #include "ColliderManager.h"
 
 /*
- * @brief オブジェクト管理クラスの初期化
- * [入力] なし
- * [出力] なし
- * [副作用] なし
+ * @brief 繧ｪ繝悶ず繧ｧ繧ｯ繝育ｮ｡逅・け繝ｩ繧ｹ縺ｮ蛻晄悄蛹・
+ * [蜈･蜉嫋 縺ｪ縺・
+ * [蜃ｺ蜉嫋 縺ｪ縺・
+ * [蜑ｯ菴懃畑] 縺ｪ縺・
  */
 ObjectManager::ObjectManager()
 {
@@ -15,20 +15,20 @@ ObjectManager::ObjectManager()
 }
 
 /*
- * @brief オブジェクト管理クラスの終了処理
- * [入力] なし
- * [出力] なし
- * [副作用] なし
+ * @brief 繧ｪ繝悶ず繧ｧ繧ｯ繝育ｮ｡逅・け繝ｩ繧ｹ縺ｮ邨ゆｺ・・逅・
+ * [蜈･蜉嫋 縺ｪ縺・
+ * [蜃ｺ蜉嫋 縺ｪ縺・
+ * [蜑ｯ菴懃畑] 縺ｪ縺・
  */
 ObjectManager::~ObjectManager()
 {
 }
 
 /*
- * @brief 登録された全オブジェクトの更新とカメラ距離の算出を行う
- * [入力] なし
- * [出力] なし
- * [副作用] Zソート用カメラ距離の更新、コライダーの一括処理実行
+ * @brief 逋ｻ骭ｲ縺輔ｌ縺溷・繧ｪ繝悶ず繧ｧ繧ｯ繝医・譖ｴ譁ｰ縺ｨ繧ｫ繝｡繝ｩ霍晞屬縺ｮ邂怜・繧定｡後≧
+ * [蜈･蜉嫋 縺ｪ縺・
+ * [蜃ｺ蜉嫋 縺ｪ縺・
+ * [蜑ｯ菴懃畑] Z繧ｽ繝ｼ繝育畑繧ｫ繝｡繝ｩ霍晞屬縺ｮ譖ｴ譁ｰ縲√さ繝ｩ繧､繝繝ｼ縺ｮ荳諡ｬ蜃ｦ逅・ｮ溯｡・
  */
 void ObjectManager::Update()
 {
@@ -42,7 +42,7 @@ void ObjectManager::Update()
 		obj->Update();
 	}
 
-	// 半透明描画時のZソートで必要となるため、カメラとの距離を算出する
+	// 蜊企乗・謠冗判譎ゅ・Z繧ｽ繝ｼ繝医〒蠢・ｦ√→縺ｪ繧九◆繧√√き繝｡繝ｩ縺ｨ縺ｮ霍晞屬繧堤ｮ怜・縺吶ｋ
 	for (auto obj : mObject3DList)
 	{
 		VECTOR cameraPos = Master::mpCamera->GetPosition();
@@ -50,15 +50,15 @@ void ObjectManager::Update()
 		obj->SetCameraDistance(VSize(VSub(objPos, cameraPos)));
 	}
 
-	// 座標更新が全て完了した後に衝突判定を行うためここで一括処理する
+	// 蠎ｧ讓呎峩譁ｰ縺悟・縺ｦ螳御ｺ・＠縺溷ｾ後↓陦晉ｪ∝愛螳壹ｒ陦後≧縺溘ａ縺薙％縺ｧ荳諡ｬ蜃ｦ逅・☆繧・
 	ColliderManager::GetInstance()->Update();
 }
 
 /*
- * @brief 登録された全オブジェクトの描画を行う
- * [入力] なし
- * [出力] なし
- * [副作用] 描画フラグが有効なオブジェクトとコライダーの描画命令発行
+ * @brief 逋ｻ骭ｲ縺輔ｌ縺溷・繧ｪ繝悶ず繧ｧ繧ｯ繝医・謠冗判繧定｡後≧
+ * [蜈･蜉嫋 縺ｪ縺・
+ * [蜃ｺ蜉嫋 縺ｪ縺・
+ * [蜑ｯ菴懃畑] 謠冗判繝輔Λ繧ｰ縺梧怏蜉ｹ縺ｪ繧ｪ繝悶ず繧ｧ繧ｯ繝医→繧ｳ繝ｩ繧､繝繝ｼ縺ｮ謠冗判蜻ｽ莉､逋ｺ陦・
  */
 void ObjectManager::Draw()
 {
@@ -81,10 +81,10 @@ void ObjectManager::Draw()
 }
 
 /*
- * @brief 3Dオブジェクトをリストとキャッシュに追加する
- * [入力] object3D: 追加する3Dオブジェクトのポインタ
- * [出力] なし
- * [副作用] mObject3DListおよびmTagCache3Dへの要素追加
+ * @brief 3D繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ繝ｪ繧ｹ繝医→繧ｭ繝｣繝・す繝･縺ｫ霑ｽ蜉縺吶ｋ
+ * [蜈･蜉嫋 object3D: 霑ｽ蜉縺吶ｋ3D繧ｪ繝悶ず繧ｧ繧ｯ繝医・繝昴う繝ｳ繧ｿ
+ * [蜃ｺ蜉嫋 縺ｪ縺・
+ * [蜑ｯ菴懃畑] mObject3DList縺翫ｈ縺ｳmTagCache3D縺ｸ縺ｮ隕∫ｴ霑ｽ蜉
  */
 void ObjectManager::AddObject(Object3D* object3D)
 {
@@ -93,10 +93,10 @@ void ObjectManager::AddObject(Object3D* object3D)
 }
 
 /*
- * @brief 3Dオブジェクトをリストから削除する（メモリ解放はしない）
- * [入力] object3D: 削除対象の3Dオブジェクトのポインタ
- * [出力] なし
- * [副作用] mObject3DListからの要素削除とキャッシュの再構築
+ * @brief 3D繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ繝ｪ繧ｹ繝医°繧牙炎髯､縺吶ｋ・医Γ繝｢繝ｪ隗｣謾ｾ縺ｯ縺励↑縺・ｼ・
+ * [蜈･蜉嫋 object3D: 蜑企勁蟇ｾ雎｡縺ｮ3D繧ｪ繝悶ず繧ｧ繧ｯ繝医・繝昴う繝ｳ繧ｿ
+ * [蜃ｺ蜉嫋 縺ｪ縺・
+ * [蜑ｯ菴懃畑] mObject3DList縺九ｉ縺ｮ隕∫ｴ蜑企勁縺ｨ繧ｭ繝｣繝・す繝･縺ｮ蜀肴ｧ狗ｯ・
  */
 void ObjectManager::RemoveObjectNoDelete(Object3D* object3D)
 {
@@ -109,10 +109,10 @@ void ObjectManager::RemoveObjectNoDelete(Object3D* object3D)
 }
 
 /*
- * @brief 全ての3Dオブジェクトに削除フラグを立て、実際の削除処理を呼ぶ
- * [入力] なし
- * [出力] なし
- * [副作用] 全3Dオブジェクトの削除とメモリ解放
+ * @brief 蜈ｨ縺ｦ縺ｮ3D繧ｪ繝悶ず繧ｧ繧ｯ繝医↓蜑企勁繝輔Λ繧ｰ繧堤ｫ九※縲∝ｮ滄圀縺ｮ蜑企勁蜃ｦ逅・ｒ蜻ｼ縺ｶ
+ * [蜈･蜉嫋 縺ｪ縺・
+ * [蜃ｺ蜉嫋 縺ｪ縺・
+ * [蜑ｯ菴懃畑] 蜈ｨ3D繧ｪ繝悶ず繧ｧ繧ｯ繝医・蜑企勁縺ｨ繝｡繝｢繝ｪ隗｣謾ｾ
  */
 void ObjectManager::DeleteAll3D()
 {
@@ -126,10 +126,10 @@ void ObjectManager::DeleteAll3D()
 }
 
 /*
- * @brief 指定されたタグを持つ3Dオブジェクトを1つ取得する
- * [入力] tag: 検索対象のタグ
- * [出力] 条件に合致する最初のObject3Dポインタ（見つからない場合はnullptr）
- * [副作用] なし
+ * @brief 謖・ｮ壹＆繧後◆繧ｿ繧ｰ繧呈戟縺､3D繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ1縺､蜿門ｾ励☆繧・
+ * [蜈･蜉嫋 tag: 讀懃ｴ｢蟇ｾ雎｡縺ｮ繧ｿ繧ｰ
+ * [蜃ｺ蜉嫋 譚｡莉ｶ縺ｫ蜷郁・縺吶ｋ譛蛻昴・Object3D繝昴う繝ｳ繧ｿ・郁ｦ九▽縺九ｉ縺ｪ縺・ｴ蜷医・nullptr・・
+ * [蜑ｯ菴懃畑] 縺ｪ縺・
  */
 Object3D* ObjectManager::GetObject3DByTag(Object3D::Tag3D tag)
 {
@@ -146,10 +146,10 @@ Object3D* ObjectManager::GetObject3DByTag(Object3D::Tag3D tag)
 }
 
 /*
- * @brief 指定されたタグを持つ3Dオブジェクトのリストを取得する
- * [入力] tag: 検索対象のタグ
- * [出力] 条件に合致するObject3Dポインタのベクタ（キャッシュから参照）
- * [副作用] なし
+ * @brief 謖・ｮ壹＆繧後◆繧ｿ繧ｰ繧呈戟縺､3D繧ｪ繝悶ず繧ｧ繧ｯ繝医・繝ｪ繧ｹ繝医ｒ蜿門ｾ励☆繧・
+ * [蜈･蜉嫋 tag: 讀懃ｴ｢蟇ｾ雎｡縺ｮ繧ｿ繧ｰ
+ * [蜃ｺ蜉嫋 譚｡莉ｶ縺ｫ蜷郁・縺吶ｋObject3D繝昴う繝ｳ繧ｿ縺ｮ繝吶け繧ｿ・医く繝｣繝・す繝･縺九ｉ蜿ら・・・
+ * [蜑ｯ菴懃畑] 縺ｪ縺・
  */
 const std::vector<Object3D*>& ObjectManager::GetObject3DListByTag(Object3D::Tag3D tag)
 {
@@ -157,10 +157,10 @@ const std::vector<Object3D*>& ObjectManager::GetObject3DListByTag(Object3D::Tag3
 }
 
 /*
- * @brief 削除フラグが立っている3Dオブジェクトをメモリ解放し、リストから除外する
- * [入力] なし
- * [出力] なし
- * [副作用] 不要オブジェクトのメモリ解放とキャッシュの再構築
+ * @brief 蜑企勁繝輔Λ繧ｰ縺檎ｫ九▲縺ｦ縺・ｋ3D繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ繝｡繝｢繝ｪ隗｣謾ｾ縺励√Μ繧ｹ繝医°繧蛾勁螟悶☆繧・
+ * [蜈･蜉嫋 縺ｪ縺・
+ * [蜃ｺ蜉嫋 縺ｪ縺・
+ * [蜑ｯ菴懃畑] 荳崎ｦ√が繝悶ず繧ｧ繧ｯ繝医・繝｡繝｢繝ｪ隗｣謾ｾ縺ｨ繧ｭ繝｣繝・す繝･縺ｮ蜀肴ｧ狗ｯ・
  */
 void ObjectManager::DeleteAll3DIfNeeded()
 {
@@ -182,17 +182,17 @@ void ObjectManager::DeleteAll3DIfNeeded()
 		isDeleted = true;
 	}
 
-	// 毎フレームのキャッシュ構築負荷を避けるため、要素変更時のみ再構築する
+	// 豈弱ヵ繝ｬ繝ｼ繝縺ｮ繧ｭ繝｣繝・す繝･讒狗ｯ芽ｲ闕ｷ繧帝∩縺代ｋ縺溘ａ縲∬ｦ∫ｴ螟画峩譎ゅ・縺ｿ蜀肴ｧ狗ｯ峨☆繧・
 	if (isDeleted) {
 		RebuildTagCache3D();
 	}
 }
 
 /*
- * @brief 2Dオブジェクトをリストとキャッシュに追加する
- * [入力] object2D: 追加する2Dオブジェクトのポインタ
- * [出力] なし
- * [副作用] mObject2DListおよびmTagCache2Dへの要素追加
+ * @brief 2D繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ繝ｪ繧ｹ繝医→繧ｭ繝｣繝・す繝･縺ｫ霑ｽ蜉縺吶ｋ
+ * [蜈･蜉嫋 object2D: 霑ｽ蜉縺吶ｋ2D繧ｪ繝悶ず繧ｧ繧ｯ繝医・繝昴う繝ｳ繧ｿ
+ * [蜃ｺ蜉嫋 縺ｪ縺・
+ * [蜑ｯ菴懃畑] mObject2DList縺翫ｈ縺ｳmTagCache2D縺ｸ縺ｮ隕∫ｴ霑ｽ蜉
  */
 void ObjectManager::AddObject(Object2D* object2D)
 {
@@ -201,10 +201,10 @@ void ObjectManager::AddObject(Object2D* object2D)
 }
 
 /*
- * @brief 全ての2Dオブジェクトをリストから削除し、メモリ解放する
- * [入力] なし
- * [出力] なし
- * [副作用] 全2Dオブジェクトの削除とキャッシュのクリア
+ * @brief 蜈ｨ縺ｦ縺ｮ2D繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ繝ｪ繧ｹ繝医°繧牙炎髯､縺励√Γ繝｢繝ｪ隗｣謾ｾ縺吶ｋ
+ * [蜈･蜉嫋 縺ｪ縺・
+ * [蜃ｺ蜉嫋 縺ｪ縺・
+ * [蜑ｯ菴懃畑] 蜈ｨ2D繧ｪ繝悶ず繧ｧ繧ｯ繝医・蜑企勁縺ｨ繧ｭ繝｣繝・す繝･縺ｮ繧ｯ繝ｪ繧｢
  */
 void ObjectManager::DeleteAll2D()
 {
@@ -217,10 +217,10 @@ void ObjectManager::DeleteAll2D()
 }
 
 /*
- * @brief 削除フラグが立っている2Dオブジェクトをメモリ解放し、リストから除外する
- * [入力] なし
- * [出力] なし
- * [副作用] 不要オブジェクトのメモリ解放とキャッシュの再構築
+ * @brief 蜑企勁繝輔Λ繧ｰ縺檎ｫ九▲縺ｦ縺・ｋ2D繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ繝｡繝｢繝ｪ隗｣謾ｾ縺励√Μ繧ｹ繝医°繧蛾勁螟悶☆繧・
+ * [蜈･蜉嫋 縺ｪ縺・
+ * [蜃ｺ蜉嫋 縺ｪ縺・
+ * [蜑ｯ菴懃畑] 荳崎ｦ√が繝悶ず繧ｧ繧ｯ繝医・繝｡繝｢繝ｪ隗｣謾ｾ縺ｨ繧ｭ繝｣繝・す繝･縺ｮ蜀肴ｧ狗ｯ・
  */
 void ObjectManager::DeleteAll2DIfNeeded()
 {
@@ -240,17 +240,17 @@ void ObjectManager::DeleteAll2DIfNeeded()
 		isDeleted = true;
 	}
 
-	// 毎フレームのキャッシュ構築負荷を避けるため、要素変更時のみ再構築する
+	// 豈弱ヵ繝ｬ繝ｼ繝縺ｮ繧ｭ繝｣繝・す繝･讒狗ｯ芽ｲ闕ｷ繧帝∩縺代ｋ縺溘ａ縲∬ｦ∫ｴ螟画峩譎ゅ・縺ｿ蜀肴ｧ狗ｯ峨☆繧・
 	if (isDeleted) {
 		RebuildTagCache2D();
 	}
 }
 
 /*
- * @brief 指定されたタグを持つ2Dオブジェクトを1つ取得する
- * [入力] tag: 検索対象のタグ
- * [出力] 条件に合致する最初のObject2Dポインタ（見つからない場合はnullptr）
- * [副作用] なし
+ * @brief 謖・ｮ壹＆繧後◆繧ｿ繧ｰ繧呈戟縺､2D繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ1縺､蜿門ｾ励☆繧・
+ * [蜈･蜉嫋 tag: 讀懃ｴ｢蟇ｾ雎｡縺ｮ繧ｿ繧ｰ
+ * [蜃ｺ蜉嫋 譚｡莉ｶ縺ｫ蜷郁・縺吶ｋ譛蛻昴・Object2D繝昴う繝ｳ繧ｿ・郁ｦ九▽縺九ｉ縺ｪ縺・ｴ蜷医・nullptr・・
+ * [蜑ｯ菴懃畑] 縺ｪ縺・
  */
 Object2D* ObjectManager::GetObject2DByTag(Object2D::Tag2D tag)
 {
@@ -268,10 +268,10 @@ Object2D* ObjectManager::GetObject2DByTag(Object2D::Tag2D tag)
 }
 
 /*
- * @brief 指定されたタグを持つ2Dオブジェクトのリストを取得する
- * [入力] tag: 検索対象のタグ
- * [出力] 条件に合致するObject2Dポインタのベクタ（キャッシュから参照）
- * [副作用] なし
+ * @brief 謖・ｮ壹＆繧後◆繧ｿ繧ｰ繧呈戟縺､2D繧ｪ繝悶ず繧ｧ繧ｯ繝医・繝ｪ繧ｹ繝医ｒ蜿門ｾ励☆繧・
+ * [蜈･蜉嫋 tag: 讀懃ｴ｢蟇ｾ雎｡縺ｮ繧ｿ繧ｰ
+ * [蜃ｺ蜉嫋 譚｡莉ｶ縺ｫ蜷郁・縺吶ｋObject2D繝昴う繝ｳ繧ｿ縺ｮ繝吶け繧ｿ・医く繝｣繝・す繝･縺九ｉ蜿ら・・・
+ * [蜑ｯ菴懃畑] 縺ｪ縺・
  */
 const std::vector<Object2D*>& ObjectManager::GetObject2DListByTag(Object2D::Tag2D tag)
 {
@@ -279,10 +279,10 @@ const std::vector<Object2D*>& ObjectManager::GetObject2DListByTag(Object2D::Tag2
 }
 
 /*
- * @brief 3Dオブジェクト検索用のタグキャッシュを全構築する
- * [入力] なし
- * [出力] なし
- * [副作用] mTagCache3Dのクリアと要素の再登録
+ * @brief 3D繧ｪ繝悶ず繧ｧ繧ｯ繝域､懃ｴ｢逕ｨ縺ｮ繧ｿ繧ｰ繧ｭ繝｣繝・す繝･繧貞・讒狗ｯ峨☆繧・
+ * [蜈･蜉嫋 縺ｪ縺・
+ * [蜃ｺ蜉嫋 縺ｪ縺・
+ * [蜑ｯ菴懃畑] mTagCache3D縺ｮ繧ｯ繝ｪ繧｢縺ｨ隕∫ｴ縺ｮ蜀咲匳骭ｲ
  */
 void ObjectManager::RebuildTagCache3D()
 {
@@ -293,10 +293,10 @@ void ObjectManager::RebuildTagCache3D()
 }
 
 /*
- * @brief 2Dオブジェクト検索用のタグキャッシュを全構築する
- * [入力] なし
- * [出力] なし
- * [副作用] mTagCache2Dのクリアと要素の再登録
+ * @brief 2D繧ｪ繝悶ず繧ｧ繧ｯ繝域､懃ｴ｢逕ｨ縺ｮ繧ｿ繧ｰ繧ｭ繝｣繝・す繝･繧貞・讒狗ｯ峨☆繧・
+ * [蜈･蜉嫋 縺ｪ縺・
+ * [蜃ｺ蜉嫋 縺ｪ縺・
+ * [蜑ｯ菴懃畑] mTagCache2D縺ｮ繧ｯ繝ｪ繧｢縺ｨ隕∫ｴ縺ｮ蜀咲匳骭ｲ
  */
 void ObjectManager::RebuildTagCache2D()
 {

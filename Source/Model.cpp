@@ -2,7 +2,7 @@
 #include"Master.h"
 
 Model::Model(std::string filename, VECTOR initPos, bool isSeparateAnimation)
-    : mvPosition(initPos)
+    : position_(initPos)
     , mfScale(1.0f)
     , mnChangeTextureHandle(-1)
 {
@@ -25,8 +25,8 @@ Model::~Model()
 void Model::Update()
 {
    
-    MV1SetPosition(mnHandle, mvPosition);
-    MV1SetRotationXYZ(mnHandle, mvRotation);
+    MV1SetPosition(mnHandle, position_);
+    MV1SetRotationXYZ(mnHandle, rotation_);
 }
 
 void Model::Draw()

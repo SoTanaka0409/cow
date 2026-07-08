@@ -6,7 +6,7 @@
 #include "Score.h"
 #include "SceneManager.h"
 
-// UI状態管理と描画用のデータをまとめるための構造体
+// UI迥ｶ諷狗ｮ｡逅・→謠冗判逕ｨ縺ｮ繝・・繧ｿ繧偵∪縺ｨ繧√ｋ縺溘ａ縺ｮ讒矩菴・
 struct TitleButton
 {
 	SelectionManager::Title type;
@@ -16,27 +16,27 @@ struct TitleButton
 	bool isHover;
 };
 
-// アプリケーション起動時の初期画面
+// 繧｢繝励Μ繧ｱ繝ｼ繧ｷ繝ｧ繝ｳ襍ｷ蜍墓凾縺ｮ蛻晄悄逕ｻ髱｢
 class TitleScene : public Scene
 {
 public:
 	TitleScene();
 	virtual ~TitleScene();
 
-	// [入力] なし [出力] なし [副作用] アセット初期化、スコア読み込み、BGM再生
+	// [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 繧｢繧ｻ繝・ヨ蛻晄悄蛹悶√せ繧ｳ繧｢隱ｭ縺ｿ霎ｼ縺ｿ縲。GM蜀咲函
 	virtual void Initialize() override;
 
-	// [入力] なし [出力] なし [副作用] マウス入力やUI状態、フェード更新
+	// [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 繝槭え繧ｹ蜈･蜉帙ｄUI迥ｶ諷九√ヵ繧ｧ繝ｼ繝画峩譁ｰ
 	virtual void Update() override;
 
-	// [入力] なし [出力] なし [副作用] 背景やUI、UFOの描画コマンド発行
+	// [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 閭梧勹繧ФI縲ゞFO縺ｮ謠冗判繧ｳ繝槭Φ繝臥匱陦・
 	virtual void Draw() override;
 
-	// [入力] なし [出力] なし [副作用] リソースの解放、BGM停止
+	// [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 繝ｪ繧ｽ繝ｼ繧ｹ縺ｮ隗｣謾ｾ縲。GM蛛懈ｭ｢
 	virtual void Finalize() override;
 
 private:
-	int mFrameCount; // 演出アニメーション用のタイマー
+	int mFrameCount; // 貍泌・繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ逕ｨ縺ｮ繧ｿ繧､繝槭・
 
 	int mnTitleGraphHandle;
 	int mnNewGame;
@@ -60,7 +60,7 @@ private:
 
 	std::vector<TitleButton> mButtons;
 
-	// [入力] なし [出力] なし [副作用] 上位3名のスコアUIを描画
+	// [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 荳贋ｽ・蜷阪・繧ｹ繧ｳ繧｢UI繧呈緒逕ｻ
 	void DrawRankingUI();
 
 	int rankImage[3];

@@ -40,53 +40,53 @@ public:
 	virtual void Draw() override;
 
 	/*
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] AI更新と壁判定を経て座標を確定する
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] AI譖ｴ譁ｰ縺ｨ螢∝愛螳壹ｒ邨後※蠎ｧ讓吶ｒ遒ｺ螳壹☆繧・
 	 */
 	virtual void MoveCharacter();
 
 	/*
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 現在のStateのUpdateを呼び出す
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 迴ｾ蝨ｨ縺ｮState縺ｮUpdate繧貞他縺ｳ蜃ｺ縺・
 	 */
 	virtual void UpdateWanderAI();
 
 	/*
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 壁オブジェクトとの判定を行い、mvPositionを補正する
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 螢√が繝悶ず繧ｧ繧ｯ繝医→縺ｮ蛻､螳壹ｒ陦後＞縲［vPosition繧定｣懈ｭ｣縺吶ｋ
 	 */
 	virtual void CheckWallCollision();
 
 	/*
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] コライダーの位置をモデルに同期させる
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 繧ｳ繝ｩ繧､繝繝ｼ縺ｮ菴咲ｽｮ繧偵Δ繝・Ν縺ｫ蜷梧悄縺輔○繧・
 	 */
 	virtual void ColliderMove();
 
 	/*
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 移動ベクトル方向へモデルを回転させる
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 遘ｻ蜍輔・繧ｯ繝医Ν譁ｹ蜷代∈繝｢繝・Ν繧貞屓霆｢縺輔○繧・
 	 */
 	virtual void RotationCharacter();
 
 	/*
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] モデルを一定速度で旋回させ続ける
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 繝｢繝・Ν繧剃ｸ螳夐溷ｺｦ縺ｧ譌句屓縺輔○邯壹￠繧・
 	 */
 	virtual void CharacterRotate();
 
 	virtual void CharacterDied();
 
 	/*
-	 * [入力] reason: 死亡の理由(DeathReason)
-	 * [出力] なし
-	 * [副作用] 死亡演出やフラグ更新を行う
+	 * [蜈･蜉嫋 reason: 豁ｻ莠｡縺ｮ逅・罰(DeathReason)
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 豁ｻ莠｡貍泌・繧・ヵ繝ｩ繧ｰ譖ｴ譁ｰ繧定｡後≧
 	 */
 	virtual void Die(DeathReason reason);
 
@@ -100,16 +100,16 @@ public:
 	void SetCurrentState(AIState state) { mCurrentState = state; }
 
 	/*
-	 * [入力] newState: 新しい状態クラスのポインタ
-	 * [出力] なし
-	 * [副作用] 古いStateを破棄し、新しいStateに移行する
+	 * [蜈･蜉嫋 newState: 譁ｰ縺励＞迥ｶ諷九け繝ｩ繧ｹ縺ｮ繝昴う繝ｳ繧ｿ
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 蜿､縺Тtate繧堤ｴ譽・＠縲∵眠縺励＞State縺ｫ遘ｻ陦後☆繧・
 	 */
 	void ChangeState(CharacterState* newState);
 
 	/*
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 状態を吸引中(STATE_VACUUM)に変更する
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 迥ｶ諷九ｒ蜷ｸ蠑穂ｸｭ(STATE_VACUUM)縺ｫ螟画峩縺吶ｋ
 	 */
 	void ChangeStateToVacuum();
 
@@ -130,7 +130,7 @@ public:
 
 protected:
 	Player3D* mpTargetPlayer = nullptr;
-	Model* mpModel;
+	Model* model_;
 
 	AIState mCurrentState;
 	CharacterState* mpCurrentState;
@@ -138,9 +138,9 @@ protected:
 	int mActionTimer;
 	float mfSpeed;
 
-	float mfTargetAngle;
-	float mfAngle;
-	const float ROTATE_SPEED = 0.2f;
+	float target_angle_;
+	float angle_;
+	const float kRotateSpeed = 0.2f;
 
 	VECTOR UpMoveVector;
 	VECTOR moveVec;

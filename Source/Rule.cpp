@@ -8,8 +8,8 @@
 Rule::Rule()
 {
 	mRuleGraph = Master::mpResourceManager->LoadGraphics("Resource/2D/settings_bg.png");
-	mTitleFontHandle = CreateFontToHandle("メイリオ", 80, 5);
-	mFontHandle = CreateFontToHandle("メイリオ", 50, 3);
+	mTitleFontHandle = CreateFontToHandle("繝｡繧､繝ｪ繧ｪ", 80, 5);
+	mFontHandle = CreateFontToHandle("繝｡繧､繝ｪ繧ｪ", 50, 3);
 	
 	mSelectedIndex = MENU_BGM;
 	mPlaySeDelay = 0;
@@ -17,7 +17,7 @@ Rule::Rule()
 
 Rule::~Rule()
 {
-	// シーン破棄時のメモリリークを防ぐため明示的に解放を呼ぶ
+	// 繧ｷ繝ｼ繝ｳ遐ｴ譽・凾縺ｮ繝｡繝｢繝ｪ繝ｪ繝ｼ繧ｯ繧帝亟縺舌◆繧∵・遉ｺ逧・↓隗｣謾ｾ繧貞他縺ｶ
 	Finalize();
 }
 
@@ -36,14 +36,14 @@ void Rule::Update()
 
 	mSceneFrames++;
 
-	int mouseX, mouseY;
-	GetMousePoint(&mouseX, &mouseY);
+	int mouse_x_, mouse_y_;
+	GetMousePoint(&mouse_x_, &mouse_y_);
 	int mouseInput = GetMouseInput();
 	static int prevMouseInput = 0;
 	bool isMouseClicked = (mouseInput & MOUSE_INPUT_LEFT) != 0 && (prevMouseInput & MOUSE_INPUT_LEFT) == 0;
 	bool isMouseHeld = (mouseInput & MOUSE_INPUT_LEFT) != 0;
 
-	// 遷移前の入力持ち越しによる誤操作を防ぐため30フレーム待機
+	// 驕ｷ遘ｻ蜑阪・蜈･蜉帶戟縺｡雜翫＠縺ｫ繧医ｋ隱､謫堺ｽ懊ｒ髦ｲ縺舌◆繧・0繝輔Ξ繝ｼ繝蠕・ｩ・
 	if (mSceneFrames < 30)
 	{
 		prevMouseInput = mouseInput;
@@ -59,7 +59,7 @@ void Rule::Update()
 	for (int i = 0; i < MENU_MAX; i++)
 	{
 		int y = startY + i * gapY;
-		if (mouseY >= y && mouseY <= y + 60)
+		if (mouse_y_ >= y && mouse_y_ <= y + 60)
 		{
 			if (mSelectedIndex != (MenuType)i)
 			{
@@ -73,13 +73,13 @@ void Rule::Update()
 		if (mSelectedIndex == MENU_BGM || mSelectedIndex == MENU_SE)
 		{
 			int y = startY + (int)mSelectedIndex * gapY;
-			if (mouseY >= y && mouseY <= y + 60)
+			if (mouse_y_ >= y && mouse_y_ <= y + 60)
 			{
 				int barStartX = startX + 350;
 				int barEndX = barStartX + (255 * 2);
-				if (mouseX >= barStartX && mouseX <= barEndX)
+				if (mouse_x_ >= barStartX && mouse_x_ <= barEndX)
 				{
-					int newVol = (mouseX - barStartX) / 2;
+					int newVol = (mouse_x_ - barStartX) / 2;
 					if (newVol < 0) newVol = 0;
 					if (newVol > 255) newVol = 255;
 
@@ -92,8 +92,8 @@ void Rule::Update()
 						Master::mpSoundManager->SetMasterSEVolume(newVol);
 						if (mPlaySeDelay <= 0)
 						{
-							Master::mpSoundManager->PlaySE(SoundManager::SE_DECIDE);
-							// SEが重なって爆音になるのを防ぐため、再生間隔を制限する
+							Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
+							// SE縺碁㍾縺ｪ縺｣縺ｦ辷・浹縺ｫ縺ｪ繧九・繧帝亟縺舌◆繧√∝・逕滄俣髫斐ｒ蛻ｶ髯舌☆繧・
 							mPlaySeDelay = 10;
 						}
 					}
@@ -105,9 +105,9 @@ void Rule::Update()
 	if (isMouseClicked && mSelectedIndex == MENU_BACK)
 	{
 		int y = startY + MENU_BACK * gapY;
-		if (mouseY >= y && mouseY <= y + 60)
+		if (mouse_y_ >= y && mouse_y_ <= y + 60)
 		{
-			Master::mpSoundManager->PlaySE(SoundManager::SE_DECIDE);
+			Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
 			mFadeState = SceneFade_Out;
 			mNextScene = SceneManager::SCENE_TITLE;
 		}
@@ -119,13 +119,13 @@ void Rule::Update()
 	{
 		mSelectedIndex = (MenuType)((int)mSelectedIndex - 1);
 		if (mSelectedIndex < 0) mSelectedIndex = (MenuType)(MENU_MAX - 1);
-		Master::mpSoundManager->PlaySE(SoundManager::SE_DECIDE);
+		Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
 	}
 	if (InputManager::CheckDownKey(KEY_INPUT_DOWN) || InputManager::CheckDownKey(KEY_INPUT_S))
 	{
 		mSelectedIndex = (MenuType)((int)mSelectedIndex + 1);
 		if (mSelectedIndex >= MENU_MAX) mSelectedIndex = MENU_BGM;
-		Master::mpSoundManager->PlaySE(SoundManager::SE_DECIDE);
+		Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
 	}
 
 	int volChange = 0;
@@ -146,7 +146,7 @@ void Rule::Update()
 			
 			if (mPlaySeDelay <= 0)
 			{
-				Master::mpSoundManager->PlaySE(SoundManager::SE_DECIDE);
+				Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
 				mPlaySeDelay = 10;
 			}
 		}
@@ -156,7 +156,7 @@ void Rule::Update()
 	{
 		if (mSelectedIndex == MENU_BACK)
 		{
-			Master::mpSoundManager->PlaySE(SoundManager::SE_DECIDE);
+			Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
 			mFadeState = SceneFade_Out;
 			mNextScene = SceneManager::SCENE_TITLE;
 		}
@@ -165,7 +165,7 @@ void Rule::Update()
 
 void Rule::Draw()
 {
-	// 元のシーン画像を透かして設定画面であることを強調するため、半透明の暗転を重ねる
+	// 蜈・・繧ｷ繝ｼ繝ｳ逕ｻ蜒上ｒ騾上°縺励※險ｭ螳夂判髱｢縺ｧ縺ゅｋ縺薙→繧貞ｼｷ隱ｿ縺吶ｋ縺溘ａ縲∝濠騾乗・縺ｮ證苓ｻ｢繧帝㍾縺ｭ繧・
 	DrawExtendGraph(0, -100, 1600, 1000, mRuleGraph, TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
 	DrawBox(0, 0, 1600, 900, GetColor(0, 0, 0), TRUE);
@@ -218,7 +218,7 @@ void Rule::Initialize()
 	SetFadeAlpha(255.0f);
 	mSelectedIndex = MENU_BGM;
 	mSceneFrames = 0;
-	Master::mpSoundManager->PlayBGM(SoundManager::BGM_RULE);
+	Master::mpSoundManager->PlayBGM(SoundManager::kBgmRule);
 }
 
 void Rule::Finalize()

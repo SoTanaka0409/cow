@@ -15,5 +15,5 @@ public:
 
 private:
 	int mLoadingTimer;
-	bool mbLoadStarted; // 非同期ロードが既に開始済みかのフラグ
+	bool mbLoadStarted; // 髱槫酔譛溘Ο繝ｼ繝峨′譌｢縺ｫ髢句ｧ区ｸ医∩縺九・繝輔Λ繧ｰ
 };

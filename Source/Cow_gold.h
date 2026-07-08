@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "CowMove.h"
 
 // 獲得時に高スコア加算とフィーバー状態移行を行う特殊キャラクター制御クラス
@@ -6,10 +6,10 @@ class Cow_gold : public CowMove
 {
 public:
 	// スポーン時のゲーム状態。フィーバー連鎖を制御するために使用
-	enum Tag_fever
+	enum TagFever
 	{
-		fever,      // 連鎖終了判定用（フィーバー中スポーン）
-		Nofever,    // フィーバー開始判定用（通常時スポーン）
+		kFever,      // 連鎖終了判定用（フィーバー中スポーン）
+		kNoFever,    // フィーバー開始判定用（通常時スポーン）
 	};
 
 public:
@@ -19,7 +19,7 @@ public:
 	 * [出力] なし
 	 * [副作用] なし
 	 */
-	Cow_gold(std::string filename, VECTOR initPos, Tag_fever fever);
+	Cow_gold(std::string filename, VECTOR initPos, TagFever fever);
 
 	/*
 	 * @brief デストラクタ
@@ -59,10 +59,10 @@ public:
 	 * [出力] なし
 	 * [副作用] なし
 	 */
-	void SetFever(Tag_fever fever) { mnFever = fever; }
+	void SetFever(TagFever fever) { fever_ = fever; }
 
 private:
-	Tag_fever mnFever;  // フィーバー連鎖制御用の状態フラグ
-	int DeathCount;     // 画面内滞留時間の計測用
-	int DeathTimer;     // 画面残りによるメモリ圧迫や進行妨害を防ぐための寿命
+	TagFever fever_;  // フィーバー連鎖制御用の状態フラグ
+	int death_count_;     // 画面内滞留時間の計測用
+	int death_timer_;     // 画面残りによるメモリ圧迫や進行妨害を防ぐための寿命
 };

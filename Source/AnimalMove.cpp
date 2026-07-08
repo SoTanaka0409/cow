@@ -16,24 +16,24 @@
 #include "Player3D.h"
 
 namespace {
-	// 暫定対応: コンボボーナス計算用のグローバル変数群
+	// 隴会ｽｫ陞ｳ螢ｼ・ｯ・ｾ陟｢繝ｻ 郢ｧ・ｳ郢晢ｽｳ郢晄㈱繝ｻ郢晢ｽｼ郢晉ｿｫ縺幃坎閧ｲ・ｮ遉ｼ逡醍ｸｺ・ｮ郢ｧ・ｰ郢晢ｽｭ郢晢ｽｼ郢晁・ﾎ晁棔逕ｻ辟夐・・､
 	int s_mnTagCount = 0;
-	AnimalMove::Tag_animal s_tag1 = AnimalMove::none;
-	AnimalMove::Tag_animal s_tag2 = AnimalMove::none;
-	AnimalMove::Tag_animal s_tag3 = AnimalMove::none;
+	AnimalMove::TagAnimal s_tag1 = AnimalMove::kNone;
+	AnimalMove::TagAnimal s_tag2 = AnimalMove::kNone;
+	AnimalMove::TagAnimal s_tag3 = AnimalMove::kNone;
 }
 
 AnimalMove::AnimalMove(std::string filename, VECTOR initPos)
 	: CharacterMove(filename, initPos)
 {
-	// 基礎パラメータとして羊の定数を適用
-	mfSpeed = GameConstants::ANIMAL_SHEEP.speed;
+	// 陜難ｽｺ驕牙ｼｱ繝ｱ郢晢ｽｩ郢晢ｽ｡郢晢ｽｼ郢ｧ・ｿ邵ｺ・ｨ邵ｺ蜉ｱ窶ｻ驗堤ｿｫ繝ｻ陞ｳ螢ｽ辟夂ｹｧ蟶昶・騾包ｽｨ
+	mfSpeed = GameConstants::kAnimalSheep.speed;
 	mActionTimer = 60;
-	mfScore = GameConstants::ANIMAL_SHEEP.score;
-	mfXp = GameConstants::ANIMAL_SHEEP.xp;
+	mfScore = GameConstants::kAnimalSheep.score;
+	mfXp = GameConstants::kAnimalSheep.xp;
 	mbBaitFlag = false;
-	mfdeathTime = GameConstants::ANIMAL_SHEEP.deathTimeHeight;
-	SetTag(Object3D::Tag3D_Animal);
+	mfdeathTime = GameConstants::kAnimalSheep.death_time_height;
+	SetTag(Object3D::kTag3dAnimal);
 }
 
 AnimalMove::~AnimalMove()
@@ -44,9 +44,9 @@ void AnimalMove::Reset(VECTOR pos)
 {
 	CharacterMove::Reset(pos);
 
-	if (mpCapsuleCollider != nullptr)
+	if (capsule_collider_ != nullptr)
 	{
-		mpCapsuleCollider->mvPosition = pos;
+		capsule_collider_->position_ = pos;
 	}
 }
 
@@ -61,10 +61,10 @@ void AnimalMove::AddAnimation(AnimationState state, std::string filename)
 
 void AnimalMove::OnEnter(Collider* collider, Collider* check)
 {
-	// 餌オブジェクトへの接触を検知し、誘導フラグを立てる
-	if (collider == mpCapsuleCollider && check->mpParentObject != nullptr)
+	// 鬯｢蠕後′郢晄じ縺夂ｹｧ・ｧ郢ｧ・ｯ郢晏現竏育ｸｺ・ｮ隰暦ｽ･髫暦ｽｦ郢ｧ蜻茨ｽ､諛・｡咲ｸｺ蜉ｱﾂ竏ｬ・ｪ莨懶ｽｰ蠑ｱ繝ｵ郢晢ｽｩ郢ｧ・ｰ郢ｧ蝣､・ｫ荵昶ｻ郢ｧ繝ｻ
+	if (collider == capsule_collider_ && check->parent_object_ != nullptr)
 	{
-		if (check->mpParentObject->GetTag() == Tag3D_Bait)
+		if (check->parent_object_->GetTag() == kTag3dBait)
 		{
 			mbBaitFlag = true;
 		}
@@ -77,10 +77,10 @@ void AnimalMove::OnTrigger(Collider* collider, Collider* check)
 
 void AnimalMove::OnExit(Collider* collider, Collider* check)
 {
-	// 餌の有効範囲外に出たため誘導フラグを解除する
-	if (collider == mpCapsuleCollider && check->mpParentObject != nullptr)
+	// 鬯｢蠕後・隴帷甥譟鷹⊃繝ｻ蟲・棔謔ｶ竊楢怎・ｺ邵ｺ貅倪螺郢ｧ竏ｬ・ｪ莨懶ｽｰ蠑ｱ繝ｵ郢晢ｽｩ郢ｧ・ｰ郢ｧ螳夲ｽｧ・｣鬮ｯ・､邵ｺ蜷ｶ・・
+	if (collider == capsule_collider_ && check->parent_object_ != nullptr)
 	{
-		if (check->mpParentObject->GetTag() == Tag3D_Bait)
+		if (check->parent_object_->GetTag() == kTag3dBait)
 		{
 			mbBaitFlag = false;
 		}
@@ -89,7 +89,7 @@ void AnimalMove::OnExit(Collider* collider, Collider* check)
 
 void AnimalMove::CharacterDied()
 {
-	// 演出都合上、フィーバー中および吸い込み状態以外では死亡判定を行わない
+	// 雋肴ｳ後・鬩幢ｽｽ陷ｷ莠包ｽｸ鄙ｫﾂ竏壹Ψ郢ｧ・｣郢晢ｽｼ郢晁・繝ｻ闕ｳ・ｭ邵ｺ鄙ｫ・育ｸｺ・ｳ陷ｷ・ｸ邵ｺ繝ｻ・ｾ・ｼ邵ｺ・ｿ霑･・ｶ隲ｷ蛟ｶ・ｻ・･陞滓じ縲堤ｸｺ・ｯ雎・ｽｻ闔・｡陋ｻ・､陞ｳ螢ｹ・帝勗蠕鯉ｽ冗ｸｺ・ｪ邵ｺ繝ｻ
 	auto fv = ServiceLocator::GetFever();
 	if (mCurrentState != STATE_VACUUM || (fv && fv->IsFever())) return;
 
@@ -98,16 +98,16 @@ void AnimalMove::CharacterDied()
 	CharacterRotate();
 	if (player != nullptr)
 	{
-		mvPosition.y += player->Status(Player3D::Status_AttackS);
+		position_.y += player->Status(Player3D::Status_AttackS);
 	}
 
-	// プレイヤーへ向けて浮遊し、一定高度に達した段階で捕獲完了とする
-	if (mvPosition.y > mfdeathTime && !mDeleteFlag)
+	// 郢晏干ﾎ樒ｹｧ・､郢晢ｽ､郢晢ｽｼ邵ｺ・ｸ陷ｷ莉｣・邵ｺ・ｦ雎ｬ・ｮ鬩慕ｿｫ・邵ｲ竏ｽ・ｸﾂ陞ｳ螟撰ｽｫ莨懶ｽｺ・ｦ邵ｺ・ｫ鬩墓鱒・邵ｺ貊難ｽｮ・ｵ鬮ｫ蠑ｱ縲定ｬ先・菴占楜蠕｡・ｺ繝ｻ竊堤ｸｺ蜷ｶ・・
+	if (position_.y > mfdeathTime && !mDeleteFlag)
 	{
 		Die(DEATH_VACUUM);
 	}
 
-	mpModel->SetPosition(mvPosition);
+	model_->SetPosition(position_);
 }
 
 void AnimalMove::Die(DeathReason reason)
@@ -126,8 +126,8 @@ void AnimalMove::Die(DeathReason reason)
 			player->mpCombo->Reset();
 			player->mpScore->AddScore(mfScore);
 
-			// 暫定対応: 同種連続捕獲時に追加経験値を付与するためのコンボロジック
-			if (mntag_animal == AnimalMove::Tag_animal::Animal_T)
+			// 隴会ｽｫ陞ｳ螢ｼ・ｯ・ｾ陟｢繝ｻ 陷ｷ讙趣ｽｨ・ｮ鬨ｾ・｣驍ｯ螢ｽ鮟定ｿｯ・ｲ隴弱ｅ竊馴恆・ｽ陷会｣ｰ驍ｨ遒・ｽｨ轣伉・､郢ｧ蜑・ｽｻ蛟・ｽｸ蠑ｱ笘・ｹｧ荵昶螺郢ｧ竏壹・郢ｧ・ｳ郢晢ｽｳ郢晄㈱ﾎ溽ｹｧ・ｸ郢昴・縺・
+			if (tag_animal_ == AnimalMove::TagAnimal::kAnimalT)
 			{
 				Master::mnTutorialcount++;
 			}
@@ -135,25 +135,25 @@ void AnimalMove::Die(DeathReason reason)
 			s_mnTagCount++;
 			if (s_mnTagCount == 1)
 			{
-				s_tag1 = mntag_animal;
+				s_tag1 = tag_animal_;
 			}
-			else if (s_mnTagCount == 2 && s_tag1 == mntag_animal)
+			else if (s_mnTagCount == 2 && s_tag1 == tag_animal_)
 			{
-				s_tag2 = mntag_animal;
+				s_tag2 = tag_animal_;
 			}
-			else if (s_mnTagCount == 3 && s_tag2 == mntag_animal)
+			else if (s_mnTagCount == 3 && s_tag2 == tag_animal_)
 			{
-				s_tag3 = mntag_animal;
-				if (s_tag3 == AnimalMove::Animal_1) player->mpLevel->AddXp(10);
-				if (s_tag2 == AnimalMove::Animal_2) player->mpLevel->AddXp(20);
-				if (s_tag3 == AnimalMove::Animal_3) player->mpLevel->AddXp(30);
+				s_tag3 = tag_animal_;
+				if (s_tag3 == AnimalMove::kAnimal1) player->mpLevel->AddXp(10);
+				if (s_tag2 == AnimalMove::kAnimal2) player->mpLevel->AddXp(20);
+				if (s_tag3 == AnimalMove::kAnimal3) player->mpLevel->AddXp(30);
 			}
 			else
 			{
 				s_mnTagCount = 0;
-				s_tag1 = AnimalMove::none;
-				s_tag2 = AnimalMove::none;
-				s_tag3 = AnimalMove::none;
+				s_tag1 = AnimalMove::kNone;
+				s_tag2 = AnimalMove::kNone;
+				s_tag3 = AnimalMove::kNone;
 			}
 		}
 		mDeleteFlag = true;

@@ -11,13 +11,13 @@
 #include "GameConstants.h"
 
 Fever::Fever()
-	: dropTime(0)
-	, DropCount(0)
-	, mpFeverPlayer(nullptr)
+	: drop_time_(0)
+	, drop_count_(0)
+	, fever_player_(nullptr)
 {
-	mGauge = 0;
-	mTimer = 0;
-	mIsFever = false;
+	gauge_ = 0;
+	timer_ = 0;
+	is_fever_ = false;
 }
 
 Fever::~Fever()
@@ -31,51 +31,51 @@ void Fever::AddGauge(int value)
 void Fever::StartFever(Player3D* player)
 {
 	if (player == nullptr) return;
-	mpFeverPlayer = player;
-	playerStatus = player->GetStatusAttack();
-	player->SetStatusAttack(playerStatus * 2.0f);
-	mIsFever = true;
-	mTimer = 600; // 難易度調整のためフィーバー継続時間を10秒(600フレーム)に固定する
-	DropCount = 0;
-	dropTime = 60;
+	fever_player_ = player;
+	player_status_ = player->GetStatusAttack();
+	player->SetStatusAttack(player_status_ * 2.0f);
+	is_fever_ = true;
+	timer_ = 600; // 髮｣譏灘ｺｦ隱ｿ謨ｴ縺ｮ縺溘ａ繝輔ぅ繝ｼ繝舌・邯咏ｶ壽凾髢薙ｒ10遘・600繝輔Ξ繝ｼ繝)縺ｫ蝗ｺ螳壹☆繧・
+	drop_count_ = 0;
+	drop_time_ = 60;
 	Master::FeverFlag = true;
 }
 
 void Fever::EndFever()
 {
-	if (mpFeverPlayer != nullptr)
+	if (fever_player_ != nullptr)
 	{
-		mpFeverPlayer->SetStatusAttack(playerStatus);
-		mpFeverPlayer = nullptr;
+		fever_player_->SetStatusAttack(player_status_);
+		fever_player_ = nullptr;
 	}
-	mIsFever = false;
+	is_fever_ = false;
 	
-	// ステージ上の獲物が枯渇するのを防ぐため終了時に基本構成で再配置する
+	// 繧ｹ繝・・繧ｸ荳翫・迯ｲ迚ｩ縺梧椡貂・☆繧九・繧帝亟縺舌◆繧∫ｵゆｺ・凾縺ｫ蝓ｺ譛ｬ讒区・縺ｧ蜀埼・鄂ｮ縺吶ｋ
 	VECTOR spawnPos = Utility::StageSize;
-	ServiceLocator::GetCowManager()->SpawnCow(GameConstants::COW_GOLD.modelPath, spawnPos, 50.0f, CowMove::Cow_gold, 1);
-	ServiceLocator::GetCowManager()->SpawnCow(GameConstants::COW_DEFAULT.modelPath, spawnPos, 50.0f, CowMove::Cow_1, 10);
-	ServiceLocator::GetAnimalManager()->SpawnAnimal(GameConstants::ANIMAL_SHEEP.modelPath, spawnPos, 50.0f, AnimalMove::Animal_1, 5);
+	ServiceLocator::GetCowManager()->SpawnCow(GameConstants::kCowGold.model_path, spawnPos, 50.0f, CowMove::kCowGold, 1);
+	ServiceLocator::GetCowManager()->SpawnCow(GameConstants::kCowDefault.model_path, spawnPos, 50.0f, CowMove::kCow1, 10);
+	ServiceLocator::GetAnimalManager()->SpawnAnimal(GameConstants::kAnimalSheep.model_path, spawnPos, 50.0f, AnimalMove::kAnimal1, 5);
 	Master::FeverFlag = false;
 }
 
 void Fever::Update()
 {
-	if (!mIsFever) return;
+	if (!is_fever_) return;
 	
 	SetDrawBlendMode(DX_BLENDMODE_ADD, 180);
 
-	// フィーバー状態であることを視覚的に伝えるため画面全体に加算ブレンドでエフェクトを描画する
-	DrawBox(0, 0, Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT, GetColor(255, 200, 50), FALSE);
-	DrawBox(1, 1, Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT, GetColor(255, 220, 100), FALSE);
-	DrawBox(2, 2, Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT, GetColor(255, 255, 180), FALSE);
+	// 繝輔ぅ繝ｼ繝舌・迥ｶ諷九〒縺ゅｋ縺薙→繧定ｦ冶ｦ夂噪縺ｫ莨昴∴繧九◆繧∫判髱｢蜈ｨ菴薙↓蜉邂励ヶ繝ｬ繝ｳ繝峨〒繧ｨ繝輔ぉ繧ｯ繝医ｒ謠冗判縺吶ｋ
+	DrawBox(0, 0, Utility::kScreenWidth, Utility::kScreenHeight, GetColor(255, 200, 50), FALSE);
+	DrawBox(1, 1, Utility::kScreenWidth, Utility::kScreenHeight, GetColor(255, 220, 100), FALSE);
+	DrawBox(2, 2, Utility::kScreenWidth, Utility::kScreenHeight, GetColor(255, 255, 180), FALSE);
 
 	for (int i = 0; i < 30; i++)
 	{
 		DrawBox(
 			i,
 			i,
-			Utility::SCREEN_WIDTH - i,
-			Utility::SCREEN_HEIGHT - i,
+			Utility::kScreenWidth - i,
+			Utility::kScreenHeight - i,
 			GetColor(255, 200, 50),
 			FALSE
 		);
@@ -83,19 +83,19 @@ void Fever::Update()
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-	DropCount++;
-	mTimer--;
+	drop_count_++;
+	timer_--;
 	
-	// ボーナススコア獲得機会を提供するため一定間隔で金の牛を生成する
-	if (DropCount > dropTime)
+	// 繝懊・繝翫せ繧ｹ繧ｳ繧｢迯ｲ蠕玲ｩ滉ｼ壹ｒ謠蝉ｾ帙☆繧九◆繧∽ｸ螳夐俣髫斐〒驥代・迚帙ｒ逕滓・縺吶ｋ
+	if (drop_count_ > drop_time_)
 	{
-		DropCount = 0;
+		drop_count_ = 0;
 		VECTOR spawnPos = Utility::StageSize;
-		ServiceLocator::GetCowManager()->SpawnCow(GameConstants::COW_GOLD.modelPath, spawnPos, 50.0f, CowMove::Cow_gold, 2, true);
+		ServiceLocator::GetCowManager()->SpawnCow(GameConstants::kCowGold.model_path, spawnPos, 50.0f, CowMove::kCowGold, 2, true);
 	}
 
-	// フィーバー継続時間を超過したため状態を通常に戻す
-	if (mTimer <= 0)
+	// 繝輔ぅ繝ｼ繝舌・邯咏ｶ壽凾髢薙ｒ雜・℃縺励◆縺溘ａ迥ｶ諷九ｒ騾壼ｸｸ縺ｫ謌ｻ縺・
+	if (timer_ <= 0)
 	{
 		EndFever();
 	}
@@ -103,5 +103,5 @@ void Fever::Update()
 
 bool Fever::IsFever()
 {
-	return mIsFever;
+	return is_fever_;
 }

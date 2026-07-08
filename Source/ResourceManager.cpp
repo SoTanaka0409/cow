@@ -7,78 +7,78 @@ ResourceManager::ResourceManager()
 
 ResourceManager::~ResourceManager()
 {
-	// 登録されたすべてのオリジナルモデルハンドルを破棄
-	for (int i = 0; i < resourceMapList.size(); i++)
+	// 逋ｻ骭ｲ縺輔ｌ縺溘☆縺ｹ縺ｦ縺ｮ繧ｪ繝ｪ繧ｸ繝翫Ν繝｢繝・Ν繝上Φ繝峨Ν繧堤ｴ譽・
+	for (int i = 0; i < resource_map_list_.size(); i++)
 	{
-		MV1DeleteModel(resourceMapList.at(i).second);
+		MV1DeleteModel(resource_map_list_.at(i).second);
 	}
 
-	// 確保した分割画像メタデータ構造体オブジェクトをメモリから解放
-	for (int i = 0; i < divGraphicResourceMapList.size(); i++)
+	// 遒ｺ菫昴＠縺溷・蜑ｲ逕ｻ蜒上Γ繧ｿ繝・・繧ｿ讒矩菴薙が繝悶ず繧ｧ繧ｯ繝医ｒ繝｡繝｢繝ｪ縺九ｉ隗｣謾ｾ
+	for (int i = 0; i < div_graphic_resource_map_list_.size(); i++)
 	{
-		delete divGraphicResourceMapList.at(i);
+		delete div_graphic_resource_map_list_.at(i);
 	}
-	divGraphicResourceMapList.clear();
+	div_graphic_resource_map_list_.clear();
 
 	MV1InitModel();
-	InitGraph(); // DxLibに読み込まれているすべての画像を一括削除
+	InitGraph(); // DxLib縺ｫ隱ｭ縺ｿ霎ｼ縺ｾ繧後※縺・ｋ縺吶∋縺ｦ縺ｮ逕ｻ蜒上ｒ荳諡ｬ蜑企勁
 }
 
 /*
- * @brief 3Dモデルファイルをキャッシュ読み込みする（二重ロード時は複製モデルを返す）
- * [入力] pathName: モデルファイルのファイルパス
- * [出力] 複製されたモデルハンドル (エラー時は-1)
- * [副作用] 新規ロード時はオリジナルとしてresourceMapListに追加
+ * @brief 3D繝｢繝・Ν繝輔ぃ繧､繝ｫ繧偵く繝｣繝・す繝･隱ｭ縺ｿ霎ｼ縺ｿ縺吶ｋ・井ｺ碁㍾繝ｭ繝ｼ繝画凾縺ｯ隍・｣ｽ繝｢繝・Ν繧定ｿ斐☆・・
+ * [蜈･蜉嫋 pathName: 繝｢繝・Ν繝輔ぃ繧､繝ｫ縺ｮ繝輔ぃ繧､繝ｫ繝代せ
+ * [蜃ｺ蜉嫋 隍・｣ｽ縺輔ｌ縺溘Δ繝・Ν繝上Φ繝峨Ν (繧ｨ繝ｩ繝ｼ譎ゅ・-1)
+ * [蜑ｯ菴懃畑] 譁ｰ隕上Ο繝ｼ繝画凾縺ｯ繧ｪ繝ｪ繧ｸ繝翫Ν縺ｨ縺励※resourceMapList縺ｫ霑ｽ蜉
  */
 int ResourceManager::LoadModel(std::string pathName)
 {
-	// 既に同じモデルがロード済みの場合は、そのオリジナルから複製を作成して返す
-	for (int i = 0; i < resourceMapList.size(); i++)
+	// 譌｢縺ｫ蜷後§繝｢繝・Ν縺後Ο繝ｼ繝画ｸ医∩縺ｮ蝣ｴ蜷医・縲√◎縺ｮ繧ｪ繝ｪ繧ｸ繝翫Ν縺九ｉ隍・｣ｽ繧剃ｽ懈・縺励※霑斐☆
+	for (int i = 0; i < resource_map_list_.size(); i++)
 	{
-		if (resourceMapList.at(i).first == pathName)
+		if (resource_map_list_.at(i).first == pathName)
 		{
-			return MV1DuplicateModel(resourceMapList.at(i).second);
+			return MV1DuplicateModel(resource_map_list_.at(i).second);
 		}
 	}
 
-	// 未ロードの場合は新規でモデルファイルを読み込み
+	// 譛ｪ繝ｭ繝ｼ繝峨・蝣ｴ蜷医・譁ｰ隕上〒繝｢繝・Ν繝輔ぃ繧､繝ｫ繧定ｪｭ縺ｿ霎ｼ縺ｿ
 	int handle = MV1LoadModel(pathName.c_str());
 	if (handle == -1)
 	{
 		return -1;
 	}
 
-	resourceMapList.push_back(std::pair<std::string, int>(pathName, handle));
-	return MV1DuplicateModel(handle); // オリジナルは保管し、複製側をゲーム側で使用させる
+	resource_map_list_.push_back(std::pair<std::string, int>(pathName, handle));
+	return MV1DuplicateModel(handle); // 繧ｪ繝ｪ繧ｸ繝翫Ν縺ｯ菫晉ｮ｡縺励∬､・｣ｽ蛛ｴ繧偵ご繝ｼ繝蛛ｴ縺ｧ菴ｿ逕ｨ縺輔○繧・
 }
 
 void ResourceManager::PreloadModel(std::string pathName)
 {
-	for (int i = 0; i < resourceMapList.size(); i++)
+	for (int i = 0; i < resource_map_list_.size(); i++)
 	{
-		if (resourceMapList.at(i).first == pathName) return;
+		if (resource_map_list_.at(i).first == pathName) return;
 	}
 
 	int handle = MV1LoadModel(pathName.c_str());
 	if (handle != -1)
 	{
-		resourceMapList.push_back(std::pair<std::string, int>(pathName, handle));
+		resource_map_list_.push_back(std::pair<std::string, int>(pathName, handle));
 	}
 }
 
 /*
- * @brief 2D画像ファイルをキャッシュ読み込みする（二重ロード時は既存のハンドルを返す）
- * [入力] pathName: 画像ファイルのファイルパス
- * [出力] 画像グラフィックハンドル (エラー時は-1)
- * [副作用] 新規ロード時はキャッシュ用リストに追加
+ * @brief 2D逕ｻ蜒上ヵ繧｡繧､繝ｫ繧偵く繝｣繝・す繝･隱ｭ縺ｿ霎ｼ縺ｿ縺吶ｋ・井ｺ碁㍾繝ｭ繝ｼ繝画凾縺ｯ譌｢蟄倥・繝上Φ繝峨Ν繧定ｿ斐☆・・
+ * [蜈･蜉嫋 pathName: 逕ｻ蜒上ヵ繧｡繧､繝ｫ縺ｮ繝輔ぃ繧､繝ｫ繝代せ
+ * [蜃ｺ蜉嫋 逕ｻ蜒上げ繝ｩ繝輔ぅ繝・け繝上Φ繝峨Ν (繧ｨ繝ｩ繝ｼ譎ゅ・-1)
+ * [蜑ｯ菴懃畑] 譁ｰ隕上Ο繝ｼ繝画凾縺ｯ繧ｭ繝｣繝・す繝･逕ｨ繝ｪ繧ｹ繝医↓霑ｽ蜉
  */
 int ResourceManager::LoadGraphics(std::string pathName)
 {
-	for (int i = 0; i < graphicResourceMapList.size(); i++)
+	for (int i = 0; i < graphic_resource_map_list_.size(); i++)
 	{
-		if (graphicResourceMapList.at(i).first == pathName)
+		if (graphic_resource_map_list_.at(i).first == pathName)
 		{
-			return graphicResourceMapList.at(i).second;
+			return graphic_resource_map_list_.at(i).second;
 		}
 	}
 
@@ -88,41 +88,41 @@ int ResourceManager::LoadGraphics(std::string pathName)
 		return -1;
 	}
 
-	graphicResourceMapList.push_back(std::pair<std::string, int>(pathName, handle));
+	graphic_resource_map_list_.push_back(std::pair<std::string, int>(pathName, handle));
 	return handle;
 }
 
 void ResourceManager::PreloadGraphics(std::string pathName)
 {
-	for (int i = 0; i < graphicResourceMapList.size(); i++)
+	for (int i = 0; i < graphic_resource_map_list_.size(); i++)
 	{
-		if (graphicResourceMapList.at(i).first == pathName) return;
+		if (graphic_resource_map_list_.at(i).first == pathName) return;
 	}
 
 	int handle = LoadGraph(pathName.c_str());
 	if (handle != -1)
 	{
-		graphicResourceMapList.push_back(std::pair<std::string, int>(pathName, handle));
+		graphic_resource_map_list_.push_back(std::pair<std::string, int>(pathName, handle));
 	}
 }
 
 /*
- * @brief 分割画像ファイルをキャッシュ読み込みし、分割データ構造体を返す
- * [入力] pathName: 画像ファイルパス, allNum: 分割総数, numX: 横分割数, numY: 縦分割数
- * [出力] 分割データオブジェクトポインタ (エラー時はnullptr)
- * [副作用] 新規ロード時はメタデータ構造体を動的生成してキャッシュに追加
+ * @brief 蛻・牡逕ｻ蜒上ヵ繧｡繧､繝ｫ繧偵く繝｣繝・す繝･隱ｭ縺ｿ霎ｼ縺ｿ縺励∝・蜑ｲ繝・・繧ｿ讒矩菴薙ｒ霑斐☆
+ * [蜈･蜉嫋 pathName: 逕ｻ蜒上ヵ繧｡繧､繝ｫ繝代せ, all_num_: 蛻・牡邱乗焚, numX: 讓ｪ蛻・牡謨ｰ, numY: 邵ｦ蛻・牡謨ｰ
+ * [蜃ｺ蜉嫋 蛻・牡繝・・繧ｿ繧ｪ繝悶ず繧ｧ繧ｯ繝医・繧､繝ｳ繧ｿ (繧ｨ繝ｩ繝ｼ譎ゅ・nullptr)
+ * [蜑ｯ菴懃畑] 譁ｰ隕上Ο繝ｼ繝画凾縺ｯ繝｡繧ｿ繝・・繧ｿ讒矩菴薙ｒ蜍慕噪逕滓・縺励※繧ｭ繝｣繝・す繝･縺ｫ霑ｽ蜉
  */
-DivGraphData* ResourceManager::LoadDivGraphics(std::string pathName, int allNum, int numX, int numY)
+DivGraphData* ResourceManager::LoadDivGraphics(std::string pathName, int all_num_, int numX, int numY)
 {
-	for (int i = 0; i < divGraphicResourceMapList.size(); i++)
+	for (int i = 0; i < div_graphic_resource_map_list_.size(); i++)
 	{
-		if (divGraphicResourceMapList.at(i)->filePath == pathName)
+		if (div_graphic_resource_map_list_.at(i)->file_path_ == pathName)
 		{
-			return divGraphicResourceMapList.at(i);
+			return div_graphic_resource_map_list_.at(i);
 		}
 	}
 
-	// 分割処理を行うための基盤画像サイズ情報取得用として、一度一時的に画像をロードする
+	// 蛻・牡蜃ｦ逅・ｒ陦後≧縺溘ａ縺ｮ蝓ｺ逶､逕ｻ蜒上し繧､繧ｺ諠・ｱ蜿門ｾ礼畑縺ｨ縺励※縲∽ｸ蠎ｦ荳譎ら噪縺ｫ逕ｻ蜒上ｒ繝ｭ繝ｼ繝峨☆繧・
 	int handle = LoadGraph(pathName.c_str());
 	if (handle == -1)
 	{
@@ -132,21 +132,21 @@ DivGraphData* ResourceManager::LoadDivGraphics(std::string pathName, int allNum,
 	DivGraphData *data = new DivGraphData(
 		pathName,
 		numX, numY,
-		allNum
+		all_num_
 	);
 
 	int sizeX, sizeY;
 	GetGraphSize(handle, &sizeX, &sizeY);
-	DeleteGraph(handle); // サイズ取得後の一時ハンドルは不要なため解放
+	DeleteGraph(handle); // 繧ｵ繧､繧ｺ蜿門ｾ怜ｾ後・荳譎ゅワ繝ｳ繝峨Ν縺ｯ荳崎ｦ√↑縺溘ａ隗｣謾ｾ
 
-	// 指定されたグリッド分割数と1コマサイズを基に、分割画像として各ハンドルをロード
-	int loadResult = LoadDivGraph(pathName.c_str(), allNum, numX, numY, sizeX / numX, sizeY / numY, data->divHandleList);
+	// 謖・ｮ壹＆繧後◆繧ｰ繝ｪ繝・ラ蛻・牡謨ｰ縺ｨ1繧ｳ繝槭し繧､繧ｺ繧貞渕縺ｫ縲∝・蜑ｲ逕ｻ蜒上→縺励※蜷・ワ繝ｳ繝峨Ν繧偵Ο繝ｼ繝・
+	int loadResult = LoadDivGraph(pathName.c_str(), all_num_, numX, numY, sizeX / numX, sizeY / numY, data->div_handle_list_);
 	if (loadResult == -1)
 	{
 		delete data;
 		return nullptr;
 	}
 
-	divGraphicResourceMapList.push_back(data);
+	div_graphic_resource_map_list_.push_back(data);
 	return data;
 }

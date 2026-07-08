@@ -18,13 +18,13 @@ SceneManager::SceneManager()
 
 SceneManager::~SceneManager()
 {
-	// メモリリークを防ぐためアクティブなシーンの解放を保証する
+	// 繝｡繝｢繝ｪ繝ｪ繝ｼ繧ｯ繧帝亟縺舌◆繧√い繧ｯ繝・ぅ繝悶↑繧ｷ繝ｼ繝ｳ縺ｮ隗｣謾ｾ繧剃ｿ晁ｨｼ縺吶ｋ
 	Finalize();
 }
 
 void SceneManager::Initialize()
 {
-	// 仕様上起動時はタイトル画面から開始する
+	// 莉墓ｧ倅ｸ願ｵｷ蜍墓凾縺ｯ繧ｿ繧､繝医Ν逕ｻ髱｢縺九ｉ髢句ｧ九☆繧・
 	mnNextSceneType = SCENE_TYPE::SCENE_TITLE;
 	ChangeSceneIfNeeded();
 }
@@ -46,10 +46,10 @@ void SceneManager::Draw()
 }
 
 /*
- * 現在のアクティブシーンを安全に解放し、後片付けを行う
- * [入力] なし
- * [出力] なし
- * [副作用] mpCurrentScene の Finalize 呼び出し、およびメモリ delete
+ * 迴ｾ蝨ｨ縺ｮ繧｢繧ｯ繝・ぅ繝悶す繝ｼ繝ｳ繧貞ｮ牙・縺ｫ隗｣謾ｾ縺励∝ｾ檎援莉倥￠繧定｡後≧
+ * [蜈･蜉嫋 縺ｪ縺・
+ * [蜃ｺ蜉嫋 縺ｪ縺・
+ * [蜑ｯ菴懃畑] mpCurrentScene 縺ｮ Finalize 蜻ｼ縺ｳ蜃ｺ縺励√♀繧医・繝｡繝｢繝ｪ delete
  */
 void SceneManager::Finalize()
 {
@@ -62,14 +62,14 @@ void SceneManager::Finalize()
 }
 
 /*
- * 遷移先指定が異なる場合、現在シーンを破棄し次のシーンをインスタンス化する
- * [入力] なし
- * [出力] なし
- * [副作用] シーンオブジェクトのメモリ解放と新規割り当て、初期化
+ * 驕ｷ遘ｻ蜈域欠螳壹′逡ｰ縺ｪ繧句ｴ蜷医∫樟蝨ｨ繧ｷ繝ｼ繝ｳ繧堤ｴ譽・＠谺｡縺ｮ繧ｷ繝ｼ繝ｳ繧偵う繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ蛹悶☆繧・
+ * [蜈･蜉嫋 縺ｪ縺・
+ * [蜃ｺ蜉嫋 縺ｪ縺・
+ * [蜑ｯ菴懃畑] 繧ｷ繝ｼ繝ｳ繧ｪ繝悶ず繧ｧ繧ｯ繝医・繝｡繝｢繝ｪ隗｣謾ｾ縺ｨ譁ｰ隕丞牡繧雁ｽ薙※縲∝・譛溷喧
  */
 void SceneManager::ChangeSceneIfNeeded()
 {
-	// 遷移先が変わっていない場合はシーン切り替えを行わない
+	// 驕ｷ遘ｻ蜈医′螟峨ｏ縺｣縺ｦ縺・↑縺・ｴ蜷医・繧ｷ繝ｼ繝ｳ蛻・ｊ譖ｿ縺医ｒ陦後ｏ縺ｪ縺・
 	if (mnSceneType == mnNextSceneType)
 	{
 		return;

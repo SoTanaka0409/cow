@@ -17,8 +17,8 @@ CharacterMove::CharacterMove(std::string filename, VECTOR initPos)
 	, mpCurrentState(new StateIdle())
 	, mActionTimer(60)
 	, mfSpeed(10.0f)
-	, mfTargetAngle(0.0f)
-	, mfAngle(0.0f)
+	, target_angle_(0.0f)
+	, angle_(0.0f)
 	, moveVec(VGet(0.0f, 0.0f, 0.0f))
 	, oldmoveVec(VGet(0.0f, 0.0f, 0.0f))
 	, hitPos(VGet(0.0f, 0.0f, 0.0f))
@@ -30,19 +30,19 @@ CharacterMove::CharacterMove(std::string filename, VECTOR initPos)
 	, mbBaitFlag(false)
 	, mbIsVisible(true)
 {
-	mpModel = new Model(filename, initPos, false);
+	model_ = new Model(filename, initPos, false);
 
-	// 初期向きをランダムに分散させる
-	mvRotation.y = (float)GetRand(359) * (DX_PI_F / 180.0f);
-	mpModel->SetRotation(mvRotation);
+	// 蛻晄悄蜷代″繧偵Λ繝ｳ繝繝縺ｫ蛻・淵縺輔○繧・
+	rotation_.y = (float)GetRand(359) * (DX_PI_F / 180.0f);
+	model_->SetRotation(rotation_);
 }
 
 CharacterMove::~CharacterMove()
 {
-	if (mpModel != nullptr)
+	if (model_ != nullptr)
 	{
-		delete mpModel;
-		mpModel = nullptr;
+		delete model_;
+		model_ = nullptr;
 	}
 	if (mpCurrentState != nullptr)
 	{
@@ -53,11 +53,11 @@ CharacterMove::~CharacterMove()
 
 void CharacterMove::Reset(VECTOR pos)
 {
-	mvPosition = pos;
+	position_ = pos;
 	mCurrentState = STATE_IDLE;
 	mpTargetPlayer = nullptr;
 
-	// 現在のStateを一度破棄し、新たに待機状態を作成
+	// 迴ｾ蝨ｨ縺ｮState繧剃ｸ蠎ｦ遐ｴ譽・＠縲∵眠縺溘↓蠕・ｩ溽憾諷九ｒ菴懈・
 	if (mpCurrentState != nullptr)
 	{
 		delete mpCurrentState;
@@ -65,16 +65,16 @@ void CharacterMove::Reset(VECTOR pos)
 	mpCurrentState = new StateIdle();
 
 	mActionTimer = 60;
-	mvRotation.y = (float)GetRand(359) * (DX_PI_F / 180.0f);
+	rotation_.y = (float)GetRand(359) * (DX_PI_F / 180.0f);
 	moveVec = VGet(0.0f, 0.0f, 0.0f);
 	oldmoveVec = VGet(0.0f, 0.0f, 0.0f);
 	mVacuumTimer = 0;
 	mDeleteFlag = false;
 	mbBaitFlag = false;
 	mbIsVisible = true;
-	SetDrawFlag(true); // 描画を有効化
+	SetDrawFlag(true); // 謠冗判繧呈怏蜉ｹ蛹・
 
-	// 管理クラス(ObjectManager)に自身を再度登録
+	// 邂｡逅・け繝ｩ繧ｹ(ObjectManager)縺ｫ閾ｪ霄ｫ繧貞・蠎ｦ逋ｻ骭ｲ
 	if (auto scene = Master::mpSceneManager->GetCurrentScene())
 	{
 		if (auto objMgr = scene->GetObjectManager())
@@ -83,36 +83,36 @@ void CharacterMove::Reset(VECTOR pos)
 		}
 	}
 
-	if (mpModel != nullptr)
+	if (model_ != nullptr)
 	{
-		mpModel->SetPosition(pos);
-		mpModel->SetRotation(mvRotation);
+		model_->SetPosition(pos);
+		model_->SetRotation(rotation_);
 	}
 
-	// 当たり判定（コライダー）を再度有効化して登録
-	if (mpCapsuleCollider != nullptr)
+	// 蠖薙◆繧雁愛螳夲ｼ医さ繝ｩ繧､繝繝ｼ・峨ｒ蜀榊ｺｦ譛牙柑蛹悶＠縺ｦ逋ｻ骭ｲ
+	if (capsule_collider_ != nullptr)
 	{
-		mpCapsuleCollider->SetDeleteFlag(false);
-		ColliderManager::GetInstance()->AddCollider(mpCapsuleCollider);
+		capsule_collider_->SetDeleteFlag(false);
+		ColliderManager::GetInstance()->AddCollider(capsule_collider_);
 	}
 }
 
 // ==============================================================================
-// Deactivate (オブジェクトの無効化)
-// 死亡時や画面外に出た時など、描画と判定をオフにして処理対象から外します。
+// Deactivate (繧ｪ繝悶ず繧ｧ繧ｯ繝医・辟｡蜉ｹ蛹・
+// 豁ｻ莠｡譎ゅｄ逕ｻ髱｢螟悶↓蜃ｺ縺滓凾縺ｪ縺ｩ縲∵緒逕ｻ縺ｨ蛻､螳壹ｒ繧ｪ繝輔↓縺励※蜃ｦ逅・ｯｾ雎｡縺九ｉ螟悶＠縺ｾ縺吶・
 // ==============================================================================
 void CharacterMove::Deactivate()
 {
 	mbIsVisible = false;
-	SetDrawFlag(false); // 描画を無効化
+	SetDrawFlag(false); // 謠冗判繧堤┌蜉ｹ蛹・
 
-	// 当たり判定を無効化
-	if (mpCapsuleCollider != nullptr)
+	// 蠖薙◆繧雁愛螳壹ｒ辟｡蜉ｹ蛹・
+	if (capsule_collider_ != nullptr)
 	{
-		mpCapsuleCollider->SetDeleteFlag(true);
+		capsule_collider_->SetDeleteFlag(true);
 	}
 
-	// deleteはせず、Updateの更新対象リストからのみ外す（再利用のため）
+	// delete縺ｯ縺帙★縲ゞpdate縺ｮ譖ｴ譁ｰ蟇ｾ雎｡繝ｪ繧ｹ繝医°繧峨・縺ｿ螟悶☆・亥・蛻ｩ逕ｨ縺ｮ縺溘ａ・・
 	if (auto scene = Master::mpSceneManager->GetCurrentScene())
 	{
 		if (auto objMgr = scene->GetObjectManager())
@@ -133,24 +133,24 @@ void CharacterMove::Update()
 	}
 
 	ColliderMove();
-	mpModel->Update();
+	model_->Update();
 }
 
 void CharacterMove::Draw()
 {
-	mpModel->Draw();
+	model_->Draw();
 }
 
 void CharacterMove::MoveCharacter()
 {
 	if (mCurrentState == STATE_VACUUM) return;
 
-	mvOldPosition = mvPosition;
+	old_position_ = position_;
 
 	UpdateWanderAI();
 	CheckWallCollision();
 
-	mpModel->SetPosition(mvPosition);
+	model_->SetPosition(position_);
 }
 
 void CharacterMove::UpdateWanderAI()
@@ -186,7 +186,7 @@ void CharacterMove::CheckWallCollision()
 	bool hitwall = false;
 	bool hitwalls = false;
 
-	const auto& walls = ServiceLocator::GetObjectManager()->GetObject3DListByTag(Object3D::Tag3D_Wall);
+	const auto& walls = ServiceLocator::GetObjectManager()->GetObject3DListByTag(Object3D::kTag3dWall);
 	if (!walls.empty())
 	{
 		for (int i = 0; i < walls.size(); i++)
@@ -197,13 +197,13 @@ void CharacterMove::CheckWallCollision()
 				std::vector<VERTEX3D> vertex = wall->GetVertex();
 
 				if (HitCheck_Capsule_Triangle(
-					mvPosition,
-					VAdd(mvPosition, VGet(0.0f, 200.0f, 0.0f)),
+					position_,
+					VAdd(position_, VGet(0.0f, 200.0f, 0.0f)),
 					80.0f,
 					vertex.at(0).pos, vertex.at(1).pos, vertex.at(2).pos) ||
 					HitCheck_Capsule_Triangle(
-						mvPosition,
-						VAdd(mvPosition, VGet(0.0f, 200.0f, 0.0f)),
+						position_,
+						VAdd(position_, VGet(0.0f, 200.0f, 0.0f)),
 						80.0f,
 						vertex.at(3).pos, vertex.at(1).pos, vertex.at(2).pos)
 					)
@@ -216,14 +216,14 @@ void CharacterMove::CheckWallCollision()
 
 					if (hitwall && !hitwalls)
 					{
-						mvPosition = mvOldPosition;
-						mvPosition = VAdd(mvPosition, VScale(slide, mfSpeed));
+						position_ = old_position_;
+						position_ = VAdd(position_, VScale(slide, mfSpeed));
 						hitwalls = true;
 					}
-					// 複数壁に挟まれた場合は進行を止める
+					// 隍・焚螢√↓謖溘∪繧後◆蝣ｴ蜷医・騾ｲ陦後ｒ豁｢繧√ｋ
 					else if (hitwalls)
 					{
-						mvPosition = mvOldPosition;
+						position_ = old_position_;
 					}
 				}
 			}
@@ -233,11 +233,11 @@ void CharacterMove::CheckWallCollision()
 
 void CharacterMove::ColliderMove()
 {
-	if (mpCapsuleCollider != nullptr)
+	if (capsule_collider_ != nullptr)
 	{
-		mpCapsuleCollider->mvPosition = mvPosition;
-		mpCapsuleCollider->mvPosition2 = VAdd(mvPosition, VGet(0.0f, 150.0f, 0.0f));
-		mpCapsuleCollider->mfRadius = 50.0f;
+		capsule_collider_->position_ = position_;
+		capsule_collider_->position2_ = VAdd(position_, VGet(0.0f, 150.0f, 0.0f));
+		capsule_collider_->radius_ = 50.0f;
 	}
 }
 
@@ -247,28 +247,28 @@ void CharacterMove::RotationCharacter()
 	{
 		float targetAngle = atan2f(moveVec.x, moveVec.z);
 
-		// モデルの正面方向の仕様に合わせて180度反転させる
-		mvRotation.y = targetAngle + DX_PI_F;
-		mpModel->SetRotation(mvRotation);
+		// 繝｢繝・Ν縺ｮ豁｣髱｢譁ｹ蜷代・莉墓ｧ倥↓蜷医ｏ縺帙※180蠎ｦ蜿崎ｻ｢縺輔○繧・
+		rotation_.y = targetAngle + DX_PI_F;
+		model_->SetRotation(rotation_);
 	}
 }
 
 void CharacterMove::CharacterRotate()
 {
-	mvRotation.y += 0.1f;
+	rotation_.y += 0.1f;
 
-	if (mvRotation.y > DX_PI_F * 2.0f)
+	if (rotation_.y > DX_PI_F * 2.0f)
 	{
-		mvRotation.y -= DX_PI_F * 2.0f;
+		rotation_.y -= DX_PI_F * 2.0f;
 	}
-	mpModel->SetRotation(mvRotation);
+	model_->SetRotation(rotation_);
 }
 
 void CharacterMove::SetScale(float scale)
 {
-	if (mpModel != nullptr)
+	if (model_ != nullptr)
 	{
-		mpModel->SetScale(scale);
+		model_->SetScale(scale);
 	}
 }
 

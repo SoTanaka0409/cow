@@ -3,58 +3,57 @@
 Mountain::Mountain(std::string filename, VECTOR initPos, VECTOR scale, VECTOR angle)
 	: Object3D(initPos)
 {
-	mpModel = new Model(filename, initPos);
-	mpModel->SetScale(scale);
-	mpModel->SetRotation(angle);
+	model_ = new Model(filename, initPos);
+	model_->SetScale(scale);
+	model_->SetRotation(angle);
 }
 
 Mountain::~Mountain()
 {
-	// メモリリーク防止のため、動的に生成したModelインスタンスを破棄する
-	if (mpModel != nullptr)
+	// 繝｡繝｢繝ｪ繝ｪ繝ｼ繧ｯ髦ｲ豁｢縺ｮ縺溘ａ縲∝虚逧・↓逕滓・縺励◆Model繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ繧堤ｴ譽・☆繧・
+	if (model_ != nullptr)
 	{
-		delete mpModel;
-		mpModel = nullptr;
+		delete model_;
+		model_ = nullptr;
 	}
 }
 
 void Mountain::Update()
 {
-	if (mpModel != nullptr)
+	if (model_ != nullptr)
 	{
-		mpModel->Update();
+		model_->Update();
 	}
 }
 
 void Mountain::Draw()
 {
-	if (mpModel != nullptr)
+	if (model_ != nullptr)
 	{
-		mpModel->Draw();
+		model_->Draw();
 	}
 }
 
 void Mountain::SetScale(VECTOR scale)
 {
-	if (mpModel != nullptr)
+	if (model_ != nullptr)
 	{
-		mpModel->SetScale(scale);
+		model_->SetScale(scale);
 	}
 }
 
 void Mountain::SetRotation(VECTOR angle)
 {
-	if (mpModel != nullptr)
+	if (model_ != nullptr)
 	{
-		mpModel->SetRotation(angle);
+		model_->SetRotation(angle);
 	}
 }
 
 void Mountain::SetColor(float r, float g, float b, float a)
 {
-	if (mpModel != nullptr)
+	if (model_ != nullptr)
 	{
-		mpModel->SetColor(r, g, b, a);
+		model_->SetColor(r, g, b, a);
 	}
 }
-

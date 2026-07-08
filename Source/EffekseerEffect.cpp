@@ -2,12 +2,12 @@
 #include <EffekseerForDXLib.h>
 #include "Master.h"
 
-EffekseerEffect::EffekseerEffect(const char* filename, VECTOR initPos, float EffectSize)
-	: PlayPos(initPos)
-	, mvRotation(VGet(0.0f, 0.0f, 0.0f))
-	, effectResourcehandle(-1)
-	, filePath(filename)
-	, effectSize(EffectSize)
+EffekseerEffect::EffekseerEffect(const char* filename, VECTOR initPos, float kEffectSize)
+	: play_pos_(initPos)
+	, rotation_(VGet(0.0f, 0.0f, 0.0f))
+	, effect_resource_handle_(-1)
+	, file_path_(filename)
+	, effectSize(kEffectSize)
 	, PlayCount(0)
 	, playingEffectHandle(-1)
 	, LoopFlag(true)
@@ -18,23 +18,23 @@ EffekseerEffect::EffekseerEffect(const char* filename, VECTOR initPos, float Eff
 
 EffekseerEffect::~EffekseerEffect()
 {
-	// ���[�h�ς݂�Effekseer�G�t�F�N�g�A�Z�b�g���\�[�X�����������������
-	DeleteEffekseerEffect(effectResourcehandle);
+	// ・ｽ・ｽ・ｽ[・ｽh・ｽﾏみゑｿｽEffekseer・ｽG・ｽt・ｽF・ｽN・ｽg・ｽA・ｽZ・ｽb・ｽg・ｽ・ｽ・ｽ\・ｽ[・ｽX・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	DeleteEffekseerEffect(effect_resource_handle_);
 }
 
 void EffekseerEffect::Load()
 {
-	// �w�肳�ꂽ�p�X����.efk�G�t�F�N�g�f�[�^���������Ƀ��[�h����
-	effectResourcehandle = LoadEffekseerEffect(filePath, effectSize);
+	// ・ｽw・ｽ閧ｳ・ｽ黷ｽ・ｽp・ｽX・ｽ・ｽ・ｽ・ｽ.efk・ｽG・ｽt・ｽF・ｽN・ｽg・ｽf・ｽ[・ｽ^・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾉ・ｿｽ・ｽ[・ｽh・ｽ・ｽ・ｽ・ｽ
+	effect_resource_handle_ = LoadEffekseerEffect(file_path_, effectSize);
 }
 
 void EffekseerEffect::Update()
 {
 	if (playingEffectHandle != -1)
 	{
-		// �Đ����̃G�t�F�N�g�ʒu�A��]�p�x�A�X�P�[���l��Effekseer���C���X�^���X�֖��t���[����������
-		SetPosPlayingEffekseer3DEffect(playingEffectHandle, PlayPos.x, PlayPos.y, PlayPos.z);
-		SetRotationPlayingEffekseer3DEffect(playingEffectHandle, mvRotation.x, mvRotation.y, mvRotation.z);
+		// ・ｽﾄ撰ｿｽ・ｽ・ｽ・ｽﾌエ・ｽt・ｽF・ｽN・ｽg・ｽﾊ置・ｽA・ｽ・ｽ]・ｽp・ｽx・ｽA・ｽX・ｽP・ｽ[・ｽ・ｽ・ｽl・ｽ・ｽEffekseer・ｽ・ｽ・ｽC・ｽ・ｽ・ｽX・ｽ^・ｽ・ｽ・ｽX・ｽﾖ厄ｿｽ・ｽt・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+		SetPosPlayingEffekseer3DEffect(playingEffectHandle, play_pos_.x, play_pos_.y, play_pos_.z);
+		SetRotationPlayingEffekseer3DEffect(playingEffectHandle, rotation_.x, rotation_.y, rotation_.z);
 		SetScalePlayingEffekseer3DEffect(playingEffectHandle, mvScale.x, mvScale.y, mvScale.z);
 	}
 }
@@ -45,18 +45,17 @@ void EffekseerEffect::Draw()
 
 void EffekseerEffect::Play()
 {
-	// �ǂݍ��񂾃G�t�F�N�g���\�[�X���ƂɁA3D��ԂōĐ���J�n����
-	playingEffectHandle = PlayEffekseer3DEffect(effectResourcehandle);
-	SetPosPlayingEffekseer3DEffect(playingEffectHandle, PlayPos.x, PlayPos.y, PlayPos.z);
+	// ・ｽﾇみ搾ｿｽ・ｽｾエ・ｽt・ｽF・ｽN・ｽg・ｽ・ｽ・ｽ\・ｽ[・ｽX・ｽ・ｽ・ｽﾆに、3D・ｽ・ｽﾔで再撰ｿｽ・ｽ・ｽJ・ｽn・ｽ・ｽ・ｽ・ｽ
+	playingEffectHandle = PlayEffekseer3DEffect(effect_resource_handle_);
+	SetPosPlayingEffekseer3DEffect(playingEffectHandle, play_pos_.x, play_pos_.y, play_pos_.z);
 }
 
 void EffekseerEffect::Stop()
 {
-	// ���݂̃G�t�F�N�g�Đ���Ԃ�擾���A�Đ����̏ꍇ�̂݋�����~�������
+	// ・ｽ・ｽ・ｽﾝのエ・ｽt・ｽF・ｽN・ｽg・ｽﾄ撰ｿｽ・ｽ・ｽﾔゑｿｽ謫ｾ・ｽ・ｽ・ｽA・ｽﾄ撰ｿｽ・ｽ・ｽ・ｽﾌ場合・ｽﾌみ具ｿｽ・ｽ・ｽ・ｽ・ｽ~・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 	int NowPlayEffect = IsEffekseer3DEffectPlaying(playingEffectHandle);
 	if (NowPlayEffect != -1)
 	{
 		StopEffekseer3DEffect(playingEffectHandle);
 	}
 }
-

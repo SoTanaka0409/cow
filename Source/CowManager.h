@@ -6,20 +6,20 @@
 #include "CowMove.h"
 #include "CreatureManager.h"
 
-// ステージ上の牛たちの動的生成、更新、タグ判定、上限管理、解放などを一括管理するクラス
-class CowManager : public CreatureManager<CowMove, CowMove::Tag_cow>
+// 繧ｹ繝・・繧ｸ荳翫・迚帙◆縺｡縺ｮ蜍慕噪逕滓・縲∵峩譁ｰ縲√ち繧ｰ蛻､螳壹∽ｸ企剞邂｡逅・∬ｧ｣謾ｾ縺ｪ縺ｩ繧剃ｸ諡ｬ邂｡逅・☆繧九け繝ｩ繧ｹ
+class CowManager : public CreatureManager<CowMove, CowMove::TagCow>
 {
 public:
 	CowManager();
 
 	/*
-	 * @brief 指定された種類の牛をランダムな位置に複数生成する（最大30匹制限あり）
-	 * [入力] filename: モデルのファイルパス, pos: 出現中心基準座標, scale: モデルの拡大率, tag: 牛の種類識別タグ, count: 生成個数, mfever: フィーバー中かどうか
-	 * [出力] なし
-	 * [副作用] 動的メモリ確保された牛オブジェクトが管理リストに追加されるか、プールから復帰する
+	 * @brief 謖・ｮ壹＆繧後◆遞ｮ鬘槭・迚帙ｒ繝ｩ繝ｳ繝繝縺ｪ菴咲ｽｮ縺ｫ隍・焚逕滓・縺吶ｋ・域怙螟ｧ30蛹ｹ蛻ｶ髯舌≠繧奇ｼ・
+	 * [蜈･蜉嫋 filename: 繝｢繝・Ν縺ｮ繝輔ぃ繧､繝ｫ繝代せ, pos: 蜃ｺ迴ｾ荳ｭ蠢・渕貅門ｺｧ讓・ scale: 繝｢繝・Ν縺ｮ諡｡螟ｧ邇・ tag: 迚帙・遞ｮ鬘櫁ｭ伜挨繧ｿ繧ｰ, count: 逕滓・蛟区焚, mfever: 繝輔ぅ繝ｼ繝舌・荳ｭ縺九←縺・°
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 蜍慕噪繝｡繝｢繝ｪ遒ｺ菫昴＆繧後◆迚帙が繝悶ず繧ｧ繧ｯ繝医′邂｡逅・Μ繧ｹ繝医↓霑ｽ蜉縺輔ｌ繧九°縲√・繝ｼ繝ｫ縺九ｉ蠕ｩ蟶ｰ縺吶ｋ
 	 */
-	void SpawnCow(std::string filename, VECTOR pos, float scale, CowMove::Tag_cow tag, int count, bool mfever = false);
+	void SpawnCow(std::string filename, VECTOR pos, float scale, CowMove::TagCow tag, int count, bool mfever = false);
 
 protected:
-	CowMove::Tag_cow GetTag(CowMove* creature) override { return creature->GetTag_cow(); }
+	CowMove::TagCow GetTag(CowMove* creature) override { return creature->GetTag_cow(); }
 };

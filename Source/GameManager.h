@@ -4,7 +4,7 @@
 
 class GameTimer;
 
-// イベント進行フェーズを管理するクラス
+// 繧､繝吶Φ繝磯ｲ陦後ヵ繧ｧ繝ｼ繧ｺ繧堤ｮ｡逅・☆繧九け繝ｩ繧ｹ
 class GameManager
 {
 public:
@@ -32,59 +32,59 @@ public:
 	~GameManager();
 
 	/*
-	 * 現在のゲームフェーズを取得する
-	 * [入力] なし
-	 * [出力] 現在のGamePhase
-	 * [副作用] なし
+	 * 迴ｾ蝨ｨ縺ｮ繧ｲ繝ｼ繝繝輔ぉ繝ｼ繧ｺ繧貞叙蠕励☆繧・
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 迴ｾ蝨ｨ縺ｮGamePhase
+	 * [蜑ｯ菴懃畑] 縺ｪ縺・
 	 */
 	GamePhase GetCurrentPhase() const { return mCurrentPhase; }
 
 	/*
-	 * ゲームフェーズを設定しイベント状態を切り替える
-	 * [入力] phase: 新しいフェーズ状態
-	 * [出力] なし
-	 * [副作用] mCurrentPhase が更新される
+	 * 繧ｲ繝ｼ繝繝輔ぉ繝ｼ繧ｺ繧定ｨｭ螳壹＠繧､繝吶Φ繝育憾諷九ｒ蛻・ｊ譖ｿ縺医ｋ
+	 * [蜈･蜉嫋 phase: 譁ｰ縺励＞繝輔ぉ繝ｼ繧ｺ迥ｶ諷・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] mCurrentPhase 縺梧峩譁ｰ縺輔ｌ繧・
 	 */
 	void SetCurrentPhase(GamePhase phase) { mCurrentPhase = phase; }
 
 	/*
-	 * スコア登録を伴う終了ステップへの遷移を行う
-	 * [入力] type: 遷移先のステップタイプ
-	 * [出力] なし
-	 * [副作用] 進行ステップ変更、フラグ更新、ネーム入力開始
+	 * 繧ｹ繧ｳ繧｢逋ｻ骭ｲ繧剃ｼｴ縺・ｵゆｺ・せ繝・ャ繝励∈縺ｮ驕ｷ遘ｻ繧定｡後≧
+	 * [蜈･蜉嫋 type: 驕ｷ遘ｻ蜈医・繧ｹ繝・ャ繝励ち繧､繝・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 騾ｲ陦後せ繝・ャ繝怜､画峩縲√ヵ繝ｩ繧ｰ譖ｴ譁ｰ縲√ロ繝ｼ繝蜈･蜉幃幕蟋・
 	 */
 	void GameNextStep(GameStepType type);
 	 
 	GameStepType GetType() { return mnType; }
 
 	/*
-	 * フェードイン等、ゲーム進行に必要な演出描画を行う
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 画面への暗転矩形描画
+	 * 繝輔ぉ繝ｼ繝峨う繝ｳ遲峨√ご繝ｼ繝騾ｲ陦後↓蠢・ｦ√↑貍泌・謠冗判繧定｡後≧
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 逕ｻ髱｢縺ｸ縺ｮ證苓ｻ｢遏ｩ蠖｢謠冗判
 	 */
 	void Draw();
 
 	/*
-	 * ゲームの進行状態と制限時間を監視・更新する
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] タイマー更新、フェーズ遷移抽選実行
+	 * 繧ｲ繝ｼ繝縺ｮ騾ｲ陦檎憾諷九→蛻ｶ髯先凾髢薙ｒ逶｣隕悶・譖ｴ譁ｰ縺吶ｋ
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 繧ｿ繧､繝槭・譖ｴ譁ｰ縲√ヵ繧ｧ繝ｼ繧ｺ驕ｷ遘ｻ謚ｽ驕ｸ螳溯｡・
 	 */
 	void Update();
 
-	GameTimer* GetGameTimer() const { return mpGameTimer; }
+	GameTimer* GetGameTimer() const { return game_timer_; }
 
 private:
-	std::vector<GameStepData*> mData; // 動的確保されたステップデータのリスト
+	std::vector<GameStepData*> mData; // 蜍慕噪遒ｺ菫昴＆繧後◆繧ｹ繝・ャ繝励ョ繝ｼ繧ｿ縺ｮ繝ｪ繧ｹ繝・
 	GameStepType mnType;
 	GamePhase mCurrentPhase;
 
-	float Fadetimer;                  // シーン開始時のフェード演出用
+	float Fadetimer;                  // 繧ｷ繝ｼ繝ｳ髢句ｧ区凾縺ｮ繝輔ぉ繝ｼ繝画ｼ泌・逕ｨ
 	bool Fadeflag;
 	
-	int m_PhaseTimer;                 // フェーズ遷移イベントの発生タイミング基準
+	int m_PhaseTimer;                 // 繝輔ぉ繝ｼ繧ｺ驕ｷ遘ｻ繧､繝吶Φ繝医・逋ｺ逕溘ち繧､繝溘Φ繧ｰ蝓ｺ貅・
 	int m_PhaseChangeCount;
 
-	GameTimer* mpGameTimer;           // タイマー管理用インスタンス
+	GameTimer* game_timer_;           // 繧ｿ繧､繝槭・邂｡逅・畑繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ
 };

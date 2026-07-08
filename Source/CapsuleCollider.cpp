@@ -5,9 +5,9 @@
 CapsuleCollider::CapsuleCollider(Object3D* parent, VECTOR pos1, VECTOR pos2, float radius)
 	: Collider(parent)
 {
-	mvPosition = pos1;
-	mvPosition2 = pos2;
-	mfRadius = radius;
+	position_ = pos1;
+	position2_ = pos2;
+	radius_ = radius;
 }
 
 CapsuleCollider::~CapsuleCollider()
@@ -29,4 +29,3 @@ void CapsuleCollider::OnTrigger()
 void CapsuleCollider::OnExit()
 {
 }
-

@@ -5,40 +5,40 @@
 class Collider;
 class CapsuleCollider;
 
-// 3D空間に配置されるオブジェクトの基底クラス
+// 3D遨ｺ髢薙↓驟咲ｽｮ縺輔ｌ繧九が繝悶ず繧ｧ繧ｯ繝医・蝓ｺ蠎輔け繝ｩ繧ｹ
 class Object3D
 {
 public:
-	// オブジェクトの識別用タグ
+	// 繧ｪ繝悶ず繧ｧ繧ｯ繝医・隴伜挨逕ｨ繧ｿ繧ｰ
 	enum Tag3D
 	{
-		None3D,
-		Tag3D_Stage,
-		Tag3D_player,
-		Tag3D_Enemy,
-		Tag3D_Cow,
-		Tag3D_Wall,
-		Tag3D_Bait,
-		Tag3D_Animal
+		kNone3d,
+		kTag3dStage,
+		kTag3dPlayer,
+		kTag3dEnemy,
+		kTag3dCow,
+		kTag3dWall,
+		kTag3dBait,
+		kTag3dAnimal
 	};
 
 public:
-	// カメラからの距離を設定する
-	void SetCameraDistance(float distance) { mfCurrentCameraDistance = distance; }
+	// 繧ｫ繝｡繝ｩ縺九ｉ縺ｮ霍晞屬繧定ｨｭ螳壹☆繧・
+	void SetCameraDistance(float distance) { current_camera_distance_ = distance; }
 
-	// カメラからの距離を基準に遠い順（Z値の降順）でソートするための比較関数
+	// 繧ｫ繝｡繝ｩ縺九ｉ縺ｮ霍晞屬繧貞渕貅悶↓驕縺・・ｼ・蛟､縺ｮ髯埼・ｼ峨〒繧ｽ繝ｼ繝医☆繧九◆繧√・豈碑ｼ・未謨ｰ
 	struct CompareZOrder {
 		bool operator()(Object3D* a, Object3D* b) const {
-			return a->mfCurrentCameraDistance > b->mfCurrentCameraDistance;
+			return a->current_camera_distance_ > b->current_camera_distance_;
 		}
 	};
 
 public:
 	/*
-	 * @brief 3Dオブジェクトを初期座標で生成し、現在アクティブなシーンのマネージャーへ自動登録する
-	 * [入力] initPos: 初期座標
-	 * [出力] なし
-	 * [副作用] シーンのObjectManagerに自身が登録される、デフォルトのカプセルコライダーが生成される
+	 * @brief 3D繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ蛻晄悄蠎ｧ讓吶〒逕滓・縺励∫樟蝨ｨ繧｢繧ｯ繝・ぅ繝悶↑繧ｷ繝ｼ繝ｳ縺ｮ繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｸ閾ｪ蜍慕匳骭ｲ縺吶ｋ
+	 * [蜈･蜉嫋 initPos: 蛻晄悄蠎ｧ讓・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 繧ｷ繝ｼ繝ｳ縺ｮObjectManager縺ｫ閾ｪ霄ｫ縺檎匳骭ｲ縺輔ｌ繧九√ョ繝輔か繝ｫ繝医・繧ｫ繝励そ繝ｫ繧ｳ繝ｩ繧､繝繝ｼ縺檎函謌舌＆繧後ｋ
 	 */
 	Object3D(VECTOR initPos);
 
@@ -49,59 +49,59 @@ public:
 	virtual void Draw();
 
 	/*
-	 * @brief コライダー同士の交差が開始した瞬間に呼ばれるコールバック関数
-	 * [入力] collider: 自身のコライダー, check: 相手のコライダー
-	 * [出力] なし
-	 * [副作用] なし
+	 * @brief 繧ｳ繝ｩ繧､繝繝ｼ蜷悟｣ｫ縺ｮ莠､蟾ｮ縺碁幕蟋九＠縺溽椪髢薙↓蜻ｼ縺ｰ繧後ｋ繧ｳ繝ｼ繝ｫ繝舌ャ繧ｯ髢｢謨ｰ
+	 * [蜈･蜉嫋 collider: 閾ｪ霄ｫ縺ｮ繧ｳ繝ｩ繧､繝繝ｼ, check: 逶ｸ謇九・繧ｳ繝ｩ繧､繝繝ｼ
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 縺ｪ縺・
 	 */
 	virtual void OnEnter(Collider* collider, Collider* check);
 
 	/*
-	 * @brief コライダー同士が交差している間、毎フレーム呼ばれるコールバック関数
-	 * [入力] collider: 自身のコライダー, check: 相手のコライダー
-	 * [出力] なし
-	 * [副作用] なし
+	 * @brief 繧ｳ繝ｩ繧､繝繝ｼ蜷悟｣ｫ縺御ｺ､蟾ｮ縺励※縺・ｋ髢薙∵ｯ弱ヵ繝ｬ繝ｼ繝蜻ｼ縺ｰ繧後ｋ繧ｳ繝ｼ繝ｫ繝舌ャ繧ｯ髢｢謨ｰ
+	 * [蜈･蜉嫋 collider: 閾ｪ霄ｫ縺ｮ繧ｳ繝ｩ繧､繝繝ｼ, check: 逶ｸ謇九・繧ｳ繝ｩ繧､繝繝ｼ
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 縺ｪ縺・
 	 */
 	virtual void OnTrigger(Collider* collider, Collider* check);
 
 	/*
-	 * @brief コライダー同士の交差が終了した瞬間に呼ばれるコールバック関数
-	 * [入力] collider: 自身のコライダー, check: 相手のコライダー
-	 * [出力] なし
-	 * [副作用] なし
+	 * @brief 繧ｳ繝ｩ繧､繝繝ｼ蜷悟｣ｫ縺ｮ莠､蟾ｮ縺檎ｵゆｺ・＠縺溽椪髢薙↓蜻ｼ縺ｰ繧後ｋ繧ｳ繝ｼ繝ｫ繝舌ャ繧ｯ髢｢謨ｰ
+	 * [蜈･蜉嫋 collider: 閾ｪ霄ｫ縺ｮ繧ｳ繝ｩ繧､繝繝ｼ, check: 逶ｸ謇九・繧ｳ繝ｩ繧､繝繝ｼ
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 縺ｪ縺・
 	 */
 	virtual void OnExit(Collider* collider, Collider* check);
 
 public:
-	// ゲッター・セッター群
-	void SetPosition(VECTOR pos) { mvPosition = pos; };
-	VECTOR GetPosition() { return mvPosition; }
+	// 繧ｲ繝・ち繝ｼ繝ｻ繧ｻ繝・ち繝ｼ鄒､
+	void SetPosition(VECTOR pos) { position_ = pos; };
+	VECTOR GetPosition() { return position_; }
 
-	void SetOldPosition(VECTOR pos) { mvOldPosition = pos; }
-	VECTOR GetOldPosition() { return mvOldPosition; }
+	void SetOldPosition(VECTOR pos) { old_position_ = pos; }
+	VECTOR GetOldPosition() { return old_position_; }
 
-	void SetRotation(VECTOR rot) { mvRotation = rot; }
-	VECTOR GETRotation() { return mvRotation; }
+	void SetRotation(VECTOR rot) { rotation_ = rot; }
+	VECTOR GETRotation() { return rotation_; }
 
-	void SetDeleteFlag(bool flag) { mbDeleteFlag = flag; }
-	bool IsDeleteFlag() { return mbDeleteFlag; }
+	void SetDeleteFlag(bool flag) { delete_flag_ = flag; }
+	bool IsDeleteFlag() { return delete_flag_; }
 
-	void SetDrawFlag(bool flag) { mbDrawFlag = flag; }
-	bool IsDrawFlag() { return mbDrawFlag; }
+	void SetDrawFlag(bool flag) { draw_flag_ = flag; }
+	bool IsDrawFlag() { return draw_flag_; }
 
-	void SetTag(Tag3D tag) { mnTag = tag; }
-	Tag3D GetTag() { return mnTag; }
+	void SetTag(Tag3D tag) { tag_ = tag; }
+	Tag3D GetTag() { return tag_; }
 
 protected:
-	VECTOR mvPosition;                  // 現在の座標
-	VECTOR mvRotation;                  // 回転角度
-	VECTOR mvOldPosition;               // 1フレーム前の座標
-	CapsuleCollider* mpCapsuleCollider; // 所有するカプセルコライダー
-	float mfRadius;                     // 簡易的な衝突半径
+	VECTOR position_;                  // 迴ｾ蝨ｨ縺ｮ蠎ｧ讓・
+	VECTOR rotation_;                  // 蝗櫁ｻ｢隗貞ｺｦ
+	VECTOR old_position_;               // 1繝輔Ξ繝ｼ繝蜑阪・蠎ｧ讓・
+	CapsuleCollider* capsule_collider_; // 謇譛峨☆繧九き繝励そ繝ｫ繧ｳ繝ｩ繧､繝繝ｼ
+	float radius_;                     // 邁｡譏鍋噪縺ｪ陦晉ｪ∝濠蠕・
 
 private:
-	bool mbDeleteFlag;                  // 削除フラグ（trueでマネージャーから破棄される）
-	Tag3D mnTag;                        // オブジェクト識別タグ
-	bool mbDrawFlag;                    // 描画フラグ
-	float mfCurrentCameraDistance;      // カメラからこのオブジェクトまでの距離
+	bool delete_flag_;                  // 蜑企勁繝輔Λ繧ｰ・・rue縺ｧ繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺九ｉ遐ｴ譽・＆繧後ｋ・・
+	Tag3D tag_;                        // 繧ｪ繝悶ず繧ｧ繧ｯ繝郁ｭ伜挨繧ｿ繧ｰ
+	bool draw_flag_;                    // 謠冗判繝輔Λ繧ｰ
+	float current_camera_distance_;      // 繧ｫ繝｡繝ｩ縺九ｉ縺薙・繧ｪ繝悶ず繧ｧ繧ｯ繝医∪縺ｧ縺ｮ霍晞屬
 };

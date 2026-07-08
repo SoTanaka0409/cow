@@ -4,14 +4,14 @@
 
 GameTimer::GameTimer(VECTOR pos, int timer, Tag_Num num)
 	: Time(timer)
-	, mvPosition(pos)
+	, position_(pos)
 	, mbFlag(false)
 	, mbStopFlag(false)
-	, mnTag(num)
+	, tag_(num)
 {
 	mLastTime = GetNowCount();
 
-	scoreTextImage = Master::mpResourceManager->LoadGraphics("Resource/2D/rimit.png"); // 描画負荷軽減のため予め読み込む
+	score_text_image_ = Master::mpResourceManager->LoadGraphics("Resource/2D/rimit.png"); // 描画遅延軽減のため先読み込み
 }
 
 GameTimer::~GameTimer()
@@ -20,23 +20,23 @@ GameTimer::~GameTimer()
 
 void GameTimer::Draw()
 {
-	if (mnTag == Tag_NoGame) return;
+	if (tag_ == Tag_NoGame) return;
 
-	// 解像度変更を考慮し、基準座標(mvPosition)からの相対位置で描画
+	// 解像度変更を想定し、基準座標(position_)からの相対位置で描画
 	DrawExtendGraph(
-		static_cast<int>(mvPosition.x + Utility::UI_BASE_X),
-		static_cast<int>(mvPosition.y + Utility::UI_TIMER_Y),
-		static_cast<int>(mvPosition.x + Utility::UI_BASE_X + Utility::UI_PANEL_W),
-		static_cast<int>(mvPosition.y + Utility::UI_TIMER_Y + Utility::UI_PANEL_H),
-		scoreTextImage,
+		static_cast<int>(position_.x + Utility::kUiBaseX),
+		static_cast<int>(position_.y + Utility::kUiTimerY),
+		static_cast<int>(position_.x + Utility::kUiBaseX + Utility::kUiPanelW),
+		static_cast<int>(position_.y + Utility::kUiTimerY + Utility::kUiPanelH),
+		score_text_image_,
 		TRUE
 	);
 
 	if (Master::mpScore)
 	{
 		Master::mpScore->DrawNumber(
-			static_cast<int>(mvPosition.x + Utility::UI_DIGIT_X),
-			static_cast<int>(mvPosition.y + Utility::UI_TIMER_Y),
+			static_cast<int>(position_.x + Utility::kUiDigitX),
+			static_cast<int>(position_.y + Utility::kUiTimerY),
 			Time,
 			1.0f,
 			1
@@ -56,7 +56,7 @@ void GameTimer::Update()
 		mLastTime = now;
 		Time--;
 
-		// 0未満の表示やマイナス値によるバグを防ぐため0で下限ストップ
+		// 0未満の表示やマイナス値によるバグを防ぐため下限をストップ
 		if (Time <= 0)
 		{
 			Time = 0;
@@ -65,4 +65,3 @@ void GameTimer::Update()
 		}
 	}
 }
-

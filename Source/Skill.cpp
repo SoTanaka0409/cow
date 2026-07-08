@@ -71,7 +71,7 @@ void Skill::Draw()
 {
 	if (!AddSkillFlag && !mSelectAnim) return;
 
-	// 選択完了後のカードが上昇・退出していく演出アニメーション
+	// 驕ｸ謚槫ｮ御ｺ・ｾ後・繧ｫ繝ｼ繝峨′荳頑・繝ｻ騾蜃ｺ縺励※縺・￥貍泌・繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ
 	if (mSelectAnim)
 	{
 		if (mSelectedSkill == 1)
@@ -119,7 +119,7 @@ void Skill::Update()
 		}
 	}
 
-	// 選択されたカードが上空へ飛んで消える演出アニメーション
+	// 驕ｸ謚槭＆繧後◆繧ｫ繝ｼ繝峨′荳顔ｩｺ縺ｸ鬟帙ｓ縺ｧ豸医∴繧区ｼ泌・繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ
 	if (mSelectAnim)
 	{
 		VECTOR target = VGet(mSelectPos.x, -400.0f, 0.0f);
@@ -137,7 +137,7 @@ void Skill::Update()
 		}
 	}
 
-	// カード選択開始時に、カードが画面外から滑らかにスライドインするアニメーション
+	// 繧ｫ繝ｼ繝蛾∈謚樣幕蟋区凾縺ｫ縲√き繝ｼ繝峨′逕ｻ髱｢螟悶°繧画ｻ代ｉ縺九↓繧ｹ繝ｩ繧､繝峨う繝ｳ縺吶ｋ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ
 	if (mOpenAnim)
 	{
 		mCard1Y += (450.0f - mCard1Y) * 0.15f;
@@ -162,14 +162,14 @@ void Skill::AddSkill()
 {
 	if (!AddSkillFlag) return;
 	
-	SetMouseDispFlag(true); // スキル選択中はマウスポインタを表示
+	SetMouseDispFlag(true); // 繧ｹ繧ｭ繝ｫ驕ｸ謚樔ｸｭ縺ｯ繝槭え繧ｹ繝昴う繝ｳ繧ｿ繧定｡ｨ遉ｺ
 	Master::SelectSkill = true;
-	int mouseX, mouseY;
-	GetMousePoint(&mouseX, &mouseY);
+	int mouse_x_, mouse_y_;
+	GetMousePoint(&mouse_x_, &mouse_y_);
 
 	mHoverSkill = 0;
 
-	// スキルカードをホバーまたは左クリックした際のコライダー計算を行うラムダ関数
+	// 繧ｹ繧ｭ繝ｫ繧ｫ繝ｼ繝峨ｒ繝帙ヰ繝ｼ縺ｾ縺溘・蟾ｦ繧ｯ繝ｪ繝・け縺励◆髫帙・繧ｳ繝ｩ繧､繝繝ｼ險育ｮ励ｒ陦後≧繝ｩ繝繝髢｢謨ｰ
 	auto ProcessSkill = [&](Texture* tex, int id) {
 		if (tex == nullptr) return false;
 
@@ -182,7 +182,7 @@ void Skill::AddSkill()
 		float top = pos.y - (h / 2.0f);
 		float bottom = pos.y + (h / 2.0f);
 
-		if (mouseX >= left && mouseX <= right && mouseY >= top && mouseY <= bottom)
+		if (mouse_x_ >= left && mouse_x_ <= right && mouse_y_ >= top && mouse_y_ <= bottom)
 		{
 			mHoverSkill = id;
 			if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0)
@@ -195,41 +195,41 @@ void Skill::AddSkill()
 
 	if (ProcessSkill(mpTexture, 1))
 	{
-		// 速度アップ
+		// 騾溷ｺｦ繧｢繝・・
 		Status_S += 2.0f;
 		mSelectedSkill = 1;
 		mSelectPos = mpTexture->GetPosition();
 		mSelectAnim = true;
 		mFlash = true;
 		mFlashAlpha = 255;
-		Master::mpSoundManager->PlaySE(SoundManager::SE_SKILL_STATUS);
+		Master::mpSoundManager->PlaySE(SoundManager::kSeSkillStatus);
 		SetMouseDispFlag(false);
 	}
 	else if (ProcessSkill(mpTexture2, 2))
 	{
-		// 餌（デコイにんじん）設置
-		auto b = new Bait("Resource/3D/牛の餌/Carrot.mv1", mpParent->GetPosition());
+		// 鬢鯉ｼ医ョ繧ｳ繧､縺ｫ繧薙§繧難ｼ芽ｨｭ鄂ｮ
+		auto b = new Bait("Resource/3D/迚帙・鬢・Carrot.mv1", mpParent->GetPosition());
 		float scale = 5000.0f;
-		b->mpModel->SetScale(VGet(scale, scale, scale));
+		b->model_->SetScale(VGet(scale, scale, scale));
 
 		mSelectedSkill = 2;
 		mSelectPos = mpTexture2->GetPosition();
 		mSelectAnim = true;
 		mFlash = true;
 		mFlashAlpha = 255;
-		Master::mpSoundManager->PlaySE(SoundManager::SE_SKILL_FOOD);
+		Master::mpSoundManager->PlaySE(SoundManager::kSeSkillFood);
 		SetMouseDispFlag(false);
 	}
 	else if (ProcessSkill(mpTexture3, 3))
 	{
-		// 吸引速度（攻撃力）アップ
+		// 蜷ｸ蠑暮溷ｺｦ・域判謦・鴨・峨い繝・・
 		Status_A += 1.0f;
 		mSelectedSkill = 3;
 		mSelectPos = mpTexture3->GetPosition();
 		mSelectAnim = true;
 		mFlash = true;
 		mFlashAlpha = 255;
-		Master::mpSoundManager->PlaySE(SoundManager::SE_SKILL_STATUS);
+		Master::mpSoundManager->PlaySE(SoundManager::kSeSkillStatus);
 		SetMouseDispFlag(false);
 	}
 }
@@ -246,4 +246,3 @@ float Skill::GetStatusDate(StatusTag tag)
 	}
 	return 0.0f;
 }
-

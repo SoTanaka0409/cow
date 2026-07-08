@@ -4,8 +4,8 @@
 SphereCollider::SphereCollider(Object3D* parent, VECTOR center, float radius)
 	: Collider(parent)
 {
-	mvPosition = center;
-	mfRadius = radius;
+	position_ = center;
+	radius_ = radius;
 }
 
 SphereCollider::~SphereCollider()
@@ -15,10 +15,10 @@ SphereCollider::~SphereCollider()
 
 void SphereCollider::Draw()
 {
-	// 球の描画処理
+	// 逅・・謠冗判蜃ｦ逅・
 	DrawSphere3D(
-		mvPosition,
-		mfRadius,
+		position_,
+		radius_,
 		8,
 		GetColor(255, 255, 255),
 		GetColor(255, 255, 255),
@@ -40,4 +40,3 @@ void SphereCollider::OnExit()
 {
 
 }
-

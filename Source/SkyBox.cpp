@@ -4,50 +4,49 @@
 SkyBox::SkyBox(std::string filename, VECTOR pos)
 	: Object3D(pos)
 {
-	// スカイボックスモデルの配置初期化
-	mpModel = new Model(filename, VGet(0.0f, 0.0f, 0.0f));
+	// 繧ｹ繧ｫ繧､繝懊ャ繧ｯ繧ｹ繝｢繝・Ν縺ｮ驟咲ｽｮ蛻晄悄蛹・
+	model_ = new Model(filename, VGet(0.0f, 0.0f, 0.0f));
 }
 
 SkyBox::~SkyBox()
 {
-	if (mpModel != nullptr)
+	if (model_ != nullptr)
 	{
-		delete mpModel;
+		delete model_;
 	}
 }
 
 void SkyBox::Update()
 {
-	if (mpModel != nullptr)
+	if (model_ != nullptr)
 	{
-		mpModel->Update();
+		model_->Update();
 	}
 }
 
 void SkyBox::Draw()
 {
-	if (mpModel != nullptr)
+	if (model_ != nullptr)
 	{
-		// 空モデルが光源計算や周囲の影の影響を受けて暗く沈まないように、ライティングを無効化して描画する
+		// 遨ｺ繝｢繝・Ν縺悟・貅占ｨ育ｮ励ｄ蜻ｨ蝗ｲ縺ｮ蠖ｱ縺ｮ蠖ｱ髻ｿ繧貞女縺代※證励￥豐医∪縺ｪ縺・ｈ縺・↓縲√Λ繧､繝・ぅ繝ｳ繧ｰ繧堤┌蜉ｹ蛹悶＠縺ｦ謠冗判縺吶ｋ
 		SetUseLighting(FALSE);
-		mpModel->Draw();
+		model_->Draw();
 		SetUseLighting(TRUE);
 	}
 }
 
 void SkyBox::SetScale(float scale)
 {
-	if (mpModel != nullptr)
+	if (model_ != nullptr)
 	{
-		mpModel->SetScale(scale);
+		model_->SetScale(scale);
 	}
 }
 
 void SkyBox::SetModelTexture(std::string filename, int index)
 {
-	if (mpModel != nullptr)
+	if (model_ != nullptr)
 	{
-		mpModel->SetTexture(filename, index);
+		model_->SetTexture(filename, index);
 	}
 }
-

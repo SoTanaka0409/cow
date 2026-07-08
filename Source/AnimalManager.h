@@ -7,20 +7,20 @@
 #include "AnimalMove.h"
 #include "CreatureManager.h"
 
-// ステージ上の一般アニマル（牛以外）の動的生成、更新、タグ判定、解放などを一括管理するクラス
-class AnimalManager : public CreatureManager<AnimalMove, AnimalMove::Tag_animal>
+// 繧ｹ繝・・繧ｸ荳翫・荳闊ｬ繧｢繝九・繝ｫ・育央莉･螟厄ｼ峨・蜍慕噪逕滓・縲∵峩譁ｰ縲√ち繧ｰ蛻､螳壹∬ｧ｣謾ｾ縺ｪ縺ｩ繧剃ｸ諡ｬ邂｡逅・☆繧九け繝ｩ繧ｹ
+class AnimalManager : public CreatureManager<AnimalMove, AnimalMove::TagAnimal>
 {
 public:
 	AnimalManager();
 
 	/*
-	 * @brief 指定された種類の動物をランダムな位置に複数生成する
-	 * [入力] filename: モデルのファイルパス, pos: 出現中心基準座標, scale: モデルの拡大率, tag: 動物の種類識別タグ, count: 生成個数
-	 * [出力] なし
-	 * [副作用] 動的メモリ確保された動物オブジェクトが管理リストに追加される、またはプールから復帰する
+	 * @brief 謖・ｮ壹＆繧後◆遞ｮ鬘槭・蜍慕黄繧偵Λ繝ｳ繝繝縺ｪ菴咲ｽｮ縺ｫ隍・焚逕滓・縺吶ｋ
+	 * [蜈･蜉嫋 filename: 繝｢繝・Ν縺ｮ繝輔ぃ繧､繝ｫ繝代せ, pos: 蜃ｺ迴ｾ荳ｭ蠢・渕貅門ｺｧ讓・ scale: 繝｢繝・Ν縺ｮ諡｡螟ｧ邇・ tag: 蜍慕黄縺ｮ遞ｮ鬘櫁ｭ伜挨繧ｿ繧ｰ, count: 逕滓・蛟区焚
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 蜍慕噪繝｡繝｢繝ｪ遒ｺ菫昴＆繧後◆蜍慕黄繧ｪ繝悶ず繧ｧ繧ｯ繝医′邂｡逅・Μ繧ｹ繝医↓霑ｽ蜉縺輔ｌ繧九√∪縺溘・繝励・繝ｫ縺九ｉ蠕ｩ蟶ｰ縺吶ｋ
 	 */
-	void SpawnAnimal(std::string filename, VECTOR pos, float scale, AnimalMove::Tag_animal tag, int count);
+	void SpawnAnimal(std::string filename, VECTOR pos, float scale, AnimalMove::TagAnimal tag, int count);
 
 protected:
-	AnimalMove::Tag_animal GetTag(AnimalMove* creature) override { return creature->GetTag_animal(); }
+	AnimalMove::TagAnimal GetTag(AnimalMove* creature) override { return creature->GetTag_animal(); }
 };

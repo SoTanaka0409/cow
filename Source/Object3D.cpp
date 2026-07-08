@@ -7,25 +7,25 @@
 #include "CapsuleCollider.h"
 
 Object3D::Object3D(VECTOR initPos)
-	: mvPosition(initPos)
-	, mpCapsuleCollider(nullptr)
-	, mvRotation(VGet(0.0f, 0.0f, 0.0f))
-	, mbDeleteFlag(false)
-	, mnTag(Tag3D::None3D)
-	, mbDrawFlag(true)
-	, mfRadius(0)
+	: position_(initPos)
+	, capsule_collider_(nullptr)
+	, rotation_(VGet(0.0f, 0.0f, 0.0f))
+	, delete_flag_(false)
+	, tag_(Tag3D::kNone3d)
+	, draw_flag_(true)
+	, radius_(0)
 {
-	// ���������I�u�W�F�N�g��Ǘ��E�X�V���邽�߁A���݂̃A�N�e�B�u�ȃV�[���̃}�l�[�W���[�֎����o�^����
+	// ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽI・ｽu・ｽW・ｽF・ｽN・ｽg・ｽ・ｽﾇ暦ｿｽ・ｽE・ｽX・ｽV・ｽ・ｽ・ｽ驍ｽ・ｽﾟ、・ｽ・ｽ・ｽﾝのア・ｽN・ｽe・ｽB・ｽu・ｽﾈシ・ｽ[・ｽ・ｽ・ｽﾌマ・ｽl・ｽ[・ｽW・ｽ・ｽ・ｽ[・ｽﾖ趣ｿｽ・ｽ・ｽ・ｽo・ｽ^・ｽ・ｽ・ｽ・ｽ
 	ServiceLocator::GetObjectManager()->AddObject(this);
-	mpCapsuleCollider = new CapsuleCollider(this, initPos, initPos, 0);
+	capsule_collider_ = new CapsuleCollider(this, initPos, initPos, 0);
 }
 
 Object3D::~Object3D()
 {
-	if (mpCapsuleCollider != nullptr)
+	if (capsule_collider_ != nullptr)
 	{
-		delete mpCapsuleCollider;
-		mpCapsuleCollider = nullptr;
+		delete capsule_collider_;
+		capsule_collider_ = nullptr;
 	}
 }
 
@@ -48,4 +48,3 @@ void Object3D::OnTrigger(Collider* collider, Collider* check)
 void Object3D::OnExit(Collider* collider, Collider* check)
 {
 }
-

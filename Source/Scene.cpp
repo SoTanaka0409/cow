@@ -28,7 +28,7 @@ Scene::~Scene()
 	if (mpObjectManager != nullptr)
 	{
 		mpObjectManager->DeleteAll3D();
-		mpObjectManager->DeleteAll2D(); // シーン切り替え時のメモリリーク防止
+		mpObjectManager->DeleteAll2D(); // 繧ｷ繝ｼ繝ｳ蛻・ｊ譖ｿ縺域凾縺ｮ繝｡繝｢繝ｪ繝ｪ繝ｼ繧ｯ髦ｲ豁｢
 		delete mpObjectManager;
 	}
 
@@ -66,7 +66,7 @@ void Scene::Draw()
 	}
 	if (mpColliderManager != nullptr)
 	{
-		mpColliderManager->Draw(); // デバッグ用の当たり判定可視化
+		mpColliderManager->Draw(); // 繝・ヰ繝・げ逕ｨ縺ｮ蠖薙◆繧雁愛螳壼庄隕門喧
 	}
 	if (mpAnimalManager != nullptr)
 	{
@@ -96,7 +96,7 @@ void Scene::Update()
 
 void Scene::Fade(SceneFade fade)
 {
-	// フェードイン
+	// 繝輔ぉ繝ｼ繝峨う繝ｳ
 	if (fade == SceneFade::SceneFade_In)
 	{
 
@@ -107,25 +107,25 @@ void Scene::Fade(SceneFade fade)
 		if (mfFadeAlpha > 0)
 		{
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)mfFadeAlpha);
-			DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE); // 画面全体を暗転
+			DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE); // 逕ｻ髱｢蜈ｨ菴薙ｒ證苓ｻ｢
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);          
 		}
 	}
-	// フェードアウト
+	// 繝輔ぉ繝ｼ繝峨い繧ｦ繝・
 	else if (fade == SceneFade::SceneFade_Out)
 	{
 
 		mfFadeAlpha += mfFadeSpeed;
-		if (mfFadeAlpha > 255) mfFadeAlpha = 255; // DxLibの仕様によりアルファ値上限は255
+		if (mfFadeAlpha > 255) mfFadeAlpha = 255; // DxLib縺ｮ莉墓ｧ倥↓繧医ｊ繧｢繝ｫ繝輔ぃ蛟､荳企剞縺ｯ255
 
 
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)mfFadeAlpha);
 		DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);          
 	}
-	// ロード中
+	// 繝ｭ繝ｼ繝我ｸｭ
 	else if (fade == SceneFade::SceneFade_Load)
 	{
-		// 将来のロード画面拡張用スペース
+		// 蟆・擂縺ｮ繝ｭ繝ｼ繝臥判髱｢諡｡蠑ｵ逕ｨ繧ｹ繝壹・繧ｹ
 	}
 }

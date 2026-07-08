@@ -28,33 +28,33 @@ bool Master::SelectSkill = false;
 int Master::mnTutorialcount = 0;
 bool Master::GameFinishFlag = false;
 int Master::mnCaughtCowCount = 0;
-bool Master::TutrialVacumFlag = false;
+bool Master::tutorial_vacum_flag_ = false;
 bool Master::FeverFlag = false;
 float Master::mfDeltaTime = 0.01666f;
 
-VECTOR Utility::StageSize= VGet(6000, 0, 6000); // 3D空間の境界制約としてステージサイズを定義
+VECTOR Utility::StageSize= VGet(6000, 0, 6000); // 3D遨ｺ髢薙・蠅・阜蛻ｶ邏・→縺励※繧ｹ繝・・繧ｸ繧ｵ繧､繧ｺ繧貞ｮ夂ｾｩ
 
 /*
- * @brief アプリケーションのエントリーポイント
- * [入力] hInstance, hPrevInstance, lpCmdLine, nCmdShow
- * [出力] 終了コード (正常終了時は0, エラー時は-1)
- * [副作用] ゲームウィンドウの起動、システム初期化、メインループ実行、全リソースの解放
+ * @brief 繧｢繝励Μ繧ｱ繝ｼ繧ｷ繝ｧ繝ｳ縺ｮ繧ｨ繝ｳ繝医Μ繝ｼ繝昴う繝ｳ繝・
+ * [蜈･蜉嫋 hInstance, hPrevInstance, lpCmdLine, nCmdShow
+ * [蜃ｺ蜉嫋 邨ゆｺ・さ繝ｼ繝・(豁｣蟶ｸ邨ゆｺ・凾縺ｯ0, 繧ｨ繝ｩ繝ｼ譎ゅ・-1)
+ * [蜑ｯ菴懃畑] 繧ｲ繝ｼ繝繧ｦ繧｣繝ｳ繝峨え縺ｮ襍ｷ蜍輔√す繧ｹ繝・Β蛻晄悄蛹悶√Γ繧､繝ｳ繝ｫ繝ｼ繝怜ｮ溯｡後∝・繝ｪ繧ｽ繝ｼ繧ｹ縺ｮ隗｣謾ｾ
  */
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	// デバッグや他作業の並行を容易にするためウィンドウモードで起動
+	// 繝・ヰ繝・げ繧・ｻ紋ｽ懈･ｭ縺ｮ荳ｦ陦後ｒ螳ｹ譏薙↓縺吶ｋ縺溘ａ繧ｦ繧｣繝ｳ繝峨え繝｢繝ｼ繝峨〒襍ｷ蜍・
 	ChangeWindowMode(true);
 
-	SetGraphMode(Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT, 32, 60);
-	SetWindowSize(Utility::SCREEN_WIDTH, Utility::SCREEN_HEIGHT);
+	SetGraphMode(Utility::kScreenWidth, Utility::kScreenHeight, 32, 60);
+	SetWindowSize(Utility::kScreenWidth, Utility::kScreenHeight);
 	
-	// DxLibの初期化エラー時は実行継続不可のため即時終了
+	// DxLib縺ｮ蛻晄悄蛹悶お繝ｩ繝ｼ譎ゅ・螳溯｡檎ｶ咏ｶ壻ｸ榊庄縺ｮ縺溘ａ蜊ｳ譎らｵゆｺ・
 	if (DxLib_Init() == -1)
 	{
 		return -1;
 	}
 
-	Master::mpScore = new Score(); // DxLib初期化前だと画像読み込みが失敗する制約があるためここで生成
+	Master::mpScore = new Score(); // DxLib蛻晄悄蛹門燕縺縺ｨ逕ｻ蜒剰ｪｭ縺ｿ霎ｼ縺ｿ縺悟､ｱ謨励☆繧句宛邏・′縺ゅｋ縺溘ａ縺薙％縺ｧ逕滓・
 
 	SRand(GetNowCount());
 
@@ -65,12 +65,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetUseZBufferFlag(true);
 	SetWriteZBufferFlag(true);
 
-	Master::mpSoundManager->Initialize(); // 再生遅延を防ぐため全音源データをプリロードする
+	Master::mpSoundManager->Initialize(); // 蜀咲函驕・ｻｶ繧帝亟縺舌◆繧∝・髻ｳ貅舌ョ繝ｼ繧ｿ繧偵・繝ｪ繝ｭ繝ｼ繝峨☆繧・
 
-	// 初期シーンを構築する
+	// 蛻晄悄繧ｷ繝ｼ繝ｳ繧呈ｧ狗ｯ峨☆繧・
 	Master::mpSceneManager->Initialize();
 	
-	// 描画用の各カメラを初期化する
+	// 謠冗判逕ｨ縺ｮ蜷・き繝｡繝ｩ繧貞・譛溷喧縺吶ｋ
 	Master::mpCamera->Initialize();
 	Master::mpDebugCamera->Initialize();
 
@@ -80,7 +80,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
-		// 前フレームの描画をクリアして新規描画の準備
+		// 蜑阪ヵ繝ｬ繝ｼ繝縺ｮ謠冗判繧偵け繝ｪ繧｢縺励※譁ｰ隕乗緒逕ｻ縺ｮ貅門ｙ
 		ClearDrawScreen();
 		int time = GetNowCount();
 
@@ -88,7 +88,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		if (Master::mfDeltaTime > 0.1f) Master::mfDeltaTime = 0.1f;
 		previousTime = time;
 
-		// 開発効率化のためF1キーでデバッグカメラをトグル
+		// 髢狗匱蜉ｹ邇・喧縺ｮ縺溘ａF1繧ｭ繝ｼ縺ｧ繝・ヰ繝・げ繧ｫ繝｡繝ｩ繧偵ヨ繧ｰ繝ｫ
 		if (InputManager::CheckDownKey(KEY_INPUT_F1))
 		{
 			Master::mbIsDebugCamera = !Master::mbIsDebugCamera;
@@ -111,15 +111,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		
 		Master::mpEffectManager->Draw();
 
-		// 描画のちらつきを防ぐためフリップする
+		// 謠冗判縺ｮ縺｡繧峨▽縺阪ｒ髦ｲ縺舌◆繧√ヵ繝ｪ繝・・縺吶ｋ
 		ScreenFlip();
 
-		// 固定フレームレート(60FPS)維持のため待機
+		// 蝗ｺ螳壹ヵ繝ｬ繝ｼ繝繝ｬ繝ｼ繝・60FPS)邯ｭ謖√・縺溘ａ蠕・ｩ・
 		while (GetNowCount() - time < 17)
 		{
 		}
 
-		// メモリリークを防ぐため破棄要求のあるオブジェクトを解放
+		// 繝｡繝｢繝ｪ繝ｪ繝ｼ繧ｯ繧帝亟縺舌◆繧∫ｴ譽・ｦ∵ｱゅ・縺ゅｋ繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ隗｣謾ｾ
 		if (auto scene = ServiceLocator::GetCurrentScene())
 		{
 			scene->GetCollisionManager()->DeleteAllColliderIfNeeded();
@@ -129,10 +129,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			objMgr->DeleteAll3DIfNeeded();
 		}
 
-		// フレーム終了時に安全にシーン遷移を行う
+		// 繝輔Ξ繝ｼ繝邨ゆｺ・凾縺ｫ螳牙・縺ｫ繧ｷ繝ｼ繝ｳ驕ｷ遘ｻ繧定｡後≧
 		Master::mpSceneManager->ChangeSceneIfNeeded();
 	}
-	// アプリケーション終了に伴うリソース解放
+	// 繧｢繝励Μ繧ｱ繝ｼ繧ｷ繝ｧ繝ｳ邨ゆｺ・↓莨ｴ縺・Μ繧ｽ繝ｼ繧ｹ隗｣謾ｾ
 	Master::mpSceneManager->Finalize();
 	delete Master::mpSceneManager;
 	Master::mpSoundManager->Finalize();
@@ -148,8 +148,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	delete Master::mpScore;
 
-	DxLib_End(); // DxLibの内部リソースを解放
+	DxLib_End(); // DxLib縺ｮ蜀・Κ繝ｪ繧ｽ繝ｼ繧ｹ繧定ｧ｣謾ｾ
 
 	return 0;
 }
-

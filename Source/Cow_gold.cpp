@@ -8,17 +8,17 @@
 #include "Bait.h"
 #include "Wall.h"
 
-Cow_gold::Cow_gold(std::string filename, VECTOR initPos, Tag_fever fever)
+Cow_gold::Cow_gold(std::string filename, VECTOR initPos, TagFever kFever)
 	: CowMove(filename, initPos)
-	, mnFever(fever)
-	, DeathCount(0)
-	, DeathTimer(1200)
+	, fever_(kFever)
+	, death_count_(0)
+	, death_timer_(1200)
 {
-	SetTag_cow(CowMove::Cow_gold);
+	SetTag_cow(CowMove::kCowGold);
 	mfXp = 20;
 	mfScore = 30;
-	// プレイヤーが捕獲しやすいように当たり判定を大きめに設定
-	mColliderRadius = 150.0f;
+	// 繝励Ξ繧､繝､繝ｼ縺梧黒迯ｲ縺励ｄ縺吶＞繧医≧縺ｫ蠖薙◆繧雁愛螳壹ｒ螟ｧ縺阪ａ縺ｫ險ｭ螳・
+	collider_radius_ = 150.0f;
 }
 
 Cow_gold::~Cow_gold()
@@ -28,17 +28,17 @@ Cow_gold::~Cow_gold()
 void Cow_gold::Reset(VECTOR pos)
 {
 	CowMove::Reset(pos);
-	DeathCount = 0;
+	death_count_ = 0;
 }
 
 void Cow_gold::Update()
 {
-	DeathCount++;
+	death_count_++;
 	CowMove::Update();
 
-	// フィーバー終了時や寿命超過で画面内に残り続けるのを防ぐため消滅させる
+	// 繝輔ぅ繝ｼ繝舌・邨ゆｺ・凾繧・ｯｿ蜻ｽ雜・℃縺ｧ逕ｻ髱｢蜀・↓谿九ｊ邯壹￠繧九・繧帝亟縺舌◆繧∵ｶ域ｻ・＆縺帙ｋ
 	auto fv = ServiceLocator::GetFever();
-	if (mnFever == fever && (fv == nullptr || fv->IsFever() == false || DeathCount >= DeathTimer))
+	if (fever_ == kFever && (fv == nullptr || fv->IsFever() == false || death_count_ >= death_timer_))
 	{
 		Die(DEATH_LIMIT);
 	}
@@ -46,14 +46,14 @@ void Cow_gold::Update()
 
 void Cow_gold::Die(DeathReason reason)
 {
-	// 二重解放や不整合を防ぐため、既に消滅処理中なら弾く
+	// 莠碁㍾隗｣謾ｾ繧・ｸ肴紛蜷医ｒ髦ｲ縺舌◆繧√∵里縺ｫ豸域ｻ・・逅・ｸｭ縺ｪ繧牙ｼｾ縺・
 	if (mDeleteFlag) return;
 	CowMove::Die(reason);
 
-	// プレイヤーの直接的アクション（吸引・エサ）で捕獲された場合のみ発動させる
+	// 繝励Ξ繧､繝､繝ｼ縺ｮ逶ｴ謗･逧・い繧ｯ繧ｷ繝ｧ繝ｳ・亥精蠑輔・繧ｨ繧ｵ・峨〒謐慕佐縺輔ｌ縺溷ｴ蜷医・縺ｿ逋ｺ蜍輔＆縺帙ｋ
 	if (reason == DEATH_VACUUM || reason == DEATH_BAIT)
 	{
-		if (this->mnFever == Nofever)
+		if (this->fever_ == kNoFever)
 		{
 			if (auto fv = ServiceLocator::GetFever())
 			{

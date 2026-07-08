@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "DxLib.h"
 #include "Object3D.h"
 #include "Model.h"
@@ -14,14 +14,14 @@ class CowMove : public CharacterMove
 {
 public:
 	// 個別仕様分岐のための牛種類識別用タグ
-	enum Tag_cow
+	enum TagCow
 	{
-		none,
-		Cow_1,
-		Cow_2,
-		Cow_3,
-		Cow_gold,
-		Cow_T,
+		kNone,
+		kCow1,
+		kCow2,
+		kCow3,
+		kCowGold,
+		kCowT,
 	};
 
 public:
@@ -91,19 +91,18 @@ public:
 	 */
 	virtual void Die(DeathReason reason) override;
 
-	void SetTag_cow(Tag_cow tag) { mntag_cow = tag; }
-	Tag_cow GetTag_cow() { return mntag_cow; }
+	void SetTag_cow(TagCow tag) { tag_cow_ = tag; }
+	TagCow GetTag_cow() { return tag_cow_; }
 
-	void SetColliderRadius(float radius) { mColliderRadius = radius; }
+	void SetColliderRadius(float radius) { collider_radius_ = radius; }
 
 protected:
-	Tag_cow mntag_cow;                  // 個別仕様分岐のためのタグ
-	float mColliderRadius = 50.0f;      // 衝突判定用の半径制約
+	TagCow tag_cow_;                  // 個別仕様分岐のためのタグ
+	float collider_radius_ = 50.0f;      // 衝突判定用の半径制約
 
-	EffekseerEffect* mpCowVm;           // 吸引演出用エフェクト
-	int mEffectTimer;                   // エフェクト再生完了までの待機フレーム
-	bool TutrialVacumFlag;              // チュートリアル用の特別な判定フラグ
+	EffekseerEffect* cow_vm_;           // 吸引演出用エフェクト
+	int effect_timer_;                   // エフェクト再生完了までの待機フレーム
+	bool tutorial_vacum_flag_;              // チュートリアル用の特別な判定フラグ
 };
-
 
 

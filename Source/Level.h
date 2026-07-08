@@ -3,7 +3,7 @@
 #include"Object3D.h"
 #include"Utility.h"
 
-// プレイヤーの成長状態(レベル・経験値)および進行度UIを管理するクラス
+// プレイヤーの成長状態（レベル・経験値）および進行度UIを管理するクラス
 class Level
 {
 public:
@@ -11,53 +11,52 @@ public:
 	~Level();
 
 	/*
-	 * @brief 現在の進行度をプレイヤーに通知するためUIを描画する
+	 * @brief 現在の進行度をプレイヤーに伝達するためUIを描画する
 	 * [入力] なし
 	 * [出力] なし
-	 * [副作用] レベル文字列、経験値バーの画面描画
+	 * [備考] レベル文字列、経験値バーの画面描画
 	 */
 	void Draw();
 
 	/*
-	 * @brief 状態更新処理を行う（現在は拡張用にプレースホルダとして残す）
+	 * @brief 状態変更処理を行う（現在は拡張用にプレースホルダとして残す）
 	 * [入力] なし
 	 * [出力] なし
-	 * [副作用] なし
+	 * [備考] なし
 	 */
 	void Update();
 
 	/*
-	 * @brief 経験値を加算し、上限到達時にレベルアップ判定を行う
+	 * @brief 経験値を加算し、一定蓄積時にレベルアップ判定を行う
 	 * [入力] xp: 加算する経験値量
 	 * [出力] なし
-	 * [副作用] 経験値の更新、およびレベルアップ時にスキル選択フラグを有効化
+	 * [備考] 経験値の更新、およびレベルアップ時にスキル選択フラグを有効化
 	 */
 	void AddXp(float xp);
 
 	/*
-	 * @brief レベルアップの進行度を適切に保つため次レベルの必要経験値を再設定する
+	 * @brief レベルアップの進行度を初期化し次レベルの必要経験値を設定する
 	 * [入力] なし
 	 * [出力] なし
-	 * [副作用] mfMaxXpの更新
+	 * [備考] mfMaxXpの更新
 	 */
 	void SetNextLevel();
 
 private:
 	/*
-	 * @brief 経験値の進行割合を視覚的に把握できるメーターとして描画する
+	 * @brief 経験値の進行割合を視覚的に読み取れるメーターとして描画する
 	 * [入力] なし
 	 * [出力] なし
-	 * [副作用] 進捗枠線（白）、背景（黒）、進捗バー（緑）の描画
+	 * [備考] 進捗背景、バー進行、全長縁の描画
 	 */
 	void DrawBar();
 
 	Object3D* mpParent;
-	int mnGaugeFrameGraph;        // スキル付与などの副作用を適用するための対象オブジェクトポインタ
-	float mfxp;                // レベルアップ判定の基準となる現在の獲得経験値量
-	float mfMaxXp;             // 難易度曲線を形成するための次レベル要求経験値
-	int mnNowLevel;            // プレイヤーの強さや要求経験値計算の基準となるレベル値
+	int mnGaugeFrameGraph;  // スキル選択などの備考用に残すための対象オブジェクトのインタ
+	float mfxp;             // レベルアップ判定の基準となる現在の累積経験値量
+	float mfMaxXp;          // 難易度調整を形成するための次レベル必要経験値
+	int mnNowLevel;         // プレイヤーの強さや必要経験値設定の基準となるレベル値
 
-	VECTOR pos = VGet(Utility::UI_BASE_X, Utility::UI_LEVEL_Y, 0); // 解像度に合わせたUI配置の基準座標
-	VECTOR size = VGet(Utility::UI_LEVEL_W, Utility::UI_LEVEL_H, 0); // 視認性を確保するためのバーの寸法
+	VECTOR pos  = VGet(Utility::kUiBaseX, Utility::kUiLevelY, 0);   // 解像度に合わせたUI配置の基準座標
+	VECTOR size = VGet(Utility::kUiLevelW, Utility::kUiLevelH, 0);  // 視覚幅を確定するためのバーの形状
 };
-

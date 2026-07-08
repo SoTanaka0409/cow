@@ -2,54 +2,53 @@
 #include <EffekseerForDXLib.h>
 #include "DxLib.h"
 
-// Effekseerエフェクトエンジンのグローバルな初期化、毎フレームの更新・描画サイクルを管理するクラス
+// Effekseer繧ｨ繝輔ぉ繧ｯ繝医お繝ｳ繧ｸ繝ｳ縺ｮ繧ｰ繝ｭ繝ｼ繝舌Ν縺ｪ蛻晄悄蛹悶∵ｯ弱ヵ繝ｬ繝ｼ繝縺ｮ譖ｴ譁ｰ繝ｻ謠冗判繧ｵ繧､繧ｯ繝ｫ繧堤ｮ｡逅・☆繧九け繝ｩ繧ｹ
 class EffectManager
 {
 public:
 	/*
-	 * @brief メンバ変数を初期化し、Effekseer初期化メソッドを呼び出す
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] なし
+	 * @brief 繝｡繝ｳ繝仙､画焚繧貞・譛溷喧縺励・ffekseer蛻晄悄蛹悶Γ繧ｽ繝・ラ繧貞他縺ｳ蜃ｺ縺・
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 縺ｪ縺・
 	 */
 	EffectManager();
 	~EffectManager();
 
 	/*
-	 * @brief Direct3D設定、最大パーティクル数設定、スクリーンリセットコールバック等を登録してEffekseerを起動する
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] Effekseerライブラリのグローバルな初期化
+	 * @brief Direct3D險ｭ螳壹∵怙螟ｧ繝代・繝・ぅ繧ｯ繝ｫ謨ｰ險ｭ螳壹√せ繧ｯ繝ｪ繝ｼ繝ｳ繝ｪ繧ｻ繝・ヨ繧ｳ繝ｼ繝ｫ繝舌ャ繧ｯ遲峨ｒ逋ｻ骭ｲ縺励※Effekseer繧定ｵｷ蜍輔☆繧・
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] Effekseer繝ｩ繧､繝悶Λ繝ｪ縺ｮ繧ｰ繝ｭ繝ｼ繝舌Ν縺ｪ蛻晄悄蛹・
 	 */
 	void Initalize();
 
 	/*
-	 * @brief Effekseer全体の毎フレームの3Dエフェクト再生状態を更新する
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 再生中の全Effekseerエフェクトの進行更新
+	 * @brief Effekseer蜈ｨ菴薙・豈弱ヵ繝ｬ繝ｼ繝縺ｮ3D繧ｨ繝輔ぉ繧ｯ繝亥・逕溽憾諷九ｒ譖ｴ譁ｰ縺吶ｋ
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 蜀咲函荳ｭ縺ｮ蜈ｨEffekseer繧ｨ繝輔ぉ繧ｯ繝医・騾ｲ陦梧峩譁ｰ
 	 */
 	void Update();
 
 	/*
-	 * @brief 再生中のすべてのEffekseerエフェクトを3D空間上にレンダリングする
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] なし
+	 * @brief 蜀咲函荳ｭ縺ｮ縺吶∋縺ｦ縺ｮEffekseer繧ｨ繝輔ぉ繧ｯ繝医ｒ3D遨ｺ髢謎ｸ翫↓繝ｬ繝ｳ繝繝ｪ繝ｳ繧ｰ縺吶ｋ
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 縺ｪ縺・
 	 */
 	void Draw();
 
 private:
-	VECTOR PlayPos; // テスト再生用の座標（未使用）
+	VECTOR play_pos_; // 繝・せ繝亥・逕溽畑縺ｮ蠎ｧ讓呻ｼ域悴菴ｿ逕ｨ・・
 
-	// パラメータ定数
-	const int EffectParticleLimit = 20000;  // 画面上に同時に表示可能な最大パーティクル数
-	const float EffectSize = 1.0f;          // 基準エフェクトサイズ
-	const int EffectPlayerInterval = 300;   // エフェクト再生の間隔フレーム数
-	const float EffectMoveSpeed = 0.2f;     // エフェクトの移動速度設定
+	// 繝代Λ繝｡繝ｼ繧ｿ螳壽焚
+	const int kEffectParticleLimit = 20000;  // 逕ｻ髱｢荳翫↓蜷梧凾縺ｫ陦ｨ遉ｺ蜿ｯ閭ｽ縺ｪ譛螟ｧ繝代・繝・ぅ繧ｯ繝ｫ謨ｰ
+	const float kEffectSize = 1.0f;          // 蝓ｺ貅悶お繝輔ぉ繧ｯ繝医し繧､繧ｺ
+	const int kEffectPlayerInterval = 300;   // 繧ｨ繝輔ぉ繧ｯ繝亥・逕溘・髢馴囈繝輔Ξ繝ｼ繝謨ｰ
+	const float kEffectMoveSpeed = 0.2f;     // 繧ｨ繝輔ぉ繧ｯ繝医・遘ｻ蜍暮溷ｺｦ險ｭ螳・
 
-	// エフェクト再生管理ハンドル
-	int effectResourcehandle;               // ロードされたエフェクトのリソースハンドル（未使用）
-	int playingEffecthandle;                // 再生中のエフェクトインスタンスハンドル（未使用）
+	// 繧ｨ繝輔ぉ繧ｯ繝亥・逕溽ｮ｡逅・ワ繝ｳ繝峨Ν
+	int effect_resource_handle_;               // 繝ｭ繝ｼ繝峨＆繧後◆繧ｨ繝輔ぉ繧ｯ繝医・繝ｪ繧ｽ繝ｼ繧ｹ繝上Φ繝峨Ν・域悴菴ｿ逕ｨ・・
+	int playing_effect_handle_;                // 蜀咲函荳ｭ縺ｮ繧ｨ繝輔ぉ繧ｯ繝医う繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ繝上Φ繝峨Ν・域悴菴ｿ逕ｨ・・
 };
-

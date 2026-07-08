@@ -9,7 +9,7 @@ Combo::Combo()
 {
 	comboCount = 0;
 	comboTimer = 0.0f;
-	comboMaxTime = 3.0f; // 難易度調整のためコンボ猶予は3秒に固定
+	comboMaxTime = 3.0f; // 難易度調整のためコンボ継続時間は3秒に固定
 
 	comboImage = Master::mpResourceManager->LoadGraphics("Resource/2D/COMBO.png");
 
@@ -23,20 +23,20 @@ Combo::~Combo()
 
 void Combo::Draw()
 {
-	// 0コンボ時は表示を省略しUIの煩雑化を防ぐ
+	// 0コンボ時は表示を省略しUIの描画負荷を抑える
 	if (comboCount >= 1)
 	{
-		int x = Utility::UI_BASE_X;
-		int y = Utility::UI_COMBO_Y;
-		int width = Utility::UI_PANEL_W;
-		int height = Utility::UI_PANEL_H;
+		int x = Utility::kUiBaseX;
+		int y = Utility::kUiComboY;
+		int width = Utility::kUiPanelW;
+		int height = Utility::kUiPanelH;
 
 		DrawExtendGraph(x, y, x + width, y + height, comboImage, TRUE);
 
 		if (Master::mpScore)
 		{
 			Master::mpScore->DrawNumber(
-				Utility::UI_DIGIT_X,
+				Utility::kUiDigitX,
 				y,
 				comboCount,
 				1.25f,
@@ -48,7 +48,7 @@ void Combo::Draw()
 
 void Combo::Update()
 {
-	// TODO: リリース時に削除（デバッグ用加算ショートカット）
+	// TODO: リリース時に削除（デバッグ用追加ショートカット）
 	if (InputManager::CheckDownKey(KEY_INPUT_R))
 	{
 		AddHit();
@@ -58,7 +58,7 @@ void Combo::Update()
 	{
 		comboTimer -= 0.01f;
 
-		// コンボ猶予時間を超過したため状態を破棄する
+		// コンボ継続時間を使い切ったため状態をリセットする
 		if (comboTimer <= 0.0f)
 		{
 			Reset();
@@ -73,7 +73,7 @@ void Combo::AddHit()
 
 	if (comboCount > 1000)
 	{
-		comboCount = 1000; // 描画領域のオーバーフローを防ぐための上限値
+		comboCount = 1000; // 描画桁数のオーバーフローを防ぐための上限値
 	}
 }
 
@@ -96,4 +96,3 @@ float Combo::GetMultiplier() const
 	}
 	return 1.0f;
 }
-

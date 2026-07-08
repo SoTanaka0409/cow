@@ -10,21 +10,21 @@
 #include "GameManager.h"
 
 Camera::Camera()
-	: mfHorizontalAngle(0.0f)
-	, mfVerticalAngle(-55.0f)
-	, mbIsPhaseCameraActive(false)
-	, mvPosition(VGet(0.0f, 0.0f, 0.0f))
-	, mvLookAtPosition(VGet(0.0f, 0.0f, 0.0f))
-	, mpTarget(nullptr)
-	, mnShakeTime(0)
-	, mnShakeTimeCount(0)
-	, mfShakeAngle(0.0f)
-	, mfShakeTimeCounter(0.0f)
+	: horizontal_angle_(0.0f)
+	, vertical_angle_(-55.0f)
+	, is_phase_camera_active_(false)
+	, position_(VGet(0.0f, 0.0f, 0.0f))
+	, look_at_position_(VGet(0.0f, 0.0f, 0.0f))
+	, target_(nullptr)
+	, shake_time_(0)
+	, shake_time_count_(0)
+	, shake_angle_(0.0f)
+	, shake_time_counter_(0.0f)
 	, mfShakeTime(0.0f)
-	, mfShakeWidth(0.0f)
-	, mfShakeAngleSpeed(0.0f)
-	, mfStepTime(0.0f)
-	, mvShakePosition(VGet(0.0f, 0.0f, 0.0f))
+	, shake_width_(0.0f)
+	, shake_angle_speed_(0.0f)
+	, step_time_(0.0f)
+	, shake_position_(VGet(0.0f, 0.0f, 0.0f))
 {
 }
 
@@ -34,36 +34,36 @@ Camera::~Camera()
 
 void Camera::Initialize()
 {
-	mpTarget = nullptr;
+	target_ = nullptr;
 	
-	// �J�����̃N���b�s���O�����i�`��\�͈́j���100?��50000�̍L�͈͂ɐݒ�
+	// ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽﾌク・ｽ・ｽ・ｽb・ｽs・ｽ・ｽ・ｽO・ｽ・ｽ・ｽ・ｽ・ｽi・ｽ`・ｽ・ｽﾂ能・ｽﾍ囲）・ｽ・ｽ・ｽ100?・ｽ・ｽ50000・ｽﾌ広・ｽﾍ囲に設抵ｿｽ
 	SetCameraNearFar(100.0f, 50000.0f);
 
-	// �`�悳��Ȃ��w�i������N���A����ۂ̃f�t�H���g�F��D�F�ɐݒ�
+	// ・ｽ`・ｽ謔ｳ・ｽ・ｽﾈゑｿｽ・ｽw・ｽi・ｽ・ｽ・ｽ・ｽ・ｽ・ｽN・ｽ・ｽ・ｽA・ｽ・ｽ・ｽ・ｽﾛのデ・ｽt・ｽH・ｽ・ｽ・ｽg・ｽF・ｽ・ｽD・ｽF・ｽﾉ設抵ｿｽ
 	SetBackgroundColor(128, 128, 128);
 
-	SetCameraPositionAndTarget_UpVecY(mvPosition, mvLookAtPosition);
+	SetCameraPositionAndTarget_UpVecY(position_, look_at_position_);
 	Update();
 }
 
 void Camera::Update()
 {
-	// �X�L���J�[�h�I�𒆁A�܂��̓f�o�b�O�̎��R�ړ��J�������쒆�̓Q�[���J�����̍X�V��X�L�b�v
+	// ・ｽX・ｽL・ｽ・ｽ・ｽJ・ｽ[・ｽh・ｽI・ｽ・A・ｽﾜゑｿｽ・ｽﾍデ・ｽo・ｽb・ｽO・ｽﾌ趣ｿｽ・ｽR・ｽﾚ難ｿｽ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・・ｿｽﾍゲ・ｽ[・ｽ・ｽ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽﾌ更・ｽV・ｽ・ｽX・ｽL・ｽb・ｽv
 	if (Master::SelectSkill) return;
 	if (Master::mbIsDebugCamera) return;
 
-	if (mpTarget == nullptr)
+	if (target_ == nullptr)
 	{
-		mpTarget = ServiceLocator::GetPlayer();
+		target_ = ServiceLocator::GetPlayer();
 	}
 	
 	UpdateRotate();
 	
-	if (mpTarget != nullptr)
+	if (target_ != nullptr)
 	{
-		// �J�����̒����_��v���C���[�L�����N�^�[�̒��S����ɐݒ肷��
-		mvLookAtPosition = mpTarget->GetPosition();
-		mvLookAtPosition.y += 340.0f;
+		// ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽﾌ抵ｿｽ・ｽ・ｽ・ｽ_・ｽ・ｽv・ｽ・ｽ・ｽC・ｽ・ｽ・ｽ[・ｽL・ｽ・ｽ・ｽ・ｽ・ｽN・ｽ^・ｽ[・ｽﾌ抵ｿｽ・ｽS・ｽ・ｽ・ｽ・ｽﾉ設定す・ｽ・ｽ
+		look_at_position_ = target_->GetPosition();
+		look_at_position_.y += 340.0f;
 	}
 	
 	Shake();
@@ -71,84 +71,84 @@ void Camera::Update()
 	{
 		const float distance = 1000.0f;
 		VECTOR temp;
-		// �����E�����p�x�l�i�x���@�j����W�A���ɕϊ����ăJ������3D���W�I�t�Z�b�g��v�Z
-		temp.x = distance * cosf(mfVerticalAngle / 180.0f * 3.14159265f) * sinf(mfHorizontalAngle / 180.0f * DX_PI_F);
-		temp.y = distance * sinf(-mfVerticalAngle / 180.0f * 3.14159265f);
-		temp.z = -(distance * cosf(mfVerticalAngle / 180.0f * DX_PI_F) * cosf(mfHorizontalAngle / 180.0f * DX_PI_F));
+		// ・ｽ・ｽ・ｽ・ｽ・ｽE・ｽ・ｽ・ｽ・ｽ・ｽp・ｽx・ｽl・ｽi・ｽx・ｽ・ｽ・ｽ@・ｽj・ｽ・ｽ・ｽ・ｽW・ｽA・ｽ・ｽ・ｽﾉ変奇ｿｽ・ｽ・ｽ・ｽﾄカ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ3D・ｽ・ｽ・ｽW・ｽI・ｽt・ｽZ・ｽb・ｽg・ｽ・ｽv・ｽZ
+		temp.x = distance * cosf(vertical_angle_ / 180.0f * 3.14159265f) * sinf(horizontal_angle_ / 180.0f * DX_PI_F);
+		temp.y = distance * sinf(-vertical_angle_ / 180.0f * 3.14159265f);
+		temp.z = -(distance * cosf(vertical_angle_ / 180.0f * DX_PI_F) * cosf(horizontal_angle_ / 180.0f * DX_PI_F));
 		
-		if (!mbIsPhaseCameraActive)
+		if (!is_phase_camera_active_)
 		{
-			mvPosition = VAdd(temp, mvLookAtPosition);
+			position_ = VAdd(temp, look_at_position_);
 			
-			// �Z�o�����J�������W����ђ����_�ɁA��ʐU���ɂ��I�t�Z�b�g���W����Z���Ĕ��f
-			SetCameraPositionAndTarget_UpVecY(VAdd(mvPosition, mvShakePosition), VAdd(mvLookAtPosition, mvShakePosition));
+			// ・ｽZ・ｽo・ｽ・ｽ・ｽ・ｽ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽW・ｽ・ｽ・ｽ・ｽﾑ抵ｿｽ・ｽ・ｽ・ｽ_・ｽﾉ、・ｽ・ｽﾊ振・ｽ・ｽ・ｽﾉゑｿｽ・ｽI・ｽt・ｽZ・ｽb・ｽg・ｽ・ｽ・ｽW・ｽ・ｽ・ｽ・ｽZ・ｽ・ｽ・ｽﾄ費ｿｽ・ｽf
+			SetCameraPositionAndTarget_UpVecY(VAdd(position_, shake_position_), VAdd(look_at_position_, shake_position_));
 		}
 	}
 
-	mPrevMouseX = mMouseX;
-	mPrevMouseY = mMouseY;
-	GetMousePoint(&mMouseX, &mMouseY);
+	prev_mouse_x_ = current_mouse_x_;
+	prev_mouse_y_ = current_mouse_y_;
+	GetMousePoint(&current_mouse_x_, &current_mouse_y_);
 
-	// �`��G�t�F�N�g�̈ʒu�������3D�J��������p�ƍ����悤�AEffekseer����3D��Ԑݒ�Ɠ�������
+	// ・ｽ`・ｽ・ｽG・ｽt・ｽF・ｽN・ｽg・ｽﾌ位置・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ3D・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽp・ｽﾆ搾ｿｽ・ｽ・ｽ・ｽ謔､・ｽAEffekseer・ｽ・ｽ・ｽ・ｽ3D・ｽ・ｽﾔ設抵ｿｽﾆ難ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
 	Effekseer_Sync3DSetting();
 
-	// �J�������璍���_�֌������x�N�g���𕽍s�����̌����Ƃ��Đݒ肵�A�����\����s��
-	VECTOR lightDir = VSub(mvLookAtPosition, mvPosition);
+	// ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ迺搾ｿｽ・ｽ・ｽ_・ｽﾖ鯉ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽx・ｽN・ｽg・ｽ・ｽ・ｽｽ行・ｽ・ｽ・ｽ・ｽ・ｽﾌ鯉ｿｽ・ｽ・ｽ・ｽﾆゑｿｽ・ｽﾄ設定し・ｽA・ｽ・ｽ・ｽ・ｽ・ｽ\・ｽ・ｽ・ｽ・ｽs・ｽ・ｽ
+	VECTOR lightDir = VSub(look_at_position_, position_);
 	SetLightDirection(lightDir);
 }
 
 void Camera::UpdateRotate()
 {
-	// �J����������]�p����ѐ�����]�p�̃I�[�o�[�t���[�ی�Ɣ͈͐���
-	if (mfHorizontalAngle >= 180.0f)
+	// ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ]・ｽp・ｽ・ｽ・ｽ・ｽﾑ撰ｿｽ・ｽ・ｽ・ｽ・ｽ]・ｽp・ｽﾌオ・ｽ[・ｽo・ｽ[・ｽt・ｽ・ｽ・ｽ[・ｽﾛ鯉ｿｽﾆ範囲撰ｿｽ・ｽ・ｽ
+	if (horizontal_angle_ >= 180.0f)
 	{
-		mfHorizontalAngle -= 360.0f;
+		horizontal_angle_ -= 360.0f;
 	}
-	if (mfHorizontalAngle <= -180.0f)
+	if (horizontal_angle_ <= -180.0f)
 	{
-		mfHorizontalAngle += 360.0f;
+		horizontal_angle_ += 360.0f;
 	}
 
-	if (mfVerticalAngle >= 80.0f)
+	if (vertical_angle_ >= 80.0f)
 	{
-		mfVerticalAngle = 80.0f;
+		vertical_angle_ = 80.0f;
 	}
-	if (mfVerticalAngle <= -80.0f)
+	if (vertical_angle_ <= -80.0f)
 	{
-		mfVerticalAngle = -80.0f;
+		vertical_angle_ = -80.0f;
 	}
 
 	const float MOUSE_SENSITIVITY = 0.05f;
 
 	if (Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::SCENE_3D || Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::SCENE_TUTORIAL)
 	{
-		// �X�L���I�𒆂łȂ��ꍇ�̓Q�[���v���C�p�̃}�E�X�L���v�`����s��
+		// ・ｽX・ｽL・ｽ・ｽ・ｽI・ｽ・ﾅなゑｿｽ・ｽ鼾・ｿｽﾍゲ・ｽ[・ｽ・ｽ・ｽv・ｽ・ｽ・ｽC・ｽp・ｽﾌマ・ｽE・ｽX・ｽL・ｽ・ｽ・ｽv・ｽ`・ｽ・ｽ・ｽ・ｽs・ｽ・ｽ
 		SetMouseDispFlag(false);
-		GetMousePoint(&mouseX, &mouseY);
+		GetMousePoint(&mouse_x_, &mouse_y_);
 
-		int centerX = 640;
-		int centerY = 200;
+		int center_x_ = 640;
+		int center_y_ = 200;
 
-		// 0�L�[�Ń}�E�X�̍S����f�o�b�O�ړI�ňꎞ����ł���悤�ɂ���
+		// 0・ｽL・ｽ[・ｽﾅマ・ｽE・ｽX・ｽﾌ拘・ｽ・ｽ・ｽ・ｽf・ｽo・ｽb・ｽO・ｽﾚ的・ｽﾅ一時・ｽ・ｽ・ｽ・ｽﾅゑｿｽ・ｽ・ｽ謔､・ｽﾉゑｿｽ・ｽ・ｽ
 		if (!CheckHitKey(KEY_INPUT_0))
 		{
-			SetMousePoint(centerX, centerY);
+			SetMousePoint(center_x_, center_y_);
 		}
 
-		int deltaX = mouseX - centerX;
+		int deltaX = mouse_x_ - center_x_;
 
-		if (!mbIsPhaseCameraActive)
+		if (!is_phase_camera_active_)
 		{
-			// ���E�̃}�E�X�ړ��ʂ�J�����̐�������p�i���[�p�j�ɒ~�ϔ��f
-			mfHorizontalAngle -= deltaX * MOUSE_SENSITIVITY;
+			// ・ｽ・ｽ・ｽE・ｽﾌマ・ｽE・ｽX・ｽﾚ難ｿｽ・ｽﾊゑｿｽJ・ｽ・ｽ・ｽ・ｽ・ｽﾌ撰ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽp・ｽi・ｽ・ｽ・ｽ[・ｽp・ｽj・ｽﾉ蓄・ｽﾏ費ｿｽ・ｽf
+			horizontal_angle_ -= deltaX * MOUSE_SENSITIVITY;
 		}
 	}
 }
 
 bool Camera::IsMouseMoved()
 {
-	int moveX = abs(mMouseX - mPrevMouseX);
-	int moveY = abs(mMouseY - mPrevMouseY);
+	int moveX = abs(current_mouse_x_ - prev_mouse_x_);
+	int moveY = abs(current_mouse_y_ - prev_mouse_y_);
 
 	return moveX > 0.05f || moveY > 0.05f;
 }
@@ -159,29 +159,29 @@ void Camera::Finalize()
 
 void Camera::Shake()
 {
-	if (mfShakeTimeCounter < mfShakeTime)
+	if (shake_time_counter_ < mfShakeTime)
 	{
-		// �����g(sinf)�Ǝ��Ԍo�߂ɂ��t�F�[�h�A�E�g�{�����Z���ăJ�����̗h�炵�ʂ���߂�
-		mvShakePosition.y = sinf(mfShakeAngle) * (1.0f - (mfShakeTimeCounter / mfShakeTime)) * mfShakeWidth;
-		mvShakePosition.x = 0.0f;
-		mvShakePosition.z = 0.0f;
+		// ・ｽ・ｽ・ｽ・ｽ・ｽg(sinf)・ｽﾆ趣ｿｽ・ｽﾔ経・ｽﾟにゑｿｽ・ｽt・ｽF・ｽ[・ｽh・ｽA・ｽE・ｽg・ｽ{・ｽ・ｽ・ｽ・ｽ・ｽZ・ｽ・ｽ・ｽﾄカ・ｽ・ｽ・ｽ・ｽ・ｽﾌ揺・ｽ轤ｵ・ｽﾊゑｿｽ・ｽ・ｽﾟゑｿｽ
+		shake_position_.y = sinf(shake_angle_) * (1.0f - (shake_time_counter_ / mfShakeTime)) * shake_width_;
+		shake_position_.x = 0.0f;
+		shake_position_.z = 0.0f;
 
-		mfShakeAngle += mfShakeAngleSpeed * mfStepTime;
-		mfShakeTimeCounter += mfStepTime;
+		shake_angle_ += shake_angle_speed_ * step_time_;
+		shake_time_counter_ += step_time_;
 	}
 	else
 	{
-		mvShakePosition = VGet(0.0f, 0.0f, 0.0f);
+		shake_position_ = VGet(0.0f, 0.0f, 0.0f);
 	}
 }
 
 void Camera::SetupShake(float time, float width, float angleSpeed, float stepTime)
 {
-	mfShakeTimeCounter = 0.0f;
+	shake_time_counter_ = 0.0f;
 	mfShakeTime = time;
-	mfShakeWidth = width;
-	mfShakeAngleSpeed = angleSpeed;
-	mfStepTime = stepTime;
+	shake_width_ = width;
+	shake_angle_speed_ = angleSpeed;
+	step_time_ = stepTime;
 }
 
 void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
@@ -206,22 +206,22 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 
 	if (phase == (int)GameManager::GamePhase::Normal)
 	{
-		mbIsPhaseCameraActive = false;
+		is_phase_camera_active_ = false;
 		return;
 	}
 
-	// ���o�̊J�n����3�b�i180�t���[���j���o�߂�����A�����I�ɕW���J�����ւƖ߂�
+	// ・ｽ・ｽ・ｽo・ｽﾌ開・ｽn・ｽ・ｽ・ｽ・ｽ3・ｽb・ｽi180・ｽt・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽj・ｽ・ｽ・ｽo・ｽﾟゑｿｽ・ｽ・ｽ・ｽ・ｽA・ｽ・ｽ・ｽ・ｽ・ｽI・ｽﾉ標・ｽ・ｽ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽﾖと戻ゑｿｽ
 	if (phaseTimer > 180)
 	{
-		mbIsPhaseCameraActive = false;
+		is_phase_camera_active_ = false;
 		return;
 	}
 	
-	mbIsPhaseCameraActive = true;
+	is_phase_camera_active_ = true;
 
 	if (phase == (int)GameManager::GamePhase::MassSpawn)
 	{
-		// ����ʔ������o�F�J��������������A�����グ��i�J�����s�b�`�p����Ɍ�����j
+		// ・ｽ・ｽ・ｽ・ｽﾊ費ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽo・ｽF・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾂつ、・ｽ・ｽ・ｽ・ｽ・ｽ繧ｰ・ｽ・ｽi・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽs・ｽb・ｽ`・ｽp・ｽ・ｽ・ｽ・ｽﾉ鯉ｿｽ・ｽ・ｽ・ｽ・ｽj
 		targetPos = VAdd(ufoPos, VGet(0.0f, 150.0f, -300.0f));
 		
 		if (phaseTimer < 180)
@@ -236,16 +236,16 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 	}
 	else if (phase == (int)GameManager::GamePhase::TornadoCrisis)
 	{
-		// �����������o�F�J�������x��グ�đS�̂���n���A�����_�𗳊��ɂ���
+		// ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽo・ｽF・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽx・ｽ・ｽ繧ｰ・ｽﾄ全・ｽﾌゑｿｽ・ｽ・ｽn・ｽ・ｽ・ｽA・ｽ・ｽ・ｽ・ｽ・ｽ_・ｽｳ奇ｿｽ・ｽﾉゑｿｽ・ｽ・ｽ
 		targetPos = VAdd(ufoPos, VGet(0.0f, 500.0f, -200.0f));
 		VECTOR toTornado = VSub(tornadoPos, ufoPos);
 		targetLookAt = VAdd(ufoPos, toTornado);
 	}
 
-	// ���݂̃J�����p�����[�^����`��ԁiLerp�j��p���ĖڕW�l�փX���[�Y�ɑJ�ڂ�����
+	// ・ｽ・ｽ・ｽﾝのカ・ｽ・ｽ・ｽ・ｽ・ｽp・ｽ・ｽ・ｽ・ｽ・ｽ[・ｽ^・ｽ・ｽ・ｽ・ｽ`・ｽ・ｽﾔ（Lerp・ｽj・ｽ・ｽp・ｽ・ｽ・ｽﾄ目標・ｽl・ｽﾖス・ｽ・ｽ・ｽ[・ｽY・ｽﾉ遷・ｽﾚゑｿｽ・ｽ・ｽ・ｽ・ｽ
 	float lerpSpeed = 0.1f; 
-	mvPosition = LerpVector(mvPosition, targetPos, lerpSpeed);
-	mvLookAtPosition = LerpVector(mvLookAtPosition, targetLookAt, lerpSpeed);
+	position_ = LerpVector(position_, targetPos, lerpSpeed);
+	look_at_position_ = LerpVector(look_at_position_, targetLookAt, lerpSpeed);
 
-	SetCameraPositionAndTarget_UpVecY(mvPosition, mvLookAtPosition);
+	SetCameraPositionAndTarget_UpVecY(position_, look_at_position_);
 }

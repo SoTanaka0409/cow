@@ -17,29 +17,29 @@
 
 namespace {
 	int s_mnTagCountCow = 0;
-	CowMove::Tag_cow s_tag1Cow = CowMove::none;
-	CowMove::Tag_cow s_tag2Cow = CowMove::none;
-	CowMove::Tag_cow s_tag3Cow = CowMove::none;
+	CowMove::TagCow s_tag1Cow = CowMove::kNone;
+	CowMove::TagCow s_tag2Cow = CowMove::kNone;
+	CowMove::TagCow s_tag3Cow = CowMove::kNone;
 }
 
 CowMove::CowMove(std::string filename, VECTOR initPos)
 	: CharacterMove(filename, initPos)
 {
-	mfdeathTime = GameConstants::COW_DEFAULT.deathTimeHeight;
-	mfScore = GameConstants::COW_DEFAULT.score;
-	mfXp = GameConstants::COW_DEFAULT.xp;
+	mfdeathTime = GameConstants::kCowDefault.death_time_height;
+	mfScore = GameConstants::kCowDefault.score;
+	mfXp = GameConstants::kCowDefault.xp;
 	mbBaitFlag = false;
 
 	mbIsVisible = true;
-	mEffectTimer = 0;
-	SetTag(Object3D::Tag3D_Cow);
+	effect_timer_ = 0;
+	SetTag(Object3D::kTag3dCow);
 
 	if (Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TUTORIAL)
 	{
-		mfdeathTime = GameConstants::COW_TUTORIAL.deathTimeHeight;
+		mfdeathTime = GameConstants::kCowTutorial.death_time_height;
 	}
 
-	mpCowVm = new EffekseerEffect("Resource/3D/EFK/MowVm.efk", mvPosition, 50.0f);
+	cow_vm_ = new EffekseerEffect("Resource/3D/EFK/MowVm.efk", position_, 50.0f);
 }
 
 CowMove::~CowMove()
@@ -51,15 +51,15 @@ void CowMove::Reset(VECTOR pos)
 	CharacterMove::Reset(pos);
 
 	mDeleteFlag = false;
-	mEffectTimer = 0;
-	if (mpCowVm != nullptr)
+	effect_timer_ = 0;
+	if (cow_vm_ != nullptr)
 	{
-		mpCowVm->SetPosition(pos);
-		mpCowVm->Stop();
+		cow_vm_->SetPosition(pos);
+		cow_vm_->Stop();
 	}
-	if (mpCapsuleCollider != nullptr)
+	if (capsule_collider_ != nullptr)
 	{
-		mpCapsuleCollider->mvPosition = pos;
+		capsule_collider_->position_ = pos;
 	}
 }
 
@@ -67,9 +67,9 @@ void CowMove::Update()
 {
 	CharacterMove::Update();
 
-	if (mpCowVm != nullptr && mbIsVisible == false)
+	if (cow_vm_ != nullptr && mbIsVisible == false)
 	{
-		mpCowVm->Update();
+		cow_vm_->Update();
 	}
 }
 
@@ -79,19 +79,19 @@ void CowMove::Draw()
 	{
 		CharacterMove::Draw();
 	}
-	if (mpCowVm != nullptr && mbIsVisible == false)
+	if (cow_vm_ != nullptr && mbIsVisible == false)
 	{
-		mpCowVm->Draw();
+		cow_vm_->Draw();
 	}
 }
 
 void CowMove::ColliderMove()
 {
-	if (mpCapsuleCollider != nullptr)
+	if (capsule_collider_ != nullptr)
 	{
-		mpCapsuleCollider->mvPosition = mvPosition;
-		mpCapsuleCollider->mvPosition2 = VAdd(mvPosition, VGet(0.0f, 150.0f, 0.0f));
-		mpCapsuleCollider->mfRadius = mColliderRadius;
+		capsule_collider_->position_ = position_;
+		capsule_collider_->position2_ = VAdd(position_, VGet(0.0f, 150.0f, 0.0f));
+		capsule_collider_->radius_ = collider_radius_;
 	}
 }
 
@@ -107,19 +107,19 @@ void CowMove::MoveCharacter()
 	CharacterMove::UpdateWanderAI();
 	CharacterMove::CheckWallCollision();
 
-	mpModel->SetPosition(mvPosition);
+	model_->SetPosition(position_);
 }
 
 void CowMove::AvoidOtherCows()
 {
-	const auto& cows = ServiceLocator::GetObjectManager()->GetObject3DListByTag(Object3D::Tag3D_Cow);
+	const auto& cows = ServiceLocator::GetObjectManager()->GetObject3DListByTag(Object3D::kTag3dCow);
 	for (int i = 0; i < cows.size(); ++i)
 	{
 		CowMove* otherCow = dynamic_cast<CowMove*>(cows.at(i));
 		if (otherCow != nullptr && otherCow != this)
 		{
 			VECTOR otherPos = otherCow->GetPosition();
-			VECTOR diff = VSub(mvPosition, otherPos);
+			VECTOR diff = VSub(position_, otherPos);
 			diff.y = 0.0f;
 
 			float distSq = VSquareSize(diff);
@@ -127,18 +127,18 @@ void CowMove::AvoidOtherCows()
 
 			if (distSq < minDist * minDist)
 			{
-				VECTOR dir = diff;
+				VECTOR dir_ = diff;
 				if (distSq < 0.001f)
 				{
-					dir = VGet((float)(GetRand(100) - 50), 0.0f, (float)(GetRand(100) - 50));
-					if (VSquareSize(dir) < 0.001f) dir = VGet(1.0f, 0.0f, 0.0f);
+					dir_ = VGet((float)(GetRand(100) - 50), 0.0f, (float)(GetRand(100) - 50));
+					if (VSquareSize(dir_) < 0.001f) dir_ = VGet(1.0f, 0.0f, 0.0f);
 				}
-				dir = VNorm(dir);
-				mvPosition = VAdd(mvPosition, VScale(dir, 15.0f));
+				dir_ = VNorm(dir_);
+				position_ = VAdd(position_, VScale(dir_, 15.0f));
 			}
 		}
 	}
-	mpModel->SetPosition(mvPosition);
+	model_->SetPosition(position_);
 }
 
 bool CowMove::SeekBait()
@@ -146,30 +146,30 @@ bool CowMove::SeekBait()
 	if (Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TUTORIAL) return false;
 	if (mCurrentState == STATE_VACUUM) return false;
 
-	mvOldPosition = mvPosition;
+	old_position_ = position_;
 
 	if (mbBaitFlag)
 	{
-		const auto& b = ServiceLocator::GetObjectManager()->GetObject3DListByTag(Object3D::Tag3D_Bait);
+		const auto& b = ServiceLocator::GetObjectManager()->GetObject3DListByTag(Object3D::kTag3dBait);
 		if (!b.empty())
 		{
 			Bait* bait = dynamic_cast<Bait*>(b.at(0));
 			if (bait)
 			{
-				VECTOR diff = VSub(bait->GetPosition(), mvPosition);
+				VECTOR diff = VSub(bait->GetPosition(), position_);
 				float distSq = VSquareSize(diff);
 
 				if (distSq > 100.0f)
 				{
-					mvPosition = VAdd(mvPosition, VScale(VNorm(diff), 25.0f));
+					position_ = VAdd(position_, VScale(VNorm(diff), 25.0f));
 				}
 				else
 				{
-					mvPosition = bait->GetPosition();
+					position_ = bait->GetPosition();
 				}
 			}
 		}
-		mpModel->SetPosition(mvPosition);
+		model_->SetPosition(position_);
 		return true;
 	}
 	return false;
@@ -201,62 +201,62 @@ void CowMove::AddAnimation(AnimationState state, std::string filename)
 
 void CowMove::OnEnter(Collider* collider, Collider* check)
 {
-	if (collider == mpCapsuleCollider && check->mpParentObject != nullptr)
+	if (collider == capsule_collider_ && check->parent_object_ != nullptr)
 	{
-		if (check->mpParentObject->GetTag() == Tag3D_Bait)
+		if (check->parent_object_->GetTag() == kTag3dBait)
 		{
 			mbBaitFlag = true;
 		}
 
-		if (check->mpParentObject->GetTag() == Tag3D_Cow)
+		if (check->parent_object_->GetTag() == kTag3dCow)
 		{
-			VECTOR otherPos = check->mpParentObject->GetPosition();
-			VECTOR dir = VSub(mvPosition, otherPos);
-			dir.y = 0.0f;
+			VECTOR otherPos = check->parent_object_->GetPosition();
+			VECTOR dir_ = VSub(position_, otherPos);
+			dir_.y = 0.0f;
 
-			float lengthSq = VSquareSize(dir);
+			float lengthSq = VSquareSize(dir_);
 			if (lengthSq < 0.001f)
 			{
-				dir = VGet((float)(GetRand(100) - 50), 0.0f, (float)(GetRand(100) - 50));
-				lengthSq = VSquareSize(dir);
-				if (lengthSq < 0.001f) dir = VGet(1.0f, 0.0f, 0.0f);
+				dir_ = VGet((float)(GetRand(100) - 50), 0.0f, (float)(GetRand(100) - 50));
+				lengthSq = VSquareSize(dir_);
+				if (lengthSq < 0.001f) dir_ = VGet(1.0f, 0.0f, 0.0f);
 			}
 
-			dir = VNorm(dir);
-			mvPosition = VAdd(mvPosition, VScale(dir, 3.0f));
+			dir_ = VNorm(dir_);
+			position_ = VAdd(position_, VScale(dir_, 3.0f));
 		}
 	}
 }
 
 void CowMove::OnTrigger(Collider* collider, Collider* check)
 {
-	if (collider == mpCapsuleCollider && check->mpParentObject != nullptr)
+	if (collider == capsule_collider_ && check->parent_object_ != nullptr)
 	{
-		if (check->mpParentObject->GetTag() == Tag3D_Cow)
+		if (check->parent_object_->GetTag() == kTag3dCow)
 		{
-			VECTOR otherPos = check->mpParentObject->GetPosition();
-			VECTOR dir = VSub(mvPosition, otherPos);
-			dir.y = 0.0f;
+			VECTOR otherPos = check->parent_object_->GetPosition();
+			VECTOR dir_ = VSub(position_, otherPos);
+			dir_.y = 0.0f;
 
-			float lengthSq = VSquareSize(dir);
+			float lengthSq = VSquareSize(dir_);
 			if (lengthSq < 0.001f)
 			{
-				dir = VGet((float)(GetRand(100) - 50), 0.0f, (float)(GetRand(100) - 50));
-				lengthSq = VSquareSize(dir);
-				if (lengthSq < 0.001f) dir = VGet(1.0f, 0.0f, 0.0f);
+				dir_ = VGet((float)(GetRand(100) - 50), 0.0f, (float)(GetRand(100) - 50));
+				lengthSq = VSquareSize(dir_);
+				if (lengthSq < 0.001f) dir_ = VGet(1.0f, 0.0f, 0.0f);
 			}
 
-			dir = VNorm(dir);
-			mvPosition = VAdd(mvPosition, VScale(dir, 3.0f));
+			dir_ = VNorm(dir_);
+			position_ = VAdd(position_, VScale(dir_, 3.0f));
 		}
 	}
 }
 
 void CowMove::OnExit(Collider* collider, Collider* check)
 {
-	if (collider == mpCapsuleCollider && check->mpParentObject != nullptr)
+	if (collider == capsule_collider_ && check->parent_object_ != nullptr)
 	{
-		if (check->mpParentObject->GetTag() == Tag3D_Bait)
+		if (check->parent_object_->GetTag() == kTag3dBait)
 		{
 			mbBaitFlag = false;
 		}
@@ -272,36 +272,36 @@ void CowMove::CharacterDied()
 		CharacterRotate();
 		if (player != nullptr)
 		{
-			mvPosition.y += player->Status(Player3D::Status_AttackS);
+			position_.y += player->Status(Player3D::Status_AttackS);
 
 			if (Master::FeverFlag)
 			{
 				float followSpeed = 0.15f;
 				VECTOR playerPos = player->GetPosition();
-				mvPosition.x += (playerPos.x - mvPosition.x) * followSpeed;
-				mvPosition.z += (playerPos.z - mvPosition.z) * followSpeed;
+				position_.x += (playerPos.x - position_.x) * followSpeed;
+				position_.z += (playerPos.z - position_.z) * followSpeed;
 			}
 		}
-		mpModel->SetPosition(mvPosition);
+		model_->SetPosition(position_);
 
-		if (mpCowVm != nullptr)
+		if (cow_vm_ != nullptr)
 		{
-			if (mvPosition.y > mfdeathTime)
+			if (position_.y > mfdeathTime)
 			{
-				if (mEffectTimer <= 0 && mbIsVisible == true)
+				if (effect_timer_ <= 0 && mbIsVisible == true)
 				{
-					mpCowVm->Play();
-					mEffectTimer = 60;
+					cow_vm_->Play();
+					effect_timer_ = 60;
 					mbIsVisible = false;
-					mpCapsuleCollider->SetDeleteFlag(true);
+					capsule_collider_->SetDeleteFlag(true);
 				}
 
 				if (!mbIsVisible)
 				{
-					mEffectTimer--;
+					effect_timer_--;
 				}
 
-				if (mEffectTimer <= 0 && !mbIsVisible)
+				if (effect_timer_ <= 0 && !mbIsVisible)
 				{
 					Die(DEATH_VACUUM);
 				}
@@ -309,7 +309,7 @@ void CowMove::CharacterDied()
 		}
 		else
 		{
-			if (mvPosition.y > mfdeathTime)
+			if (position_.y > mfdeathTime)
 			{
 				Die(DEATH_VACUUM);
 			}
@@ -339,8 +339,8 @@ void CowMove::Die(DeathReason reason)
 			player->mpCombo->AddHit();
 			player->mpScore->AddScore(mfScore * player->mpCombo->GetMultiplier());
 
-			// 同種連続キルによるボーナススコア計算
-			if (mntag_cow == CowMove::Tag_cow::Cow_T)
+			// 陷ｷ讙趣ｽｨ・ｮ鬨ｾ・｣驍ｯ螢ｹ縺冗ｹ晢ｽｫ邵ｺ・ｫ郢ｧ蛹ｻ・狗ｹ晄㈱繝ｻ郢晉ｿｫ縺帷ｹｧ・ｹ郢ｧ・ｳ郢ｧ・｢髫ｪ閧ｲ・ｮ繝ｻ
+			if (tag_cow_ == CowMove::TagCow::kCowT)
 			{
 				Master::mnTutorialcount++;
 			}
@@ -348,24 +348,24 @@ void CowMove::Die(DeathReason reason)
 			s_mnTagCountCow++;
 			if (s_mnTagCountCow == 1)
 			{
-				s_tag1Cow = mntag_cow;
+				s_tag1Cow = tag_cow_;
 			}
-			else if (s_mnTagCountCow == 2 && s_tag1Cow == mntag_cow)
+			else if (s_mnTagCountCow == 2 && s_tag1Cow == tag_cow_)
 			{
-				s_tag2Cow = mntag_cow;
+				s_tag2Cow = tag_cow_;
 			}
-			else if (s_mnTagCountCow == 3 && s_tag2Cow == mntag_cow)
+			else if (s_mnTagCountCow == 3 && s_tag2Cow == tag_cow_)
 			{
-				s_tag3Cow = mntag_cow;
-				if (s_tag3Cow == CowMove::Cow_1) player->mpScore->AddScore(300);
-				if (s_tag2Cow == CowMove::Cow_2) player->mpScore->AddScore(600);
+				s_tag3Cow = tag_cow_;
+				if (s_tag3Cow == CowMove::kCow1) player->mpScore->AddScore(300);
+				if (s_tag2Cow == CowMove::kCow2) player->mpScore->AddScore(600);
 			}
 			else
 			{
 				s_mnTagCountCow = 0;
-				s_tag1Cow = CowMove::none;
-				s_tag2Cow = CowMove::none;
-				s_tag3Cow = CowMove::none;
+				s_tag1Cow = CowMove::kNone;
+				s_tag2Cow = CowMove::kNone;
+				s_tag3Cow = CowMove::kNone;
 			}
 		}
 		mDeleteFlag = true;

@@ -8,23 +8,23 @@ public:
 	virtual ~CharacterState() = default;
 
 	/*
-	 * [入力] character: 状態を適用する対象キャラクター
-	 * [出力] なし
-	 * [副作用] 状態開始時の初期化処理
+	 * [蜈･蜉嫋 character: 迥ｶ諷九ｒ驕ｩ逕ｨ縺吶ｋ蟇ｾ雎｡繧ｭ繝｣繝ｩ繧ｯ繧ｿ繝ｼ
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 迥ｶ諷矩幕蟋区凾縺ｮ蛻晄悄蛹門・逅・
 	 */
 	virtual void Enter(CharacterMove* character) {}
 
 	/*
-	 * [入力] character: 更新対象のキャラクター
-	 * [出力] なし
-	 * [副作用] キャラクターの座標やフラグなどを毎フレーム更新する
+	 * [蜈･蜉嫋 character: 譖ｴ譁ｰ蟇ｾ雎｡縺ｮ繧ｭ繝｣繝ｩ繧ｯ繧ｿ繝ｼ
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 繧ｭ繝｣繝ｩ繧ｯ繧ｿ繝ｼ縺ｮ蠎ｧ讓吶ｄ繝輔Λ繧ｰ縺ｪ縺ｩ繧呈ｯ弱ヵ繝ｬ繝ｼ繝譖ｴ譁ｰ縺吶ｋ
 	 */
 	virtual void Update(CharacterMove* character) = 0;
 
 	/*
-	 * [入力] character: 状態を解除する対象キャラクター
-	 * [出力] なし
-	 * [副作用] 状態終了時のクリーンアップ処理
+	 * [蜈･蜉嫋 character: 迥ｶ諷九ｒ隗｣髯､縺吶ｋ蟇ｾ雎｡繧ｭ繝｣繝ｩ繧ｯ繧ｿ繝ｼ
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 迥ｶ諷狗ｵゆｺ・凾縺ｮ繧ｯ繝ｪ繝ｼ繝ｳ繧｢繝・・蜃ｦ逅・
 	 */
 	virtual void Exit(CharacterMove* character) {}
 };

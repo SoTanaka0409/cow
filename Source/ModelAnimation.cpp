@@ -1,20 +1,20 @@
-﻿#include "DxLib.h"
+#include "DxLib.h"
 #include "ModelAnimation.h"
 
 ModelAnimation::ModelAnimation(int ModelHandle)
 	: mnModelHandle(ModelHandle)
 	, mfAnimationTime(0.0f)
 	, mnAnimationIndex(-1)
-	, mnState(AnimationState::ANIMATION_MAX)
+	, mnState(AnimationState::kAnimationMax)
 	, mfOldAnimationTime(0.0f)
 	, mnOldAnimationIndex(-1)
 	, mfAnimBlendRate(1.0f)
 	, mfAnimationCount(0.5f)
 	, mbLoop(true)
-	, mnLoopFinishState(AnimationState::ANIMATION_MAX)
+	, mnLoopFinishState(AnimationState::kAnimationMax)
 	, mbLoopFinish(false)
 {
-	// ルートフレームが移動アニメーションで勝手に動いてずれないよう、ローカル行列を固定する
+	// 繝ｫ繝ｼ繝医ヵ繝ｬ繝ｼ繝縺檎ｧｻ蜍輔い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｧ蜍晄焔縺ｫ蜍輔＞縺ｦ縺壹ｌ縺ｪ縺・ｈ縺・√Ο繝ｼ繧ｫ繝ｫ陦悟・繧貞崋螳壹☆繧・
 	int moveAnimFrameIndex = MV1SearchFrame(mnModelHandle, "root");
 	MV1SetFrameUserLocalMatrix(
 		mnModelHandle,
@@ -22,7 +22,7 @@ ModelAnimation::ModelAnimation(int ModelHandle)
 		MV1GetFrameLocalMatrix(mnModelHandle, moveAnimFrameIndex)
 	);
 
-	ChangeAnimation(AnimationState::ANIMATION_NEUTRAL);
+	ChangeAnimation(AnimationState::kAnimationNeutral);
 }
 
 ModelAnimation::~ModelAnimation()
@@ -31,7 +31,7 @@ ModelAnimation::~ModelAnimation()
 
 void ModelAnimation::Update()
 {
-	// アニメーション遷移時のブレンド率を1フレームごとに進行させる
+	// 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ驕ｷ遘ｻ譎ゅ・繝悶Ξ繝ｳ繝臥紫繧・繝輔Ξ繝ｼ繝縺斐→縺ｫ騾ｲ陦後＆縺帙ｋ
 	if (mfAnimBlendRate < 1.0f)
 	{
 		mfAnimBlendRate += 0.1f;
@@ -52,8 +52,8 @@ void ModelAnimation::Update()
 		{
 			if (!mbLoop)
 			{
-				// 非ループアニメーションが終了した場合、次の指定遷移先がなければアニメーション時間を止める
-				if (mnLoopFinishState == ANIMATION_MAX)
+				// 髱槭Ν繝ｼ繝励い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺檎ｵゆｺ・＠縺溷ｴ蜷医∵ｬ｡縺ｮ謖・ｮ夐・遘ｻ蜈医′縺ｪ縺代ｌ縺ｰ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ譎る俣繧呈ｭ｢繧√ｋ
+				if (mnLoopFinishState == kAnimationMax)
 				{
 					mbLoopFinish = true;
 					return;
@@ -78,14 +78,14 @@ void ModelAnimation::Update()
 			mfOldAnimationTime = 0.0f;
 		}
 
-		// 古いアニメーションのブレンド率を下げていき、最終的にフェードアウトさせる
+		// 蜿､縺・い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｮ繝悶Ξ繝ｳ繝臥紫繧剃ｸ九￡縺ｦ縺・″縲∵怙邨ら噪縺ｫ繝輔ぉ繝ｼ繝峨い繧ｦ繝医＆縺帙ｋ
 		MV1SetAttachAnimBlendRate(mnModelHandle, mnOldAnimationIndex, 1.0f - mfAnimBlendRate);
 	}
 }
 
 void ModelAnimation::ChangeAnimation(AnimationState state, int index)
 {
-	// 既に同じアニメーションが選択されている場合は無駄なデタッチ・アタッチを避ける
+	// 譌｢縺ｫ蜷後§繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺碁∈謚槭＆繧後※縺・ｋ蝣ｴ蜷医・辟｡鬧・↑繝・ち繝・メ繝ｻ繧｢繧ｿ繝・メ繧帝∩縺代ｋ
 	if (mnState == state)
 	{
 		return;
@@ -93,10 +93,10 @@ void ModelAnimation::ChangeAnimation(AnimationState state, int index)
 
 	mnState = state;
 	mbLoop = true;
-	mnLoopFinishState = AnimationState::ANIMATION_MAX;
+	mnLoopFinishState = AnimationState::kAnimationMax;
 	mbLoopFinish = false;
 
-	// 古すぎるアニメーションハンドルが残っている場合は完全に切り離す
+	// 蜿､縺吶℃繧九い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ繝上Φ繝峨Ν縺梧ｮ九▲縺ｦ縺・ｋ蝣ｴ蜷医・螳悟・縺ｫ蛻・ｊ髮｢縺・
 	if (mnOldAnimationIndex != -1)
 	{
 		MV1DetachAnim(mnModelHandle, mnOldAnimationIndex);
@@ -118,7 +118,7 @@ void ModelAnimation::SetAnimationBlend(bool isblend)
 	}
 	else
 	{
-		// ブレンドしない場合は即座に新規アニメーションへ完全切り替えする
+		// 繝悶Ξ繝ｳ繝峨＠縺ｪ縺・ｴ蜷医・蜊ｳ蠎ｧ縺ｫ譁ｰ隕上い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｸ螳悟・蛻・ｊ譖ｿ縺医☆繧・
 		mfAnimBlendRate = 1.0f;
 
 		if (mnOldAnimationIndex != -1)

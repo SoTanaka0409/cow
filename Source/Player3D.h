@@ -16,10 +16,10 @@ class CapsuleCollider;
 class Player3D : public Object3D
 {
 private:
-	// 仕様により吸引アクションのオンオフを制御する
+	// 莉墓ｧ倥↓繧医ｊ蜷ｸ蠑輔い繧ｯ繧ｷ繝ｧ繝ｳ縺ｮ繧ｪ繝ｳ繧ｪ繝輔ｒ蛻ｶ蠕｡縺吶ｋ
 	bool mbVacuumFlag = true;
 public:
-	// ステータスID（UIやスキル加算判定に使用）
+	// 繧ｹ繝・・繧ｿ繧ｹID・・I繧・せ繧ｭ繝ｫ蜉邂怜愛螳壹↓菴ｿ逕ｨ・・
 	enum StatusID
 	{
 		Status_Hp,
@@ -34,9 +34,9 @@ public:
 
 public:
 	/*
-	 * [入力] filename: モデルファイルパス, initPos: 初期座標
-	 * [出力] なし
-	 * [副作用] 各マネージャー(Score, Level等)とコライダーの生成
+	 * [蜈･蜉嫋 filename: 繝｢繝・Ν繝輔ぃ繧､繝ｫ繝代せ, initPos: 蛻晄悄蠎ｧ讓・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 蜷・・繝阪・繧ｸ繝｣繝ｼ(Score, Level遲・縺ｨ繧ｳ繝ｩ繧､繝繝ｼ縺ｮ逕滓・
 	 */
 	Player3D(std::string filename, VECTOR initPos);
 	virtual ~Player3D();
@@ -45,65 +45,65 @@ public:
 	void Update() override;
 
 	/*
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] mvPositionの更新
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] mvPosition縺ｮ譖ｴ譁ｰ
 	 */
 	void MoveEx();
 
 	/*
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] mIsVacuumActiveとmVacuumGaugeの更新
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] mIsVacuumActive縺ｨmVacuumGauge縺ｮ譖ｴ譁ｰ
 	 */
 	void Play();
 
 	/*
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] mpCapsuleColliderとビームエフェクトの更新
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] mpCapsuleCollider縺ｨ繝薙・繝繧ｨ繝輔ぉ繧ｯ繝医・譖ｴ譁ｰ
 	 */
 	void ColliderUpdate();
 
 	/*
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 画面外時の座標リセット
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 逕ｻ髱｢螟匁凾縺ｮ蠎ｧ讓吶Μ繧ｻ繝・ヨ
 	 */
 	void ScreenOutCheck();
 
 	/*
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] mvRotationの更新
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] mvRotation縺ｮ譖ｴ譁ｰ
 	 */
 	void RotationByMove();
 
 	/*
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] サブモジュールのUpdate/Draw呼び出し
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 繧ｵ繝悶Δ繧ｸ繝･繝ｼ繝ｫ縺ｮUpdate/Draw蜻ｼ縺ｳ蜃ｺ縺・
 	 */
 	void ManagerUpdate();
 
 	/*
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] UI描画
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] UI謠冗判
 	 */
 	void bar();
 
 	/*
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] デバッグ時の状態変化
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] 繝・ヰ繝・げ譎ゅ・迥ｶ諷句､牙喧
 	 */
 	void test();
 
 	/*
-	 * [入力] id: ステータスID
-	 * [出力] スキル補正後のステータス値
-	 * [副作用] なし
+	 * [蜈･蜉嫋 id: 繧ｹ繝・・繧ｿ繧ｹID
+	 * [蜃ｺ蜉嫋 繧ｹ繧ｭ繝ｫ陬懈ｭ｣蠕後・繧ｹ繝・・繧ｿ繧ｹ蛟､
+	 * [蜑ｯ菴懃畑] 縺ｪ縺・
 	 */
 	float Status(StatusID id);
 
@@ -116,21 +116,21 @@ public:
 	virtual void OnTrigger(Collider* collider, Collider* check) override;
 	virtual void OnExit(Collider* collider, Collider* check) override;
 
-	CapsuleCollider* GetCollisionCollider() { return mpCapsuleCollider; }
+	CapsuleCollider* GetCollisionCollider() { return capsule_collider_; }
 
 	void SetScale(float scale);
 
 	/*
-	 * [入力] stunTime: 気絶時間（フレーム数）
-	 * [出力] なし
-	 * [副作用] mIsStunnedをtrueにし、操作不能時間を発生させる
+	 * [蜈･蜉嫋 stunTime: 豌礼ｵｶ譎る俣・医ヵ繝ｬ繝ｼ繝謨ｰ・・
+	 * [蜃ｺ蜉嫋 縺ｪ縺・
+	 * [蜑ｯ菴懃畑] mIsStunned繧稚rue縺ｫ縺励∵桃菴應ｸ崎・譎る俣繧堤匱逕溘＆縺帙ｋ
 	 */
 	void ApplyStun(int stunTime);
 
 	void PlaySkillEffect();
 
 public:
-	Model* mpModel;
+	Model* model_;
 	Skill* mpSkill;
 	Level* mpLevel;
 	Combo* mpCombo;
@@ -140,9 +140,9 @@ private:
 	float mfSpeed;
 	float mfHp;
 	float mfAttack_Speed;
-	float mfTargetAngle;
-	float mfAngle;
-	const float ROTATE_SPEED = 0.2f;
+	float target_angle_;
+	float angle_;
+	const float kRotateSpeed = 0.2f;
 	const float JUMP_POWER = 30.0f;
 	bool mIsOutOfBounds = false;
 	int mnLighGraph;
@@ -166,8 +166,8 @@ private:
 	VECTOR oldmoveVec;
 	VECTOR hitPos = VGet(0.0f, 0.0f, 0.0f);
 
-	float mfHorizontalAngle;
-	float mfVerticalAngle;
+	float horizontal_angle_;
+	float vertical_angle_;
 
 	const int SIZE_RAND_MAX = 800;
 	const int SIZE_RAND_MIN = 400;
@@ -176,9 +176,8 @@ private:
 
 	EffekseerEffect* mpSpeed;
 	EffekseerEffect* mpBeam;
-	int mEffectTimer;
+	int effect_timer_;
 
 	bool mIsStunned;
 	int mStunTimer;
 };
-

@@ -13,8 +13,8 @@ Thunder::Thunder(VECTOR pos)
 	: Object3D(pos)
 {
 	mHasStunned = false;
-	mPos = pos;
-	// プレイヤーが回避行動をとれるよう、落下前に1秒間の猶予を設ける
+	pos_ = pos;
+	// 繝励Ξ繧､繝､繝ｼ縺悟屓驕ｿ陦悟虚繧偵→繧後ｋ繧医≧縲∬誠荳句燕縺ｫ1遘帝俣縺ｮ迪ｶ莠医ｒ險ｭ縺代ｋ
 	mWarningTimer = 60;
 	mStrikeTimer = 20;
 	mIntervalTimer = 180;
@@ -22,18 +22,18 @@ Thunder::Thunder(VECTOR pos)
 	mState = IDLE;
 	mActive = true;
 	
-	mpCapsuleCollider->mfRadius = 230;
+	capsule_collider_->radius_ = 230;
 
-	mpThunder = new EffekseerEffect("Resource/3D/EFK/thud.efk", mPos, 200.0f);
+	mpThunder = new EffekseerEffect("Resource/3D/EFK/thud.efk", pos_, 200.0f);
 	mpThunder->SetScale(VGet(1.0f, 1.0f, 1.0f));
 
-	mpWarning = new EffekseerEffect("Resource/3D/EFK/warning2.efk", mPos, 40.0f);
-	mpStun = new EffekseerEffect("Resource/3D/EFK/stun.efk", mPos, 20.0f);
+	mpWarning = new EffekseerEffect("Resource/3D/EFK/warning2.efk", pos_, 40.0f);
+	mpStun = new EffekseerEffect("Resource/3D/EFK/stun.efk", pos_, 20.0f);
 }
 
 Thunder::~Thunder()
 {
-	// エフェクトは自前管理のため手動で解放する
+	// 繧ｨ繝輔ぉ繧ｯ繝医・閾ｪ蜑咲ｮ｡逅・・縺溘ａ謇句虚縺ｧ隗｣謾ｾ縺吶ｋ
 	if (mpThunder != nullptr)
 	{
 		delete mpThunder;
@@ -57,13 +57,13 @@ void Thunder::Update()
 {
 	if (mpThunder != nullptr)
 	{
-		mpThunder->SetPosition(mPos);
+		mpThunder->SetPosition(pos_);
 		mpThunder->Update();
 	}
 
 	if (mpWarning != nullptr)
 	{
-		mpWarning->SetPosition(mPos);
+		mpWarning->SetPosition(pos_);
 		mpWarning->Update();
 	}
 
@@ -74,8 +74,8 @@ void Thunder::Update()
 
 	if (!mActive) return;
 
-	mpCapsuleCollider->mvPosition = VSub(mvPosition, VGet(0, 2000, 0));
-	mpCapsuleCollider->mvPosition2 = VAdd(mvPosition, VGet(0, 2000, 0));
+	capsule_collider_->position_ = VSub(position_, VGet(0, 2000, 0));
+	capsule_collider_->position2_ = VAdd(position_, VGet(0, 2000, 0));
    
 	switch (mState)
 	{
@@ -84,11 +84,11 @@ void Thunder::Update()
 		if (mIntervalTimer <= 0)
 		{
 			float range = 3000.0f;
-			mPos.x = (float)(GetRand((int)range * 2) - (int)range);
-			mPos.z = (float)(GetRand((int)range * 2) - (int)range);
-			mPos.y = 0.0f;
+			pos_.x = (float)(GetRand((int)range * 2) - (int)range);
+			pos_.z = (float)(GetRand((int)range * 2) - (int)range);
+			pos_.y = 0.0f;
 
-			mvPosition = mPos;
+			position_ = pos_;
 			mWarningTimer = 60;
 			mState = WARNING;
 
@@ -115,7 +115,7 @@ void Thunder::Update()
 				bool playSound = false;
 				for (auto p : players)
 				{
-					VECTOR diff = VSub(p->GetPosition(), mPos);
+					VECTOR diff = VSub(p->GetPosition(), pos_);
 					if (VSquareSize(diff) < 3000.0f * 3000.0f)
 					{
 						playSound = true;
@@ -124,7 +124,7 @@ void Thunder::Update()
 				}
 				if (playSound)
 				{
-					Master::mpSoundManager->PlaySE(SoundManager::SE_KAMINARI);
+					Master::mpSoundManager->PlaySE(SoundManager::kSeKaminari);
 				}
 			}
 		}
@@ -144,7 +144,7 @@ void Thunder::Update()
 	{
 		mStunEffectTimer--;
 
-		// エフェクトの再生時間が短いため、スタン期間中は定期的に再生し直す
+		// 繧ｨ繝輔ぉ繧ｯ繝医・蜀咲函譎る俣縺檎洒縺・◆繧√√せ繧ｿ繝ｳ譛滄俣荳ｭ縺ｯ螳壽悄逧・↓蜀咲函縺礼峩縺・
 		if (mStunEffectTimer > 0 && mStunEffectTimer % 30 == 0)
 		{
 			if (mpStun != nullptr)
@@ -168,7 +168,7 @@ bool Thunder::CheckHit(VECTOR playerPos, float range)
 {
 	if (mState != STRIKE) return false;
 
-	VECTOR diff = VSub(playerPos, mPos);
+	VECTOR diff = VSub(playerPos, pos_);
 	float distance = sqrtf(diff.x * diff.x + diff.y * diff.y + diff.z * diff.z);
 
 	return distance < range;
@@ -177,12 +177,12 @@ bool Thunder::CheckHit(VECTOR playerPos, float range)
 void Thunder::OnEnter(Collider* collider, Collider* check)
 {
 	if (mState != STRIKE) return;
-	// 多段ヒットによる理不尽なスタン延長を防ぐため
+	// 螟壽ｮｵ繝偵ャ繝医↓繧医ｋ逅・ｸ榊ｰｽ縺ｪ繧ｹ繧ｿ繝ｳ蟒ｶ髟ｷ繧帝亟縺舌◆繧・
 	if (mHasStunned) return;
 
-	if (check->mpParentObject->GetTag() == Tag3D_player)
+	if (check->parent_object_->GetTag() == kTag3dPlayer)
 	{
-		Player3D* player = dynamic_cast<Player3D*>(check->mpParentObject);
+		Player3D* player = dynamic_cast<Player3D*>(check->parent_object_);
 		if (player != nullptr)
 		{
 			mHasStunned = true;
@@ -194,7 +194,7 @@ void Thunder::OnEnter(Collider* collider, Collider* check)
 
 			player->ApplyStun(120);
 
-			// 落雷の威力を視覚的に強調するためカメラシェイクを発生させる
+			// 關ｽ髮ｷ縺ｮ螽∝鴨繧定ｦ冶ｦ夂噪縺ｫ蠑ｷ隱ｿ縺吶ｋ縺溘ａ繧ｫ繝｡繝ｩ繧ｷ繧ｧ繧､繧ｯ繧堤匱逕溘＆縺帙ｋ
 			Master::mpCamera->SetupShake(30.0f, 45.0f, 40.0f);
 		}
 	}

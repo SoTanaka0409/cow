@@ -3,36 +3,36 @@
 #include <string>
 #include"Dxlib.h"
 
-// 分割画像の読み込みデータおよびリソースハンドル情報を保持する構造体
+// 蛻・牡逕ｻ蜒上・隱ｭ縺ｿ霎ｼ縺ｿ繝・・繧ｿ縺翫ｈ縺ｳ繝ｪ繧ｽ繝ｼ繧ｹ繝上Φ繝峨Ν諠・ｱ繧剃ｿ晄戟縺吶ｋ讒矩菴・
 struct DivGraphData
 {
-	std::string filePath;	// 画像アセットのファイルパス
-	int* divHandleList;		// 分割ロードされたグラフィックハンドルの配列
-	int divX;				// 水平方向の分割数
-	int divY;				// 垂直方向の分割数
-	int allNum;				// 分割画像の総数
+	std::string file_path_;	// 逕ｻ蜒上い繧ｻ繝・ヨ縺ｮ繝輔ぃ繧､繝ｫ繝代せ
+	int* div_handle_list_;		// 蛻・牡繝ｭ繝ｼ繝峨＆繧後◆繧ｰ繝ｩ繝輔ぅ繝・け繝上Φ繝峨Ν縺ｮ驟榊・
+	int div_x_;				// 豌ｴ蟷ｳ譁ｹ蜷代・蛻・牡謨ｰ
+	int div_y_;				// 蝙ら峩譁ｹ蜷代・蛻・牡謨ｰ
+	int all_num_;				// 蛻・牡逕ｻ蜒上・邱乗焚
 
 	DivGraphData(
-		std::string filePath,
-		int divX,
-		int divY,
-		int allNum
+		std::string file_path_,
+		int div_x_,
+		int div_y_,
+		int all_num_
 	)
 	{
-		this->filePath = filePath;
-		this->divHandleList = new int[allNum];
-		this->divX = divX;
-		this->divY = divY;
-		this->allNum = allNum;
+		this->file_path_ = file_path_;
+		this->div_handle_list_ = new int[all_num_];
+		this->div_x_ = div_x_;
+		this->div_y_ = div_y_;
+		this->all_num_ = all_num_;
 	}
 
 	~DivGraphData()
 	{
-		delete[] divHandleList; // 動的確保されたグラフィックハンドル配列の解放漏れを防ぐ
+		delete[] div_handle_list_; // 蜍慕噪遒ｺ菫昴＆繧後◆繧ｰ繝ｩ繝輔ぅ繝・け繝上Φ繝峨Ν驟榊・縺ｮ隗｣謾ｾ貍上ｌ繧帝亟縺・
 	}
 };
 
-// 3Dモデルや2Dテクスチャアセットの二重ロードを防止し、一括管理するマネージャークラス
+// 3D繝｢繝・Ν繧・D繝・け繧ｹ繝√Ε繧｢繧ｻ繝・ヨ縺ｮ莠碁㍾繝ｭ繝ｼ繝峨ｒ髦ｲ豁｢縺励∽ｸ諡ｬ邂｡逅・☆繧九・繝阪・繧ｸ繝｣繝ｼ繧ｯ繝ｩ繧ｹ
 class ResourceManager
 {
 public:
@@ -40,42 +40,41 @@ public:
 	~ResourceManager();
 
 	/*
-	 * @brief 3Dモデルファイルをキャッシュ読み込みする（二重ロード時は複製モデルを返す）
-	 * [入力] pathName: アセットファイルパス
-	 * [出力] 複製されたモデルハンドル（エラー時は -1）
-	 * [副作用] 新規ロード時はresourceMapListにオリジナルハンドルを追加登録
+	 * @brief 3D繝｢繝・Ν繝輔ぃ繧､繝ｫ繧偵く繝｣繝・す繝･隱ｭ縺ｿ霎ｼ縺ｿ縺吶ｋ・井ｺ碁㍾繝ｭ繝ｼ繝画凾縺ｯ隍・｣ｽ繝｢繝・Ν繧定ｿ斐☆・・
+	 * [蜈･蜉嫋 pathName: 繧｢繧ｻ繝・ヨ繝輔ぃ繧､繝ｫ繝代せ
+	 * [蜃ｺ蜉嫋 隍・｣ｽ縺輔ｌ縺溘Δ繝・Ν繝上Φ繝峨Ν・医お繝ｩ繝ｼ譎ゅ・ -1・・
+	 * [蜑ｯ菴懃畑] 譁ｰ隕上Ο繝ｼ繝画凾縺ｯresourceMapList縺ｫ繧ｪ繝ｪ繧ｸ繝翫Ν繝上Φ繝峨Ν繧定ｿｽ蜉逋ｻ骭ｲ
 	 */
 	int LoadModel(std::string pathName);
 	void PreloadModel(std::string pathName);
 
 	/*
-	 * @brief 2D画像ファイルをキャッシュ読み込みする（二重ロード時は既存のハンドルを返す）
-	 * [入力] pathName: アセットファイルパス
-	 * [出力] 画像グラフィックハンドル（エラー時は -1）
-	 * [副作用] 新規ロード時はgraphicResourceMapListに登録
+	 * @brief 2D逕ｻ蜒上ヵ繧｡繧､繝ｫ繧偵く繝｣繝・す繝･隱ｭ縺ｿ霎ｼ縺ｿ縺吶ｋ・井ｺ碁㍾繝ｭ繝ｼ繝画凾縺ｯ譌｢蟄倥・繝上Φ繝峨Ν繧定ｿ斐☆・・
+	 * [蜈･蜉嫋 pathName: 繧｢繧ｻ繝・ヨ繝輔ぃ繧､繝ｫ繝代せ
+	 * [蜃ｺ蜉嫋 逕ｻ蜒上げ繝ｩ繝輔ぅ繝・け繝上Φ繝峨Ν・医お繝ｩ繝ｼ譎ゅ・ -1・・
+	 * [蜑ｯ菴懃畑] 譁ｰ隕上Ο繝ｼ繝画凾縺ｯgraphicResourceMapList縺ｫ逋ｻ骭ｲ
 	 */
 	int LoadGraphics(std::string pathName);
 	void PreloadGraphics(std::string pathName);
 
 	/*
-	 * @brief 分割画像ファイルをキャッシュ読み込みし、分割データ構造体を返す
-	 * [入力] pathName: アセットファイルパス, allNum: 分割総数, numX: 横分割数, numY: 縦分割数
-	 * [出力] 分割画像データ構造体へのポインタ（エラー時は nullptr）
-	 * [副作用] 新規ロード時はdivGraphicResourceMapListに構造体を追加登録
+	 * @brief 蛻・牡逕ｻ蜒上ヵ繧｡繧､繝ｫ繧偵く繝｣繝・す繝･隱ｭ縺ｿ霎ｼ縺ｿ縺励∝・蜑ｲ繝・・繧ｿ讒矩菴薙ｒ霑斐☆
+	 * [蜈･蜉嫋 pathName: 繧｢繧ｻ繝・ヨ繝輔ぃ繧､繝ｫ繝代せ, all_num_: 蛻・牡邱乗焚, numX: 讓ｪ蛻・牡謨ｰ, numY: 邵ｦ蛻・牡謨ｰ
+	 * [蜃ｺ蜉嫋 蛻・牡逕ｻ蜒上ョ繝ｼ繧ｿ讒矩菴薙∈縺ｮ繝昴う繝ｳ繧ｿ・医お繝ｩ繝ｼ譎ゅ・ nullptr・・
+	 * [蜑ｯ菴懃畑] 譁ｰ隕上Ο繝ｼ繝画凾縺ｯdivGraphicResourceMapList縺ｫ讒矩菴薙ｒ霑ｽ蜉逋ｻ骭ｲ
 	 */
-	DivGraphData* LoadDivGraphics(std::string pathName, int allNum, int numX, int numY);
+	DivGraphData* LoadDivGraphics(std::string pathName, int all_num_, int numX, int numY);
 
 	/*
-	 * @brief キャッシュ管理されているリソースの総数を取得する
-	 * [入力] なし
-	 * [出力] 登録されているリソースの合計数
-	 * [副作用] なし
+	 * @brief 繧ｭ繝｣繝・す繝･邂｡逅・＆繧後※縺・ｋ繝ｪ繧ｽ繝ｼ繧ｹ縺ｮ邱乗焚繧貞叙蠕励☆繧・
+	 * [蜈･蜉嫋 縺ｪ縺・
+	 * [蜃ｺ蜉嫋 逋ｻ骭ｲ縺輔ｌ縺ｦ縺・ｋ繝ｪ繧ｽ繝ｼ繧ｹ縺ｮ蜷郁ｨ域焚
+	 * [蜑ｯ菴懃畑] 縺ｪ縺・
 	 */
-	int GetTotalResource() { return static_cast<int>(resourceMapList.size() + graphicResourceMapList.size() + divGraphicResourceMapList.size()); }
+	int GetTotalResource() { return static_cast<int>(resource_map_list_.size() + graphic_resource_map_list_.size() + div_graphic_resource_map_list_.size()); }
 
 private:
-	std::vector<std::pair<std::string, int>> resourceMapList;			// キャッシュ管理用モデルアセットリスト (パス名とオリジナルハンドルのペア)
-	std::vector<std::pair<std::string, int>> graphicResourceMapList;	// キャッシュ管理用2Dグラフィックリスト
-	std::vector<DivGraphData*> divGraphicResourceMapList;				// キャッシュ管理用分割画像データリスト
+	std::vector<std::pair<std::string, int>> resource_map_list_;			// 繧ｭ繝｣繝・す繝･邂｡逅・畑繝｢繝・Ν繧｢繧ｻ繝・ヨ繝ｪ繧ｹ繝・(繝代せ蜷阪→繧ｪ繝ｪ繧ｸ繝翫Ν繝上Φ繝峨Ν縺ｮ繝壹い)
+	std::vector<std::pair<std::string, int>> graphic_resource_map_list_;	// 繧ｭ繝｣繝・す繝･邂｡逅・畑2D繧ｰ繝ｩ繝輔ぅ繝・け繝ｪ繧ｹ繝・
+	std::vector<DivGraphData*> div_graphic_resource_map_list_;				// 繧ｭ繝｣繝・す繝･邂｡逅・畑蛻・牡逕ｻ蜒上ョ繝ｼ繧ｿ繝ｪ繧ｹ繝・
 };
-

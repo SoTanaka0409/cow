@@ -7,35 +7,35 @@ Floor::Floor(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bott
 {
 	mnGraphHandle = Master::mpResourceManager->LoadGraphics(filename.c_str());
 
-	// 床の左上頂点の設定
+	// 蠎翫・蟾ｦ荳企らせ縺ｮ險ｭ螳・
 	mVertex[0].pos = VAdd(centerPos, topLeft);
 	mVertex[0].dif = GetColorU8(255, 255, 255, 255);
 	mVertex[0].spc = GetColorU8(0, 0, 0, 0);
 	mVertex[0].u = 0.0f;
 	mVertex[0].v = 0.0f;
 
-	// 床の右上頂点の設定
+	// 蠎翫・蜿ｳ荳企らせ縺ｮ險ｭ螳・
 	mVertex[1].pos = VAdd(centerPos, VGet(bottomRight.x, 0, topLeft.z));
 	mVertex[1].dif = GetColorU8(255, 255, 255, 255);
 	mVertex[1].spc = GetColorU8(0, 0, 0, 0);
 	mVertex[1].u = 1.0f;
 	mVertex[1].v = 0.0f;
 
-	// 床の左下頂点の設定
+	// 蠎翫・蟾ｦ荳矩らせ縺ｮ險ｭ螳・
 	mVertex[2].pos = VAdd(centerPos, VGet(topLeft.x, 0, bottomRight.z));
 	mVertex[2].dif = GetColorU8(255, 255, 255, 255);
 	mVertex[2].spc = GetColorU8(0, 0, 0, 0);
 	mVertex[2].u = 0.0f;
 	mVertex[2].v = 1.0f;
 
-	// 床の右下頂点の設定
+	// 蠎翫・蜿ｳ荳矩らせ縺ｮ險ｭ螳・
 	mVertex[3].pos = VAdd(centerPos, bottomRight);
 	mVertex[3].dif = GetColorU8(255, 255, 255, 255);
 	mVertex[3].spc = GetColorU8(0, 0, 0, 0);
 	mVertex[3].u = 1.0f;
 	mVertex[3].v = 1.0f;
 
-	// 各頂点の法線ベクトルを計算して面全体の向きを統一する
+	// 蜷・らせ縺ｮ豕慕ｷ壹・繧ｯ繝医Ν繧定ｨ育ｮ励＠縺ｦ髱｢蜈ｨ菴薙・蜷代″繧堤ｵｱ荳縺吶ｋ
 	VECTOR norm = VCross(
 		VSub(mVertex[0].pos, mVertex[1].pos),
 		VSub(mVertex[0].pos, mVertex[2].pos)
@@ -68,7 +68,7 @@ void Floor::Draw()
 	index[4] = 2;
 	index[5] = 1;
 
-	// ライティング計算を無効化し、テクスチャ本来の色で床を描画する
+	// 繝ｩ繧､繝・ぅ繝ｳ繧ｰ險育ｮ励ｒ辟｡蜉ｹ蛹悶＠縲√ユ繧ｯ繧ｹ繝√Ε譛ｬ譚･縺ｮ濶ｲ縺ｧ蠎翫ｒ謠冗判縺吶ｋ
 	SetUseLighting(false);
 	DrawPolygonIndexed3D(mVertex, 4, index, 2, mnGraphHandle, TRUE);
 	SetUseLighting(true);
