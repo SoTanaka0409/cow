@@ -36,10 +36,10 @@ void Camera::Initialize()
 {
 	mpTarget = nullptr;
 	
-	// ƒJƒƒ‰‚ÌƒNƒŠƒbƒsƒ“ƒO‹——£i•`‰æ‰Â”\”ÍˆÍj‚ğ‹ß100?‰“50000‚ÌL”ÍˆÍ‚Éİ’è
+	// ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ÌƒNï¿½ï¿½ï¿½bï¿½sï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½iï¿½`ï¿½ï¿½Â”\ï¿½ÍˆÍjï¿½ï¿½ï¿½100?ï¿½ï¿½50000ï¿½ÌLï¿½ÍˆÍ‚Éİ’ï¿½
 	SetCameraNearFar(100.0f, 50000.0f);
 
-	// •`‰æ‚³‚ê‚È‚¢”wŒi•”•ª‚ğƒNƒŠƒA‚·‚éÛ‚ÌƒfƒtƒHƒ‹ƒgF‚ğŠDF‚Éİ’è
+	// ï¿½`ï¿½æ‚³ï¿½ï¿½È‚ï¿½ï¿½wï¿½iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½Û‚Ìƒfï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Fï¿½ï¿½Dï¿½Fï¿½Éİ’ï¿½
 	SetBackgroundColor(128, 128, 128);
 
 	SetCameraPositionAndTarget_UpVecY(mvPosition, mvLookAtPosition);
@@ -48,7 +48,7 @@ void Camera::Initialize()
 
 void Camera::Update()
 {
-	// ƒXƒLƒ‹ƒJ[ƒh‘I‘ğ’†A‚Ü‚½‚ÍƒfƒoƒbƒO‚Ì©—RˆÚ“®ƒJƒƒ‰‘€ì’†‚ÍƒQ[ƒ€ƒJƒƒ‰‚ÌXV‚ğƒXƒLƒbƒv
+	// ï¿½Xï¿½Lï¿½ï¿½ï¿½Jï¿½[ï¿½hï¿½Iï¿½ğ’†Aï¿½Ü‚ï¿½ï¿½Íƒfï¿½oï¿½bï¿½Oï¿½Ìï¿½ï¿½Rï¿½Ú“ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì’†ï¿½ÍƒQï¿½[ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ÌXï¿½Vï¿½ï¿½Xï¿½Lï¿½bï¿½v
 	if (Master::SelectSkill) return;
 	if (Master::mbIsDebugCamera) return;
 
@@ -61,7 +61,7 @@ void Camera::Update()
 	
 	if (mpTarget != nullptr)
 	{
-		// ƒJƒƒ‰‚Ì’‹“_‚ğƒvƒŒƒCƒ„[ƒLƒƒƒ‰ƒNƒ^[‚Ì’†S‚â‚âã‚Éİ’è‚·‚é
+		// ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ì’ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½^ï¿½[ï¿½Ì’ï¿½ï¿½Sï¿½ï¿½ï¿½ï¿½Éİ’è‚·ï¿½ï¿½
 		mvLookAtPosition = mpTarget->GetPosition();
 		mvLookAtPosition.y += 340.0f;
 	}
@@ -71,7 +71,7 @@ void Camera::Update()
 	{
 		const float distance = 1000.0f;
 		VECTOR temp;
-		// …•½E‚’¼Šp“x’li“x”–@j‚ğƒ‰ƒWƒAƒ“‚É•ÏŠ·‚µ‚ÄƒJƒƒ‰‚Ì3DÀ•WƒIƒtƒZƒbƒg‚ğŒvZ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½pï¿½xï¿½lï¿½iï¿½xï¿½ï¿½ï¿½@ï¿½jï¿½ï¿½ï¿½ï¿½Wï¿½Aï¿½ï¿½ï¿½É•ÏŠï¿½ï¿½ï¿½ï¿½ÄƒJï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3Dï¿½ï¿½ï¿½Wï¿½Iï¿½tï¿½Zï¿½bï¿½gï¿½ï¿½vï¿½Z
 		temp.x = distance * cosf(mfVerticalAngle / 180.0f * 3.14159265f) * sinf(mfHorizontalAngle / 180.0f * DX_PI_F);
 		temp.y = distance * sinf(-mfVerticalAngle / 180.0f * 3.14159265f);
 		temp.z = -(distance * cosf(mfVerticalAngle / 180.0f * DX_PI_F) * cosf(mfHorizontalAngle / 180.0f * DX_PI_F));
@@ -80,7 +80,7 @@ void Camera::Update()
 		{
 			mvPosition = VAdd(temp, mvLookAtPosition);
 			
-			// Zo‚µ‚½ƒJƒƒ‰À•W‚¨‚æ‚Ñ’‹“_‚ÉA‰æ–ÊU“®‚É‚æ‚éƒIƒtƒZƒbƒgÀ•W‚ğ‰ÁZ‚µ‚Ä”½‰f
+			// ï¿½Zï¿½oï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½ï¿½Ñ’ï¿½ï¿½ï¿½ï¿½_ï¿½ÉAï¿½ï¿½ÊUï¿½ï¿½ï¿½É‚ï¿½ï¿½Iï¿½tï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½Ä”ï¿½ï¿½f
 			SetCameraPositionAndTarget_UpVecY(VAdd(mvPosition, mvShakePosition), VAdd(mvLookAtPosition, mvShakePosition));
 		}
 	}
@@ -89,17 +89,17 @@ void Camera::Update()
 	mPrevMouseY = mMouseY;
 	GetMousePoint(&mMouseX, &mMouseY);
 
-	// •`‰æƒGƒtƒFƒNƒg‚ÌˆÊ’u‚â•ûŒü‚ª3DƒJƒƒ‰‹–ìŠp‚Æ‡‚¤‚æ‚¤AEffekseer‘¤‚Ì3D‹óŠÔİ’è‚Æ“¯Šú‚·‚é
+	// ï¿½`ï¿½ï¿½Gï¿½tï¿½Fï¿½Nï¿½gï¿½ÌˆÊ’uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3Dï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½Æï¿½ï¿½ï¿½ï¿½æ‚¤ï¿½AEffekseerï¿½ï¿½ï¿½ï¿½3Dï¿½ï¿½Ôİ’ï¿½Æ“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	Effekseer_Sync3DSetting();
 
-	// ƒJƒƒ‰‚©‚ç’‹“_‚ÖŒü‚©‚¤ƒxƒNƒgƒ‹‚ğ•½sŒõŒ¹‚ÌŒü‚«‚Æ‚µ‚Äİ’è‚µA‡Œõ•\Œ»‚ğs‚¤
+	// ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç’ï¿½ï¿½ï¿½_ï¿½ÖŒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½Nï¿½gï¿½ï¿½ï¿½ğ•½sï¿½ï¿½ï¿½ï¿½ï¿½ÌŒï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½Äİ’è‚µï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½
 	VECTOR lightDir = VSub(mvLookAtPosition, mvPosition);
 	SetLightDirection(lightDir);
 }
 
 void Camera::UpdateRotate()
 {
-	// ƒJƒƒ‰…•½‰ñ“]Šp‚¨‚æ‚Ñ‚’¼‰ñ“]Šp‚ÌƒI[ƒo[ƒtƒ[•ÛŒì‚Æ”ÍˆÍ§ŒÀ
+	// ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½]ï¿½pï¿½ï¿½ï¿½ï¿½Ñï¿½ï¿½ï¿½ï¿½ï¿½]ï¿½pï¿½ÌƒIï¿½[ï¿½oï¿½[ï¿½tï¿½ï¿½ï¿½[ï¿½ÛŒï¿½Æ”ÍˆÍï¿½ï¿½ï¿½
 	if (mfHorizontalAngle >= 180.0f)
 	{
 		mfHorizontalAngle -= 360.0f;
@@ -122,14 +122,14 @@ void Camera::UpdateRotate()
 
 	if (Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::SCENE_3D || Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::SCENE_TUTORIAL)
 	{
-		// ƒXƒLƒ‹‘I‘ğ’†‚Å‚È‚¢ê‡‚ÍƒQ[ƒ€ƒvƒŒƒC—p‚Ìƒ}ƒEƒXƒLƒƒƒvƒ`ƒƒ‚ğs‚¤
+		// ï¿½Xï¿½Lï¿½ï¿½ï¿½Iï¿½ğ’†‚Å‚È‚ï¿½ï¿½ê‡ï¿½ÍƒQï¿½[ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½pï¿½Ìƒ}ï¿½Eï¿½Xï¿½Lï¿½ï¿½ï¿½vï¿½`ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½
 		SetMouseDispFlag(false);
 		GetMousePoint(&mouseX, &mouseY);
 
 		int centerX = 640;
 		int centerY = 200;
 
-		// 0ƒL[‚Åƒ}ƒEƒX‚ÌS‘©‚ğƒfƒoƒbƒO–Ú“I‚Åˆê‰ğœ‚Å‚«‚é‚æ‚¤‚É‚·‚é
+		// 0ï¿½Lï¿½[ï¿½Åƒ}ï¿½Eï¿½Xï¿½ÌSï¿½ï¿½ï¿½ï¿½fï¿½oï¿½bï¿½Oï¿½Ú“Iï¿½Åˆêï¿½ï¿½ï¿½ï¿½Å‚ï¿½ï¿½ï¿½æ‚¤ï¿½É‚ï¿½ï¿½ï¿½
 		if (!CheckHitKey(KEY_INPUT_0))
 		{
 			SetMousePoint(centerX, centerY);
@@ -139,7 +139,7 @@ void Camera::UpdateRotate()
 
 		if (!mbIsPhaseCameraActive)
 		{
-			// ¶‰E‚Ìƒ}ƒEƒXˆÚ“®—Ê‚ğƒJƒƒ‰‚Ì…•½ù‰ñŠpiƒˆ[Špj‚É’~Ï”½‰f
+			// ï¿½ï¿½ï¿½Eï¿½Ìƒ}ï¿½Eï¿½Xï¿½Ú“ï¿½ï¿½Ê‚ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½iï¿½ï¿½ï¿½[ï¿½pï¿½jï¿½É’~ï¿½Ï”ï¿½ï¿½f
 			mfHorizontalAngle -= deltaX * MOUSE_SENSITIVITY;
 		}
 	}
@@ -161,7 +161,7 @@ void Camera::Shake()
 {
 	if (mfShakeTimeCounter < mfShakeTime)
 	{
-		// ³Œ·”g(sinf)‚ÆŠÔŒo‰ß‚É‚æ‚éƒtƒF[ƒhƒAƒEƒg”{—¦‚ğæZ‚µ‚ÄƒJƒƒ‰‚Ì—h‚ç‚µ—Ê‚ğ‹‚ß‚é
+		// ï¿½ï¿½ï¿½ï¿½ï¿½g(sinf)ï¿½Æï¿½ï¿½ÔŒoï¿½ß‚É‚ï¿½ï¿½tï¿½Fï¿½[ï¿½hï¿½Aï¿½Eï¿½gï¿½{ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½ÄƒJï¿½ï¿½ï¿½ï¿½ï¿½Ì—hï¿½ç‚µï¿½Ê‚ï¿½ï¿½ï¿½ß‚ï¿½
 		mvShakePosition.y = sinf(mfShakeAngle) * (1.0f - (mfShakeTimeCounter / mfShakeTime)) * mfShakeWidth;
 		mvShakePosition.x = 0.0f;
 		mvShakePosition.z = 0.0f;
@@ -210,7 +210,7 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 		return;
 	}
 
-	// ‰‰o‚ÌŠJn‚©‚ç3•bi180ƒtƒŒ[ƒ€j‚ªŒo‰ß‚µ‚½‚çA©“®“I‚É•W€ƒJƒƒ‰‚Ö‚Æ–ß‚·
+	// ï¿½ï¿½ï¿½oï¿½ÌŠJï¿½nï¿½ï¿½ï¿½ï¿½3ï¿½bï¿½i180ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½oï¿½ß‚ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½É•Wï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ö‚Æ–ß‚ï¿½
 	if (phaseTimer > 180)
 	{
 		mbIsPhaseCameraActive = false;
@@ -221,7 +221,7 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 
 	if (phase == (int)GameManager::GamePhase::MassSpawn)
 	{
-		// ‹‘å—Ê”­¶‰‰oFƒJƒƒ‰‚ğˆø‚«‰º‚°‚Â‚ÂA‹ó‚ğŒ©ã‚°‚éiƒJƒƒ‰ƒsƒbƒ`Šp‚ğ‰º‚ÉŒü‚¯‚éj
+		// ï¿½ï¿½ï¿½ï¿½Ê”ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½Fï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â‚ÂAï¿½ï¿½ï¿½ï¿½ï¿½ã‚°ï¿½ï¿½iï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½sï¿½bï¿½`ï¿½pï¿½ï¿½ï¿½ï¿½ÉŒï¿½ï¿½ï¿½ï¿½ï¿½j
 		targetPos = VAdd(ufoPos, VGet(0.0f, 150.0f, -300.0f));
 		
 		if (phaseTimer < 180)
@@ -236,13 +236,13 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 	}
 	else if (phase == (int)GameManager::GamePhase::TornadoCrisis)
 	{
-		// —³Šª”­¶‰‰oFƒJƒƒ‰‚“x‚ğã‚°‚Ä‘S‘Ì‚ğŒ©“n‚µA’‹“_‚ğ—³Šª‚É‚·‚é
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½Fï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½ã‚°ï¿½Ä‘Sï¿½Ì‚ï¿½ï¿½ï¿½nï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ğ—³Šï¿½ï¿½É‚ï¿½ï¿½ï¿½
 		targetPos = VAdd(ufoPos, VGet(0.0f, 500.0f, -200.0f));
 		VECTOR toTornado = VSub(tornadoPos, ufoPos);
 		targetLookAt = VAdd(ufoPos, toTornado);
 	}
 
-	// Œ»İ‚ÌƒJƒƒ‰ƒpƒ‰ƒ[ƒ^‚ğüŒ`•âŠÔiLerpj‚ğ—p‚¢‚Ä–Ú•W’l‚ÖƒXƒ€[ƒY‚É‘JˆÚ‚³‚¹‚é
+	// ï¿½ï¿½ï¿½İ‚ÌƒJï¿½ï¿½ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½`ï¿½ï¿½ÔiLerpï¿½jï¿½ï¿½pï¿½ï¿½ï¿½Ä–Ú•Wï¿½lï¿½ÖƒXï¿½ï¿½ï¿½[ï¿½Yï¿½É‘Jï¿½Ú‚ï¿½ï¿½ï¿½ï¿½ï¿½
 	float lerpSpeed = 0.1f; 
 	mvPosition = LerpVector(mvPosition, targetPos, lerpSpeed);
 	mvLookAtPosition = LerpVector(mvLookAtPosition, targetLookAt, lerpSpeed);

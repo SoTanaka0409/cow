@@ -15,7 +15,7 @@ Object3D::Object3D(VECTOR initPos)
 	, mbDrawFlag(true)
 	, mfRadius(0)
 {
-	// ¶¬‚µ‚½ƒIƒuƒWƒFƒNƒg‚ðŠÇ—EXV‚·‚é‚½‚ßAŒ»Ý‚ÌƒAƒNƒeƒBƒu‚ÈƒV[ƒ“‚Ìƒ}ƒl[ƒWƒƒ[‚ÖŽ©“®“o˜^‚·‚é
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½Ç—ï¿½ï¿½Eï¿½Xï¿½Vï¿½ï¿½ï¿½é‚½ï¿½ßAï¿½ï¿½ï¿½Ý‚ÌƒAï¿½Nï¿½eï¿½Bï¿½uï¿½ÈƒVï¿½[ï¿½ï¿½ï¿½Ìƒ}ï¿½lï¿½[ï¿½Wï¿½ï¿½ï¿½[ï¿½ÖŽï¿½ï¿½ï¿½ï¿½oï¿½^ï¿½ï¿½ï¿½ï¿½
 	ServiceLocator::GetObjectManager()->AddObject(this);
 	mpCapsuleCollider = new CapsuleCollider(this, initPos, initPos, 0);
 }

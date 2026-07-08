@@ -17,7 +17,7 @@ DebugCamera::~DebugCamera()
 
 void DebugCamera::Initialize()
 {
-	// ƒJƒƒ‰‚Ì‰ŠúˆÊ’u‚ğƒQ[ƒ€’†ƒJƒƒ‰‚ÌˆÊ’u‚©‚çˆø‚«Œp‚¬AƒXƒ€[ƒY‚ÉØ‚è‘Ö‚¦‚Å‚«‚é‚æ‚¤‚É‚·‚é
+	// ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½Ê’uï¿½ï¿½Qï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½Aï¿½Xï¿½ï¿½ï¿½[ï¿½Yï¿½ÉØ‚ï¿½Ö‚ï¿½ï¿½Å‚ï¿½ï¿½ï¿½æ‚¤ï¿½É‚ï¿½ï¿½ï¿½
 	if (Master::mpCamera != nullptr)
 	{
 		mvPosition = Master::mpCamera->GetPosition();
@@ -33,12 +33,12 @@ void DebugCamera::Initialize()
 void DebugCamera::Update()
 {
 	float speed = 20.0f;
-	// LSHIFTƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚éŠÔ‚ÍAƒfƒoƒbƒOƒJƒƒ‰‚ÌˆÚ“®‘¬“x‚ğ‚‘¬‰»‚·‚é
+	// LSHIFTï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Ô‚ÍAï¿½fï¿½oï¿½bï¿½Oï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ÌˆÚ“ï¿½ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (CheckHitKey(KEY_INPUT_LSHIFT)) speed = 100.0f;
 
 	VECTOR moveVec = VGet(0, 0, 0);
-	VECTOR UpMoveVector = VGet(0.0f, 0.0f, 0.0f);   // ƒJƒƒ‰‚Ìã•ûŒüi‘OijˆÚ“®ƒxƒNƒgƒ‹
-	VECTOR leftMoveVector = VGet(0.0f, 0.0f, 0.0f); // ƒJƒƒ‰‚Ì¶•ûŒüˆÚ“®ƒxƒNƒgƒ‹
+	VECTOR UpMoveVector = VGet(0.0f, 0.0f, 0.0f);   // ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½iï¿½Oï¿½iï¿½jï¿½Ú“ï¿½ï¿½xï¿½Nï¿½gï¿½ï¿½
+	VECTOR leftMoveVector = VGet(0.0f, 0.0f, 0.0f); // ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú“ï¿½ï¿½xï¿½Nï¿½gï¿½ï¿½
 	
 	UpdateRotate();
 	
@@ -49,10 +49,10 @@ void DebugCamera::Update()
 	target.z = mvPosition.z - dist * cosf(mfVerticalAngle * DX_PI_F / 180.0f) * cosf(mfHorizontalAngle * DX_PI_F / 180.0f);
 
 	{
-		// ƒJƒƒ‰‚Ì‹üƒxƒNƒgƒ‹‚©‚ç‘OiˆÚ“®¬•ª‚ğ‹‚ß‚é
+		// ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½xï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½iï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½
 		UpMoveVector = VSub(target, mvPosition);
 
-		// ƒJƒƒ‰‚Ì‘OiƒxƒNƒgƒ‹‚ÆY²‚ÌãƒxƒNƒgƒ‹‚Æ‚ÌŠOÏ‚ğ‚Æ‚èA^¶•ûŒü‚ÌƒxƒNƒgƒ‹‚ğ‹‚ß‚é
+		// ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ì‘Oï¿½iï¿½xï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½Yï¿½ï¿½ï¿½Ìï¿½xï¿½Nï¿½gï¿½ï¿½ï¿½Æ‚ÌŠOï¿½Ï‚ï¿½Æ‚ï¿½Aï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìƒxï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½
 		leftMoveVector = VCross(UpMoveVector, VGet(0.0f, 1.0f, 0.0f));
 
 		UpMoveVector = VNorm(UpMoveVector);
@@ -82,18 +82,18 @@ void DebugCamera::Update()
 	}
 	mvPosition = VAdd(mvPosition, moveVec);
 
-	// ÅV‚ÌÀ•W‚ğ‚à‚Æ‚ÉƒJƒƒ‰‚Ì’‹“_‚ğÄŒvZ‚·‚é
+	// ï¿½ÅVï¿½Ìï¿½ï¿½Wï¿½ï¿½ï¿½Æ‚ÉƒJï¿½ï¿½ï¿½ï¿½ï¿½Ì’ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ÄŒvï¿½Zï¿½ï¿½ï¿½ï¿½
 	target.x = mvPosition.x + dist * cosf(mfVerticalAngle * DX_PI_F / 180.0f) * sinf(mfHorizontalAngle * DX_PI_F / 180.0f);
 	target.y = mvPosition.y + dist * sinf(-mfVerticalAngle * DX_PI_F / 180.0f);
 	target.z = mvPosition.z - dist * cosf(mfVerticalAngle * DX_PI_F / 180.0f) * cosf(mfHorizontalAngle * DX_PI_F / 180.0f);
 
-	// DXƒ‰ƒCƒuƒ‰ƒŠ‚ÌƒJƒƒ‰‚ÉAÄŒvZ‚³‚ê‚½ƒfƒoƒbƒO—pƒJƒƒ‰‚ÌˆÊ’u‚Æ’‹“_‚ğ”½‰f‚³‚¹‚é
+	// DXï¿½ï¿½ï¿½Cï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ÌƒJï¿½ï¿½ï¿½ï¿½ï¿½ÉAï¿½ÄŒvï¿½Zï¿½ï¿½ï¿½ê‚½ï¿½fï¿½oï¿½bï¿½Oï¿½pï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ÌˆÊ’uï¿½Æ’ï¿½ï¿½ï¿½ï¿½_ï¿½ğ”½‰fï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	SetCameraPositionAndTarget_UpVecY(mvPosition, target);
 }
 
 void DebugCamera::UpdateRotate()
 {
-	// Šp“x’l‚ª”ÍˆÍŠOi}180“xj‚ÉƒI[ƒo[ƒtƒ[‚µ‚È‚¢‚æ‚¤‚Éƒ‰ƒbƒvˆ—‚ğs‚¤
+	// ï¿½pï¿½xï¿½lï¿½ï¿½ï¿½ÍˆÍŠOï¿½iï¿½}180ï¿½xï¿½jï¿½ÉƒIï¿½[ï¿½oï¿½[ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½È‚ï¿½ï¿½æ‚¤ï¿½Éƒï¿½ï¿½bï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½
 	if (mfHorizontalAngle >= 180.0f)
 	{
 		mfHorizontalAngle -= 360.0f;
@@ -122,7 +122,7 @@ void DebugCamera::UpdateRotate()
 		int centerX = 640;
 		int centerY = 360;
 
-		// ‹ü‘€ì‚ğs‚¢‚â‚·‚­‚·‚é‚½‚ßAƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ğ‰æ–Ê’†S‚É–ˆ‰ñˆø‚«–ß‚·i0ƒL[‚Å‰ğœ‰Â”\j
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½â‚·ï¿½ï¿½ï¿½ï¿½ï¿½é‚½ï¿½ßAï¿½}ï¿½Eï¿½Xï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½Ê’ï¿½ï¿½Sï¿½É–ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½ï¿½i0ï¿½Lï¿½[ï¿½Å‰ï¿½ï¿½ï¿½Â”\ï¿½j
 		if (!CheckHitKey(KEY_INPUT_0))
 		{
 			SetMousePoint(centerX, centerY);

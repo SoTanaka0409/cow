@@ -18,13 +18,13 @@ EffekseerEffect::EffekseerEffect(const char* filename, VECTOR initPos, float Eff
 
 EffekseerEffect::~EffekseerEffect()
 {
-	// ƒ[ƒhÏ‚İ‚ÌEffekseerƒGƒtƒFƒNƒgƒAƒZƒbƒgƒŠƒ\[ƒX‚ğƒƒ‚ƒŠ‚©‚ç‰ğ•ú‚·‚é
+	// ï¿½ï¿½ï¿½[ï¿½hï¿½Ï‚İ‚ï¿½Effekseerï¿½Gï¿½tï¿½Fï¿½Nï¿½gï¿½Aï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½\ï¿½[ï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	DeleteEffekseerEffect(effectResourcehandle);
 }
 
 void EffekseerEffect::Load()
 {
-	// w’è‚³‚ê‚½ƒpƒX‚©‚ç.efkƒGƒtƒFƒNƒgƒf[ƒ^‚ğƒƒ‚ƒŠã‚Éƒ[ƒh‚·‚é
+	// ï¿½wï¿½è‚³ï¿½ê‚½ï¿½pï¿½Xï¿½ï¿½ï¿½ï¿½.efkï¿½Gï¿½tï¿½Fï¿½Nï¿½gï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éƒï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½ï¿½
 	effectResourcehandle = LoadEffekseerEffect(filePath, effectSize);
 }
 
@@ -32,7 +32,7 @@ void EffekseerEffect::Update()
 {
 	if (playingEffectHandle != -1)
 	{
-		// Ä¶’†‚ÌƒGƒtƒFƒNƒgˆÊ’uA‰ñ“]Šp“xAƒXƒP[ƒ‹’l‚ğEffekseer‘¤ƒCƒ“ƒXƒ^ƒ“ƒX‚Ö–ˆƒtƒŒ[ƒ€“¯Šú‚·‚é
+		// ï¿½Äï¿½ï¿½ï¿½ï¿½ÌƒGï¿½tï¿½Fï¿½Nï¿½gï¿½Ê’uï¿½Aï¿½ï¿½]ï¿½pï¿½xï¿½Aï¿½Xï¿½Pï¿½[ï¿½ï¿½ï¿½lï¿½ï¿½Effekseerï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½Xï¿½Ö–ï¿½ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		SetPosPlayingEffekseer3DEffect(playingEffectHandle, PlayPos.x, PlayPos.y, PlayPos.z);
 		SetRotationPlayingEffekseer3DEffect(playingEffectHandle, mvRotation.x, mvRotation.y, mvRotation.z);
 		SetScalePlayingEffekseer3DEffect(playingEffectHandle, mvScale.x, mvScale.y, mvScale.z);
@@ -45,14 +45,14 @@ void EffekseerEffect::Draw()
 
 void EffekseerEffect::Play()
 {
-	// “Ç‚İ‚ñ‚¾ƒGƒtƒFƒNƒgƒŠƒ\[ƒX‚ğ‚à‚Æ‚ÉA3D‹óŠÔ‚ÅÄ¶‚ğŠJn‚·‚é
+	// ï¿½Ç‚İï¿½ï¿½ñ‚¾ƒGï¿½tï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½\ï¿½[ï¿½Xï¿½ï¿½ï¿½Æ‚ÉA3Dï¿½ï¿½Ô‚ÅÄï¿½ï¿½ï¿½Jï¿½nï¿½ï¿½ï¿½ï¿½
 	playingEffectHandle = PlayEffekseer3DEffect(effectResourcehandle);
 	SetPosPlayingEffekseer3DEffect(playingEffectHandle, PlayPos.x, PlayPos.y, PlayPos.z);
 }
 
 void EffekseerEffect::Stop()
 {
-	// Œ»İ‚ÌƒGƒtƒFƒNƒgÄ¶ó‘Ô‚ğæ“¾‚µAÄ¶’†‚Ìê‡‚Ì‚İ‹­§’â~‚ğ‚©‚¯‚é
+	// ï¿½ï¿½ï¿½İ‚ÌƒGï¿½tï¿½Fï¿½Nï¿½gï¿½Äï¿½ï¿½ï¿½Ô‚ï¿½æ“¾ï¿½ï¿½ï¿½Aï¿½Äï¿½ï¿½ï¿½ï¿½Ìê‡ï¿½Ì‚İ‹ï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	int NowPlayEffect = IsEffekseer3DEffectPlaying(playingEffectHandle);
 	if (NowPlayEffect != -1)
 	{

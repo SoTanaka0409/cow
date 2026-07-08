@@ -3,24 +3,24 @@
 #include <vector>
 #include "Dxlib.h"
 
-// 2D•`‰æ‚ğs‚¤ƒIƒuƒWƒFƒNƒg‚ÌŠî’êƒNƒ‰ƒX
+// 2Dæç”»ã‚’è¡Œã†ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åŸºåº•ã‚¯ãƒ©ã‚¹
 class Object2D
 {
 public:
-	// ƒIƒuƒWƒFƒNƒg‚Ì¯•Ê—pƒ^ƒO
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è­˜åˆ¥ç”¨ã‚¿ã‚°
 	enum Tag2D
 	{
-		None2D = 0,      // İ’è‚È‚µ
+		None2D = 0,      // è¨­å®šãªã—
 		Tag2D_Dino1 = 1,
 		Tag2D_Dino2 = 100,
 	};
 
 public:
 	/*
-	 * @brief 2DƒIƒuƒWƒFƒNƒg‚ğ‰ŠúÀ•W‚Å¶¬‚µAŒ»İ‚ÌƒAƒNƒeƒBƒu‚ÈƒIƒuƒWƒFƒNƒgƒ}ƒl[ƒWƒƒ[‚É©“®“o˜^‚·‚é
-	 * [“ü—Í] initPos: ‰ŠúÀ•W
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒV[ƒ“‚ÌObjectManager‚É©g‚ª“o˜^‚³‚ê‚é
+	 * @brief 2Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’åˆæœŸåº§æ¨™ã§ç”Ÿæˆã—ã€ç¾åœ¨ã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«è‡ªå‹•ç™»éŒ²ã™ã‚‹
+	 * [å…¥åŠ›] initPos: åˆæœŸåº§æ¨™
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ã‚·ãƒ¼ãƒ³ã®ObjectManagerã«è‡ªèº«ãŒç™»éŒ²ã•ã‚Œã‚‹
 	 */
 	Object2D(VECTOR initPos);
 
@@ -31,7 +31,7 @@ public:
 	virtual void Draw();
 
 public:
-	// ƒQƒbƒ^[EƒZƒbƒ^[ŒQ
+	// ã‚²ãƒƒã‚¿ãƒ¼ãƒ»ã‚»ãƒƒã‚¿ãƒ¼ç¾¤
 	void SetPosition(VECTOR pos) { mvPosition = pos; };
 	VECTOR GetPosition() { return mvPosition; }
 
@@ -48,12 +48,12 @@ public:
 	Tag2D GetTag() { return mnTag; }
 
 protected:
-	VECTOR mvPosition;  // ‰æ–Êã‚Ì”z’uÀ•W
-	VECTOR mvRotation;  // ‰ñ“]Šp“x
+	VECTOR mvPosition;  // ç”»é¢ä¸Šã®é…ç½®åº§æ¨™
+	VECTOR mvRotation;  // å›è»¢è§’åº¦
 
 private:
-	bool mbDeleteFlag;  // íœƒtƒ‰ƒOitrue‚Åƒ}ƒl[ƒWƒƒ[‚©‚ç”jŠü‚³‚ê‚éj
-	Tag2D mnTag;        // ƒIƒuƒWƒFƒNƒg¯•Êƒ^ƒO
-	bool mbDrawFlag;    // •`‰æ‚ğÀs‚·‚é‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
+	bool mbDeleteFlag;  // å‰Šé™¤ãƒ•ãƒ©ã‚°ï¼ˆtrueã§ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‹ã‚‰ç ´æ£„ã•ã‚Œã‚‹ï¼‰
+	Tag2D mnTag;        // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆè­˜åˆ¥ã‚¿ã‚°
+	bool mbDrawFlag;    // æç”»ã‚’å®Ÿè¡Œã™ã‚‹ã‹ã©ã†ã‹ã®ãƒ•ãƒ©ã‚°
 };
 

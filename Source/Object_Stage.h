@@ -3,15 +3,15 @@
 #include "Dxlib.h"
 #include "Object3D.h"
 
-// �X�e�[�W���ɔz�u�����e��ÓI3D�I�u�W�F�N�g�i��Q���⑕���I�u�W�F�N�g�Ȃǁj�𐧌䂷��N���X
+// ステージ内に配置される各種静的3Dオブジェクト（障害物や装飾オブジェクトなど）を制御するクラス
 class Object_Stage : public Object3D
 {
 public:
 	/*
-	 * @brief �X�e�[�W�����I�u�W�F�N�g��ǂݍ��݁A�ʒu�A�g�嗦�A��]�p�x��ݒ肵�ď���������
-	 * [����] filename: ���f���̃t�@�C���p�X, initPos: �������W, scale: �g�嗦, angle: ��]�p�x
-	 * [�o��] �Ȃ�
-	 * [����p] Model�C���X�^���X�����I�m�ۂ����
+	 * @brief ステージ装飾オブジェクトを読み込み、位置、拡大率、回転角度を設定して初期化する
+	 * [入力] filename: モデルのファイルパス, initPos: 初期座標, scale: 拡大率, angle: 回転角度
+	 * [出力] なし
+	 * [副作用] Modelインスタンスが動的確保される
 	 */
 	Object_Stage(std::string filename, VECTOR initPos, float scale, VECTOR angle);
 	virtual ~Object_Stage();
@@ -24,6 +24,6 @@ public:
 	void SetColor(float r, float g, float b, float a = 1.0f);
 
 private:
-	Model* mpModel;          // ����Ώۂ�3D���f���ւ̃|�C���^
+	Model* mpModel;          // 制御対象の3Dモデルへのポインタ
 };
 

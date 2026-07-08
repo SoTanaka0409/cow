@@ -11,7 +11,7 @@ Object2D::Object2D(VECTOR initPos)
 	, mnTag(Tag2D::None2D)
 	, mbDrawFlag(true)
 {
-	// ���������I�u�W�F�N�g���Ǘ��E�X�V���邽�߁A���݂̃A�N�e�B�u�ȃV�[���̃}�l�[�W���[�֎����œo�^����
+	// 生成したオブジェクトを管理・更新するため、現在のアクティブなシーンのマネージャーへ自動で登録する
 	ServiceLocator::GetObjectManager()->AddObject(this);
 }
 

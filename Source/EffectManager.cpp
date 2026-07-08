@@ -13,35 +13,35 @@ EffectManager::~EffectManager()
 
 void EffectManager::Initalize()
 {
-	// DX���C�u��������Direct3D11���g�p����悤�ɐݒ肷��iEffekseer�̗v���d�l�j
+	// DXライブラリ側でDirect3D11を使用するように設定する（Effekseerの要求仕様）
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
 
-	// �\���\�ȃp�[�e�B�N���̍ő吔���w�肵�āAEffekseer�V�X�e��������������
+	// 表示可能なパーティクルの最大数を指定して、Effekseerシステムを初期化する
 	if (Effekseer_Init(EffectParticleLimit) == -1)
 	{
 		DxLib_End();
 	}
 
-	// ��ʃ��[�h�ؑցi�E�B���h�E/�t���X�N���[���j���AEffekseer�̃O���t�B�b�N�X�f�o�C�X���Z�b�g��h��
+	// 画面モード切替（ウィンドウ/フルスクリーン）時、Effekseerのグラフィックスデバイスリセットを防ぐ
 	SetChangeScreenModeGraphicsSystemResetFlag(FALSE);
 
-	// DX���C�u�����ł̃f�o�C�X�r���E���A��Effekseer�̓������\�[�X�Đ��������т���R�[���o�b�N��ݒ肷��
+	// DXライブラリでのデバイス喪失・復帰とEffekseerの内部リソース再生成を結びつけるコールバックを設定する
 	Effekseer_SetGraphicsDeviceLostCallbackFunctions();
 
-	// 3D�G�t�F�N�g�`�掞�ɑO��֌W�i�[�x�l�j���������l�������悤�AZ�o�b�t�@������L���ɂ���
+	// 3Dエフェクト描画時に前後関係（深度値）が正しく考慮されるよう、Zバッファ処理を有効にする
 	SetUseZBuffer3D(TRUE);
 	SetWriteZBuffer3D(TRUE);
 }
 
 void EffectManager::Update()
 {
-	// ���t���[���Ăяo���A���ݍĐ����̑SEffekseer3D�G�t�F�N�g�̃A�j���[�V�����X�e�b�v��i�߂�
+	// 毎フレーム呼び出し、現在再生中の全Effekseer3Dエフェクトのアニメーションステップを進める
 	UpdateEffekseer3D();
 }
 
 void EffectManager::Draw()
 {
-	// �Đ�������ʓ��Ɏ��܂�Effekseer�G�t�F�N�g��3D�`��p�X�֑���
+	// 再生中かつ画面内に収まるEffekseerエフェクトを3D描画パスへ送る
 	DrawEffekseer3D();
 }
 

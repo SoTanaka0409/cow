@@ -14,7 +14,7 @@ ModelAnimation::ModelAnimation(int ModelHandle)
 	, mnLoopFinishState(AnimationState::ANIMATION_MAX)
 	, mbLoopFinish(false)
 {
-	// ƒ‹[ƒgƒtƒŒ[ƒ€‚ªˆÚ“®ƒAƒjƒ[ƒVƒ‡ƒ“‚ÅŸŽè‚É“®‚¢‚Ä‚¸‚ê‚È‚¢‚æ‚¤Aƒ[ƒJƒ‹s—ñ‚ðŒÅ’è‚·‚é
+	// ãƒ«ãƒ¼ãƒˆãƒ•ãƒ¬ãƒ¼ãƒ ãŒç§»å‹•ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã§å‹æ‰‹ã«å‹•ã„ã¦ãšã‚Œãªã„ã‚ˆã†ã€ãƒ­ãƒ¼ã‚«ãƒ«è¡Œåˆ—ã‚’å›ºå®šã™ã‚‹
 	int moveAnimFrameIndex = MV1SearchFrame(mnModelHandle, "root");
 	MV1SetFrameUserLocalMatrix(
 		mnModelHandle,
@@ -31,7 +31,7 @@ ModelAnimation::~ModelAnimation()
 
 void ModelAnimation::Update()
 {
-	// ƒAƒjƒ[ƒVƒ‡ƒ“‘JˆÚŽž‚ÌƒuƒŒƒ“ƒh—¦‚ð1ƒtƒŒ[ƒ€‚²‚Æ‚Éis‚³‚¹‚é
+	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é·ç§»æ™‚ã®ãƒ–ãƒ¬ãƒ³ãƒ‰çŽ‡ã‚’1ãƒ•ãƒ¬ãƒ¼ãƒ ã”ã¨ã«é€²è¡Œã•ã›ã‚‹
 	if (mfAnimBlendRate < 1.0f)
 	{
 		mfAnimBlendRate += 0.1f;
@@ -52,7 +52,7 @@ void ModelAnimation::Update()
 		{
 			if (!mbLoop)
 			{
-				// ”ñƒ‹[ƒvƒAƒjƒ[ƒVƒ‡ƒ“‚ªI—¹‚µ‚½ê‡AŽŸ‚ÌŽw’è‘JˆÚæ‚ª‚È‚¯‚ê‚ÎƒAƒjƒ[ƒVƒ‡ƒ“ŽžŠÔ‚ðŽ~‚ß‚é
+				// éžãƒ«ãƒ¼ãƒ—ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒçµ‚äº†ã—ãŸå ´åˆã€æ¬¡ã®æŒ‡å®šé·ç§»å…ˆãŒãªã‘ã‚Œã°ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æ™‚é–“ã‚’æ­¢ã‚ã‚‹
 				if (mnLoopFinishState == ANIMATION_MAX)
 				{
 					mbLoopFinish = true;
@@ -78,14 +78,14 @@ void ModelAnimation::Update()
 			mfOldAnimationTime = 0.0f;
 		}
 
-		// ŒÃ‚¢ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌƒuƒŒƒ“ƒh—¦‚ð‰º‚°‚Ä‚¢‚«AÅI“I‚ÉƒtƒF[ƒhƒAƒEƒg‚³‚¹‚é
+		// å¤ã„ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒ–ãƒ¬ãƒ³ãƒ‰çŽ‡ã‚’ä¸‹ã’ã¦ã„ãã€æœ€çµ‚çš„ã«ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆã•ã›ã‚‹
 		MV1SetAttachAnimBlendRate(mnModelHandle, mnOldAnimationIndex, 1.0f - mfAnimBlendRate);
 	}
 }
 
 void ModelAnimation::ChangeAnimation(AnimationState state, int index)
 {
-	// Šù‚É“¯‚¶ƒAƒjƒ[ƒVƒ‡ƒ“‚ª‘I‘ð‚³‚ê‚Ä‚¢‚éê‡‚Í–³‘Ê‚Èƒfƒ^ƒbƒ`EƒAƒ^ƒbƒ`‚ð”ð‚¯‚é
+	// æ—¢ã«åŒã˜ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒé¸æŠžã•ã‚Œã¦ã„ã‚‹å ´åˆã¯ç„¡é§„ãªãƒ‡ã‚¿ãƒƒãƒãƒ»ã‚¢ã‚¿ãƒƒãƒã‚’é¿ã‘ã‚‹
 	if (mnState == state)
 	{
 		return;
@@ -96,7 +96,7 @@ void ModelAnimation::ChangeAnimation(AnimationState state, int index)
 	mnLoopFinishState = AnimationState::ANIMATION_MAX;
 	mbLoopFinish = false;
 
-	// ŒÃ‚·‚¬‚éƒAƒjƒ[ƒVƒ‡ƒ“ƒnƒ“ƒhƒ‹‚ªŽc‚Á‚Ä‚¢‚éê‡‚ÍŠ®‘S‚ÉØ‚è—£‚·
+	// å¤ã™ãŽã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒãƒ³ãƒ‰ãƒ«ãŒæ®‹ã£ã¦ã„ã‚‹å ´åˆã¯å®Œå…¨ã«åˆ‡ã‚Šé›¢ã™
 	if (mnOldAnimationIndex != -1)
 	{
 		MV1DetachAnim(mnModelHandle, mnOldAnimationIndex);
@@ -118,7 +118,7 @@ void ModelAnimation::SetAnimationBlend(bool isblend)
 	}
 	else
 	{
-		// ƒuƒŒƒ“ƒh‚µ‚È‚¢ê‡‚Í‘¦À‚ÉV‹KƒAƒjƒ[ƒVƒ‡ƒ“‚ÖŠ®‘SØ‚è‘Ö‚¦‚·‚é
+		// ãƒ–ãƒ¬ãƒ³ãƒ‰ã—ãªã„å ´åˆã¯å³åº§ã«æ–°è¦ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã¸å®Œå…¨åˆ‡ã‚Šæ›¿ãˆã™ã‚‹
 		mfAnimBlendRate = 1.0f;
 
 		if (mnOldAnimationIndex != -1)

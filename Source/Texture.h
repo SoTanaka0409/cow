@@ -4,7 +4,7 @@
 #include <string>
 #include "DxLib.h"
 
-// 2D�摜�A�Z�b�g��ǂݍ��݁A�ʒu��T�C�Y�A�X�P�[�����O���w�肵�ĉ�ʕ`����s���N���X
+// 2D画像アセットを読み込み、位置やサイズ、スケーリングを指定して画面描画を行うクラス
 class Texture
 {
 public:
@@ -12,38 +12,38 @@ public:
 	~Texture();
 
 	/*
-	 * @brief �e�N�X�`���� mvPosition �𒆐S�Ɏw��T�C�Y�ŕ`�悷��
-	 * [����] �Ȃ�
-	 * [�o��] �Ȃ�
-	 * [����p] ��ʁi�o�b�N�o�b�t�@�j�ɉ摜��`��
+	 * @brief テクスチャを mvPosition を中心に指定サイズで描画する
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 画面（バックバッファ）に画像を描画
 	 */
 	void Draw();
 
 	/*
-	 * @brief �e�N�X�`����ʏ�T�C�Y��菭���g�債����ԂŒ��S�`�悷��i�{�^���z�o�[�p�ȂǁA���ݖ��g�p�j
-	 * [����] �Ȃ�
-	 * [�o��] �Ȃ�
-	 * [����p] ��ʂɊg��摜��`��
+	 * @brief テクスチャを通常サイズより少し拡大した状態で中心描画する（ボタンホバー用など、現在未使用）
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 画面に拡大画像を描画
 	 */
 	void SizeDraw();
 
 	/*
-	 * @brief �e�N�X�`���̖��t���[���̍X�V�����i���ݏ����Ȃ��j
-	 * [����] �Ȃ�
-	 * [�o��] �Ȃ�
-	 * [����p] �Ȃ�
+	 * @brief テクスチャの毎フレームの更新処理（現在処理なし）
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] なし
 	 */
 	void Update();
 
 	/*
-	 * @brief �e�N�X�`����C�ӂ̃X�P�[���䗦�Œ��S�`�悷��
-	 * [����] scale: �X�P�[�����O�{���i1.0f�����{�j
-	 * [�o��] �Ȃ�
-	 * [����p] ��ʂɊg��/�k�������摜��`��
+	 * @brief テクスチャを任意のスケール比率で中心描画する
+	 * [入力] scale: スケーリング倍率（1.0fが等倍）
+	 * [出力] なし
+	 * [副作用] 画面に拡大/縮小した画像を描画
 	 */
 	void DrawScale(float scale);
 
-	// �Z�b�^�[�E�Q�b�^�[�Q
+	// セッター・ゲッター群
 	void SetPosition(VECTOR centerPosition) { mvPosition = centerPosition; }
 	VECTOR GetPosition() { return mvPosition; }
 	int GetSizeX() { return mnSizeX; }
@@ -52,14 +52,14 @@ public:
 	int GetHeight() { return mNewGameH; }
 
 private:
-	int mnHandle;       // ���[�h�����摜�̃O���t�B�b�N�n���h��
-	VECTOR mvPosition;  // ��ʕ`�掞�̒��S���W
-	int mnSizeX;        // �摜�t�@�C���{���̉���
-	int mnSizeY;        // �摜�t�@�C���{���̏c��
-	bool mnTransFlag;   // �w�i�̓��߁i���߃`�����l���j��L���ɂ��邩�ǂ����̃t���O
+	int mnHandle;       // ロードした画像のグラフィックハンドル
+	VECTOR mvPosition;  // 画面描画時の中心座標
+	int mnSizeX;        // 画像ファイル本来の横幅
+	int mnSizeY;        // 画像ファイル本来の縦幅
+	bool mnTransFlag;   // 背景の透過（透過チャンネル）を有効にするかどうかのフラグ
 
-	int mNewGameW;      // �w�肳�ꂽ�`��p�̉���
-	int mNewGameH;      // �w�肳�ꂽ�`��p�̏c��
+	int mNewGameW;      // 指定された描画用の横幅
+	int mNewGameH;      // 指定された描画用の縦幅
 };
 
 #endif

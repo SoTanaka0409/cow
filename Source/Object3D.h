@@ -5,11 +5,11 @@
 class Collider;
 class CapsuleCollider;
 
-// 3D‹óŠÔ‚É”z’u‚³‚ê‚éƒIƒuƒWƒFƒNƒg‚ÌŠî’êƒNƒ‰ƒX
+// 3Dç©ºé–“ã«é…ç½®ã•ã‚Œã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åŸºåº•ã‚¯ãƒ©ã‚¹
 class Object3D
 {
 public:
-	// ƒIƒuƒWƒFƒNƒg‚Ì¯•Ê—pƒ^ƒO
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è­˜åˆ¥ç”¨ã‚¿ã‚°
 	enum Tag3D
 	{
 		None3D,
@@ -23,10 +23,10 @@ public:
 	};
 
 public:
-	// ƒJƒƒ‰‚©‚ç‚Ì‹——£‚ğİ’è‚·‚é
+	// ã‚«ãƒ¡ãƒ©ã‹ã‚‰ã®è·é›¢ã‚’è¨­å®šã™ã‚‹
 	void SetCameraDistance(float distance) { mfCurrentCameraDistance = distance; }
 
-	// ƒJƒƒ‰‚©‚ç‚Ì‹——£‚ğŠî€‚É‰“‚¢‡iZ’l‚Ì~‡j‚Åƒ\[ƒg‚·‚é‚½‚ß‚Ì”äŠrŠÖ”
+	// ã‚«ãƒ¡ãƒ©ã‹ã‚‰ã®è·é›¢ã‚’åŸºæº–ã«é ã„é †ï¼ˆZå€¤ã®é™é †ï¼‰ã§ã‚½ãƒ¼ãƒˆã™ã‚‹ãŸã‚ã®æ¯”è¼ƒé–¢æ•°
 	struct CompareZOrder {
 		bool operator()(Object3D* a, Object3D* b) const {
 			return a->mfCurrentCameraDistance > b->mfCurrentCameraDistance;
@@ -35,10 +35,10 @@ public:
 
 public:
 	/*
-	 * @brief 3DƒIƒuƒWƒFƒNƒg‚ğ‰ŠúÀ•W‚Å¶¬‚µAŒ»İƒAƒNƒeƒBƒu‚ÈƒV[ƒ“‚Ìƒ}ƒl[ƒWƒƒ[‚Ö©“®“o˜^‚·‚é
-	 * [“ü—Í] initPos: ‰ŠúÀ•W
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒV[ƒ“‚ÌObjectManager‚É©g‚ª“o˜^‚³‚ê‚éAƒfƒtƒHƒ‹ƒg‚ÌƒJƒvƒZƒ‹ƒRƒ‰ƒCƒ_[‚ª¶¬‚³‚ê‚é
+	 * @brief 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’åˆæœŸåº§æ¨™ã§ç”Ÿæˆã—ã€ç¾åœ¨ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªã‚·ãƒ¼ãƒ³ã®ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã¸è‡ªå‹•ç™»éŒ²ã™ã‚‹
+	 * [å…¥åŠ›] initPos: åˆæœŸåº§æ¨™
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ã‚·ãƒ¼ãƒ³ã®ObjectManagerã«è‡ªèº«ãŒç™»éŒ²ã•ã‚Œã‚‹ã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ã‚«ãƒ—ã‚»ãƒ«ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ãŒç”Ÿæˆã•ã‚Œã‚‹
 	 */
 	Object3D(VECTOR initPos);
 
@@ -49,31 +49,31 @@ public:
 	virtual void Draw();
 
 	/*
-	 * @brief ƒRƒ‰ƒCƒ_[“¯m‚ÌŒğ·‚ªŠJn‚µ‚½uŠÔ‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒNŠÖ”
-	 * [“ü—Í] collider: ©g‚ÌƒRƒ‰ƒCƒ_[, check: ‘Šè‚ÌƒRƒ‰ƒCƒ_[
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ‚È‚µ
+	 * @brief ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼åŒå£«ã®äº¤å·®ãŒé–‹å§‹ã—ãŸç¬é–“ã«å‘¼ã°ã‚Œã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
+	 * [å…¥åŠ›] collider: è‡ªèº«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼, check: ç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ãªã—
 	 */
 	virtual void OnEnter(Collider* collider, Collider* check);
 
 	/*
-	 * @brief ƒRƒ‰ƒCƒ_[“¯m‚ªŒğ·‚µ‚Ä‚¢‚éŠÔA–ˆƒtƒŒ[ƒ€ŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒNŠÖ”
-	 * [“ü—Í] collider: ©g‚ÌƒRƒ‰ƒCƒ_[, check: ‘Šè‚ÌƒRƒ‰ƒCƒ_[
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ‚È‚µ
+	 * @brief ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼åŒå£«ãŒäº¤å·®ã—ã¦ã„ã‚‹é–“ã€æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‘¼ã°ã‚Œã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
+	 * [å…¥åŠ›] collider: è‡ªèº«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼, check: ç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ãªã—
 	 */
 	virtual void OnTrigger(Collider* collider, Collider* check);
 
 	/*
-	 * @brief ƒRƒ‰ƒCƒ_[“¯m‚ÌŒğ·‚ªI—¹‚µ‚½uŠÔ‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒNŠÖ”
-	 * [“ü—Í] collider: ©g‚ÌƒRƒ‰ƒCƒ_[, check: ‘Šè‚ÌƒRƒ‰ƒCƒ_[
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ‚È‚µ
+	 * @brief ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼åŒå£«ã®äº¤å·®ãŒçµ‚äº†ã—ãŸç¬é–“ã«å‘¼ã°ã‚Œã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
+	 * [å…¥åŠ›] collider: è‡ªèº«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼, check: ç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ãªã—
 	 */
 	virtual void OnExit(Collider* collider, Collider* check);
 
 public:
-	// ƒQƒbƒ^[EƒZƒbƒ^[ŒQ
+	// ã‚²ãƒƒã‚¿ãƒ¼ãƒ»ã‚»ãƒƒã‚¿ãƒ¼ç¾¤
 	void SetPosition(VECTOR pos) { mvPosition = pos; };
 	VECTOR GetPosition() { return mvPosition; }
 
@@ -93,15 +93,15 @@ public:
 	Tag3D GetTag() { return mnTag; }
 
 protected:
-	VECTOR mvPosition;                  // Œ»İ‚ÌÀ•W
-	VECTOR mvRotation;                  // ‰ñ“]Šp“x
-	VECTOR mvOldPosition;               // 1ƒtƒŒ[ƒ€‘O‚ÌÀ•W
-	CapsuleCollider* mpCapsuleCollider; // Š—L‚·‚éƒJƒvƒZƒ‹ƒRƒ‰ƒCƒ_[
-	float mfRadius;                     // ŠÈˆÕ“I‚ÈÕ“Ë”¼Œa
+	VECTOR mvPosition;                  // ç¾åœ¨ã®åº§æ¨™
+	VECTOR mvRotation;                  // å›è»¢è§’åº¦
+	VECTOR mvOldPosition;               // 1ãƒ•ãƒ¬ãƒ¼ãƒ å‰ã®åº§æ¨™
+	CapsuleCollider* mpCapsuleCollider; // æ‰€æœ‰ã™ã‚‹ã‚«ãƒ—ã‚»ãƒ«ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
+	float mfRadius;                     // ç°¡æ˜“çš„ãªè¡çªåŠå¾„
 
 private:
-	bool mbDeleteFlag;                  // íœƒtƒ‰ƒOitrue‚Åƒ}ƒl[ƒWƒƒ[‚©‚ç”jŠü‚³‚ê‚éj
-	Tag3D mnTag;                        // ƒIƒuƒWƒFƒNƒg¯•Êƒ^ƒO
-	bool mbDrawFlag;                    // •`‰æƒtƒ‰ƒO
-	float mfCurrentCameraDistance;      // ƒJƒƒ‰‚©‚ç‚±‚ÌƒIƒuƒWƒFƒNƒg‚Ü‚Å‚Ì‹——£
+	bool mbDeleteFlag;                  // å‰Šé™¤ãƒ•ãƒ©ã‚°ï¼ˆtrueã§ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‹ã‚‰ç ´æ£„ã•ã‚Œã‚‹ï¼‰
+	Tag3D mnTag;                        // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆè­˜åˆ¥ã‚¿ã‚°
+	bool mbDrawFlag;                    // æç”»ãƒ•ãƒ©ã‚°
+	float mfCurrentCameraDistance;      // ã‚«ãƒ¡ãƒ©ã‹ã‚‰ã“ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¾ã§ã®è·é›¢
 };

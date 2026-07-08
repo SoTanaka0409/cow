@@ -5,15 +5,15 @@
 #include "string"
 #include "GameTimer.h"
 
-// ‹‚ğˆø‚«Šñ‚¹‚é‚½‚ß‚Ì‰aiBaitjƒIƒuƒWƒFƒNƒg‚ğ§Œä‚·‚éƒNƒ‰ƒX
+// ç‰›ã‚’å¼•ãå¯„ã›ã‚‹ãŸã‚ã®é¤Œï¼ˆBaitï¼‰ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’åˆ¶å¾¡ã™ã‚‹ã‚¯ãƒ©ã‚¹
 class Bait : public Object3D
 {
 public:
 	/*
-	 * @brief ‰aƒIƒuƒWƒFƒNƒg‚ğ”z’u‚µA—LŒøŠÔ—p‚Ìƒ^ƒCƒ}[‚Æ‹zˆøƒRƒ‰ƒCƒ_[‚ğİ’è‚·‚é
-	 * [“ü—Í] filename: ƒ‚ƒfƒ‹‚Ìƒtƒ@ƒCƒ‹ƒpƒX, pos: ”z’uÀ•W
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] GameTimerƒCƒ“ƒXƒ^ƒ“ƒX‚Ì¶¬AƒRƒ‰ƒCƒ_[ƒTƒCƒYİ’è
+	 * @brief é¤Œã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’é…ç½®ã—ã€æœ‰åŠ¹æ™‚é–“ç”¨ã®ã‚¿ã‚¤ãƒãƒ¼ã¨å¸å¼•ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’è¨­å®šã™ã‚‹
+	 * [å…¥åŠ›] filename: ãƒ¢ãƒ‡ãƒ«ã®ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹, pos: é…ç½®åº§æ¨™
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] GameTimerã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®ç”Ÿæˆã€ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚µã‚¤ã‚ºè¨­å®š
 	 */
 	Bait(std::string filename, VECTOR pos);
 	virtual ~Bait();
@@ -24,9 +24,9 @@ public:
 	virtual void OnEnter(Collider* collider, Collider* check) override;
 
 public:
-	Model* mpModel;          // ‰a‚Ì3Dƒ‚ƒfƒ‹‚Ö‚Ìƒ|ƒCƒ“ƒ^
+	Model* mpModel;          // é¤Œã®3Dãƒ¢ãƒ‡ãƒ«ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 
 private:
-	GameTimer* mpGameTimer;  // —LŒøŠÔ‚ğƒJƒEƒ“ƒg‚·‚éƒ^ƒCƒ}[ƒIƒuƒWƒFƒNƒg‚Ö‚Ìƒ|ƒCƒ“ƒ^
+	GameTimer* mpGameTimer;  // æœ‰åŠ¹æ™‚é–“ã‚’ã‚«ã‚¦ãƒ³ãƒˆã™ã‚‹ã‚¿ã‚¤ãƒãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¸ã®ãƒã‚¤ãƒ³ã‚¿
 };
 

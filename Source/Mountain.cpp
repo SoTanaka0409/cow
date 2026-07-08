@@ -10,7 +10,7 @@ Mountain::Mountain(std::string filename, VECTOR initPos, VECTOR scale, VECTOR an
 
 Mountain::~Mountain()
 {
-	// ƒƒ‚ƒŠƒŠ[ƒN–h~‚Ì‚½‚ßA“®“I‚É¶¬‚µ‚½ModelƒCƒ“ƒXƒ^ƒ“ƒX‚ğ”jŠü‚·‚é
+	// ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯é˜²æ­¢ã®ãŸã‚ã€å‹•çš„ã«ç”Ÿæˆã—ãŸModelã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç ´æ£„ã™ã‚‹
 	if (mpModel != nullptr)
 	{
 		delete mpModel;

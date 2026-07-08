@@ -199,7 +199,6 @@
     <ClCompile Include="Source\Stage.cpp" />
     <ClCompile Include="Source\Tatumaki.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
-    <ClCompile Include="Source\Wall.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Thunder.cpp" />
     <ClCompile Include="Source\TitleScene.cpp" />

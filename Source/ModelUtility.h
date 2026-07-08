@@ -1,32 +1,32 @@
 ï»¿#pragma once
 #include "InputManager.h"
 
-// 3Dƒ‚ƒfƒ‹‚ÌƒAƒjƒ[ƒVƒ‡ƒ“ó‘Ô‚ð•\‚·—ñ‹“Œ^
+// 3Dãƒ¢ãƒ‡ãƒ«ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³çŠ¶æ…‹ã‚’è¡¨ã™åˆ—æŒ™åž‹
 enum AnimationState
 {
-	ANIMATION_NEUTRAL = 0,    // ‘Ò‹@ó‘Ô
-	ANIMATION_RUN,            // ‘–‚èó‘Ô
-	ANIMATION_ATTACKJUMP,     // ‹ó’†UŒ‚ó‘Ô
-	ANIMATION_JUMP_IN,        // ƒWƒƒƒ“ƒvŠJŽnó‘Ô
-	ANIMATION_JUMP_LOOP,      // ƒWƒƒƒ“ƒv‘Ø‹óó‘Ô
-	ANIMATION_JUMP_OUT,       // ’…’nó‘Ô
-	ANIMATION_ATTACK,         // UŒ‚ó‘Ô
-	ANIMATION_ATTACKSLIDE,    // ƒXƒ‰ƒCƒfƒBƒ“ƒOUŒ‚ó‘Ô
-	ANIMATION_SLIDE,          // ƒXƒ‰ƒCƒfƒBƒ“ƒOó‘Ô
-	ANIMATION_ATTACKMAGIC,    // –‚–@UŒ‚ó‘Ô
+	ANIMATION_NEUTRAL = 0,    // å¾…æ©ŸçŠ¶æ…‹
+	ANIMATION_RUN,            // èµ°ã‚ŠçŠ¶æ…‹
+	ANIMATION_ATTACKJUMP,     // ç©ºä¸­æ”»æ’ƒçŠ¶æ…‹
+	ANIMATION_JUMP_IN,        // ã‚¸ãƒ£ãƒ³ãƒ—é–‹å§‹çŠ¶æ…‹
+	ANIMATION_JUMP_LOOP,      // ã‚¸ãƒ£ãƒ³ãƒ—æ»žç©ºçŠ¶æ…‹
+	ANIMATION_JUMP_OUT,       // ç€åœ°çŠ¶æ…‹
+	ANIMATION_ATTACK,         // æ”»æ’ƒçŠ¶æ…‹
+	ANIMATION_ATTACKSLIDE,    // ã‚¹ãƒ©ã‚¤ãƒ‡ã‚£ãƒ³ã‚°æ”»æ’ƒçŠ¶æ…‹
+	ANIMATION_SLIDE,          // ã‚¹ãƒ©ã‚¤ãƒ‡ã‚£ãƒ³ã‚°çŠ¶æ…‹
+	ANIMATION_ATTACKMAGIC,    // é­”æ³•æ”»æ’ƒçŠ¶æ…‹
 
-	// ŠeƒLƒƒƒ‰ƒNƒ^[ŒÅ—L‚Ü‚½‚ÍV‹K’Ç‰Á‚ÌƒAƒjƒ[ƒVƒ‡ƒ“ó‘Ô
-	ANIMATION_WALKING,        // •à‚«ó‘Ô
-	ANIMATION_DYING,          // Ž€–Só‘Ô
-	ANIMATION_DROP_KICK,      // ƒhƒƒbƒvƒLƒbƒNó‘Ô
+	// å„ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼å›ºæœ‰ã¾ãŸã¯æ–°è¦è¿½åŠ ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³çŠ¶æ…‹
+	ANIMATION_WALKING,        // æ­©ãçŠ¶æ…‹
+	ANIMATION_DYING,          // æ­»äº¡çŠ¶æ…‹
+	ANIMATION_DROP_KICK,      // ãƒ‰ãƒ­ãƒƒãƒ—ã‚­ãƒƒã‚¯çŠ¶æ…‹
 
-	ANIMATION_MAX             // —ñ‹“Œ^‚ÌÅ‘å”’è‹`—p
+	ANIMATION_MAX             // åˆ—æŒ™åž‹ã®æœ€å¤§æ•°å®šç¾©ç”¨
 };
 
-// ƒAƒjƒ[ƒVƒ‡ƒ“ó‘Ô‚ÆDXƒ‰ƒCƒuƒ‰ƒŠ‚Ì“o˜^ƒnƒ“ƒhƒ‹‚Ìƒ}ƒbƒsƒ“ƒOî•ñ\‘¢‘Ì
+// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³çŠ¶æ…‹ã¨DXãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®ç™»éŒ²ãƒãƒ³ãƒ‰ãƒ«ã®ãƒžãƒƒãƒ”ãƒ³ã‚°æƒ…å ±æ§‹é€ ä½“
 struct AnimationInfo
 {
-	AnimationState mState;    // ƒAƒjƒ[ƒVƒ‡ƒ“ó‘Ô
-	int mnAnimationHandle;    // ƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚éƒAƒjƒ[ƒVƒ‡ƒ“‚Ìƒnƒ“ƒhƒ‹
+	AnimationState mState;    // ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³çŠ¶æ…‹
+	int mnAnimationHandle;    // ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒãƒ³ãƒ‰ãƒ«
 };
 

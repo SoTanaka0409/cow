@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <vector>
 #include <map>
@@ -58,7 +58,7 @@ public:
 
 	/*
 	 * @brief 削除フラグ(mDeleteFlag)が立っているオブジェクトを管理リストから除外しプールへ返す
-	 * [入力] なし
+	 * [入力] 
 	 * [出力] なし
 	 * [副作用] リストからの除外、プールへの追加
 	 */
