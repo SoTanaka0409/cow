@@ -10,8 +10,8 @@ TitleScene::TitleScene()
 {
 	mCowVoiceTimer = 180; // 蛻晏屓蜀咲函縺ｾ縺ｧ縺ｮ蠕・ｩ溘ヵ繝ｬ繝ｼ繝險ｭ螳・
 	
-	mnTitleGraphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/繧ｿ繧､繝医Ν繧ｷ繝ｼ繝ｳ.png");
-	mnUfoGraphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/迚帙→UFO.png");
+	mnTitleGraphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/タイトルシーン.png");
+	mnUfoGraphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/牛とUFO.png");
 	GetGraphSize(mnUfoGraphHandle, &mUfoW, &mUfoH);
 
 	mUfoX = 540;
@@ -30,7 +30,7 @@ TitleScene::TitleScene()
 
 	TitleButton newGameBtn;
 	newGameBtn.type = SelectionManager::Title::NewGame;
-	newGameBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/繧ｹ繧ｿ繝ｼ繝医・繧ｿ繝ｳ1.png");
+	newGameBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/スタートボタン1.png");
 	newGameBtn.x = 920;
 	newGameBtn.y = 50;
 	GetGraphSize(newGameBtn.graphHandle, &newGameBtn.w, &newGameBtn.h);
@@ -39,7 +39,7 @@ TitleScene::TitleScene()
 
 	TitleButton tutorialBtn;
 	tutorialBtn.type = SelectionManager::Title::Tutorial;
-	tutorialBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/繝√Η繝ｼ繝医Μ繧｢繝ｫ縺ｼ縺溘ｓ.png");
+	tutorialBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/チュートリアルぼたん.png");
 	tutorialBtn.x = 900;
 	tutorialBtn.y = 250;
 	GetGraphSize(tutorialBtn.graphHandle, &tutorialBtn.w, &tutorialBtn.h);
@@ -48,7 +48,7 @@ TitleScene::TitleScene()
 
 	TitleButton opeBtn;
 	opeBtn.type = SelectionManager::Title::OperationProcedures;
-	opeBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/縺帙▲縺ｦ縺・⊂縺溘ｓ1.png");
+	opeBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/せっていぼたん1.png");
 	opeBtn.x = 915;
 	opeBtn.y = 450;
 	GetGraphSize(opeBtn.graphHandle, &opeBtn.w, &opeBtn.h);
@@ -57,7 +57,7 @@ TitleScene::TitleScene()
 
 	TitleButton exitBtn;
 	exitBtn.type = SelectionManager::Title::titleOUT;
-	exitBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/縺励ｅ縺・ｊ繧・≧縺ｼ縺溘ｓ (1).png");
+	exitBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/しゅうりょうぼたん (1).png");
 	exitBtn.x = 960;
 	exitBtn.y = 680;
 	GetGraphSize(exitBtn.graphHandle, &exitBtn.w, &exitBtn.h);
@@ -72,11 +72,11 @@ TitleScene::TitleScene()
 	mFrameCount = 0;
 
 	// 繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ陦ｨ遉ｺ逕ｨ縺ｮ逕ｻ蜒上ｒ繝ｭ繝ｼ繝会ｼ・xLib蛻晄悄蛹門ｾ後〒縺ｪ縺・→螟ｱ謨励☆繧九◆繧√％縺薙〒陦後≧・・
-	rankImage[0] = Master::mpResourceManager->LoadGraphics("Resource/2D/1菴・png");
-	rankImage[1] = Master::mpResourceManager->LoadGraphics("Resource/2D/2菴・png");
-	rankImage[2] = Master::mpResourceManager->LoadGraphics("Resource/2D/3菴・png");
-	rankingTitleImage = Master::mpResourceManager->LoadGraphics("Resource/2D/繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ.png");
-	pointImg = Master::mpResourceManager->LoadGraphics("Resource/2D/轤ｹ.png");
+	rankImage[0] = Master::mpResourceManager->LoadGraphics("Resource/2D/1位.png");
+	rankImage[1] = Master::mpResourceManager->LoadGraphics("Resource/2D/2位.png");
+	rankImage[2] = Master::mpResourceManager->LoadGraphics("Resource/2D/3位.png");
+	rankingTitleImage = Master::mpResourceManager->LoadGraphics("Resource/2D/ランキング.png");
+	pointImg = Master::mpResourceManager->LoadGraphics("Resource/2D/点.png");
 }
 
 TitleScene::~TitleScene()

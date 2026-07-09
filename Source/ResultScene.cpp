@@ -7,17 +7,17 @@ ResultScene::ResultScene()
 	mFlag = true;
 	mnCount = 0;
 	
-	ResultGraphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/繝ｪ繧ｶ繝ｫ繝・png");
-	rankImage[0] = Master::mpResourceManager->LoadGraphics("Resource/2D/1菴・png");
-	rankImage[1] = Master::mpResourceManager->LoadGraphics("Resource/2D/2菴・png");
-	rankImage[2] = Master::mpResourceManager->LoadGraphics("Resource/2D/3菴・png");
-	rankingTitleImage = Master::mpResourceManager->LoadGraphics("Resource/2D/繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ.png");
-	yourScoreTextImg = Master::mpResourceManager->LoadGraphics("Resource/2D/繧ｹ繧ｳ繧｢.png");
-	pointImg = Master::mpResourceManager->LoadGraphics("Resource/2D/轤ｹ.png");
+	ResultGraphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/リザルト.png");
+	rankImage[0] = Master::mpResourceManager->LoadGraphics("Resource/2D/1位.png");
+	rankImage[1] = Master::mpResourceManager->LoadGraphics("Resource/2D/2位.png");
+	rankImage[2] = Master::mpResourceManager->LoadGraphics("Resource/2D/3位.png");
+	rankingTitleImage = Master::mpResourceManager->LoadGraphics("Resource/2D/ランキング.png");
+	yourScoreTextImg = Master::mpResourceManager->LoadGraphics("Resource/2D/スコア.png");
+	pointImg = Master::mpResourceManager->LoadGraphics("Resource/2D/点.png");
 
 	ResultButton newGameBtn;
 	newGameBtn.type = SelectionManager::Title::title;
-	newGameBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/繧ｹ繧ｿ繝ｼ繝医・繧ｿ繝ｳ1.png");
+	newGameBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/スタートボタン1.png");
 	newGameBtn.x = 920;
 	newGameBtn.y = 50;
 	GetGraphSize(newGameBtn.graphHandle, &newGameBtn.w, &newGameBtn.h);
@@ -26,7 +26,7 @@ ResultScene::ResultScene()
 
 	ResultButton exitBtn;
 	exitBtn.type = SelectionManager::Title::titleOUT;
-	exitBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/縺励ｅ縺・ｊ繧・≧縺ｼ縺溘ｓ (1).png");
+	exitBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/しゅうりょうぼたん (1).png");
 	exitBtn.x = 960;
 	exitBtn.y = 680;
 	GetGraphSize(exitBtn.graphHandle, &exitBtn.w, &exitBtn.h);
