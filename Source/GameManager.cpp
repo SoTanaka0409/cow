@@ -1,4 +1,4 @@
-﻿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include"GameManager.h"
 #include"Master.h"
 #include"SceneManager.h"
@@ -46,10 +46,10 @@ GameManager::~GameManager()
 }
 
 /*
- * 繧�E�繧�E�繧�E�逋ｻ骭�E�繧剁E���E�縺・�E�めE��・せ繝�Eャ繝励∈縺�E�驕ｷ遘ｻ繧定｡後≧
- * [蜈･蜉嫁Etype: 驕ｷ遘ｻ蜈医・繧�E�繝�Eャ繝悠D
- * [蜁E��蜉嫁E縺�E�縺・
- * [蜑ｯ菴懁E��] 騾�E�陦後せ繝�Eャ繝怜､画峩縲√ヵ繝ｩ繧�E�譖ｴ譁E��縲√ロ繝ｼ繝蜈･蜉幁E��蟋・
+ * �?E?�?E?�?E?登�?E?�?E???E?ぁE?E?��E??�E���?E��プへ�?E?遷移を行う
+ * [入劉�Etype: 遷移先�E�?E?�?E��プID
+ * [?E??劉�E�?E?ぁE
+ * [副�?E??] �?E?行ス�?E��プ変更、フラ�?E?更�E??、ネーム入�?E??姁E
  */
 void GameManager::GameNextStep(GameStepType type)
 {
@@ -69,12 +69,12 @@ void GameManager::GameNextStep(GameStepType type)
 			Master::mpScore->SetResultScore(player->mpScore->GetScore());
 			player->mpScore->AddRanking();
 
-			// 蜷榊��蜈･蜉帙�E繧�E�繧�E�繝�E・縺励※閾�E�蜍輔そ繝ｼ繝悶☁E��倶�E�墓ｧ倥・縺溘ａE
+			// 名�??入力�?E�?E?�?E?�?E�Eして�?E?動セーブ�?E??��?E?�様�EためE
 			player->mpScore->Save();
 			player->mpScore->SaveRanking();
 		}
 
-		// 繝ｪ繧�E�繝ｫ繝育判髱�E�縺�E�縺�E�繝輔ぉ繝ｼ繝峨ぁE���E�繝医�E�髢句�E�九�E繧・
+		// リ�?E?ルト画�?E?�?E?�?E?フェードゟE???E?ト�?E?開�?E?��?EめE
 		if (auto scene = Master::mpSceneManager->GetCurrentScene())
 		{
 			scene->fade_state_ = Scene::kSceneFadeOut;
@@ -86,17 +86,17 @@ void GameManager::GameNextStep(GameStepType type)
 }
 
 /*
- * 繝輔ぉ繝ｼ繝峨ぁE��ｳ遲峨√ご繝ｼ繝騾�E�陦後�E蠢・�E�√�E貍泌�E謠冗判繧定｡後≧
- * [蜈･蜉嫁E縺�E�縺・
- * [蜁E��蜉嫁E縺�E�縺・
- * [蜑ｯ菴懁E��] 逕ｻ髱�E�蜈ｨ蝓溘�EDrawBox縺�E�繧医�E�鮟貞｡励�E�謠冗判
+ * フェードゟE??�等、ゲーム�?E?行�?E�K�v?E?��?E演�?E描画を行う
+ * [入劉�E�?E?ぁE
+ * [?E??劉�E�?E?ぁE
+ * [副�?E??] 画�?E?全域�?EDrawBox�?E?よ�?E?黒塗�?E?描画
  */
 void GameManager::Draw()
 {
 	if (fade_flag_)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(fade_timer_));
-		// 繧�E�繧�E�繝ｳ繝峨え蜈�E�逕ｻ髱�E�繧偵き繝�E・縺吶�E�縺溘ａEUtility 螳壽焚縺�E�隗｣蜒丞ｺ�E�繧剁E���E�逕ｨ縺吶�E�E
+		// �?E?�?E?ンドウ�?E?画�?E?をカ�?E�Eす�?E?ためEUtility 定数�?E?解像�?E?�?E???E?用す�?E?E
 		DrawBox(0, 0, Utility::kScreenWidth, Utility::kScreenHeight, GetColor(0, 0, 0), TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
@@ -118,7 +118,7 @@ void GameManager::Update()
 	{
 	}
 	
-	// 蛻�E�髯先�E髢薙ち繧�E�繝槭・邂｡送E�E♀繧医・繝ｩ繝ｳ繝繝繝輔ぉ繝ｼ繧�E�蛻・�E�譖ｿ縺亥・送E�E
+	// �?E?限�?E間タ�?E?マ�E管��E?E��よ�Eランダムフェー�?E?刁E?E?替え�E��E?E
 	if (GameStepType::kCowGet == type_)
 	{
 		if (!game_timer_)
@@ -147,7 +147,7 @@ void GameManager::Update()
 			phase_change_count_++;
 		}
 		
-		// 30遘�E�E�E���E�縺�E�繧�E�繝ｼ繝縺�E�繝輔ぉ繝ｼ繧�E�・域ｼ泌�E・峨�E�繝ｩ繝ｳ繝繝縺�E�螟画峩縺吶�E�蛻�E�邏�E
+		// 30�?E?E?E???E?�?E?�?E?ーム�?E?フェー�?E?�E�演�?E�E��?E?ランダム�?E?変更す�?E?�?E?�?E
 		if (phase_change_count_ >= 30)
 		{
 			phase_change_count_ = 0;

@@ -1,48 +1,48 @@
-ï»¿#pragma once
+#pragma once
 #include "DxLib.h"
 
-// ã‚²ãƒ¼ãƒ å†…ã§å…±æœ‰ã—ã¦ä½¿ç”¨ã•ã‚Œã‚‹ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã‚µã‚¤ã‚ºå®šæ•°ãƒ»ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£é–¢æ•°ã‚’å®šç¾©ã™ã‚‹é™çš„ã‚¯ãƒ©ã‚¹
+// ƒQ[ƒ€“à‚Å‹¤—L‚µ‚Äg—p‚³‚ê‚éƒXƒNƒŠ[ƒ“ƒTƒCƒY’è”Eƒ†[ƒeƒBƒŠƒeƒBŠÖ”‚ğ’è‹`‚·‚éÃ“IƒNƒ‰ƒX
 class Utility
 {
 public:
-	static const int kScreenWidth  = 1600;  // ã‚²ãƒ¼ãƒ ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®è§£åƒåº¦ï¼ˆæ¨ªå¹…ï¼‰
-	static const int kScreenHeight = 900;   // ã‚²ãƒ¼ãƒ ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®è§£åƒåº¦ï¼ˆé«˜ã•ï¼‰
+	static const int kScreenWidth  = 1600;  // ƒQ[ƒ€ƒEƒBƒ“ƒhƒE‚Ì‰ğ‘œ“xi‰¡•j
+	static const int kScreenHeight = 900;   // ƒQ[ƒ€ƒEƒBƒ“ƒhƒE‚Ì‰ğ‘œ“xi‚‚³j
 
-	// UIç”¨å…±é€šå®šæ•°
-	static const int kUiBaseX   = 20;   // UIè¦‹å‡ºã—(LIMIT, SCORE, COMBO)ã®Xåº§æ¨™
-	static const int kUiDigitX  = 220;  // UIæ•°å€¤(0~9)ã®Xåº§æ¨™
+	// UI—p‹¤’Ê’è”
+	static const int kUiBaseX   = 20;   // UIŒ©o‚µ(LIMIT, SCORE, COMBO)‚ÌXÀ•W
+	static const int kUiDigitX  = 220;  // UI”’l(0~9)‚ÌXÀ•W
 
-	static const int kUiPanelW  = 200;  // ãƒ‘ãƒãƒ«ç³»UIã®å…±é€šå¹…
-	static const int kUiPanelH  = 100;  // ãƒ‘ãƒãƒ«ç³»UIã®å…±é€šé«˜ã•
+	static const int kUiPanelW  = 200;  // ƒpƒlƒ‹ŒnUI‚Ì‹¤’Ê•
+	static const int kUiPanelH  = 100;  // ƒpƒlƒ‹ŒnUI‚Ì‹¤’Ê‚‚³
 
-	static const int kUiTimerY  = 0;    // ã‚¿ã‚¤ãƒãƒ¼UIã®Yåº§æ¨™
-	static const int kUiScoreY  = 100;  // ã‚¹ã‚³ã‚¢UIã®Yåº§æ¨™
-	static const int kUiComboY  = 200;  // ã‚³ãƒ³ãƒœUIã®Yåº§æ¨™
+	static const int kUiTimerY  = 0;    // ƒ^ƒCƒ}[UI‚ÌYÀ•W
+	static const int kUiScoreY  = 100;  // ƒXƒRƒAUI‚ÌYÀ•W
+	static const int kUiComboY  = 200;  // ƒRƒ“ƒ{UI‚ÌYÀ•W
 
-	static const int kUiVacuumY = 700;  // ãƒã‚­ãƒ¥ãƒ¼ãƒ ã‚²ãƒ¼ã‚¸ã®Yåº§æ¨™
-	static const int kUiVacuumW = 300;  // ãƒã‚­ãƒ¥ãƒ¼ãƒ ã‚²ãƒ¼ã‚¸ã®å¹…
-	static const int kUiVacuumH = 50;   // ãƒã‚­ãƒ¥ãƒ¼ãƒ ã‚²ãƒ¼ã‚¸ã®é«˜ã•
+	static const int kUiVacuumY = 700;  // ƒoƒLƒ…[ƒ€ƒQ[ƒW‚ÌYÀ•W
+	static const int kUiVacuumW = 300;  // ƒoƒLƒ…[ƒ€ƒQ[ƒW‚Ì•
+	static const int kUiVacuumH = 50;   // ƒoƒLƒ…[ƒ€ƒQ[ƒW‚Ì‚‚³
 
-	static const int kUiLevelY  = 800;  // ãƒ¬ãƒ™ãƒ«UIã®Yåº§æ¨™
-	static const int kUiLevelW  = 300;  // ãƒ¬ãƒ™ãƒ«UIã®å¹…
-	static const int kUiLevelH  = 30;   // ãƒ¬ãƒ™ãƒ«UIã®é«˜ã•
+	static const int kUiLevelY  = 800;  // ƒŒƒxƒ‹UI‚ÌYÀ•W
+	static const int kUiLevelW  = 300;  // ƒŒƒxƒ‹UI‚Ì•
+	static const int kUiLevelH  = 30;   // ƒŒƒxƒ‹UI‚Ì‚‚³
 
-	static VECTOR StageSize;  // ã‚¹ãƒ†ãƒ¼ã‚¸å¢ƒç•Œã®Xãƒ»Zæ–¹å‘ã®æœ€å¤§å€¤ç¯„å›²ã‚’å®šç¾©ã™ã‚‹è£œåŠ©ãƒ™ã‚¯ãƒˆãƒ«
+	static VECTOR StageSize;  // ƒXƒe[ƒW‹«ŠE‚ÌXEZ•ûŒü‚ÌÅ‘å’l”ÍˆÍ‚ğ’è‹`‚·‚é•â•ƒxƒNƒgƒ‹
 
 	/*
-	 * @brief åº¦ï¼ˆDegreeï¼‰ã‚’ãƒ©ã‚¸ã‚¢ãƒ³ï¼ˆRadianï¼‰ã«å¤‰æ›ã™ã‚‹
-	 * [å…¥åŠ›] deg: åº¦æ•°å€¤
-	 * [å‡ºåŠ›] å¤‰æ›å¾Œã®ãƒ©ã‚¸ã‚¢ãƒ³å€¤ (float)
-	 * [å‚™è€ƒ] ãªã—
+	 * @brief “xiDegreej‚ğƒ‰ƒWƒAƒ“iRadianj‚É•ÏŠ·‚·‚é
+	 * [“ü—Í] deg: “x”’l
+	 * [o—Í] •ÏŠ·Œã‚Ìƒ‰ƒWƒAƒ“’l (float)
+	 * [”õl] ‚È‚µ
 	 */
 	static float DegToRad(float deg);
 
 	/*
-	 * @brief å®‰å…¨ã«ãƒã‚¤ãƒ³ã‚¿ã‚’deleteã—nullptrã‚’ä»£å…¥ã™ã‚‹
-	 * [å…¥åŠ›] ptr: è§£æ”¾ã™ã‚‹ãƒã‚¤ãƒ³ã‚¿ã®å‚ç…§
-	 * [å‡ºåŠ›] ãªã—
-	 * [å‚™è€ƒ] ãƒ¡ãƒ¢ãƒªè§£æ”¾ã¨nullpträ»£å…¥
-	 * â€»ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆé–¢æ•°ã®ãŸã‚ãƒ˜ãƒƒãƒ€ã«å®Ÿè£…ã‚’æ®‹ã™å¿…è¦ãŒã‚ã‚‹
+	 * @brief ˆÀ‘S‚Éƒ|ƒCƒ“ƒ^‚ğdelete‚µnullptr‚ğ‘ã“ü‚·‚é
+	 * [“ü—Í] ptr: ‰ğ•ú‚·‚éƒ|ƒCƒ“ƒ^‚ÌQÆ
+	 * [o—Í] ‚È‚µ
+	 * [”õl] ƒƒ‚ƒŠ‰ğ•ú‚Ænullptr‘ã“ü
+	 * ¦ƒeƒ“ƒvƒŒ[ƒgŠÖ”‚Ì‚½‚ßƒwƒbƒ_‚ÉÀ‘•‚ğc‚·•K—v‚ª‚ ‚é
 	 */
 	template<typename T>
 	static void SafeDelete(T*& ptr)

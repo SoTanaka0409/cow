@@ -1,4 +1,4 @@
-﻿#include "Skill.h"
+#include "Skill.h"
 #include "Player3D.h"
 #include "Texture.h"
 #include "Master.h"
@@ -71,7 +71,7 @@ void Skill::Draw()
 {
 	if (!add_skill_flag_ && !select_anim_) return;
 
-	// 驕ｸ謚槫ｮ御ｺ・ｾ後・繧ｫ繝ｼ繝峨′荳頑・繝ｻ騾蜃ｺ縺励※縺・￥貍泌・繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ
+	// 選択完亁E���Eカードが上�E�E退出してぁE��演�Eアニメーション
 	if (select_anim_)
 	{
 		if (selected_skill_ == 1)
@@ -119,7 +119,7 @@ void Skill::Update()
 		}
 	}
 
-	// 驕ｸ謚槭＆繧後◆繧ｫ繝ｼ繝峨′荳顔ｩｺ縺ｸ鬟帙ｓ縺ｧ豸医∴繧区ｼ泌・繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ
+	// 選択されたカードが上空へ飛んで消える演�Eアニメーション
 	if (select_anim_)
 	{
 		VECTOR target = VGet(select_pos_.x, -400.0f, 0.0f);
@@ -137,7 +137,7 @@ void Skill::Update()
 		}
 	}
 
-	// 繧ｫ繝ｼ繝蛾∈謚樣幕蟋区凾縺ｫ縲√き繝ｼ繝峨′逕ｻ髱｢螟悶°繧画ｻ代ｉ縺九↓繧ｹ繝ｩ繧､繝峨う繝ｳ縺吶ｋ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ
+	// カード選択開始時に、カードが画面外から滑らかにスライドインするアニメーション
 	if (open_anim_)
 	{
 		card1_y_ += (450.0f - card1_y_) * 0.15f;
@@ -162,14 +162,14 @@ void Skill::AddSkill()
 {
 	if (!add_skill_flag_) return;
 	
-	SetMouseDispFlag(true); // 繧ｹ繧ｭ繝ｫ驕ｸ謚樔ｸｭ縺ｯ繝槭え繧ｹ繝昴う繝ｳ繧ｿ繧定｡ｨ遉ｺ
+	SetMouseDispFlag(true); // スキル選択中はマウスポインタを表示
 	Master::SelectSkill = true;
 	int mouse_x_, mouse_y_;
 	GetMousePoint(&mouse_x_, &mouse_y_);
 
 	hover_skill_ = 0;
 
-	// 繧ｹ繧ｭ繝ｫ繧ｫ繝ｼ繝峨ｒ繝帙ヰ繝ｼ縺ｾ縺溘・蟾ｦ繧ｯ繝ｪ繝・け縺励◆髫帙・繧ｳ繝ｩ繧､繝繝ｼ險育ｮ励ｒ陦後≧繝ｩ繝繝髢｢謨ｰ
+	// スキルカードをホバーまた�E左クリチE��した際�Eコライダー計算を行うラムダ関数
 	auto ProcessSkill = [&](Texture* tex, int id) {
 		if (tex == nullptr) return false;
 
@@ -195,7 +195,7 @@ void Skill::AddSkill()
 
 	if (ProcessSkill(texture_, 1))
 	{
-		// 騾溷ｺｦ繧｢繝・・
+		// 速度アチE�E
 		status_s_ += 2.0f;
 		selected_skill_ = 1;
 		select_pos_ = texture_->GetPosition();
@@ -207,8 +207,8 @@ void Skill::AddSkill()
 	}
 	else if (ProcessSkill(texture2_, 2))
 	{
-		// 鬢鯉ｼ医ョ繧ｳ繧､縺ｫ繧薙§繧難ｼ芽ｨｭ鄂ｮ
-		auto b = new Bait("Resource/3D/迚帙・鬢・Carrot.mv1", parent_->GetPosition());
+		// 餌（デコイにんじん）設置
+		auto b = new Bait("Resource/3D/牛�E餁ECarrot.mv1", parent_->GetPosition());
 		float scale = 5000.0f;
 		b->model_->SetScale(VGet(scale, scale, scale));
 
@@ -222,7 +222,7 @@ void Skill::AddSkill()
 	}
 	else if (ProcessSkill(texture3_, 3))
 	{
-		// 蜷ｸ蠑暮溷ｺｦ・域判謦・鴨・峨い繝・・
+		// 吸引速度�E�攻撁E���E�アチE�E
 		status_a_ += 1.0f;
 		selected_skill_ = 3;
 		select_pos_ = texture3_->GetPosition();

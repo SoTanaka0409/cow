@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #pragma warning(push)
 #pragma warning(disable : 4819)
@@ -40,53 +40,53 @@ public:
 	virtual void Draw() override;
 
 	/*
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] AI譖ｴ譁ｰ縺ｨ螢∝愛螳壹ｒ邨後※蠎ｧ讓吶ｒ遒ｺ螳壹☆繧・
+	 * [入力] �Ȃ�
+	 * [出力] �Ȃ�
+	 * [副作用] AI更新と壁判定を経て座標を確定すめE
 	 */
 	virtual void MoveCharacter();
 
 	/*
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 迴ｾ蝨ｨ縺ｮState縺ｮUpdate繧貞他縺ｳ蜃ｺ縺・
+	 * [入力] �Ȃ�
+	 * [出力] �Ȃ�
+	 * [副作用] 現在のStateのUpdateを呼び出ぁE
 	 */
 	virtual void UpdateWanderAI();
 
 	/*
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 螢√が繝悶ず繧ｧ繧ｯ繝医→縺ｮ蛻､螳壹ｒ陦後＞縲［vPosition繧定｣懈ｭ｣縺吶ｋ
+	 * [入力] �Ȃ�
+	 * [出力] �Ȃ�
+	 * [副作用] 壁オブジェクトとの判定を行い、mvPositionを補正する
 	 */
 	virtual void CheckWallCollision();
 
 	/*
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 繧ｳ繝ｩ繧､繝繝ｼ縺ｮ菴咲ｽｮ繧偵Δ繝・Ν縺ｫ蜷梧悄縺輔○繧・
+	 * [入力] �Ȃ�
+	 * [出力] �Ȃ�
+	 * [副作用] コライダーの位置をモチE��に同期させめE
 	 */
 	virtual void ColliderMove();
 
 	/*
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 遘ｻ蜍輔・繧ｯ繝医Ν譁ｹ蜷代∈繝｢繝・Ν繧貞屓霆｢縺輔○繧・
+	 * [入力] �Ȃ�
+	 * [出力] �Ȃ�
+	 * [副作用] 移動�Eクトル方向へモチE��を回転させめE
 	 */
 	virtual void RotationCharacter();
 
 	/*
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 繝｢繝・Ν繧剃ｸ螳夐溷ｺｦ縺ｧ譌句屓縺輔○邯壹￠繧・
+	 * [入力] �Ȃ�
+	 * [出力] �Ȃ�
+	 * [副作用] モチE��を一定速度で旋回させ続けめE
 	 */
 	virtual void CharacterRotate();
 
 	virtual void CharacterDied();
 
 	/*
-	 * [蜈･蜉嫋 reason: 豁ｻ莠｡縺ｮ逅・罰(DeathReason)
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 豁ｻ莠｡貍泌・繧・ヵ繝ｩ繧ｰ譖ｴ譁ｰ繧定｡後≧
+	 * [入力] reason: 死亡の琁E��(DeathReason)
+	 * [出力] �Ȃ�
+	 * [副作用] 死亡演�EめE��ラグ更新を行う
 	 */
 	virtual void Die(DeathReason reason);
 
@@ -100,16 +100,16 @@ public:
 	void SetCurrentState(AIState state) { mCurrentState = state; }
 
 	/*
-	 * [蜈･蜉嫋 newState: 譁ｰ縺励＞迥ｶ諷九け繝ｩ繧ｹ縺ｮ繝昴う繝ｳ繧ｿ
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 蜿､縺Тtate繧堤ｴ譽・＠縲∵眠縺励＞State縺ｫ遘ｻ陦後☆繧・
+	 * [入力] newState: 新しい状態クラスのポインタ
+	 * [出力] �Ȃ�
+	 * [副作用] 古いStateを破棁E��、新しいStateに移行すめE
 	 */
 	void ChangeState(CharacterState* newState);
 
 	/*
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 迥ｶ諷九ｒ蜷ｸ蠑穂ｸｭ(STATE_VACUUM)縺ｫ螟画峩縺吶ｋ
+	 * [入力] �Ȃ�
+	 * [出力] �Ȃ�
+	 * [副作用] 状態を吸引中(STATE_VACUUM)に変更する
 	 */
 	void ChangeStateToVacuum();
 
@@ -149,7 +149,7 @@ protected:
 
 	int mVacuumTimer;
 	bool mDeleteFlag;
-	float mfdeathTime;
+	float death_timer_;
 
 	float mfScore;
 	float mfXp;

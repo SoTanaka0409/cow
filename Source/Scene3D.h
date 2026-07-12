@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 #include"Scene.h"
 #include"Dxlib.h"
 #include"Master.h"
@@ -6,16 +6,16 @@
 #include"CowManager.h"
 #include"AnimalManager.h"
 
-// 3Dã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚¹ãƒEï¿½Eã‚¸ç®¡çE
+// 3DƒAƒNƒVƒ‡ƒ“ƒXƒ`E?EƒWŠÇ?E
 class Scene3D : public Scene
 {
 public: 
-	// ã‚²ãƒ¼ãƒ é€²è¡Œï¿½Eãƒ•ã‚§ãƒ¼ã‚º
+	// ƒQ[ƒ€is?EƒtƒF[ƒY
 	enum Phase
 	{
-		kNormal,         // é€šå¸¸
-		kTornadoCrisis,  // ç«œå·»å·¨å¤§åŒE
-		kMobSpawn,       // ç”Ÿç‰©å¤§é‡ã‚¹ãƒï¿½Eãƒ³
+		kNormal,         // ’Êí
+		kTornadoCrisis,  // —³Šª‹‘å–æE
+		kMobSpawn,       // ¶•¨‘å—ÊƒXƒ|?Eƒ“
 	};	
 	
 public:
@@ -23,41 +23,41 @@ public:
 	~Scene3D();
 
 	/*
-	 * @brief ã‚¹ãƒEï¿½Eã‚¸åˆæœŸåŒE
-	 * [å…¥åŠ›] ãªãE[å‡ºåŠ›] ãªãE[å‰¯ä½œç”¨] ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆã€BGMå†ç”Ÿ
+	 * @brief ƒXƒ`E?EƒW‰Šú–æE
+	 * [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ƒIƒuƒWƒFƒNƒg¶¬ABGMÄ¶
 	 */
 	void Initialize() override;
 
 	/*
-	 * @brief ã‚·ãƒ¼ãƒ³çµ‚äºEï¿½EçE
-	 * [å…¥åŠ›] ãªãE[å‡ºåŠ›] ãªãE[å‰¯ä½œç”¨] BGMåœæ­¢
+	 * @brief ƒV[ƒ“I?E?E?E
+	 * [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] BGM’â~
 	 */
 	void Finalize() override;
 
 	/*
-	 * @brief ã‚¹ãƒEï¿½Eã‚¸æç”»
-	 * [å…¥åŠ›] ãªãE[å‡ºåŠ›] ãªãE[å‰¯ä½œç”¨] ç”»é¢æç”»
+	 * @brief ƒXƒ`E?EƒW•`‰æ
+	 * [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ‰æ–Ê•`‰æ
 	 */
 	void Draw() override;
 
 	/*
-	 * @brief ã‚¹ãƒEï¿½Eã‚¸æ›´æ–°
-	 * [å…¥åŠ›] ãªãE[å‡ºåŠ›] ãªãE[å‰¯ä½œç”¨] ã‚¿ã‚¤ãƒ ã‚¢ãƒEï¿½Eæ™‚ï¿½Eãƒªã‚¶ãƒ«ãƒˆï¿½Eç§»
+	 * @brief ƒXƒ`E?EƒWXV
+	 * [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ƒ^ƒCƒ€ƒAƒ`E?E?EƒŠƒUƒ‹ƒg?EˆÚ
 	 */
 	void Update() override;
 
 	/*
-	 * @brief ãƒ•ã‚§ãƒ¼ã‚ºé€²è¡Œã«ã‚ˆã‚‹ç’°å¢Eï¿½ï¿½åŒ–
-	 * [å…¥åŠ›] ãªãE[å‡ºåŠ›] ãªãE[å‰¯ä½œç”¨] ã‚«ãƒ¡ãƒ©ãƒ»ç«œå·»çŠ¶æ…‹å¤‰æ›´ã€ã‚¹ãƒï¿½Eãƒ³å‡¦çE
+	 * @brief ƒtƒF[ƒYis‚É‚æ‚éŠÂ?E??‰»
+	 * [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ƒJƒƒ‰E—³Šªó‘Ô•ÏXAƒXƒ|?Eƒ“ˆ?E
 	 */
 	void PhaseUpdate();
 
 private:
-	float warning_radius_;       // è­¦å‘Šã‚¨ãƒªã‚¢ç¾åœ¨åŠå¾E(äºˆç´E
-	float max_radius_;           // è­¦å‘Šã‚¨ãƒªã‚¢æœ€å¤§åŠå¾E(äºˆç´E
+	float warning_radius_;       // ŒxƒGƒŠƒAŒ»İ”¼ªE(—\?E
+	float max_radius_;           // ŒxƒGƒŠƒAÅ‘å”¼ªE(—\?E
 	
-	int tatumaki_spawn_timer_;   // ç«œå·»å‡ºç¾ã‚¿ã‚¤ãƒï¿½E
-	int mass_spawn_timer_;       // å¤§é‡ï¿½Eç¾ã®é–“éš”ã‚¿ã‚¤ãƒï¿½E
-	Phase phase_;             // ç¾åœ¨ã®ãƒ•ã‚§ãƒ¼ã‚º
-	int font_back_graph_;        // è­¦å‘Šãƒ†ã‚­ã‚¹ãƒˆèƒŒæ™¯ç”¨ãƒãƒ³ãƒ‰ãƒ«
+	int tatumaki_spawn_timer_;   // —³ŠªoŒ»ƒ^ƒCƒ}?E
+	int mass_spawn_timer_;       // ‘å—Ê?EŒ»‚ÌŠÔŠuƒ^ƒCƒ}?E
+	Phase phase_;             // Œ»İ‚ÌƒtƒF[ƒY
+	int font_back_graph_;        // ŒxƒeƒLƒXƒg”wŒi—pƒnƒ“ƒhƒ‹
 };

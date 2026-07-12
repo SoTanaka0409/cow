@@ -1,15 +1,15 @@
-﻿#pragma once
+#pragma once
 #include "CowMove.h"
 
-// 繧ｿ繧ｰCow_1縺ｮ讓呎ｺ悶く繝｣繝ｩ繧ｯ繧ｿ繝ｼ螳夂ｾｩ・亥渕譛ｬ陦悟虚縺ｯCowMove縺ｫ貅匁侠・・
+// タグCow_1の標準キャラクター定義�E�基本行動はCowMoveに準拠�E�E
 class Cow : public CowMove
 {
 public:
 	/*
-	 * @brief 繧ｪ繝悶ず繧ｧ繧ｯ繝亥・譛溷喧
-	 * [蜈･蜉嫋 filename: 繝｢繝・Ν繝代せ, initPos: 蛻晄悄驟咲ｽｮ蠎ｧ讓・ num: 蝓ｺ遉弱せ繧ｳ繧｢蛟､
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 繧ｹ繧ｳ繧｢縺ｨ邨碁ｨ灘､縺ｮ險ｭ螳・
+	 * @brief オブジェクト�E期化
+	 * [入力] filename: モチE��パス, initPos: 初期配置座樁E num: 基礎スコア値
+	 * [出力] �Ȃ�
+	 * [副作用] スコアと経験値の設宁E
 	 */
 	Cow(std::string filename, VECTOR initPos, float num);
 	virtual ~Cow();

@@ -1,9 +1,9 @@
-﻿#include "Animal.h"
+#include "Animal.h"
 
 Animal::Animal(std::string filename, VECTOR initPos)
 	: AnimalMove(filename, initPos)
 {
-	// Animal_1繧偵ョ繝輔か繝ｫ繝医→縺励∝崋譛峨・邨碁ｨ灘､繧定ｨｭ螳・
+	// Animal_1をデフォルトとし、固有�E経験値を設宁E
 	mfXp = 10;
 	SetTagAnimal(AnimalMove::kAnimal1);
 }
@@ -16,7 +16,7 @@ void Animal::Update()
 {
 	MoveCharacter();
 
-	// 蜷ｸ縺・ｾｼ縺ｾ繧御ｸｭ縺ｯ荳崎・辟ｶ縺ｪ蝗櫁ｻ｢繧帝亟縺舌◆繧∝屓霆｢蜃ｦ逅・ｒ繧ｹ繧ｭ繝・・縺吶ｋ
+	// 吸ぁE��まれ中は不�E然な回転を防ぐため回転処琁E��スキチE�Eする
 	if (!(mCurrentState == STATE_VACUUM))
 	{
 		RotationCharacter();

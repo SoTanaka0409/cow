@@ -1,4 +1,4 @@
-ï»¿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include"Player3D.h"
 #include"Model.h"
 #include"ModelAnimation.h"
@@ -58,7 +58,7 @@ Player3D::Player3D(std::string filename, VECTOR initPos)
 	capsule_collider_->position2_ = position_;
 	capsule_collider_->radius_ = radius_;
 
-	// Yè»¸æ–¹å‘ã«ã‚¹ã‚±ãƒ¼ãƒ«ã‚’ä¼¸ã°ã—çœŸä¸‹ã«å‘ã‘ã‚E
+	// Y²•ûŒü‚ÉƒXƒP[ƒ‹‚ğL‚Î‚µ^‰º‚ÉŒü‚¯‚ßE
 	mpBeam = new EffekseerEffect("Resource/3D/EFK/Beam.efk", position_, 80.0f);
 	mpBeam->SetRotation(VGet(DX_PI_F / -2.0f, 0.0f, 0.0f));
 	mpBeam->SetScale(VGet(1.0f, 1.0f, 4.0f));
@@ -79,10 +79,10 @@ Player3D::~Player3D()
 
 void Player3D::Update()
 {
-	// ãƒEï¿½ï¿½ãƒEï¿½ï¿½ã‚«ãƒ¡ãƒ©ãŒæœ‰åŠ¹ãªå ´åˆï¿½Eãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æŒ™å‹•ã‚’ã™ã¹ã¦åœæ­¢
+	// ƒ`E??ƒ`E??ƒJƒƒ‰‚ª—LŒø‚Èê‡?EƒvƒŒƒCƒ„[‚Ì‹““®‚ğ‚·‚×‚Ä’â~
 	if (Master::mbIsDebugCamera) return;
 
-	// --- ã‚¹ã‚¿ãƒ³ï¿½Eï¿½æ°—çµ¶ï¿½Eï¿½çŠ¶æ…‹ï¿½Eç®¡çE---
+	// --- ƒXƒ^ƒ“?E?‹Câ?E?ó‘Ô?EŠÇ?E---
 	if (mIsStunned)
 	{
 		mStunTimer--;
@@ -96,7 +96,7 @@ void Player3D::Update()
 
 	ManagerUpdate();
 
-	// ã‚¹ãƒEï¿½Eã‚¸å¤–è½ä¸‹æ™‚ãªã©ã¯å¾©å¸°ã®ãŸã‚ã«ç©ºä¸­ã¸é€€é¿
+	// ƒXƒ`E?EƒWŠO—‰º‚È‚Ç‚Í•œ‹A‚Ì‚½‚ß‚É‹ó’†‚Ö‘Ş”ğ
 	if (Master::GameFinishFlag || mIsOutOfBounds)
 	{
 		position_ = VGet(0, 2000, 0);
@@ -110,15 +110,15 @@ void Player3D::Update()
 		ColliderUpdate();
 		Play();
 	}
-	// --- ã‚¹ã‚¿ãƒ³ä¸­ã®ãƒ•ã‚©ãƒ¼ãƒ«ãƒãƒƒã‚¯ ---
+	// --- ƒXƒ^ƒ“’†‚ÌƒtƒH[ƒ‹ƒoƒbƒN ---
 	else
 	{
-		// å¸ãEï¿½ï¿½ã¿åˆ¤å®šãŒæ®‹ã‚‹ã®ã‚’é˜²ããŸã‚ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’ãƒªã‚»ãƒEï¿½ï¿½
+		// ‹z‚ŸE??‚İ”»’è‚ªc‚é‚Ì‚ğ–h‚®‚½‚ßƒRƒ‰ƒCƒ_[‚ğƒŠƒZƒ`E??
 		mIsVacuumActive = false;
 		ColliderUpdate();
 	}
 
-	// ã‚¹ãƒEï¿½Eã‚¸å¤–ã«å‡ºã¦ãEï¿½ï¿½ãEï¿½ï¿½ã®ãƒã‚§ãƒEï¿½ï¿½
+	// ƒXƒ`E?EƒWŠO‚Éo‚Ä‚ŸE??‚ŸE??‚Ìƒ`ƒFƒ`E??
 	ScreenOutCheck();
 }
 
@@ -139,7 +139,7 @@ void Player3D::Play()
 
 		float recoverySpeed = VACUUM_RECOVER_PER_FRAME;
 
-		// ãƒ©ã‚¹ãƒˆã‚¹ãƒ‘ï¿½Eãƒˆæ™‚ã¯ã‚²ãƒ¼ã‚¸å›å¾©é€Ÿåº¦ã‚’ä¸Šã’ã¦é›£æ˜“åº¦ã‚’ç·©å’Œã™ã‚E
+		// ƒ‰ƒXƒgƒXƒp?Eƒg‚ÍƒQ[ƒW‰ñ•œ‘¬“x‚ğã‚°‚Ä“ïˆÕ“x‚ğŠÉ˜a‚·‚ßE
 		if (Master::mpSceneManager && Master::mpSceneManager->GetCurrentScene() && ServiceLocator::GetGameManager())
 		{
 			auto timer = ServiceLocator::GetGameManager()->GetGameTimer();
@@ -153,7 +153,7 @@ void Player3D::Play()
 		if (mVacuumGauge > VACUUM_GAUGE_MAX) mVacuumGauge = VACUUM_GAUGE_MAX;
 	}
 
-	// ãƒ•ã‚£ãƒ¼ãƒï¿½EçŠ¶æ…‹ï¿½Eä»•æ§˜ã‚’æº€ãŸã™ãŸã‚å¼·åˆ¶ç™ºå‹E
+	// ƒtƒB[ƒo?Eó‘Ô?Ed—l‚ğ–‚½‚·‚½‚ß‹­§”­™¤E
 	if (Master::FeverFlag) mIsVacuumActive = true;
 }
 
@@ -161,7 +161,7 @@ void Player3D::ColliderUpdate()
 {
 	if (mIsVacuumActive)
 	{
-		// ä¸Šç©ºã®ç‰›ã¾ã§åˆ¤å®šãŒå±Šãã‚ˆã†ã«Yè»¸æ–¹å‘ã«ã‚«ãƒ—ã‚»ãƒ«ã‚’åºEï¿½ï¿½ã‚E
+		// ã‹ó‚Ì‹‚Ü‚Å”»’è‚ª“Í‚­‚æ‚¤‚ÉY²•ûŒü‚ÉƒJƒvƒZƒ‹‚ğ’¡E??‚ßE
 		capsule_collider_->position_ = VGet(position_.x, -1000, position_.z);
 		capsule_collider_->position2_ = VGet(position_.x, 3000, position_.z);
 		capsule_collider_->radius_ = VACUUM_RADIUS;
@@ -189,7 +189,7 @@ void Player3D::ColliderUpdate()
 		effect_timer_ = 0;
 	}
 
-	// åEï¿½ï¿½ã‚¨ãƒ•ã‚§ã‚¯ãƒˆï¿½Eåº§æ¨™è¿½å¾“ã¨æ›´æ–°å‡¦çE
+	// ™ÜE??ƒGƒtƒFƒNƒg?EÀ•W’Ç]‚ÆXVˆ?E
 	if (mpBeam != nullptr)
 	{
 		mpBeam->SetPosition(position_);
@@ -210,7 +210,7 @@ void Player3D::ScreenOutCheck()
 	{
 		mIsOutOfBounds = true;
 
-		// é€²è¡Œä¸ï¿½Eå›é¿ã®ãŸã‚ã‚­ãƒ¼å…¥åŠ›ã§å¾©å¸°ã•ã›ã‚E
+		// is•s?E‰ñ”ğ‚Ì‚½‚ßƒL[“ü—Í‚Å•œ‹A‚³‚¹‚ßE
 		if (CheckHitKey(KEY_INPUT_SPACE))
 		{
 			SetPosition(VGet(0, 2000, 0));
@@ -228,12 +228,12 @@ void Player3D::test()
 	if (InputManager::CheckDownKey(KEY_INPUT_5))
 	{
 		mpLevel->AddXp(20);
-		mpSkill->SetSkillFlag(true); // ã‚¹ã‚­ãƒ«UI/åŠ¹æœï¿½Eå¼·åˆ¶é–‹æ”¾
+		mpSkill->SetSkillFlag(true); // ƒXƒLƒ‹UI/Œø‰Ê?E‹­§ŠJ•ú
 	}
 }
 
 /*
- * @brief ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ç´ã¥ãå„ç¨®ã‚µãƒ–ã‚·ã‚¹ãƒEï¿½ï¿½ã®ä¸€æ‹¬æç”»ãƒ»æ›´æ–°å‘¼ã³å‡ºãE
+ * @brief ƒvƒŒƒCƒ„[‚É•R‚Ã‚­ŠeíƒTƒuƒVƒXƒ`E??‚ÌˆêŠ‡•`‰æEXVŒÄ‚Ño‚ŸE
  */
 void Player3D::ManagerUpdate()
 {
@@ -254,7 +254,7 @@ void Player3D::Draw()
 	const int DIV = 32;
 	unsigned int color;
 
-	// ãƒ­ãƒEï¿½ï¿½ã‚ªãƒ³çŠ¶æ…‹ã«å¿œã˜ã¦ã‚µãƒ¼ã‚¯ãƒ«ã®è‰²ã‚’å¤‰æ›´ã™ã‚‹
+	// ƒƒ`E??ƒIƒ“ó‘Ô‚É‰‚¶‚ÄƒT[ƒNƒ‹‚ÌF‚ğ•ÏX‚·‚é
 	if (mIsCowInVacuumRange == true)
 	{
 		color = GetColor(255, 0, 0);
@@ -285,7 +285,7 @@ void Player3D::MoveEx()
 	VECTOR UpMoveVector = VGet(0.0f, 0.0f, 0.0f);
 	VECTOR leftMoveVector = VGet(0.0f, 0.0f, 0.0f);
 
-	// ã‚«ãƒ¡ãƒ©è¦–ç‚¹ã‚’åŸºæº–ã¨ã—ãŸç§»å‹•æ–¹å‘ï¿½Eç®—ï¿½E
+	// ƒJƒƒ‰‹“_‚ğŠî€‚Æ‚µ‚½ˆÚ“®•ûŒü?EZ?E
 	{
 		UpMoveVector = VSub(Master::camera_->GetLookAtPosition(), Master::camera_->GetPosition());
 		UpMoveVector.y = 0.0f;
@@ -336,7 +336,7 @@ void Player3D::MoveEx()
 					hitwall = true;
 					VECTOR slide = VGet(0.0f, 0.0f, 0.0f);
 
-					// æ³•ç·šã‹ã‚‰å£ãšã‚Šç§»å‹•ç”¨ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¨ˆç®E
+					// –@ü‚©‚ç•Ç‚¸‚èˆÚ“®—pƒxƒNƒgƒ‹‚ğŒv?E
 					float a = VDot(VScale(moveVec, -1.0f), vertex.at(0).norm);
 					slide = VAdd(moveVec, VScale(vertex.at(0).norm, a));
 
@@ -346,7 +346,7 @@ void Player3D::MoveEx()
 						position_ = VAdd(position_, VScale(slide, mfSpeed));
 						hitwalls = true;
 					}
-					// æŒŸã¾ã‚Šé˜²æ­¢ã®ãŸã‚é€²è¡Œã‚’åˆ¶é™ã™ã‚E
+					// ‹²‚Ü‚è–h~‚Ì‚½‚ßis‚ğ§ŒÀ‚·‚ßE
 					else if (hitwalls == true)
 					{
 						position_ = old_position_;
@@ -381,7 +381,7 @@ void Player3D::RotationByMove()
 {
 	float subAngle = target_angle_ - angle_;
 
-	// è§’åº¦ã®å¢Eï¿½ï¿½ç·šã‚’è·¨ãEï¿½ï¿½å ´åˆï¿½Eæœ€çŸ­ãƒ«ãƒ¼ãƒˆè£œæ­£
+	// Šp“x‚Ì?E??ü‚ğŒ×‚ŸE??ê‡?EÅ’Zƒ‹[ƒg•â³
 	if (subAngle < -DX_PI_F) subAngle += DX_TWO_PI_F;
 	if (subAngle > DX_PI_F)  subAngle -= DX_TWO_PI_F;
 
@@ -403,7 +403,7 @@ void Player3D::RotationByMove()
 }
 
 /*
- * @brief ç”»é¢ä¸‹éƒ¨ã«è¡¨ç¤ºã™ã‚‹å¸ãEï¿½ï¿½ã¿ã‚²ãƒ¼ã‚¸ï¿½Eï¿½ED UIï¿½Eï¿½ï¿½Eæç”»
+ * @brief ‰æ–Ê‰º•”‚É•\¦‚·‚é‹z‚ŸE??‚İƒQ[ƒW?E?ED UI?E??E•`‰æ
  */
 void Player3D::bar()
 {
@@ -418,13 +418,13 @@ void Player3D::bar()
 	if (currentWidth < 0) currentWidth = 0;
 	if (currentWidth > gaugeWidth) currentWidth = gaugeWidth;
 
-	// ã‚²ãƒ¼ã‚¸ãŒç©ºã®æ™‚ï¿½Eè­¦å‘Šã¨ã—ã¦èµ¤è‰²è¡¨ç¤º
+	// ƒQ[ƒW‚ª‹ó‚Ì?EŒx‚Æ‚µ‚ÄÔF•\¦
 	unsigned int gaugeColor = GetColor(0, 255, 255);
 	if (mVacuumGauge <= 0.0f) gaugeColor = GetColor(255, 0, 0);
 
 	DrawBox(gaugeX, gaugeY, gaugeX + currentWidth, gaugeY + gaugeHeight, gaugeColor, TRUE);
 
-	// ç‰›æŸ„ãƒ•ãƒ¬ãƒ¼ãƒ ã‚’æç”»ï¿½Eï¿½ï¿½Eã®ç™½ãEï¿½ï¿½ç·EDrawBox ã®ä»£ã‚ã‚Šï¿½Eï¿½E
+	// ‹•¿ƒtƒŒ[ƒ€‚ğ•`‰æ?E??E‚Ì”’‚ŸE???EDrawBox ‚Ì‘ã‚í‚è?E?E
 	DrawExtendGraph(gaugeX - 10, gaugeY - 10, gaugeX + gaugeWidth + 10, gaugeY + gaugeHeight + 10, mnGaugeFrameGraph, TRUE);
 
 	DrawFormatString(gaugeX, gaugeY - 30, GetColor(255, 255, 255), "Vacuum Gauge: %.1f%%", mVacuumGauge);
@@ -457,7 +457,7 @@ void Player3D::OnEnter(Collider* collider, Collider* check)
 
 void Player3D::OnExit(Collider* collider, Collider* check)
 {
-	// å¸ãEï¿½ï¿½ã¿ä¸­æ–­æ™‚ï¿½Eå¯¾è±¡ã‚’åœ°ä¸Šã§ã®å¾˜å¾ŠçŠ¶æ…‹ã«æˆ»ãE
+	// ‹z‚ŸE??‚İ’†’f?E‘ÎÛ‚ğ’nã‚Å‚Ìœpœjó‘Ô‚É–ß‚ŸE
 	if (collider == capsule_collider_ && check->parent_object_->GetTag() == kTag3dCow)
 	{
 		CowMove* cow = dynamic_cast<CowMove*>(check->parent_object_);

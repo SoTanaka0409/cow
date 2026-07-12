@@ -1,4 +1,4 @@
-﻿#include "Texture.h"
+#include "Texture.h"
 #include "DxLib.h"
 #include "Master.h"
 
@@ -10,7 +10,7 @@ Texture::Texture(std::string filename, VECTOR centerPosition, int graphsize_x, i
 	, mnTransFlag(transFlag)
 {
 	mnHandle = Master::mpResourceManager->LoadGraphics(filename.c_str());
-	GetGraphSize(mnHandle, &mnSizeX, &mnSizeY); // 拡大縮小描画の基準にするためオリジナルサイズを取征E
+	GetGraphSize(mnHandle, &mnSizeX, &mnSizeY); // �g��k���`��̊�ɂ��邽�߃I���W�i���T�C�Y���搪E
 }
 
 Texture::~Texture()
@@ -19,10 +19,10 @@ Texture::~Texture()
 }
 
 /*
-	* @brief 設定された持E��サイズ(new_game_w_, new_game_h_)で、mvPositionを中忁E��引き伸ばし描画する
-	* [入力] なぁE
-	* [出力] なぁE
-	* [副作用] 持E��篁E��へチE��スチャ描画
+	* @brief �ݒ肳�ꂽ��E??�T�C�Y(new_game_w_, new_game_h_)�ŁAmvPosition��?E??�����L�΂��`�悷��
+	* [����] �Ȃ�
+	* [�o��] �Ȃ�
+	* [����p] ��E??�E??�փ`E??�X�`���`��
 	*/
 void Texture::Draw()
 {
@@ -36,14 +36,14 @@ void Texture::Draw()
 }
 
 /*
-	* @brief ボタンホバー演�E用などに、E��常サイズに特定�E拡張幁Eexpand)を加えて拡大描画する�E�現在未使用�E�E
-	* [入力] なぁE
-	* [出力] なぁE
-	* [副作用] 持E��された拡張領域へ拡大描画
+	* @brief �{�^���z�o�[��?E�p�ȂǂɁAE??��T�C�Y�ɓ���?E�g��?Eexpand)�������Ċg��`�悷��?E?���ݖ��g�p?E?E
+	* [����] �Ȃ�
+	* [�o��] �Ȃ�
+	* [����p] ��E??���ꂽ�g���̈�֊g��`��
 	*/
 void Texture::SizeDraw()
 {
-	int expand = 15; // 拡大表示する際�E拡張ピクセル数
+	int expand = 15; // �g��\�������?E�g���s�N�Z����
 	int halfW = (new_game_w_ + expand) / 2;
 	int halfH = (new_game_h_ + expand) / 2;
 
@@ -61,10 +61,10 @@ void Texture::Update()
 }
 
 /*
-	* @brief 中忁E��標を軸にして、比率持E��Escale)による拡大縮小描画を行う
-	* [入力] scale: スケーリング倍率�E�E.0fが等倍！E
-	* [出力] なぁE
-	* [副作用] 持E��サイズでチE��スチャ描画
+	* @brief ��?E??�W�����ɂ��āA�䗦��E??Escale)�ɂ��g��k���`����s��
+	* [����] scale: �X�P�[�����O�{��?E?E.0f�����{�IE
+	* [�o��] �Ȃ�
+	* [����p] ��E??�T�C�Y�Ń`E??�X�`���`��
 	*/
 void Texture::DrawScale(float scale)
 {

@@ -1,4 +1,4 @@
-﻿#include "Wall.h"
+#include "Wall.h"
 #include "DxLib.h"
 #include "Master.h"
 
@@ -8,7 +8,7 @@ Wall::Wall(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottom
 	SetTag(Object3D::kTag3dWall);
 	graph_handle_ = Master::mpResourceManager->LoadGraphics(filename.c_str());
 
-	// 蟾ｦ荳企らせ縺ｮ險ｭ螳・
+	// 左上頂点の設宁E
 	vertex_[0].pos = VAdd(centerPos, topLeft);
 	vertex_[0].norm = VGet(1.0f, 0.0f, 0.0f);
 	vertex_[0].dif = GetColorU8(255, 255, 255, 255);
@@ -18,7 +18,7 @@ Wall::Wall(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottom
 	vertex_[0].su = 0.0f;
 	vertex_[0].sv = 0.0f;
 
-	// 蜿ｳ荳企らせ縺ｮ險ｭ螳・
+	// 右上頂点の設宁E
 	vertex_[1].pos = VAdd(centerPos, VGet(bottomRight.x, topLeft.y, bottomRight.z));
 	vertex_[1].norm = VGet(1.0f, 0.0f, 0.0f);
 	vertex_[1].dif = GetColorU8(255, 255, 255, 255);
@@ -28,7 +28,7 @@ Wall::Wall(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottom
 	vertex_[1].su = 1.0f;
 	vertex_[1].sv = 0.0f;
 
-	// 蟾ｦ荳矩らせ縺ｮ險ｭ螳・
+	// 左下頂点の設宁E
 	vertex_[2].pos = VAdd(centerPos, VGet(topLeft.x, bottomRight.y, topLeft.z));
 	vertex_[2].norm = VGet(1.0f, 0.0f, 0.0f);
 	vertex_[2].dif = GetColorU8(255, 255, 255, 255);
@@ -38,7 +38,7 @@ Wall::Wall(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottom
 	vertex_[2].su = 0.0f;
 	vertex_[2].sv = 1.0f;
 
-	// 蜿ｳ荳矩らせ縺ｮ險ｭ螳・
+	// 右下頂点の設宁E
 	vertex_[3].pos = VAdd(centerPos, bottomRight);
 	vertex_[3].norm = VGet(1.0f, 0.0f, 0.0f);
 	vertex_[3].dif = GetColorU8(255, 255, 255, 255);
@@ -48,7 +48,7 @@ Wall::Wall(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottom
 	vertex_[3].su = 1.0f;
 	vertex_[3].sv = 1.0f;
 
-	// 繝昴Μ繧ｴ繝ｳ縺ｮ鬆らせ蠎ｧ讓吶°繧画ｳ慕ｷ壹・繧ｯ繝医Ν繧定ｨ育ｮ励＠縺ｦ蜷・らせ縺ｫ險ｭ螳壹☆繧・
+	// ポリゴンの頂点座標から法線�Eクトルを計算して�ꍇ��点に設定すめE
 	VECTOR norm = VCross(
 		VSub(vertex_[0].pos, vertex_[1].pos),
 		VSub(vertex_[0].pos, vertex_[2].pos)
@@ -90,7 +90,7 @@ void Wall::Draw()
 	index[4] = 2;
 	index[5] = 1;
 
-	// 繝ｩ繧､繝・ぅ繝ｳ繧ｰ繧堤┌蜉ｹ蛹悶＠縺ｦ縲√ユ繧ｯ繧ｹ繝√Ε譛ｬ譚･縺ｮ濶ｲ蜷医＞縺ｧ螢√ｒ謠冗判縺吶ｋ
+	// ライチE��ングを無効化して、テクスチャ本来の色合いで壁を描画する
 	SetUseLighting(false);
 	DrawPolygonIndexed3D(vertex_, 4, index, 2, graph_handle_, true);
 	SetUseLighting(true);

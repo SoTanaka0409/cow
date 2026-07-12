@@ -1,10 +1,10 @@
-﻿#ifndef _TEXTURE_H_
+#ifndef _TEXTURE_H_
 #define _TEXTURE_H_
 
 #include <string>
 #include "DxLib.h"
 
-// 2D画像アセチE��を読み込み、位置めE��イズ、スケーリングを指定して画面描画を行うクラス
+// 2D�摜�A�Z�`E??��ǂݍ��݁A�ʒu��E??�C�Y�A�X�P�[�����O���w�肵�ĉ�ʕ`����s���N���X
 class Texture
 {
 public:
@@ -12,38 +12,38 @@ public:
 	~Texture();
 
 	/*
-	 * @brief チE��スチャめEposition_ を中忁E��持E��サイズで描画する
-	 * [入力] なぁE
-	 * [出力] なぁE
-	 * [副作用] 画面�E�バチE��バッファ�E�に画像を描画
+	 * @brief �`E??�X�`����Eposition_ ��?E??��E??�T�C�Y�ŕ`�悷��
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] ���?E?�o�`E??�o�b�t�@?E?�ɉ摜��`��
 	 */
 	void Draw();
 
 	/*
-	 * @brief チE��スチャを通常サイズより少し拡大した状態で中忁E��画する�E��Eタンホバー用など、現在未使用�E�E
-	 * [入力] なぁE
-	 * [出力] なぁE
-	 * [副作用] 画面に拡大画像を描画
+	 * @brief �`E??�X�`����ʏ�T�C�Y��菭���g�債����ԂŒ�?E??�悷��?E??�{�^���z�o�[�p�ȂǁA���ݖ��g�p?E?E
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] ��ʂɊg��摜��`��
 	 */
 	void SizeDraw();
 
 	/*
-	 * @brief チE��スチャの毎フレームの更新処琁E��現在処琁E��し！E
-	 * [入力] なぁE
-	 * [出力] なぁE
-	 * [副作用] なぁE
+	 * @brief �`E??�X�`���̖��t���[���̍X�V��?E??���ݏ�?E??���IE
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �Ȃ�
 	 */
 	void Update();
 
 	/*
-	 * @brief チE��スチャを任意�Eスケール比率で中忁E��画する
-	 * [入力] scale: スケーリング倍率�E�E.0fが等倍！E
-	 * [出力] なぁE
-	 * [副作用] 画面に拡大/縮小した画像を描画
+	 * @brief �`E??�X�`����C��?E�X�P�[���䗦�Œ�?E??�悷��
+	 * [����] scale: �X�P�[�����O�{��?E?E.0f�����{�IE
+	 * [�o��] �Ȃ�
+	 * [����p] ��ʂɊg��/�k�������摜��`��
 	 */
 	void DrawScale(float scale);
 
-	// セチE��ー・ゲチE��ー群
+	// �Z�`E??�[�E�Q�`E??�[�Q
 	void SetPosition(VECTOR centerPosition) { position_ = centerPosition; }
 	VECTOR GetPosition() { return position_; }
 	int GetSizeX() { return mnSizeX; }
@@ -52,14 +52,14 @@ public:
 	int GetHeight() { return new_game_h_; }
 
 private:
-	int mnHandle;       // ロードした画像�EグラフィチE��ハンドル
-	VECTOR position_;  // 画面描画時�E中忁E��樁E
-	int mnSizeX;        // 画像ファイル本来の横幁E
-	int mnSizeY;        // 画像ファイル本来の縦幁E
-	bool mnTransFlag;   // 背景の透過�E�透過チャンネル�E�を有効にするかどぁE��のフラグ
+	int mnHandle;       // ���[�h�����摜?E�O���t�B�`E??�n���h��
+	VECTOR position_;  // ��ʕ`�掞?E��?E???E
+	int mnSizeX;        // �摜�t�@�C���{���̉�?E
+	int mnSizeY;        // �摜�t�@�C���{���̏c?E
+	bool mnTransFlag;   // �w�i�̓���?E?���߃`�����l��?E?��L���ɂ��邩�ǂ�E??�̃t���O
 
-	int new_game_w_;      // 持E��された描画用の横幁E
-	int new_game_h_;      // 持E��された描画用の縦幁E
+	int new_game_w_;      // ��E??���ꂽ�`��p�̉�?E
+	int new_game_h_;      // ��E??���ꂽ�`��p�̏c?E
 };
 
 #endif

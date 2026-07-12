@@ -1,4 +1,4 @@
-﻿#include "Mountain.h"
+#include "Mountain.h"
 
 Mountain::Mountain(std::string filename, VECTOR initPos, VECTOR scale, VECTOR angle)
 	: Object3D(initPos)
@@ -10,7 +10,7 @@ Mountain::Mountain(std::string filename, VECTOR initPos, VECTOR scale, VECTOR an
 
 Mountain::~Mountain()
 {
-	// 繝｡繝｢繝ｪ繝ｪ繝ｼ繧ｯ髦ｲ豁｢縺ｮ縺溘ａ縲∝虚逧・↓逕滓・縺励◆Model繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ繧堤ｴ譽・☆繧・
+	// メモリリーク防止のため、動皁E��生�EしたModelインスタンスを破棁E��めE
 	if (model_ != nullptr)
 	{
 		delete model_;

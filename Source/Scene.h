@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 #include"DxLib.h"
 #include"GameManager.h"
 #include"CowManager.h"
@@ -8,17 +8,17 @@
 class ObjectManager;
 class ColliderManager;
 
-// åEï¿½ï¿½ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã®æŠ½è±¡åŸºåº•ã‚¯ãƒ©ã‚¹
+// ™ÜE??[ƒ€ƒV[ƒ“‚Ì’ŠÛŠî’êƒNƒ‰ƒX
 class Scene
 {
 public:
-	// ãƒ•ã‚§ãƒ¼ãƒ‰çŠ¶æ…E
+	// ƒtƒF[ƒhó?E
 	enum SceneFade
 	{
-		kSceneFadeIn,   // æš—è»¢ã‹ã‚‰æ˜è»¢
-		kSceneFadeOut,  // æ˜è»¢ã‹ã‚‰æš—è»¢
-		kSceneFadeNone, // ãƒ•ã‚§ãƒ¼ãƒ‰ãªãE
-		kSceneFadeLoad, // ãƒ­ãƒ¼ãƒ‰ä¸­
+		kSceneFadeIn,   // ˆÃ“]‚©‚ç–¾“]
+		kSceneFadeOut,  // –¾“]‚©‚çˆÃ“]
+		kSceneFadeNone, // ƒtƒF[ƒh‚È‚µ
+		kSceneFadeLoad, // ƒ[ƒh’†
 	};
 	
 public:
@@ -26,52 +26,52 @@ public:
 	virtual ~Scene();
 
 	/*
-	 * @brief ã‚·ãƒ¼ãƒ³åˆæœŸåŒE
-	 * [å…¥åŠ›] ãªãE[å‡ºåŠ›] ãªãE[å‰¯ä½œç”¨] ãƒªã‚½ãƒ¼ã‚¹åˆæœŸåŒE
+	 * @brief ƒV[ƒ“‰Šú–æE
+	 * [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ƒŠƒ\[ƒX‰Šú–æE
 	 */
 	virtual void Initialize() = 0;
 
 	/*
-	 * @brief ãƒ•ã‚§ãƒ¼ãƒ‰æç”»
-	 * [å…¥åŠ›] fade: ãƒ•ã‚§ãƒ¼ãƒ‰çŠ¶æ…E[å‡ºåŠ›] ãªãE[å‰¯ä½œç”¨] ç”»é¢æç”»ã€ã‚¢ãƒ«ãƒ•ã‚¡å€¤æ›´æ–°
+	 * @brief ƒtƒF[ƒh•`‰æ
+	 * [“ü—Í] fade: ƒtƒF[ƒhó?E[o—Í] ‚È‚µ[•›ì—p] ‰æ–Ê•`‰æAƒAƒ‹ƒtƒ@’lXV
 	 */
 	virtual void Fade(SceneFade fade);
 
 	/*
-	 * @brief ã‚·ãƒ¼ãƒ³å†Eï¿½ï¿½ç´ ã®æ›´æ–°
-	 * [å…¥åŠ›] ãªãE[å‡ºåŠ›] ãªãE[å‰¯ä½œç”¨] åEï¿½Eãƒï¿½Eã‚¸ãƒ£ãƒ¼ã®Updateå‘¼ã³å‡ºãE
+	 * @brief ƒV[ƒ“?E??‘f‚ÌXV
+	 * [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ™ÜE?Eƒl?EƒWƒƒ[‚ÌUpdateŒÄ‚Ño‚ŸE
 	 */
 	virtual void Update();
 
 	/*
-	 * @brief ã‚·ãƒ¼ãƒ³å†Eï¿½ï¿½ç´ ã®æç”»
-	 * [å…¥åŠ›] ãªãE[å‡ºåŠ›] ãªãE[å‰¯ä½œç”¨] åEï¿½Eãƒï¿½Eã‚¸ãƒ£ãƒ¼ã®Drawå‘¼ã³å‡ºãE
+	 * @brief ƒV[ƒ“?E??‘f‚Ì•`‰æ
+	 * [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ™ÜE?Eƒl?EƒWƒƒ[‚ÌDrawŒÄ‚Ño‚ŸE
 	 */
 	virtual void Draw();
 
 	/*
-	 * @brief ã‚·ãƒ¼ãƒ³çµ‚äºEï¿½EçE
-	 * [å…¥åŠ›] ãªãE[å‡ºåŠ›] ãªãE[å‰¯ä½œç”¨] ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç­‰ï¿½Eè§£æ”¾
+	 * @brief ƒV[ƒ“I?E?E?E
+	 * [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ƒIƒuƒWƒFƒNƒg“™?E‰ğ•ú
 	 */
 	virtual void Finalize() = 0;
 
-	// ã‚²ãƒEï¿½ï¿½ãƒ¼ãƒ»ã‚»ãƒEï¿½ï¿½ãƒ¼ç¾¤
+	// ƒQƒ`E??[EƒZƒ`E??[ŒQ
 	ObjectManager* GetObjectManager() { return object_manager_; }
 	ColliderManager* GetCollisionManager() { return collider_manager_; }
 	float GetFadeAlpha() const { return fade_alpha_; }
 	void SetFadeAlpha(float alpha) { fade_alpha_ = alpha; }
 	
-	SceneFade fade_state_ = kSceneFadeNone; // ãƒ•ã‚§ãƒ¼ãƒ‰çŠ¶æ…E
-	int next_scene_ = 0;                    // æ¬¡ã®ã‚·ãƒ¼ãƒ³ID
+	SceneFade fade_state_ = kSceneFadeNone; // ƒtƒF[ƒhó?E
+	int next_scene_ = 0;                    // Ÿ‚ÌƒV[ƒ“ID
 
-	Fever* fever_;                        // ãƒ•ã‚£ãƒ¼ãƒï¿½Eç®¡çE
-	AnimalManager* animal_manager_;        // ã‚¢ãƒ‹ï¿½Eãƒ«ç®¡çE
-	CowManager* cow_manager_;              // ç‰›ç®¡çE
-	GameManager* game_manager_;            // ã‚²ãƒ¼ãƒ é€²è¡Œç®¡çE
+	Fever* fever_;                        // ƒtƒB[ƒo?EŠÇ?E
+	AnimalManager* animal_manager_;        // ƒAƒj?Eƒ‹ŠÇ?E
+	CowManager* cow_manager_;              // ‹ŠÇ?E
+	GameManager* game_manager_;            // ƒQ[ƒ€isŠÇ?E
 
 private:
-	ObjectManager* object_manager_;        // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç®¡çE
-	ColliderManager* collider_manager_;    // ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ç®¡çE
-	float fade_alpha_;                     // ãƒ•ã‚§ãƒ¼ãƒ‰ä¸é€ï¿½Eåº¦ (0-255)
-	float fade_speed_;                     // ãƒ•ã‚§ãƒ¼ãƒ‰é€Ÿåº¦
+	ObjectManager* object_manager_;        // ƒIƒuƒWƒFƒNƒgŠÇ?E
+	ColliderManager* collider_manager_;    // ƒRƒ‰ƒCƒ_[ŠÇ?E
+	float fade_alpha_;                     // ƒtƒF[ƒh•s“§?E“x (0-255)
+	float fade_speed_;                     // ƒtƒF[ƒh‘¬“x
 };

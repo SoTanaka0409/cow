@@ -1,4 +1,4 @@
-﻿#include "Collider.h"
+#include "Collider.h"
 #include "Object3D.h"
 #include "ColliderManager.h"
 #include <cassert>
@@ -11,25 +11,25 @@ Collider::Collider(Object3D* parent)
 	, delete_flag_(false)
 {
 	assert(parent);
-	ColliderManager::GetInstance()->AddCollider(this); // 逕滓・譎ゅ↓閾ｪ蜍輔〒繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｸ逋ｻ骭ｲ
+	ColliderManager::GetInstance()->AddCollider(this); // 生�E時に自動でマネージャーへ登録
 }
 
 Collider::~Collider()
 {
-	ColliderManager::GetInstance()->RemoveCollider(this); // 遐ｴ譽・凾縺ｫ閾ｪ蜍輔〒繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺九ｉ逋ｻ骭ｲ隗｣髯､
+	ColliderManager::GetInstance()->RemoveCollider(this); // 破棁E��に自動でマネージャーから登録解除
 }
 
 /*
- * @brief 蛻･縺ｮ繧ｳ繝ｩ繧､繝繝ｼ縺ｨ縺ｮ蟷ｾ菴募ｭｦ逧・↑莠､蟾ｮ迥ｶ諷九ｒ蜈・↓縲・←蛻・↑繧ｳ繝ｪ繧ｸ繝ｧ繝ｳ繧､繝吶Φ繝医ｒ騾夂衍縺吶ｋ
- * [蜈･蜉嫋 check: 蛻､螳壼ｯｾ雎｡縺ｮ逶ｸ謇九さ繝ｩ繧､繝繝ｼ, isHit: 蠖薙◆繧雁愛螳壹・莠､蟾ｮ險育ｮ礼ｵ先棡
- * [蜃ｺ蜉嫋 縺ｪ縺・
- * [蜑ｯ菴懃畑] mCollisionList縺ｮ謖ｿ蜈･繝ｻ蜑企勁縲＾nEnter / OnTrigger / OnExit 縺ｮ隕ｪ繧｢繧ｯ繧ｿ繝ｼ縺ｸ縺ｮ繧ｳ繝ｼ繝ｫ繝舌ャ繧ｯ騾夂衍
+ * @brief 別のコライダーとの幾何学皁E��交差状態を允E��、E��刁E��コリジョンイベントを通知する
+ * [入力] check: 判定対象の相手コライダー, isHit: 当たり判定�E交差計算結果
+ * [出力] �Ȃ�
+ * [副作用] mCollisionListの挿入�E削除、OnEnter / OnTrigger / OnExit の親アクターへのコールバック通知
  */
 void Collider::HitCheck(Collider* check, bool isHit)
 {
 	if (isHit)
 	{
-		// 譌｢縺ｫ蜑阪ヵ繝ｬ繝ｼ繝縺ｧ蜷後§逶ｸ謇九→陦晉ｪ√＠縺ｦ縺・◆縺九ｒ讀懃ｴ｢
+		// 既に前フレームで同じ相手と衝突してぁE��かを検索
 		auto itr = std::find_if(
 			collision_list_.begin(),
 			collision_list_.end(),
@@ -38,7 +38,7 @@ void Collider::HitCheck(Collider* check, bool isHit)
 
 		if (itr != collision_list_.end())
 		{
-			// 蜑阪ヵ繝ｬ繝ｼ繝縺九ｉ陦晉ｪ√′邯咏ｶ壹＠縺ｦ縺・ｋ縺溘ａ縲＾nTrigger・域ｻ槫惠繧､繝吶Φ繝茨ｼ峨ｒ騾夂衍
+			// 前フレームから衝突が継続してぁE��ため、OnTrigger�E�滞在イベント）を通知
 			if (this->parent_object_ != nullptr)
 			{
 				parent_object_->OnTrigger(this, check);
@@ -46,7 +46,7 @@ void Collider::HitCheck(Collider* check, bool isHit)
 		}
 		else
 		{
-			// 譁ｰ隕上・陦晉ｪ√′逋ｺ逕溘＠縺溘◆繧√√Μ繧ｹ繝医↓逋ｻ骭ｲ縺励※ OnEnter・磯幕蟋九う繝吶Φ繝茨ｼ峨ｒ騾夂衍
+			// 新規�E衝突が発生したため、リストに登録して OnEnter�E�開始イベント）を通知
 			collision_list_.push_back(check);
 			if (this->parent_object_ != nullptr)
 			{
@@ -56,7 +56,7 @@ void Collider::HitCheck(Collider* check, bool isHit)
 	}
 	else
 	{
-		// 陦晉ｪ√＠縺ｦ縺・↑縺・ｴ蜷医∝燕繝輔Ξ繝ｼ繝縺ｾ縺ｧ陦晉ｪ√＠縺ｦ縺・◆縺九・迥ｶ諷九ｒ繝√ぉ繝・け縺吶ｋ
+		// 衝突してぁE��ぁE��合、前フレームまで衝突してぁE��か�E状態をチェチE��する
 		auto itr = std::find_if(
 			collision_list_.begin(),
 			collision_list_.end(),
@@ -65,7 +65,7 @@ void Collider::HitCheck(Collider* check, bool isHit)
 
 		if (itr != collision_list_.end())
 		{
-			// 陦晉ｪ√′蛻・ｌ縺滂ｼ磯屬閼ｱ縺励◆・臥椪髢薙・縺溘ａ縲＾nExit・育ｵゆｺ・う繝吶Φ繝茨ｼ峨ｒ騾夂衍縺励Μ繧ｹ繝医°繧蛾勁螟悶☆繧・
+			// 衝突が刁E��た（離脱した�E�瞬間�Eため、OnExit�E�終亁E��ベント）を通知しリストから除外すめE
 			if (this->parent_object_ != nullptr)
 			{
 				this->parent_object_->OnExit(this, check);

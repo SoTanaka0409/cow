@@ -1,4 +1,4 @@
-﻿#include "AnimalMove.h"
+#include "AnimalMove.h"
 #include "GameConstants.h"
 #include "Master.h"
 #include "InputManager.h"
@@ -16,7 +16,7 @@
 #include "Player3D.h"
 
 namespace {
-	// 證ｫ螳壼�E��E�蠢・ 繧�E�繝ｳ繝懊・繝ｼ繝翫せ險育�E�礼畑縺�E�繧�E�繝ｭ繝ｼ繝�EΝ螟画焚�E�E�
+	// 暫定�?E??E?�K�v �?E?ンボ�Eーナス計�?E?�用�?E?�?E?ロー�?E��変数?E?E?
 	int s_mnTagCount = 0;
 	AnimalMove::TagAnimal s_tag1 = AnimalMove::kNone;
 	AnimalMove::TagAnimal s_tag2 = AnimalMove::kNone;
@@ -26,13 +26,13 @@ namespace {
 AnimalMove::AnimalMove(std::string filename, VECTOR initPos)
 	: CharacterMove(filename, initPos)
 {
-	// 蝓ｺ遉弱ヱ繝ｩ繝｡繝ｼ繧�E�縺�E�縺励※鄒翫・螳壽焚繧帝�E逕ｨ
+	// 基礎パラメー�?E?�?E?して羊�E定数を�?E用
 	mfSpeed = GameConstants::kAnimalSheep.speed;
 	mActionTimer = 60;
 	mfScore = GameConstants::kAnimalSheep.score;
 	mfXp = GameConstants::kAnimalSheep.xp;
 	mbBaitFlag = false;
-	mfdeathTime = GameConstants::kAnimalSheep.death_time_height;
+	death_timer_ = GameConstants::kAnimalSheep.death_time_height;
 	SetTag(Object3D::kTag3dAnimal);
 }
 
@@ -61,7 +61,7 @@ void AnimalMove::AddAnimation(AnimationState state, std::string filename)
 
 void AnimalMove::OnEnter(Collider* collider, Collider* check)
 {
-	// 鬢後が繝悶ず繧�E�繧�E�繝医∈縺�E�謗･隗ｦ繧呈､懁E��縺励∬�E�伜ｰ弱ヵ繝ｩ繧�E�繧堤�E�九※繧・
+	// 餌オブジ�?E?�?E?トへ�?E?接触を�?E??し、�?E?�導フラ�?E?を�?E?�てめE
 	if (collider == capsule_collider_ && check->parent_object_ != nullptr)
 	{
 		if (check->parent_object_->GetTag() == kTag3dBait)
@@ -77,7 +77,7 @@ void AnimalMove::OnTrigger(Collider* collider, Collider* check)
 
 void AnimalMove::OnExit(Collider* collider, Collider* check)
 {
-	// 鬢後�E譛牙柑遽・峁E��悶↓蜃�E�縺溘◆繧∬�E�伜ｰ弱ヵ繝ｩ繧�E�繧定ｧ�E�髯�E�縺吶�E�E
+	// 餌�?E有効篁E?E??�に�?E?たため�?E?�導フラ�?E?を�?E?�?E?す�?E?E
 	if (collider == capsule_collider_ && check->parent_object_ != nullptr)
 	{
 		if (check->parent_object_->GetTag() == kTag3dBait)
@@ -89,7 +89,7 @@ void AnimalMove::OnExit(Collider* collider, Collider* check)
 
 void AnimalMove::CharacterDied()
 {
-	// 貍泌�E驛ｽ蜷井ｸ翫√ヵ繧�E�繝ｼ繝�E・荳�E�縺翫�E�縺�E�蜷�E�縺・�E��E�縺�E�迥�E�諷倶�E��E�螟悶〒縺�E�豁E��莠�E�蛻�E�螳壹�E�陦後ｏ縺�E�縺・
+	// 演�?E都合上、フ�?E?ー�?E�E�?E?お�?E?�?E?�?E?ぁE?E??E?�?E?�?E?態�?E??E?外で�?E?�E??�?E?�?E?定�?E?行わ�?E?ぁE
 	auto fv = ServiceLocator::GetFever();
 	if (mCurrentState != STATE_VACUUM || (fv && fv->IsFever())) return;
 
@@ -101,8 +101,8 @@ void AnimalMove::CharacterDied()
 		position_.y += player->Status(Player3D::Status_AttackS);
 	}
 
-	// 繝励Ξ繧�E�繝､繝ｼ縺�E�蜷代�E�縺�E�豬�E�驕翫�E�縲∽�E�螳夐ｫ伜ｺ�E�縺�E�驕斐�E�縺滓ｮ�E�髫弱〒謐�E佐螳御�E�・→縺吶�E�E
-	if (position_.y > mfdeathTime && !mDeleteFlag)
+	// プレ�?E?ヤー�?E?向�?E?�?E?�?E?遊�?E?、�?E?�定高�?E?�?E?達�?E?た�?E?階で�?E��完�?E?�E��す�?E?E
+	if (position_.y > death_timer_ && !mDeleteFlag)
 	{
 		Die(DEATH_VACUUM);
 	}
@@ -126,7 +126,7 @@ void AnimalMove::Die(DeathReason reason)
 			player->combo_->Reset();
 			player->mpScore->AddScore(mfScore);
 
-			// 證ｫ螳壼�E��E�蠢・ 蜷檎ｨ�E�騾�E�邯壽黒迯�E�譎ゅ↓霑�E�蜉邨碁E��灘�E�繧剁E��倁E��弱☁E��九◆繧√�E繧�E�繝ｳ繝懊Ο繧�E�繝�EぁE
+			// 暫定�?E??E?�K�v 同�?E?�?E?続捕�?E?時に�?E?加経�E??��?E?�?E???E??��?E??�ため�?E�?E?ンボロ�?E?�?E��E
 			if (tag_animal_ == AnimalMove::TagAnimal::kAnimalT)
 			{
 				Master::mnTutorialcount++;

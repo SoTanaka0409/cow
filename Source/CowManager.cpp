@@ -1,4 +1,4 @@
-ï»¿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include "CowManager.h"
 #include "CowMove.h"
 #include "Player3D.h"
@@ -9,14 +9,14 @@
 #include "Cow.h"
 #include "Cow_2.h"
 #include "Cow_Tutorial.h"
-#include "Cow_gold.h"
+#include "GoldCow.h"
 #include "CapsuleCollider.h"
 
 /*
- * @brief ç®¡çEï¿½ï¿½ãƒ–ã‚¸ã‚§ã‚¯ãƒˆï¿½EåˆæœŸåŒ–ã‚’è¡Œã†
- * [å…¥åŠ›] ãªãE
- * [å‡ºåŠ›] ãªãE
- * [å‰¯ä½œç”¨] ãªãE
+ * @brief ŠÇ?E??ƒuƒWƒFƒNƒg?E‰Šú‰»‚ğs‚¤
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ‚È‚µ
  */
 CowManager::CowManager()
 {
@@ -25,21 +25,21 @@ CowManager::CowManager()
 
 
 /*
- * @brief æŒEï¿½ï¿½ã•ã‚ŒãŸç¨®é¡ï¿½Eç‰›ã‚’ç”Ÿï¿½Eã¾ãŸï¿½Eãƒ—ï¿½Eãƒ«ã‹ã‚‰å†åˆ©ç”¨ã—ã¦é…ç½®ã™ã‚‹
- * [å…¥åŠ›] filename: ãƒ¢ãƒEï¿½ï¿½ãƒ•ã‚¡ã‚¤ãƒ«, pos: å‡ºç¾åŸºæº–åº§æ¨E scale: æ‹¡å¤§çE tag: ç‰›ï¿½Eã‚¿ã‚°, count: ç”Ÿï¿½Eæ•°, is_fever: ãƒ•ã‚£ãƒ¼ãƒï¿½Eãƒ•ãƒ©ã‚°
- * [å‡ºåŠ›] ãªãE
- * [å‰¯ä½œç”¨] ç‰›ï¿½Eãƒ¡ãƒ¢ãƒªç¢ºä¿ãŠã‚ˆï¿½EmCowsã¸ã®è¿½åŠ ã€ã¾ãŸï¿½Eãƒ—ï¿½Eãƒ«ã‹ã‚‰ã®å–ã‚Šå‡ºãE
+ * @brief E??‚³‚ê‚½í—Ş?E‹‚ğ¶?E‚Ü‚½?Eƒv?Eƒ‹‚©‚çÄ—˜—p‚µ‚Ä”z’u‚·‚é
+ * [“ü—Í] filename: ƒ‚ƒ`E??ƒtƒ@ƒCƒ‹, pos: oŒ»Šî€À?E scale: Šg‘å?E tag: ‹?Eƒ^ƒO, count: ¶?E”, is_fever: ƒtƒB[ƒo?Eƒtƒ‰ƒO
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ‹?Eƒƒ‚ƒŠŠm•Û‚¨‚æ?EmCows‚Ö‚Ì’Ç‰ÁA‚Ü‚½?Eƒv?Eƒ‹‚©‚ç‚Ìæ‚èo‚ŸE
  */
 void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove::TagCow tag, int count, bool is_fever)
 {
 	for (int i = 0; i < count; i++)
 	{
-		// ãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹ç¶­æŒï¿½EãŸã‚ã€åŒæ™‚ï¿½Eç¾æ•°ã‚’æœ€å¤§30åŒ¹ã«åˆ¶é™ã™ã‚E
+		// ƒpƒtƒH[ƒ}ƒ“ƒXˆÛ?E‚½‚ßA“¯?EŒ»”‚ğÅ‘å30•C‚É§ŒÀ‚·‚ßE
 		if (mCreatures.size() >= 30)
 		{
 			if (tag == CowMove::kCowGold)
 			{
-				// é‡‘ï¿½Eç‰›ã‚’ç¢ºå®Ÿã«å‡ºç¾ã•ã›ã‚‹ãŸã‚ã€ï¿½Eãƒ¬ã‚¤ãƒ¤ãƒ¼ã‹ã‚‰æœ€ã‚‚é ãEï¿½ï¿½é€šï¿½Eç‰›ã‚’å„ªå…ˆã—ã¦ç ´æ£Eï¿½ï¿½æ ã‚’ç©ºã‘ã‚‹
+				// ‹à?E‹‚ğŠmÀ‚ÉoŒ»‚³‚¹‚é‚½‚ßA?EƒŒƒCƒ„[‚©‚çÅ‚à‰“‚ŸE??’Ê?E‹‚ğ—Dæ‚µ‚Ä”j?E??˜g‚ğ‹ó‚¯‚é
 				bool erased = false;
 				float maxDistSq = -1.0f;
 				auto furthestIt = mCreatures.end();
@@ -66,7 +66,7 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 
 				if (furthestIt != mCreatures.end())
 				{
-					// æ—¢ã«å‰Šé™¤ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ãEï¿½ï¿½ç‰›ãªã©ã¯ObjectManagerå´ã§æ¶ˆã•ã‚Œã‚‹
+					// Šù‚Éíœƒtƒ‰ƒO‚ª—§‚Á‚Ä‚ŸE??‹‚È‚Ç‚ÍObjectManager‘¤‚ÅÁ‚³‚ê‚é
 					(*furthestIt)->Die(DEATH_LIMIT);
 					auto cow = *furthestIt;
 					cow->Deactivate();
@@ -76,7 +76,7 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 				}
 				else if (!mCreatures.empty())
 				{
-					// å…¨ã¦ã®ç‰›ãŒç”»é¢å†Eï¿½ï¿½ã©ã®å ´åˆã€ä¸€ç•ªå¤ãEï¿½ï¿½ã®ã®å‰Šé™¤ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã¦ãƒªã‚¹ãƒˆã‹ã‚‰é™¤å¤–ã™ã‚E
+					// ‘S‚Ä‚Ì‹‚ª‰æ–Ê?E??‚Ç‚Ìê‡Aˆê”ÔŒÃ‚ŸE??‚Ì‚Ìíœƒtƒ‰ƒO‚ğ—§‚Ä‚ÄƒŠƒXƒg‚©‚çœŠO‚·‚ßE
 					mCreatures.front()->Die(DEATH_LIMIT);
 					auto cow = mCreatures.front();
 					cow->Deactivate();
@@ -107,8 +107,8 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 		}
 		else if (tag == CowMove::kCowGold)
 		{
-			auto feverMode = is_fever ? Cow_gold::kFever : Cow_gold::kNoFever;
-			auto cow = SpawnAndInit<Cow_gold>(tag, spawnPos, scale, filename, spawnPos, feverMode);
+			auto feverMode = is_fever ? GoldCow::kFever : GoldCow::kNoFever;
+			auto cow = SpawnAndInit<GoldCow>(tag, spawnPos, scale, filename, spawnPos, feverMode);
 			cow->SetFever(feverMode);
 		}
 		else if (tag == CowMove::kCowT)

@@ -1,6 +1,6 @@
-﻿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include "Fever.h"
-#include "Cow_gold.h"
+#include "GoldCow.h"
 #include "CowManager.h"
 #include "Master.h"
 #include "SceneManager.h"
@@ -35,7 +35,7 @@ void Fever::StartFever(Player3D* player)
 	player_status_ = player->GetStatusAttack();
 	player->SetStatusAttack(player_status_ * 2.0f);
 	is_fever_ = true;
-	timer_ = 600; // 髮｣譏灘ｺｦ隱ｿ謨ｴ縺ｮ縺溘ａ繝輔ぅ繝ｼ繝舌・邯咏ｶ壽凾髢薙ｒ10遘・600繝輔Ξ繝ｼ繝)縺ｫ蝗ｺ螳壹☆繧・
+	timer_ = 600; // 難易度調整のためフィーバ�E継続時間を10私E600フレーム)に固定すめE
 	drop_count_ = 0;
 	drop_time_ = 60;
 	Master::FeverFlag = true;
@@ -50,7 +50,7 @@ void Fever::EndFever()
 	}
 	is_fever_ = false;
 	
-	// 繧ｹ繝・・繧ｸ荳翫・迯ｲ迚ｩ縺梧椡貂・☆繧九・繧帝亟縺舌◆繧∫ｵゆｺ・凾縺ｫ蝓ｺ譛ｬ讒区・縺ｧ蜀埼・鄂ｮ縺吶ｋ
+	// スチE�Eジ上�E獲物が枯渁E��る�Eを防ぐため終亁E��に基本構�Eで再�E置する
 	VECTOR spawnPos = Utility::StageSize;
 	ServiceLocator::GetCowManager()->SpawnCow(GameConstants::kCowGold.model_path, spawnPos, 50.0f, CowMove::kCowGold, 1);
 	ServiceLocator::GetCowManager()->SpawnCow(GameConstants::kCowDefault.model_path, spawnPos, 50.0f, CowMove::kCow1, 10);
@@ -64,7 +64,7 @@ void Fever::Update()
 	
 	SetDrawBlendMode(DX_BLENDMODE_ADD, 180);
 
-	// 繝輔ぅ繝ｼ繝舌・迥ｶ諷九〒縺ゅｋ縺薙→繧定ｦ冶ｦ夂噪縺ｫ莨昴∴繧九◆繧∫判髱｢蜈ｨ菴薙↓蜉邂励ヶ繝ｬ繝ｳ繝峨〒繧ｨ繝輔ぉ繧ｯ繝医ｒ謠冗判縺吶ｋ
+	// フィーバ�E状態であることを視覚的に伝えるため画面全体に加算ブレンドでエフェクトを描画する
 	DrawBox(0, 0, Utility::kScreenWidth, Utility::kScreenHeight, GetColor(255, 200, 50), FALSE);
 	DrawBox(1, 1, Utility::kScreenWidth, Utility::kScreenHeight, GetColor(255, 220, 100), FALSE);
 	DrawBox(2, 2, Utility::kScreenWidth, Utility::kScreenHeight, GetColor(255, 255, 180), FALSE);
@@ -86,7 +86,7 @@ void Fever::Update()
 	drop_count_++;
 	timer_--;
 	
-	// 繝懊・繝翫せ繧ｹ繧ｳ繧｢迯ｲ蠕玲ｩ滉ｼ壹ｒ謠蝉ｾ帙☆繧九◆繧∽ｸ螳夐俣髫斐〒驥代・迚帙ｒ逕滓・縺吶ｋ
+	// ボ�Eナススコア獲得機会を提供するため一定間隔で金�E牛を生�Eする
 	if (drop_count_ > drop_time_)
 	{
 		drop_count_ = 0;
@@ -94,7 +94,7 @@ void Fever::Update()
 		ServiceLocator::GetCowManager()->SpawnCow(GameConstants::kCowGold.model_path, spawnPos, 50.0f, CowMove::kCowGold, 2, true);
 	}
 
-	// 繝輔ぅ繝ｼ繝舌・邯咏ｶ壽凾髢薙ｒ雜・℃縺励◆縺溘ａ迥ｶ諷九ｒ騾壼ｸｸ縺ｫ謌ｻ縺・
+	// フィーバ�E継続時間を趁E��したため状態を通常に戻ぁE
 	if (timer_ <= 0)
 	{
 		EndFever();

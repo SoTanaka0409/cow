@@ -1,37 +1,37 @@
-﻿#include"ResultScene.h"
+#include"ResultScene.h"
 #include"Master.h"
 #include"SceneManager.h"
 
 ResultScene::ResultScene()
 {
-	mFlag = true;
-	mnCount = 0;
+	flag_ = true;
+	count_ = 0;
 	
-	ResultGraphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/リザルト.png");
-	rankImage[0] = Master::mpResourceManager->LoadGraphics("Resource/2D/1位.png");
-	rankImage[1] = Master::mpResourceManager->LoadGraphics("Resource/2D/2位.png");
-	rankImage[2] = Master::mpResourceManager->LoadGraphics("Resource/2D/3位.png");
-	rankingTitleImage = Master::mpResourceManager->LoadGraphics("Resource/2D/ランキング.png");
-	yourScoreTextImg = Master::mpResourceManager->LoadGraphics("Resource/2D/スコア.png");
-	pointImg = Master::mpResourceManager->LoadGraphics("Resource/2D/点.png");
+	result_graph_handle_ = Master::mpResourceManager->LoadGraphics("Resource/2D/���U���g.png");
+	rank_image_[0] = Master::mpResourceManager->LoadGraphics("Resource/2D/1��.png");
+	rank_image_[1] = Master::mpResourceManager->LoadGraphics("Resource/2D/2��.png");
+	rank_image_[2] = Master::mpResourceManager->LoadGraphics("Resource/2D/3��.png");
+	ranking_title_image_ = Master::mpResourceManager->LoadGraphics("Resource/2D/�����L���O.png");
+	your_score_text_img_ = Master::mpResourceManager->LoadGraphics("Resource/2D/�X�R�A.png");
+	point_img_ = Master::mpResourceManager->LoadGraphics("Resource/2D/�_.png");
 
 	ResultButton newGameBtn;
 	newGameBtn.type = SelectionManager::Title::title;
-	newGameBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/スタートボタン1.png");
+	newGameBtn.graph_handle = Master::mpResourceManager->LoadGraphics("Resource/2D/�X�^�[�g�{�^��1.png");
 	newGameBtn.x = 920;
 	newGameBtn.y = 50;
-	GetGraphSize(newGameBtn.graphHandle, &newGameBtn.w, &newGameBtn.h);
-	newGameBtn.isHover = false;
-	mButtons.push_back(newGameBtn);
+	GetGraphSize(newGameBtn.graph_handle, &newGameBtn.w, &newGameBtn.h);
+	newGameBtn.is_hover = false;
+	buttons_.push_back(newGameBtn);
 
 	ResultButton exitBtn;
 	exitBtn.type = SelectionManager::Title::titleOUT;
-	exitBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/しゅうりょうぼたん (1).png");
+	exitBtn.graph_handle = Master::mpResourceManager->LoadGraphics("Resource/2D/���イ��傤�ڂ��� (1).png");
 	exitBtn.x = 960;
 	exitBtn.y = 680;
-	GetGraphSize(exitBtn.graphHandle, &exitBtn.w, &exitBtn.h);
-	exitBtn.isHover = false;
-	mButtons.push_back(exitBtn);
+	GetGraphSize(exitBtn.graph_handle, &exitBtn.w, &exitBtn.h);
+	exitBtn.is_hover = false;
+	buttons_.push_back(exitBtn);
 
 	Master::mpSoundManager->PlayBGM(SoundManager::kBgmResult);
 	Master::mpSoundManager->SetBGMVolume(120);
@@ -40,24 +40,24 @@ ResultScene::ResultScene()
 
 ResultScene::~ResultScene()
 {
-	Finalize(); // 繝ｪ繧ｽ繝ｼ繧ｹ縺ｮ隗｣謾ｾ貍上ｌ繧帝亟縺舌◆繧∵・遉ｺ逧・↓蜻ｼ縺ｳ蜃ｺ縺・
+	Finalize(); // リソースの解放漏れを防ぐため�E示皁E��呼び出ぁE
 }
 
 void ResultScene::Initialize()
 {
-	mFadeState = SceneFade_In;
+	fade_state_ = kSceneFadeIn;
 	SetFadeAlpha(255.0f);
 	Master::mpScore->LoadRanking();
 }
 
 void ResultScene::Draw()
 {
-	DrawExtendGraph(0, 0, 1600, 900, ResultGraphHandle, FALSE);
+	DrawExtendGraph(0, 0, 1600, 900, result_graph_handle_, FALSE);
 
 	DrawRankingUI();
 
-	// 繝励Ξ繧､繝､繝ｼ縺ｮ譛邨ら佐蠕励せ繧ｳ繧｢繧剃ｸｭ蠢・Κ縺ｫ謠冗判縺吶ｋ
-	DrawExtendGraph(500, 300, 1100, 550, yourScoreTextImg, TRUE);
+	// プレイヤーの最終獲得スコアを中�K�v��に描画する
+	DrawExtendGraph(500, 300, 1100, 550, your_score_text_img_, TRUE);
 	int score = Score::GetResultScore();
 	int temp = score;
 	int digitCount = 0;
@@ -78,32 +78,32 @@ void ResultScene::Draw()
 	Master::mpScore->DrawNumber(startX, 490, score, 1.0f, 4);
 	
 	int pointX = startX + digitCount * 80;
-	DrawExtendGraph(pointX, 430, pointX + 200, 630, pointImg, TRUE);
+	DrawExtendGraph(pointX, 430, pointX + 200, 630, point_img_, TRUE);
 
 	Scene::Draw();
-	if (mFadeState != SceneFade_None) {
-		Scene::Fade(mFadeState);
+	if (fade_state_ != kSceneFadeNone) {
+		Scene::Fade(fade_state_);
 	}
 }
 
 void ResultScene::Update()
 {
-	mnCount++;
+	count_++;
 
-	// 蠕・ｩ滓凾髢鍋ｵ碁℃蠕後∬・蜍慕噪縺ｫ繧ｿ繧､繝医Ν逕ｻ髱｢縺ｸ謌ｻ繧九ヵ繧ｧ繝ｼ繝峨ｒ髢句ｧ・
-	if (mnCount >= 200 && mFadeState != SceneFade_Out)
+	// 征E��時間経過後、�E動的にタイトル画面へ戻るフェードを開姁E
+	if (count_ >= 200 && fade_state_ != kSceneFadeOut)
 	{
-		mFadeState = SceneFade_Out;
-		mNextScene = SceneManager::SCENE_TITLE;
+		fade_state_ = kSceneFadeOut;
+		next_scene_ = SceneManager::kSceneTitle;
 	}
 
-	if (mFadeState == SceneFade_Out)
+	if (fade_state_ == kSceneFadeOut)
 	{
 		Master::mpSoundManager->SetBGMVolume((Master::mpSoundManager->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
 		if (GetFadeAlpha() >= 255)
 		{
 			SetFadeAlpha(255);
-			Master::mpSceneManager->SetNextScene((SceneManager::SCENE_TYPE)mNextScene);
+			Master::mpSceneManager->SetNextScene((SceneManager::SCENE_TYPE)next_scene_);
 		}
 		return;
 	}
@@ -111,7 +111,7 @@ void ResultScene::Update()
 	Scene::Update();
 }
 
-// [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 逕ｻ髱｢荳翫↓繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ繧呈緒逕ｻ
+// [入力] �Ȃ�[出力] �Ȃ�[副作用] 画面上にランキングを描画
 void ResultScene::DrawRankingUI()
 {
 	int baseX = 40;
@@ -122,7 +122,7 @@ void ResultScene::DrawRankingUI()
 		baseY - 100,
 		baseX + 420,
 		baseY + 120,
-		rankingTitleImage,
+		ranking_title_image_,
 		TRUE
 	);
 
@@ -136,7 +136,7 @@ void ResultScene::DrawRankingUI()
 			y - 20,
 			baseX + 120,
 			y + 100,
-			rankImage[i],
+			rank_image_[i],
 			TRUE
 		);
 
@@ -164,11 +164,11 @@ void ResultScene::DrawRankingUI()
 		}
 		if (digitCount < 4) digitCount = 4;
 		int pointX = baseX + 180 + digitCount * w;
-		DrawExtendGraph(pointX, drawY, pointX + w, drawY + h, pointImg, TRUE);
+		DrawExtendGraph(pointX, drawY, pointX + w, drawY + h, point_img_, TRUE);
 	}
 }
 
-// [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 逕ｻ蜒上い繧ｻ繝・ヨ蜑企勁縲。GM蛛懈ｭ｢
+// [入力] �Ȃ�[出力] �Ȃ�[副作用] 画像アセチE��削除、BGM停止
 void ResultScene::Finalize()
 {
 	Master::mpSoundManager->StopBGM();

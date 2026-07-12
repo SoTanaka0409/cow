@@ -1,10 +1,10 @@
-﻿#include "Utility.h"
+#include "Utility.h"
 
 /*
- * @brief 蠎ｦ・・egree・峨ｒ繝ｩ繧ｸ繧｢繝ｳ・・adian・峨↓螟画鋤縺吶ｋ
- * [蜈･蜉嫋 deg: 蠎ｦ謨ｰ蛟､
- * [蜃ｺ蜉嫋 螟画鋤蠕後・繝ｩ繧ｸ繧｢繝ｳ蛟､ (float)
- * [蜑ｯ菴懃畑] 縺ｪ縺・
+ * @brief 度�E�Eegree�E�をラジアン�E�Eadian�E�に変換する
+ * [入力] deg: 度数値
+ * [出力] 変換後�Eラジアン値 (float)
+ * [副作用] �Ȃ�
  */
 float Utility::DegToRad(float deg)
 {

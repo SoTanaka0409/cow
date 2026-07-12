@@ -1,4 +1,4 @@
-﻿#include "DxLib.h"
+#include "DxLib.h"
 #include "ModelAnimation.h"
 
 ModelAnimation::ModelAnimation(int ModelHandle)
@@ -14,7 +14,7 @@ ModelAnimation::ModelAnimation(int ModelHandle)
 	, mnLoopFinishState(AnimationState::kAnimationMax)
 	, mbLoopFinish(false)
 {
-	// 郢晢ｽｫ郢晢ｽｼ郢晏現繝ｵ郢晢ｽｬ郢晢ｽｼ郢晢｣ｰ邵ｺ讙趣ｽｧ・ｻ陷崎ｼ斐＞郢昜ｹ斟鍋ｹ晢ｽｼ郢ｧ・ｷ郢晢ｽｧ郢晢ｽｳ邵ｺ・ｧ陷肴刋辟皮ｸｺ・ｫ陷崎ｼ費ｼ樒ｸｺ・ｦ邵ｺ螢ｹ・檎ｸｺ・ｪ邵ｺ繝ｻ・育ｸｺ繝ｻﾂ竏墅溽ｹ晢ｽｼ郢ｧ・ｫ郢晢ｽｫ髯ｦ謔溘・郢ｧ雋槫ｴ玖楜螢ｹ笘・ｹｧ繝ｻ
+	// 繝ｫ繝ｼ繝医ヵ繝ｬ繝ｼ繝縺檎ｧ�E�蜍輔い繝九Γ繝ｼ繧�E�繝ｧ繝ｳ縺�E�蜍晄焔縺�E�蜍輔＞縺�E�縺壹�E�縺�E�縺�E�E�縺�E√Ο繝ｼ繧�E�繝ｫ陦悟�E繧貞崋螳壹☁E���E
 	int moveAnimFrameIndex = MV1SearchFrame(model_handle_, "root");
 	MV1SetFrameUserLocalMatrix(
 		model_handle_,
@@ -31,7 +31,7 @@ ModelAnimation::~ModelAnimation()
 
 void ModelAnimation::Update()
 {
-	// 郢ｧ・｢郢昜ｹ斟鍋ｹ晢ｽｼ郢ｧ・ｷ郢晢ｽｧ郢晢ｽｳ鬩包ｽｷ驕假ｽｻ隴弱ｅ繝ｻ郢晄じﾎ樒ｹ晢ｽｳ郢晁・邏ｫ郢ｧ繝ｻ郢晁ｼ釆樒ｹ晢ｽｼ郢晢｣ｰ邵ｺ譁絶・邵ｺ・ｫ鬨ｾ・ｲ髯ｦ蠕鯉ｼ・ｸｺ蟶呻ｽ・
+	// 繧�E�繝九Γ繝ｼ繧�E�繝ｧ繝ｳ驕ｷ遘ｻ譎ゅ�E繝悶Ξ繝ｳ繝�E紫繧�E繝輔Ξ繝ｼ繝縺斐�E縺�E�騾�E�陦後！E��帙ａE
 	if (mfAnimBlendRate < 1.0f)
 	{
 		mfAnimBlendRate += 0.1f;
@@ -52,7 +52,7 @@ void ModelAnimation::Update()
 		{
 			if (!mbLoop)
 			{
-				// 鬮ｱ讒ｭﾎ晉ｹ晢ｽｼ郢晏干縺・ｹ昜ｹ斟鍋ｹ晢ｽｼ郢ｧ・ｷ郢晢ｽｧ郢晢ｽｳ邵ｺ讙趣ｽｵ繧・ｽｺ繝ｻ・邵ｺ貅ｷ・ｰ・ｴ陷ｷ蛹ｻﾂ竏ｵ・ｬ・｡邵ｺ・ｮ隰悶・・ｮ螟舌・驕假ｽｻ陷亥現窶ｲ邵ｺ・ｪ邵ｺ莉｣・檎ｸｺ・ｰ郢ｧ・｢郢昜ｹ斟鍋ｹ晢ｽｼ郢ｧ・ｷ郢晢ｽｧ郢晢ｽｳ隴弱ｋ菫｣郢ｧ蜻茨ｽｭ・｢郢ｧ竏夲ｽ・
+				// 髱槭Ν繝ｼ繝励ぁE��九Γ繝ｼ繧�E�繝ｧ繝ｳ縺檎ｵめE���E�E�縺溷�E��E�蜷医∵�E��E�縺�E�謖�E�E�夐�E遘ｻ蜈医′縺�E�縺代�E�縺�E�繧�E�繝九Γ繝ｼ繧�E�繝ｧ繝ｳ譎る俣繧呈ｭ�E�繧√ａE
 				if (mnLoopFinishState == kAnimationMax)
 				{
 					mbLoopFinish = true;
@@ -78,14 +78,14 @@ void ModelAnimation::Update()
 			mfOldAnimationTime = 0.0f;
 		}
 
-		// 陷ｿ・､邵ｺ繝ｻ縺・ｹ昜ｹ斟鍋ｹ晢ｽｼ郢ｧ・ｷ郢晢ｽｧ郢晢ｽｳ邵ｺ・ｮ郢晄じﾎ樒ｹ晢ｽｳ郢晁・邏ｫ郢ｧ蜑・ｽｸ荵晢ｿ｡邵ｺ・ｦ邵ｺ繝ｻ窶ｳ邵ｲ竏ｵ諤咎お繧牙飭邵ｺ・ｫ郢晁ｼ斐♂郢晢ｽｼ郢晏ｳｨ縺・ｹｧ・ｦ郢晏現・・ｸｺ蟶呻ｽ・
+		// 蜿�E�縺�EぁE��九Γ繝ｼ繧�E�繝ｧ繝ｳ縺�E�繝悶Ξ繝ｳ繝�E紫繧剁E��九￡縺�E�縺�E″縲∵怙邨ら噪縺�E�繝輔ぉ繝ｼ繝峨ぁE���E�繝医�E�E��帙ａE
 		MV1SetAttachAnimBlendRate(model_handle_, mnOldAnimationIndex, 1.0f - mfAnimBlendRate);
 	}
 }
 
 void ModelAnimation::ChangeAnimation(AnimationState state, int index)
 {
-	// 隴鯉ｽ｢邵ｺ・ｫ陷ｷ蠕個ｧ郢ｧ・｢郢昜ｹ斟鍋ｹ晢ｽｼ郢ｧ・ｷ郢晢ｽｧ郢晢ｽｳ邵ｺ遒≫・隰壽ｧｭ・・ｹｧ蠕娯ｻ邵ｺ繝ｻ・玖撻・ｴ陷ｷ蛹ｻ繝ｻ霎滂ｽ｡鬯ｧ繝ｻ竊醍ｹ昴・縺｡郢昴・繝｡郢晢ｽｻ郢ｧ・｢郢ｧ・ｿ郢昴・繝｡郢ｧ蟶昶茜邵ｺ莉｣・・
+	// 譌｢縺�E�蜷後§繧�E�繝九Γ繝ｼ繧�E�繝ｧ繝ｳ縺碁�E謚槭�E�E��後※縺�E�E�蝣�E�蜷医�E辟｡鬧�E↑繝�Eち繝�Eメ繝ｻ繧�E�繧�E�繝�Eメ繧帝∩縺代�E�E
 	if (mnState == state)
 	{
 		return;
@@ -96,7 +96,7 @@ void ModelAnimation::ChangeAnimation(AnimationState state, int index)
 	mnLoopFinishState = AnimationState::kAnimationMax;
 	mbLoopFinish = false;
 
-	// 陷ｿ・､邵ｺ蜷ｶ邃・ｹｧ荵昴＞郢昜ｹ斟鍋ｹ晢ｽｼ郢ｧ・ｷ郢晢ｽｧ郢晢ｽｳ郢昜ｸ莞ｦ郢晏ｳｨﾎ晉ｸｺ譴ｧ・ｮ荵昶夢邵ｺ・ｦ邵ｺ繝ｻ・玖撻・ｴ陷ｷ蛹ｻ繝ｻ陞ｳ謔溘・邵ｺ・ｫ陋ｻ繝ｻ・企ｫｮ・｢邵ｺ繝ｻ
+	// 蜿�E�縺吶℁E��九い繝九Γ繝ｼ繧�E�繝ｧ繝ｳ繝上Φ繝峨Ν縺梧�E�九▲縺�E�縺�E�E�蝣�E�蜷医�E螳悟�E縺�E�蛻�E�E�髮�E�縺�E
 	if (mnOldAnimationIndex != -1)
 	{
 		MV1DetachAnim(model_handle_, mnOldAnimationIndex);
@@ -118,7 +118,7 @@ void ModelAnimation::SetAnimationBlend(bool isblend)
 	}
 	else
 	{
-		// 郢晄じﾎ樒ｹ晢ｽｳ郢晏ｳｨ・邵ｺ・ｪ邵ｺ繝ｻ・ｰ・ｴ陷ｷ蛹ｻ繝ｻ陷奇ｽｳ陟趣ｽｧ邵ｺ・ｫ隴・ｽｰ髫穂ｸ翫＞郢昜ｹ斟鍋ｹ晢ｽｼ郢ｧ・ｷ郢晢ｽｧ郢晢ｽｳ邵ｺ・ｸ陞ｳ謔溘・陋ｻ繝ｻ・願ｭ厄ｽｿ邵ｺ蛹ｻ笘・ｹｧ繝ｻ
+		// 繝悶Ξ繝ｳ繝峨�E�縺�E�縺�E�E��E�蜷医�E蜊ｳ蠎ｧ縺�E�譁E��隕上い繝九Γ繝ｼ繧�E�繝ｧ繝ｳ縺�E�螳悟�E蛻�E�E�譖ｿ縺医☁E���E
 		mfAnimBlendRate = 1.0f;
 
 		if (mnOldAnimationIndex != -1)

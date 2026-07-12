@@ -1,4 +1,4 @@
-ï»¿#include "EffekseerEffect.h"
+#include "EffekseerEffect.h"
 #include <EffekseerForDXLib.h>
 #include "Master.h"
 
@@ -18,13 +18,13 @@ EffekseerEffect::EffekseerEffect(const char* filename, VECTOR initPos, float kEf
 
 EffekseerEffect::~EffekseerEffect()
 {
-	// ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½[ãƒ»ï½½hãƒ»ï½½ï¾ã¿ã‚‘ï½¿ï½½Effekseerãƒ»ï½½Gãƒ»ï½½tãƒ»ï½½Fãƒ»ï½½Nãƒ»ï½½gãƒ»ï½½Aãƒ»ï½½Zãƒ»ï½½bãƒ»ï½½gãƒ»ï½½ãƒ»ï½½ãƒ»ï½½\ãƒ»ï½½[ãƒ»ï½½Xãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½
+	// E½E½E½[E½hE½Ï‚İ‚ï¿½EffekseerE½GE½tE½FE½NE½gE½AE½ZE½bE½gE½E½E½\E½[E½XE½E½E½E½E½E½E½E½E½E½E½E½E½E½E½E½E½
 	DeleteEffekseerEffect(effect_resource_handle_);
 }
 
 void EffekseerEffect::Load()
 {
-	// ãƒ»ï½½wãƒ»ï½½é–§ï½³ãƒ»ï½½é»·ï½½ãƒ»ï½½pãƒ»ï½½Xãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½.efkãƒ»ï½½Gãƒ»ï½½tãƒ»ï½½Fãƒ»ï½½Nãƒ»ï½½gãƒ»ï½½fãƒ»ï½½[ãƒ»ï½½^ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ï¾‰ãƒ»ï½¿ï½½ãƒ»ï½½[ãƒ»ï½½hãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½
+	// E½wE½è‚³E½ê‚½E½pE½XE½E½E½E½.efkE½GE½tE½FE½NE½gE½fE½[E½^E½E½E½E½E½E½E½E½E½ÉE¿½E½[E½hE½E½E½E½
 	effect_resource_handle_ = LoadEffekseerEffect(file_path_, effectSize);
 }
 
@@ -32,7 +32,7 @@ void EffekseerEffect::Update()
 {
 	if (playingEffectHandle != -1)
 	{
-		// ãƒ»ï½½ï¾„æ’°ï½¿ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ï¾Œã‚¨ãƒ»ï½½tãƒ»ï½½Fãƒ»ï½½Nãƒ»ï½½gãƒ»ï½½ï¾Šç½®ãƒ»ï½½Aãƒ»ï½½ãƒ»ï½½]ãƒ»ï½½pãƒ»ï½½xãƒ»ï½½Aãƒ»ï½½Xãƒ»ï½½Pãƒ»ï½½[ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½lãƒ»ï½½ãƒ»ï½½Effekseerãƒ»ï½½ãƒ»ï½½ãƒ»ï½½Cãƒ»ï½½ãƒ»ï½½ãƒ»ï½½Xãƒ»ï½½^ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½Xãƒ»ï½½ï¾–å„ï½¿ï½½ãƒ»ï½½tãƒ»ï½½ãƒ»ï½½ãƒ»ï½½[ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½
+		// E½Äï¿½E½E½E½ÌƒGE½tE½FE½NE½gE½Ê’uE½AE½E½]E½pE½xE½AE½XE½PE½[E½E½E½lE½E½EffekseerE½E½E½CE½E½E½XE½^E½E½E½XE½Ö–ï¿½E½tE½E½E½[E½E½E½E½E½E½E½E½E½E½
 		SetPosPlayingEffekseer3DEffect(playingEffectHandle, play_pos_.x, play_pos_.y, play_pos_.z);
 		SetRotationPlayingEffekseer3DEffect(playingEffectHandle, rotation_.x, rotation_.y, rotation_.z);
 		SetScalePlayingEffekseer3DEffect(playingEffectHandle, mvScale.x, mvScale.y, mvScale.z);
@@ -45,14 +45,14 @@ void EffekseerEffect::Draw()
 
 void EffekseerEffect::Play()
 {
-	// ãƒ»ï½½ï¾‡ã¿æ¾ï½¿ï½½ãƒ»ï½½îƒ½ï½¾ã‚¨ãƒ»ï½½tãƒ»ï½½Fãƒ»ï½½Nãƒ»ï½½gãƒ»ï½½ãƒ»ï½½ãƒ»ï½½\ãƒ»ï½½[ãƒ»ï½½Xãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ï¾†ã«ã€3Dãƒ»ï½½ãƒ»ï½½ï¾”ã§å†æ’°ï½¿ï½½ãƒ»ï½½ãƒ»ï½½Jãƒ»ï½½nãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½
+	// E½Ç‚İï¿½E½ñ‚¾ƒGE½tE½FE½NE½gE½E½E½\E½[E½XE½E½E½Æ‚ÉA3DE½E½Ô‚ÅÄï¿½E½E½JE½nE½E½E½E½
 	playingEffectHandle = PlayEffekseer3DEffect(effect_resource_handle_);
 	SetPosPlayingEffekseer3DEffect(playingEffectHandle, play_pos_.x, play_pos_.y, play_pos_.z);
 }
 
 void EffekseerEffect::Stop()
 {
-	// ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ï¾ã®ã‚¨ãƒ»ï½½tãƒ»ï½½Fãƒ»ï½½Nãƒ»ï½½gãƒ»ï½½ï¾„æ’°ï½¿ï½½ãƒ»ï½½ãƒ»ï½½ï¾”ã‚‘ï½¿ï½½è¬«ï½¾ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½Aãƒ»ï½½ï¾„æ’°ï½¿ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ï¾Œå ´åˆãƒ»ï½½ï¾Œã¿å…·ï½¿ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½~ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½
+	// E½E½E½İ‚ÌƒGE½tE½FE½NE½gE½Äï¿½E½E½Ô‚ï¿½æ“¾E½E½E½AE½Äï¿½E½E½E½Ìê‡E½Ì‚İ‹ï¿½E½E½E½E½~E½E½E½E½E½E½E½
 	int NowPlayEffect = IsEffekseer3DEffectPlaying(playingEffectHandle);
 	if (NowPlayEffect != -1)
 	{

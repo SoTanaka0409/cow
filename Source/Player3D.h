@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 #include "DxLib.h"
 #include <string>
 #include "Object3D.h"
@@ -16,10 +16,10 @@ class CapsuleCollider;
 class Player3D : public Object3D
 {
 private:
-	// ä»•æ§˜ã«ã‚ˆã‚Šå¸å¼•ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã®ã‚ªãƒ³ã‚ªãƒ•ã‚’åˆ¶å¾¡ã™ã‚‹
+	// d—l‚É‚æ‚è‹zˆøƒAƒNƒVƒ‡ƒ“‚ÌƒIƒ“ƒIƒt‚ğ§Œä‚·‚é
 	bool mbVacuumFlag = true;
 public:
-	// ã‚¹ãƒEï¿½Eã‚¿ã‚¹IDï¿½Eï¿½EIã‚Eï¿½ï¿½ã‚­ãƒ«åŠ ç®—åˆ¤å®šã«ä½¿ç”¨ï¿½Eï¿½E
+	// ƒXƒ`E?Eƒ^ƒXID?E?EI‚ßE??ƒLƒ‹‰ÁZ”»’è‚Ég—p?E?E
 	enum StatusID
 	{
 		Status_Hp,
@@ -34,9 +34,9 @@ public:
 
 public:
 	/*
-	 * [å…¥åŠ›] filename: ãƒ¢ãƒEï¿½ï¿½ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹, initPos: åˆæœŸåº§æ¨E
-	 * [å‡ºåŠ›] ãªãE
-	 * [å‰¯ä½œç”¨] åEï¿½Eãƒï¿½Eã‚¸ãƒ£ãƒ¼(Score, Levelç­Eã¨ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®ç”Ÿï¿½E
+	 * [“ü—Í] filename: ƒ‚ƒ`E??ƒtƒ@ƒCƒ‹ƒpƒX, initPos: ‰ŠúÀ?E
+	 * [o—Í] ‚È‚µ
+	 * [•›ì—p] ™ÜE?Eƒl?EƒWƒƒ[(Score, Level?E‚ÆƒRƒ‰ƒCƒ_[‚Ì¶?E
 	 */
 	Player3D(std::string filename, VECTOR initPos);
 	virtual ~Player3D();
@@ -45,65 +45,65 @@ public:
 	void Update() override;
 
 	/*
-	 * [å…¥åŠ›] ãªãE
-	 * [å‡ºåŠ›] ãªãE
-	 * [å‰¯ä½œç”¨] mvPositionã®æ›´æ–°
+	 * [“ü—Í] ‚È‚µ
+	 * [o—Í] ‚È‚µ
+	 * [•›ì—p] mvPosition‚ÌXV
 	 */
 	void MoveEx();
 
 	/*
-	 * [å…¥åŠ›] ãªãE
-	 * [å‡ºåŠ›] ãªãE
-	 * [å‰¯ä½œç”¨] mIsVacuumActiveã¨mVacuumGaugeã®æ›´æ–°
+	 * [“ü—Í] ‚È‚µ
+	 * [o—Í] ‚È‚µ
+	 * [•›ì—p] mIsVacuumActive‚ÆmVacuumGauge‚ÌXV
 	 */
 	void Play();
 
 	/*
-	 * [å…¥åŠ›] ãªãE
-	 * [å‡ºåŠ›] ãªãE
-	 * [å‰¯ä½œç”¨] mpCapsuleColliderã¨ãƒ“ï¿½Eãƒ ã‚¨ãƒ•ã‚§ã‚¯ãƒˆï¿½Eæ›´æ–°
+	 * [“ü—Í] ‚È‚µ
+	 * [o—Í] ‚È‚µ
+	 * [•›ì—p] mpCapsuleCollider‚Æƒr?Eƒ€ƒGƒtƒFƒNƒg?EXV
 	 */
 	void ColliderUpdate();
 
 	/*
-	 * [å…¥åŠ›] ãªãE
-	 * [å‡ºåŠ›] ãªãE
-	 * [å‰¯ä½œç”¨] ç”»é¢å¤–æ™‚ã®åº§æ¨™ãƒªã‚»ãƒEï¿½ï¿½
+	 * [“ü—Í] ‚È‚µ
+	 * [o—Í] ‚È‚µ
+	 * [•›ì—p] ‰æ–ÊŠO‚ÌÀ•WƒŠƒZƒ`E??
 	 */
 	void ScreenOutCheck();
 
 	/*
-	 * [å…¥åŠ›] ãªãE
-	 * [å‡ºåŠ›] ãªãE
-	 * [å‰¯ä½œç”¨] mvRotationã®æ›´æ–°
+	 * [“ü—Í] ‚È‚µ
+	 * [o—Í] ‚È‚µ
+	 * [•›ì—p] mvRotation‚ÌXV
 	 */
 	void RotationByMove();
 
 	/*
-	 * [å…¥åŠ›] ãªãE
-	 * [å‡ºåŠ›] ãªãE
-	 * [å‰¯ä½œç”¨] ã‚µãƒ–ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã®Update/Drawå‘¼ã³å‡ºãE
+	 * [“ü—Í] ‚È‚µ
+	 * [o—Í] ‚È‚µ
+	 * [•›ì—p] ƒTƒuƒ‚ƒWƒ…[ƒ‹‚ÌUpdate/DrawŒÄ‚Ño‚ŸE
 	 */
 	void ManagerUpdate();
 
 	/*
-	 * [å…¥åŠ›] ãªãE
-	 * [å‡ºåŠ›] ãªãE
-	 * [å‰¯ä½œç”¨] UIæç”»
+	 * [“ü—Í] ‚È‚µ
+	 * [o—Í] ‚È‚µ
+	 * [•›ì—p] UI•`‰æ
 	 */
 	void bar();
 
 	/*
-	 * [å…¥åŠ›] ãªãE
-	 * [å‡ºåŠ›] ãªãE
-	 * [å‰¯ä½œç”¨] ãƒEï¿½ï¿½ãƒEï¿½ï¿½æ™‚ï¿½EçŠ¶æ…‹å¤‰åŒ–
+	 * [“ü—Í] ‚È‚µ
+	 * [o—Í] ‚È‚µ
+	 * [•›ì—p] ƒ`E??ƒ`E???Eó‘Ô•Ï‰»
 	 */
 	void test();
 
 	/*
-	 * [å…¥åŠ›] id: ã‚¹ãƒEï¿½Eã‚¿ã‚¹ID
-	 * [å‡ºåŠ›] ã‚¹ã‚­ãƒ«è£œæ­£å¾Œï¿½Eã‚¹ãƒEï¿½Eã‚¿ã‚¹å€¤
-	 * [å‰¯ä½œç”¨] ãªãE
+	 * [“ü—Í] id: ƒXƒ`E?Eƒ^ƒXID
+	 * [o—Í] ƒXƒLƒ‹•â³Œã?EƒXƒ`E?Eƒ^ƒX’l
+	 * [•›ì—p] ‚È‚µ
 	 */
 	float Status(StatusID id);
 
@@ -121,9 +121,9 @@ public:
 	void SetScale(float scale);
 
 	/*
-	 * [å…¥åŠ›] stunTime: æ°—çµ¶æ™‚é–“ï¿½Eï¿½ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ï¿½Eï¿½E
-	 * [å‡ºåŠ›] ãªãE
-	 * [å‰¯ä½œç”¨] mIsStunnedã‚’trueã«ã—ã€æ“ä½œä¸ï¿½Eæ™‚é–“ã‚’ç™ºç”Ÿã•ã›ã‚‹
+	 * [“ü—Í] stunTime: ‹CâŠÔ?E?ƒtƒŒ[ƒ€”?E?E
+	 * [o—Í] ‚È‚µ
+	 * [•›ì—p] mIsStunned‚ğtrue‚É‚µA‘€ì•s?EŠÔ‚ğ”­¶‚³‚¹‚é
 	 */
 	void ApplyStun(int stunTime);
 

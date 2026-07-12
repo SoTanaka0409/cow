@@ -1,4 +1,4 @@
-﻿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include "Bait.h"
 #include "Model.h"
 #include "CapsuleCollider.h"

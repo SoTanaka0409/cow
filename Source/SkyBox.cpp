@@ -1,10 +1,10 @@
-﻿#include "SkyBox.h"
+#include "SkyBox.h"
 #include "Model.h"
 
 SkyBox::SkyBox(std::string filename, VECTOR pos)
 	: Object3D(pos)
 {
-	// 繧ｹ繧ｫ繧､繝懊ャ繧ｯ繧ｹ繝｢繝・Ν縺ｮ驟咲ｽｮ蛻晄悄蛹・
+	// スカイボックスモチE��の配置初期匁E
 	model_ = new Model(filename, VGet(0.0f, 0.0f, 0.0f));
 }
 
@@ -28,7 +28,7 @@ void SkyBox::Draw()
 {
 	if (model_ != nullptr)
 	{
-		// 遨ｺ繝｢繝・Ν縺悟・貅占ｨ育ｮ励ｄ蜻ｨ蝗ｲ縺ｮ蠖ｱ縺ｮ蠖ｱ髻ｿ繧貞女縺代※證励￥豐医∪縺ｪ縺・ｈ縺・↓縲√Λ繧､繝・ぅ繝ｳ繧ｰ繧堤┌蜉ｹ蛹悶＠縺ｦ謠冗判縺吶ｋ
+		// 空モチE��が�E源計算や周囲の影の影響を受けて暗く沈ま�Ȃ���ぁE��、ライチE��ングを無効化して描画する
 		SetUseLighting(FALSE);
 		model_->Draw();
 		SetUseLighting(TRUE);

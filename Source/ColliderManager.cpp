@@ -1,4 +1,4 @@
-﻿#include "ColliderManager.h"
+#include "ColliderManager.h"
 #include "Collider.h"
 #include "CapsuleCollider.h"
 #include "SphereCollider.h"
@@ -50,13 +50,13 @@ void ColliderManager::Update()
 
 			bool isHit = CheckCollision(colA, colB);
 			
-			// A縺ｨB縺ｮ蜿梧婿縺ｫ蛻､螳夂ｵ先棡繧帝夂衍縺吶ｋ
+			// AとBの双方に判定結果を通知する
 			colA->HitCheck(colB, isHit);
 			colB->HitCheck(colA, isHit);
 		}
 	}
 
-	DeleteAllColliderIfNeeded(); // 繝輔Ξ繝ｼ繝邨ゆｺ・凾縺ｫ荳崎ｦ√↑繧ｳ繝ｩ繧､繝繝ｼ繧偵け繝ｪ繝ｼ繝ｳ繧｢繝・・
+	DeleteAllColliderIfNeeded(); // フレーム終亁E��に不要なコライダーをクリーンアチE�E
 }
 
 void ColliderManager::Draw()
@@ -69,10 +69,10 @@ void ColliderManager::AddCollider(Collider* Collider)
 }
 
 /*
- * @brief 縺吶∋縺ｦ縺ｮ逋ｻ骭ｲ貂医∩繧ｳ繝ｩ繧､繝繝ｼ縺ｮ蜑企勁繝輔Λ繧ｰ繧堤ｫ九※縲∫ｮ｡逅・Μ繧ｹ繝医ｒ遨ｺ縺ｫ縺吶ｋ
- * [蜈･蜉嫋 縺ｪ縺・
- * [蜃ｺ蜉嫋 縺ｪ縺・
- * [蜑ｯ菴懃畑] 蜈ｨ繧ｳ繝ｩ繧､繝繝ｼ縺ｸ縺ｮ蜑企勁繝輔Λ繧ｰ騾夂衍縲√Μ繧ｹ繝医・繧ｯ繝ｪ繧｢
+ * @brief すべての登録済みコライダーの削除フラグを立て、管琁E��ストを空にする
+ * [入力] �Ȃ�
+ * [出力] �Ȃ�
+ * [副作用] 全コライダーへの削除フラグ通知、リスト�Eクリア
  */
 void ColliderManager::DeleteAllCollider()
 {
@@ -87,10 +87,10 @@ void ColliderManager::DeleteAllCollider()
 }
 
 /*
- * @brief 蜑企勁繝輔Λ繧ｰ(delete_flag_)縺檎悄縺ｫ險ｭ螳壹＆繧後※縺・ｋ繧ｳ繝ｩ繧､繝繝ｼ繧偵Μ繧ｹ繝医°繧牙ｮ牙・縺ｫ髯､螟悶☆繧・
- * [蜈･蜉嫋 縺ｪ縺・
- * [蜃ｺ蜉嫋 縺ｪ縺・
- * [蜑ｯ菴懃畑] 隧ｲ蠖薙さ繝ｩ繧､繝繝ｼ縺ｮ繝ｪ繧ｹ繝磯勁螟悶√う繝・Ξ繝ｼ繧ｿ縺ｮ螳牙・縺ｪ騾ｲ陦・
+ * @brief 削除フラグ(delete_flag_)が真に設定されてぁE��コライダーをリストから安�Eに除外すめE
+ * [入力] �Ȃ�
+ * [出力] �Ȃ�
+ * [副作用] 該当コライダーのリスト除外、イチE��ータの安�Eな進衁E
  */
 void ColliderManager::DeleteAllColliderIfNeeded()
 {

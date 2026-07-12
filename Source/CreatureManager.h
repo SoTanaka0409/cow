@@ -1,10 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include <vector>
 #include <map>
 #include <utility>
 
-// 蜍慕噪逕滓・縺輔ｌ縺溘く繝｣繝ｩ繧ｯ繧ｿ繝ｼ・育央繝ｻ蜍慕黄・峨・繝ｪ繧ｹ繝医→繝励・繝ｫ繧剃ｸ蜈・ｮ｡逅・☆繧九ユ繝ｳ繝励Ξ繝ｼ繝医け繝ｩ繧ｹ
+// 動的生�Eされたキャラクター�E�牛�E動物�E��Eリストとプ�Eルを一允E��琁E��るテンプレートクラス
 template <typename TMove, typename TTag>
 class CreatureManager
 {
@@ -16,8 +16,8 @@ public:
 
 	virtual ~CreatureManager()
 	{
-		// 繧｢繧ｯ繝・ぅ繝悶↑繧ｭ繝｣繝ｩ繧ｯ繧ｿ繝ｼ・・Creatures・峨・ ObjectManager 縺檎ｮ｡逅・・delete 縺吶ｋ縺溘ａ縲・
-		// 縺薙％縺ｧ delete 縺吶ｋ縺ｨ莠碁㍾隗｣謾ｾ繧ｨ繝ｩ繝ｼ・・ull繧ｨ繝ｩ繝ｼ・峨↓縺ｪ繧九・縺ｧ clear 縺ｮ縺ｿ陦後≧縲・
+		// アクチE��ブなキャラクター�E�ECreatures�E��E ObjectManager が管琁E�Edelete するため、E
+		// ここで delete すると二重解放エラー�E�Eullエラー�E�になる�Eで clear のみ行う、E
 		mCreatures.clear();
 		for (auto& pair : mPools)
 		{
@@ -30,10 +30,10 @@ public:
 	}
 
 	/*
-	 * @brief 邂｡逅・＠縺ｦ縺・ｋ蜈ｨ縺ｦ縺ｮ繧ｪ繝悶ず繧ｧ繧ｯ繝医・譖ｴ譁ｰ縺翫ｈ縺ｳ荳崎ｦ√が繝悶ず繧ｧ繧ｯ繝医・繝励・繝ｫ霑泌唆繧定｡後≧
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 蜷・が繝悶ず繧ｧ繧ｯ繝医・Update螳溯｡後→縲・rase()縺ｮ螳溯｡・
+	 * @brief 管琁E��てぁE��全てのオブジェクト�E更新および不要オブジェクト�Eプ�Eル返却を行う
+	 * [入力] �Ȃ�
+	 * [出力] �Ȃ�
+	 * [副作用] �ꍇ��ブジェクト�EUpdate実行と、Erase()の実衁E
 	 */
 	void Update()
 	{
@@ -45,20 +45,20 @@ public:
 	}
 
 	/*
-	 * @brief 謠冗判蜃ｦ逅・ｼ育樟蝨ｨ縺ｯ螟夜Κ縺ｧ陦後▲縺ｦ縺・ｋ縺溘ａ遨ｺ・・
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 縺ｪ縺・
+	 * @brief 描画処琁E��現在は外部で行ってぁE��ため空�E�E
+	 * [入力] �Ȃ�
+	 * [出力] �Ȃ�
+	 * [副作用] �Ȃ�
 	 */
 	void Draw()
 	{
 	}
 
 	/*
-	 * @brief 蜑企勁繝輔Λ繧ｰ(mDeleteFlag)縺檎ｫ九▲縺ｦ縺・ｋ繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ邂｡逅・Μ繧ｹ繝医°繧蛾勁螟悶＠繝励・繝ｫ縺ｸ霑斐☆
-	 * [蜈･蜉嫋 
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 繝ｪ繧ｹ繝医°繧峨・髯､螟悶√・繝ｼ繝ｫ縺ｸ縺ｮ霑ｽ蜉
+	 * @brief 削除フラグ(mDeleteFlag)が立ってぁE��オブジェクトを管琁E��ストから除外しプ�Eルへ返す
+	 * [入力] 
+	 * [出力] �Ȃ�
+	 * [副作用] リストから�E除外、�Eールへの追加
 	 */
 	void Erase()
 	{
@@ -66,7 +66,7 @@ public:
 		{
 			for (auto it = mCreatures.begin(); it != mCreatures.end();)
 			{
-				// CowMove 縺ｨ AnimalMove 縺ｯ縺・★繧後ｂ CharacterMove 繧堤ｶ呎価縺励※縺翫ｊ GetCharacterDelete() 縺御ｽｿ縺医ｋ
+				// CowMove と AnimalMove はぁE��れも CharacterMove を継承しており GetCharacterDelete() が使える
 				if ((*it)->GetCharacterDelete())
 				{
 					auto creature = *it;
@@ -85,13 +85,13 @@ public:
 	}
 
 protected:
-	// 豢ｾ逕溘け繝ｩ繧ｹ縺ｧ繧ｿ繧ｰ蜿門ｾ怜・逅・ｒ螳溯｣・☆繧・
+	// 派生クラスでタグ取得�E琁E��実裁E��めE
 	virtual TTag GetTag(TMove* creature) = 0;
 
 	/*
-	 * @brief 繝励・繝ｫ縺九ｉ縺ｮ蠕ｩ蟶ｰ縺ｾ縺溘・譁ｰ隕冗函謌舌ｒ陦後＞縲√Μ繧ｹ繝医↓霑ｽ蜉縺吶ｋ蜈ｱ騾壼・逅・
-	 * [蜈･蜉嫋 tag: 隴伜挨繧ｿ繧ｰ, spawnPos: 蜃ｺ迴ｾ蠎ｧ讓・ scale: 諡｡螟ｧ邇・ args: 繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ蠑墓焚
-	 * [蜃ｺ蜉嫋 逕滓・縺ｾ縺溘・蠕ｩ蟶ｰ縺励◆繧ｪ繝悶ず繧ｧ繧ｯ繝医・繝昴う繝ｳ繧ｿ
+	 * @brief プ�Eルからの復帰また�E新規生成を行い、リストに追加する共通�E琁E
+	 * [入力] tag: 識別タグ, spawnPos: 出現座樁E scale: 拡大玁E args: コンストラクタ引数
+	 * [出力] 生�Eまた�E復帰したオブジェクト�Eポインタ
 	 */
 	template <typename TConcrete, typename... Args>
 	TConcrete* SpawnAndInit(TTag tag, VECTOR spawnPos, float scale, Args&&... args)

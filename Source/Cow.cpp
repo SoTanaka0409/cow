@@ -1,4 +1,4 @@
-﻿#include "Cow.h"
+#include "Cow.h"
 #include "CapsuleCollider.h"
 #include "Master.h"
 

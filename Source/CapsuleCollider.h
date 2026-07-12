@@ -1,7 +1,7 @@
-﻿#pragma once
+#pragma once
 #include "Collider.h"
 
-// 繧ｫ繝励そ繝ｫ蠖｢迥ｶ・育ｷ壼・・句濠蠕・ｼ峨・蠖薙◆繧雁愛螳壹さ繝ｩ繧､繝繝ｼ繧ｯ繝ｩ繧ｹ
+// カプセル形状�E�線�E�E�半征E���E当たり判定コライダークラス
 class CapsuleCollider : public Collider
 {
 public:
@@ -9,10 +9,10 @@ public:
 	virtual ~CapsuleCollider();
 
 	/*
-	 * @brief ・医ョ繝舌ャ繧ｰ陦ｨ遉ｺ逕ｨ・峨き繝励そ繝ｫ縺ｮ3D繝ｯ繧､繝､繝ｼ繝輔Ξ繝ｼ繝繧呈緒逕ｻ縺吶ｋ・育樟蝨ｨ蜃ｦ逅・↑縺暦ｼ・
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 縺ｪ縺・
+	 * @brief �E�デバッグ表示用�E�カプセルの3Dワイヤーフレームを描画する�E�現在処琁E��し！E
+	 * [入力] �Ȃ�
+	 * [出力] �Ȃ�
+	 * [副作用] �Ȃ�
 	 */
 	void Draw() override;
 

@@ -1,4 +1,4 @@
-ï»¿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include "Object3D.h"
 #include "Master.h"
 #include "ObjectManager.h"
@@ -15,7 +15,7 @@ Object3D::Object3D(VECTOR initPos)
 	, draw_flag_(true)
 	, radius_(0)
 {
-	// ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½Iãƒ»ï½½uãƒ»ï½½Wãƒ»ï½½Fãƒ»ï½½Nãƒ»ï½½gãƒ»ï½½ãƒ»ï½½ï¾‡æš¦ï½¿ï½½ãƒ»ï½½Eãƒ»ï½½Xãƒ»ï½½Vãƒ»ï½½ãƒ»ï½½ãƒ»ï½½é©ï½½ãƒ»ï½½ï¾Ÿã€ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ï¾ã®ã‚¢ãƒ»ï½½Nãƒ»ï½½eãƒ»ï½½Bãƒ»ï½½uãƒ»ï½½ï¾ˆã‚·ãƒ»ï½½[ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ï¾Œãƒžãƒ»ï½½lãƒ»ï½½[ãƒ»ï½½Wãƒ»ï½½ãƒ»ï½½ãƒ»ï½½[ãƒ»ï½½ï¾–è¶£ï½¿ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½oãƒ»ï½½^ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½ãƒ»ï½½
+	// E½E½E½E½E½E½E½E½E½IE½uE½WE½FE½NE½gE½E½Ç—ï¿½E½EE½XE½VE½E½E½é‚½E½ßAE½E½E½Ý‚ÌƒAE½NE½eE½BE½uE½ÈƒVE½[E½E½E½Ìƒ}E½lE½[E½WE½E½E½[E½ÖŽï¿½E½E½E½oE½^E½E½E½E½
 	ServiceLocator::GetObjectManager()->AddObject(this);
 	capsule_collider_ = new CapsuleCollider(this, initPos, initPos, 0);
 }

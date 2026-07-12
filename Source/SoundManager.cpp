@@ -1,4 +1,4 @@
-﻿#include"SoundManager.h"
+#include"SoundManager.h"
 #include"DxLib.h"
 
 SoundManager::SoundManager()
@@ -9,15 +9,15 @@ SoundManager::SoundManager()
 
 SoundManager::~SoundManager()
 {
-    // 繧ｪ繝悶ず繧ｧ繧ｯ繝育ｴ譽・凾縺ｮ繝｡繝｢繝ｪ繝ｪ繝ｼ繧ｯ繧堤｢ｺ螳溘↓髦ｲ縺舌◆繧∵・遉ｺ逧・↓隗｣謾ｾ
+    // オブジェクト破棁E��のメモリリークを確実に防ぐため�E示皁E��解放
     Finalize();
 }
 
 /*
- * 繧ｲ繝ｼ繝繝励Ξ繧､荳ｭ縺ｮ繝ｭ繝ｼ繝蛾≦蟒ｶ繧帝亟縺舌◆繧∝・髻ｳ貅舌ｒ蛻晄悄蛹匁凾縺ｫ隱ｭ縺ｿ霎ｼ繧
- * [蜈･蜉嫋 縺ｪ縺・
- * [蜃ｺ蜉嫋 縺ｪ縺・
- * [蜑ｯ菴懃畑] 蜷・ワ繝ｳ繝峨Ν繝ｪ繧ｹ繝医↓繧ｵ繧ｦ繝ｳ繝峨Μ繧ｽ繝ｼ繧ｹ繧堤匳骭ｲ
+ * ゲームプレイ中のロード遅延を防ぐため�E音源を初期化時に読み込む
+ * [入力] �Ȃ�
+ * [出力] �Ȃ�
+ * [副作用] �ꍇ��ンドルリストにサウンドリソースを登録
  */
 void SoundManager::Initialize()
 {
@@ -27,23 +27,23 @@ void SoundManager::Initialize()
     LoadBGM(SoundBgm::kBgmTutorial, "Resource/BGM/MusMus-BGM-103.mp3");
     LoadBGM(SoundBgm::kBgmRule, "Resource/BGM/MusMus-BGM-158.mp3");
 
-    LoadSE(SoundSe::kSeDecide, "Resource/SE/決定ボタンを押す42.mp3");
-    LoadSE(SoundSe::kSeCow, "Resource/SE/牛の鳴き声.mp3");
+    LoadSE(SoundSe::kSeDecide, "Resource/SE/����{�^��������42.mp3");
+    LoadSE(SoundSe::kSeCow, "Resource/SE/���̖���.mp3");
     LoadSE(SoundSe::kSeChicken, "Resource/SE/MusMus-BGM-084");
-    LoadSE(SoundSe::kSeTatumaki, "Resource/SE/天候・風一吹き（しらけ表現）.mp3");
-    LoadSE(SoundSe::kSeKaminari, "Resource/SE/天候・雷01.mp3");
-    LoadSE(SoundSe::kSeTutorialChange, "Resource/SE/シーン切り替え2.mp3");
-    LoadSE(SoundSe::kSeBeam, "Resource/SE/HP吸収魔法1.mp3");
-    LoadSE(SoundSe::kSeSkillStatus, "Resource/SE/ステータス上昇魔法2.mp3");
-    LoadSE(SoundSe::kSeSkillFood, "Resource/SE/ロボット起動2.mp3");
-    LoadSE(SoundSe::kSeBaitFinal, "Resource/SE/高速移動.mp3");
+    LoadSE(SoundSe::kSeTornado, "Resource/SE/�V��E���ꐁ���i���炯�\���j.mp3");
+    LoadSE(SoundSe::kSeKaminari, "Resource/SE/�V��E��01.mp3");
+    LoadSE(SoundSe::kSeTutorialChange, "Resource/SE/�V�[���؂�ւ�2.mp3");
+    LoadSE(SoundSe::kSeBeam, "Resource/SE/HP�z�����@1.mp3");
+    LoadSE(SoundSe::kSeSkillStatus, "Resource/SE/�X�e�[�^�X�㏸���@2.mp3");
+    LoadSE(SoundSe::kSeSkillFood, "Resource/SE/���{�b�g�N��2.mp3");
+    LoadSE(SoundSe::kSeBaitFinal, "Resource/SE/�����ړ�.mp3");
 }
 
 /*
- * 繝｡繝｢繝ｪ繝ｪ繝ｼ繧ｯ繧帝亟縺舌◆繧√・蜈ｨ繧ｵ繧ｦ繝ｳ繝峨Μ繧ｽ繝ｼ繧ｹ隗｣謾ｾ
- * [蜈･蜉嫋 縺ｪ縺・
- * [蜃ｺ蜉嫋 縺ｪ縺・
- * [蜑ｯ菴懃畑] BGM繝ｻSE繝上Φ繝峨Ν縺ｮ蜑企勁縺ｨ繝ｪ繧ｹ繝医・繧ｯ繝ｪ繧｢
+ * メモリリークを防ぐため�E全サウンドリソース解放
+ * [入力] �Ȃ�
+ * [出力] �Ȃ�
+ * [副作用] BGM�ESEハンドルの削除とリスト�Eクリア
  */
 void SoundManager::Finalize()
 {
@@ -61,14 +61,14 @@ void SoundManager::Finalize()
 }
 
 /*
- * BGM縺ｮ蜀咲函縺ｨ縲∝酔荳譖ｲ縺ｮ莠碁㍾蜀咲函髦ｲ豁｢繧貞宛蠕｡縺吶ｋ
- * [蜈･蜉嫋 bgm: 蜀咲函縺吶ｋBGMID, isTop: 蜈磯ｭ縺九ｉ蜀咲函縺吶ｋ縺・
- * [蜃ｺ蜉嫋 縺ｪ縺・
- * [蜑ｯ菴懃畑] BGM蜀咲函髢句ｧ九［nNowPlayingBgm縺ｮ譖ｴ譁ｰ
+ * BGMの再生と、同一曲の二重再生防止を制御する
+ * [入力] bgm: 再生するBGMID, isTop: 先頭から再生するぁE
+ * [出力] �Ȃ�
+ * [副作用] BGM再生開始、mnNowPlayingBgmの更新
  */
 void SoundManager::PlayBGM(SoundBgm bgm, bool isTop)
 {
-    // 蜷御ｸ譖ｲ縺梧欠螳壹＆繧後◆蝣ｴ蜷医∵峇縺ｮ荳崎・辟ｶ縺ｪ蜀埼幕繧帝亟縺舌◆繧∝・逅・ｒ繧ｹ繧ｭ繝・・
+    // 同一曲が指定された場合、曲の不�E然な再開を防ぐため�E琁E��スキチE�E
     if (now_playing_bgm_ == bgm && !isTop)
     {
         return;
@@ -78,7 +78,7 @@ void SoundManager::PlayBGM(SoundBgm bgm, bool isTop)
     {
         if (it->first == bgm)
         {
-            // 險ｭ螳壹＆繧後※縺・ｋ譛譁ｰ縺ｮ繝槭せ繧ｿ繝ｼ髻ｳ驥上〒蜀咲函繧帝幕蟋九☆繧・
+            // 設定されてぁE��最新のマスター音量で再生を開始すめE
             ChangeVolumeSoundMem(master_bgm_volume_, it->second);
             PlaySoundMem(it->second, DX_PLAYTYPE_LOOP, isTop);
             now_playing_bgm_ = bgm;
@@ -88,10 +88,10 @@ void SoundManager::PlayBGM(SoundBgm bgm, bool isTop)
 }
 
 /*
- * 蜉ｹ譫憺浹繧偵ヰ繝・け繧ｰ繝ｩ繧ｦ繝ｳ繝峨〒荳ｦ蛻怜・逕溘☆繧・
- * [蜈･蜉嫋 se: 蜀咲函縺吶ｋSE縺ｮID
- * [蜃ｺ蜉嫋 縺ｪ縺・
- * [蜑ｯ菴懃畑] SE蜀咲函髢句ｧ九［nNowPlayingSe縺ｮ譖ｴ譁ｰ
+ * 効果音をバチE��グラウンドで並列�E生すめE
+ * [入力] se: 再生するSEのID
+ * [出力] �Ȃ�
+ * [副作用] SE再生開始、mnNowPlayingSeの更新
  */
 void SoundManager::PlaySE(SoundSe se)
 {
@@ -99,7 +99,7 @@ void SoundManager::PlaySE(SoundSe se)
     {
         if (it->first == se)
         {
-            // SE縺ｯ隍・焚蜷梧凾縺ｫ魑ｴ繧句庄閭ｽ諤ｧ縺後≠繧九◆繧∽ｸｦ蛻怜・逕溘ｒ謖・ｮ・
+            // SEは褁E��同時に鳴る可能性があるため並列�E生を持E��E
             PlaySoundMem(it->second, DX_PLAYTYPE_BACK);
             now_playing_se_ = se;
             break;
@@ -108,14 +108,14 @@ void SoundManager::PlaySE(SoundSe se)
 }
 
 /*
- * 髻ｳ貅舌・莠碁㍾繝ｭ繝ｼ繝峨ｒ髦ｲ縺弱▽縺､BGM繧偵Γ繝｢繝ｪ縺ｫ驟咲ｽｮ縺吶ｋ
- * [蜈･蜉嫋 bgm: 逋ｻ骭ｲID, filename: 繝輔ぃ繧､繝ｫ繝代せ
- * [蜃ｺ蜉嫋 縺ｪ縺・
- * [蜑ｯ菴懃畑] 繝上Φ繝峨Ν蜿門ｾ励→繝ｪ繧ｹ繝医∈縺ｮ霑ｽ蜉
+ * 音源�E二重ロードを防ぎつつBGMをメモリに配置する
+ * [入力] bgm: 登録ID, filename: ファイルパス
+ * [出力] �Ȃ�
+ * [副作用] ハンドル取得とリストへの追加
  */
 void SoundManager::LoadBGM(SoundBgm bgm, std::string filename)
 {
-    // 辟｡鬧・↑繝｡繝｢繝ｪ豸郁ｲｻ繧帝亟縺舌◆繧√∵里縺ｫ逋ｻ骭ｲ貂医∩縺ｮ蝣ｴ蜷医・繧ｹ繧ｭ繝・・
+    // 無駁E��メモリ消費を防ぐため、既に登録済みの場合�EスキチE�E
     for (auto it = bgm_handle_list_.begin(); it != bgm_handle_list_.end(); it++)
     {
         if (it->first == bgm)
@@ -125,7 +125,7 @@ void SoundManager::LoadBGM(SoundBgm bgm, std::string filename)
     }
 
     int handle = LoadSoundMem(filename.c_str());
-    // 蟄伜惠縺励↑縺・ヵ繧｡繧､繝ｫ繝代せ遲峨↓繧医ｋ辟｡蜉ｹ縺ｪ繝上Φ繝峨Ν逋ｻ骭ｲ繧帝亟縺・
+    // 存在しなぁE��ァイルパス等による無効なハンドル登録を防ぁE
     if (handle == -1)
     {
         return;
@@ -135,14 +135,14 @@ void SoundManager::LoadBGM(SoundBgm bgm, std::string filename)
 }
 
 /*
- * 髻ｳ貅舌・莠碁㍾繝ｭ繝ｼ繝峨ｒ髦ｲ縺弱▽縺､SE繧偵Γ繝｢繝ｪ縺ｫ驟咲ｽｮ縺吶ｋ
- * [蜈･蜉嫋 se: 逋ｻ骭ｲID, filename: 繝輔ぃ繧､繝ｫ繝代せ
- * [蜃ｺ蜉嫋 縺ｪ縺・
- * [蜑ｯ菴懃畑] 繝上Φ繝峨Ν蜿門ｾ励→繝ｪ繧ｹ繝医∈縺ｮ霑ｽ蜉
+ * 音源�E二重ロードを防ぎつつSEをメモリに配置する
+ * [入力] se: 登録ID, filename: ファイルパス
+ * [出力] �Ȃ�
+ * [副作用] ハンドル取得とリストへの追加
  */
 void SoundManager::LoadSE(SoundSe se, std::string filename)
 {
-    // 辟｡鬧・↑繝｡繝｢繝ｪ豸郁ｲｻ繧帝亟縺舌◆繧√∵里縺ｫ逋ｻ骭ｲ貂医∩縺ｮ蝣ｴ蜷医・繧ｹ繧ｭ繝・・
+    // 無駁E��メモリ消費を防ぐため、既に登録済みの場合�EスキチE�E
     for (auto it = se_handle_list_.begin(); it != se_handle_list_.end(); it++)
     {
         if (it->first == se)
@@ -152,7 +152,7 @@ void SoundManager::LoadSE(SoundSe se, std::string filename)
     }
 
     int handle = LoadSoundMem(filename.c_str());
-    // 蟄伜惠縺励↑縺・ヵ繧｡繧､繝ｫ繝代せ遲峨↓繧医ｋ辟｡蜉ｹ縺ｪ繝上Φ繝峨Ν逋ｻ骭ｲ繧帝亟縺・
+    // 存在しなぁE��ァイルパス等による無効なハンドル登録を防ぁE
     if (handle == -1)
     {
         return;
@@ -162,10 +162,10 @@ void SoundManager::LoadSE(SoundSe se, std::string filename)
 }
 
 /*
- * 繧ｷ繝ｼ繝ｳ邨ゆｺ・凾縺ｪ縺ｩ縺ｫ迴ｾ蝨ｨ蜀咲函荳ｭ縺ｮBGM繧呈ｭ｢繧√ｋ
- * [蜈･蜉嫋 縺ｪ縺・
- * [蜃ｺ蜉嫋 縺ｪ縺・
- * [蜑ｯ菴懃畑] 蜀咲函荳ｭ縺ｮBGM繧貞●豁｢
+ * シーン終亁E��などに現在再生中のBGMを止める
+ * [入力] �Ȃ�
+ * [出力] �Ȃ�
+ * [副作用] 再生中のBGMを停止
  */
 void SoundManager::StopBGM()
 {
@@ -173,7 +173,7 @@ void SoundManager::StopBGM()
     {
         if (it->first == now_playing_bgm_)
         {
-            // DxLib蛛ｴ縺ｧ譌｢縺ｫ蛛懈ｭ｢縺励※縺・ｋ蝣ｴ蜷医・繧ｨ繝ｩ繝ｼ繧貞屓驕ｿ
+            // DxLib側で既に停止してぁE��場合�Eエラーを回避
             if (CheckSoundMem(it->second))
             {
                 StopSoundMem(it->second);
@@ -184,10 +184,10 @@ void SoundManager::StopBGM()
 }
 
 /*
- * 繝ｭ繝ｼ繝画ｸ医∩蜈ｨBGM縺ｫ髻ｳ驥上ｒ荳諡ｬ驕ｩ逕ｨ縺吶ｋ
- * [蜈･蜉嫋 volume: 髻ｳ驥丞､(0-255)
- * [蜃ｺ蜉嫋 縺ｪ縺・
- * [蜑ｯ菴懃畑] 繝上Φ繝峨Ν繧帝壹§縺檻GM髻ｳ驥丞､画峩
+ * ロード済み全BGMに音量を一括適用する
+ * [入力] volume: 音量値(0-255)
+ * [出力] �Ȃ�
+ * [副作用] ハンドルを通じたBGM音量変更
  */
 void SoundManager::SetBGMVolume(int volume)
 {
@@ -198,10 +198,10 @@ void SoundManager::SetBGMVolume(int volume)
 }
 
 /*
- * 繝ｭ繝ｼ繝画ｸ医∩蜈ｨSE縺ｫ髻ｳ驥上ｒ荳諡ｬ驕ｩ逕ｨ縺吶ｋ
- * [蜈･蜉嫋 volume: 髻ｳ驥丞､(0-255)
- * [蜃ｺ蜉嫋 縺ｪ縺・
- * [蜑ｯ菴懃畑] 繝上Φ繝峨Ν繧帝壹§縺欖E髻ｳ驥丞､画峩
+ * ロード済み全SEに音量を一括適用する
+ * [入力] volume: 音量値(0-255)
+ * [出力] �Ȃ�
+ * [副作用] ハンドルを通じたSE音量変更
  */
 void SoundManager::SetSEVolume(int volume)
 {
@@ -212,14 +212,14 @@ void SoundManager::SetSEVolume(int volume)
 }
 
 /*
- * 繧ｷ繧ｹ繝・Β險ｭ螳壹↑縺ｩ縺ｧ荳諡ｬ螟画峩縺輔ｌ繧毅GM繝槭せ繧ｿ繝ｼ髻ｳ驥上ｒ驕ｩ逕ｨ縺吶ｋ
- * [蜈･蜉嫋 volume: 蝓ｺ貅夜浹驥・0-255)
- * [蜃ｺ蜉嫋 縺ｪ縺・
- * [蜑ｯ菴懃畑] mMasterBGMVolume譖ｴ譁ｰ縲∝・BGM縺ｸ髻ｳ驥丞渚譏
+ * シスチE��設定などで一括変更されるBGMマスター音量を適用する
+ * [入力] volume: 基準音釁E0-255)
+ * [出力] �Ȃ�
+ * [副作用] mMasterBGMVolume更新、�EBGMへ音量反映
  */
 void SoundManager::SetMasterBGMVolume(int volume)
 {
-    // DxLib縺ｮ髻ｳ驥乗欠螳夂ｯ・峇(0-255)螟悶・蛟､繧帝亟縺舌◆繧√・繧ｯ繝ｩ繝ｳ繝・
+    // DxLibの音量指定篁E��(0-255)外�E値を防ぐため�EクランチE
     if (volume < 0) volume = 0;
     if (volume > 255) volume = 255;
     master_bgm_volume_ = volume;
@@ -227,14 +227,14 @@ void SoundManager::SetMasterBGMVolume(int volume)
 }
 
 /*
- * 繧ｷ繧ｹ繝・Β險ｭ螳壹↑縺ｩ縺ｧ荳諡ｬ螟画峩縺輔ｌ繧鬼E繝槭せ繧ｿ繝ｼ髻ｳ驥上ｒ驕ｩ逕ｨ縺吶ｋ
- * [蜈･蜉嫋 volume: 蝓ｺ貅夜浹驥・0-255)
- * [蜃ｺ蜉嫋 縺ｪ縺・
- * [蜑ｯ菴懃畑] mMasterSEVolume譖ｴ譁ｰ縲∝・SE縺ｸ髻ｳ驥丞渚譏
+ * シスチE��設定などで一括変更されるSEマスター音量を適用する
+ * [入力] volume: 基準音釁E0-255)
+ * [出力] �Ȃ�
+ * [副作用] mMasterSEVolume更新、�ESEへ音量反映
  */
 void SoundManager::SetMasterSEVolume(int volume)
 {
-    // DxLib縺ｮ髻ｳ驥乗欠螳夂ｯ・峇(0-255)螟悶・蛟､繧帝亟縺舌◆繧√・繧ｯ繝ｩ繝ｳ繝・
+    // DxLibの音量指定篁E��(0-255)外�E値を防ぐため�EクランチE
     if (volume < 0) volume = 0;
     if (volume > 255) volume = 255;
     master_se_volume_ = volume;

@@ -1,4 +1,4 @@
-ï»¿#include"Scene.h"
+#include"Scene.h"
 #include "Rule.h"
 #include "DxLib.h"
 #include "Master.h"
@@ -8,8 +8,8 @@
 Rule::Rule()
 {
 	rule_graph_ = Master::mpResourceManager->LoadGraphics("Resource/2D/settings_bg.png");
-	title_font_handle_ = CreateFontToHandle("ãƒ¡ã‚¤ãƒªã‚ª", 80, 5);
-	font_handle_ = CreateFontToHandle("ãƒ¡ã‚¤ãƒªã‚ª", 50, 3);
+	title_font_handle_ = CreateFontToHandle("ƒƒCƒŠƒI", 80, 5);
+	font_handle_ = CreateFontToHandle("ƒƒCƒŠƒI", 50, 3);
 	
 	selected_index_ = kMenuBgm;
 	play_se_delay_ = 0;
@@ -17,7 +17,7 @@ Rule::Rule()
 
 Rule::~Rule()
 {
-	// ã‚·ãƒ¼ãƒ³ç ´æ£Eï¿½ï¿½ã®ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯ã‚’é˜²ããŸã‚ï¿½Eç¤ºçšEï¿½ï¿½è§£æ”¾ã‚’å‘¼ã¶
+	// ƒV[ƒ“”j?E??‚Ìƒƒ‚ƒŠƒŠ[ƒN‚ğ–h‚®‚½‚ß?E¦?E??‰ğ•ú‚ğŒÄ‚Ô
 	Finalize();
 }
 
@@ -43,7 +43,7 @@ void Rule::Update()
 	bool isMouseClicked = (mouseInput & MOUSE_INPUT_LEFT) != 0 && (prevMouseInput & MOUSE_INPUT_LEFT) == 0;
 	bool isMouseHeld = (mouseInput & MOUSE_INPUT_LEFT) != 0;
 
-	// é·ç§»å‰ï¿½Eå…¥åŠ›æŒã¡è¶Šã—ã«ã‚ˆã‚‹èª¤æ“ä½œã‚’é˜²ããŸã‚E0ãƒ•ãƒ¬ãƒ¼ãƒ å¾Eï¿½ï¿½E
+	// ‘JˆÚ‘O?E“ü—Í‚¿‰z‚µ‚É‚æ‚éŒë‘€ì‚ğ–h‚®‚½‚ßE0ƒtƒŒ[ƒ€ªE??E
 	if (scene_frames_ < 30)
 	{
 		prevMouseInput = mouseInput;
@@ -93,7 +93,7 @@ void Rule::Update()
 						if (play_se_delay_ <= 0)
 						{
 							Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
-							// SEãŒé‡ãªã£ã¦çˆEï¿½ï¿½ã«ãªã‚‹ï¿½Eã‚’é˜²ããŸã‚ã€ï¿½Eç”Ÿé–“éš”ã‚’åˆ¶é™ã™ã‚E
+							// SE‚ªd‚È‚Á‚Ä?E??‚É‚È‚é?E‚ğ–h‚®‚½‚ßA?E¶ŠÔŠu‚ğ§ŒÀ‚·‚ßE
 							play_se_delay_ = 10;
 						}
 					}
@@ -165,7 +165,7 @@ void Rule::Update()
 
 void Rule::Draw()
 {
-	// å…Eï¿½Eã‚·ãƒ¼ãƒ³ç”»åƒã‚’é€ã‹ã—ã¦è¨­å®šç”»é¢ã§ã‚ã‚‹ã“ã¨ã‚’å¼·èª¿ã™ã‚‹ãŸã‚ã€åŠé€ï¿½Eã®æš—è»¢ã‚’é‡ã­ã‚E
+	// ˆòE?EƒV[ƒ“‰æ‘œ‚ğ“§‚©‚µ‚Äİ’è‰æ–Ê‚Å‚ ‚é‚±‚Æ‚ğ‹­’²‚·‚é‚½‚ßA”¼“§?E‚ÌˆÃ“]‚ğd‚Ë‚ßE
 	DrawExtendGraph(0, -100, 1600, 1000, rule_graph_, TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
 	DrawBox(0, 0, 1600, 900, GetColor(0, 0, 0), TRUE);

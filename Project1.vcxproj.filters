@@ -108,7 +108,7 @@
     <ClCompile Include="Source\Cow_2.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Cow_gold.cpp">
+    <ClCompile Include="Source\GoldCow.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Source\DebugCamera.cpp">
@@ -150,7 +150,7 @@
     <ClCompile Include="Source\Fever.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Tatumaki.cpp">
+    <ClCompile Include="Source\Tornado.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Source\Rule.cpp">
@@ -287,7 +287,7 @@
     <ClInclude Include="Source\Cow_2.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Cow_gold.h">
+    <ClInclude Include="Source\GoldCow.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Source\DebugCamera.h">
@@ -329,7 +329,7 @@
     <ClInclude Include="Source\Fever.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Tatumaki.h">
+    <ClInclude Include="Source\Tornado.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Source\Rule.h">

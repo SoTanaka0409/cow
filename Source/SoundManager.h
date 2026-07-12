@@ -1,12 +1,12 @@
-﻿#pragma once
+#pragma once
 #include<string>
 #include<vector>
 
-// 繧ｲ繝ｼ繝蜀・GM縺ｨSE縺ｮ莠碁㍾蜀咲函髦ｲ豁｢繧・浹驥上・荳諡ｬ蛻ｶ蠕｡繧定｡後≧縺溘ａ縺ｮ邂｡逅・け繝ｩ繧ｹ
+// ゲーム冁EGMとSEの二重再生防止めE��量�E一括制御を行うための管琁E��ラス
 class SoundManager
 {
 public:
-    // 繧ｷ繝ｼ繝ｳ驕ｷ遘ｻ譎ゅ・BGM蛻・ｊ譖ｿ縺育畑ID
+    // シーン遷移時�EBGM刁E��替え用ID
     enum SoundBgm
     {
         kBgmTitle = 0,
@@ -16,7 +16,7 @@ public:
         kBgmRule,
     };
 
-    // 蜷・ｨｮ繧｢繧ｯ繧ｷ繝ｧ繝ｳ蜉ｹ譫憺浹蜻ｼ縺ｳ蜃ｺ縺礼畑ID
+    // �ꍇ��アクション効果音呼び出し用ID
     enum SoundSe
     {
         kSeDecide = 0,
@@ -25,7 +25,7 @@ public:
         kSeSkillStatus,
         kSeSkillFood,
         kSeChicken,
-        kSeTatumaki,
+        kSeTornado,
         kSeKaminari,
         kSeTutorialChange,
         kSeBaitFinal,
@@ -35,74 +35,74 @@ public:
     ~SoundManager();
 
     /*
-     * 繧ｲ繝ｼ繝繝励Ξ繧､荳ｭ縺ｮ繝ｭ繝ｼ繝蛾≦蟒ｶ繧帝亟縺舌◆繧∝・髻ｳ貅舌ｒ蛻晄悄蛹匁凾縺ｫ隱ｭ縺ｿ霎ｼ繧
-     * [蜈･蜉嫋 縺ｪ縺・
-     * [蜃ｺ蜉嫋 縺ｪ縺・
-     * [蜑ｯ菴懃畑] 蜷・ワ繝ｳ繝峨Ν繝ｪ繧ｹ繝医↓繧ｵ繧ｦ繝ｳ繝峨Μ繧ｽ繝ｼ繧ｹ繧堤匳骭ｲ
+     * ゲームプレイ中のロード遅延を防ぐため�E音源を初期化時に読み込む
+     * [入力] �Ȃ�
+     * [出力] �Ȃ�
+     * [副作用] �ꍇ��ンドルリストにサウンドリソースを登録
      */
     void Initialize();
 
     /*
-     * 繝｡繝｢繝ｪ繝ｪ繝ｼ繧ｯ繧帝亟縺舌◆繧√・蜈ｨ繧ｵ繧ｦ繝ｳ繝峨Μ繧ｽ繝ｼ繧ｹ隗｣謾ｾ
-     * [蜈･蜉嫋 縺ｪ縺・
-     * [蜃ｺ蜉嫋 縺ｪ縺・
-     * [蜑ｯ菴懃畑] BGM繝ｻSE繝上Φ繝峨Ν縺ｮ蜑企勁縺ｨ繝ｪ繧ｹ繝医・繧ｯ繝ｪ繧｢
+     * メモリリークを防ぐため�E全サウンドリソース解放
+     * [入力] �Ȃ�
+     * [出力] �Ȃ�
+     * [副作用] BGM�ESEハンドルの削除とリスト�Eクリア
      */
     void Finalize();
 
     /*
-     * BGM縺ｮ蜀咲函縺ｨ縲∝酔荳譖ｲ縺ｮ莠碁㍾蜀咲函髦ｲ豁｢繧貞宛蠕｡縺吶ｋ
-     * [蜈･蜉嫋 bgm: 蜀咲函縺吶ｋBGMID, IsTop: true縺ｧ蜈磯ｭ縺九ｉ蜀咲函
-     * [蜃ｺ蜉嫋 縺ｪ縺・
-     * [蜑ｯ菴懃畑] BGM蜀咲函髢句ｧ九［nNowPlayingBgm縺ｮ譖ｴ譁ｰ
+     * BGMの再生と、同一曲の二重再生防止を制御する
+     * [入力] bgm: 再生するBGMID, IsTop: trueで先頭から再生
+     * [出力] �Ȃ�
+     * [副作用] BGM再生開始、mnNowPlayingBgmの更新
      */
     void PlayBGM(SoundBgm bgm, bool IsTop = true);
 
     /*
-     * 蜉ｹ譫憺浹繧偵ヰ繝・け繧ｰ繝ｩ繧ｦ繝ｳ繝峨〒荳ｦ蛻怜・逕溘☆繧・
-     * [蜈･蜉嫋 se: 蜀咲函縺吶ｋSE縺ｮID
-     * [蜃ｺ蜉嫋 縺ｪ縺・
-     * [蜑ｯ菴懃畑] SE蜀咲函髢句ｧ九［nNowPlayingSe縺ｮ譖ｴ譁ｰ
+     * 効果音をバチE��グラウンドで並列�E生すめE
+     * [入力] se: 再生するSEのID
+     * [出力] �Ȃ�
+     * [副作用] SE再生開始、mnNowPlayingSeの更新
      */
     void PlaySE(SoundSe se);
 
     /*
-     * 髻ｳ貅舌・莠碁㍾繝ｭ繝ｼ繝峨ｒ髦ｲ縺弱▽縺､BGM繧偵Γ繝｢繝ｪ縺ｫ驟咲ｽｮ縺吶ｋ
-     * [蜈･蜉嫋 bgm: 逋ｻ骭ｲID, filename: 繝輔ぃ繧､繝ｫ繝代せ
-     * [蜃ｺ蜉嫋 縺ｪ縺・
-     * [蜑ｯ菴懃畑] 繝上Φ繝峨Ν蜿門ｾ励→繝ｪ繧ｹ繝医∈縺ｮ霑ｽ蜉
+     * 音源�E二重ロードを防ぎつつBGMをメモリに配置する
+     * [入力] bgm: 登録ID, filename: ファイルパス
+     * [出力] �Ȃ�
+     * [副作用] ハンドル取得とリストへの追加
      */
     void LoadBGM(SoundBgm bgm, std::string filename);
 
     /*
-     * 髻ｳ貅舌・莠碁㍾繝ｭ繝ｼ繝峨ｒ髦ｲ縺弱▽縺､SE繧偵Γ繝｢繝ｪ縺ｫ驟咲ｽｮ縺吶ｋ
-     * [蜈･蜉嫋 se: 逋ｻ骭ｲID, filename: 繝輔ぃ繧､繝ｫ繝代せ
-     * [蜃ｺ蜉嫋 縺ｪ縺・
-     * [蜑ｯ菴懃畑] 繝上Φ繝峨Ν蜿門ｾ励→繝ｪ繧ｹ繝医∈縺ｮ霑ｽ蜉
+     * 音源�E二重ロードを防ぎつつSEをメモリに配置する
+     * [入力] se: 登録ID, filename: ファイルパス
+     * [出力] �Ȃ�
+     * [副作用] ハンドル取得とリストへの追加
      */
     void LoadSE(SoundSe se, std::string filename);
 
     /*
-     * 繧ｷ繝ｼ繝ｳ邨ゆｺ・凾縺ｪ縺ｩ縺ｫ迴ｾ蝨ｨ蜀咲函荳ｭ縺ｮBGM繧呈ｭ｢繧√ｋ
-     * [蜈･蜉嫋 縺ｪ縺・
-     * [蜃ｺ蜉嫋 縺ｪ縺・
-     * [蜑ｯ菴懃畑] 蜀咲函荳ｭ縺ｮBGM繧貞●豁｢
+     * シーン終亁E��などに現在再生中のBGMを止める
+     * [入力] �Ȃ�
+     * [出力] �Ȃ�
+     * [副作用] 再生中のBGMを停止
      */
     void StopBGM();
 
     /*
-     * 繝ｭ繝ｼ繝画ｸ医∩蜈ｨBGM縺ｫ髻ｳ驥上ｒ荳諡ｬ驕ｩ逕ｨ縺吶ｋ
-     * [蜈･蜉嫋 volume: 髻ｳ驥丞､(0-255)
-     * [蜃ｺ蜉嫋 縺ｪ縺・
-     * [蜑ｯ菴懃畑] 繝上Φ繝峨Ν繧帝壹§縺檻GM髻ｳ驥丞､画峩
+     * ロード済み全BGMに音量を一括適用する
+     * [入力] volume: 音量値(0-255)
+     * [出力] �Ȃ�
+     * [副作用] ハンドルを通じたBGM音量変更
      */
     void SetBGMVolume(int volume);
 
     /*
-     * 繝ｭ繝ｼ繝画ｸ医∩蜈ｨSE縺ｫ髻ｳ驥上ｒ荳諡ｬ驕ｩ逕ｨ縺吶ｋ
-     * [蜈･蜉嫋 volume: 髻ｳ驥丞､(0-255)
-     * [蜃ｺ蜉嫋 縺ｪ縺・
-     * [蜑ｯ菴懃畑] 繝上Φ繝峨Ν繧帝壹§縺欖E髻ｳ驥丞､画峩
+     * ロード済み全SEに音量を一括適用する
+     * [入力] volume: 音量値(0-255)
+     * [出力] �Ȃ�
+     * [副作用] ハンドルを通じたSE音量変更
      */
     void SetSEVolume(int volume);
 
@@ -110,18 +110,18 @@ public:
     int GetMasterSEVolume() const { return master_se_volume_; }
 
     /*
-     * 繧ｷ繧ｹ繝・Β險ｭ螳壹↑縺ｩ縺ｧ荳諡ｬ螟画峩縺輔ｌ繧毅GM繝槭せ繧ｿ繝ｼ髻ｳ驥上ｒ驕ｩ逕ｨ縺吶ｋ
-     * [蜈･蜉嫋 volume: 蝓ｺ貅夜浹驥・0-255)
-     * [蜃ｺ蜉嫋 縺ｪ縺・
-     * [蜑ｯ菴懃畑] mMasterBGMVolume譖ｴ譁ｰ縲∝・BGM縺ｸ髻ｳ驥丞渚譏
+     * シスチE��設定などで一括変更されるBGMマスター音量を適用する
+     * [入力] volume: 基準音釁E0-255)
+     * [出力] �Ȃ�
+     * [副作用] mMasterBGMVolume更新、�EBGMへ音量反映
      */
     void SetMasterBGMVolume(int volume);
 
     /*
-     * 繧ｷ繧ｹ繝・Β險ｭ螳壹↑縺ｩ縺ｧ荳諡ｬ螟画峩縺輔ｌ繧鬼E繝槭せ繧ｿ繝ｼ髻ｳ驥上ｒ驕ｩ逕ｨ縺吶ｋ
-     * [蜈･蜉嫋 volume: 蝓ｺ貅夜浹驥・0-255)
-     * [蜃ｺ蜉嫋 縺ｪ縺・
-     * [蜑ｯ菴懃畑] mMasterSEVolume譖ｴ譁ｰ縲∝・SE縺ｸ髻ｳ驥丞渚譏
+     * シスチE��設定などで一括変更されるSEマスター音量を適用する
+     * [入力] volume: 基準音釁E0-255)
+     * [出力] �Ȃ�
+     * [副作用] mMasterSEVolume更新、�ESEへ音量反映
      */
     void SetMasterSEVolume(int volume);
 
@@ -129,7 +129,7 @@ private:
     int master_bgm_volume_ = 255;
     int master_se_volume_ = 255;
 
-    // 蛛懈ｭ｢蜃ｦ逅・ｄ莠碁㍾蜀咲函髦ｲ豁｢縺ｮ蛻､螳壹↓逕ｨ縺・ｋ迥ｶ諷倶ｿ晄戟
+    // 停止処琁E��二重再生防止の判定に用ぁE��状態保持
     SoundBgm now_playing_bgm_;
     SoundSe now_playing_se_;
 

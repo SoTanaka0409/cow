@@ -1,4 +1,4 @@
-﻿#include "SphereCollider.h"
+#include "SphereCollider.h"
 #include"CapsuleCollider.h"
 
 SphereCollider::SphereCollider(Object3D* parent, VECTOR center, float radius)
@@ -15,7 +15,7 @@ SphereCollider::~SphereCollider()
 
 void SphereCollider::Draw()
 {
-	// 逅・・謠冗判蜃ｦ逅・
+	// 琁E�E描画処琁E
 	DrawSphere3D(
 		position_,
 		radius_,

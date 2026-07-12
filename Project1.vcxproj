@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -173,7 +173,7 @@
     <ClCompile Include="Source\CowMove.cpp" />
     <ClCompile Include="Source\CharacterMove.cpp" />
     <ClCompile Include="Source\Cow_2.cpp" />
-    <ClCompile Include="Source\Cow_gold.cpp" />
+    <ClCompile Include="Source\GoldCow.cpp" />
     <ClCompile Include="Source\DebugCamera.cpp" />
     <ClCompile Include="Source\Cow_Tutorial.cpp" />
     <ClCompile Include="Source\EffectManager.cpp" />
@@ -209,7 +209,7 @@
     <ClCompile Include="Source\SoundManager.cpp" />
     <ClCompile Include="Source\SphereCollider.cpp" />
     <ClCompile Include="Source\Stage.cpp" />
-    <ClCompile Include="Source\Tatumaki.cpp" />
+    <ClCompile Include="Source\Tornado.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Thunder.cpp" />
@@ -232,7 +232,7 @@
     <ClInclude Include="Source\CowMove.h" />
     <ClInclude Include="Source\CharacterMove.h" />
     <ClInclude Include="Source\Cow_2.h" />
-    <ClInclude Include="Source\Cow_gold.h" />
+    <ClInclude Include="Source\GoldCow.h" />
     <ClInclude Include="Source\DebugCamera.h" />
     <ClInclude Include="Source\Cow_Tutorial.h" />
     <ClInclude Include="Source\EffectManager.h" />
@@ -267,7 +267,7 @@
     <ClInclude Include="Source\SoundManager.h" />
     <ClInclude Include="Source\SphereCollider.h" />
     <ClInclude Include="Source\Stage.h" />
-    <ClInclude Include="Source\Tatumaki.h" />
+    <ClInclude Include="Source\Tornado.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Thunder.h" />
     <ClInclude Include="Source\TitleScene.h" />

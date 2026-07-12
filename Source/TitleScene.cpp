@@ -1,4 +1,4 @@
-﻿#include "TitleScene.h"
+#include "TitleScene.h"
 #include "DxLib.h"
 #include "Utility.h"
 #include "Master.h"
@@ -8,75 +8,75 @@
 TitleScene::TitleScene()
 	: Scene()
 {
-	mCowVoiceTimer = 180; // 蛻晏屓蜀咲函縺ｾ縺ｧ縺ｮ蠕・ｩ溘ヵ繝ｬ繝ｼ繝險ｭ螳・
+	cow_voice_timer_ = 180; // 蛻晏屓蜀咲函縺�E�縺�E�縺�E�蠕�E�E�溘ヵ繝ｬ繝ｼ繝�險�E�螳・
 	
-	mnTitleGraphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/タイトルシーン.png");
-	mnUfoGraphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/牛とUFO.png");
-	GetGraphSize(mnUfoGraphHandle, &mUfoW, &mUfoH);
+	title_graph_handle_ = Master::mpResourceManager->LoadGraphics("Resource/2D/タイトルシーン.png");
+	ufo_graph_handle_ = Master::mpResourceManager->LoadGraphics("Resource/2D/牛とUFO.png");
+	GetGraphSize(ufo_graph_handle_, &ufo_w_, &ufo_h_);
 
-	mUfoX = 540;
-	mUfoY = 30;
+	ufo_x_ = 540;
+	ufo_y_ = 30;
 
-	mbIsDraggingUfo = false;
-	mOffsetX = 0;
-	mOffsetY = 0;
+	is_dragging_ufo_ = false;
+	offset_x_ = 0;
+	offset_y_ = 0;
 
-	mUfoVX = 2.0f;
-	mUfoVY = 1.5f;
+	ufo_vx_ = 2.0f;
+	ufo_vy_ = 1.5f;
 
-	mUfoAngle = 0.0f;
-	mIsAutoPatrol = false;
-	mAutoPatrolTimer = 0;
+	ufo_angle_ = 0.0f;
+	is_auto_patrol_ = false;
+	auto_patrol_timer_ = 0;
 
 	TitleButton newGameBtn;
 	newGameBtn.type = SelectionManager::Title::NewGame;
-	newGameBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/スタートボタン1.png");
+	newGameBtn.graph_handle = Master::mpResourceManager->LoadGraphics("Resource/2D/スタート�Eタン1.png");
 	newGameBtn.x = 920;
 	newGameBtn.y = 50;
-	GetGraphSize(newGameBtn.graphHandle, &newGameBtn.w, &newGameBtn.h);
-	newGameBtn.isHover = false;
-	mButtons.push_back(newGameBtn);
+	GetGraphSize(newGameBtn.graph_handle, &newGameBtn.w, &newGameBtn.h);
+	newGameBtn.is_hover = false;
+	buttons_.push_back(newGameBtn);
 
 	TitleButton tutorialBtn;
 	tutorialBtn.type = SelectionManager::Title::Tutorial;
-	tutorialBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/チュートリアルぼたん.png");
+	tutorialBtn.graph_handle = Master::mpResourceManager->LoadGraphics("Resource/2D/チュートリアルぼたん.png");
 	tutorialBtn.x = 900;
 	tutorialBtn.y = 250;
-	GetGraphSize(tutorialBtn.graphHandle, &tutorialBtn.w, &tutorialBtn.h);
-	tutorialBtn.isHover = false;
-	mButtons.push_back(tutorialBtn);
+	GetGraphSize(tutorialBtn.graph_handle, &tutorialBtn.w, &tutorialBtn.h);
+	tutorialBtn.is_hover = false;
+	buttons_.push_back(tutorialBtn);
 
 	TitleButton opeBtn;
 	opeBtn.type = SelectionManager::Title::OperationProcedures;
-	opeBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/せっていぼたん1.png");
+	opeBtn.graph_handle = Master::mpResourceManager->LoadGraphics("Resource/2D/せってぁE��たん1.png");
 	opeBtn.x = 915;
 	opeBtn.y = 450;
-	GetGraphSize(opeBtn.graphHandle, &opeBtn.w, &opeBtn.h);
-	opeBtn.isHover = false;
-	mButtons.push_back(opeBtn);
+	GetGraphSize(opeBtn.graph_handle, &opeBtn.w, &opeBtn.h);
+	opeBtn.is_hover = false;
+	buttons_.push_back(opeBtn);
 
 	TitleButton exitBtn;
 	exitBtn.type = SelectionManager::Title::titleOUT;
-	exitBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/しゅうりょうぼたん (1).png");
+	exitBtn.graph_handle = Master::mpResourceManager->LoadGraphics("Resource/2D/しゅぁE��めE��ぼたん (1).png");
 	exitBtn.x = 960;
 	exitBtn.y = 680;
-	GetGraphSize(exitBtn.graphHandle, &exitBtn.w, &exitBtn.h);
-	exitBtn.isHover = false;
-	mButtons.push_back(exitBtn);
+	GetGraphSize(exitBtn.graph_handle, &exitBtn.w, &exitBtn.h);
+	exitBtn.is_hover = false;
+	buttons_.push_back(exitBtn);
 
-	mFadeState = SceneFade_In;
+	fade_state_ = kSceneFadeIn;
 	SetFadeAlpha(255.0f);
-	mNextScene = SceneManager::SCENE_TITLE;
+	next_scene_ = SceneManager::kSceneTitle;
 
-	mbIsHoverNewGame = false;
-	mFrameCount = 0;
+	is_hover_new_game_ = false;
+	frame_count_ = 0;
 
-	// 繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ陦ｨ遉ｺ逕ｨ縺ｮ逕ｻ蜒上ｒ繝ｭ繝ｼ繝会ｼ・xLib蛻晄悄蛹門ｾ後〒縺ｪ縺・→螟ｱ謨励☆繧九◆繧√％縺薙〒陦後≧・・
-	rankImage[0] = Master::mpResourceManager->LoadGraphics("Resource/2D/1位.png");
-	rankImage[1] = Master::mpResourceManager->LoadGraphics("Resource/2D/2位.png");
-	rankImage[2] = Master::mpResourceManager->LoadGraphics("Resource/2D/3位.png");
-	rankingTitleImage = Master::mpResourceManager->LoadGraphics("Resource/2D/ランキング.png");
-	pointImg = Master::mpResourceManager->LoadGraphics("Resource/2D/点.png");
+	// 繝ｩ繝ｳ繧�E�繝ｳ繧�E�陦�E�遉ｺ逕ｨ縺�E�逕ｻ蜒上ｒ繝ｭ繝ｼ繝会ｼ・xLib蛻晁E��蛹門�E�後〒なし�E螟ｱ謨励☁E��九◆繧√！E��薙〒陦後≧・・
+	rank_image_[0] = Master::mpResourceManager->LoadGraphics("Resource/2D/1佁Epng");
+	rank_image_[1] = Master::mpResourceManager->LoadGraphics("Resource/2D/2佁Epng");
+	rank_image_[2] = Master::mpResourceManager->LoadGraphics("Resource/2D/3佁Epng");
+	ranking_title_image_ = Master::mpResourceManager->LoadGraphics("Resource/2D/ランキング.png");
+	point_img_ = Master::mpResourceManager->LoadGraphics("Resource/2D/点.png");
 }
 
 TitleScene::~TitleScene()
@@ -86,9 +86,9 @@ TitleScene::~TitleScene()
 void TitleScene::Initialize()
 {
 	Master::GameFinishFlag = false;
-	SetMouseDispFlag(true); // 繝ｦ繝ｼ繧ｶ繝ｼ縺後・繧ｿ繝ｳ謫堺ｽ懊〒縺阪ｋ繧医≧縺ｫ繝槭え繧ｹ繧定｡ｨ遉ｺ
-	Master::mpScore->LoadRanking(); // 繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ陦ｨ遉ｺ逕ｨ縺ｫ菫晏ｭ倥＆繧後◆繧ｹ繧ｳ繧｢繧偵Ο繝ｼ繝・
-	Master::mpCamera->Initialize();
+	SetMouseDispFlag(true); // 繝ｦ繝ｼ繧�E�繝ｼ縺後�E繧�E�繝ｳ謫堺�E�懊〒縺阪�E�繧医≧縺�E�繝槭え繧�E�繧定｡�E�遉ｺ
+	Master::mpScore->LoadRanking(); // 繝ｩ繝ｳ繧�E�繝ｳ繧�E�陦�E�遉ｺ逕ｨ縺�E�菫晏ｭ倥�E�E��後◆繧�E�繧�E�繧�E�繧偵Ο繝ｼ繝�E
+	Master::camera_->Initialize();
 
 	Master::mpSoundManager->PlayBGM(SoundManager::kBgmTitle);
 }
@@ -96,77 +96,77 @@ void TitleScene::Initialize()
 void TitleScene::Draw()
 {
 	Scene::Draw();
-	DrawExtendGraph(0, 0, 1600, 900, mnTitleGraphHandle, FALSE);
+	DrawExtendGraph(0, 0, 1600, 900, title_graph_handle_, FALSE);
 
-	int ufoDrawY = mUfoY;
+	int ufoDrawY = ufo_y_;
 
-	// 繝峨Λ繝・げ荳ｭ莉･螟悶・繧ｵ繧､繝ｳ豕｢縺ｧUFO縺ｮ豬ｮ驕翫い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ繧帝←逕ｨ縺吶ｋ
-	if (!mbIsDraggingUfo)
+	// 繝峨Λ繝�Eげ荳�E�莉･螟悶・繧�E�繧�E�繝ｳ豕｢縺�E�UFO縺�E�豬�E�驕翫ぁE��九Γ繝ｼ繧�E�繝ｧ繝ｳ繧帝�E逕ｨ縺吶�E�E
+	if (!is_dragging_ufo_)
 	{
-		float ufoWave = sin(mFrameCount * 0.03f) * 20.0f;
+		float ufoWave = sin(frame_count_ * 0.03f) * 20.0f;
 		ufoDrawY += (int)ufoWave;
 	}
 
 	int ufoSize = 360;
 	DrawExtendGraph(
-		mUfoX,
+		ufo_x_,
 		ufoDrawY,
-		mUfoX + ufoSize,
+		ufo_x_ + ufoSize,
 		ufoDrawY + ufoSize,
-		mnUfoGraphHandle,
+		ufo_graph_handle_,
 		TRUE
 	);
 
-	// 繝帙ヰ繝ｼ譎ゅ↓繝懊ち繝ｳ繧呈僑螟ｧ謠冗判縺励∬ｦ冶ｦ夂噪縺ｪ繝輔ぅ繝ｼ繝峨ヰ繝・け繧剃ｸ弱∴繧・
-	for (int i = 0; i < mButtons.size(); i++)
+	// 繝帙ヰ繝ｼ譎ゅ↓繝懊ち繝ｳ繧呈僑螟ｧ謠冗判縺励∬�E�冶�E�夂噪縺�E�繝輔ぅ繝ｼ繝峨ヰ繝�Eけ繧剁E��弱∴繧・
+	for (int i = 0; i < buttons_.size(); i++)
 	{
-		float wave = sin(mFrameCount * 0.05f + (i * 1.5f)) * 10.0f;
-		int drawY = mButtons[i].y + (int)wave;
+		float wave = sin(frame_count_ * 0.05f + (i * 1.5f)) * 10.0f;
+		int drawY = buttons_[i].y + (int)wave;
 
-		if (mButtons[i].isHover == true)
+		if (buttons_[i].is_hover == true)
 		{
 			int expand = 15;
 			DrawExtendGraph(
-				mButtons[i].x - expand,
+				buttons_[i].x - expand,
 				drawY - expand,
-				mButtons[i].x + mButtons[i].w + expand,
-				drawY + mButtons[i].h + expand,
-				mButtons[i].graphHandle, TRUE);
+				buttons_[i].x + buttons_[i].w + expand,
+				drawY + buttons_[i].h + expand,
+				buttons_[i].graph_handle, TRUE);
 		}
 		else
 		{
-			DrawGraph(mButtons[i].x, drawY, mButtons[i].graphHandle, TRUE);
+			DrawGraph(buttons_[i].x, drawY, buttons_[i].graph_handle, TRUE);
 		}
 	}
 
 	
 	DrawRankingUI();
-	if (mFadeState != SceneFade_None) {
-		Scene::Fade(mFadeState);
+	if (fade_state_ != kSceneFadeNone) {
+		Scene::Fade(fade_state_);
 	}
 }
 
 void TitleScene::Update()
 {
-	mFrameCount++;
+	frame_count_++;
 
-	if (mFadeState != SceneFade_Out)
+	if (fade_state_ != kSceneFadeOut)
 	{
-		mCowVoiceTimer--;
-		if (mCowVoiceTimer <= 0)
+		cow_voice_timer_--;
+		if (cow_voice_timer_ <= 0)
 		{
-			Master::mpSoundManager->PlaySE(SoundManager::kSeCow); // 繧ｿ繧､繝医Ν逕ｻ髱｢縺ｮ貍泌・縺ｨ縺励※螳壽悄逧・↓蜀咲函
-			mCowVoiceTimer = GetRand(600) + 300; // 蜀咲函髢馴囈繧偵Λ繝ｳ繝繝蛹悶＠蜊倩ｪｿ縺輔ｒ髦ｲ縺・
+			Master::mpSoundManager->PlaySE(SoundManager::kSeCow); // 繧�E�繧�E�繝医Ν逕ｻ髱�E�縺�E�貍泌�E縺�E�縺励※螳壽悁E��・↓蜀咲函
+			cow_voice_timer_ = GetRand(600) + 300; // 蜀咲函髢馴囈繧偵Λ繝ｳ繝繝�蛹悶�E�蜊倩�E��E�縺輔ｒ髦�E�縺・
 		}
 	}
 
-	if (mFadeState == SceneFade_Out)
+	if (fade_state_ == kSceneFadeOut)
 	{
 		Master::mpSoundManager->SetBGMVolume((Master::mpSoundManager->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
 		if (GetFadeAlpha() >= 255)
 		{
 			SetFadeAlpha(255);
-			Master::mpSceneManager->SetNextScene((SceneManager::SCENE_TYPE)mNextScene);
+			Master::mpSceneManager->SetNextScene((SceneManager::SCENE_TYPE)next_scene_);
 		}
 		return;
 	}
@@ -176,83 +176,83 @@ void TitleScene::Update()
 	int mouseInput = GetMouseInput();
 	int ufoSize = 360;
 
-	// UFO繧ｯ繝ｪ繝・け譎ゅ↓髫縺苓ｦ∫ｴ縺ｮ閾ｪ蜍募ｷ｡蝗槭Δ繝ｼ繝峨ｒ襍ｷ蜍輔☆繧・
+	// UFO繧�E�繝ｪ繝�Eけ譎ゅ↓髫�E�縺苓ｦ∫�E��E�縺�E�閾�E�蜍募�E��E�蝗槭Δ繝ｼ繝峨�E�襍ｷ蜍輔�E繧・
 	if ((mouseInput & MOUSE_INPUT_LEFT) != 0)
 	{
-		if (mouse_x_ >= mUfoX && mouse_x_ <= mUfoX + ufoSize &&
-			mouse_y_ >= mUfoY && mouse_y_ <= mUfoY + ufoSize)
+		if (mouse_x_ >= ufo_x_ && mouse_x_ <= ufo_x_ + ufoSize &&
+			mouse_y_ >= ufo_y_ && mouse_y_ <= ufo_y_ + ufoSize)
 		{
-			mIsAutoPatrol = true;
-			mAutoPatrolTimer = 240; // 4遘帝俣・・40繝輔Ξ繝ｼ繝・芽・蜍募ｷ｡蝗槭ｒ陦後≧
-			mbIsDraggingUfo = true;
+			is_auto_patrol_ = true;
+			auto_patrol_timer_ = 240; // 4遘帝俣・・40繝輔Ξ繝ｼ繝�・芽・蜍募�E��E�蝗槭�E�陦後≧
+			is_dragging_ufo_ = true;
 		}
 	}
 	else
 	{
-		mbIsDraggingUfo = false;
+		is_dragging_ufo_ = false;
 	}
 
-	// 讌募・霆碁％縺ｮ謨ｰ蠑上ｒ逕ｨ縺・※UFO繧定・蜍募ｷ｡蝗槭＆縺帙ｋ
-	if (mIsAutoPatrol)
+	// 讌募・霁E��E��E���E�謨�E�蠑上ｒ逕ｨ縺・※UFO繧定�E蜍募�E��E�蝗槭�E�E��帙ａE
+	if (is_auto_patrol_)
 	{
-		mUfoAngle += 0.02f;
-		mUfoX = 800 - (ufoSize / 2) + (int)(cos(mUfoAngle) * 400.0f);
-		mUfoY = 450 - (ufoSize / 2) + (int)(sin(mUfoAngle) * 200.0f);
+		ufo_angle_ += 0.02f;
+		ufo_x_ = 800 - (ufoSize / 2) + (int)(cos(ufo_angle_) * 400.0f);
+		ufo_y_ = 450 - (ufoSize / 2) + (int)(sin(ufo_angle_) * 200.0f);
 
-		mAutoPatrolTimer--;
-		if (mAutoPatrolTimer <= 0)
+		auto_patrol_timer_--;
+		if (auto_patrol_timer_ <= 0)
 		{
-			mAutoPatrolTimer = 0;
-			mIsAutoPatrol = false;
+			auto_patrol_timer_ = 0;
+			is_auto_patrol_ = false;
 		}
 	}
 
-	// UFO謫堺ｽ應ｸｭ莉･螟悶↓繝懊ち繝ｳ縺ｮ繝槭え繧ｹ蛻､螳壹→繧ｷ繝ｼ繝ｳ驕ｷ遘ｻ隕∵ｱゅｒ陦後≧
-	if (mbIsDraggingUfo == false)
+	// UFO謫堺�E�應ｸ�E�莉･螟悶↓繝懊ち繝ｳ縺�E�繝槭え繧�E�蛻�E�螳壹→繧�E�繝ｼ繝ｳ驕ｷ遘ｻ隕∵�E�めE��陦後≧
+	if (is_dragging_ufo_ == false)
 	{
-		for (int i = 0; i < mButtons.size(); i++)
+		for (int i = 0; i < buttons_.size(); i++)
 		{
-			if (mouse_x_ >= mButtons[i].x && mouse_x_ <= mButtons[i].x + mButtons[i].w &&
-				mouse_y_ >= mButtons[i].y && mouse_y_ <= mButtons[i].y + mButtons[i].h)
+			if (mouse_x_ >= buttons_[i].x && mouse_x_ <= buttons_[i].x + buttons_[i].w &&
+				mouse_y_ >= buttons_[i].y && mouse_y_ <= buttons_[i].y + buttons_[i].h)
 			{
-				mButtons[i].isHover = true;
+				buttons_[i].is_hover = true;
 
 				if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0)
 				{
-					switch (mButtons[i].type)
+					switch (buttons_[i].type)
 					{
 					case SelectionManager::Title::NewGame:
-						mNextScene = SceneManager::SCENE_LOADING;
-						mFadeState = SceneFade_Out;
+						next_scene_ = SceneManager::kSceneLoading;
+						fade_state_ = kSceneFadeOut;
 						Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
 						break;
 					case SelectionManager::Title::Tutorial:
-						mNextScene = SceneManager::SCENE_TUTORIAL;
-						mFadeState = SceneFade_Out;
+						next_scene_ = SceneManager::kSceneTutorial;
+						fade_state_ = kSceneFadeOut;
 						Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
 						break;
 					case SelectionManager::Title::OperationProcedures:
-						mNextScene = SceneManager::SCENE_RULE;
-						mFadeState = SceneFade_Out;
+						next_scene_ = SceneManager::kSceneRule;
+						fade_state_ = kSceneFadeOut;
 						Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
 						break;
 					case SelectionManager::Title::titleOUT:
-						PostQuitMessage(0); // OS縺ｫ繧｢繝励Μ繧ｱ繝ｼ繧ｷ繝ｧ繝ｳ邨ゆｺ・ｦ∵ｱゅｒ騾∽ｿ｡
+						PostQuitMessage(0); // OS縺�E�繧�E�繝励Μ繧�E�繝ｼ繧�E�繝ｧ繝ｳ邨めE��・�E�∵�E�めE��騾∽�E��E�
 						break;
 					}
 				}
 			}
 			else
 			{
-				mButtons[i].isHover = false;
+				buttons_[i].is_hover = false;
 			}
 		}
 	}
 	else
 	{
-		// UFO繝峨Λ繝・げ荳ｭ縺ｮ繝懊ち繝ｳ隱､蜿榊ｿ懊ｒ髦ｲ縺舌◆繧√・繝舌・迥ｶ諷九ｒ隗｣髯､
-		for (int i = 0; i < mButtons.size(); i++) {
-			mButtons[i].isHover = false;
+		// UFO繝峨Λ繝�Eげ荳�E�縺�E�繝懊ち繝ｳ隱�E�蜿榊ｿ懊ｒ髦�E�縺舌◆繧√�E繝�E・迥�E�諷九ｒ隗�E�髯�E�
+		for (int i = 0; i < buttons_.size(); i++) {
+			buttons_[i].is_hover = false;
 		}
 	}
 
@@ -261,25 +261,13 @@ void TitleScene::Update()
 
 void TitleScene::Finalize()
 {
-	DeleteGraph(mnTitleGraphHandle);
-	DeleteGraph(mnUfoGraphHandle);
+	// ResourceManager�ŊǗ����Ă��邽��DeleteGraph�͌Ă΂Ȃ�
 
-	for (int i = 0; i < mButtons.size(); i++)
-	{
-		DeleteGraph(mButtons[i].graphHandle);
-	}
-
-	for (int i = 0; i < 3; i++)
-	{
-		DeleteGraph(rankImage[i]);
-	}
-	SetMouseDispFlag(false); // 繧ｲ繝ｼ繝荳ｭ縺ｮ隱､謫堺ｽ懊ｒ髦ｲ縺舌◆繧√・繧ｦ繧ｹ繧帝撼陦ｨ遉ｺ蛹・
-	DeleteGraph(rankingTitleImage);
-	DeleteGraph(pointImg);
+	SetMouseDispFlag(false); // �Q�[�����̌둀���h�����߃}�E�X���\����
 	Master::mpSoundManager->StopBGM();
 }
 
-// [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 逕ｻ髱｢荳翫↓繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ謨ｰ蛟､縺ｨ繧｢繧､繧ｳ繝ｳ繧呈緒逕ｻ
+// [蜈･蜉嫁Eなし[蜁E��蜉嫁Eなし[蜑ｯ菴懁E��] 逕ｻ髱�E�荳翫↓繝ｩ繝ｳ繧�E�繝ｳ繧�E�謨�E�蛟､縺�E�繧�E�繧�E�繧�E�繝ｳ繧呈緒逕ｻ
 void TitleScene::DrawRankingUI()
 {
 	int baseX = 40;
@@ -290,7 +278,7 @@ void TitleScene::DrawRankingUI()
 		baseY - 100,
 		baseX + 420,
 		baseY + 120,
-		rankingTitleImage,
+		ranking_title_image_,
 		TRUE
 	);
 
@@ -304,7 +292,7 @@ void TitleScene::DrawRankingUI()
 			y - 20,
 			baseX + 120,
 			y + 100,
-			rankImage[i],
+			rank_image_[i],
 			TRUE
 		);
 
@@ -332,6 +320,6 @@ void TitleScene::DrawRankingUI()
 		}
 		if (digitCount < 4) digitCount = 4;
 		int pointX = baseX + 180 + digitCount * w;
-		DrawExtendGraph(pointX, drawY, pointX + w, drawY + h, pointImg, TRUE);
+		DrawExtendGraph(pointX, drawY, pointX + w, drawY + h, point_img_, TRUE);
 	}
 }

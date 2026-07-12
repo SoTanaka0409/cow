@@ -1,4 +1,4 @@
-ï»¿#include"Scene.h"
+#include"Scene.h"
 #include"ObjectManager.h"
 #include"Master.h"
 #include"ColliderManager.h"
@@ -28,7 +28,7 @@ Scene::~Scene()
 	if (object_manager_ != nullptr)
 	{
 		object_manager_->DeleteAll3D();
-		object_manager_->DeleteAll2D(); // ã‚·ãƒ¼ãƒ³åˆEï¿½ï¿½æ›¿ãˆæ™‚ã®ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯é˜²æ­¢
+		object_manager_->DeleteAll2D(); // ƒV[ƒ“?E??‘Ö‚¦‚Ìƒƒ‚ƒŠƒŠ[ƒN–h~
 		delete object_manager_;
 	}
 
@@ -66,7 +66,7 @@ void Scene::Draw()
 	}
 	if (collider_manager_ != nullptr)
 	{
-		collider_manager_->Draw(); // ãƒEï¿½ï¿½ãƒEï¿½ï¿½ç”¨ã®å½“ãŸã‚Šåˆ¤å®šå¯è¦–åŒ–
+		collider_manager_->Draw(); // ƒ`E??ƒ`E??—p‚Ì“–‚½‚è”»’è‰Â‹‰»
 	}
 	if (animal_manager_ != nullptr)
 	{
@@ -96,7 +96,7 @@ void Scene::Update()
 
 void Scene::Fade(SceneFade fade)
 {
-	// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³
+	// ƒtƒF[ƒhƒCƒ“
 	if (fade == SceneFade::kSceneFadeIn)
 	{
 
@@ -107,25 +107,25 @@ void Scene::Fade(SceneFade fade)
 		if (fade_alpha_ > 0)
 		{
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)fade_alpha_);
-			DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE); // ç”»é¢å…¨ä½“ã‚’æš—è»¢
+			DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE); // ‰æ–Ê‘S‘Ì‚ğˆÃ“]
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);          
 		}
 	}
-	// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒE
+	// ƒtƒF[ƒhƒAƒEƒ`E
 	else if (fade == SceneFade::kSceneFadeOut)
 	{
 
 		fade_alpha_ += fade_speed_;
-		if (fade_alpha_ > 255) fade_alpha_ = 255; // DxLibã®ä»•æ§˜ã«ã‚ˆã‚Šã‚¢ãƒ«ãƒ•ã‚¡å€¤ä¸Šé™ã¯255
+		if (fade_alpha_ > 255) fade_alpha_ = 255; // DxLib‚Ìd—l‚É‚æ‚èƒAƒ‹ƒtƒ@’lãŒÀ‚Í255
 
 
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)fade_alpha_);
 		DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);          
 	}
-	// ãƒ­ãƒ¼ãƒ‰ä¸­
+	// ƒ[ƒh’†
 	else if (fade == SceneFade::kSceneFadeLoad)
 	{
-		// å°Eï¿½ï¿½ã®ãƒ­ãƒ¼ãƒ‰ç”»é¢æ‹¡å¼µç”¨ã‚¹ãƒšï¿½Eã‚¹
+		// ••E??‚Ìƒ[ƒh‰æ–ÊŠg’£—pƒXƒy?EƒX
 	}
 }

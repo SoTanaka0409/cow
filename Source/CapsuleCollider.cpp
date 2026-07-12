@@ -1,4 +1,4 @@
-﻿#include "CapsuleCollider.h"
+#include "CapsuleCollider.h"
 #include "SphereCollider.h"
 #include "Object3D.h"
 

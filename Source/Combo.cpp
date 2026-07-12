@@ -1,4 +1,4 @@
-﻿#include "Combo.h"
+#include "Combo.h"
 #include "DxLib.h"
 #include "InputManager.h"
 #include "Master.h"
@@ -9,7 +9,7 @@ Combo::Combo()
 {
 	combo_count_ = 0;
 	combo_timer_ = 0.0f;
-	combo_max_time_ = 3.0f; // 難易度調整のためコンボ継続時間は3秒に固定
+	combo_max_time_ = 3.0f; // ��Փx�����̂��߃R���{�p�����Ԃ�3�b�ɌŒ�
 
 	combo_image_ = Master::mpResourceManager->LoadGraphics("Resource/2D/COMBO.png");
 
@@ -23,7 +23,7 @@ Combo::~Combo()
 
 void Combo::Draw()
 {
-	// 0コンボ時は表示を省略しUIの描画負荷を抑える
+	// 0�R���{���͕\�����ȗ���UI�̕`�敉�ׂ�}����
 	if (combo_count_ >= 1)
 	{
 		int x = Utility::kUiBaseX;
@@ -48,7 +48,7 @@ void Combo::Draw()
 
 void Combo::Update()
 {
-	// TODO: リリース時に削除（デバッグ用追加ショートカット）
+	// TODO: �����[�X���ɍ폜�i�f�o�b�O�p�ǉ��V���[�g�J�b�g�j
 	if (InputManager::CheckDownKey(KEY_INPUT_R))
 	{
 		AddHit();
@@ -58,7 +58,7 @@ void Combo::Update()
 	{
 		combo_timer_ -= 0.01f;
 
-		// コンボ継続時間を使い切ったため状態をリセットする
+		// �R���{�p�����Ԃ��g���؂������ߏ�Ԃ����Z�b�g����
 		if (combo_timer_ <= 0.0f)
 		{
 			Reset();
@@ -73,7 +73,7 @@ void Combo::AddHit()
 
 	if (combo_count_ > 1000)
 	{
-		combo_count_ = 1000; // 描画桁数のオーバーフローを防ぐための上限値
+		combo_count_ = 1000; // �`�挅���̃I�[�o�[�t���[��h�����߂̏���l
 	}
 }
 

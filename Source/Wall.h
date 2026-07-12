@@ -1,17 +1,17 @@
-﻿#pragma once
+#pragma once
 #include "DxLib.h"
 #include "Object3D.h"
 #include <vector>
 
-// 繧ｲ繝ｼ繝蜀・・螢・擇・亥屁隗貞ｽ｢繝昴Μ繧ｴ繝ｳ・峨ｒ逕滓・繝ｻ謠冗判縺吶ｋ繧ｯ繝ｩ繧ｹ
+// ゲーム冁E�E壁E���E�四角形ポリゴン�E�を生�E�E描画するクラス
 class Wall : public Object3D
 {
 public:
 	/*
-	 * @brief 螢・擇縺ｮ繝・け繧ｹ繝√Ε逕ｻ蜒上→遽・峇繝代Λ繝｡繝ｼ繧ｿ繧定ｨｭ螳壹＠縺ｦ蛻晄悄蛹悶☆繧・
-	 * [蜈･蜉嫋 filename: 繝・け繧ｹ繝√Ε逕ｻ蜒上∈縺ｮ繝代せ, centerPos: 螢√・荳ｭ蠢・ｺｧ讓・ topLeft: 蟾ｦ荳翫・逶ｸ蟇ｾ蠎ｧ讓・ bottomRight: 蜿ｳ荳九・逶ｸ蟇ｾ蠎ｧ讓・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 繝・け繧ｹ繝√Ε縺後Ο繝ｼ繝画凾縺ｫ繝ｭ繝ｼ繝峨＆繧後・らせ繝舌ャ繝輔ぃ(vertex_)縺瑚ｨｭ螳壹＆繧後ｋ
+	 * @brief 壁E��のチE��スチャ画像と篁E��パラメータを設定して初期化すめE
+	 * [入力] filename: チE��スチャ画像へのパス, centerPos: 壁�E中�K�v��樁E topLeft: 左上�E相対座樁E bottomRight: 右下�E相対座樁E
+	 * [出力] �Ȃ�
+	 * [副作用] チE��スチャがロード時にロードされ、E��点バッファ(vertex_)が設定される
 	 */
 	Wall(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight);
 	virtual ~Wall();
@@ -20,14 +20,14 @@ public:
 	void Draw() override;
 
 	/*
-	 * @brief 螢√ｒ讒区・縺吶ｋ4縺､縺ｮ鬆らせ繝・・繧ｿ繧貞叙蠕励☆繧・
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 VERTEX3D讒矩菴薙・繝吶け繧ｿ繝ｼ
-	 * [蜑ｯ菴懃畑] 縺ｪ縺・
+	 * @brief 壁を構�Eする4つの頂点チE�Eタを取得すめE
+	 * [入力] �Ȃ�
+	 * [出力] VERTEX3D構造体�Eベクター
+	 * [副作用] �Ȃ�
 	 */
 	std::vector<VERTEX3D> GetVertex();
 
 private:
-	int graph_handle_;      // 螢√ユ繧ｯ繧ｹ繝√Ε縺ｮ繧ｰ繝ｩ繝輔ぅ繝・け繝上Φ繝峨Ν
-	VERTEX3D vertex_[4];    // 螢・擇繧呈ｧ区・縺吶ｋ4縺､縺ｮ鬆らせ繝・・繧ｿ
+	int graph_handle_;      // 壁テクスチャのグラフィチE��ハンドル
+	VERTEX3D vertex_[4];    // 壁E��を構�Eする4つの頂点チE�Eタ
 };

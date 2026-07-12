@@ -1,4 +1,4 @@
-﻿#include "CowMove.h"
+#include "CowMove.h"
 #include "GameConstants.h"
 #include "Master.h"
 #include "InputManager.h"
@@ -25,7 +25,7 @@ namespace {
 CowMove::CowMove(std::string filename, VECTOR initPos)
 	: CharacterMove(filename, initPos)
 {
-	mfdeathTime = GameConstants::kCowDefault.death_time_height;
+	death_timer_ = GameConstants::kCowDefault.death_time_height;
 	mfScore = GameConstants::kCowDefault.score;
 	mfXp = GameConstants::kCowDefault.xp;
 	mbBaitFlag = false;
@@ -36,7 +36,7 @@ CowMove::CowMove(std::string filename, VECTOR initPos)
 
 	if (Master::mpSceneManager->GetSceneType() == SceneManager::kSceneTutorial)
 	{
-		mfdeathTime = GameConstants::kCowTutorial.death_time_height;
+		death_timer_ = GameConstants::kCowTutorial.death_time_height;
 	}
 
 	cow_vm_ = new EffekseerEffect("Resource/3D/EFK/MowVm.efk", position_, 50.0f);
@@ -286,7 +286,7 @@ void CowMove::CharacterDied()
 
 		if (cow_vm_ != nullptr)
 		{
-			if (position_.y > mfdeathTime)
+			if (position_.y > death_timer_)
 			{
 				if (effect_timer_ <= 0 && mbIsVisible == true)
 				{
@@ -309,7 +309,7 @@ void CowMove::CharacterDied()
 		}
 		else
 		{
-			if (position_.y > mfdeathTime)
+			if (position_.y > death_timer_)
 			{
 				Die(DEATH_VACUUM);
 			}
@@ -339,7 +339,7 @@ void CowMove::Die(DeathReason reason)
 			player->combo_->AddHit();
 			player->mpScore->AddScore(mfScore * player->combo_->GetMultiplier());
 
-			// 蜷檎ｨ�E�騾�E�邯壹く繝ｫ縺�E�繧医�E�繝懊・繝翫せ繧�E�繧�E�繧�E�險育�E�・
+			// 同�?E?�?E?続キル�?E?よ�?E?ボ�Eナス�?E?�?E?�?E?計�?E?�E
 			if (tag_cow_ == CowMove::TagCow::kCowT)
 			{
 				Master::mnTutorialcount++;

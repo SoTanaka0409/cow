@@ -1,4 +1,4 @@
-﻿#include"Model.h"
+#include"Model.h"
 #include"Master.h"
 
 Model::Model(std::string filename, VECTOR initPos, bool isSeparateAnimation)
@@ -17,7 +17,7 @@ Model::~Model()
     
     if (mnChangeTextureHandle != -1)
     {
-        DeleteGraph(mnChangeTextureHandle);
+        // DeleteGraph(mnChangeTextureHandle); // ResourceManagerで管琁E��てぁE��ため削除しなぁE
     }
     MV1DeleteModel(mnHandle);
 }
@@ -49,7 +49,7 @@ void Model::SetTexture(std::string filename, int index)
 {
     if (mnChangeTextureHandle != -1)
     {
-        DeleteGraph(mnChangeTextureHandle);
+        // DeleteGraph(mnChangeTextureHandle); // ResourceManagerで管琁E��てぁE��ため削除しなぁE
     }
     mnChangeTextureHandle = Master::mpResourceManager->LoadGraphics(filename);
     MV1SetTextureGraphHandle(mnHandle, index, mnChangeTextureHandle, FALSE);

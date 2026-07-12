@@ -1,7 +1,7 @@
-ï»¿#pragma once
+#pragma once
 #include <string>
 
-// ã‚²ãƒ¼ãƒ ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å®šæ•°ã¨ã—ã¦å®šç¾©ã™ã‚‹ãƒ‡ãƒ¼ã‚¿é§†å‹•è¨­è¨ˆã®å‚ç…§å…ˆ (Data-Driven Design)
+// ƒQ[ƒ€ƒpƒ‰ƒ[ƒ^‚ğ’è”‚Æ‚µ‚Ä’è‹`‚·‚éƒf[ƒ^‹ì“®İŒv‚ÌQÆæ (Data-Driven Design)
 namespace GameConstants
 {
 	struct CharacterParams
@@ -13,13 +13,13 @@ namespace GameConstants
 		std::string model_path;
 	};
 
-	// ç‰›
+	// ‹
 	const CharacterParams kCowDefault  = { 10.0f,  30.0f,  10.0f, 1900.0f, "Resource/3D/Cow/uploads_files_3880923_Cow.mv1" };
 	const CharacterParams kCow2        = { 10.0f,  20.0f,  10.0f, 1900.0f, "Resource/3D/Cow/uploads_files_3880923_Cow.mv1" };
 	const CharacterParams kCowGold     = { 15.0f,  30.0f,  20.0f, 1900.0f, "Resource/3D/GOLDCow/GoldCow.mv1" };
 	const CharacterParams kCowTutorial = { 10.0f,  30.0f, 150.0f,  700.0f, "Resource/3D/Cow/uploads_files_3880923_Cow.mv1" };
 
-	// å‹•ç‰©ï¼ˆæ•µã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ï¼‰
+	// “®•¨i“GƒLƒƒƒ‰ƒNƒ^[j
 	const CharacterParams kAnimalSheep   = { 10.0f, -10.0f,   0.0f, 1000.0f, "Resource/3D/Animal/uploads_files_3880923_Sheep.mv1" };
 	const CharacterParams kAnimalChicken = { 10.0f, -10.0f,   0.0f, 1000.0f, "Resource/3D/Animal/uploads_files_3881253_Chicken_Low.mv1" };
 	const CharacterParams kAnimalBear    = { 10.0f, -10.0f,   0.0f, 1000.0f, "Resource/3D/Animal/uploads_files_3887296_Black_Bear.mv1" };

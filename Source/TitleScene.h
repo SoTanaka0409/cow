@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 #include "Scene.h"
 #include"Texture.h"
 #include "SelectionManager.h"
@@ -6,7 +6,7 @@
 #include "Score.h"
 #include "SceneManager.h"
 
-// UIçŠ¶æ…‹ç®¡çEï¿½ï¿½æç”»ç”¨ã®ãƒEï¿½Eã‚¿ã‚’ã¾ã¨ã‚ã‚‹ãŸã‚ã®æ§‹é€ ä½E
+// UIó‘ÔŠÇ?E??•`‰æ—p‚Ìƒ`E?Eƒ^‚ğ‚Ü‚Æ‚ß‚é‚½‚ß‚Ì\‘¢‘Ì
 struct TitleButton
 {
 	SelectionManager::Title type;
@@ -16,27 +16,27 @@ struct TitleButton
 	bool is_hover;
 };
 
-// ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³èµ·å‹•æ™‚ã®åˆæœŸç”»é¢
+// ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‹N“®‚Ì‰Šú‰æ–Ê
 class TitleScene : public Scene
 {
 public:
 	TitleScene();
 	virtual ~TitleScene();
 
-	// [å…¥åŠ›] ãªãE[å‡ºåŠ›] ãªãE[å‰¯ä½œç”¨] ã‚¢ã‚»ãƒEï¿½ï¿½åˆæœŸåŒ–ã€ã‚¹ã‚³ã‚¢èª­ã¿è¾¼ã¿ã€BGMå†ç”Ÿ
+	// [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ƒAƒZƒ`E??‰Šú‰»AƒXƒRƒA“Ç‚İ‚İABGMÄ¶
 	virtual void Initialize() override;
 
-	// [å…¥åŠ›] ãªãE[å‡ºåŠ›] ãªãE[å‰¯ä½œç”¨] ãƒã‚¦ã‚¹å…¥åŠ›ã‚„UIçŠ¶æ…‹ã€ãƒ•ã‚§ãƒ¼ãƒ‰æ›´æ–°
+	// [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ƒ}ƒEƒX“ü—Í‚âUIó‘ÔAƒtƒF[ƒhXV
 	virtual void Update() override;
 
-	// [å…¥åŠ›] ãªãE[å‡ºåŠ›] ãªãE[å‰¯ä½œç”¨] èƒŒæ™¯ã‚„UIã€UFOã®æç”»ã‚³ãƒãƒ³ãƒ‰ç™ºè¡E
+	// [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ”wŒi‚âUIAUFO‚Ì•`‰æƒRƒ}ƒ“ƒh”­?E
 	virtual void Draw() override;
 
-	// [å…¥åŠ›] ãªãE[å‡ºåŠ›] ãªãE[å‰¯ä½œç”¨] ãƒªã‚½ãƒ¼ã‚¹ã®è§£æ”¾ã€BGMåœæ­¢
+	// [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ƒŠƒ\[ƒX‚Ì‰ğ•úABGM’â~
 	virtual void Finalize() override;
 
 private:
-	int frame_count_; // æ¼”ï¿½Eã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ç”¨ã®ã‚¿ã‚¤ãƒï¿½E
+	int frame_count_; // ‰‰?EƒAƒjƒ[ƒVƒ‡ƒ“—p‚Ìƒ^ƒCƒ}?E
 
 	int title_graph_handle_;
 	int new_game_;
@@ -60,7 +60,7 @@ private:
 
 	std::vector<TitleButton> buttons_;
 
-	// [å…¥åŠ›] ãªãE[å‡ºåŠ›] ãªãE[å‰¯ä½œç”¨] ä¸Šä½Eåï¿½Eã‚¹ã‚³ã‚¢UIã‚’æç”»
+	// [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ã?E–¼?EƒXƒRƒAUI‚ğ•`‰æ
 	void DrawRankingUI();
 
 	int rank_image_[3];

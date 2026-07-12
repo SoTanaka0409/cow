@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 #include"SceneManager.h"
 #include"SoundManager.h"
 #include"ResourceManager.h"
@@ -13,27 +13,27 @@
 #include"EffectManager.h"
 #include"Fever.h"
 
-// ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³å›é¿ã¨åEï¿½ï¿½ï¿½Eã¸ã®ã‚°ãƒ­ãƒ¼ãƒãƒ«ã‚¢ã‚¯ã‚»ã‚¹ã‚’æä¾›ã™ã‚‹ãŸã‚Eï¿½ï¿½çšEï¿½ï¿½ãƒ©ã‚¹ã¨ã—ã¦å®šç¾©
+// ƒVƒ“ƒOƒ‹ƒgƒ“‰ñ”ğ‚Æ™ÜE???E‚Ö‚ÌƒOƒ[ƒoƒ‹ƒAƒNƒZƒX‚ğ’ñ‹Ÿ‚·‚é‚½‚ßE???E??ƒ‰ƒX‚Æ‚µ‚Ä’è‹`
 class Master
 {
 public:
-	static SceneManager* mpSceneManager;      // ã‚·ãƒ¼ãƒ³åˆEï¿½ï¿½æ›¿ãˆã¨ãƒ©ã‚¤ãƒ•ã‚µã‚¤ã‚¯ãƒ«ç®¡çEï¿½ï¿½
-	static SoundManager* mpSoundManager;      // BGM/SEã®ä¸€æ‹¬åˆ¶å¾¡ç”¨
-	static Score* mpScore;                    // UIè¡¨ç¤ºã¨ãƒªã‚¶ãƒ«ãƒˆç®—ï¿½Eã®ãŸã‚ã®ã‚¹ã‚³ã‚¢æƒEï¿½ï¿½
-	static ResourceManager* mpResourceManager;// é »ç¹ãªãƒ­ãƒ¼ãƒ‰ã«ã‚ˆã‚‹ã‚«ã‚¯ã¤ãã‚’é˜²ãã‚¢ã‚»ãƒEï¿½ï¿½ã‚­ãƒ£ãƒEï¿½ï¿½ãƒ¥
-	static Camera* camera_;                  // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼è¿½å¾“ç”¨ã®ãƒ¡ã‚¤ãƒ³ã‚«ãƒ¡ãƒ©
-	static DebugCamera* mpDebugCamera;        // ãƒEï¿½ï¿½ãƒEï¿½ï¿½æ™‚ï¿½Eè‡ªç”±è¦–ç‚¹ç¢ºèªç”¨
-	static bool mbIsDebugCamera;              // å…¥åŠ›ï¿½Eæ–­ã¨ã‚«ãƒ¡ãƒ©æ“ä½œã‚’åˆEï¿½ï¿½æ›¿ãˆã‚‹ãƒEï¿½ï¿½ãƒEï¿½ï¿½ãƒ•ãƒ©ã‚°
-	static Level* mpLevel;                    // ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ç”¨ãƒ¬ãƒ™ãƒ«æƒEï¿½ï¿½
-	static EffectManager* mpEffectManager;    // Effekseerã‚¨ãƒ•ã‚§ã‚¯ãƒˆï¿½Eæç”»ãƒ»å¯¿å‘½ç®¡çEï¿½ï¿½
+	static SceneManager* mpSceneManager;      // ƒV[ƒ“?E??‘Ö‚¦‚Æƒ‰ƒCƒtƒTƒCƒNƒ‹ŠÇ?E??
+	static SoundManager* mpSoundManager;      // BGM/SE‚ÌˆêŠ‡§Œä—p
+	static Score* mpScore;                    // UI•\¦‚ÆƒŠƒUƒ‹ƒgZ?E‚Ì‚½‚ß‚ÌƒXƒRƒA?E??
+	static ResourceManager* mpResourceManager;// •p”É‚Èƒ[ƒh‚É‚æ‚éƒJƒN‚Â‚«‚ğ–h‚®ƒAƒZƒ`E??ƒLƒƒƒ`E??ƒ…
+	static Camera* camera_;                  // ƒvƒŒƒCƒ„[’Ç]—p‚ÌƒƒCƒ“ƒJƒƒ‰
+	static DebugCamera* mpDebugCamera;        // ƒ`E??ƒ`E???E©—R‹“_Šm”F—p
+	static bool mbIsDebugCamera;              // “ü—Í?E’f‚ÆƒJƒƒ‰‘€ì‚ğ?E??‘Ö‚¦‚éƒ`E??ƒ`E??ƒtƒ‰ƒO
+	static Level* mpLevel;                    // ƒpƒ‰ƒ[ƒ^ƒXƒP[ƒŠƒ“ƒO—pƒŒƒxƒ‹?E??
+	static EffectManager* mpEffectManager;    // EffekseerƒGƒtƒFƒNƒg?E•`‰æEõ–½ŠÇ?E??
 	
-	static bool SelectSkill;                  // ã‚¹ã‚­ãƒ«é¸æŠä¸­ã®ã‚²ãƒ¼ãƒ é€²è¡Œåœæ­¢ç”¨ãƒ•ãƒ©ã‚°
-	static int mnTutorialcount;               // ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«ã®é€²è¡Œåº¦åˆ¤å®šç”¨ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼
-	static bool GameFinishFlag;               // ãƒªã‚¶ãƒ«ãƒˆç§»è¡Œã‚’åˆ¶å¾¡ã™ã‚‹çµ‚äºEï¿½ï¿½æ…‹ãƒ•ãƒ©ã‚°
-	static bool FeverFlag;                    // è‡ªå‹•å¸å¼•ã¨å¤§é‡ï¿½Eç¾ãƒ¢ãƒ¼ãƒ‰ã‚’æœ‰åŠ¹ã«ã™ã‚‹ãƒ•ãƒ©ã‚°
-	static int mnCaughtCowCount;              // å®Ÿç¸¾è§£é™¤ã¨ã‚¤ãƒ™ãƒ³ãƒˆç™ºç”Ÿåˆ¤å®šç”¨ã®ç·å›åæ•°
-	static bool tutorial_vacum_flag_;             // ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«ã§ã®å¸å¼•æ“ä½œé”æˆãƒ•ãƒ©ã‚°
+	static bool SelectSkill;                  // ƒXƒLƒ‹‘I‘ğ’†‚ÌƒQ[ƒ€is’â~—pƒtƒ‰ƒO
+	static int mnTutorialcount;               // ƒ`ƒ…[ƒgƒŠƒAƒ‹‚Ìis“x”»’è—pƒJƒEƒ“ƒ^[
+	static bool GameFinishFlag;               // ƒŠƒUƒ‹ƒgˆÚs‚ğ§Œä‚·‚éI?E??‘Ôƒtƒ‰ƒO
+	static bool FeverFlag;                    // ©“®‹zˆø‚Æ‘å—Ê?EŒ»ƒ‚[ƒh‚ğ—LŒø‚É‚·‚éƒtƒ‰ƒO
+	static int mnCaughtCowCount;              // ÀÑ‰ğœ‚ÆƒCƒxƒ“ƒg”­¶”»’è—p‚Ì‘‰ñû”
+	static bool tutorial_vacum_flag_;             // ƒ`ƒ…[ƒgƒŠƒAƒ‹‚Å‚Ì‹zˆø‘€ì’B¬ƒtƒ‰ƒO
 
-	static float mfDeltaTime;                 // ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆå¤‰å‹•ã‚’å¸åã™ã‚‹ãŸã‚ï¿½EçµŒéæ™‚é–“(ç§E
-	static float GetDeltaTimeScaler() { return mfDeltaTime * 60.0f; } // 60FPSåŸºæº–ï¿½Eç§»å‹•é‡è£œæ­£ã‚¹ã‚±ãƒ¼ãƒ«
+	static float mfDeltaTime;                 // ƒtƒŒ[ƒ€ƒŒ[ƒg•Ï“®‚ğ‹zû‚·‚é‚½‚ß?EŒo‰ßŠÔ(„E
+	static float GetDeltaTimeScaler() { return mfDeltaTime * 60.0f; } // 60FPSŠî€?EˆÚ“®—Ê•â³ƒXƒP[ƒ‹
 };

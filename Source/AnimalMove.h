@@ -1,14 +1,14 @@
-﻿#pragma once
+#pragma once
 #include "CharacterMove.h"
 
 class SphereCollider;
 class CapsuleCollider;
 
-// 閾ｪ蠕狗ｧｻ蜍輔→謐慕佐・亥精縺・ｾｼ縺ｿ・臥憾諷九ｒ邂｡逅・☆繧句虚迚ｩ縺ｮ蝓ｺ蠎輔け繝ｩ繧ｹ
+// 自律移動と捕獲�E�吸ぁE��み�E�状態を管琁E��る動物の基底クラス
 class AnimalMove : public CharacterMove
 {
 public:
-	// 繧ｳ繝ｳ繝懊・繝ｼ繝翫せ險育ｮ励↓逕ｨ縺・ｋ蜍慕黄遞ｮ蛻･
+	// コンボ�Eーナス計算に用ぁE��動物種別
 	enum TagAnimal
 	{
 		kNone,
@@ -21,19 +21,19 @@ public:
 
 public:
 	/*
-	 * @brief 蜍慕黄繧ｪ繝悶ず繧ｧ繧ｯ繝医・逕滓・
-	 * [蜈･蜉嫋 filename: 繝｢繝・Ν繝代せ, initPos: 蛻晄悄蠎ｧ讓・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 繧ｹ繝・・繧ｿ繧ｹ蛻晄悄蛹・
+	 * @brief 動物オブジェクト�E生�E
+	 * [入力] filename: モチE��パス, initPos: 初期座樁E
+	 * [出力] �Ȃ�
+	 * [副作用] スチE�Eタス初期匁E
 	 */
 	AnimalMove(std::string filename, VECTOR initPos);
 	virtual ~AnimalMove();
 
 	/*
-	 * @brief 繧ｭ繝｣繝ｩ繧ｯ繧ｿ繝ｼ縺ｮ遘ｻ蜍募・逅・
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 蠎ｧ讓吶・譖ｴ譁ｰ
+	 * @brief キャラクターの移動�E琁E
+	 * [入力] �Ȃ�
+	 * [出力] �Ȃ�
+	 * [副作用] 座標�E更新
 	 */
 	virtual void MoveCharacter() override;
 	virtual void Reset(VECTOR pos) override;
