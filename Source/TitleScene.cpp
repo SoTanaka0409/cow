@@ -8,75 +8,75 @@
 TitleScene::TitleScene()
 	: Scene()
 {
-	cow_voice_timer_ = 180; // 初回再生までの征E��フレーム設宁E
+	mCowVoiceTimer = 180; // 蛻晏屓蜀咲函縺ｾ縺ｧ縺ｮ蠕・ｩ溘ヵ繝ｬ繝ｼ繝險ｭ螳・
 	
-	title_graph_handle_ = Master::mpResourceManager->LoadGraphics("Resource/2D/タイトルシーン.png");
-	ufo_graph_handle_ = Master::mpResourceManager->LoadGraphics("Resource/2D/牛とUFO.png");
-	GetGraphSize(ufo_graph_handle_, &ufo_w_, &ufo_h_);
+	mnTitleGraphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/タイトルシーン.png");
+	mnUfoGraphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/牛とUFO.png");
+	GetGraphSize(mnUfoGraphHandle, &mUfoW, &mUfoH);
 
-	ufo_x_ = 540;
-	ufo_y_ = 30;
+	mUfoX = 540;
+	mUfoY = 30;
 
-	is_dragging_ufo_ = false;
-	offset_x_ = 0;
-	offset_y_ = 0;
+	mbIsDraggingUfo = false;
+	mOffsetX = 0;
+	mOffsetY = 0;
 
-	ufo_vx_ = 2.0f;
-	ufo_vy_ = 1.5f;
+	mUfoVX = 2.0f;
+	mUfoVY = 1.5f;
 
-	ufo_angle_ = 0.0f;
-	is_auto_patrol_ = false;
-	auto_patrol_timer_ = 0;
+	mUfoAngle = 0.0f;
+	mIsAutoPatrol = false;
+	mAutoPatrolTimer = 0;
 
 	TitleButton newGameBtn;
 	newGameBtn.type = SelectionManager::Title::NewGame;
-	newGameBtn.graph_handle = Master::mpResourceManager->LoadGraphics("Resource/2D/スタートボタン1.png");
+	newGameBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/スタートボタン1.png");
 	newGameBtn.x = 920;
 	newGameBtn.y = 50;
-	GetGraphSize(newGameBtn.graph_handle, &newGameBtn.w, &newGameBtn.h);
-	newGameBtn.is_hover = false;
-	buttons_.push_back(newGameBtn);
+	GetGraphSize(newGameBtn.graphHandle, &newGameBtn.w, &newGameBtn.h);
+	newGameBtn.isHover = false;
+	mButtons.push_back(newGameBtn);
 
 	TitleButton tutorialBtn;
 	tutorialBtn.type = SelectionManager::Title::Tutorial;
-	tutorialBtn.graph_handle = Master::mpResourceManager->LoadGraphics("Resource/2D/チュートリアルぼたん.png");
+	tutorialBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/チュートリアルぼたん.png");
 	tutorialBtn.x = 900;
 	tutorialBtn.y = 250;
-	GetGraphSize(tutorialBtn.graph_handle, &tutorialBtn.w, &tutorialBtn.h);
-	tutorialBtn.is_hover = false;
-	buttons_.push_back(tutorialBtn);
+	GetGraphSize(tutorialBtn.graphHandle, &tutorialBtn.w, &tutorialBtn.h);
+	tutorialBtn.isHover = false;
+	mButtons.push_back(tutorialBtn);
 
 	TitleButton opeBtn;
 	opeBtn.type = SelectionManager::Title::OperationProcedures;
-	opeBtn.graph_handle = Master::mpResourceManager->LoadGraphics("Resource/2D/せっていぼたん1.png");
+	opeBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/せっていぼたん1.png");
 	opeBtn.x = 915;
 	opeBtn.y = 450;
-	GetGraphSize(opeBtn.graph_handle, &opeBtn.w, &opeBtn.h);
-	opeBtn.is_hover = false;
-	buttons_.push_back(opeBtn);
+	GetGraphSize(opeBtn.graphHandle, &opeBtn.w, &opeBtn.h);
+	opeBtn.isHover = false;
+	mButtons.push_back(opeBtn);
 
 	TitleButton exitBtn;
 	exitBtn.type = SelectionManager::Title::titleOUT;
-	exitBtn.graph_handle = Master::mpResourceManager->LoadGraphics("Resource/2D/しゅうりょうぼたん (1).png");
+	exitBtn.graphHandle = Master::mpResourceManager->LoadGraphics("Resource/2D/しゅうりょうぼたん (1).png");
 	exitBtn.x = 960;
 	exitBtn.y = 680;
-	GetGraphSize(exitBtn.graph_handle, &exitBtn.w, &exitBtn.h);
-	exitBtn.is_hover = false;
-	buttons_.push_back(exitBtn);
+	GetGraphSize(exitBtn.graphHandle, &exitBtn.w, &exitBtn.h);
+	exitBtn.isHover = false;
+	mButtons.push_back(exitBtn);
 
-	fade_state_ = kSceneFadeIn;
+	mFadeState = SceneFade_In;
 	SetFadeAlpha(255.0f);
-	next_scene_ = SceneManager::kSceneTitle;
+	mNextScene = SceneManager::SCENE_TITLE;
 
-	is_hover_new_game_ = false;
-	frame_count_ = 0;
+	mbIsHoverNewGame = false;
+	mFrameCount = 0;
 
-	// ランキング表示用の画像をロード！ExLib初期化後でなぁE��失敗するためここで行う�E�E
-	rank_image_[0] = Master::mpResourceManager->LoadGraphics("Resource/2D/1位.png");
-	rank_image_[1] = Master::mpResourceManager->LoadGraphics("Resource/2D/2位.png");
-	rank_image_[2] = Master::mpResourceManager->LoadGraphics("Resource/2D/3位.png");
-	ranking_title_image_ = Master::mpResourceManager->LoadGraphics("Resource/2D/ランキング.png");
-	point_img_ = Master::mpResourceManager->LoadGraphics("Resource/2D/点.png");
+	// 繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ陦ｨ遉ｺ逕ｨ縺ｮ逕ｻ蜒上ｒ繝ｭ繝ｼ繝会ｼ・xLib蛻晄悄蛹門ｾ後〒縺ｪ縺・→螟ｱ謨励☆繧九◆繧√％縺薙〒陦後≧・・
+	rankImage[0] = Master::mpResourceManager->LoadGraphics("Resource/2D/1位.png");
+	rankImage[1] = Master::mpResourceManager->LoadGraphics("Resource/2D/2位.png");
+	rankImage[2] = Master::mpResourceManager->LoadGraphics("Resource/2D/3位.png");
+	rankingTitleImage = Master::mpResourceManager->LoadGraphics("Resource/2D/ランキング.png");
+	pointImg = Master::mpResourceManager->LoadGraphics("Resource/2D/点.png");
 }
 
 TitleScene::~TitleScene()
@@ -86,9 +86,9 @@ TitleScene::~TitleScene()
 void TitleScene::Initialize()
 {
 	Master::GameFinishFlag = false;
-	SetMouseDispFlag(true); // ユーザーが�Eタン操作できるようにマウスを表示
-	Master::mpScore->LoadRanking(); // ランキング表示用に保存されたスコアをローチE
-	Master::camera_->Initialize();
+	SetMouseDispFlag(true); // 繝ｦ繝ｼ繧ｶ繝ｼ縺後・繧ｿ繝ｳ謫堺ｽ懊〒縺阪ｋ繧医≧縺ｫ繝槭え繧ｹ繧定｡ｨ遉ｺ
+	Master::mpScore->LoadRanking(); // 繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ陦ｨ遉ｺ逕ｨ縺ｫ菫晏ｭ倥＆繧後◆繧ｹ繧ｳ繧｢繧偵Ο繝ｼ繝・
+	Master::mpCamera->Initialize();
 
 	Master::mpSoundManager->PlayBGM(SoundManager::kBgmTitle);
 }
@@ -96,80 +96,77 @@ void TitleScene::Initialize()
 void TitleScene::Draw()
 {
 	Scene::Draw();
-	DrawExtendGraph(0, 0, 1600, 900, title_graph_handle_, FALSE);
+	DrawExtendGraph(0, 0, 1600, 900, mnTitleGraphHandle, FALSE);
 
-	int ufoDrawY = ufo_y_;
+	int ufoDrawY = mUfoY;
 
-	// ドラチE��中以外�Eサイン波でUFOの浮遊アニメーションを適用する
-	if (!is_dragging_ufo_)
+	// 繝峨Λ繝・げ荳ｭ莉･螟悶・繧ｵ繧､繝ｳ豕｢縺ｧUFO縺ｮ豬ｮ驕翫い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ繧帝←逕ｨ縺吶ｋ
+	if (!mbIsDraggingUfo)
 	{
-		float ufoWave = sin(frame_count_ * 0.03f) * 20.0f;
+		float ufoWave = sin(mFrameCount * 0.03f) * 20.0f;
 		ufoDrawY += (int)ufoWave;
 	}
 
 	int ufoSize = 360;
 	DrawExtendGraph(
-		ufo_x_,
+		mUfoX,
 		ufoDrawY,
-		ufo_x_ + ufoSize,
+		mUfoX + ufoSize,
 		ufoDrawY + ufoSize,
-		ufo_graph_handle_,
+		mnUfoGraphHandle,
 		TRUE
 	);
 
-	// ホバー時にボタンを拡大描画し、視覚的なフィードバチE��を与えめE
-	for (int i = 0; i < buttons_.size(); i++)
+	// 繝帙ヰ繝ｼ譎ゅ↓繝懊ち繝ｳ繧呈僑螟ｧ謠冗判縺励∬ｦ冶ｦ夂噪縺ｪ繝輔ぅ繝ｼ繝峨ヰ繝・け繧剃ｸ弱∴繧・
+	for (int i = 0; i < mButtons.size(); i++)
 	{
-		float wave = sin(frame_count_ * 0.05f + (i * 1.5f)) * 10.0f;
-		int drawY = buttons_[i].y + (int)wave;
+		float wave = sin(mFrameCount * 0.05f + (i * 1.5f)) * 10.0f;
+		int drawY = mButtons[i].y + (int)wave;
 
-		if (buttons_[i].is_hover == true)
+		if (mButtons[i].isHover == true)
 		{
 			int expand = 15;
 			DrawExtendGraph(
-				buttons_[i].x - expand,
+				mButtons[i].x - expand,
 				drawY - expand,
-				buttons_[i].x + buttons_[i].w + expand,
-				drawY + buttons_[i].h + expand,
-				buttons_[i].graph_handle, TRUE);
+				mButtons[i].x + mButtons[i].w + expand,
+				drawY + mButtons[i].h + expand,
+				mButtons[i].graphHandle, TRUE);
 		}
 		else
 		{
-			DrawGraph(buttons_[i].x, drawY, buttons_[i].graph_handle, TRUE);
+			DrawGraph(mButtons[i].x, drawY, mButtons[i].graphHandle, TRUE);
 		}
 	}
 
 	
 	DrawRankingUI();
-	if (fade_state_ != kSceneFadeNone) {
-		Scene::Fade(fade_state_);
+	if (mFadeState != SceneFade_None) {
+		Scene::Fade(mFadeState);
 	}
-	
-	// DEBUG
-	DrawFormatString(10, 10, GetColor(255, 0, 0), "TitleHandle: %d, Fade: %f, Res: %d", title_graph_handle_, GetFadeAlpha(), Master::mpResourceManager->GetTotalResource());
 }
 
 void TitleScene::Update()
 {
-	frame_count_++;
+	mFrameCount++;
 
-	if (fade_state_ != kSceneFadeOut)
+	if (mFadeState != SceneFade_Out)
 	{
-		cow_voice_timer_--;
-		if (cow_voice_timer_ <= 0)
+		mCowVoiceTimer--;
+		if (mCowVoiceTimer <= 0)
 		{
-			Master::mpSoundManager->PlaySE(SoundManager::kSeCow); // タイトル画面の演�Eとして定期皁E��再生
-			cow_voice_timer_ = GetRand(600) + 300; // 再生間隔をランダム化し単調さを防ぁE
+			Master::mpSoundManager->PlaySE(SoundManager::kSeCow); // 繧ｿ繧､繝医Ν逕ｻ髱｢縺ｮ貍泌・縺ｨ縺励※螳壽悄逧・↓蜀咲函
+			mCowVoiceTimer = GetRand(600) + 300; // 蜀咲函髢馴囈繧偵Λ繝ｳ繝繝蛹悶＠蜊倩ｪｿ縺輔ｒ髦ｲ縺・
 		}
 	}
 
-	if (fade_state_ == kSceneFadeOut)
+	if (mFadeState == SceneFade_Out)
 	{
 		Master::mpSoundManager->SetBGMVolume((Master::mpSoundManager->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
 		if (GetFadeAlpha() >= 255)
 		{
 			SetFadeAlpha(255);
-			Master::mpSceneManager->SetNextScene((SceneManager::SCENE_TYPE)next_scene_);
+			Master::mpSceneManager->SetNextScene((SceneManager::SCENE_TYPE)mNextScene);
 		}
 		return;
 	}
@@ -179,83 +176,83 @@ void TitleScene::Update()
 	int mouseInput = GetMouseInput();
 	int ufoSize = 360;
 
-	// UFOクリチE��時に隠し要素の自動巡回モードを起動すめE
+	// UFO繧ｯ繝ｪ繝・け譎ゅ↓髫縺苓ｦ∫ｴ縺ｮ閾ｪ蜍募ｷ｡蝗槭Δ繝ｼ繝峨ｒ襍ｷ蜍輔☆繧・
 	if ((mouseInput & MOUSE_INPUT_LEFT) != 0)
 	{
-		if (mouse_x_ >= ufo_x_ && mouse_x_ <= ufo_x_ + ufoSize &&
-			mouse_y_ >= ufo_y_ && mouse_y_ <= ufo_y_ + ufoSize)
+		if (mouse_x_ >= mUfoX && mouse_x_ <= mUfoX + ufoSize &&
+			mouse_y_ >= mUfoY && mouse_y_ <= mUfoY + ufoSize)
 		{
-			is_auto_patrol_ = true;
-			auto_patrol_timer_ = 240; // 4秒間�E�E40フレーム�E��E動巡回を行う
-			is_dragging_ufo_ = true;
+			mIsAutoPatrol = true;
+			mAutoPatrolTimer = 240; // 4遘帝俣・・40繝輔Ξ繝ｼ繝・芽・蜍募ｷ｡蝗槭ｒ陦後≧
+			mbIsDraggingUfo = true;
 		}
 	}
 	else
 	{
-		is_dragging_ufo_ = false;
+		mbIsDraggingUfo = false;
 	}
 
-	// 楕�E軌道の数式を用ぁE��UFOを�E動巡回させる
-	if (is_auto_patrol_)
+	// 讌募・霆碁％縺ｮ謨ｰ蠑上ｒ逕ｨ縺・※UFO繧定・蜍募ｷ｡蝗槭＆縺帙ｋ
+	if (mIsAutoPatrol)
 	{
-		ufo_angle_ += 0.02f;
-		ufo_x_ = 800 - (ufoSize / 2) + (int)(cos(ufo_angle_) * 400.0f);
-		ufo_y_ = 450 - (ufoSize / 2) + (int)(sin(ufo_angle_) * 200.0f);
+		mUfoAngle += 0.02f;
+		mUfoX = 800 - (ufoSize / 2) + (int)(cos(mUfoAngle) * 400.0f);
+		mUfoY = 450 - (ufoSize / 2) + (int)(sin(mUfoAngle) * 200.0f);
 
-		auto_patrol_timer_--;
-		if (auto_patrol_timer_ <= 0)
+		mAutoPatrolTimer--;
+		if (mAutoPatrolTimer <= 0)
 		{
-			auto_patrol_timer_ = 0;
-			is_auto_patrol_ = false;
+			mAutoPatrolTimer = 0;
+			mIsAutoPatrol = false;
 		}
 	}
 
-	// UFO操作中以外にボタンのマウス判定とシーン遷移要求を行う
-	if (is_dragging_ufo_ == false)
+	// UFO謫堺ｽ應ｸｭ莉･螟悶↓繝懊ち繝ｳ縺ｮ繝槭え繧ｹ蛻､螳壹→繧ｷ繝ｼ繝ｳ驕ｷ遘ｻ隕∵ｱゅｒ陦後≧
+	if (mbIsDraggingUfo == false)
 	{
-		for (int i = 0; i < buttons_.size(); i++)
+		for (int i = 0; i < mButtons.size(); i++)
 		{
-			if (mouse_x_ >= buttons_[i].x && mouse_x_ <= buttons_[i].x + buttons_[i].w &&
-				mouse_y_ >= buttons_[i].y && mouse_y_ <= buttons_[i].y + buttons_[i].h)
+			if (mouse_x_ >= mButtons[i].x && mouse_x_ <= mButtons[i].x + mButtons[i].w &&
+				mouse_y_ >= mButtons[i].y && mouse_y_ <= mButtons[i].y + mButtons[i].h)
 			{
-				buttons_[i].is_hover = true;
+				mButtons[i].isHover = true;
 
 				if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0)
 				{
-					switch (buttons_[i].type)
+					switch (mButtons[i].type)
 					{
 					case SelectionManager::Title::NewGame:
-						next_scene_ = SceneManager::kSceneLoading;
-						fade_state_ = kSceneFadeOut;
+						mNextScene = SceneManager::SCENE_LOADING;
+						mFadeState = SceneFade_Out;
 						Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
 						break;
 					case SelectionManager::Title::Tutorial:
-						next_scene_ = SceneManager::kSceneTutorial;
-						fade_state_ = kSceneFadeOut;
+						mNextScene = SceneManager::SCENE_TUTORIAL;
+						mFadeState = SceneFade_Out;
 						Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
 						break;
 					case SelectionManager::Title::OperationProcedures:
-						next_scene_ = SceneManager::kSceneRule;
-						fade_state_ = kSceneFadeOut;
+						mNextScene = SceneManager::SCENE_RULE;
+						mFadeState = SceneFade_Out;
 						Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
 						break;
 					case SelectionManager::Title::titleOUT:
-						PostQuitMessage(0); // OSにアプリケーション終亁E��求を送信
+						PostQuitMessage(0); // OS縺ｫ繧｢繝励Μ繧ｱ繝ｼ繧ｷ繝ｧ繝ｳ邨ゆｺ・ｦ∵ｱゅｒ騾∽ｿ｡
 						break;
 					}
 				}
 			}
 			else
 			{
-				buttons_[i].is_hover = false;
+				mButtons[i].isHover = false;
 			}
 		}
 	}
 	else
 	{
-		// UFOドラチE��中のボタン誤反応を防ぐため�Eバ�E状態を解除
-		for (int i = 0; i < buttons_.size(); i++) {
-			buttons_[i].is_hover = false;
+		// UFO繝峨Λ繝・げ荳ｭ縺ｮ繝懊ち繝ｳ隱､蜿榊ｿ懊ｒ髦ｲ縺舌◆繧√・繝舌・迥ｶ諷九ｒ隗｣髯､
+		for (int i = 0; i < mButtons.size(); i++) {
+			mButtons[i].isHover = false;
 		}
 	}
 
@@ -264,11 +261,25 @@ void TitleScene::Update()
 
 void TitleScene::Finalize()
 {
-	SetMouseDispFlag(false); // ゲーム中の誤操作を防ぐためマウスを非表示化
+	DeleteGraph(mnTitleGraphHandle);
+	DeleteGraph(mnUfoGraphHandle);
+
+	for (int i = 0; i < mButtons.size(); i++)
+	{
+		DeleteGraph(mButtons[i].graphHandle);
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		DeleteGraph(rankImage[i]);
+	}
+	SetMouseDispFlag(false); // 繧ｲ繝ｼ繝荳ｭ縺ｮ隱､謫堺ｽ懊ｒ髦ｲ縺舌◆繧√・繧ｦ繧ｹ繧帝撼陦ｨ遉ｺ蛹・
+	DeleteGraph(rankingTitleImage);
+	DeleteGraph(pointImg);
 	Master::mpSoundManager->StopBGM();
 }
 
-// [入力] なぁE[出力] なぁE[副作用] 画面上にランキング数値とアイコンを描画
+// [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 逕ｻ髱｢荳翫↓繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ謨ｰ蛟､縺ｨ繧｢繧､繧ｳ繝ｳ繧呈緒逕ｻ
 void TitleScene::DrawRankingUI()
 {
 	int baseX = 40;
@@ -279,7 +290,7 @@ void TitleScene::DrawRankingUI()
 		baseY - 100,
 		baseX + 420,
 		baseY + 120,
-		ranking_title_image_,
+		rankingTitleImage,
 		TRUE
 	);
 
@@ -293,7 +304,7 @@ void TitleScene::DrawRankingUI()
 			y - 20,
 			baseX + 120,
 			y + 100,
-			rank_image_[i],
+			rankImage[i],
 			TRUE
 		);
 
@@ -321,6 +332,6 @@ void TitleScene::DrawRankingUI()
 		}
 		if (digitCount < 4) digitCount = 4;
 		int pointX = baseX + 180 + digitCount * w;
-		DrawExtendGraph(pointX, drawY, pointX + w, drawY + h, point_img_, TRUE);
+		DrawExtendGraph(pointX, drawY, pointX + w, drawY + h, pointImg, TRUE);
 	}
 }
