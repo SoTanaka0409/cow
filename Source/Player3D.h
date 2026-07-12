@@ -16,15 +16,15 @@ class CapsuleCollider;
 class Player3D : public Object3D
 {
 private:
-	// 莉墓ｧ倥↓繧医ｊ蜷ｸ蠑輔い繧ｯ繧ｷ繝ｧ繝ｳ縺ｮ繧ｪ繝ｳ繧ｪ繝輔ｒ蛻ｶ蠕｡縺吶ｋ
+	// 仕様により吸引アクションのオンオフを制御する
 	bool mbVacuumFlag = true;
 public:
-	// 繧ｹ繝・・繧ｿ繧ｹID・・I繧・せ繧ｭ繝ｫ蜉邂怜愛螳壹↓菴ｿ逕ｨ・・
+	// スチE�EタスID�E�EIめE��キル加算判定に使用�E�E
 	enum StatusID
 	{
 		Status_Hp,
 		Status_AttackS,
-		Status_Speed,
+		kStatusSpeed,
 	};
 
 	bool GetVacuumFlag() const
@@ -34,9 +34,9 @@ public:
 
 public:
 	/*
-	 * [蜈･蜉嫋 filename: 繝｢繝・Ν繝輔ぃ繧､繝ｫ繝代せ, initPos: 蛻晄悄蠎ｧ讓・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 蜷・・繝阪・繧ｸ繝｣繝ｼ(Score, Level遲・縺ｨ繧ｳ繝ｩ繧､繝繝ｼ縺ｮ逕滓・
+	 * [入力] filename: モチE��ファイルパス, initPos: 初期座樁E
+	 * [出力] なぁE
+	 * [副作用] 吁E�Eネ�Eジャー(Score, Level筁Eとコライダーの生�E
 	 */
 	Player3D(std::string filename, VECTOR initPos);
 	virtual ~Player3D();
@@ -45,65 +45,65 @@ public:
 	void Update() override;
 
 	/*
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] mvPosition縺ｮ譖ｴ譁ｰ
+	 * [入力] なぁE
+	 * [出力] なぁE
+	 * [副作用] mvPositionの更新
 	 */
 	void MoveEx();
 
 	/*
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] mIsVacuumActive縺ｨmVacuumGauge縺ｮ譖ｴ譁ｰ
+	 * [入力] なぁE
+	 * [出力] なぁE
+	 * [副作用] mIsVacuumActiveとmVacuumGaugeの更新
 	 */
 	void Play();
 
 	/*
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] mpCapsuleCollider縺ｨ繝薙・繝繧ｨ繝輔ぉ繧ｯ繝医・譖ｴ譁ｰ
+	 * [入力] なぁE
+	 * [出力] なぁE
+	 * [副作用] mpCapsuleColliderとビ�Eムエフェクト�E更新
 	 */
 	void ColliderUpdate();
 
 	/*
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 逕ｻ髱｢螟匁凾縺ｮ蠎ｧ讓吶Μ繧ｻ繝・ヨ
+	 * [入力] なぁE
+	 * [出力] なぁE
+	 * [副作用] 画面外時の座標リセチE��
 	 */
 	void ScreenOutCheck();
 
 	/*
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] mvRotation縺ｮ譖ｴ譁ｰ
+	 * [入力] なぁE
+	 * [出力] なぁE
+	 * [副作用] mvRotationの更新
 	 */
 	void RotationByMove();
 
 	/*
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 繧ｵ繝悶Δ繧ｸ繝･繝ｼ繝ｫ縺ｮUpdate/Draw蜻ｼ縺ｳ蜃ｺ縺・
+	 * [入力] なぁE
+	 * [出力] なぁE
+	 * [副作用] サブモジュールのUpdate/Draw呼び出ぁE
 	 */
 	void ManagerUpdate();
 
 	/*
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] UI謠冗判
+	 * [入力] なぁE
+	 * [出力] なぁE
+	 * [副作用] UI描画
 	 */
 	void bar();
 
 	/*
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 繝・ヰ繝・げ譎ゅ・迥ｶ諷句､牙喧
+	 * [入力] なぁE
+	 * [出力] なぁE
+	 * [副作用] チE��チE��時�E状態変化
 	 */
 	void test();
 
 	/*
-	 * [蜈･蜉嫋 id: 繧ｹ繝・・繧ｿ繧ｹID
-	 * [蜃ｺ蜉嫋 繧ｹ繧ｭ繝ｫ陬懈ｭ｣蠕後・繧ｹ繝・・繧ｿ繧ｹ蛟､
-	 * [蜑ｯ菴懃畑] 縺ｪ縺・
+	 * [入力] id: スチE�EタスID
+	 * [出力] スキル補正後�EスチE�Eタス値
+	 * [副作用] なぁE
 	 */
 	float Status(StatusID id);
 
@@ -121,9 +121,9 @@ public:
 	void SetScale(float scale);
 
 	/*
-	 * [蜈･蜉嫋 stunTime: 豌礼ｵｶ譎る俣・医ヵ繝ｬ繝ｼ繝謨ｰ・・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] mIsStunned繧稚rue縺ｫ縺励∵桃菴應ｸ崎・譎る俣繧堤匱逕溘＆縺帙ｋ
+	 * [入力] stunTime: 気絶時間�E�フレーム数�E�E
+	 * [出力] なぁE
+	 * [副作用] mIsStunnedをtrueにし、操作不�E時間を発生させる
 	 */
 	void ApplyStun(int stunTime);
 
@@ -133,7 +133,7 @@ public:
 	Model* model_;
 	Skill* mpSkill;
 	Level* mpLevel;
-	Combo* mpCombo;
+	Combo* combo_;
 	Score* mpScore;
 
 private:

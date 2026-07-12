@@ -7,7 +7,7 @@ Level::Level(Object3D* obj)
 	, mfMaxXp(1.0f)
 	, mnNowLevel(1)
 {
-	this->mpParent = obj;
+	this->parent_ = obj;
 }
 
 Level::~Level()
@@ -41,9 +41,9 @@ void Level::AddXp(float xp)
 		SetNextLevel();
 		
 		// プレイヤーの成長演出を進めるため、レベルアップ直後のスキル選択フラグを有効化する
-		if (mpParent->GetTag() == Object3D::kTag3dPlayer)
+		if (parent_->GetTag() == Object3D::kTag3dPlayer)
 		{
-			auto player = dynamic_cast<Player3D*>(mpParent);
+			auto player = dynamic_cast<Player3D*>(parent_);
 			player->mpSkill->SetSkillFlag(true);
 		}
 	}

@@ -6,67 +6,67 @@
 #include"vector"
 #include "Score.h"
 
-// 繝ｪ繧ｶ繝ｫ繝育判髱｢縺ｫ縺翫￠繧九・繧ｿ繝ｳ縺ｮUI迥ｶ諷九→謠冗判繝・・繧ｿ繧剃ｿ晄戟縺吶ｋ讒矩菴・
+// リザルト画面における�EタンのUI状態と描画チE�Eタを保持する構造佁E
 struct ResultButton
 {
 	SelectionManager::Title type;
-	int graphHandle;
+	int graph_handle;
 	int x, y;
 	int w, h;
-	bool isHover;
+	bool is_hover;
 };
 
-// 繧ｲ繝ｼ繝邨ゆｺ・凾縺ｫ譛邨ゅせ繧ｳ繧｢縺ｨ繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ繧定｡ｨ遉ｺ縺吶ｋ繧ｷ繝ｼ繝ｳ
+// ゲーム終亁E��に最終スコアとランキングを表示するシーン
 class ResultScene : public Scene
 {
 public:
 	ResultScene();
 	virtual ~ResultScene();
 
-	// [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 譛譁ｰ繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ縺ｮ繝ｭ繝ｼ繝峨→繝輔ぉ繝ｼ繝牙・譛溷喧
+	// [入力] なぁE[出力] なぁE[副作用] 最新ランキングのロードとフェード�E期化
 	void Initialize() override;
 
-	// [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 閭梧勹縲√せ繧ｳ繧｢縲√Λ繝ｳ繧ｭ繝ｳ繧ｰUI縺ｮ謠冗判繧ｳ繝槭Φ繝牙ｮ溯｡・
+	// [入力] なぁE[出力] なぁE[副作用] 背景、スコア、ランキングUIの描画コマンド実衁E
 	void Draw() override;
 
-	// [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 荳螳壽凾髢鍋ｵ碁℃蠕後↓繧ｿ繧､繝医Ν逕ｻ髱｢縺ｸ縺ｮ驕ｷ遘ｻ繧定ｦ∵ｱ・
+	// [入力] なぁE[出力] なぁE[副作用] 一定時間経過後にタイトル画面への遷移を要汁E
 	void Update() override;
 
-	// [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 菴ｿ逕ｨ縺励◆逕ｻ蜒上ワ繝ｳ繝峨Ν縺ｮ遐ｴ譽・→BGM蛛懈ｭ｢
+	// [入力] なぁE[出力] なぁE[副作用] 使用した画像ハンドルの破棁E��BGM停止
 	void Finalize() override;
 
 private:
-	SelectionManager* mnTitleSelect;
-	Texture* mpTexture;
-	Texture* mpTexture2;
-	Texture* mpTexture3;
+	SelectionManager* title_select_;
+	Texture* texture_;
+	Texture* texture2_;
+	Texture* texture3_;
 
-	int mNewGameX;
-	int mNewGameY;
-	int mNewGameW;
-	int mNewGameH;
+	int new_game_x_;
+	int new_game_y_;
+	int new_game_w_;
+	int new_game_h_;
 
-	bool mbIsHoverNewGame;
+	bool is_hover_new_game_;
 
-	std::vector<ResultButton> mButtons;
-	int ResultGraphHandle;
+	std::vector<ResultButton> buttons_;
+	int result_graph_handle_;
 
-	Score mScore;
+	Score score_;
 
-	int rankingTitleImage;
-	int rankImage[3];
+	int ranking_title_image_;
+	int rank_image_[3];
 
-	int yourScoreImage;
-	int pointImage;
+	int your_score_image_;
+	int point_image_;
 
-	// [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 荳贋ｽ・蜷阪・繧ｹ繧ｳ繧｢縺ｨ繝｡繝繝ｫ繧呈緒逕ｻ
+	// [入力] なぁE[出力] なぁE[副作用] 上佁E名�Eスコアとメダルを描画
 	void DrawRankingUI();
 
-	int yourScoreTextImg;
-	int pointImg;
+	int your_score_text_img_;
+	int point_img_;
 
-	int mFrameCount; // UI繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ蛻ｶ蠕｡逕ｨ繧ｿ繧､繝槭・
-	int mnCount;     // 閾ｪ蜍暮・遘ｻ逕ｨ縺ｮ邨碁℃譎る俣繧ｿ繧､繝槭・
-	bool mFlag;
+	int frame_count_; // UIアニメーション制御用タイマ�E
+	int count_;     // 自動�E移用の経過時間タイマ�E
+	bool flag_;
 };
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "CowMove.h"
 
 // 獲得時に高スコア加算とフィーバー状態移行を行う特殊キャラクター制御クラス

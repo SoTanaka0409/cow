@@ -1,4 +1,4 @@
-#include "LoadingScene.h"
+﻿#include "LoadingScene.h"
 #include "DxLib.h"
 #include "Master.h"
 #include "ResourceManager.h"
@@ -6,8 +6,8 @@
 #include "GameConstants.h"
 
 LoadingScene::LoadingScene()
-	: mLoadingTimer(0)
-	, mbLoadStarted(false)
+	: loading_timer_(0)
+	, load_started_(false)
 {
 }
 
@@ -17,17 +17,17 @@ LoadingScene::~LoadingScene()
 
 void LoadingScene::Initialize()
 {
-	mLoadingTimer = 0;
-	mbLoadStarted = false;
+	loading_timer_ = 0;
+	load_started_ = false;
 }
 
 void LoadingScene::Update()
 {
-	mLoadingTimer++;
+	loading_timer_++;
 
-	// 1繝輔Ξ繝ｼ繝逶ｮ縺ｯ謠冗判繧貞━蜈医＠縲・繝輔Ξ繝ｼ繝逶ｮ莉･髯阪〒髱槫酔譛溘Ο繝ｼ繝峨ｒ髢句ｧ九☆繧・
-	// ・磯幕蟋狗峩蠕後↓ GetASyncLoadNum() 縺瑚ｪ､縺｣縺ｦ0繧定ｿ斐☆縺薙→繧帝亟縺撰ｼ・
-	if (!mbLoadStarted && mLoadingTimer >= 2)
+	// 1繝輔Ξ繝ｼ繝逶�E�縺�E�謠冗判繧貞━蜈医�E�縲・繝輔Ξ繝ｼ繝逶�E�莉･髯阪〒髱槫酔譛溘Ο繝ｼ繝峨�E�髢句�E�九�E繧・
+	// ・磯幕蟋狗峩蠕後�E GetASyncLoadNum() 縺瑚ｪ�E�縺�E�縺�E�0繧定ｿ斐�E縺薙�E繧帝亟縺撰�E�・
+	if (!load_started_ && loading_timer_ >= 2)
 	{
 		SetUseASyncLoadFlag(TRUE);
 
@@ -42,14 +42,14 @@ void LoadingScene::Update()
 
 		SetUseASyncLoadFlag(FALSE);
 
-		mbLoadStarted = true;
+		load_started_ = true;
 	}
 
-	// 繝ｭ繝ｼ繝峨′髢句ｧ九＆繧後※縺翫ｊ縲√°縺､蜈ｨ繝輔ぃ繧､繝ｫ縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ縺悟ｮ御ｺ・＠縺ｦ縺・◆繧蛾・遘ｻ縺吶ｋ
-	if (mbLoadStarted && GetASyncLoadNum() == 0 && mLoadingTimer > 60)
+	// 繝ｭ繝ｼ繝峨′髢句�E�九！E��後※縺翫�E�縲√°縺�E�蜈ｨ繝輔ぃ繧�E�繝ｫ縺�E�隱�E�縺�E�霎ｼ縺�E�縺悟ｮ御�E�・�E�縺�E�縺・◁E��蛾・遘ｻ縺吶�E�E
+	if (load_started_ && GetASyncLoadNum() == 0 && loading_timer_ > 60)
 	{
-		// SceneManager縺ｫ逶ｴ謗･驕ｷ遘ｻ繧呈欠遉ｺ縺吶ｋ・・NextScene縺ｸ縺ｮ莉｣蜈･縺縺代〒縺ｯ驕ｷ遘ｻ縺励↑縺・ｼ・
-		Master::mpSceneManager->SetNextScene(SceneManager::SCENE_3D);
+		// SceneManager縺�E�逶�E�謗･驕ｷ遘ｻ繧呈欠遉ｺ縺吶�E��E・NextScene縺�E�縺�E�莉｣蜈･縺�E�縺代〒縺�E�驕ｷ遘ｻ縺励↑縺・�E�・
+		Master::mpSceneManager->SetNextScene(SceneManager::kScene3D);
 	}
 }
 
@@ -58,8 +58,8 @@ void LoadingScene::Draw()
 	// 鮟定レ譎ｯ繧呈緒逕ｻ
 	DrawBox(0, 0, 1600, 900, GetColor(0, 0, 0), TRUE);
 
-	// NOW LOADING... 縺ｮ轤ｹ貊・い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ
-	if ((mLoadingTimer / 20) % 2 == 0)
+	// NOW LOADING... 縺�E�轤�E�貊�EぁE��九Γ繝ｼ繧�E�繝ｧ繝ｳ
+	if ((loading_timer_ / 20) % 2 == 0)
 	{
 		DrawString(1600 / 2 - 60, 900 / 2, "NOW LOADING...", GetColor(255, 255, 255));
 	}

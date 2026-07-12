@@ -136,9 +136,9 @@ public:
 	void RebuildTagCache2D();
 
 private:
-	std::vector<Object3D*> mObject3DList;
-	std::map<Object3D::Tag3D, std::vector<Object3D*>> mTagCache3D;
+	std::vector<Object3D*> object3d_list_;
+	std::map<Object3D::Tag3D, std::vector<Object3D*>> tag_cache_3d_;
 	
-	std::vector<Object2D*> mObject2DList;
-	std::map<Object2D::Tag2D, std::vector<Object2D*>> mTagCache2D;
+	std::vector<Object2D*> object2d_list_;
+	std::map<Object2D::Tag2D, std::vector<Object2D*>> tag_cache_2d_;
 };

@@ -12,76 +12,76 @@
 Thunder::Thunder(VECTOR pos)
 	: Object3D(pos)
 {
-	mHasStunned = false;
+	has_stunned_ = false;
 	pos_ = pos;
-	// 繝励Ξ繧､繝､繝ｼ縺悟屓驕ｿ陦悟虚繧偵→繧後ｋ繧医≧縲∬誠荳句燕縺ｫ1遘帝俣縺ｮ迪ｶ莠医ｒ險ｭ縺代ｋ
-	mWarningTimer = 60;
-	mStrikeTimer = 20;
-	mIntervalTimer = 180;
+	// プレイヤーが回避行動をとれるよう、落下前に1秒間の猶予を設ける
+	warning_timer_ = 60;
+	strike_timer_ = 20;
+	interval_timer_ = 180;
 
-	mState = IDLE;
-	mActive = true;
+	state_ = kIdle;
+	active_ = true;
 	
 	capsule_collider_->radius_ = 230;
 
-	mpThunder = new EffekseerEffect("Resource/3D/EFK/thud.efk", pos_, 200.0f);
-	mpThunder->SetScale(VGet(1.0f, 1.0f, 1.0f));
+	thunder_ = new EffekseerEffect("Resource/3D/EFK/thud.efk", pos_, 200.0f);
+	thunder_->SetScale(VGet(1.0f, 1.0f, 1.0f));
 
-	mpWarning = new EffekseerEffect("Resource/3D/EFK/warning2.efk", pos_, 40.0f);
-	mpStun = new EffekseerEffect("Resource/3D/EFK/stun.efk", pos_, 20.0f);
+	warning_ = new EffekseerEffect("Resource/3D/EFK/warning2.efk", pos_, 40.0f);
+	stun_ = new EffekseerEffect("Resource/3D/EFK/stun.efk", pos_, 20.0f);
 }
 
 Thunder::~Thunder()
 {
-	// 繧ｨ繝輔ぉ繧ｯ繝医・閾ｪ蜑咲ｮ｡逅・・縺溘ａ謇句虚縺ｧ隗｣謾ｾ縺吶ｋ
-	if (mpThunder != nullptr)
+	// エフェクト�E自前管琁E�Eため手動で解放する
+	if (thunder_ != nullptr)
 	{
-		delete mpThunder;
-		mpThunder = nullptr;
+		delete thunder_;
+		thunder_ = nullptr;
 	}
 
-	if (mpWarning != nullptr)
+	if (warning_ != nullptr)
 	{
-		delete mpWarning;
-		mpWarning = nullptr;
+		delete warning_;
+		warning_ = nullptr;
 	}
 
-	if (mpStun != nullptr)
+	if (stun_ != nullptr)
 	{
-		delete mpStun;
-		mpStun = nullptr;
+		delete stun_;
+		stun_ = nullptr;
 	}
 }
 
 void Thunder::Update()
 {
-	if (mpThunder != nullptr)
+	if (thunder_ != nullptr)
 	{
-		mpThunder->SetPosition(pos_);
-		mpThunder->Update();
+		thunder_->SetPosition(pos_);
+		thunder_->Update();
 	}
 
-	if (mpWarning != nullptr)
+	if (warning_ != nullptr)
 	{
-		mpWarning->SetPosition(pos_);
-		mpWarning->Update();
+		warning_->SetPosition(pos_);
+		warning_->Update();
 	}
 
-	if (mpStun != nullptr)
+	if (stun_ != nullptr)
 	{
-		mpStun->Update();
+		stun_->Update();
 	}
 
-	if (!mActive) return;
+	if (!active_) return;
 
 	capsule_collider_->position_ = VSub(position_, VGet(0, 2000, 0));
 	capsule_collider_->position2_ = VAdd(position_, VGet(0, 2000, 0));
    
-	switch (mState)
+	switch (state_)
 	{
-	case IDLE:
-		mIntervalTimer--;
-		if (mIntervalTimer <= 0)
+	case kIdle:
+		interval_timer_--;
+		if (interval_timer_ <= 0)
 		{
 			float range = 3000.0f;
 			pos_.x = (float)(GetRand((int)range * 2) - (int)range);
@@ -89,27 +89,27 @@ void Thunder::Update()
 			pos_.y = 0.0f;
 
 			position_ = pos_;
-			mWarningTimer = 60;
-			mState = WARNING;
+			warning_timer_ = 60;
+			state_ = kWarning;
 
-			if (mpWarning != nullptr)
+			if (warning_ != nullptr)
 			{
-				mpWarning->Play();
+				warning_->Play();
 			}
 		}
 		break;
 
-	case WARNING:
-		mWarningTimer--;
-		if (mWarningTimer <= 0)
+	case kWarning:
+		warning_timer_--;
+		if (warning_timer_ <= 0)
 		{
-			mState = STRIKE;
-			mStrikeTimer = 30;
-			mHasStunned = false;
+			state_ = kStrike;
+			strike_timer_ = 30;
+			has_stunned_ = false;
 			
-			if (mpThunder != nullptr)
+			if (thunder_ != nullptr)
 			{
-				mpThunder->Play();
+				thunder_->Play();
 				
 				auto players = ServiceLocator::GetPlayers();
 				bool playSound = false;
@@ -130,26 +130,26 @@ void Thunder::Update()
 		}
 		break;
 
-	case STRIKE:
-		mStrikeTimer--;
-		if (mStrikeTimer <= 0)
+	case kStrike:
+		strike_timer_--;
+		if (strike_timer_ <= 0)
 		{
-			mIntervalTimer = 120;
-			mState = IDLE;
+			interval_timer_ = 120;
+			state_ = kIdle;
 		}
 		break;
 	}
 
-	if (mStunEffectTimer > 0)
+	if (stun_effect_timer_ > 0)
 	{
-		mStunEffectTimer--;
+		stun_effect_timer_--;
 
-		// 繧ｨ繝輔ぉ繧ｯ繝医・蜀咲函譎る俣縺檎洒縺・◆繧√√せ繧ｿ繝ｳ譛滄俣荳ｭ縺ｯ螳壽悄逧・↓蜀咲函縺礼峩縺・
-		if (mStunEffectTimer > 0 && mStunEffectTimer % 30 == 0)
+		// エフェクト�E再生時間が短ぁE��め、スタン期間中は定期皁E��再生し直ぁE
+		if (stun_effect_timer_ > 0 && stun_effect_timer_ % 30 == 0)
 		{
-			if (mpStun != nullptr)
+			if (stun_ != nullptr)
 			{
-				mpStun->Play();
+				stun_->Play();
 			}
 		}
 	}
@@ -161,12 +161,12 @@ void Thunder::Draw()
 
 bool Thunder::IsActive() const
 {
-	return mActive;
+	return active_;
 }
 
 bool Thunder::CheckHit(VECTOR playerPos, float range)
 {
-	if (mState != STRIKE) return false;
+	if (state_ != kStrike) return false;
 
 	VECTOR diff = VSub(playerPos, pos_);
 	float distance = sqrtf(diff.x * diff.x + diff.y * diff.y + diff.z * diff.z);
@@ -176,26 +176,26 @@ bool Thunder::CheckHit(VECTOR playerPos, float range)
 
 void Thunder::OnEnter(Collider* collider, Collider* check)
 {
-	if (mState != STRIKE) return;
-	// 螟壽ｮｵ繝偵ャ繝医↓繧医ｋ逅・ｸ榊ｰｽ縺ｪ繧ｹ繧ｿ繝ｳ蟒ｶ髟ｷ繧帝亟縺舌◆繧・
-	if (mHasStunned) return;
+	if (state_ != kStrike) return;
+	// 多段ヒットによる琁E��尽なスタン延長を防ぐためE
+	if (has_stunned_) return;
 
 	if (check->parent_object_->GetTag() == kTag3dPlayer)
 	{
 		Player3D* player = dynamic_cast<Player3D*>(check->parent_object_);
 		if (player != nullptr)
 		{
-			mHasStunned = true;
-			mStunEffectTimer = 120;
+			has_stunned_ = true;
+			stun_effect_timer_ = 120;
 
 			VECTOR playerPos = player->GetPosition();
-			mpStun->SetPosition(playerPos);
-			mpStun->Play();
+			stun_->SetPosition(playerPos);
+			stun_->Play();
 
 			player->ApplyStun(120);
 
-			// 關ｽ髮ｷ縺ｮ螽∝鴨繧定ｦ冶ｦ夂噪縺ｫ蠑ｷ隱ｿ縺吶ｋ縺溘ａ繧ｫ繝｡繝ｩ繧ｷ繧ｧ繧､繧ｯ繧堤匱逕溘＆縺帙ｋ
-			Master::mpCamera->SetupShake(30.0f, 45.0f, 40.0f);
+			// 落雷の威力を視覚的に強調するためカメラシェイクを発生させる
+			Master::camera_->SetupShake(30.0f, 45.0f, 40.0f);
 		}
 	}
 }

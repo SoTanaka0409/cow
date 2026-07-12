@@ -6,73 +6,73 @@
 #include "Score.h"
 #include "SceneManager.h"
 
-// UI迥ｶ諷狗ｮ｡逅・→謠冗判逕ｨ縺ｮ繝・・繧ｿ繧偵∪縺ｨ繧√ｋ縺溘ａ縺ｮ讒矩菴・
+// UI状態管琁E��描画用のチE�Eタをまとめるための構造佁E
 struct TitleButton
 {
 	SelectionManager::Title type;
-	int graphHandle;
+	int graph_handle;
 	int x, y;
 	int w, h;
-	bool isHover;
+	bool is_hover;
 };
 
-// 繧｢繝励Μ繧ｱ繝ｼ繧ｷ繝ｧ繝ｳ襍ｷ蜍墓凾縺ｮ蛻晄悄逕ｻ髱｢
+// アプリケーション起動時の初期画面
 class TitleScene : public Scene
 {
 public:
 	TitleScene();
 	virtual ~TitleScene();
 
-	// [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 繧｢繧ｻ繝・ヨ蛻晄悄蛹悶√せ繧ｳ繧｢隱ｭ縺ｿ霎ｼ縺ｿ縲。GM蜀咲函
+	// [入力] なぁE[出力] なぁE[副作用] アセチE��初期化、スコア読み込み、BGM再生
 	virtual void Initialize() override;
 
-	// [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 繝槭え繧ｹ蜈･蜉帙ｄUI迥ｶ諷九√ヵ繧ｧ繝ｼ繝画峩譁ｰ
+	// [入力] なぁE[出力] なぁE[副作用] マウス入力やUI状態、フェード更新
 	virtual void Update() override;
 
-	// [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 閭梧勹繧ФI縲ゞFO縺ｮ謠冗判繧ｳ繝槭Φ繝臥匱陦・
+	// [入力] なぁE[出力] なぁE[副作用] 背景やUI、UFOの描画コマンド発衁E
 	virtual void Draw() override;
 
-	// [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 繝ｪ繧ｽ繝ｼ繧ｹ縺ｮ隗｣謾ｾ縲。GM蛛懈ｭ｢
+	// [入力] なぁE[出力] なぁE[副作用] リソースの解放、BGM停止
 	virtual void Finalize() override;
 
 private:
-	int mFrameCount; // 貍泌・繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ逕ｨ縺ｮ繧ｿ繧､繝槭・
+	int frame_count_; // 演�Eアニメーション用のタイマ�E
 
-	int mnTitleGraphHandle;
-	int mnNewGame;
-	int mnTutorial;
-	int mnOperationProcedures;
+	int title_graph_handle_;
+	int new_game_;
+	int tutorial_;
+	int operation_procedures_;
 
-	int rankingTitleImage;
-	int pointImg;
+	int ranking_title_image_;
+	int point_img_;
 
-	SelectionManager* mnTitleSelect;
-	Texture* mpTexture;
-	Texture* mpTexture2;
-	Texture* mpTexture3;
+	SelectionManager* title_select_;
+	Texture* texture_;
+	Texture* texture2_;
+	Texture* texture3_;
 
-	int mNewGameX;
-	int mNewGameY;
-	int mNewGameW;
-	int mNewGameH;
+	int new_game_x_;
+	int new_game_y_;
+	int new_game_w_;
+	int new_game_h_;
 
-	bool mbIsHoverNewGame;
+	bool is_hover_new_game_;
 
-	std::vector<TitleButton> mButtons;
+	std::vector<TitleButton> buttons_;
 
-	// [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 荳贋ｽ・蜷阪・繧ｹ繧ｳ繧｢UI繧呈緒逕ｻ
+	// [入力] なぁE[出力] なぁE[副作用] 上佁E名�EスコアUIを描画
 	void DrawRankingUI();
 
-	int rankImage[3];
+	int rank_image_[3];
 
-	int mnUfoGraphHandle;
-	int mUfoX, mUfoY;
-	int mUfoW, mUfoH;
-	bool mbIsDraggingUfo;
-	int mOffsetX, mOffsetY;
-	int mCowVoiceTimer;
-	float mUfoVX, mUfoVY;
-	float mUfoAngle;
-	bool  mIsAutoPatrol;
-	int mAutoPatrolTimer;
+	int ufo_graph_handle_;
+	int ufo_x_, ufo_y_;
+	int ufo_w_, ufo_h_;
+	bool is_dragging_ufo_;
+	int offset_x_, offset_y_;
+	int cow_voice_timer_;
+	float ufo_vx_, ufo_vy_;
+	float ufo_angle_;
+	bool  is_auto_patrol_;
+	int auto_patrol_timer_;
 };

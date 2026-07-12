@@ -7,7 +7,7 @@ Cow_2::Cow_2(std::string filename, VECTOR initPos)
 	mfScore = 20;
 	mfXp = 10;
 	collider_radius_ = 50.0f;
-	SetTag_cow(CowMove::kCow2);
+	SetTagCow(CowMove::kCow2);
 }
 
 Cow_2::~Cow_2()

@@ -12,10 +12,10 @@ class Thunder : public Object3D
 public:
 	enum State
 	{
-		IDLE,
-		WARNING,
-		STRIKE,
-		END
+		kIdle,
+		kWarning,
+		kStrike,
+		kEnd
 	};
 
 public:
@@ -79,18 +79,18 @@ public:
 
 private:
 	VECTOR pos_;
-	int mWarningTimer;
-	int mStrikeTimer;
-	State mState;
-	int mIntervalTimer;
-	bool mActive;
+	int warning_timer_;
+	int strike_timer_;
+	State state_;
+	int interval_timer_;
+	bool active_;
 
 public:
-	EffekseerEffect* mpThunder;
-	EffekseerEffect* mpWarning;
-	EffekseerEffect* mpStun;
+	EffekseerEffect* thunder_;
+	EffekseerEffect* warning_;
+	EffekseerEffect* stun_;
 
 	// 螟壽ｮｵ繝偵ャ繝医↓繧医ｋ繧ｹ繧ｿ繝ｳ縺ｮ豌ｸ邯壼喧繧帝亟縺舌◆繧√・繝輔Λ繧ｰ
-	bool mHasStunned;
-	int mStunEffectTimer;
+	bool has_stunned_;
+	int stun_effect_timer_;
 };

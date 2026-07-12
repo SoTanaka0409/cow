@@ -5,46 +5,46 @@
 Floor::Floor(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight)
 	: Object3D(centerPos)
 {
-	mnGraphHandle = Master::mpResourceManager->LoadGraphics(filename.c_str());
+	graph_handle_ = Master::mpResourceManager->LoadGraphics(filename.c_str());
 
 	// 蠎翫・蟾ｦ荳企らせ縺ｮ險ｭ螳・
-	mVertex[0].pos = VAdd(centerPos, topLeft);
-	mVertex[0].dif = GetColorU8(255, 255, 255, 255);
-	mVertex[0].spc = GetColorU8(0, 0, 0, 0);
-	mVertex[0].u = 0.0f;
-	mVertex[0].v = 0.0f;
+	vertex_[0].pos = VAdd(centerPos, topLeft);
+	vertex_[0].dif = GetColorU8(255, 255, 255, 255);
+	vertex_[0].spc = GetColorU8(0, 0, 0, 0);
+	vertex_[0].u = 0.0f;
+	vertex_[0].v = 0.0f;
 
 	// 蠎翫・蜿ｳ荳企らせ縺ｮ險ｭ螳・
-	mVertex[1].pos = VAdd(centerPos, VGet(bottomRight.x, 0, topLeft.z));
-	mVertex[1].dif = GetColorU8(255, 255, 255, 255);
-	mVertex[1].spc = GetColorU8(0, 0, 0, 0);
-	mVertex[1].u = 1.0f;
-	mVertex[1].v = 0.0f;
+	vertex_[1].pos = VAdd(centerPos, VGet(bottomRight.x, 0, topLeft.z));
+	vertex_[1].dif = GetColorU8(255, 255, 255, 255);
+	vertex_[1].spc = GetColorU8(0, 0, 0, 0);
+	vertex_[1].u = 1.0f;
+	vertex_[1].v = 0.0f;
 
 	// 蠎翫・蟾ｦ荳矩らせ縺ｮ險ｭ螳・
-	mVertex[2].pos = VAdd(centerPos, VGet(topLeft.x, 0, bottomRight.z));
-	mVertex[2].dif = GetColorU8(255, 255, 255, 255);
-	mVertex[2].spc = GetColorU8(0, 0, 0, 0);
-	mVertex[2].u = 0.0f;
-	mVertex[2].v = 1.0f;
+	vertex_[2].pos = VAdd(centerPos, VGet(topLeft.x, 0, bottomRight.z));
+	vertex_[2].dif = GetColorU8(255, 255, 255, 255);
+	vertex_[2].spc = GetColorU8(0, 0, 0, 0);
+	vertex_[2].u = 0.0f;
+	vertex_[2].v = 1.0f;
 
 	// 蠎翫・蜿ｳ荳矩らせ縺ｮ險ｭ螳・
-	mVertex[3].pos = VAdd(centerPos, bottomRight);
-	mVertex[3].dif = GetColorU8(255, 255, 255, 255);
-	mVertex[3].spc = GetColorU8(0, 0, 0, 0);
-	mVertex[3].u = 1.0f;
-	mVertex[3].v = 1.0f;
+	vertex_[3].pos = VAdd(centerPos, bottomRight);
+	vertex_[3].dif = GetColorU8(255, 255, 255, 255);
+	vertex_[3].spc = GetColorU8(0, 0, 0, 0);
+	vertex_[3].u = 1.0f;
+	vertex_[3].v = 1.0f;
 
 	// 蜷・らせ縺ｮ豕慕ｷ壹・繧ｯ繝医Ν繧定ｨ育ｮ励＠縺ｦ髱｢蜈ｨ菴薙・蜷代″繧堤ｵｱ荳縺吶ｋ
 	VECTOR norm = VCross(
-		VSub(mVertex[0].pos, mVertex[1].pos),
-		VSub(mVertex[0].pos, mVertex[2].pos)
+		VSub(vertex_[0].pos, vertex_[1].pos),
+		VSub(vertex_[0].pos, vertex_[2].pos)
 	);
 	norm = VNorm(norm);
 
 	for (int i = 0; i < 4; i++)
 	{
-		mVertex[i].norm = norm;
+		vertex_[i].norm = norm;
 	}
 }
 
@@ -70,7 +70,7 @@ void Floor::Draw()
 
 	// 繝ｩ繧､繝・ぅ繝ｳ繧ｰ險育ｮ励ｒ辟｡蜉ｹ蛹悶＠縲√ユ繧ｯ繧ｹ繝√Ε譛ｬ譚･縺ｮ濶ｲ縺ｧ蠎翫ｒ謠冗判縺吶ｋ
 	SetUseLighting(false);
-	DrawPolygonIndexed3D(mVertex, 4, index, 2, mnGraphHandle, TRUE);
+	DrawPolygonIndexed3D(vertex_, 4, index, 2, graph_handle_, TRUE);
 	SetUseLighting(true);
 }
 

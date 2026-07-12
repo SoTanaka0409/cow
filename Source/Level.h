@@ -51,7 +51,7 @@ private:
 	 */
 	void DrawBar();
 
-	Object3D* mpParent;
+	Object3D* parent_;
 	int mnGaugeFrameGraph;  // スキル選択などの備考用に残すための対象オブジェクトのインタ
 	float mfxp;             // レベルアップ判定の基準となる現在の累積経験値量
 	float mfMaxXp;          // 難易度調整を形成するための次レベル必要経験値

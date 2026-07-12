@@ -20,31 +20,31 @@
 TutorialScene::TutorialScene()
 	: Scene() 
 {
-	// CowManagerの生成と破棄は基底クラスSceneにて行われるためここでは処理しない
-	CowDelete = false;
-	mfeverstate = FEVER_1; 
-	timerCount = 0;        
+	// CowManager�̐����Ɣj���͊��N���XScene�ɂčs���邽�߂����ł͏������Ȃ�
+	cow_delete_ = false;
+	fever_state_ = kFever1; 
+	timer_count_ = 0;        
 }
 
 TutorialScene::~TutorialScene()
 {
-	DeleteFontToHandle(fontHandle);
+	DeleteFontToHandle(font_handle_);
 
-	if (mpTexture)  { delete mpTexture;  mpTexture = nullptr; }
-	if (mpTexture2) { delete mpTexture2; mpTexture2 = nullptr; }
-	if (mpTexture3) { delete mpTexture3; mpTexture3 = nullptr; }
-	if (mpTexture4) { delete mpTexture4; mpTexture4 = nullptr; }
-	if (mpTexture5) { delete mpTexture5; mpTexture5 = nullptr; }
-	if (mpTexture6) { delete mpTexture6; mpTexture6 = nullptr; }
+	if (texture_)  { delete texture_;  texture_ = nullptr; }
+	if (texture2_) { delete texture2_; texture2_ = nullptr; }
+	if (texture3_) { delete texture3_; texture3_ = nullptr; }
+	if (texture4_) { delete texture4_; texture4_ = nullptr; }
+	if (texture5_) { delete texture5_; texture5_ = nullptr; }
+	if (texture6_) { delete texture6_; texture6_ = nullptr; }
 	
-	// CowManagerの破棄はSceneのデストラクタに委譲する
+	// CowManagerの生成と破棄は継承クラスSceneにて行うためここでは行わない
 }
 
 void TutorialScene::Initialize()
 {
-	mFadeState = SceneFade_In;
+	fade_state_ = kSceneFadeIn;
 	SetFadeAlpha(255.0f);
-	fontHandle = CreateFontToHandle("???C???I", 40, 3, DX_FONTTYPE_ANTIALIASING_8X8);
+	font_handle_ = CreateFontToHandle("メイリオ", 40, 3, DX_FONTTYPE_ANTIALIASING_8X8);
 
 	CreateFences();
 	CreateWalls();
@@ -60,16 +60,16 @@ void TutorialScene::Initialize()
 	auto Player = new Player3D("Resource/3D/ufo2/uploads_files_2595751_UFO.mv1", VGet(0.0f, 1000.0f, 0.0f));
 	Player->SetScale(0.6f);
 
-	SetCamera(Master::mpCamera);
+	SetCamera(Master::camera_);
 
 	VECTOR pos = VGet(1200, 150, 0);
 	float GraphSize_x = 800, GraphSize_y = 300;
-	mpTexture  = new Texture("Resource/2D/tutorial_1_move.png", pos, GraphSize_x, GraphSize_y, true);
-	mpTexture2 = new Texture("Resource/2D/tutorial_2_beam.png", pos, GraphSize_x, GraphSize_y, true);
-	mpTexture3 = new Texture("Resource/2D/tutorial_3_combo.png", pos, GraphSize_x, GraphSize_y, true);
-	mpTexture4 = new Texture("Resource/2D/tutorial_4_phase.png", pos, GraphSize_x, GraphSize_y, true);
-	mpTexture5 = new Texture("Resource/2D/tutorial_5_skill.png", pos, GraphSize_x, GraphSize_y, true);
-	mpTexture6 = new Texture("Resource/2D/tutorial_6_fever.png", pos, GraphSize_x, GraphSize_y, true);
+	texture_  = new Texture("Resource/2D/tutorial_1_move.png", pos, GraphSize_x, GraphSize_y, true);
+	texture2_ = new Texture("Resource/2D/tutorial_2_beam.png", pos, GraphSize_x, GraphSize_y, true);
+	texture3_ = new Texture("Resource/2D/tutorial_3_combo.png", pos, GraphSize_x, GraphSize_y, true);
+	texture4_ = new Texture("Resource/2D/tutorial_4_phase.png", pos, GraphSize_x, GraphSize_y, true);
+	texture5_ = new Texture("Resource/2D/tutorial_5_skill.png", pos, GraphSize_x, GraphSize_y, true);
+	texture6_ = new Texture("Resource/2D/tutorial_6_fever.png", pos, GraphSize_x, GraphSize_y, true);
 }
 
 void TutorialScene::CreateFences()
@@ -105,59 +105,59 @@ void TutorialScene::CreateWalls()
 
 void TutorialScene::SetCamera(Camera* camera)
 {
-	mpCamera = camera;
+	camera_ = camera;
 }
 
 void TutorialScene::Update()
 {
-	if (mpCamera != nullptr)
+	if (camera_ != nullptr)
 	{
-		mpCamera->Update();
+		camera_->Update();
 	}
-	if (mpCowManager != nullptr)
+	if (cow_manager_ != nullptr)
 	{
-		mpCowManager->Update();
+		cow_manager_->Update();
 	}
 
-	switch (mState)
+	switch (state_)
 	{
-	case STATE_MOVE:
+	case kStateMove:
 		UpdateStateMove();         
 		break;
-	case STATE_BEAM:
+	case kStateBeam:
 		UpdateStateBeam();         
 		break;
-	case STATE_COMBO_SCORE:
+	case kStateComboScore:
 		UpdateStateComboScore();   
 		break;
-	case STATE_PHASE:
+	case kStatePhase:
 		UpdateStatePhase();        
 		break;
-	case STATE_SKILL:
+	case kStateSkill:
 		UpdateStateSkill();        
 		break;
-	case STATE_FEVER:
+	case kStateFever:
 		UpdateStateFever();        
 		break;
-	case STATE_END:
+	case kStateEnd:
 		UpdateStateEnd();          
 		break;
 	}
 
-	// チュートリアル終了時、ENTERキー入力でタイトル画面へ遷移する
-	if(InputManager::CheckDownKey(KEY_INPUT_RETURN) && mState != STATE_END)
+	// チュートリアル終了、ENTERキー入力でタイトル画面へ遷移
+	if(InputManager::CheckDownKey(KEY_INPUT_RETURN) && state_ != kStateEnd)
 	{
-		mFadeState = SceneFade_Out;
-		mNextScene = SceneManager::SCENE_TITLE;
+		fade_state_ = kSceneFadeOut;
+		next_scene_ = SceneManager::kSceneTitle;
 	}
 
-	if (mFadeState == SceneFade_Out)
+	if (fade_state_ == kSceneFadeOut)
 	{
 		Master::mpSoundManager->SetBGMVolume((Master::mpSoundManager->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
 		if (GetFadeAlpha() >= 255)
 		{
 			SetFadeAlpha(255);
-			Master::mpSceneManager->SetNextScene((SceneManager::SCENE_TYPE)mNextScene);
+			Master::mpSceneManager->SetNextScene((SceneManager::SCENE_TYPE)next_scene_);
 		}
 	}
 	
@@ -168,115 +168,115 @@ void TutorialScene::Update()
 // 移動操作（WASD）を確認し、次のステップへ進行する
 void TutorialScene::UpdateStateMove()
 {
-	if (mpTexture) mpTexture->Draw();
+	if (texture_) texture_->Draw();
 
 	if (CheckHitKey(KEY_INPUT_W) || CheckHitKey(KEY_INPUT_A) || CheckHitKey(KEY_INPUT_S) || CheckHitKey(KEY_INPUT_D))
 	{
 		Master::mpSoundManager->PlaySE(SoundManager::kSeTutorialChange);
-		mState = STATE_BEAM;
+		state_ = kStateBeam;
 		
 		VECTOR spawnPos = VGet(0, 0.0f, 1000.0f);
-		mpCowManager->SpawnCow(GameConstants::kCowDefault.model_path, spawnPos, 50.0f, CowMove::kCow1, 1);
+		cow_manager_->SpawnCow(GameConstants::kCowDefault.model_path, spawnPos, 50.0f, CowMove::kCow1, 1);
 	}
 }
 
-// マウス左クリックでビーム吸引操作を確認する
+// マウス左クリックでビームを照射することを確認
 void TutorialScene::UpdateStateBeam()
 {
-	if (mpTexture2) mpTexture2->Draw();
+	if (texture2_) texture2_->Draw();
 
 	if (GetMouseInput() & MOUSE_INPUT_LEFT)
 	{
 		Master::mpSoundManager->PlaySE(SoundManager::kSeTutorialChange);
-		mState = STATE_COMBO_SCORE;
+		state_ = kStateComboScore;
 
-		// コンボ説明用として複数の牛をスポーンさせる
-		mpCowManager->SpawnCow(GameConstants::kCowDefault.model_path, VGet(500, 0.0f, 1000.0f), 50.0f, CowMove::kCow1, 2);
-		mpCowManager->SpawnCow(GameConstants::kCowDefault.model_path, VGet(-500, 0.0f, 1000.0f), 50.0f, CowMove::kCow1, 2);
+		// コンボ稼ぎ用として牛の群れをスポーン
+		cow_manager_->SpawnCow(GameConstants::kCowDefault.model_path, VGet(500, 0.0f, 1000.0f), 50.0f, CowMove::kCow1, 2);
+		cow_manager_->SpawnCow(GameConstants::kCowDefault.model_path, VGet(-500, 0.0f, 1000.0f), 50.0f, CowMove::kCow1, 2);
 	}
 }
 
-// プレイヤーのコンボが2以上になったことを確認して次に進む
+// プレイヤーのコンボが2以上になったことを確認して次に進行
 void TutorialScene::UpdateStateComboScore()
 {
-	if (mpTexture3) mpTexture3->Draw();
+	if (texture3_) texture3_->Draw();
 
 	Player3D* player = ServiceLocator::GetPlayer();
 
-	if (player && player->mpCombo->GetCombo() >= 2)
+	if (player && player->combo_->GetCombo() >= 2)
 	{
 		Master::mpSoundManager->PlaySE(SoundManager::kSeTutorialChange);
-		mState = STATE_PHASE;
-		timerCount = 0; 
+		state_ = kStatePhase;
+		timer_count_ = 0; 
 	}
 }
 
-// フェーズ説明のため、一定時間（約3秒）待機した後に進行する
+// フェーズ移行のため、待機（3秒）時間を設けて進行する
 void TutorialScene::UpdateStatePhase()
 {
-	if (mpTexture4) mpTexture4->Draw();
+	if (texture4_) texture4_->Draw();
 
-	timerCount++;
-	if (timerCount > 180)
+	timer_count_++;
+	if (timer_count_ > 180)
 	{
 		Master::mpSoundManager->PlaySE(SoundManager::kSeTutorialChange);
-		mState = STATE_SKILL;
+		state_ = kStateSkill;
 	}
 }
 
-// スキル発動操作を確認し、フィーバー体験へ移行する
+// スキルを使用することを確認し、フィーバーの導線へ移行する
 void TutorialScene::UpdateStateSkill()
 {
 	Player3D* player = ServiceLocator::GetPlayer();
 
 	if (!player) return;
 
-	if (player->mpSkill->AddSkillFlag)
+	if (player->mpSkill->add_skill_flag_)
 	{
-		if(mpTexture5) mpTexture5->Draw();
-		mbSkillFlag = true;
+		if(texture5_) texture5_->Draw();
+		skill_flag_ = true;
 	}
 
-	if (player->mpSkill->AddSkillFlag == false && mbSkillFlag)
+	if (player->mpSkill->add_skill_flag_ == false && skill_flag_)
 	{
-		mbSkillFlag = false;
-		mState = STATE_FEVER;
+		skill_flag_ = false;
+		state_ = kStateFever;
 		Master::mpSoundManager->PlaySE(SoundManager::kSeTutorialChange);
 		
-		// フィーバーモード用にゴールド牛を配置する
+		// フィーバーモード用でゴールド牛を召喚
 		auto g = new Cow_gold("Resource/3D/GOLDCow/GoldCow.mv1", VGet(1000, 0, 1000), Cow_gold::kNoFever);
 		g->SetScale(100);
 	}
 }
 
-// フィーバーモードの開始と終了を監視する
+// フィーバーモードの開始と終了を確認する
 void TutorialScene::UpdateStateFever()
 {
-	if (mfeverstate == FEVER_1)
+	if (fever_state_ == kFever1)
 	{
-		if(mpTexture6) mpTexture6->Draw(); 
+		if(texture6_) texture6_->Draw(); 
 		
-		if (mpFever && mpFever->IsFever()) { 
-			mfeverstate = FEVER_2; 
+		if (fever_ && fever_->IsFever()) { 
+			fever_state_ = kFever2; 
 		}
 	}
-	else if (mfeverstate == FEVER_2)
+	else if (fever_state_ == kFever2)
 	{
-		if (mpFever && mpFever->IsFever() == false) { 
-			mState = STATE_END; 
+		if (fever_ && fever_->IsFever() == false) { 
+			state_ = kStateEnd; 
 		}
 	}
 }
 
-// チュートリアル終了テキストを表示し入力待機状態にする
+// チュートリアル終了テキストを表示して待機状態にする
 void TutorialScene::UpdateStateEnd()
 {
 	DrawTutorialText("Enterでチュートリアルを終了します");
 
 	if (CheckHitKey(KEY_INPUT_RETURN))
 	{
-		mFadeState = SceneFade_Out;
-		mNextScene = SceneManager::SCENE_TITLE;
+		fade_state_ = kSceneFadeOut;
+		next_scene_ = SceneManager::kSceneTitle;
 	}
 }
 
@@ -288,7 +288,7 @@ void TutorialScene::Draw()
 void TutorialScene::DrawTutorialText(const char* text, int yOffset)
 {
 	unsigned int color = GetColor(255, 255, 0);
-	DrawFormatStringToHandle(400, 50 + yOffset, color, fontHandle, text);
+	DrawFormatStringToHandle(400, 50 + yOffset, color, font_handle_, text);
 }
 
 void TutorialScene::Finalize()

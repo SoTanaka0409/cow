@@ -42,7 +42,7 @@ public:
 	void SetAnimationCount(float count) { mfAnimationCount = count; }
 
 private:
-	int mnModelHandle;                  // DX繝ｩ繧､繝悶Λ繝ｪ縺ｮ3D繝｢繝・Ν繝上Φ繝峨Ν
+	int model_handle_;                  // DX繝ｩ繧､繝悶Λ繝ｪ縺ｮ3D繝｢繝・Ν繝上Φ繝峨Ν
 	float mfAnimationTime;              // 迴ｾ蝨ｨ蜀咲函荳ｭ縺ｮ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ譎ょ綾・育ｧ抵ｼ・
 	float mfAnimationCount;             // 蜀咲函譎る俣繧帝ｲ繧√ｋ騾溷ｺｦ菫よ焚
 	int mnAnimationIndex;               // 迴ｾ蝨ｨ縺ｮ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｮ繧､繝ｳ繝・ャ繧ｯ繧ｹ

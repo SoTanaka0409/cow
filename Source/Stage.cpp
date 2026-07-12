@@ -6,22 +6,22 @@ Stage::Stage(VECTOR initPos, std::string stageModelName, std::string stageCollis
 {
 	SetTag(Object3D::kTag3dStage);
 
-	mnModelHandle = Master::mpResourceManager->LoadModel(stageModelName);
-	mnCollisionHandle = Master::mpResourceManager->LoadModel(stageCollisionModelName);
+	model_handle_ = Master::mpResourceManager->LoadModel(stageModelName);
+	collision_handle_ = Master::mpResourceManager->LoadModel(stageCollisionModelName);
 
 	// 螳溯｡梧凾縺ｮ雋闕ｷ繧定ｻｽ貂帙☆繧九◆繧√∝・譛溷喧譎ゅ↓繝昴Μ繧ｴ繝ｳ諠・ｱ繧剃ｺ句燕讒狗ｯ峨＠縺ｦ縺翫￥
 	float StageSize = 5.0f;
-	MV1SetScale(mnModelHandle, VGet(StageSize, 0.3f, StageSize));
-	MV1SetScale(mnCollisionHandle, VGet(StageSize, 0.3f, StageSize));
-	MV1SetPosition(mnCollisionHandle, initPos);
-	MV1SetPosition(mnModelHandle, initPos);
-	MV1SetupCollInfo(mnCollisionHandle);
+	MV1SetScale(model_handle_, VGet(StageSize, 0.3f, StageSize));
+	MV1SetScale(collision_handle_, VGet(StageSize, 0.3f, StageSize));
+	MV1SetPosition(collision_handle_, initPos);
+	MV1SetPosition(model_handle_, initPos);
+	MV1SetupCollInfo(collision_handle_);
 }
 
 Stage::~Stage()
 {
-	MV1DeleteModel(mnModelHandle);
-	MV1DeleteModel(mnCollisionHandle);
+	MV1DeleteModel(model_handle_);
+	MV1DeleteModel(collision_handle_);
 }
 
 void Stage::Update()
@@ -30,12 +30,12 @@ void Stage::Update()
 
 void Stage::Draw()
 {
-	MV1DrawModel(mnModelHandle);
+	MV1DrawModel(model_handle_);
 }
 
 bool Stage::CheckHit_Capsule(VECTOR pos1, VECTOR pos2, float r)
 {
-	MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Capsule(mnCollisionHandle, -1, pos1, pos2, r);
+	MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Capsule(collision_handle_, -1, pos1, pos2, r);
 
 	if (result.HitNum >= 1)
 	{
@@ -61,7 +61,7 @@ VECTOR Stage::CheckHit_Line(VECTOR pos1, VECTOR pos2)
 {
 	VECTOR ret = VGet(0.0f, 0.0f, 0.0f);
 
-	auto result = MV1CollCheck_Line(mnCollisionHandle, -1, pos1, pos2);
+	auto result = MV1CollCheck_Line(collision_handle_, -1, pos1, pos2);
 
 	if (result.HitFlag)
 	{
@@ -75,7 +75,7 @@ VECTOR Stage::CheckHit_LineDebug(VECTOR pos1, VECTOR pos2)
 {
 	VECTOR ret = VGet(0.0f, 0.0f, 0.0f);
 
-	auto result = MV1CollCheck_Line(mnCollisionHandle, -1, pos1, pos2);
+	auto result = MV1CollCheck_Line(collision_handle_, -1, pos1, pos2);
 
 	if (result.HitFlag)
 	{

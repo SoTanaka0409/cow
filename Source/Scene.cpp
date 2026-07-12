@@ -10,122 +10,122 @@
 Scene::Scene()
 {
 
-	mpObjectManager = new ObjectManager();
-	mpColliderManager = new ColliderManager();
-	mpGameManager = new GameManager();
-	mpCowManager = new CowManager();
-	mpAnimalManager = new AnimalManager();
-	mpFever = new Fever();
+	object_manager_ = new ObjectManager();
+	collider_manager_ = new ColliderManager();
+	game_manager_ = new GameManager();
+	cow_manager_ = new CowManager();
+	animal_manager_ = new AnimalManager();
+	fever_ = new Fever();
 
 
-	mfFadeAlpha = 0.0f;
-	mfFadeSpeed = 5.0f;
+	fade_alpha_ = 0.0f;
+	fade_speed_ = 5.0f;
 }
 
 Scene::~Scene()
 {
 
-	if (mpObjectManager != nullptr)
+	if (object_manager_ != nullptr)
 	{
-		mpObjectManager->DeleteAll3D();
-		mpObjectManager->DeleteAll2D(); // 繧ｷ繝ｼ繝ｳ蛻・ｊ譖ｿ縺域凾縺ｮ繝｡繝｢繝ｪ繝ｪ繝ｼ繧ｯ髦ｲ豁｢
-		delete mpObjectManager;
+		object_manager_->DeleteAll3D();
+		object_manager_->DeleteAll2D(); // シーン刁E��替え時のメモリリーク防止
+		delete object_manager_;
 	}
 
 
-	if (mpColliderManager != nullptr)
+	if (collider_manager_ != nullptr)
 	{
-		mpColliderManager->DeleteAllCollider();
-		delete mpColliderManager;
+		collider_manager_->DeleteAllCollider();
+		delete collider_manager_;
 	}
 
 
-	if (mpGameManager != nullptr)
+	if (game_manager_ != nullptr)
 	{
-		delete mpGameManager;
+		delete game_manager_;
 	}
-	if (mpCowManager != nullptr)
+	if (cow_manager_ != nullptr)
 	{
-		delete mpCowManager;
+		delete cow_manager_;
 	}
-	if (mpFever != nullptr)
+	if (fever_ != nullptr)
 	{
-		delete mpFever;
+		delete fever_;
 	}
-	if (mpAnimalManager != nullptr)
+	if (animal_manager_ != nullptr)
 	{
-		delete mpAnimalManager;
+		delete animal_manager_;
 	}
 }
 
 void Scene::Draw()
 {
-	if (mpObjectManager != nullptr)
+	if (object_manager_ != nullptr)
 	{
-		mpObjectManager->Draw();
+		object_manager_->Draw();
 	}
-	if (mpColliderManager != nullptr)
+	if (collider_manager_ != nullptr)
 	{
-		mpColliderManager->Draw(); // 繝・ヰ繝・げ逕ｨ縺ｮ蠖薙◆繧雁愛螳壼庄隕門喧
+		collider_manager_->Draw(); // チE��チE��用の当たり判定可視化
 	}
-	if (mpAnimalManager != nullptr)
+	if (animal_manager_ != nullptr)
 	{
-		mpAnimalManager->Draw();
+		animal_manager_->Draw();
 	}
 }
 
 void Scene::Update()
 {
-	if (mpObjectManager != nullptr)
+	if (object_manager_ != nullptr)
 	{
-		mpObjectManager->Update();
+		object_manager_->Update();
 	}
-	if (mpColliderManager != nullptr)
+	if (collider_manager_ != nullptr)
 	{
-		mpColliderManager->Update();
+		collider_manager_->Update();
 	}
-	if (mpFever != nullptr)
+	if (fever_ != nullptr)
 	{
-		mpFever->Update();
+		fever_->Update();
 	}
-	if (mpAnimalManager != nullptr)
+	if (animal_manager_ != nullptr)
 	{
-		mpAnimalManager->Update();
+		animal_manager_->Update();
 	}
 }
 
 void Scene::Fade(SceneFade fade)
 {
-	// 繝輔ぉ繝ｼ繝峨う繝ｳ
-	if (fade == SceneFade::SceneFade_In)
+	// フェードイン
+	if (fade == SceneFade::kSceneFadeIn)
 	{
 
-		mfFadeAlpha -= mfFadeSpeed;
-		if (mfFadeAlpha < 0) mfFadeAlpha = 0; 
+		fade_alpha_ -= fade_speed_;
+		if (fade_alpha_ < 0) fade_alpha_ = 0; 
 
 
-		if (mfFadeAlpha > 0)
+		if (fade_alpha_ > 0)
 		{
-			SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)mfFadeAlpha);
-			DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE); // 逕ｻ髱｢蜈ｨ菴薙ｒ證苓ｻ｢
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)fade_alpha_);
+			DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE); // 画面全体を暗転
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);          
 		}
 	}
-	// 繝輔ぉ繝ｼ繝峨い繧ｦ繝・
-	else if (fade == SceneFade::SceneFade_Out)
+	// フェードアウチE
+	else if (fade == SceneFade::kSceneFadeOut)
 	{
 
-		mfFadeAlpha += mfFadeSpeed;
-		if (mfFadeAlpha > 255) mfFadeAlpha = 255; // DxLib縺ｮ莉墓ｧ倥↓繧医ｊ繧｢繝ｫ繝輔ぃ蛟､荳企剞縺ｯ255
+		fade_alpha_ += fade_speed_;
+		if (fade_alpha_ > 255) fade_alpha_ = 255; // DxLibの仕様によりアルファ値上限は255
 
 
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)mfFadeAlpha);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)fade_alpha_);
 		DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);          
 	}
-	// 繝ｭ繝ｼ繝我ｸｭ
-	else if (fade == SceneFade::SceneFade_Load)
+	// ロード中
+	else if (fade == SceneFade::kSceneFadeLoad)
 	{
-		// 蟆・擂縺ｮ繝ｭ繝ｼ繝臥判髱｢諡｡蠑ｵ逕ｨ繧ｹ繝壹・繧ｹ
+		// 封E��のロード画面拡張用スペ�Eス
 	}
 }

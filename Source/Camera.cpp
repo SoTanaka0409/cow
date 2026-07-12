@@ -36,10 +36,10 @@ void Camera::Initialize()
 {
 	target_ = nullptr;
 	
-	// ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽﾌク・ｽ・ｽ・ｽb・ｽs・ｽ・ｽ・ｽO・ｽ・ｽ・ｽ・ｽ・ｽi・ｽ`・ｽ・ｽﾂ能・ｽﾍ囲）・ｽ・ｽ・ｽ100?・ｽ・ｽ50000・ｽﾌ広・ｽﾍ囲に設抵ｿｽ
+	// �E�J�E��E��E��E��E�̃N�E��E��E�b�E�s�E��E��E�O�E��E��E��E��E�i�E�`�E��E�\�E�͈́j�E��E��E�100?�E��E�50000�E�̍L�E�͈͂ɐݒ�
 	SetCameraNearFar(100.0f, 50000.0f);
 
-	// ・ｽ`・ｽ謔ｳ・ｽ・ｽﾈゑｿｽ・ｽw・ｽi・ｽ・ｽ・ｽ・ｽ・ｽ・ｽN・ｽ・ｽ・ｽA・ｽ・ｽ・ｽ・ｽﾛのデ・ｽt・ｽH・ｽ・ｽ・ｽg・ｽF・ｽ・ｽD・ｽF・ｽﾉ設抵ｿｽ
+	// �E�`�E�悳�E��E�Ȃ��E�w�E�i�E��E��E��E��E��E�N�E��E��E�A�E��E��E��E�ۂ̃f�E�t�E�H�E��E��E�g�E�F�E��E�D�E�F�E�ɐݒ�
 	SetBackgroundColor(128, 128, 128);
 
 	SetCameraPositionAndTarget_UpVecY(position_, look_at_position_);
@@ -48,7 +48,7 @@ void Camera::Initialize()
 
 void Camera::Update()
 {
-	// ・ｽX・ｽL・ｽ・ｽ・ｽJ・ｽ[・ｽh・ｽI・ｽ・A・ｽﾜゑｿｽ・ｽﾍデ・ｽo・ｽb・ｽO・ｽﾌ趣ｿｽ・ｽR・ｽﾚ難ｿｽ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・・ｿｽﾍゲ・ｽ[・ｽ・ｽ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽﾌ更・ｽV・ｽ・ｽX・ｽL・ｽb・ｽv
+	// �E�X�E�L�E��E��E�J�E�[�E�h�E�I�E��EA�E�܂��E�̓f�E�o�E�b�E�O�E�̎��E�R�E�ړ��E�J�E��E��E��E��E��E��E��E�E��̓Q�E�[�E��E��E�J�E��E��E��E��E�̍X�E�V�E��E�X�E�L�E�b�E�v
 	if (Master::SelectSkill) return;
 	if (Master::mbIsDebugCamera) return;
 
@@ -61,7 +61,7 @@ void Camera::Update()
 	
 	if (target_ != nullptr)
 	{
-		// ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽﾌ抵ｿｽ・ｽ・ｽ・ｽ_・ｽ・ｽv・ｽ・ｽ・ｽC・ｽ・ｽ・ｽ[・ｽL・ｽ・ｽ・ｽ・ｽ・ｽN・ｽ^・ｽ[・ｽﾌ抵ｿｽ・ｽS・ｽ・ｽ・ｽ・ｽﾉ設定す・ｽ・ｽ
+		// �E�J�E��E��E��E��E�̒��E��E��E�_�E��E�v�E��E��E�C�E��E��E�[�E�L�E��E��E��E��E�N�E�^�E�[�E�̒��E�S�E��E��E��E�ɐݒ肷�E��E�
 		look_at_position_ = target_->GetPosition();
 		look_at_position_.y += 340.0f;
 	}
@@ -71,7 +71,7 @@ void Camera::Update()
 	{
 		const float distance = 1000.0f;
 		VECTOR temp;
-		// ・ｽ・ｽ・ｽ・ｽ・ｽE・ｽ・ｽ・ｽ・ｽ・ｽp・ｽx・ｽl・ｽi・ｽx・ｽ・ｽ・ｽ@・ｽj・ｽ・ｽ・ｽ・ｽW・ｽA・ｽ・ｽ・ｽﾉ変奇ｿｽ・ｽ・ｽ・ｽﾄカ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ3D・ｽ・ｽ・ｽW・ｽI・ｽt・ｽZ・ｽb・ｽg・ｽ・ｽv・ｽZ
+		// �E��E��E��E��E�E�E��E��E��E��E�p�E�x�E�l�E�i�E�x�E��E��E�@�E�j�E��E��E��E�W�E�A�E��E��E�ɕϊ��E��E��E�ăJ�E��E��E��E��E��E�3D�E��E��E�W�E�I�E�t�E�Z�E�b�E�g�E��E�v�E�Z
 		temp.x = distance * cosf(vertical_angle_ / 180.0f * 3.14159265f) * sinf(horizontal_angle_ / 180.0f * DX_PI_F);
 		temp.y = distance * sinf(-vertical_angle_ / 180.0f * 3.14159265f);
 		temp.z = -(distance * cosf(vertical_angle_ / 180.0f * DX_PI_F) * cosf(horizontal_angle_ / 180.0f * DX_PI_F));
@@ -80,7 +80,7 @@ void Camera::Update()
 		{
 			position_ = VAdd(temp, look_at_position_);
 			
-			// ・ｽZ・ｽo・ｽ・ｽ・ｽ・ｽ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽW・ｽ・ｽ・ｽ・ｽﾑ抵ｿｽ・ｽ・ｽ・ｽ_・ｽﾉ、・ｽ・ｽﾊ振・ｽ・ｽ・ｽﾉゑｿｽ・ｽI・ｽt・ｽZ・ｽb・ｽg・ｽ・ｽ・ｽW・ｽ・ｽ・ｽ・ｽZ・ｽ・ｽ・ｽﾄ費ｿｽ・ｽf
+			// �E�Z�E�o�E��E��E��E��E�J�E��E��E��E��E��E��E�W�E��E��E��E�ђ��E��E��E�_�E�ɁA�E��E�ʐU�E��E��E�ɂ��E�I�E�t�E�Z�E�b�E�g�E��E��E�W�E��E��E��E�Z�E��E��E�Ĕ��E�f
 			SetCameraPositionAndTarget_UpVecY(VAdd(position_, shake_position_), VAdd(look_at_position_, shake_position_));
 		}
 	}
@@ -89,17 +89,17 @@ void Camera::Update()
 	prev_mouse_y_ = current_mouse_y_;
 	GetMousePoint(&current_mouse_x_, &current_mouse_y_);
 
-	// ・ｽ`・ｽ・ｽG・ｽt・ｽF・ｽN・ｽg・ｽﾌ位置・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ3D・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽp・ｽﾆ搾ｿｽ・ｽ・ｽ・ｽ謔､・ｽAEffekseer・ｽ・ｽ・ｽ・ｽ3D・ｽ・ｽﾔ設抵ｿｽﾆ難ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// �E�`�E��E�G�E�t�E�F�E�N�E�g�E�̈ʒu�E��E��E��E��E��E��E�3D�E�J�E��E��E��E��E��E��E��E�p�E�ƍ��E��E��E�悤�E�AEffekseer�E��E��E��E�3D�E��E�Ԑݒ�Ɠ��E��E��E��E��E��E�
 	Effekseer_Sync3DSetting();
 
-	// ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ迺搾ｿｽ・ｽ・ｽ_・ｽﾖ鯉ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽx・ｽN・ｽg・ｽ・ｽ・ｽｽ行・ｽ・ｽ・ｽ・ｽ・ｽﾌ鯉ｿｽ・ｽ・ｽ・ｽﾆゑｿｽ・ｽﾄ設定し・ｽA・ｽ・ｽ・ｽ・ｽ・ｽ\・ｽ・ｽ・ｽ・ｽs・ｽ・ｽ
+	// �E�J�E��E��E��E��E��E��E�璍��E��E�_�E�֌��E��E��E��E��E�x�E�N�E�g�E��E��E�𕽍s�E��E��E��E��E�̌��E��E��E�Ƃ��E�Đݒ肵�E�A�E��E��E��E��E�\�E��E��E��E�s�E��E�
 	VECTOR lightDir = VSub(look_at_position_, position_);
 	SetLightDirection(lightDir);
 }
 
 void Camera::UpdateRotate()
 {
-	// ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ]・ｽp・ｽ・ｽ・ｽ・ｽﾑ撰ｿｽ・ｽ・ｽ・ｽ・ｽ]・ｽp・ｽﾌオ・ｽ[・ｽo・ｽ[・ｽt・ｽ・ｽ・ｽ[・ｽﾛ鯉ｿｽﾆ範囲撰ｿｽ・ｽ・ｽ
+	// �E�J�E��E��E��E��E��E��E��E��E��E�]�E�p�E��E��E��E�ѐ��E��E��E��E�]�E�p�E�̃I�E�[�E�o�E�[�E�t�E��E��E�[�E�ی�Ɣ͈͐��E��E�
 	if (horizontal_angle_ >= 180.0f)
 	{
 		horizontal_angle_ -= 360.0f;
@@ -120,16 +120,16 @@ void Camera::UpdateRotate()
 
 	const float MOUSE_SENSITIVITY = 0.05f;
 
-	if (Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::SCENE_3D || Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::SCENE_TUTORIAL)
+	if (Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::kScene3D || Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::kSceneTutorial)
 	{
-		// ・ｽX・ｽL・ｽ・ｽ・ｽI・ｽ・ﾅなゑｿｽ・ｽ鼾・ｿｽﾍゲ・ｽ[・ｽ・ｽ・ｽv・ｽ・ｽ・ｽC・ｽp・ｽﾌマ・ｽE・ｽX・ｽL・ｽ・ｽ・ｽv・ｽ`・ｽ・ｽ・ｽ・ｽs・ｽ・ｽ
+		// �E�X�E�L�E��E��E�I�E��EłȂ��E�ꍁE��̓Q�E�[�E��E��E�v�E��E��E�C�E�p�E�̃}�E�E�E�X�E�L�E��E��E�v�E�`�E��E��E��E�s�E��E�
 		SetMouseDispFlag(false);
 		GetMousePoint(&mouse_x_, &mouse_y_);
 
 		int center_x_ = 640;
 		int center_y_ = 200;
 
-		// 0・ｽL・ｽ[・ｽﾅマ・ｽE・ｽX・ｽﾌ拘・ｽ・ｽ・ｽ・ｽf・ｽo・ｽb・ｽO・ｽﾚ的・ｽﾅ一時・ｽ・ｽ・ｽ・ｽﾅゑｿｽ・ｽ・ｽ謔､・ｽﾉゑｿｽ・ｽ・ｽ
+		// 0�E�L�E�[�E�Ń}�E�E�E�X�E�̍S�E��E��E��E�f�E�o�E�b�E�O�E�ړI�E�ňꎞ�E��E��E��E�ł��E��E�悤�E�ɂ��E��E�
 		if (!CheckHitKey(KEY_INPUT_0))
 		{
 			SetMousePoint(center_x_, center_y_);
@@ -139,7 +139,7 @@ void Camera::UpdateRotate()
 
 		if (!is_phase_camera_active_)
 		{
-			// ・ｽ・ｽ・ｽE・ｽﾌマ・ｽE・ｽX・ｽﾚ難ｿｽ・ｽﾊゑｿｽJ・ｽ・ｽ・ｽ・ｽ・ｽﾌ撰ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽp・ｽi・ｽ・ｽ・ｽ[・ｽp・ｽj・ｽﾉ蓄・ｽﾏ費ｿｽ・ｽf
+			// �E��E��E�E�E�̃}�E�E�E�X�E�ړ��E�ʂ�J�E��E��E��E��E�̐��E��E��E��E��E��E�p�E�i�E��E��E�[�E�p�E�j�E�ɒ~�E�ϔ��E�f
 			horizontal_angle_ -= deltaX * MOUSE_SENSITIVITY;
 		}
 	}
@@ -161,7 +161,7 @@ void Camera::Shake()
 {
 	if (shake_time_counter_ < mfShakeTime)
 	{
-		// ・ｽ・ｽ・ｽ・ｽ・ｽg(sinf)・ｽﾆ趣ｿｽ・ｽﾔ経・ｽﾟにゑｿｽ・ｽt・ｽF・ｽ[・ｽh・ｽA・ｽE・ｽg・ｽ{・ｽ・ｽ・ｽ・ｽ・ｽZ・ｽ・ｽ・ｽﾄカ・ｽ・ｽ・ｽ・ｽ・ｽﾌ揺・ｽ轤ｵ・ｽﾊゑｿｽ・ｽ・ｽﾟゑｿｽ
+		// �E��E��E��E��E�g(sinf)�E�Ǝ��E�Ԍo�E�߂ɂ��E�t�E�F�E�[�E�h�E�A�E�E�E�g�E�{�E��E��E��E��E�Z�E��E��E�ăJ�E��E��E��E��E�̗h�E�炵�E�ʂ��E��E�߂�
 		shake_position_.y = sinf(shake_angle_) * (1.0f - (shake_time_counter_ / mfShakeTime)) * shake_width_;
 		shake_position_.x = 0.0f;
 		shake_position_.z = 0.0f;
@@ -204,13 +204,13 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 		return VAdd(start, VScale(VSub(end, start), t));
 	};
 
-	if (phase == (int)GameManager::GamePhase::Normal)
+	if (phase == (int)GameManager::GamePhase::kNormal)
 	{
 		is_phase_camera_active_ = false;
 		return;
 	}
 
-	// ・ｽ・ｽ・ｽo・ｽﾌ開・ｽn・ｽ・ｽ・ｽ・ｽ3・ｽb・ｽi180・ｽt・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽj・ｽ・ｽ・ｽo・ｽﾟゑｿｽ・ｽ・ｽ・ｽ・ｽA・ｽ・ｽ・ｽ・ｽ・ｽI・ｽﾉ標・ｽ・ｽ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽﾖと戻ゑｿｽ
+	// �E��E��E�o�E�̊J�E�n�E��E��E��E�3�E�b�E�i180�E�t�E��E��E�[�E��E��E�j�E��E��E�o�E�߂��E��E��E��E�A�E��E��E��E��E�I�E�ɕW�E��E��E�J�E��E��E��E��E�ւƖ߂�
 	if (phaseTimer > 180)
 	{
 		is_phase_camera_active_ = false;
@@ -219,9 +219,9 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 	
 	is_phase_camera_active_ = true;
 
-	if (phase == (int)GameManager::GamePhase::MassSpawn)
+	if (phase == (int)GameManager::GamePhase::kMassSpawn)
 	{
-		// ・ｽ・ｽ・ｽ・ｽﾊ費ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽo・ｽF・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾂつ、・ｽ・ｽ・ｽ・ｽ・ｽ繧ｰ・ｽ・ｽi・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽs・ｽb・ｽ`・ｽp・ｽ・ｽ・ｽ・ｽﾉ鯉ｿｽ・ｽ・ｽ・ｽ・ｽj
+		// �E��E��E��E�ʔ��E��E��E��E��E�o�E�F�E�J�E��E��E��E��E��E��E��E��E��E��E��E��E��E�A�E��E��E��E��E�グ�E��E�i�E�J�E��E��E��E��E�s�E�b�E�`�E�p�E��E��E��E�Ɍ��E��E��E��E�j
 		targetPos = VAdd(ufoPos, VGet(0.0f, 150.0f, -300.0f));
 		
 		if (phaseTimer < 180)
@@ -234,15 +234,15 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 			targetLookAt = VAdd(ufoPos, VGet(0.0f, 100.0f, 0.0f));
 		}
 	}
-	else if (phase == (int)GameManager::GamePhase::TornadoCrisis)
+	else if (phase == (int)GameManager::GamePhase::kTornadoCrisis)
 	{
-		// ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽo・ｽF・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽx・ｽ・ｽ繧ｰ・ｽﾄ全・ｽﾌゑｿｽ・ｽ・ｽn・ｽ・ｽ・ｽA・ｽ・ｽ・ｽ・ｽ・ｽ_・ｽｳ奇ｿｽ・ｽﾉゑｿｽ・ｽ・ｽ
+		// �E��E��E��E��E��E��E��E��E��E��E�o�E�F�E�J�E��E��E��E��E��E��E�x�E��E�グ�E�đS�E�̂��E��E�n�E��E��E�A�E��E��E��E��E�_�E�𗳊��E�ɂ��E��E�
 		targetPos = VAdd(ufoPos, VGet(0.0f, 500.0f, -200.0f));
 		VECTOR toTornado = VSub(tornadoPos, ufoPos);
 		targetLookAt = VAdd(ufoPos, toTornado);
 	}
 
-	// ・ｽ・ｽ・ｽﾝのカ・ｽ・ｽ・ｽ・ｽ・ｽp・ｽ・ｽ・ｽ・ｽ・ｽ[・ｽ^・ｽ・ｽ・ｽ・ｽ`・ｽ・ｽﾔ（Lerp・ｽj・ｽ・ｽp・ｽ・ｽ・ｽﾄ目標・ｽl・ｽﾖス・ｽ・ｽ・ｽ[・ｽY・ｽﾉ遷・ｽﾚゑｿｽ・ｽ・ｽ・ｽ・ｽ
+	// �E��E��E�݂̃J�E��E��E��E��E�p�E��E��E��E��E�[�E�^�E��E��E��E�`�E��E�ԁiLerp�E�j�E��E�p�E��E��E�ĖڕW�E�l�E�փX�E��E��E�[�E�Y�E�ɑJ�E�ڂ��E��E��E��E�
 	float lerpSpeed = 0.1f; 
 	position_ = LerpVector(position_, targetPos, lerpSpeed);
 	look_at_position_ = LerpVector(look_at_position_, targetLookAt, lerpSpeed);

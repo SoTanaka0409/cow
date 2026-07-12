@@ -11,16 +11,16 @@ public:
 	enum SkillTag
 	{
 		None,
-		Skill_1,    // 繧ｹ繝・・繧ｿ繧ｹ蠑ｷ蛹・ (蜷ｸ蠑暮溷ｺｦ)
-		Skill_2,    // 鬢鯉ｼ医ョ繧ｳ繧､・芽ｨｭ鄂ｮ
-		Skill_3,    // 繧ｹ繝・・繧ｿ繧ｹ蠑ｷ蛹・ (繝励Ξ繧､繝､繝ｼ騾溷ｺｦ)
+		kSkill1,    // 繧ｹ繝・・繧ｿ繧ｹ蠑ｷ蛹・ (蜷ｸ蠑暮溷ｺｦ)
+		kSkill2,    // 鬢鯉ｼ医ョ繧ｳ繧､・芽ｨｭ鄂ｮ
+		kSkill3,    // 繧ｹ繝・・繧ｿ繧ｹ蠑ｷ蛹・ (繝励Ξ繧､繝､繝ｼ騾溷ｺｦ)
 	};
 
 	// 蠑ｷ蛹門庄閭ｽ縺ｪ繝励Ξ繧､繝､繝ｼ繝代Λ繝｡繝ｼ繧ｿ縺ｮ繧ｿ繧ｰ螳夂ｾｩ
 	enum StatusTag
 	{
-		Status_AttackSpeed,
-		Status_Speed,
+		kStatusAttackSpeed,
+		kStatusSpeed,
 	};
 
 public:
@@ -57,7 +57,7 @@ public:
 	 */
 	void AddSkill();
 
-	SkillTag GetSkillTag() { return tag; }
+	SkillTag GetSkillTag() { return tag_; }
 
 	/*
 	 * @brief 謖・ｮ壹＆繧後◆蠑ｷ蛹悶せ繝・・繧ｿ繧ｹ縺ｮ蜷郁ｨ医・繝ｼ繝翫せ蛟､繧貞叙蠕励☆繧・
@@ -75,34 +75,34 @@ public:
 	 */
 	void SetSkillFlag(bool flag);
 
-	bool AddSkillFlag;          // 繧ｹ繧ｭ繝ｫ驕ｸ謚樒判髱｢縺檎樟蝨ｨ繧ｪ繝ｼ繝励Φ縺励※縺・ｋ縺九←縺・°縺ｮ繝輔Λ繧ｰ
+	bool add_skill_flag_;          // 繧ｹ繧ｭ繝ｫ驕ｸ謚樒判髱｢縺檎樟蝨ｨ繧ｪ繝ｼ繝励Φ縺励※縺・ｋ縺九←縺・°縺ｮ繝輔Λ繧ｰ
 
 private:
-	Object3D* mpParent;         // 隕ｪ繧｢繧ｯ繧ｿ繝ｼ
-	SkillTag tag;               // 繧ｹ繧ｭ繝ｫ繧ｿ繧ｰ
-	Texture* mpTexture;         // 繧ｫ繝ｼ繝・・磯溷ｺｦ繧｢繝・・・峨・繝・け繧ｹ繝√Ε
-	Texture* mpTexture2;        // 繧ｫ繝ｼ繝・・磯､後↓繧薙§繧難ｼ峨・繝・け繧ｹ繝√Ε
-	Texture* mpTexture3;        // 繧ｫ繝ｼ繝・・亥精蠑募鴨繧｢繝・・・峨・繝・け繧ｹ繝√Ε
-	float StatusDate;           // 繝代Λ繝｡繝ｼ繧ｿ荳譎ょ､画焚
-	float Status_A;             // 蜷ｸ蠑暮溷ｺｦ縺ｮ蜷郁ｨ亥ｼｷ蛹門､
-	float Status_S;             // 遘ｻ蜍暮溷ｺｦ縺ｮ蜷郁ｨ亥ｼｷ蛹門､
+	Object3D* parent_;         // 隕ｪ繧｢繧ｯ繧ｿ繝ｼ
+	SkillTag tag_;               // 繧ｹ繧ｭ繝ｫ繧ｿ繧ｰ
+	Texture* texture_;         // 繧ｫ繝ｼ繝・・磯溷ｺｦ繧｢繝・・・峨・繝・け繧ｹ繝√Ε
+	Texture* texture2_;        // 繧ｫ繝ｼ繝・・磯､後↓繧薙§繧難ｼ峨・繝・け繧ｹ繝√Ε
+	Texture* texture3_;        // 繧ｫ繝ｼ繝・・亥精蠑募鴨繧｢繝・・・峨・繝・け繧ｹ繝√Ε
+	float status_date_;           // 繝代Λ繝｡繝ｼ繧ｿ荳譎ょ､画焚
+	float status_a_;             // 蜷ｸ蠑暮溷ｺｦ縺ｮ蜷郁ｨ亥ｼｷ蛹門､
+	float status_s_;             // 遘ｻ蜍暮溷ｺｦ縺ｮ蜷郁ｨ亥ｼｷ蛹門､
 
-	int mHoverSkill;            // 繝槭え繧ｹ縺後・繝舌・縺励※縺・ｋ繧ｫ繝ｼ繝峨・逡ｪ蜿ｷ (1?3)
-	int mFlashAlpha;            // 驕ｸ謚樊凾縺ｮ繝輔Λ繝・す繝･蜉ｹ譫懃畑繧｢繝ｫ繝輔ぃ蛟､
-	bool mFlash;                // 繝輔Λ繝・す繝･蜉ｹ譫懊′繧｢繧ｯ繝・ぅ繝悶°縺ｩ縺・°縺ｮ繝輔Λ繧ｰ
+	int hover_skill_;            // 繝槭え繧ｹ縺後・繝舌・縺励※縺・ｋ繧ｫ繝ｼ繝峨・逡ｪ蜿ｷ (1?3)
+	int flash_alpha_;            // 驕ｸ謚樊凾縺ｮ繝輔Λ繝・す繝･蜉ｹ譫懃畑繧｢繝ｫ繝輔ぃ蛟､
+	bool flash_;                // 繝輔Λ繝・す繝･蜉ｹ譫懊′繧｢繧ｯ繝・ぅ繝悶°縺ｩ縺・°縺ｮ繝輔Λ繧ｰ
 
-	bool mSelectAnim;           // 繧ｫ繝ｼ繝峨′逕ｻ髱｢螟悶∈繝輔ぉ繝ｼ繝峨い繧ｦ繝医☆繧九い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ荳ｭ縺九←縺・°縺ｮ繝輔Λ繧ｰ
-	int mSelectedSkill;         // 驕ｸ謚槭＆繧後◆繧ｫ繝ｼ繝臥分蜿ｷ
-	float mSelectScale;         // 驕ｸ謚槭い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ譎ゅ・繧ｫ繝ｼ繝峨せ繧ｱ繝ｼ繝ｫ
-	VECTOR mSelectPos;          // 驕ｸ謚槭＆繧後◆繧ｫ繝ｼ繝峨・陦ｨ遉ｺ迴ｾ蝨ｨ菴咲ｽｮ
+	bool select_anim_;           // 繧ｫ繝ｼ繝峨′逕ｻ髱｢螟悶∈繝輔ぉ繝ｼ繝峨い繧ｦ繝医☆繧九い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ荳ｭ縺九←縺・°縺ｮ繝輔Λ繧ｰ
+	int selected_skill_;         // 驕ｸ謚槭＆繧後◆繧ｫ繝ｼ繝臥分蜿ｷ
+	float select_scale_;         // 驕ｸ謚槭い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ譎ゅ・繧ｫ繝ｼ繝峨せ繧ｱ繝ｼ繝ｫ
+	VECTOR select_pos_;          // 驕ｸ謚槭＆繧後◆繧ｫ繝ｼ繝峨・陦ｨ遉ｺ迴ｾ蝨ｨ菴咲ｽｮ
 
-	VECTOR mPos1;               // 繧ｫ繝ｼ繝・縺ｮ讓呎ｺ夜・鄂ｮ蠎ｧ讓・
-	VECTOR mPos2;               // 繧ｫ繝ｼ繝・縺ｮ讓呎ｺ夜・鄂ｮ蠎ｧ讓・
-	VECTOR mPos3;               // 繧ｫ繝ｼ繝・縺ｮ讓呎ｺ夜・鄂ｮ蠎ｧ讓・
+	VECTOR pos1_;               // 繧ｫ繝ｼ繝・縺ｮ讓呎ｺ夜・鄂ｮ蠎ｧ讓・
+	VECTOR pos2_;               // 繧ｫ繝ｼ繝・縺ｮ讓呎ｺ夜・鄂ｮ蠎ｧ讓・
+	VECTOR pos3_;               // 繧ｫ繝ｼ繝・縺ｮ讓呎ｺ夜・鄂ｮ蠎ｧ讓・
 
-	bool mOpenAnim;             // 繧ｫ繝ｼ繝峨′荳九°繧峨せ繝ｩ繧､繝峨う繝ｳ縺吶ｋ逋ｻ蝣ｴ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ荳ｭ縺九←縺・°縺ｮ繝輔Λ繧ｰ
-	float mCard1Y;              // 繧ｫ繝ｼ繝・縺ｮ迴ｾ蝨ｨY蠎ｧ讓・
-	float mCard2Y;              // 繧ｫ繝ｼ繝・縺ｮ迴ｾ蝨ｨY蠎ｧ讓・
-	float mCard3Y;              // 繧ｫ繝ｼ繝・縺ｮ 迴ｾ蝨ｨY蠎ｧ讓・
+	bool open_anim_;             // 繧ｫ繝ｼ繝峨′荳九°繧峨せ繝ｩ繧､繝峨う繝ｳ縺吶ｋ逋ｻ蝣ｴ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ荳ｭ縺九←縺・°縺ｮ繝輔Λ繧ｰ
+	float card1_y_;              // 繧ｫ繝ｼ繝・縺ｮ迴ｾ蝨ｨY蠎ｧ讓・
+	float card2_y_;              // 繧ｫ繝ｼ繝・縺ｮ迴ｾ蝨ｨY蠎ｧ讓・
+	float card3_y_;              // 繧ｫ繝ｼ繝・縺ｮ 迴ｾ蝨ｨY蠎ｧ讓・
 };
 

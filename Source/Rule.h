@@ -42,20 +42,20 @@ public:
 
 	enum MenuType
 	{
-		MENU_BGM,
-		MENU_SE,
-		MENU_BACK,
-		MENU_MAX
+		kMenuBgm,
+		kMenuSe,
+		kMenuBack,
+		kMenuMax
 	};
 
 private:
-	int mRuleGraph;
-	int mFontHandle;
-	int mTitleFontHandle;
+	int rule_graph_;
+	int font_handle_;
+	int title_font_handle_;
 
-	MenuType mSelectedIndex = MENU_BGM;
+	MenuType selected_index_ = kMenuBgm;
 	// 髻ｳ驥上せ繝ｩ繧､繝繝ｼ謫堺ｽ懈凾縺ｫSE縺梧ｯ弱ヵ繝ｬ繝ｼ繝魑ｴ繧九・繧帝亟縺舌◆繧√・繧､繝ｳ繧ｿ繝ｼ繝舌Ν
-	int mPlaySeDelay = 0;
+	int play_se_delay_ = 0;
 	// 繧ｷ繝ｼ繝ｳ驕ｷ遘ｻ逶ｴ蠕後・蜈･蜉帶戟縺｡雜翫＠縺ｫ繧医ｋ隱､蜍穂ｽ懊ｒ髦ｲ縺舌◆繧・
-	int mSceneFrames = 0;
+	int scene_frames_ = 0;
 };

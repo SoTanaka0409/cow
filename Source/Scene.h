@@ -8,17 +8,17 @@
 class ObjectManager;
 class ColliderManager;
 
-// 蜷・ご繝ｼ繝繧ｷ繝ｼ繝ｳ縺ｮ謚ｽ雎｡蝓ｺ蠎輔け繝ｩ繧ｹ
+// 吁E��ームシーンの抽象基底クラス
 class Scene
 {
 public:
-	// 繝輔ぉ繝ｼ繝臥憾諷・
+	// フェード状慁E
 	enum SceneFade
 	{
-		SceneFade_In,   // 證苓ｻ｢縺九ｉ譏手ｻ｢
-		SceneFade_Out,  // 譏手ｻ｢縺九ｉ證苓ｻ｢
-		SceneFade_None, // 繝輔ぉ繝ｼ繝峨↑縺・
-		SceneFade_Load, // 繝ｭ繝ｼ繝我ｸｭ
+		kSceneFadeIn,   // 暗転から明転
+		kSceneFadeOut,  // 明転から暗転
+		kSceneFadeNone, // フェードなぁE
+		kSceneFadeLoad, // ロード中
 	};
 	
 public:
@@ -26,52 +26,52 @@ public:
 	virtual ~Scene();
 
 	/*
-	 * @brief 繧ｷ繝ｼ繝ｳ蛻晄悄蛹・
-	 * [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 繝ｪ繧ｽ繝ｼ繧ｹ蛻晄悄蛹・
+	 * @brief シーン初期匁E
+	 * [入力] なぁE[出力] なぁE[副作用] リソース初期匁E
 	 */
 	virtual void Initialize() = 0;
 
 	/*
-	 * @brief 繝輔ぉ繝ｼ繝画緒逕ｻ
-	 * [蜈･蜉嫋 fade: 繝輔ぉ繝ｼ繝臥憾諷・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 逕ｻ髱｢謠冗判縲√い繝ｫ繝輔ぃ蛟､譖ｴ譁ｰ
+	 * @brief フェード描画
+	 * [入力] fade: フェード状慁E[出力] なぁE[副作用] 画面描画、アルファ値更新
 	 */
 	virtual void Fade(SceneFade fade);
 
 	/*
-	 * @brief 繧ｷ繝ｼ繝ｳ蜀・ｦ∫ｴ縺ｮ譖ｴ譁ｰ
-	 * [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 蜷・・繝阪・繧ｸ繝｣繝ｼ縺ｮUpdate蜻ｼ縺ｳ蜃ｺ縺・
+	 * @brief シーン冁E��素の更新
+	 * [入力] なぁE[出力] なぁE[副作用] 吁E�Eネ�EジャーのUpdate呼び出ぁE
 	 */
 	virtual void Update();
 
 	/*
-	 * @brief 繧ｷ繝ｼ繝ｳ蜀・ｦ∫ｴ縺ｮ謠冗判
-	 * [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 蜷・・繝阪・繧ｸ繝｣繝ｼ縺ｮDraw蜻ｼ縺ｳ蜃ｺ縺・
+	 * @brief シーン冁E��素の描画
+	 * [入力] なぁE[出力] なぁE[副作用] 吁E�Eネ�EジャーのDraw呼び出ぁE
 	 */
 	virtual void Draw();
 
 	/*
-	 * @brief 繧ｷ繝ｼ繝ｳ邨ゆｺ・・逅・
-	 * [蜈･蜉嫋 縺ｪ縺・[蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] 繧ｪ繝悶ず繧ｧ繧ｯ繝育ｭ峨・隗｣謾ｾ
+	 * @brief シーン終亁E�E琁E
+	 * [入力] なぁE[出力] なぁE[副作用] オブジェクト等�E解放
 	 */
 	virtual void Finalize() = 0;
 
-	// 繧ｲ繝・ち繝ｼ繝ｻ繧ｻ繝・ち繝ｼ鄒､
-	ObjectManager* GetObjectManager() { return mpObjectManager; }
-	ColliderManager* GetCollisionManager() { return mpColliderManager; }
-	float GetFadeAlpha() const { return mfFadeAlpha; }
-	void SetFadeAlpha(float alpha) { mfFadeAlpha = alpha; }
+	// ゲチE��ー・セチE��ー群
+	ObjectManager* GetObjectManager() { return object_manager_; }
+	ColliderManager* GetCollisionManager() { return collider_manager_; }
+	float GetFadeAlpha() const { return fade_alpha_; }
+	void SetFadeAlpha(float alpha) { fade_alpha_ = alpha; }
 	
-	SceneFade mFadeState = SceneFade_None; // 繝輔ぉ繝ｼ繝臥憾諷・
-	int mNextScene = 0;                    // 谺｡縺ｮ繧ｷ繝ｼ繝ｳID
+	SceneFade fade_state_ = kSceneFadeNone; // フェード状慁E
+	int next_scene_ = 0;                    // 次のシーンID
 
-	Fever* mpFever;                        // 繝輔ぅ繝ｼ繝舌・邂｡逅・
-	AnimalManager* mpAnimalManager;        // 繧｢繝九・繝ｫ邂｡逅・
-	CowManager* mpCowManager;              // 迚帷ｮ｡逅・
-	GameManager* mpGameManager;            // 繧ｲ繝ｼ繝騾ｲ陦檎ｮ｡逅・
+	Fever* fever_;                        // フィーバ�E管琁E
+	AnimalManager* animal_manager_;        // アニ�Eル管琁E
+	CowManager* cow_manager_;              // 牛管琁E
+	GameManager* game_manager_;            // ゲーム進行管琁E
 
 private:
-	ObjectManager* mpObjectManager;        // 繧ｪ繝悶ず繧ｧ繧ｯ繝育ｮ｡逅・
-	ColliderManager* mpColliderManager;    // 繧ｳ繝ｩ繧､繝繝ｼ邂｡逅・
-	float mfFadeAlpha;                     // 繝輔ぉ繝ｼ繝我ｸ埼乗・蠎ｦ (0-255)
-	float mfFadeSpeed;                     // 繝輔ぉ繝ｼ繝蛾溷ｺｦ
+	ObjectManager* object_manager_;        // オブジェクト管琁E
+	ColliderManager* collider_manager_;    // コライダー管琁E
+	float fade_alpha_;                     // フェード不透�E度 (0-255)
+	float fade_speed_;                     // フェード速度
 };

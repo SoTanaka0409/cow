@@ -14,7 +14,7 @@ Cow_gold::Cow_gold(std::string filename, VECTOR initPos, TagFever kFever)
 	, death_count_(0)
 	, death_timer_(1200)
 {
-	SetTag_cow(CowMove::kCowGold);
+	SetTagCow(CowMove::kCowGold);
 	mfXp = 20;
 	mfScore = 30;
 	// 繝励Ξ繧､繝､繝ｼ縺梧黒迯ｲ縺励ｄ縺吶＞繧医≧縺ｫ蠖薙◆繧雁愛螳壹ｒ螟ｧ縺阪ａ縺ｫ險ｭ螳・

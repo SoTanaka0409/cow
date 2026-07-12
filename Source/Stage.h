@@ -43,6 +43,6 @@ public:
 	VECTOR CheckHit_LineDebug(VECTOR pos1, VECTOR pos2);
 
 private:
-	int mnModelHandle;
-	int mnCollisionHandle;
+	int model_handle_;
+	int collision_handle_;
 };

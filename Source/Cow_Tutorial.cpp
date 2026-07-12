@@ -6,7 +6,7 @@ Cow_Tutorial::Cow_Tutorial(std::string filename, VECTOR initPos)
 	mfScore = 30;
 	// 遏ｭ譎る俣縺ｧ繝ｬ繝吶Ν繧｢繝・・繧剃ｽ馴ｨ薙＆縺帙ｋ縺溘ａ邨碁ｨ灘､繧帝ｫ倥￥險ｭ螳・
 	mfXp = 150;
-	SetTag_cow(CowMove::kCowT);
+	SetTagCow(CowMove::kCowT);
 }
 
 Cow_Tutorial::~Cow_Tutorial()

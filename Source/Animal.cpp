@@ -5,7 +5,7 @@ Animal::Animal(std::string filename, VECTOR initPos)
 {
 	// Animal_1繧偵ョ繝輔か繝ｫ繝医→縺励∝崋譛峨・邨碁ｨ灘､繧定ｨｭ螳・
 	mfXp = 10;
-	SetTag_animal(AnimalMove::kAnimal1);
+	SetTagAnimal(AnimalMove::kAnimal1);
 }
 
 Animal::~Animal()

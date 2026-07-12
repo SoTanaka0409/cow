@@ -9,34 +9,34 @@
 #include"Utility.h"
 
 GameManager::GameManager()
-	: Fadetimer(300.0f)
-	, Fadeflag(true)
-	, mCurrentPhase(GamePhase::Normal)
-	, mnType(GameStepType::game_CowGet)
+	: fade_timer_(300.0f)
+	, fade_flag_(true)
+	, current_phase_(GamePhase::kNormal)
+	, type_(GameStepType::kCowGet)
 {
 	game_timer_ = nullptr;
 	
 	auto data = new GameStepData;
-	data->type = GameStepType::game_CowGet;
+	data->type = GameStepType::kCowGet;
 	data->TrueFlag = true;
-	mData.push_back(data);
+	data_.push_back(data);
 
 	data = new GameStepData;
-	data->type = GameStepType::game_final;
+	data->type = GameStepType::kFinal;
 	data->TrueFlag = true;
-	mData.push_back(data);
+	data_.push_back(data);
 
-	m_PhaseTimer = GetNowCount();
-	m_PhaseChangeCount = 0;
+	phase_timer_ = GetNowCount();
+	phase_change_count_ = 0;
 }
 
 GameManager::~GameManager()
 {
-	for (auto data : mData)
+	for (auto data : data_)
 	{
 		delete data;
 	}
-	mData.clear();
+	data_.clear();
 
 	if (game_timer_ != nullptr)
 	{
@@ -46,21 +46,21 @@ GameManager::~GameManager()
 }
 
 /*
- * 郢ｧ・ｹ郢ｧ・ｳ郢ｧ・｢騾具ｽｻ鬪ｭ・ｲ郢ｧ蜑・ｽｼ・ｴ邵ｺ繝ｻ・ｵ繧・ｽｺ繝ｻ縺帷ｹ昴・繝｣郢晏干竏育ｸｺ・ｮ鬩包ｽｷ驕假ｽｻ郢ｧ螳夲ｽ｡蠕娯鴬
- * [陷茨ｽ･陷牙ｫ・type: 鬩包ｽｷ驕假ｽｻ陷亥現繝ｻ郢ｧ・ｹ郢昴・繝｣郢晄あD
- * [陷・ｽｺ陷牙ｫ・邵ｺ・ｪ邵ｺ繝ｻ
- * [陷托ｽｯ闖ｴ諛・舞] 鬨ｾ・ｲ髯ｦ蠕後○郢昴・繝｣郢晄懶ｽ､逕ｻ蟲ｩ邵ｲ竏壹Ψ郢晢ｽｩ郢ｧ・ｰ隴厄ｽｴ隴・ｽｰ邵ｲ竏壹Ο郢晢ｽｼ郢晢｣ｰ陷茨ｽ･陷牙ｹ・ｹ戊沂繝ｻ
+ * 繧�E�繧�E�繧�E�逋ｻ骭�E�繧剁E���E�縺・�E�めE��・せ繝�Eャ繝励∈縺�E�驕ｷ遘ｻ繧定｡後≧
+ * [蜈･蜉嫁Etype: 驕ｷ遘ｻ蜈医・繧�E�繝�Eャ繝悠D
+ * [蜁E��蜉嫁E縺�E�縺・
+ * [蜑ｯ菴懁E��] 騾�E�陦後せ繝�Eャ繝怜､画峩縲√ヵ繝ｩ繧�E�譖ｴ譁E��縲√ロ繝ｼ繝蜈･蜉幁E��蟋・
  */
 void GameManager::GameNextStep(GameStepType type)
 {
 	Player3D* player = ServiceLocator::GetPlayer();
 	
-	if (GameStepType::game_CowGet == type)
+	if (GameStepType::kCowGet == type)
 	{
-		Fadeflag = true;
-		mnType = type;
+		fade_flag_ = true;
+		type_ = type;
 	}
-	if (GameStepType::game_final == type)
+	if (GameStepType::kFinal == type)
 	{
 		Master::GameFinishFlag = true;
 		if (player != nullptr)
@@ -69,43 +69,43 @@ void GameManager::GameNextStep(GameStepType type)
 			Master::mpScore->SetResultScore(player->mpScore->GetScore());
 			player->mpScore->AddRanking();
 
-			// 陷ｷ讎顔√陷茨ｽ･陷牙ｸ吶・郢ｧ・ｹ郢ｧ・ｭ郢昴・繝ｻ邵ｺ蜉ｱ窶ｻ髢ｾ・ｪ陷崎ｼ斐◎郢晢ｽｼ郢晄じ笘・ｹｧ蛟ｶ・ｻ蠅難ｽｧ蛟･繝ｻ邵ｺ貅假ｽ・
+			// 蜷榊��蜈･蜉帙�E繧�E�繧�E�繝�E・縺励※閾�E�蜍輔そ繝ｼ繝悶☁E��倶�E�墓ｧ倥・縺溘ａE
 			player->mpScore->Save();
 			player->mpScore->SaveRanking();
 		}
 
-		// 郢晢ｽｪ郢ｧ・ｶ郢晢ｽｫ郢晁ご蛻､鬮ｱ・｢邵ｺ・ｸ邵ｺ・ｮ郢晁ｼ斐♂郢晢ｽｼ郢晏ｳｨ縺・ｹｧ・ｦ郢晏現・帝ｫ｢蜿･・ｧ荵昶・郢ｧ繝ｻ
+		// 繝ｪ繧�E�繝ｫ繝育判髱�E�縺�E�縺�E�繝輔ぉ繝ｼ繝峨ぁE���E�繝医�E�髢句�E�九�E繧・
 		if (auto scene = Master::mpSceneManager->GetCurrentScene())
 		{
-			scene->mFadeState = Scene::SceneFade_Out;
-			scene->mNextScene = SceneManager::SCENE_RESULT;
+			scene->fade_state_ = Scene::kSceneFadeOut;
+			scene->next_scene_ = SceneManager::kSceneResult;
 		}
 
-		mnType = type;
+		type_ = type;
 	}
 }
 
 /*
- * 郢晁ｼ斐♂郢晢ｽｼ郢晏ｳｨ縺・ｹ晢ｽｳ驕ｲ蟲ｨﾂ竏壹＃郢晢ｽｼ郢晢｣ｰ鬨ｾ・ｲ髯ｦ蠕娯・陟｢繝ｻ・ｦ竏壺・雋肴ｳ後・隰蜀怜愛郢ｧ螳夲ｽ｡蠕娯鴬
- * [陷茨ｽ･陷牙ｫ・邵ｺ・ｪ邵ｺ繝ｻ
- * [陷・ｽｺ陷牙ｫ・邵ｺ・ｪ邵ｺ繝ｻ
- * [陷托ｽｯ闖ｴ諛・舞] 騾包ｽｻ鬮ｱ・｢陷茨ｽｨ陜捺ｺ倪・DrawBox邵ｺ・ｫ郢ｧ蛹ｻ・矩ｮ溯ｲ橸ｽ｡蜉ｱ・願ｬ蜀怜愛
+ * 繝輔ぉ繝ｼ繝峨ぁE��ｳ遲峨√ご繝ｼ繝騾�E�陦後�E蠢・�E�√�E貍泌�E謠冗判繧定｡後≧
+ * [蜈･蜉嫁E縺�E�縺・
+ * [蜁E��蜉嫁E縺�E�縺・
+ * [蜑ｯ菴懁E��] 逕ｻ髱�E�蜈ｨ蝓溘�EDrawBox縺�E�繧医�E�鮟貞｡励�E�謠冗判
  */
 void GameManager::Draw()
 {
-	if (Fadeflag)
+	if (fade_flag_)
 	{
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(Fadetimer));
-		// 郢ｧ・ｦ郢ｧ・｣郢晢ｽｳ郢晏ｳｨ縺郁怦・ｨ騾包ｽｻ鬮ｱ・｢郢ｧ蛛ｵ縺咲ｹ晁・繝ｻ邵ｺ蜷ｶ・狗ｸｺ貅假ｽ・Utility 陞ｳ螢ｽ辟夂ｸｺ・ｮ髫暦ｽ｣陷剃ｸ橸ｽｺ・ｦ郢ｧ蜑・ｽｽ・ｿ騾包ｽｨ邵ｺ蜷ｶ・・
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(fade_timer_));
+		// 繧�E�繧�E�繝ｳ繝峨え蜈�E�逕ｻ髱�E�繧偵き繝�E・縺吶�E�縺溘ａEUtility 螳壽焚縺�E�隗｣蜒丞ｺ�E�繧剁E���E�逕ｨ縺吶�E�E
 		DrawBox(0, 0, Utility::kScreenWidth, Utility::kScreenHeight, GetColor(0, 0, 0), TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-		Fadetimer -= 2.0f;
+		fade_timer_ -= 2.0f;
 
-		if (Fadetimer <= 0.0f)
+		if (fade_timer_ <= 0.0f)
 		{
-			Fadetimer = 0.0f;
-			Fadeflag = false;
+			fade_timer_ = 0.0f;
+			fade_flag_ = false;
 		}
 	}
 }
@@ -114,12 +114,12 @@ void GameManager::Update()
 {
 	Player3D* player = ServiceLocator::GetPlayer();
 	
-	if (GameStepType::game_final == mnType)
+	if (GameStepType::kFinal == type_)
 	{
 	}
 	
-	// 陋ｻ・ｶ鬮ｯ蜈亥・鬮｢阮吶■郢ｧ・､郢晄ｧｭ繝ｻ驍ゑｽ｡騾・・笙郢ｧ蛹ｻ繝ｻ郢晢ｽｩ郢晢ｽｳ郢敖郢晢｣ｰ郢晁ｼ斐♂郢晢ｽｼ郢ｧ・ｺ陋ｻ繝ｻ・願ｭ厄ｽｿ邵ｺ莠･繝ｻ騾・・
-	if (GameStepType::game_CowGet == mnType)
+	// 蛻�E�髯先�E髢薙ち繧�E�繝槭・邂｡送E�E♀繧医・繝ｩ繝ｳ繝繝繝輔ぉ繝ｼ繧�E�蛻・�E�譖ｿ縺亥・送E�E
+	if (GameStepType::kCowGet == type_)
 	{
 		if (!game_timer_)
 		{
@@ -131,7 +131,7 @@ void GameManager::Update()
 			if (game_timer_->OutTimerFlag())
 			{
 				game_timer_->SetOutTimerFlag(false);
-				GameNextStep(GameManager::game_final);
+				GameNextStep(GameManager::kFinal);
 			}
 			else
 			{
@@ -141,29 +141,29 @@ void GameManager::Update()
 
 		int Timer = GetNowCount();
 
-		if (Timer - m_PhaseTimer >= 1000)
+		if (Timer - phase_timer_ >= 1000)
 		{
-			m_PhaseTimer = Timer;
-			m_PhaseChangeCount++;
+			phase_timer_ = Timer;
+			phase_change_count_++;
 		}
 		
-		// 30驕伜・・・ｸｺ・ｨ邵ｺ・ｫ郢ｧ・ｲ郢晢ｽｼ郢晢｣ｰ邵ｺ・ｮ郢晁ｼ斐♂郢晢ｽｼ郢ｧ・ｺ繝ｻ蝓滂ｽｼ豕後・繝ｻ蟲ｨ・堤ｹ晢ｽｩ郢晢ｽｳ郢敖郢晢｣ｰ邵ｺ・ｫ陞溽判蟲ｩ邵ｺ蜷ｶ・玖崕・ｶ驍上・
-		if (m_PhaseChangeCount >= 30)
+		// 30遘�E�E�E���E�縺�E�繧�E�繝ｼ繝縺�E�繝輔ぉ繝ｼ繧�E�・域ｼ泌�E・峨�E�繝ｩ繝ｳ繝繝縺�E�螟画峩縺吶�E�蛻�E�邏�E
+		if (phase_change_count_ >= 30)
 		{
-			m_PhaseChangeCount = 0;
+			phase_change_count_ = 0;
 			int m_Num = rand() % 2 + 1;
 			
 			if (m_Num == 1)
 			{
-				mCurrentPhase = GamePhase::TornadoCrisis;
+				current_phase_ = GamePhase::kTornadoCrisis;
 			}
 			else if (m_Num == 2)
 			{
-				mCurrentPhase = GamePhase::MassSpawn;
+				current_phase_ = GamePhase::kMassSpawn;
 			}
 			else
 			{
-				mCurrentPhase = GamePhase::Normal;
+				current_phase_ = GamePhase::kNormal;
 			}
 		}
 	}

@@ -1,19 +1,6 @@
-$bom = [byte[]](0xEF, 0xBB, 0xBF)
-$basePath = 'C:\Users\Admin\Desktop\progtram\Cow\Source'
-$targets = @(
-    "$basePath\TutorialScene.cpp"
-)
+$utf8 = New-Object System.Text.UTF8Encoding $true
+$content = [System.IO.File]::ReadAllText('c:\Users\Admin\Desktop\progtram\Cow\Source\TitleScene.cpp')
+[System.IO.File]::WriteAllText('c:\Users\Admin\Desktop\progtram\Cow\Source\TitleScene.cpp', $content, $utf8)
 
-foreach ($path in $targets) {
-    $raw = [System.IO.File]::ReadAllBytes($path)
-    if ($raw.Length -ge 3 -and $raw[0] -eq 0xEF -and $raw[1] -eq 0xBB -and $raw[2] -eq 0xBF) {
-        Write-Host ("Already BOM: " + (Split-Path $path -Leaf))
-    } else {
-        $newBytes = New-Object byte[] ($bom.Length + $raw.Length)
-        [System.Array]::Copy($bom, 0, $newBytes, 0, $bom.Length)
-        [System.Array]::Copy($raw, 0, $newBytes, $bom.Length, $raw.Length)
-        [System.IO.File]::WriteAllBytes($path, $newBytes)
-        Write-Host ("BOM added: " + (Split-Path $path -Leaf))
-    }
-}
-Write-Host "Done."
+$content2 = [System.IO.File]::ReadAllText('c:\Users\Admin\Desktop\progtram\Cow\Source\Rule.cpp')
+[System.IO.File]::WriteAllText('c:\Users\Admin\Desktop\progtram\Cow\Source\Rule.cpp', $content2, $utf8)

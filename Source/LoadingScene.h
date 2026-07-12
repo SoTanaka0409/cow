@@ -14,6 +14,6 @@ public:
 	void Finalize() override;
 
 private:
-	int mLoadingTimer;
-	bool mbLoadStarted; // 髱槫酔譛溘Ο繝ｼ繝峨′譌｢縺ｫ髢句ｧ区ｸ医∩縺九・繝輔Λ繧ｰ
+	int loading_timer_;
+	bool load_started_; // 非同期ロードが既に開始済みか�Eフラグ
 };

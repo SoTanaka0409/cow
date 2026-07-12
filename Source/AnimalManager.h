@@ -22,5 +22,5 @@ public:
 	void SpawnAnimal(std::string filename, VECTOR pos, float scale, AnimalMove::TagAnimal tag, int count);
 
 protected:
-	AnimalMove::TagAnimal GetTag(AnimalMove* creature) override { return creature->GetTag_animal(); }
+	AnimalMove::TagAnimal GetTag(AnimalMove* creature) override { return creature->GetTagAnimal(); }
 };

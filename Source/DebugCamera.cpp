@@ -17,10 +17,10 @@ DebugCamera::~DebugCamera()
 
 void DebugCamera::Initialize()
 {
-	// ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽﾌ擾ｿｽ・ｽ・ｽ・ｽﾊ置・ｽ・ｽQ・ｽ[・ｽ・ｽ・ｽ・ｽ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽﾌ位置・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽp・ｽ・ｽ・ｽA・ｽX・ｽ・ｽ・ｽ[・ｽY・ｽﾉ切ゑｿｽﾖゑｿｽ・ｽﾅゑｿｽ・ｽ・ｽ謔､・ｽﾉゑｿｽ・ｽ・ｽ
-	if (Master::mpCamera != nullptr)
+	// �E�J�E��E��E��E��E�̏��E��E��E�ʒu�E��E�Q�E�[�E��E��E��E��E�J�E��E��E��E��E�̈ʒu�E��E��E��E��E��E��E��E�p�E��E��E�A�E�X�E��E��E�[�E�Y�E�ɐ؂�ւ��E�ł��E��E�悤�E�ɂ��E��E�
+	if (Master::camera_ != nullptr)
 	{
-		position_ = Master::mpCamera->GetPosition();
+		position_ = Master::camera_->GetPosition();
 	}
 	else
 	{
@@ -33,12 +33,12 @@ void DebugCamera::Initialize()
 void DebugCamera::Update()
 {
 	float speed = 20.0f;
-	// LSHIFT・ｽL・ｽ[・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾄゑｿｽ・ｽ・ｽﾔは、・ｽf・ｽo・ｽb・ｽO・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽﾌ移難ｿｽ・ｽ・ｽ・ｽx・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// LSHIFT�E�L�E�[�E��E��E��E��E��E��E��E�Ă��E��E�Ԃ́A�E�f�E�o�E�b�E�O�E�J�E��E��E��E��E�̈ړ��E��E��E�x�E��E��E��E��E��E��E��E��E��E��E�
 	if (CheckHitKey(KEY_INPUT_LSHIFT)) speed = 100.0f;
 
 	VECTOR moveVec = VGet(0, 0, 0);
-	VECTOR UpMoveVector = VGet(0.0f, 0.0f, 0.0f);   // ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽﾌ擾ｿｽ・ｽ・ｽ・ｽ・ｽi・ｽO・ｽi・ｽj・ｽﾚ難ｿｽ・ｽx・ｽN・ｽg・ｽ・ｽ
-	VECTOR leftMoveVector = VGet(0.0f, 0.0f, 0.0f); // ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽﾌ搾ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽﾚ難ｿｽ・ｽx・ｽN・ｽg・ｽ・ｽ
+	VECTOR UpMoveVector = VGet(0.0f, 0.0f, 0.0f);   // �E�J�E��E��E��E��E�̏��E��E��E��E�i�E�O�E�i�E�j�E�ړ��E�x�E�N�E�g�E��E�
+	VECTOR leftMoveVector = VGet(0.0f, 0.0f, 0.0f); // �E�J�E��E��E��E��E�̍��E��E��E��E��E�ړ��E�x�E�N�E�g�E��E�
 	
 	UpdateRotate();
 	
@@ -49,10 +49,10 @@ void DebugCamera::Update()
 	target.z = position_.z - dist * cosf(vertical_angle_ * DX_PI_F / 180.0f) * cosf(horizontal_angle_ * DX_PI_F / 180.0f);
 
 	{
-		// ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽﾌ趣ｿｽ・ｽ・ｽ・ｽx・ｽN・ｽg・ｽ・ｽ・ｽ・ｽ・ｽ・ｽO・ｽi・ｽﾚ難ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾟゑｿｽ
+		// �E�J�E��E��E��E��E�̎��E��E��E�x�E�N�E�g�E��E��E��E��E��E�O�E�i�E�ړ��E��E��E��E��E��E��E��E�߂�
 		UpMoveVector = VSub(target, position_);
 
-		// ・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽﾌ前・ｽi・ｽx・ｽN・ｽg・ｽ・ｽ・ｽ・ｽY・ｽ・ｽ・ｽﾌ擾ｿｽx・ｽN・ｽg・ｽ・ｽ・ｽﾆの外・ｽﾏゑｿｽﾆゑｿｽA・ｽ^・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾌベ・ｽN・ｽg・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾟゑｿｽ
+		// �E�J�E��E��E��E��E�̑O�E�i�E�x�E�N�E�g�E��E��E��E�Y�E��E��E�̏�x�E�N�E�g�E��E��E�Ƃ̊O�E�ς�Ƃ�A�E�^�E��E��E��E��E��E��E�̃x�E�N�E�g�E��E��E��E��E��E�߂�
 		leftMoveVector = VCross(UpMoveVector, VGet(0.0f, 1.0f, 0.0f));
 
 		UpMoveVector = VNorm(UpMoveVector);
@@ -82,18 +82,18 @@ void DebugCamera::Update()
 	}
 	position_ = VAdd(position_, moveVec);
 
-	// ・ｽﾅ新・ｽﾌ搾ｿｽ・ｽW・ｽ・ｽ・ｽﾆにカ・ｽ・ｽ・ｽ・ｽ・ｽﾌ抵ｿｽ・ｽ・ｽ・ｽ_・ｽ・ｽﾄ計・ｽZ・ｽ・ｽ・ｽ・ｽ
+	// �E�ŐV�E�̍��E�W�E��E��E�ƂɃJ�E��E��E��E��E�̒��E��E��E�_�E��E�Čv�E�Z�E��E��E��E�
 	target.x = position_.x + dist * cosf(vertical_angle_ * DX_PI_F / 180.0f) * sinf(horizontal_angle_ * DX_PI_F / 180.0f);
 	target.y = position_.y + dist * sinf(-vertical_angle_ * DX_PI_F / 180.0f);
 	target.z = position_.z - dist * cosf(vertical_angle_ * DX_PI_F / 180.0f) * cosf(horizontal_angle_ * DX_PI_F / 180.0f);
 
-	// DX・ｽ・ｽ・ｽC・ｽu・ｽ・ｽ・ｽ・ｽ・ｽﾌカ・ｽ・ｽ・ｽ・ｽ・ｽﾉ、・ｽﾄ計・ｽZ・ｽ・ｽ・ｽ黷ｽ・ｽf・ｽo・ｽb・ｽO・ｽp・ｽJ・ｽ・ｽ・ｽ・ｽ・ｽﾌ位置・ｽﾆ抵ｿｽ・ｽ・ｽ・ｽ_・ｽｽ映・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ
+	// DX�E��E��E�C�E�u�E��E��E��E��E�̃J�E��E��E��E��E�ɁA�E�Čv�E�Z�E��E��E�ꂽ�E�f�E�o�E�b�E�O�E�p�E�J�E��E��E��E��E�̈ʒu�E�ƒ��E��E��E�_�E�𔽉f�E��E��E��E��E��E�
 	SetCameraPositionAndTarget_UpVecY(position_, target);
 }
 
 void DebugCamera::UpdateRotate()
 {
-	// ・ｽp・ｽx・ｽl・ｽ・ｽ・ｽﾍ囲外・ｽi・ｽ}180・ｽx・ｽj・ｽﾉオ・ｽ[・ｽo・ｽ[・ｽt・ｽ・ｽ・ｽ[・ｽ・ｽ・ｽﾈゑｿｽ・ｽ謔､・ｽﾉ・ｿｽ・ｽb・ｽv・ｽ・ｽ・ｽ・ｽ・ｽ・ｽs・ｽ・ｽ
+	// �E�p�E�x�E�l�E��E��E�͈͊O�E�i�E�}180�E�x�E�j�E�ɃI�E�[�E�o�E�[�E�t�E��E��E�[�E��E��E�Ȃ��E�悤�E�ɁE���E�b�E�v�E��E��E��E��E��E�s�E��E�
 	if (horizontal_angle_ >= 180.0f)
 	{
 		horizontal_angle_ -= 360.0f;
@@ -114,7 +114,7 @@ void DebugCamera::UpdateRotate()
 
 	const float MOUSE_SENSITIVITY = 0.05f;
 
-	if (Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::SCENE_3D || Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::SCENE_TUTORIAL)
+	if (Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::kScene3D || Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::kSceneTutorial)
 	{
 		int mouse_x_, mouse_y_;
 		GetMousePoint(&mouse_x_, &mouse_y_);
@@ -122,7 +122,7 @@ void DebugCamera::UpdateRotate()
 		int center_x_ = 640;
 		int center_y_ = 360;
 
-		// ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽs・ｽ・ｽ・ｽ竄ｷ・ｽ・ｽ・ｽ・ｽ・ｽ驍ｽ・ｽﾟ、・ｽ}・ｽE・ｽX・ｽJ・ｽ[・ｽ\・ｽ・ｽ・ｽ・ｽ・ｽﾊ抵ｿｽ・ｽS・ｽﾉ厄ｿｽ・ｽ・ｽ・ｽ・ｽ・ｽ・ｽﾟゑｿｽ・ｽi0・ｽL・ｽ[・ｽﾅ会ｿｽ・ｽ・ｽﾂ能・ｽj
+		// �E��E��E��E��E��E��E��E��E�s�E��E��E�₷�E��E��E��E��E�邽�E�߁A�E�}�E�E�E�X�E�J�E�[�E�\�E��E��E��E��E�ʒ��E�S�E�ɖ��E��E��E��E��E��E�߂��E�i0�E�L�E�[�E�ŉ��E��E�\�E�j
 		if (!CheckHitKey(KEY_INPUT_0))
 		{
 			SetMousePoint(center_x_, center_y_);

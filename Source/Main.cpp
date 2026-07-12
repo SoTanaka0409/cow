@@ -15,7 +15,7 @@
 #include <EffekseerForDXLib.h>
 
 SceneManager* Master::mpSceneManager = new SceneManager();
-Camera* Master::mpCamera = new Camera();
+Camera* Master::camera_ = new Camera();
 DebugCamera* Master::mpDebugCamera = new DebugCamera();
 bool Master::mbIsDebugCamera = false;
 ResourceManager* Master::mpResourceManager = new ResourceManager();
@@ -32,29 +32,31 @@ bool Master::tutorial_vacum_flag_ = false;
 bool Master::FeverFlag = false;
 float Master::mfDeltaTime = 0.01666f;
 
-VECTOR Utility::StageSize= VGet(6000, 0, 6000); // 3D遨ｺ髢薙・蠅・阜蛻ｶ邏・→縺励※繧ｹ繝・・繧ｸ繧ｵ繧､繧ｺ繧貞ｮ夂ｾｩ
+VECTOR Utility::StageSize= VGet(6000, 0, 6000); // 3D空間�E墁E��制紁E��してスチE�Eジサイズを定義
 
 /*
- * @brief 繧｢繝励Μ繧ｱ繝ｼ繧ｷ繝ｧ繝ｳ縺ｮ繧ｨ繝ｳ繝医Μ繝ｼ繝昴う繝ｳ繝・
- * [蜈･蜉嫋 hInstance, hPrevInstance, lpCmdLine, nCmdShow
- * [蜃ｺ蜉嫋 邨ゆｺ・さ繝ｼ繝・(豁｣蟶ｸ邨ゆｺ・凾縺ｯ0, 繧ｨ繝ｩ繝ｼ譎ゅ・-1)
- * [蜑ｯ菴懃畑] 繧ｲ繝ｼ繝繧ｦ繧｣繝ｳ繝峨え縺ｮ襍ｷ蜍輔√す繧ｹ繝・Β蛻晄悄蛹悶√Γ繧､繝ｳ繝ｫ繝ｼ繝怜ｮ溯｡後∝・繝ｪ繧ｽ繝ｼ繧ｹ縺ｮ隗｣謾ｾ
+ * @brief アプリケーションのエントリーポインチE
+ * [入力] hInstance, hPrevInstance, lpCmdLine, nCmdShow
+ * [出力] 終亁E��ーチE(正常終亁E��は0, エラー時�E-1)
+ * [副作用] ゲームウィンドウの起動、シスチE��初期化、メインループ実行、�Eリソースの解放
  */
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	// 繝・ヰ繝・げ繧・ｻ紋ｽ懈･ｭ縺ｮ荳ｦ陦後ｒ螳ｹ譏薙↓縺吶ｋ縺溘ａ繧ｦ繧｣繝ｳ繝峨え繝｢繝ｼ繝峨〒襍ｷ蜍・
+	// チEチEめE作業の並行を容易にするためウィンドウモードで起勁E
 	ChangeWindowMode(true);
 
 	SetGraphMode(Utility::kScreenWidth, Utility::kScreenHeight, 32, 60);
 	SetWindowSize(Utility::kScreenWidth, Utility::kScreenHeight);
 	
-	// DxLib縺ｮ蛻晄悄蛹悶お繝ｩ繝ｼ譎ゅ・螳溯｡檎ｶ咏ｶ壻ｸ榊庄縺ｮ縺溘ａ蜊ｳ譎らｵゆｺ・
+	SetDoubleStartValidFlag(TRUE); // 二重起動を許可する（不正なミューテックス残存による即落ちを防ぐため）
+
+	// DxLibの初期化エラー時E実行継続不可のため即時終亁E
 	if (DxLib_Init() == -1)
 	{
 		return -1;
 	}
 
-	Master::mpScore = new Score(); // DxLib蛻晄悄蛹門燕縺縺ｨ逕ｻ蜒剰ｪｭ縺ｿ霎ｼ縺ｿ縺悟､ｱ謨励☆繧句宛邏・′縺ゅｋ縺溘ａ縺薙％縺ｧ逕滓・
+	Master::mpScore = new Score(); // DxLib初期化前だと画像読み込みが失敗する制紁Eあるためここで生E
 
 	SRand(GetNowCount());
 
@@ -65,13 +67,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetUseZBufferFlag(true);
 	SetWriteZBufferFlag(true);
 
-	Master::mpSoundManager->Initialize(); // 蜀咲函驕・ｻｶ繧帝亟縺舌◆繧∝・髻ｳ貅舌ョ繝ｼ繧ｿ繧偵・繝ｪ繝ｭ繝ｼ繝峨☆繧・
+	Master::mpSoundManager->Initialize(); // 再生遁E��を防ぐため�E音源データを�EリロードすめE
 
-	// 蛻晄悄繧ｷ繝ｼ繝ｳ繧呈ｧ狗ｯ峨☆繧・
+	// 初期シーンを構築すめE
 	Master::mpSceneManager->Initialize();
 	
-	// 謠冗判逕ｨ縺ｮ蜷・き繝｡繝ｩ繧貞・譛溷喧縺吶ｋ
-	Master::mpCamera->Initialize();
+	// 描画用の吁E��メラを�E期化する
+	Master::camera_->Initialize();
 	Master::mpDebugCamera->Initialize();
 
 	Master::mpEffectManager->Initalize();
@@ -80,7 +82,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
-		// 蜑阪ヵ繝ｬ繝ｼ繝縺ｮ謠冗判繧偵け繝ｪ繧｢縺励※譁ｰ隕乗緒逕ｻ縺ｮ貅門ｙ
+		// 前フレームの描画をクリアして新規描画の準備
 		ClearDrawScreen();
 		int time = GetNowCount();
 
@@ -88,7 +90,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		if (Master::mfDeltaTime > 0.1f) Master::mfDeltaTime = 0.1f;
 		previousTime = time;
 
-		// 髢狗匱蜉ｹ邇・喧縺ｮ縺溘ａF1繧ｭ繝ｼ縺ｧ繝・ヰ繝・げ繧ｫ繝｡繝ｩ繧偵ヨ繧ｰ繝ｫ
+		// 開発効玁E��のためF1キーでチE��チE��カメラをトグル
 		if (InputManager::CheckDownKey(KEY_INPUT_F1))
 		{
 			Master::mbIsDebugCamera = !Master::mbIsDebugCamera;
@@ -100,7 +102,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		if (Master::mbIsDebugCamera) {
 			Master::mpDebugCamera->Update();
 		} else {
-			Master::mpCamera->Update();
+			Master::camera_->Update();
 		}
 
 		Master::mpEffectManager->Update();
@@ -111,15 +113,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		
 		Master::mpEffectManager->Draw();
 
-		// 謠冗判縺ｮ縺｡繧峨▽縺阪ｒ髦ｲ縺舌◆繧√ヵ繝ｪ繝・・縺吶ｋ
+		// 描画のちらつきを防ぐためフリチE�Eする
 		ScreenFlip();
 
-		// 蝗ｺ螳壹ヵ繝ｬ繝ｼ繝繝ｬ繝ｼ繝・60FPS)邯ｭ謖√・縺溘ａ蠕・ｩ・
+		// 固定フレームレーチE60FPS)維持�Eため征E��E
 		while (GetNowCount() - time < 17)
 		{
 		}
 
-		// 繝｡繝｢繝ｪ繝ｪ繝ｼ繧ｯ繧帝亟縺舌◆繧∫ｴ譽・ｦ∵ｱゅ・縺ゅｋ繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ隗｣謾ｾ
+		// メモリリークを防ぐため破棁E��求�Eあるオブジェクトを解放
 		if (auto scene = ServiceLocator::GetCurrentScene())
 		{
 			scene->GetCollisionManager()->DeleteAllColliderIfNeeded();
@@ -129,16 +131,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			objMgr->DeleteAll3DIfNeeded();
 		}
 
-		// 繝輔Ξ繝ｼ繝邨ゆｺ・凾縺ｫ螳牙・縺ｫ繧ｷ繝ｼ繝ｳ驕ｷ遘ｻ繧定｡後≧
+		// フレーム終亁E��に安�Eにシーン遷移を行う
 		Master::mpSceneManager->ChangeSceneIfNeeded();
 	}
-	// 繧｢繝励Μ繧ｱ繝ｼ繧ｷ繝ｧ繝ｳ邨ゆｺ・↓莨ｴ縺・Μ繧ｽ繝ｼ繧ｹ隗｣謾ｾ
+	// アプリケーション終亁E��伴ぁE��ソース解放
 	Master::mpSceneManager->Finalize();
 	delete Master::mpSceneManager;
 	Master::mpSoundManager->Finalize();
 	delete Master::mpSoundManager;
-	Master::mpCamera->Finalize();
-	delete Master::mpCamera;
+	Master::camera_->Finalize();
+	delete Master::camera_;
 	delete Master::mpDebugCamera;
 	delete Master::mpResourceManager;
 
@@ -148,7 +150,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	delete Master::mpScore;
 
-	DxLib_End(); // DxLib縺ｮ蜀・Κ繝ｪ繧ｽ繝ｼ繧ｹ繧定ｧ｣謾ｾ
+	DxLib_End(); // DxLibの冁E��リソースを解放
 
 	return 0;
 }

@@ -17,21 +17,21 @@
 #include"Utility.h"
 #include "GameConstants.h"
 
-Thunder* thunder = nullptr;     // ???????o?p??A?N?e?B?u??I?u?W?F?N?g?|?C???^
+Thunder* thunder_ = nullptr;     // ???????o?p??A?N?e?B?u??I?u?W?F?N?g?|?C???^
 Tatumaki* tatumaki = nullptr;   // ?X?e?[?W???????????I?u?W?F?N?g?|?C???^
 
 Scene3D::Scene3D()
 {
-	mMassSpawnTimer = 0;
-	mFontBackGraph = Master::mpResourceManager->LoadGraphics("Resource/2D/fontback.png");
+	mass_spawn_timer_ = 0;
+	font_back_graph_ = Master::mpResourceManager->LoadGraphics("Resource/2D/fontback.png");
 }
 
 Scene3D::~Scene3D()
 {
 
-	// ?? mpCowManager ?? thunder, tatumaki ???? Object3D ??p??????I?u?W?F?N?g??A
+	// ?? cow_manager_ ?? thunder_, tatumaki ???? Object3D ??p??????I?u?W?F?N?g??A
 	// ???N???X Scene ??f?X?g???N?^?????? ObjectManager ??????????I?? delete ???????A
-	// ???????髣｢・ｮ delete ????d????i?N???b?V???????j??h??????s???????B
+	// ???????闢�E� delete ????d????i?N???b?V???????j??h??????s???????B
 }
 
 /*
@@ -43,7 +43,7 @@ Scene3D::~Scene3D()
 void Scene3D::Initialize()
 {
 	Master::mnCaughtCowCount = 0;
-	mFadeState = SceneFade_In;
+	fade_state_ = kSceneFadeIn;
 	SetFadeAlpha(255.0f);
 
 	Master::mpSoundManager->PlayBGM(SoundManager::kBgmGame);
@@ -88,7 +88,7 @@ void Scene3D::Initialize()
 	auto m4 = new Mountain("Resource/3D/Mountain/uploads_files_2708212_terrain.mv1", VGet(-mountainDist, 0, 0), mountainScale, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
 	m4->SetColor(0.2f, 0.3f, 0.2f, 1.0f);
 
-	// 郢晏干ﾎ樒ｹｧ・､郢ｧ・ｨ郢晢ｽｪ郢ｧ・｢陞滓じ竊楢怎・ｺ郢ｧ蟲ｨ・檎ｸｺ・ｪ邵ｺ繝ｻ・育ｸｺ繝ｻ・ｲ・ｩ(Rock)郢ｧ蟶昴・驗ゑｽｮ
+	// 繝励Ξ繧�E�繧�E�繝ｪ繧�E�螟悶↓蜃�E�繧峨�E�縺�E�縺・�E�縺・�E��E�(Rock)繧帝�E鄂ｮ
 	for (int i = 0; i < 40; i++)
 	{
 		float rockX = (float)(GetRand(15000) - 7500);
@@ -105,7 +105,7 @@ void Scene3D::Initialize()
 		rock->SetColor(0.4f, 0.7f, 0.3f, 1.0f);
 	}
 
-	// 郢晏干ﾎ樒ｹｧ・､郢ｧ・ｨ郢晢ｽｪ郢ｧ・｢陟・・髦懃ｸｺ・ｫ郢晁ｼ斐♂郢晢ｽｳ郢ｧ・ｹ(Fence)郢ｧ蟶昴・驗ゑｽｮ
+	// 繝励Ξ繧�E�繧�E�繝ｪ繧�E�蠁E�E阜縺�E�繝輔ぉ繝ｳ繧�E�(Fence)繧帝�E鄂ｮ
 	for (int i = 0; i < 5; i++)
 	{
 		new Object_Stage("Resource/3D/NewFence/fence1.mv1", VGet(490.0f + 1000 * i, 0.0f, 5050.0f), 12.80f, VGet(0.0f, 0.0f, 0.0f));
@@ -118,21 +118,21 @@ void Scene3D::Initialize()
 		new Object_Stage("Resource/3D/NewFence/fence1.mv1", VGet(-5050.0f, 0.0f, -490.0f + -1000 * i), 12.80f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
 	}
 
-	thunder = new Thunder(VGet(0.0f, 0.0f, 0.0f));
+	thunder_ = new Thunder(VGet(0.0f, 0.0f, 0.0f));
 	tatumaki = new Tatumaki(VGet(3000.0f, 0.0f, 3000.0f));
 
 	auto Player = new Player3D("Resource/3D/ufo2/uploads_files_2595751_UFO.mv1", VGet(1000.0f, 2000.0f, 0.0f));
 	Player->SetScale(0.6f);
 
-	VECTOR spawnPos = Utility::StageSize; // 郢ｧ・ｹ郢晄亢繝ｻ郢晢ｽｳ陋ｻ譎・ｄ闖ｴ蜥ｲ・ｽ・ｮ
+	VECTOR spawnPos = Utility::StageSize; // 繧�E�繝昴・繝ｳ蛻晁E��菴咲�E��E�
 
-	// 陋ｻ譎・ｄ郢ｧ・ｹ郢昴・繝ｻ郢ｧ・ｸ邵ｺ・ｮ騾墓ｺｽ鮟・ｹｧ蟶昴・驗ゑｽｮ
-	mpCowManager->SpawnCow(GameConstants::kCowDefault.model_path, spawnPos, 50.0f, CowMove::kCow1, 10);
-	mpCowManager->SpawnCow(GameConstants::kCowGold.model_path, spawnPos, 50.0f, CowMove::kCowGold, 2);
-	mpAnimalManager->SpawnAnimal(GameConstants::kAnimalChicken.model_path, spawnPos, 50.0f, AnimalMove::kAnimal1, 5);
-	mpAnimalManager->SpawnAnimal(GameConstants::kAnimalBear.model_path, spawnPos, 50.0f, AnimalMove::kAnimal1, 5);
+	// 蛻晁E��繧�E�繝�E・繧�E�縺�E�逕溽黁E��帝�E鄂ｮ
+	cow_manager_->SpawnCow(GameConstants::kCowDefault.model_path, spawnPos, 50.0f, CowMove::kCow1, 10);
+	cow_manager_->SpawnCow(GameConstants::kCowGold.model_path, spawnPos, 50.0f, CowMove::kCowGold, 2);
+	animal_manager_->SpawnAnimal(GameConstants::kAnimalChicken.model_path, spawnPos, 50.0f, AnimalMove::kAnimal1, 5);
+	animal_manager_->SpawnAnimal(GameConstants::kAnimalBear.model_path, spawnPos, 50.0f, AnimalMove::kAnimal1, 5);
 	
-	mpPhase = Normal;
+	phase_ = kNormal;
 
 	auto skybox = new SkyBox("Resource/3D/SkyBox/SkyBox.mv1", VGet(0, 0, 0));
 	skybox->SetScale(30.0f);
@@ -145,7 +145,7 @@ void Scene3D::Initialize()
 		VGet(11500, 0, 11500)
 	);
 	
-	// 郢晄ｧｭ繝｣郢晄懶ｽ､髢・｣竏壹・陟冶侭笳・ｹｧ髮∵・陞ｳ螟ら舞郢ｧ・ｳ郢晢ｽｩ郢ｧ・､郢敖郢晢ｽｼ髫ｪ・ｭ陞ｳ繝ｻ
+	// 繝槭ャ繝怜､門�E�√�E蠖薙◁E��雁�E螳夂畑繧�E�繝ｩ繧�E�繝繝ｼ險�E�螳・
 	new Wall("Resource", VGet(0.0f, 0.0f, 5000.0f), VGet(-5000.0f, 5000.0f, 0.0f), VGet(5000.0f, 0.0f, 0.0f));
 	new Wall("Resource", VGet(0.0f, 0.0f, -5000.0f), VGet(-5000.0f, 5000.0f, 0.0), VGet(5000.0f, 0.0f, 0.0f));
 	new Wall("Resource", VGet(5000.0f, 0.0f, 0.0f), VGet(0.0f, 5000.0f, 5000.0f), VGet(0.0f, 0.0f, -5000.0f));
@@ -159,26 +159,26 @@ void Scene3D::Update()
 	
 	Scene::Update();
 
-	mpCowManager->Update();
-	mpGameManager->Update();
+	cow_manager_->Update();
+	game_manager_->Update();
 	PhaseUpdate();
 	tatumaki->Update();
 
-	// 陋ｻ・ｶ鬮ｯ蜈亥・鬮｢骰具ｽｵ繧・ｽｺ繝ｻ縲堤ｹ晢ｽｪ郢ｧ・ｶ郢晢ｽｫ郢晁ご蛻､鬮ｱ・｢邵ｺ・ｸ邵ｺ・ｮ郢晁ｼ斐♂郢晢ｽｼ郢晁崟蟷戊沂繝ｻ
+	// 蛻�E�髯先�E髢鍋ｵめE��・〒繝ｪ繧�E�繝ｫ繝育判髱�E�縺�E�縺�E�繝輔ぉ繝ｼ繝蛾幕蟋・
 	if (ServiceLocator::GetGameManager()->GetGameTimer()->GetTime() <= 0)
 	{
-		mFadeState = SceneFade_Out;
-		mNextScene = SceneManager::SCENE_RESULT;
+		fade_state_ = kSceneFadeOut;
+		next_scene_ = SceneManager::kSceneResult;
 	}
 
-	if (mFadeState == SceneFade_Out)
+	if (fade_state_ == kSceneFadeOut)
 	{
-		// 郢晁ｼ斐♂郢晢ｽｼ郢晏ｳｨ縺・ｹｧ・ｦ郢晏現竊楢惺蛹ｻ・冗ｸｺ蟶吮ｻBGM郢ｧ蛛ｵ繝ｵ郢ｧ・ｧ郢晢ｽｼ郢晏ｳｨ縺・ｹｧ・ｦ郢昴・
+		// 繝輔ぉ繝ｼ繝峨ぁE���E�繝医↓蜷医�E�縺帙※BGM繧偵ヵ繧�E�繝ｼ繝峨ぁE���E�繝�E
 		Master::mpSoundManager->SetBGMVolume((Master::mpSoundManager->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
 		if (GetFadeAlpha() >= 255)
 		{
 			SetFadeAlpha(255);
-			Master::mpSceneManager->SetNextScene((SceneManager::SCENE_TYPE)mNextScene);
+			Master::mpSceneManager->SetNextScene((SceneManager::SCENE_TYPE)next_scene_);
 		}
 	}
 }
@@ -189,7 +189,7 @@ void Scene3D::Draw()
 	const int count = 51;
 	const float distance = -500.0f;
 	
-	// 郢昴・繝ｰ郢昴・縺帝包ｽｨ邵ｺ・ｮ郢ｧ・ｰ郢晢ｽｪ郢昴・繝ｩ隰蜀怜愛
+	// 繝�Eヰ繝�Eげ逕ｨ縺�E�繧�E�繝ｪ繝�Eラ謠冗判
 	for (int i = 0; i < count; i++)
 	{
 		float base = (count / 2 - i) * -distance;
@@ -207,48 +207,48 @@ void Scene3D::Draw()
 		);
 	}
 	
-	mpCowManager->Draw();
+	cow_manager_->Draw();
   
-	if (mpGameManager->GetGameTimer() && !(mpGameManager->GetGameTimer()->OutTimerFlag()))
+	if (game_manager_->GetGameTimer() && !(game_manager_->GetGameTimer()->OutTimerFlag()))
 	{
-		mpGameManager->GetGameTimer()->Draw();
+		game_manager_->GetGameTimer()->Draw();
 	}
 
-	// 郢ｧ・､郢晏生ﾎｦ郢晏現繝ｵ郢ｧ・ｧ郢晢ｽｼ郢ｧ・ｺ邵ｺ・ｫ陟｢諛環ｧ邵ｺ貅ｯ・ｭ・ｦ陷ｻ鄙ｫ繝ｦ郢ｧ・ｭ郢ｧ・ｹ郢晞メ・｡・ｨ驕会ｽｺ
-	if (Master::mpCamera->GetIsPhaseCameraActive())
+	// 繧�E�繝吶Φ繝医ヵ繧�E�繝ｼ繧�E�縺�E�蠢懊§縺溯�E��E�蜻翫ユ繧�E�繧�E�繝郁�E��E�遉ｺ
+	if (Master::camera_->GetIsPhaseCameraActive())
 	{
-		int currentPhase = (int)mpGameManager->GetCurrentPhase();
+		int currentPhase = (int)game_manager_->GetCurrentPhase();
 		
-		if (currentPhase == (int)GameManager::GamePhase::MassSpawn || currentPhase == (int)GameManager::GamePhase::TornadoCrisis)
+		if (currentPhase == (int)GameManager::GamePhase::kMassSpawn || currentPhase == (int)GameManager::GamePhase::kTornadoCrisis)
 		{
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
-			DrawExtendGraph(0, 0, 1920, 1080, mFontBackGraph, TRUE);
+			DrawExtendGraph(0, 0, 1920, 1080, font_back_graph_, TRUE);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		}
 
-		if (currentPhase == (int)GameManager::GamePhase::MassSpawn)
+		if (currentPhase == (int)GameManager::GamePhase::kMassSpawn)
 		{
 			SetFontSize(64);
-			DrawFormatString(600, 200, GetColor(255, 100, 100), "霑壼ｸ吮ｲ陞滂ｽｧ鬩･蜀怜験騾輔・!");
+			DrawFormatString(600, 200, GetColor(255, 100, 100), "迚帙′螟ｧ驥冗匱逕�E!");
 			SetFontSize(16);
 		}
-		else if (currentPhase == (int)GameManager::GamePhase::TornadoCrisis)
+		else if (currentPhase == (int)GameManager::GamePhase::kTornadoCrisis)
 		{
 			SetFontSize(64);
-			DrawFormatString(600, 200, GetColor(255, 100, 100), "陷ｿ・ｰ鬯夲ｽｨ邵ｺ謔滂ｽｷ・ｨ陞滂ｽｧ陋ｹ繝ｻ!");
+			DrawFormatString(600, 200, GetColor(255, 100, 100), "蜿�E�鬚ｨ縺悟ｷ�E�螟ｧ蛹・!");
 			SetFontSize(16);
 		}
 	}
 
-	if (mFadeState != SceneFade_None)
+	if (fade_state_ != kSceneFadeNone)
 	{
-		Scene::Fade(mFadeState);
+		Scene::Fade(fade_state_);
 	}
 }
 
 /*
- * @brief 郢晁ｼ斐♂郢晢ｽｼ郢ｧ・ｺ鬨ｾ・ｲ髯ｦ謔溷ｮ幄包ｽ｡
- * [陷茨ｽ･陷牙ｫ・邵ｺ・ｪ邵ｺ繝ｻ[陷・ｽｺ陷牙ｫ・邵ｺ・ｪ邵ｺ繝ｻ[陷托ｽｯ闖ｴ諛・舞] 郢ｧ・ｫ郢晢ｽ｡郢晢ｽｩ郢晢ｽｻ驕ｶ諛ｷ・ｷ・ｻ霑･・ｶ隲ｷ蜿･・､逕ｻ蟲ｩ邵ｲ竏晢ｽ､・ｧ鬩･荳翫○郢晄亢繝ｻ郢晢ｽｳ陷・ｽｦ騾・・
+ * @brief 繝輔ぉ繝ｼ繧�E�騾�E�陦悟宛蠕｡
+ * [蜈･蜉嫁E縺�E�縺・[蜁E��蜉嫁E縺�E�縺・[蜑ｯ菴懁E��] 繧�E�繝｡繝ｩ繝ｻ遶懷�E��E�迥�E�諷句�E�画峩縲∝､�E�驥上せ繝昴・繝ｳ蜁E��送E�E
  */
 void Scene3D::PhaseUpdate()
 {
@@ -256,24 +256,24 @@ void Scene3D::PhaseUpdate()
 	Player3D* player = dynamic_cast<Player3D*>(p);
 	
 	if (player != nullptr && tatumaki != nullptr) {
-		int currentPhase = (int)mpGameManager->GetCurrentPhase();
-		Master::mpCamera->UpdateCameraByPhase(currentPhase, player->GetPosition(), tatumaki->GetPosition());
+		int currentPhase = (int)game_manager_->GetCurrentPhase();
+		Master::camera_->UpdateCameraByPhase(currentPhase, player->GetPosition(), tatumaki->GetPosition());
 
-		tatumaki->SetCrisisMode(currentPhase == (int)GameManager::GamePhase::TornadoCrisis);
+		tatumaki->SetCrisisMode(currentPhase == (int)GameManager::GamePhase::kTornadoCrisis);
 
-		// 陞滂ｽｧ鬩･荳槭・霑ｴ・ｾ郢晁ｼ斐♂郢晢ｽｼ郢ｧ・ｺ隴弱ｅﾂ繝ｻ0郢晁ｼ釆樒ｹ晢ｽｼ郢晢｣ｰ鬮｢鬥ｴ蝗育ｸｺ・ｧ霑壼ｸ呻ｽ堤ｹｧ・ｹ郢晄亢繝ｻ郢晢ｽｳ
-		if (currentPhase == (int)GameManager::GamePhase::MassSpawn)
+		// 螟ｧ驥丞�E迴�E�繝輔ぉ繝ｼ繧�E�譎ゅ・0繝輔Ξ繝ｼ繝髢馴囈縺�E�迚帙ｒ繧�E�繝昴・繝ｳ
+		if (currentPhase == (int)GameManager::GamePhase::kMassSpawn)
 		{
-			mMassSpawnTimer++;
-			if (mMassSpawnTimer >= 60)
+			mass_spawn_timer_++;
+			if (mass_spawn_timer_ >= 60)
 			{
-				mMassSpawnTimer = 0;
+				mass_spawn_timer_ = 0;
 
 				VECTOR spawnCenter = player->GetPosition();
-				// 郢ｧ・ｹ郢晄亢繝ｻ郢晢ｽｳ闖ｴ蜥ｲ・ｽ・ｮ郢ｧ蛛ｵ繝ｻ郢晢ｽｬ郢ｧ・､郢晢ｽ､郢晢ｽｼ闕ｳ鬘費ｽｩ・ｺ(y+2000)邵ｺ・ｫ髫ｪ・ｭ陞ｳ繝ｻ
+				// 繧�E�繝昴・繝ｳ菴咲�E��E�繧偵・繝ｬ繧�E�繝､繝ｼ荳顔ｩ�E�(y+2000)縺�E�險�E�螳・
 				VECTOR spawnArgs = VGet(4000.0f, spawnCenter.y + 2000.0f, 4000.0f);
 
-				mpCowManager->SpawnCow(GameConstants::kCowDefault.model_path, spawnArgs, 50.0f, CowMove::kCow1, 2);
+				cow_manager_->SpawnCow(GameConstants::kCowDefault.model_path, spawnArgs, 50.0f, CowMove::kCow1, 2);
 			}
 		}
 	}
@@ -281,5 +281,5 @@ void Scene3D::PhaseUpdate()
 
 void Scene3D::Finalize()
 {
-	Master::mpSoundManager->StopBGM(); // 郢ｧ・ｷ郢晢ｽｼ郢晢ｽｳ驍ｨ繧・ｽｺ繝ｻ蜃ｾ邵ｺ・ｫBGM郢ｧ雋樞酪雎・ｽ｢
+	Master::mpSoundManager->StopBGM(); // 繧�E�繝ｼ繝ｳ邨めE��・凾縺�E�BGM繧貞●豁E��
 }

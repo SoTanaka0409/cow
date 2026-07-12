@@ -34,7 +34,7 @@ CowMove::CowMove(std::string filename, VECTOR initPos)
 	effect_timer_ = 0;
 	SetTag(Object3D::kTag3dCow);
 
-	if (Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TUTORIAL)
+	if (Master::mpSceneManager->GetSceneType() == SceneManager::kSceneTutorial)
 	{
 		mfdeathTime = GameConstants::kCowTutorial.death_time_height;
 	}
@@ -143,7 +143,7 @@ void CowMove::AvoidOtherCows()
 
 bool CowMove::SeekBait()
 {
-	if (Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TUTORIAL) return false;
+	if (Master::mpSceneManager->GetSceneType() == SceneManager::kSceneTutorial) return false;
 	if (mCurrentState == STATE_VACUUM) return false;
 
 	old_position_ = position_;
@@ -336,10 +336,10 @@ void CowMove::Die(DeathReason reason)
 		if (player != nullptr)
 		{
 			player->mpLevel->AddXp(mfXp);
-			player->mpCombo->AddHit();
-			player->mpScore->AddScore(mfScore * player->mpCombo->GetMultiplier());
+			player->combo_->AddHit();
+			player->mpScore->AddScore(mfScore * player->combo_->GetMultiplier());
 
-			// 陷ｷ讙趣ｽｨ・ｮ鬨ｾ・｣驍ｯ螢ｹ縺冗ｹ晢ｽｫ邵ｺ・ｫ郢ｧ蛹ｻ・狗ｹ晄㈱繝ｻ郢晉ｿｫ縺帷ｹｧ・ｹ郢ｧ・ｳ郢ｧ・｢髫ｪ閧ｲ・ｮ繝ｻ
+			// 蜷檎ｨ�E�騾�E�邯壹く繝ｫ縺�E�繧医�E�繝懊・繝翫せ繧�E�繧�E�繧�E�險育�E�・
 			if (tag_cow_ == CowMove::TagCow::kCowT)
 			{
 				Master::mnTutorialcount++;
@@ -375,8 +375,8 @@ void CowMove::Die(DeathReason reason)
 		if (player != nullptr)
 		{
 			player->mpLevel->AddXp(mfXp);
-			player->mpCombo->AddHit();
-			player->mpScore->AddScore(mfScore * player->mpCombo->GetMultiplier());
+			player->combo_->AddHit();
+			player->mpScore->AddScore(mfScore * player->combo_->GetMultiplier());
 		}
 		mDeleteFlag = true;
 		break;

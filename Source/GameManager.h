@@ -10,8 +10,8 @@ class GameManager
 public:
 	enum GameStepType
 	{
-		game_CowGet,
-		game_final,
+		kCowGet,
+		kFinal,
 	};
 
 	struct GameStepData
@@ -22,9 +22,9 @@ public:
 
 	enum class GamePhase
 	{
-		Normal,
-		MassSpawn,
-		TornadoCrisis
+		kNormal,
+		kMassSpawn,
+		kTornadoCrisis
 	};
 
 public:
@@ -37,15 +37,15 @@ public:
 	 * [蜃ｺ蜉嫋 迴ｾ蝨ｨ縺ｮGamePhase
 	 * [蜑ｯ菴懃畑] 縺ｪ縺・
 	 */
-	GamePhase GetCurrentPhase() const { return mCurrentPhase; }
+	GamePhase GetCurrentPhase() const { return current_phase_; }
 
 	/*
 	 * 繧ｲ繝ｼ繝繝輔ぉ繝ｼ繧ｺ繧定ｨｭ螳壹＠繧､繝吶Φ繝育憾諷九ｒ蛻・ｊ譖ｿ縺医ｋ
 	 * [蜈･蜉嫋 phase: 譁ｰ縺励＞繝輔ぉ繝ｼ繧ｺ迥ｶ諷・
 	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] mCurrentPhase 縺梧峩譁ｰ縺輔ｌ繧・
+	 * [蜑ｯ菴懃畑] current_phase_ 縺梧峩譁ｰ縺輔ｌ繧・
 	 */
-	void SetCurrentPhase(GamePhase phase) { mCurrentPhase = phase; }
+	void SetCurrentPhase(GamePhase phase) { current_phase_ = phase; }
 
 	/*
 	 * 繧ｹ繧ｳ繧｢逋ｻ骭ｲ繧剃ｼｴ縺・ｵゆｺ・せ繝・ャ繝励∈縺ｮ驕ｷ遘ｻ繧定｡後≧
@@ -55,7 +55,7 @@ public:
 	 */
 	void GameNextStep(GameStepType type);
 	 
-	GameStepType GetType() { return mnType; }
+	GameStepType GetType() { return type_; }
 
 	/*
 	 * 繝輔ぉ繝ｼ繝峨う繝ｳ遲峨√ご繝ｼ繝騾ｲ陦後↓蠢・ｦ√↑貍泌・謠冗判繧定｡後≧
@@ -76,15 +76,15 @@ public:
 	GameTimer* GetGameTimer() const { return game_timer_; }
 
 private:
-	std::vector<GameStepData*> mData; // 蜍慕噪遒ｺ菫昴＆繧後◆繧ｹ繝・ャ繝励ョ繝ｼ繧ｿ縺ｮ繝ｪ繧ｹ繝・
-	GameStepType mnType;
-	GamePhase mCurrentPhase;
+	std::vector<GameStepData*> data_; // 蜍慕噪遒ｺ菫昴＆繧後◆繧ｹ繝・ャ繝励ョ繝ｼ繧ｿ縺ｮ繝ｪ繧ｹ繝・
+	GameStepType type_;
+	GamePhase current_phase_;
 
-	float Fadetimer;                  // 繧ｷ繝ｼ繝ｳ髢句ｧ区凾縺ｮ繝輔ぉ繝ｼ繝画ｼ泌・逕ｨ
-	bool Fadeflag;
+	float fade_timer_;                  // 繧ｷ繝ｼ繝ｳ髢句ｧ区凾縺ｮ繝輔ぉ繝ｼ繝画ｼ泌・逕ｨ
+	bool fade_flag_;
 	
-	int m_PhaseTimer;                 // 繝輔ぉ繝ｼ繧ｺ驕ｷ遘ｻ繧､繝吶Φ繝医・逋ｺ逕溘ち繧､繝溘Φ繧ｰ蝓ｺ貅・
-	int m_PhaseChangeCount;
+	int phase_timer_;                 // 繝輔ぉ繝ｼ繧ｺ驕ｷ遘ｻ繧､繝吶Φ繝医・逋ｺ逕溘ち繧､繝溘Φ繧ｰ蝓ｺ貅・
+	int phase_change_count_;
 
 	GameTimer* game_timer_;           // 繧ｿ繧､繝槭・邂｡逅・畑繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ
 };

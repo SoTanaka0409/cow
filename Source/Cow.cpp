@@ -7,7 +7,7 @@ Cow::Cow(std::string filename, VECTOR initPos, float num)
 {
 	mfScore = num;
 	mfXp = 10;
-	SetTag_cow(CowMove::kCow1);
+	SetTagCow(CowMove::kCow1);
 	mCurrentState = STATE_IDLE;
 }
 

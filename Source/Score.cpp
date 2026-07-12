@@ -234,10 +234,10 @@ void Score::LoadRanking()
 	}
 }
 
-void Score::AddScoreWithCombo(int baseScore, int comboCount)
+void Score::AddScoreWithCombo(int baseScore, int combo_count_)
 {
 	// コンボボーナス: 1コンボあたり20%増加
-	float multiplier = 1.0f + comboCount * 0.2f;
+	float multiplier = 1.0f + combo_count_ * 0.2f;
 	int finalScore = static_cast<int>(baseScore * multiplier);
 
 	score_ += finalScore;

@@ -46,10 +46,10 @@ Player3D::Player3D(std::string filename, VECTOR initPos)
 	mpLevel = new Level(this);
 	mpLevel->SetNextLevel();
 	mpSkill = new Skill(this);
-	mpCombo = new Combo();
+	combo_ = new Combo();
 	mpScore = new Score();
 
-	Master::mpCamera->Initialize();
+	Master::camera_->Initialize();
 
 	mnLighGraph = Master::mpResourceManager->LoadGraphics("Resource/2D/green_beam_transparent.png");
 	mnGaugeFrameGraph = Master::mpResourceManager->LoadGraphics("Resource/2D/cow_frame.png");
@@ -58,7 +58,7 @@ Player3D::Player3D(std::string filename, VECTOR initPos)
 	capsule_collider_->position2_ = position_;
 	capsule_collider_->radius_ = radius_;
 
-	// Y霆ｸ譁ｹ蜷代↓繧ｹ繧ｱ繝ｼ繝ｫ繧剃ｼｸ縺ｰ縺礼悄荳九↓蜷代￠繧・
+	// Y軸方向にスケールを伸ばし真下に向けめE
 	mpBeam = new EffekseerEffect("Resource/3D/EFK/Beam.efk", position_, 80.0f);
 	mpBeam->SetRotation(VGet(DX_PI_F / -2.0f, 0.0f, 0.0f));
 	mpBeam->SetScale(VGet(1.0f, 1.0f, 4.0f));
@@ -71,7 +71,7 @@ Player3D::~Player3D()
 	Utility::SafeDelete(model_);
 	Utility::SafeDelete(mpLevel);
 	Utility::SafeDelete(mpSkill);
-	Utility::SafeDelete(mpCombo);
+	Utility::SafeDelete(combo_);
 	Utility::SafeDelete(mpScore);
 	Utility::SafeDelete(mpBeam);
 	Utility::SafeDelete(mpSpeed);
@@ -79,10 +79,10 @@ Player3D::~Player3D()
 
 void Player3D::Update()
 {
-	// 繝・ヰ繝・げ繧ｫ繝｡繝ｩ縺梧怏蜉ｹ縺ｪ蝣ｴ蜷医・繝励Ξ繧､繝､繝ｼ縺ｮ謖吝虚繧偵☆縺ｹ縺ｦ蛛懈ｭ｢
+	// チE��チE��カメラが有効な場合�Eプレイヤーの挙動をすべて停止
 	if (Master::mbIsDebugCamera) return;
 
-	// --- 繧ｹ繧ｿ繝ｳ・域ｰ礼ｵｶ・臥憾諷九・邂｡逅・---
+	// --- スタン�E�気絶�E�状態�E管琁E---
 	if (mIsStunned)
 	{
 		mStunTimer--;
@@ -96,7 +96,7 @@ void Player3D::Update()
 
 	ManagerUpdate();
 
-	// 繧ｹ繝・・繧ｸ螟冶誠荳区凾縺ｪ縺ｩ縺ｯ蠕ｩ蟶ｰ縺ｮ縺溘ａ縺ｫ遨ｺ荳ｭ縺ｸ騾驕ｿ
+	// スチE�Eジ外落下時などは復帰のために空中へ退避
 	if (Master::GameFinishFlag || mIsOutOfBounds)
 	{
 		position_ = VGet(0, 2000, 0);
@@ -110,15 +110,15 @@ void Player3D::Update()
 		ColliderUpdate();
 		Play();
 	}
-	// --- 繧ｹ繧ｿ繝ｳ荳ｭ縺ｮ繝輔か繝ｼ繝ｫ繝舌ャ繧ｯ ---
+	// --- スタン中のフォールバック ---
 	else
 	{
-		// 蜷ｸ縺・ｾｼ縺ｿ蛻､螳壹′谿九ｋ縺ｮ繧帝亟縺舌◆繧√さ繝ｩ繧､繝繝ｼ繧偵Μ繧ｻ繝・ヨ
+		// 吸ぁE��み判定が残るのを防ぐためコライダーをリセチE��
 		mIsVacuumActive = false;
 		ColliderUpdate();
 	}
 
-	// 繧ｹ繝・・繧ｸ螟悶↓蜃ｺ縺ｦ縺・↑縺・°縺ｮ繝√ぉ繝・け
+	// スチE�Eジ外に出てぁE��ぁE��のチェチE��
 	ScreenOutCheck();
 }
 
@@ -139,7 +139,7 @@ void Player3D::Play()
 
 		float recoverySpeed = VACUUM_RECOVER_PER_FRAME;
 
-		// 繝ｩ繧ｹ繝医せ繝代・繝域凾縺ｯ繧ｲ繝ｼ繧ｸ蝗槫ｾｩ騾溷ｺｦ繧剃ｸ翫￡縺ｦ髮｣譏灘ｺｦ繧堤ｷｩ蜥後☆繧・
+		// ラストスパ�Eト時はゲージ回復速度を上げて難易度を緩和すめE
 		if (Master::mpSceneManager && Master::mpSceneManager->GetCurrentScene() && ServiceLocator::GetGameManager())
 		{
 			auto timer = ServiceLocator::GetGameManager()->GetGameTimer();
@@ -153,7 +153,7 @@ void Player3D::Play()
 		if (mVacuumGauge > VACUUM_GAUGE_MAX) mVacuumGauge = VACUUM_GAUGE_MAX;
 	}
 
-	// 繝輔ぅ繝ｼ繝舌・迥ｶ諷九・莉墓ｧ倥ｒ貅縺溘☆縺溘ａ蠑ｷ蛻ｶ逋ｺ蜍・
+	// フィーバ�E状態�E仕様を満たすため強制発勁E
 	if (Master::FeverFlag) mIsVacuumActive = true;
 }
 
@@ -161,7 +161,7 @@ void Player3D::ColliderUpdate()
 {
 	if (mIsVacuumActive)
 	{
-		// 荳顔ｩｺ縺ｮ迚帙∪縺ｧ蛻､螳壹′螻翫￥繧医≧縺ｫY霆ｸ譁ｹ蜷代↓繧ｫ繝励そ繝ｫ繧貞ｺ・￡繧・
+		// 上空の牛まで判定が届くようにY軸方向にカプセルを庁E��めE
 		capsule_collider_->position_ = VGet(position_.x, -1000, position_.z);
 		capsule_collider_->position2_ = VGet(position_.x, 3000, position_.z);
 		capsule_collider_->radius_ = VACUUM_RADIUS;
@@ -189,7 +189,7 @@ void Player3D::ColliderUpdate()
 		effect_timer_ = 0;
 	}
 
-	// 蜷・ｨｮ繧ｨ繝輔ぉ繧ｯ繝医・蠎ｧ讓呵ｿｽ蠕薙→譖ｴ譁ｰ蜃ｦ逅・
+	// 吁E��エフェクト�E座標追従と更新処琁E
 	if (mpBeam != nullptr)
 	{
 		mpBeam->SetPosition(position_);
@@ -210,7 +210,7 @@ void Player3D::ScreenOutCheck()
 	{
 		mIsOutOfBounds = true;
 
-		// 騾ｲ陦御ｸ崎・蝗樣∩縺ｮ縺溘ａ繧ｭ繝ｼ蜈･蜉帙〒蠕ｩ蟶ｰ縺輔○繧・
+		// 進行不�E回避のためキー入力で復帰させめE
 		if (CheckHitKey(KEY_INPUT_SPACE))
 		{
 			SetPosition(VGet(0, 2000, 0));
@@ -228,12 +228,12 @@ void Player3D::test()
 	if (InputManager::CheckDownKey(KEY_INPUT_5))
 	{
 		mpLevel->AddXp(20);
-		mpSkill->SetSkillFlag(true); // 繧ｹ繧ｭ繝ｫUI/蜉ｹ譫懊・蠑ｷ蛻ｶ髢区叛
+		mpSkill->SetSkillFlag(true); // スキルUI/効果�E強制開放
 	}
 }
 
 /*
- * @brief 繝励Ξ繧､繝､繝ｼ縺ｫ邏舌▼縺丞推遞ｮ繧ｵ繝悶す繧ｹ繝・Β縺ｮ荳諡ｬ謠冗判繝ｻ譖ｴ譁ｰ蜻ｼ縺ｳ蜃ｺ縺・
+ * @brief プレイヤーに紐づく各種サブシスチE��の一括描画・更新呼び出ぁE
  */
 void Player3D::ManagerUpdate()
 {
@@ -243,8 +243,8 @@ void Player3D::ManagerUpdate()
 	model_->Draw();
 	mpSkill->Update();
 	mpSkill->Draw();
-	mpCombo->Draw();
-	mpCombo->Update();
+	combo_->Draw();
+	combo_->Update();
 	mpScore->Draw();
 	test();
 }
@@ -254,7 +254,7 @@ void Player3D::Draw()
 	const int DIV = 32;
 	unsigned int color;
 
-	// 繝ｭ繝・け繧ｪ繝ｳ迥ｶ諷九↓蠢懊§縺ｦ繧ｵ繝ｼ繧ｯ繝ｫ縺ｮ濶ｲ繧貞､画峩縺吶ｋ
+	// ロチE��オン状態に応じてサークルの色を変更する
 	if (mIsCowInVacuumRange == true)
 	{
 		color = GetColor(255, 0, 0);
@@ -285,9 +285,9 @@ void Player3D::MoveEx()
 	VECTOR UpMoveVector = VGet(0.0f, 0.0f, 0.0f);
 	VECTOR leftMoveVector = VGet(0.0f, 0.0f, 0.0f);
 
-	// 繧ｫ繝｡繝ｩ隕也せ繧貞渕貅悶→縺励◆遘ｻ蜍墓婿蜷代・邂怜・
+	// カメラ視点を基準とした移動方向�E算�E
 	{
-		UpMoveVector = VSub(Master::mpCamera->GetLookAtPosition(), Master::mpCamera->GetPosition());
+		UpMoveVector = VSub(Master::camera_->GetLookAtPosition(), Master::camera_->GetPosition());
 		UpMoveVector.y = 0.0f;
 
 		leftMoveVector = VCross(UpMoveVector, VGet(0.0f, 1.0f, 0.0f));
@@ -309,7 +309,7 @@ void Player3D::MoveEx()
 		target_angle_ = atan2f(moveVec.x, moveVec.z);
 		oldmoveVec = moveVec;
 
-		currentSpeed = Status(Status_Speed);
+		currentSpeed = Status(kStatusSpeed);
 		position_ = VAdd(position_, VScale(moveVec, currentSpeed));
 	}
 
@@ -336,7 +336,7 @@ void Player3D::MoveEx()
 					hitwall = true;
 					VECTOR slide = VGet(0.0f, 0.0f, 0.0f);
 
-					// 豕慕ｷ壹°繧牙｣√★繧顔ｧｻ蜍慕畑繝吶け繝医Ν繧定ｨ育ｮ・
+					// 法線から壁ずり移動用ベクトルを計箁E
 					float a = VDot(VScale(moveVec, -1.0f), vertex.at(0).norm);
 					slide = VAdd(moveVec, VScale(vertex.at(0).norm, a));
 
@@ -346,7 +346,7 @@ void Player3D::MoveEx()
 						position_ = VAdd(position_, VScale(slide, mfSpeed));
 						hitwalls = true;
 					}
-					// 謖溘∪繧企亟豁｢縺ｮ縺溘ａ騾ｲ陦後ｒ蛻ｶ髯舌☆繧・
+					// 挟まり防止のため進行を制限すめE
 					else if (hitwalls == true)
 					{
 						position_ = old_position_;
@@ -364,15 +364,15 @@ float Player3D::Status(StatusID id)
 {
 	if (id == Status_AttackS)
 	{
-		return mfAttack_Speed + mpSkill->GetStatusDate(Skill::Status_AttackSpeed);
+		return mfAttack_Speed + mpSkill->GetStatusDate(Skill::kStatusAttackSpeed);
 	}
 	if (id == Status_Hp)
 	{
 		return mfHp;
 	}
-	if (id == Status_Speed)
+	if (id == kStatusSpeed)
 	{
-		return mfSpeed + mpSkill->GetStatusDate(Skill::Status_Speed);
+		return mfSpeed + mpSkill->GetStatusDate(Skill::kStatusSpeed);
 	}
 	return 0.0f;
 }
@@ -381,7 +381,7 @@ void Player3D::RotationByMove()
 {
 	float subAngle = target_angle_ - angle_;
 
-	// 隗貞ｺｦ縺ｮ蠅・阜邱壹ｒ霍ｨ縺・□蝣ｴ蜷医・譛遏ｭ繝ｫ繝ｼ繝郁｣懈ｭ｣
+	// 角度の墁E��線を跨ぁE��場合�E最短ルート補正
 	if (subAngle < -DX_PI_F) subAngle += DX_TWO_PI_F;
 	if (subAngle > DX_PI_F)  subAngle -= DX_TWO_PI_F;
 
@@ -403,7 +403,7 @@ void Player3D::RotationByMove()
 }
 
 /*
- * @brief 逕ｻ髱｢荳矩Κ縺ｫ陦ｨ遉ｺ縺吶ｋ蜷ｸ縺・ｾｼ縺ｿ繧ｲ繝ｼ繧ｸ・・D UI・峨・謠冗判
+ * @brief 画面下部に表示する吸ぁE��みゲージ�E�ED UI�E��E描画
  */
 void Player3D::bar()
 {
@@ -418,13 +418,13 @@ void Player3D::bar()
 	if (currentWidth < 0) currentWidth = 0;
 	if (currentWidth > gaugeWidth) currentWidth = gaugeWidth;
 
-	// 繧ｲ繝ｼ繧ｸ縺檎ｩｺ縺ｮ譎ゅ・隴ｦ蜻翫→縺励※襍､濶ｲ陦ｨ遉ｺ
+	// ゲージが空の時�E警告として赤色表示
 	unsigned int gaugeColor = GetColor(0, 255, 255);
 	if (mVacuumGauge <= 0.0f) gaugeColor = GetColor(255, 0, 0);
 
 	DrawBox(gaugeX, gaugeY, gaugeX + currentWidth, gaugeY + gaugeHeight, gaugeColor, TRUE);
 
-	// 迚帶氛繝輔Ξ繝ｼ繝繧呈緒逕ｻ・亥・縺ｮ逋ｽ縺・棧邱・DrawBox 縺ｮ莉｣繧上ｊ・・
+	// 牛柄フレームを描画�E��Eの白ぁE��緁EDrawBox の代わり�E�E
 	DrawExtendGraph(gaugeX - 10, gaugeY - 10, gaugeX + gaugeWidth + 10, gaugeY + gaugeHeight + 10, mnGaugeFrameGraph, TRUE);
 
 	DrawFormatString(gaugeX, gaugeY - 30, GetColor(255, 255, 255), "Vacuum Gauge: %.1f%%", mVacuumGauge);
@@ -457,7 +457,7 @@ void Player3D::OnEnter(Collider* collider, Collider* check)
 
 void Player3D::OnExit(Collider* collider, Collider* check)
 {
-	// 蜷ｸ縺・ｾｼ縺ｿ荳ｭ譁ｭ譎ゅ・蟇ｾ雎｡繧貞慍荳翫〒縺ｮ蠕伜ｾ顔憾諷九↓謌ｻ縺・
+	// 吸ぁE��み中断時�E対象を地上での徘徊状態に戻ぁE
 	if (collider == capsule_collider_ && check->parent_object_->GetTag() == kTag3dCow)
 	{
 		CowMove* cow = dynamic_cast<CowMove*>(check->parent_object_);

@@ -11,7 +11,7 @@
 
 Scene* ServiceLocator::GetCurrentScene()
 {
-	// 譛ｪ蛻晄悄蛹匁凾縺ｮ繧ｯ繝ｩ繝・す繝･繧帝亟縺舌◆繧√・繧､繝ｳ繧ｿ縺ｮ譛牙柑諤ｧ繧呈､懆ｨｼ
+	// 未初期化時のクラチE��ュを防ぐため�Eインタの有効性を検証
 	if (Master::mpSceneManager != nullptr)
 	{
 		return Master::mpSceneManager->GetCurrentScene();
@@ -31,7 +31,7 @@ ObjectManager* ServiceLocator::GetObjectManager()
 
 Player3D* ServiceLocator::GetPlayer()
 {
-	// 繧ｿ繧ｰ讀懃ｴ｢縺ｫ繧医ｊ繝励Ξ繧､繝､繝ｼ繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ蜍慕噪縺ｫ迚ｹ螳・
+	// タグ検索によりプレイヤーオブジェクトを動的に特宁E
 	ObjectManager* objMgr = GetObjectManager();
 	if (objMgr != nullptr)
 	{
@@ -42,7 +42,7 @@ Player3D* ServiceLocator::GetPlayer()
 
 std::vector<Player3D*> ServiceLocator::GetPlayers()
 {
-	// 繝槭Ν繝√・繝ｬ繧､蟇ｾ蠢懃ｭ峨ｒ閠・・縺励∝ｭ伜惠縺吶ｋ蜈ｨ繝励Ξ繧､繝､繝ｼ繧貞庶髮・
+	// マルチ�Eレイ対応等を老E�Eし、存在する全プレイヤーを収雁E
 	std::vector<Player3D*> players;
 	ObjectManager* objMgr = GetObjectManager();
 	if (objMgr != nullptr)
@@ -64,7 +64,7 @@ CowManager* ServiceLocator::GetCowManager()
 	Scene* scene = GetCurrentScene();
 	if (scene != nullptr)
 	{
-		return scene->mpCowManager;
+		return scene->cow_manager_;
 	}
 	return nullptr;
 }
@@ -74,7 +74,7 @@ AnimalManager* ServiceLocator::GetAnimalManager()
 	Scene* scene = GetCurrentScene();
 	if (scene != nullptr)
 	{
-		return scene->mpAnimalManager;
+		return scene->animal_manager_;
 	}
 	return nullptr;
 }
@@ -84,7 +84,7 @@ GameManager* ServiceLocator::GetGameManager()
 	Scene* scene = GetCurrentScene();
 	if (scene != nullptr)
 	{
-		return scene->mpGameManager;
+		return scene->game_manager_;
 	}
 	return nullptr;
 }
@@ -94,7 +94,7 @@ Fever* ServiceLocator::GetFever()
 	Scene* scene = GetCurrentScene();
 	if (scene != nullptr)
 	{
-		return scene->mpFever;
+		return scene->fever_;
 	}
 	return nullptr;
 }

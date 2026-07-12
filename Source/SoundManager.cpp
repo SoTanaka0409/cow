@@ -27,16 +27,16 @@ void SoundManager::Initialize()
     LoadBGM(SoundBgm::kBgmTutorial, "Resource/BGM/MusMus-BGM-103.mp3");
     LoadBGM(SoundBgm::kBgmRule, "Resource/BGM/MusMus-BGM-158.mp3");
 
-    LoadSE(SoundSe::kSeDecide, "Resource/SE/豎ｺ螳壹・繧ｿ繝ｳ繧呈款縺・2.mp3");
-    LoadSE(SoundSe::kSeCow, "Resource/SE/迚帙・魑ｴ縺榊｣ｰ.mp3");
+    LoadSE(SoundSe::kSeDecide, "Resource/SE/決定ボタンを押す42.mp3");
+    LoadSE(SoundSe::kSeCow, "Resource/SE/牛の鳴き声.mp3");
     LoadSE(SoundSe::kSeChicken, "Resource/SE/MusMus-BGM-084");
-    LoadSE(SoundSe::kSeTatumaki, "Resource/SE/螟ｩ蛟吶・鬚ｨ荳蜷ｹ縺搾ｼ医＠繧峨￠陦ｨ迴ｾ・・mp3");
-    LoadSE(SoundSe::kSeKaminari, "Resource/SE/螟ｩ蛟吶・髮ｷ01.mp3");
-    LoadSE(SoundSe::kSeTutorialChange, "Resource/SE/繧ｷ繝ｼ繝ｳ蛻・ｊ譖ｿ縺・.mp3");
-    LoadSE(SoundSe::kSeBeam, "Resource/SE/HP蜷ｸ蜿朱ｭ疲ｳ・.mp3");
-    LoadSE(SoundSe::kSeSkillStatus, "Resource/SE/繧ｹ繝・・繧ｿ繧ｹ荳頑・鬲疲ｳ・.mp3");
-    LoadSE(SoundSe::kSeSkillFood, "Resource/SE/繝ｭ繝懊ャ繝郁ｵｷ蜍・.mp3");
-    LoadSE(SoundSe::kSeBaitFinal, "Resource/SE/鬮倬溽ｧｻ蜍・mp3");
+    LoadSE(SoundSe::kSeTatumaki, "Resource/SE/天候・風一吹き（しらけ表現）.mp3");
+    LoadSE(SoundSe::kSeKaminari, "Resource/SE/天候・雷01.mp3");
+    LoadSE(SoundSe::kSeTutorialChange, "Resource/SE/シーン切り替え2.mp3");
+    LoadSE(SoundSe::kSeBeam, "Resource/SE/HP吸収魔法1.mp3");
+    LoadSE(SoundSe::kSeSkillStatus, "Resource/SE/ステータス上昇魔法2.mp3");
+    LoadSE(SoundSe::kSeSkillFood, "Resource/SE/ロボット起動2.mp3");
+    LoadSE(SoundSe::kSeBaitFinal, "Resource/SE/高速移動.mp3");
 }
 
 /*

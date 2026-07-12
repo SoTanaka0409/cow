@@ -1,24 +1,24 @@
 ﻿#pragma once
 #include"Scene.h"
 
-// 繧ｷ繝ｼ繝ｳ驕ｷ遘ｻ縺翫ｈ縺ｳ繝ｩ繧､繝輔し繧､繧ｯ繝ｫ繧堤ｮ｡逅・☆繧九け繝ｩ繧ｹ
+// シーン遷移およびライフサイクルを管琁E��るクラス
 class SceneManager
 {
 public:
 	enum SCENE_TYPE
 	{
-		SCENE_NONE = 0,
-		SCENE_TITLE,
-		SCENE_RULE,
-		SCENE_TUTORIAL,
-		SCENE_LEVEL,
-		SCENE_GAME,
-		SCENE_3DHARD,
-		SCENE_RESULT,
-		SCENE_RESULTWIN,
-		SCENE_NORMALRESULTSCENE,
-		SCENE_LOADING,
-		SCENE_3D
+		kSceneNone = 0,
+		kSceneTitle,
+		kSceneRule,
+		kSceneTutorial,
+		kSceneLevel,
+		kSceneGame,
+		kScene3DHard,
+		kSceneResult,
+		kSceneResultWin,
+		kSceneNormalResult,
+		kSceneLoading,
+		kScene3D
 	};
 
 public:
@@ -26,58 +26,58 @@ public:
 	~SceneManager();
 
 	/*
-	 * 蛻晄悄險ｭ螳壹ｒ陦後＞縲∵怙蛻昴・繧ｷ繝ｼ繝ｳ・医ち繧､繝医Ν・峨∈驕ｷ遘ｻ縺吶ｋ
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] mnNextSceneType縺ｮ譖ｴ譁ｰ縺翫ｈ縺ｳ繧ｷ繝ｼ繝ｳ蛻・ｊ譖ｿ縺・
+	 * 初期設定を行い、最初�Eシーン�E�タイトル�E�へ遷移する
+	 * [入力] なぁE
+	 * [出力] なぁE
+	 * [副作用] mnNextSceneTypeの更新およびシーン刁E��替ぁE
 	 */
 	void Initialize();
 
 	/*
-	 * 迴ｾ蝨ｨ繧｢繧ｯ繝・ぅ繝悶↑繧ｷ繝ｼ繝ｳ縺ｮ謠冗判蜃ｦ逅・ｒ蜻ｼ縺ｳ蜃ｺ縺・
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 逕ｻ髱｢縺ｸ縺ｮ謠冗判蜃ｦ逅・
+	 * 現在アクチE��ブなシーンの描画処琁E��呼び出ぁE
+	 * [入力] なぁE
+	 * [出力] なぁE
+	 * [副作用] 画面への描画処琁E
 	 */
 	void Draw();
 
 	/*
-	 * 迴ｾ蝨ｨ繧｢繧ｯ繝・ぅ繝悶↑繧ｷ繝ｼ繝ｳ縺ｮ譖ｴ譁ｰ蜃ｦ逅・ｒ蜻ｼ縺ｳ蜃ｺ縺・
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 迴ｾ蝨ｨ縺ｮ繧ｷ繝ｼ繝ｳ迥ｶ諷九・譖ｴ譁ｰ
+	 * 現在アクチE��ブなシーンの更新処琁E��呼び出ぁE
+	 * [入力] なぁE
+	 * [出力] なぁE
+	 * [副作用] 現在のシーン状態�E更新
 	 */
 	void Update();
 
 	/*
-	 * 繧｢繧ｯ繝・ぅ繝悶↑繧ｷ繝ｼ繝ｳ繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ螳牙・縺ｫ隗｣謾ｾ繝ｻ邨ゆｺ・☆繧・
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] mpCurrentScene縺ｮ繝｡繝｢繝ｪ隗｣謾ｾ
+	 * アクチE��ブなシーンオブジェクトを安�Eに解放・終亁E��めE
+	 * [入力] なぁE
+	 * [出力] なぁE
+	 * [副作用] mpCurrentSceneのメモリ解放
 	 */
 	void Finalize();
 
 	/*
-	 * 驕ｷ遘ｻ隕∵ｱゅ′縺ゅｋ蝣ｴ蜷医∝商縺・す繝ｼ繝ｳ繧堤ｴ譽・＠譁ｰ縺励＞繧ｷ繝ｼ繝ｳ繧堤函謌舌・蛻晄悄蛹悶☆繧・
-	 * [蜈･蜉嫋 縺ｪ縺・
-	 * [蜃ｺ蜉嫋 縺ｪ縺・
-	 * [蜑ｯ菴懃畑] 繧ｷ繝ｼ繝ｳ繧ｪ繝悶ず繧ｧ繧ｯ繝医・繝｡繝｢繝ｪ隗｣謾ｾ縺ｨ譁ｰ隕冗函謌・
+	 * 遷移要求がある場合、古ぁE��ーンを破棁E��新しいシーンを生成�E初期化すめE
+	 * [入力] なぁE
+	 * [出力] なぁE
+	 * [副作用] シーンオブジェクト�Eメモリ解放と新規生戁E
 	 */
 	void ChangeSceneIfNeeded();
 
-	void SetNextScene(SCENE_TYPE next) { mnNextSceneType = next; }
-	void SetSceneHard(bool Hard) { SceneHard = Hard; }
-	bool GetSceneHard() { return SceneHard; }
-	void SetSceneNormal(bool Normal) { SceneNormal = Normal; }
-	bool GetSceneNormal() { return SceneNormal; }
-	Scene* GetCurrentScene() { return mpCurrentScene; }
-	SCENE_TYPE GetSceneType() const { return mnSceneType; }
+	void SetNextScene(SCENE_TYPE next) { next_scene_type_ = next; }
+	void SetSceneHard(bool Hard) { scene_hard_ = Hard; }
+	bool GetSceneHard() { return scene_hard_; }
+	void SetSceneNormal(bool Normal) { scene_normal_ = Normal; }
+	bool GetSceneNormal() { return scene_normal_; }
+	Scene* GetCurrentScene() { return current_scene_; }
+	SCENE_TYPE GetSceneType() const { return scene_type_; }
 
 private:
-	SCENE_TYPE mnSceneType;
-	SCENE_TYPE mnNextSceneType;
-	Scene* mpCurrentScene;
+	SCENE_TYPE scene_type_;
+	SCENE_TYPE next_scene_type_;
+	Scene* current_scene_;
 
-	bool SceneHard;
-	bool SceneNormal;
+	bool scene_hard_;
+	bool scene_normal_;
 };

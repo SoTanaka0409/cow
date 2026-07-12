@@ -1,8 +1,8 @@
-#include "DxLib.h"
+﻿#include "DxLib.h"
 #include "ModelAnimation.h"
 
 ModelAnimation::ModelAnimation(int ModelHandle)
-	: mnModelHandle(ModelHandle)
+	: model_handle_(ModelHandle)
 	, mfAnimationTime(0.0f)
 	, mnAnimationIndex(-1)
 	, mnState(AnimationState::kAnimationMax)
@@ -14,12 +14,12 @@ ModelAnimation::ModelAnimation(int ModelHandle)
 	, mnLoopFinishState(AnimationState::kAnimationMax)
 	, mbLoopFinish(false)
 {
-	// 繝ｫ繝ｼ繝医ヵ繝ｬ繝ｼ繝縺檎ｧｻ蜍輔い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｧ蜍晄焔縺ｫ蜍輔＞縺ｦ縺壹ｌ縺ｪ縺・ｈ縺・√Ο繝ｼ繧ｫ繝ｫ陦悟・繧貞崋螳壹☆繧・
-	int moveAnimFrameIndex = MV1SearchFrame(mnModelHandle, "root");
+	// 郢晢ｽｫ郢晢ｽｼ郢晏現繝ｵ郢晢ｽｬ郢晢ｽｼ郢晢｣ｰ邵ｺ讙趣ｽｧ・ｻ陷崎ｼ斐＞郢昜ｹ斟鍋ｹ晢ｽｼ郢ｧ・ｷ郢晢ｽｧ郢晢ｽｳ邵ｺ・ｧ陷肴刋辟皮ｸｺ・ｫ陷崎ｼ費ｼ樒ｸｺ・ｦ邵ｺ螢ｹ・檎ｸｺ・ｪ邵ｺ繝ｻ・育ｸｺ繝ｻﾂ竏墅溽ｹ晢ｽｼ郢ｧ・ｫ郢晢ｽｫ髯ｦ謔溘・郢ｧ雋槫ｴ玖楜螢ｹ笘・ｹｧ繝ｻ
+	int moveAnimFrameIndex = MV1SearchFrame(model_handle_, "root");
 	MV1SetFrameUserLocalMatrix(
-		mnModelHandle,
+		model_handle_,
 		moveAnimFrameIndex,
-		MV1GetFrameLocalMatrix(mnModelHandle, moveAnimFrameIndex)
+		MV1GetFrameLocalMatrix(model_handle_, moveAnimFrameIndex)
 	);
 
 	ChangeAnimation(AnimationState::kAnimationNeutral);
@@ -31,7 +31,7 @@ ModelAnimation::~ModelAnimation()
 
 void ModelAnimation::Update()
 {
-	// 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ驕ｷ遘ｻ譎ゅ・繝悶Ξ繝ｳ繝臥紫繧・繝輔Ξ繝ｼ繝縺斐→縺ｫ騾ｲ陦後＆縺帙ｋ
+	// 郢ｧ・｢郢昜ｹ斟鍋ｹ晢ｽｼ郢ｧ・ｷ郢晢ｽｧ郢晢ｽｳ鬩包ｽｷ驕假ｽｻ隴弱ｅ繝ｻ郢晄じﾎ樒ｹ晢ｽｳ郢晁・邏ｫ郢ｧ繝ｻ郢晁ｼ釆樒ｹ晢ｽｼ郢晢｣ｰ邵ｺ譁絶・邵ｺ・ｫ鬨ｾ・ｲ髯ｦ蠕鯉ｼ・ｸｺ蟶呻ｽ・
 	if (mfAnimBlendRate < 1.0f)
 	{
 		mfAnimBlendRate += 0.1f;
@@ -45,14 +45,14 @@ void ModelAnimation::Update()
 
 	if (mnAnimationIndex != -1)
 	{
-		fAnimTotaltime = MV1GetAttachAnimTotalTime(mnModelHandle, mnAnimationIndex);
+		fAnimTotaltime = MV1GetAttachAnimTotalTime(model_handle_, mnAnimationIndex);
 		mfAnimationTime += mfAnimationCount;
 
 		if (mfAnimationTime > fAnimTotaltime)
 		{
 			if (!mbLoop)
 			{
-				// 髱槭Ν繝ｼ繝励い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺檎ｵゆｺ・＠縺溷ｴ蜷医∵ｬ｡縺ｮ謖・ｮ夐・遘ｻ蜈医′縺ｪ縺代ｌ縺ｰ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ譎る俣繧呈ｭ｢繧√ｋ
+				// 鬮ｱ讒ｭﾎ晉ｹ晢ｽｼ郢晏干縺・ｹ昜ｹ斟鍋ｹ晢ｽｼ郢ｧ・ｷ郢晢ｽｧ郢晢ｽｳ邵ｺ讙趣ｽｵ繧・ｽｺ繝ｻ・邵ｺ貅ｷ・ｰ・ｴ陷ｷ蛹ｻﾂ竏ｵ・ｬ・｡邵ｺ・ｮ隰悶・・ｮ螟舌・驕假ｽｻ陷亥現窶ｲ邵ｺ・ｪ邵ｺ莉｣・檎ｸｺ・ｰ郢ｧ・｢郢昜ｹ斟鍋ｹ晢ｽｼ郢ｧ・ｷ郢晢ｽｧ郢晢ｽｳ隴弱ｋ菫｣郢ｧ蜻茨ｽｭ・｢郢ｧ竏夲ｽ・
 				if (mnLoopFinishState == kAnimationMax)
 				{
 					mbLoopFinish = true;
@@ -60,32 +60,32 @@ void ModelAnimation::Update()
 				}
 				ChangeAnimation(mnLoopFinishState);
 				SetAnimationBlend(false);
-				fAnimTotaltime = MV1GetAttachAnimTotalTime(mnModelHandle, mnAnimationIndex);
+				fAnimTotaltime = MV1GetAttachAnimTotalTime(model_handle_, mnAnimationIndex);
 			}
 			mfAnimationTime = 0.0f;
 		}
 
-		MV1SetAttachAnimTime(mnModelHandle, mnAnimationIndex, mfAnimationTime);
-		MV1SetAttachAnimBlendRate(mnModelHandle, mnAnimationIndex, mfAnimBlendRate);
+		MV1SetAttachAnimTime(model_handle_, mnAnimationIndex, mfAnimationTime);
+		MV1SetAttachAnimBlendRate(model_handle_, mnAnimationIndex, mfAnimBlendRate);
 	}
 
 	if (mnOldAnimationIndex != -1)
 	{
-		fAnimTotaltime = MV1GetAttachAnimTotalTime(mnModelHandle, mnOldAnimationIndex);
+		fAnimTotaltime = MV1GetAttachAnimTotalTime(model_handle_, mnOldAnimationIndex);
 
 		if (mfOldAnimationTime > fAnimTotaltime)
 		{
 			mfOldAnimationTime = 0.0f;
 		}
 
-		// 蜿､縺・い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｮ繝悶Ξ繝ｳ繝臥紫繧剃ｸ九￡縺ｦ縺・″縲∵怙邨ら噪縺ｫ繝輔ぉ繝ｼ繝峨い繧ｦ繝医＆縺帙ｋ
-		MV1SetAttachAnimBlendRate(mnModelHandle, mnOldAnimationIndex, 1.0f - mfAnimBlendRate);
+		// 陷ｿ・､邵ｺ繝ｻ縺・ｹ昜ｹ斟鍋ｹ晢ｽｼ郢ｧ・ｷ郢晢ｽｧ郢晢ｽｳ邵ｺ・ｮ郢晄じﾎ樒ｹ晢ｽｳ郢晁・邏ｫ郢ｧ蜑・ｽｸ荵晢ｿ｡邵ｺ・ｦ邵ｺ繝ｻ窶ｳ邵ｲ竏ｵ諤咎お繧牙飭邵ｺ・ｫ郢晁ｼ斐♂郢晢ｽｼ郢晏ｳｨ縺・ｹｧ・ｦ郢晏現・・ｸｺ蟶呻ｽ・
+		MV1SetAttachAnimBlendRate(model_handle_, mnOldAnimationIndex, 1.0f - mfAnimBlendRate);
 	}
 }
 
 void ModelAnimation::ChangeAnimation(AnimationState state, int index)
 {
-	// 譌｢縺ｫ蜷後§繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺碁∈謚槭＆繧後※縺・ｋ蝣ｴ蜷医・辟｡鬧・↑繝・ち繝・メ繝ｻ繧｢繧ｿ繝・メ繧帝∩縺代ｋ
+	// 隴鯉ｽ｢邵ｺ・ｫ陷ｷ蠕個ｧ郢ｧ・｢郢昜ｹ斟鍋ｹ晢ｽｼ郢ｧ・ｷ郢晢ｽｧ郢晢ｽｳ邵ｺ遒≫・隰壽ｧｭ・・ｹｧ蠕娯ｻ邵ｺ繝ｻ・玖撻・ｴ陷ｷ蛹ｻ繝ｻ霎滂ｽ｡鬯ｧ繝ｻ竊醍ｹ昴・縺｡郢昴・繝｡郢晢ｽｻ郢ｧ・｢郢ｧ・ｿ郢昴・繝｡郢ｧ蟶昶茜邵ｺ莉｣・・
 	if (mnState == state)
 	{
 		return;
@@ -96,17 +96,17 @@ void ModelAnimation::ChangeAnimation(AnimationState state, int index)
 	mnLoopFinishState = AnimationState::kAnimationMax;
 	mbLoopFinish = false;
 
-	// 蜿､縺吶℃繧九い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ繝上Φ繝峨Ν縺梧ｮ九▲縺ｦ縺・ｋ蝣ｴ蜷医・螳悟・縺ｫ蛻・ｊ髮｢縺・
+	// 陷ｿ・､邵ｺ蜷ｶ邃・ｹｧ荵昴＞郢昜ｹ斟鍋ｹ晢ｽｼ郢ｧ・ｷ郢晢ｽｧ郢晢ｽｳ郢昜ｸ莞ｦ郢晏ｳｨﾎ晉ｸｺ譴ｧ・ｮ荵昶夢邵ｺ・ｦ邵ｺ繝ｻ・玖撻・ｴ陷ｷ蛹ｻ繝ｻ陞ｳ謔溘・邵ｺ・ｫ陋ｻ繝ｻ・企ｫｮ・｢邵ｺ繝ｻ
 	if (mnOldAnimationIndex != -1)
 	{
-		MV1DetachAnim(mnModelHandle, mnOldAnimationIndex);
+		MV1DetachAnim(model_handle_, mnOldAnimationIndex);
 		mnOldAnimationIndex = -1;
 	}
 
 	mnOldAnimationIndex = mnAnimationIndex;
 	mfOldAnimationTime = mfAnimationTime;
 
-	mnAnimationIndex = MV1AttachAnim(mnModelHandle, (int)state);
+	mnAnimationIndex = MV1AttachAnim(model_handle_, (int)state);
 	mfAnimationTime = 0.0f;
 }
 
@@ -118,12 +118,12 @@ void ModelAnimation::SetAnimationBlend(bool isblend)
 	}
 	else
 	{
-		// 繝悶Ξ繝ｳ繝峨＠縺ｪ縺・ｴ蜷医・蜊ｳ蠎ｧ縺ｫ譁ｰ隕上い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｸ螳悟・蛻・ｊ譖ｿ縺医☆繧・
+		// 郢晄じﾎ樒ｹ晢ｽｳ郢晏ｳｨ・邵ｺ・ｪ邵ｺ繝ｻ・ｰ・ｴ陷ｷ蛹ｻ繝ｻ陷奇ｽｳ陟趣ｽｧ邵ｺ・ｫ隴・ｽｰ髫穂ｸ翫＞郢昜ｹ斟鍋ｹ晢ｽｼ郢ｧ・ｷ郢晢ｽｧ郢晢ｽｳ邵ｺ・ｸ陞ｳ謔溘・陋ｻ繝ｻ・願ｭ厄ｽｿ邵ｺ蛹ｻ笘・ｹｧ繝ｻ
 		mfAnimBlendRate = 1.0f;
 
 		if (mnOldAnimationIndex != -1)
 		{
-			MV1DetachAnim(mnModelHandle, mnOldAnimationIndex);
+			MV1DetachAnim(model_handle_, mnOldAnimationIndex);
 			mnOldAnimationIndex = -1;
 		}
 	}

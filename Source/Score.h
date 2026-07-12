@@ -101,9 +101,9 @@ public:
 
 	/*
 	 * @brief 繧ｳ繝ｳ繝懈焚縺ｫ蠢懊§縺溷咲紫縺ｧ繧ｹ繧ｳ繧｢蜉邂・
-	 * [蜈･蜉嫋 baseScore: 蝓ｺ譛ｬ蛟､, comboCount: 繧ｳ繝ｳ繝懈焚 [蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] score縺ｮ譖ｴ譁ｰ
+	 * [蜈･蜉嫋 baseScore: 蝓ｺ譛ｬ蛟､, combo_count_: 繧ｳ繝ｳ繝懈焚 [蜃ｺ蜉嫋 縺ｪ縺・[蜑ｯ菴懃畑] score縺ｮ譖ｴ譁ｰ
 	 */
-	void AddScoreWithCombo(int baseScore, int comboCount);
+	void AddScoreWithCombo(int baseScore, int combo_count_);
 
 	// 繧ｷ繝ｼ繝ｳ髢灘ｼ輔″邯吶℃逕ｨ
 	static void SetResultScore(int value);
