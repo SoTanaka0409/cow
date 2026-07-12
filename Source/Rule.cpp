@@ -2,12 +2,13 @@
 #include "Rule.h"
 #include "DxLib.h"
 #include "Master.h"
+#include "GameConstants.h"
 #include "SceneManager.h"
 #include "InputManager.h"
 
 Rule::Rule()
 {
-	rule_graph_ = Master::mpResourceManager->LoadGraphics("Resource/2D/settings_bg.png");
+	rule_graph_ = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kSettingsBg);
 	title_font_handle_ = CreateFontToHandle("メイリオ", 80, 5);
 	font_handle_ = CreateFontToHandle("メイリオ", 50, 3);
 	
@@ -23,6 +24,8 @@ Rule::~Rule()
 
 void Rule::Update()
 {
+	Scene::Update();
+
 	if (fade_state_ == kSceneFadeOut)
 	{
 		Master::mpSoundManager->SetBGMVolume((Master::mpSoundManager->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);

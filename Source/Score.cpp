@@ -328,3 +328,27 @@ int Score::GetResultScore()
 {
 	return result_score_;
 }
+void Score::DrawScoreWithPoint(int x, int y, int score, float scale, int minDigits, int point_graph_handle)
+{
+	DrawNumber(x, y, score, scale, minDigits);
+
+	int temp = score;
+	int digitCount = 0;
+	if (temp == 0) {
+		digitCount = 1;
+	} else {
+		if (temp < 0) temp = -temp;
+		while (temp > 0) {
+			temp /= 10;
+			digitCount++;
+		}
+	}
+	if (digitCount < minDigits) {
+		digitCount = minDigits;
+	}
+
+	int w = (int)(80 * scale);
+	int h = (int)(80 * scale);
+	int pointX = x + digitCount * w;
+	DrawExtendGraph(pointX, y, pointX + w, y + h, point_graph_handle, TRUE);
+}

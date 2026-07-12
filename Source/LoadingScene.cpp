@@ -23,6 +23,8 @@ void LoadingScene::Initialize()
 
 void LoadingScene::Update()
 {
+	Scene::Update();
+
 	loading_timer_++;
 
 	// 1フレーム�?E?�?E?描画を優先�?E?、Eフレーム�?E?以降で非同期ロード�?E?開�?E?��?EめE

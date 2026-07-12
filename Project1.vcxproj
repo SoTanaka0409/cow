@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -213,7 +213,9 @@
     <ClCompile Include="Source\Utility.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Thunder.cpp" />
+    
     <ClCompile Include="Source\TitleScene.cpp" />
+    <ClCompile Include="Source\UIButton.cpp" />
     <ClCompile Include="Source\TutorialScene.cpp" />
     <ClCompile Include="Source\Wall.cpp" />
   </ItemGroup>
@@ -270,7 +272,9 @@
     <ClInclude Include="Source\Tornado.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Thunder.h" />
+    
     <ClInclude Include="Source\TitleScene.h" />
+    <ClInclude Include="Source\UIButton.h" />
     <ClInclude Include="Source\TutorialScene.h" />
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Wall.h" />

@@ -98,6 +98,7 @@ public:
 	 * [入力] x,y: 座樁E value: 数値 [出力] �Ȃ�[副作用] 画面描画
 	 */
 	void DrawNumber(int x, int y, int value, float scale = 1.0f, int minDigits = 1);
+	void DrawScoreWithPoint(int x, int y, int score, float scale, int minDigits, int point_graph_handle);
 
 	/*
 	 * @brief コンボ数に応じた倍率でスコア加箁E

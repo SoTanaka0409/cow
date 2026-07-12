@@ -4,6 +4,30 @@
 // ゲームパラメータを定数として定義するデータ駆動設計の参照先 (Data-Driven Design)
 namespace GameConstants
 {
+	namespace ImagePaths
+	{
+		const std::string kCombo = "Resource/2D/COMBO.png";
+		const std::string kLimit = "Resource/2D/rimit.png";
+		const std::string kBeam = "Resource/2D/green_beam_transparent.png";
+		const std::string kCowFrame = "Resource/2D/cow_frame.png";
+		const std::string kResult = "Resource/2D/リザルト.png";
+		const std::string kRank1 = "Resource/2D/1位.png";
+		const std::string kRank2 = "Resource/2D/2位.png";
+		const std::string kRank3 = "Resource/2D/3位.png";
+		const std::string kRankingTitle = "Resource/2D/ランキング.png";
+		const std::string kScoreTitle = "Resource/2D/スコア.png";
+		const std::string kPoint = "Resource/2D/点.png";
+		const std::string kBtnStart = "Resource/2D/スタートボタン1.png";
+		const std::string kBtnExit = "Resource/2D/しゅうりょうぼたん (1).png";
+		const std::string kBtnTutorial = "Resource/2D/チュートリアルぼたん.png";
+		const std::string kBtnSetting = "Resource/2D/せっていぼたん1.png";
+		const std::string kSettingsBg = "Resource/2D/settings_bg.png";
+		const std::string kFontBack = "Resource/2D/fontback.png";
+		const std::string kScoreWord = "Resource/2D/SCORE.png";
+		const std::string kMinus = "Resource/2D/マイナス.png";
+		const std::string kTitleBg = "Resource/2D/タイトルシーン.png";
+		const std::string kTitleUfo = "Resource/2D/牛とUFO.png";
+	}
 	struct CharacterParams
 	{
 		float speed;

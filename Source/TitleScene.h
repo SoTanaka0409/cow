@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include "UIButton.h"
 #include"Texture.h"
 #include "SelectionManager.h"
 #include <vector>
@@ -7,14 +8,7 @@
 #include "SceneManager.h"
 
 // UI状態管?E??描画用のチE?Eタをまとめるための構造体
-struct TitleButton
-{
-	SelectionManager::Title type;
-	int graph_handle;
-	int x, y;
-	int w, h;
-	bool is_hover;
-};
+
 
 // アプリケーション起動時の初期画面
 class TitleScene : public Scene
@@ -58,7 +52,7 @@ private:
 
 	bool is_hover_new_game_;
 
-	std::vector<TitleButton> buttons_;
+	std::vector<UIButton> buttons_;
 
 	// [入力] なし[出力] なし[副作用] 上?E名?EスコアUIを描画
 	void DrawRankingUI();

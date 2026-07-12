@@ -1,20 +1,14 @@
 #pragma once
 #include"dxlib.h"
-#include"Scene.h"
+#include "Scene.h"
+#include "UIButton.h"
 #include"Texture.h"
 #include"SelectionManager.h"
 #include"vector"
 #include "Score.h"
 
 // リザルト画面における?ボタンのUI状態と描画チE?Eタを保持する構造体
-struct ResultButton
-{
-	SelectionManager::Title type;
-	int graph_handle;
-	int x, y;
-	int w, h;
-	bool is_hover;
-};
+
 
 // ゲーム終了??に最終スコアとランキングを表示するシーン
 class ResultScene : public Scene
@@ -48,7 +42,7 @@ private:
 
 	bool is_hover_new_game_;
 
-	std::vector<ResultButton> buttons_;
+	std::vector<UIButton> buttons_;
 	int result_graph_handle_;
 
 	Score score_;

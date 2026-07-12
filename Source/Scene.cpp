@@ -92,8 +92,17 @@ void Scene::Update()
 	{
 		animal_manager_->Update();
 	}
-}
 
+	if (fade_state_ == kSceneFadeOut)
+	{
+		Master::mpSoundManager->SetBGMVolume((Master::mpSoundManager->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
+		if (GetFadeAlpha() >= 255)
+		{
+			SetFadeAlpha(255);
+			Master::mpSceneManager->SetNextScene((SceneManager::SCENE_TYPE)next_scene_);
+		}
+	}
+}
 void Scene::Fade(SceneFade fade)
 {
 	// フェードイン

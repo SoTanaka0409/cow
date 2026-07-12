@@ -1,36 +1,27 @@
-#include"ResultScene.h"
-#include"Master.h"
-#include"SceneManager.h"
+#include "ResultScene.h"
+#include "Master.h"
+#include "GameConstants.h"
+#include "SceneManager.h"
 
 ResultScene::ResultScene()
 {
 	flag_ = true;
 	count_ = 0;
 	
-	result_graph_handle_ = Master::mpResourceManager->LoadGraphics("Resource/2D/リザルト.png");
-	rank_image_[0] = Master::mpResourceManager->LoadGraphics("Resource/2D/1位.png");
-	rank_image_[1] = Master::mpResourceManager->LoadGraphics("Resource/2D/2位.png");
-	rank_image_[2] = Master::mpResourceManager->LoadGraphics("Resource/2D/3位.png");
-	ranking_title_image_ = Master::mpResourceManager->LoadGraphics("Resource/2D/ランキング.png");
-	your_score_text_img_ = Master::mpResourceManager->LoadGraphics("Resource/2D/スコア.png");
-	point_img_ = Master::mpResourceManager->LoadGraphics("Resource/2D/点.png");
+	result_graph_handle_ = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kResult);
+	rank_image_[0] = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kRank1);
+	rank_image_[1] = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kRank2);
+	rank_image_[2] = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kRank3);
+	ranking_title_image_ = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kRankingTitle);
+	your_score_text_img_ = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kScoreTitle);
+	point_img_ = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kPoint);
 
-	ResultButton newGameBtn;
-	newGameBtn.type = SelectionManager::Title::title;
-	newGameBtn.graph_handle = Master::mpResourceManager->LoadGraphics("Resource/2D/スタートボタン1.png");
-	newGameBtn.x = 920;
-	newGameBtn.y = 50;
-	GetGraphSize(newGameBtn.graph_handle, &newGameBtn.w, &newGameBtn.h);
-	newGameBtn.is_hover = false;
+		UIButton newGameBtn;
+	newGameBtn.Initialize(SelectionManager::Title::title, Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kBtnStart), 920, 50, 0.0f);
 	buttons_.push_back(newGameBtn);
 
-	ResultButton exitBtn;
-	exitBtn.type = SelectionManager::Title::titleOUT;
-	exitBtn.graph_handle = Master::mpResourceManager->LoadGraphics("Resource/2D/しゅうりょうぼたん (1).png");
-	exitBtn.x = 960;
-	exitBtn.y = 680;
-	GetGraphSize(exitBtn.graph_handle, &exitBtn.w, &exitBtn.h);
-	exitBtn.is_hover = false;
+		UIButton exitBtn;
+	exitBtn.Initialize(SelectionManager::Title::titleOUT, Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kBtnExit), 920, 250, 1.5f);
 	buttons_.push_back(exitBtn);
 
 	Master::mpSoundManager->PlayBGM(SoundManager::kBgmResult);
@@ -95,17 +86,6 @@ void ResultScene::Update()
 	{
 		fade_state_ = kSceneFadeOut;
 		next_scene_ = SceneManager::kSceneTitle;
-	}
-
-	if (fade_state_ == kSceneFadeOut)
-	{
-		Master::mpSoundManager->SetBGMVolume((Master::mpSoundManager->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
-		if (GetFadeAlpha() >= 255)
-		{
-			SetFadeAlpha(255);
-			Master::mpSceneManager->SetNextScene((SceneManager::SCENE_TYPE)next_scene_);
-		}
-		return;
 	}
 
 	Scene::Update();

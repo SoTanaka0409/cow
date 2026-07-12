@@ -170,17 +170,6 @@ void Scene3D::Update()
 		fade_state_ = kSceneFadeOut;
 		next_scene_ = SceneManager::kSceneResult;
 	}
-
-	if (fade_state_ == kSceneFadeOut)
-	{
-		// フェードゟE???E?トに合�?E?せてBGMをフ�?E?ードゟE???E?�?E
-		Master::mpSoundManager->SetBGMVolume((Master::mpSoundManager->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
-		if (GetFadeAlpha() >= 255)
-		{
-			SetFadeAlpha(255);
-			Master::mpSceneManager->SetNextScene((SceneManager::SCENE_TYPE)next_scene_);
-		}
-	}
 }
 
 void Scene3D::Draw()

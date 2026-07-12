@@ -110,6 +110,8 @@ void TutorialScene::SetCamera(Camera* camera)
 
 void TutorialScene::Update()
 {
+	Scene::Update();
+
 	if (camera_ != nullptr)
 	{
 		camera_->Update();
@@ -149,16 +151,6 @@ void TutorialScene::Update()
 	{
 		fade_state_ = kSceneFadeOut;
 		next_scene_ = SceneManager::kSceneTitle;
-	}
-
-	if (fade_state_ == kSceneFadeOut)
-	{
-		Master::mpSoundManager->SetBGMVolume((Master::mpSoundManager->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
-		if (GetFadeAlpha() >= 255)
-		{
-			SetFadeAlpha(255);
-			Master::mpSceneManager->SetNextScene((SceneManager::SCENE_TYPE)next_scene_);
-		}
 	}
 	
 	Scene::Update();
