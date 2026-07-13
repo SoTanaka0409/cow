@@ -113,9 +113,9 @@ void CowMove::MoveCharacter()
 void CowMove::AvoidOtherCows()
 {
 	const auto& cows = ServiceLocator::GetObjectManager()->GetObject3DListByTag(Object3D::kTag3dCow);
-	for (int i = 0; i < cows.size(); ++i)
+	for (auto& obj : cows)
 	{
-		CowMove* otherCow = dynamic_cast<CowMove*>(cows.at(i));
+		CowMove* otherCow = dynamic_cast<CowMove*>(obj);
 		if (otherCow != nullptr && otherCow != this)
 		{
 			VECTOR otherPos = otherCow->GetPosition();
@@ -339,7 +339,7 @@ void CowMove::Die(DeathReason reason)
 			player->combo_->AddHit();
 			player->mpScore->AddScore(mfScore * player->combo_->GetMultiplier());
 
-			// 同�?E?�?E?続キル�?E?よ�?E?ボ�Eナス�?E?�?E?�?E?計�?E?�E
+			// 蜷檎ｨ?E?騾?E?邯壹く繝ｫ縺?E?繧医?E?繝懊・繝翫せ繧?E?繧?E?繧?E?險育?E?・
 			if (tag_cow_ == CowMove::TagCow::kCowT)
 			{
 				Master::mnTutorialcount++;

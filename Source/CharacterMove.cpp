@@ -32,7 +32,7 @@ CharacterMove::CharacterMove(std::string filename, VECTOR initPos)
 {
 	model_ = new Model(filename, initPos, false);
 
-	// 初期向きをランダムに刁E��させめE
+	// 蛻晄悄蜷代″繧偵Λ繝ｳ繝繝�縺ｫ蛻・淵縺輔○繧・
 	rotation_.y = (float)GetRand(359) * (DX_PI_F / 180.0f);
 	model_->SetRotation(rotation_);
 }
@@ -57,7 +57,7 @@ void CharacterMove::Reset(VECTOR pos)
 	mCurrentState = STATE_IDLE;
 	mpTargetPlayer = nullptr;
 
-	// 現在のStateを一度破棁E��、新たに征E��状態を作�E
+	// 迴ｾ蝨ｨ縺ｮState繧剃ｸ蠎ｦ遐ｴ譽・＠縲∵眠縺溘↓蠕・ｩ溽憾諷九ｒ菴懈・
 	if (mpCurrentState != nullptr)
 	{
 		delete mpCurrentState;
@@ -72,9 +72,9 @@ void CharacterMove::Reset(VECTOR pos)
 	mDeleteFlag = false;
 	mbBaitFlag = false;
 	mbIsVisible = true;
-	SetDrawFlag(true); // 描画を有効匁E
+	SetDrawFlag(true); // 謠冗判繧呈怏蜉ｹ蛹・
 
-	// 管琁E��ラス(ObjectManager)に自身を�E度登録
+	// 邂｡逅・け繝ｩ繧ｹ(ObjectManager)縺ｫ閾ｪ霄ｫ繧貞・蠎ｦ逋ｻ骭ｲ
 	if (auto scene = Master::mpSceneManager->GetCurrentScene())
 	{
 		if (auto objMgr = scene->GetObjectManager())
@@ -89,7 +89,7 @@ void CharacterMove::Reset(VECTOR pos)
 		model_->SetRotation(rotation_);
 	}
 
-	// 当たり判定（コライダー�E�を再度有効化して登録
+	// 蠖薙◆繧雁愛螳夲ｼ医さ繝ｩ繧､繝繝ｼ・峨ｒ蜀榊ｺｦ譛牙柑蛹悶＠縺ｦ逋ｻ骭ｲ
 	if (capsule_collider_ != nullptr)
 	{
 		capsule_collider_->SetDeleteFlag(false);
@@ -98,21 +98,21 @@ void CharacterMove::Reset(VECTOR pos)
 }
 
 // ==============================================================================
-// Deactivate (オブジェクト�E無効匁E
-// 死亡時や画面外に出た時など、描画と判定をオフにして処琁E��象から外します、E
+// Deactivate (繧ｪ繝悶ず繧ｧ繧ｯ繝医・辟｡蜉ｹ蛹・
+// 豁ｻ莠｡譎ゅｄ逕ｻ髱｢螟悶↓蜃ｺ縺滓凾縺ｪ縺ｩ縲∵緒逕ｻ縺ｨ蛻､螳壹ｒ繧ｪ繝輔↓縺励※蜃ｦ逅・ｯｾ雎｡縺九ｉ螟悶＠縺ｾ縺吶・
 // ==============================================================================
 void CharacterMove::Deactivate()
 {
 	mbIsVisible = false;
-	SetDrawFlag(false); // 描画を無効匁E
+	SetDrawFlag(false); // 謠冗判繧堤┌蜉ｹ蛹・
 
-	// 当たり判定を無効匁E
+	// 蠖薙◆繧雁愛螳壹ｒ辟｡蜉ｹ蛹・
 	if (capsule_collider_ != nullptr)
 	{
 		capsule_collider_->SetDeleteFlag(true);
 	}
 
-	// deleteはせず、Updateの更新対象リストから�Eみ外す�E��E利用のため�E�E
+	// delete縺ｯ縺帙★縲ゞpdate縺ｮ譖ｴ譁ｰ蟇ｾ雎｡繝ｪ繧ｹ繝医°繧峨・縺ｿ螟悶☆・亥・蛻ｩ逕ｨ縺ｮ縺溘ａ・・
 	if (auto scene = Master::mpSceneManager->GetCurrentScene())
 	{
 		if (auto objMgr = scene->GetObjectManager())
@@ -189,9 +189,9 @@ void CharacterMove::CheckWallCollision()
 	const auto& walls = ServiceLocator::GetObjectManager()->GetObject3DListByTag(Object3D::kTag3dWall);
 	if (!walls.empty())
 	{
-		for (int i = 0; i < walls.size(); i++)
+		for (auto& w : walls)
 		{
-			Wall* wall = dynamic_cast<Wall*>(walls.at(i));
+			Wall* wall = dynamic_cast<Wall*>(w);
 			if (wall != nullptr)
 			{
 				std::vector<VERTEX3D> vertex = wall->GetVertex();
@@ -220,7 +220,7 @@ void CharacterMove::CheckWallCollision()
 						position_ = VAdd(position_, VScale(slide, mfSpeed));
 						hitwalls = true;
 					}
-					// 褁E��壁に挟まれた場合�E進行を止める
+					// 隍・焚螢√↓謖溘∪繧後◆蝣ｴ蜷医・騾ｲ陦後ｒ豁｢繧√ｋ
 					else if (hitwalls)
 					{
 						position_ = old_position_;
@@ -247,7 +247,7 @@ void CharacterMove::RotationCharacter()
 	{
 		float targetAngle = atan2f(moveVec.x, moveVec.z);
 
-		// モチE��の正面方向�E仕様に合わせて180度反転させめE
+		// 繝｢繝・Ν縺ｮ豁｣髱｢譁ｹ蜷代・莉墓ｧ倥↓蜷医ｏ縺帙※180蠎ｦ蜿崎ｻ｢縺輔○繧・
 		rotation_.y = targetAngle + DX_PI_F;
 		model_->SetRotation(rotation_);
 	}
