@@ -3,33 +3,21 @@
 #include <vector>
 #include "ModelUtility.h"
 
-// 3D繝｢繝・Ν・・V1蠖｢蠑擾ｼ峨・繝懊・繝ｳ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ蛻ｶ蠕｡縺ｨ繝悶Ξ繝ｳ繝牙・逅・ｒ陦後≧繧ｯ繝ｩ繧ｹ
+// MV1モデルのボーンアニメーション制御と、状態遷移時のモーション補間（ブレンド）をカプセル化し、モデルの描画と状態管理を分離するクラス
 class ModelAnimation
 {
 public:
-	/*
-	 * @brief 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ蛻ｶ蠕｡蟇ｾ雎｡縺ｮ繝｢繝・Ν繝上Φ繝峨Ν繧堤匳骭ｲ縺吶ｋ
-	 * [蜈･蜉嫋 modelHandle: DX繝ｩ繧､繝悶Λ繝ｪ縺ｮ繝｢繝・Ν繝上Φ繝峨Ν
-	 * [蜃ｺ蜉嫋 なし
-	 * [蜑ｯ菴懃畑] 場合ｨｮ蜀・Κ迥ｶ諷句､画焚縺ｮ蛻晄悄蛹悶√ョ繝輔か繝ｫ繝医い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｸ縺ｮ蛻・ｊ譖ｿ縺・
-	 */
+	// [入力] modelHandle: DXライブラリのモデルハンドル [出力] なし [副作用] 内部状態の初期化
+	// 生成後に外部でモデルが破棄された場合、アクセス違反でクラッシュするため、モデル本体とライフサイクルを厳密に同期させること
 	ModelAnimation(int modelHandle);
 	~ModelAnimation();
 
-	/*
-	 * @brief 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｮ譎る俣繧帝ｲ陦後＆縺帙∝・繧頑崛縺域凾縺ｮ繝悶Ξ繝ｳ繝芽｣憺俣繧呈峩譁ｰ縺吶ｋ
-	 * [蜈･蜉嫋 なし
-	 * [蜃ｺ蜉嫋 なし
-	 * [蜑ｯ菴懃畑] DX繝ｩ繧､繝悶Λ繝ｪ縺ｮ繝｢繝・Ν繝上Φ繝峨Ν縺ｫ蟇ｾ縺励※迴ｾ蝨ｨ縺ｮ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ迥ｶ諷九・譎ょ綾繧貞渚譏
-	 */
+	// [入力] なし [出力] なし [副作用] DXライブラリ側のモデル姿勢の更新
+	// 可変フレームレート環境下でのモーション進行速度のブレを防ぐため、内部でシステム経過時間（DeltaTime）を乗算して時間を進めること
 	void Update();
 
-	/*
-	 * @brief 蜀咲函縺吶ｋ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ繧貞・繧頑崛縺医ｋ
-	 * [蜈･蜉嫋 state: 蛻・ｊ譖ｿ縺亥・縺ｮ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ迥ｶ諷・ index: 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｮ繧､繝ｳ繝・ャ繧ｯ繧ｹ逡ｪ蜿ｷ
-	 * [蜃ｺ蜉嫋 なし
-	 * [蜑ｯ菴懃畑] 蜑阪・繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｨ縺ｮ繝悶Ξ繝ｳ繝牙・逅・′髢句ｧ九＆繧後ｋ
-	 */
+	// [入力] state: 次の状態, index: アニメーション番号 [出力] なし [副作用] ブレンド処理の開始
+	// 毎フレーム連続で呼び出すとブレンド率が初期化され続けモーションが固まるバグが発生するため、状態変化時のみ呼ぶようガードすること
 	void ChangeAnimation(AnimationState state, int index = 1);
 
 	void SetLoop(bool isLoop) { mbLoop = isLoop; }
@@ -42,16 +30,15 @@ public:
 	void SetAnimationCount(float count) { mfAnimationCount = count; }
 
 private:
-	int model_handle_;                  // DX繝ｩ繧､繝悶Λ繝ｪ縺ｮ3D繝｢繝・Ν繝上Φ繝峨Ν
-	float mfAnimationTime;              // 迴ｾ蝨ｨ蜀咲函荳ｭ縺ｮ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ譎ょ綾・育ｧ抵ｼ・
-	float mfAnimationCount;             // 蜀咲函譎る俣繧帝ｲ繧√ｋ騾溷ｺｦ菫よ焚
-	int mnAnimationIndex;               // 迴ｾ蝨ｨ縺ｮ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｮ繧､繝ｳ繝・ャ繧ｯ繧ｹ
-	float mfOldAnimationTime;           // 繝悶Ξ繝ｳ繝臥ｧｻ陦悟燕縺ｮ蜿､縺・い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｮ譎ょ綾・育ｧ抵ｼ・
-	int mnOldAnimationIndex;            // 蜿､縺・い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｮ繧､繝ｳ繝・ャ繧ｯ繧ｹ
-	float mfAnimBlendRate;              // 譁ｰ譌ｧ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｮ繝悶Ξ繝ｳ繝画ｯ皮紫 (0.0?1.0)
-	AnimationState mnState;             // 迴ｾ蝨ｨ縺ｮ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ迥ｶ諷・
-	bool mbLoop;                        // 繝ｫ繝ｼ繝怜・逕溘☆繧九°縺ｩ縺・°
-	AnimationState mnLoopFinishState;   // 髱槭Ν繝ｼ繝励い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ邨ゆｺ・ｾ後↓驕ｷ遘ｻ縺吶ｋ迥ｶ諷・
-	bool mbLoopFinish;                  // 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺・蜻ｨ螳御ｺ・＠縺溘°縺ｩ縺・°
+	int model_handle_;                 // DXライブラリのモデルハンドル
+	float mfAnimationTime;             // 現在のアニメーション再生時間
+	float mfAnimationCount;            // アニメーションの再生速度倍率
+	int mnAnimationIndex;              // 現在のアニメーション番号
+	float mfOldAnimationTime;          // ブレンド前の旧アニメーション再生時間
+	int mnOldAnimationIndex;           // ブレンド前の旧アニメーション番号
+	float mfAnimBlendRate;             // モーション補間のブレンド率
+	AnimationState mnState;            // 現在のアニメーション状態
+	bool mbLoop;                       // ループ再生するかどうかのフラグ
+	AnimationState mnLoopFinishState;  // 非ループ再生終了後の遷移先状態
+	bool mbLoopFinish;                 // アニメーションが終了したかどうかのフラグ
 };
-

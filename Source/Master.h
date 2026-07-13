@@ -13,27 +13,29 @@
 #include"EffectManager.h"
 #include"Fever.h"
 
-// シングルトン回避と吁E???Eへのグローバルアクセスを提供するためE???E??ラスとして定義
+// 循環参照や初期化順序バグの温床になりやすいため、各機能の結合度を下げる恒久対応までの暫定的なグローバルアクセス（Service Locator）として運用する
 class Master
 {
 public:
-	static SceneManager* mpSceneManager;      // シーン?E??替えとライフサイクル管?E??
-	static SoundManager* mpSoundManager;      // BGM/SEの一括制御用
-	static Score* mpScore;                    // UI表示とリザルト算?Eのためのスコア?E??
-	static ResourceManager* mpResourceManager;// 頻繁なロードによるカクつきを防ぐアセチE??キャチE??ュ
-	static Camera* camera_;                  // プレイヤー追従用のメインカメラ
-	static DebugCamera* mpDebugCamera;        // チE??チE??時?E自由視点確認用
-	static bool mbIsDebugCamera;              // 入力?E断とカメラ操作を?E??替えるチE??チE??フラグ
-	static Level* mpLevel;                    // パラメータスケーリング用レベル?E??
-	static EffectManager* mpEffectManager;    // Effekseerエフェクト?E描画・寿命管?E??
-	
-	static bool SelectSkill;                  // スキル選択中のゲーム進行停止用フラグ
-	static int mnTutorialcount;               // チュートリアルの進行度判定用カウンター
-	static bool GameFinishFlag;               // リザルト移行を制御する終?E??態フラグ
-	static bool FeverFlag;                    // 自動吸引と大量?E現モードを有効にするフラグ
-	static int mnCaughtCowCount;              // 実績解除とイベント発生判定用の総回収数
-	static bool tutorial_vacum_flag_;             // チュートリアルでの吸引操作達成フラグ
+	static SceneManager* mpSceneManager;      // メモリリークを防ぐため、古いシーンの破棄と新規生成を中央集約で完全に保証する
+	static SoundManager* mpSoundManager;      // シーン遷移時もBGMを途切れさせず再生維持するため、ライフサイクルをゲーム全体と同期させる
+	static Score* mpScore;                    // 複数オブジェクトからの非同期なポイント加算による計算ズレや、UI表示との同期ズレを防ぐための一元管理用
+	static ResourceManager* mpResourceManager;// 毎フレームのファイルI/Oによる深刻な処理落ち（スパイク）を防ぐためのアセット共有キャッシュ
+	static Camera* camera_;                   // プレイヤーの座標更新より先にカメラが動いて画面がガタつくバグを防ぐため、参照経由で最後尾に更新すること
+	static DebugCamera* mpDebugCamera;        // リリースビルドへの意図せぬ混入やメインカメラ座標の破壊を防ぐため、必ずフラグ(mbIsDebugCamera)とセットで運用すること
+	static bool mbIsDebugCamera;              // 有効時はプレイヤー入力の遮断と描画カメラの差し替えを行い、ゲームの進行状態を破壊せずにデバッグを行うためのフラグ
+	static Level* mpLevel;                    // プレイ進行度に応じた難易度のインフレ計算を一元化し、バランス調整時の変更箇所を1箇所に絞るための参照
+	static EffectManager* mpEffectManager;    // 画面上に残存する全エフェクトの正しいZバッファ描画順序と、再生終了時の自動メモリ解放を保証する
 
-	static float mfDeltaTime;                 // フレームレート変動を吸収するため?E経過時間(私E
-	static float GetDeltaTimeScaler() { return mfDeltaTime * 60.0f; } // 60FPS基準?E移動量補正スケール
+	static bool SelectSkill;                  // 有効化中はUpdateの進行をスキップし、スキル選択UIの操作以外を受け付けないようにするための排他ロックフラグ
+	static int mnTutorialcount;               // 想定外の操作による進行不能（スタック）バグを防ぐため、特定のアクションを強制するためのステップ状態管理
+	static bool GameFinishFlag;               // 死亡時などに複数回リザルト画面へ遷移（多重発火）してしまうクラッシュバグを防ぐためのエッジトリガ
+	static bool FeverFlag;                    // ゲームのコアメカニクスを一時的に書き換えるため、有効化時は専用のUI演出やBGM変更の処理を確実に連動させること
+	static int mnCaughtCowCount;              // スコア計算とは独立した「累計捕獲数」の要件（実績解除や内部ランク変動など）を満たすための専用カウンター
+	static bool tutorial_vacum_flag_;         // チュートリアル中、特定の手順を踏む前に吸い込みアクションが暴発して進行不能になるのを防ぐ制約フラグ
+
+	static float mfDeltaTime;                 // OSやハードウェアの性能差によるゲームスピードの変動（FPS依存バグ）を防ぐために乗算する前フレームからの経過時間(秒)
+
+	// 固定60FPS前提で実装された過去の移動処理ロジックを破壊せずに、可変FPS対応へと安全にリファクタリングするためのラッパー関数
+	static float GetDeltaTimeScaler() { return mfDeltaTime * 60.0f; }
 };
