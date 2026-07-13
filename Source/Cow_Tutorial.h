@@ -1,24 +1,24 @@
-#pragma once
+﻿#pragma once
 #include "CowMove.h"
 #include "dxlib.h"
 
-// チュートリアル進行用の特殊調整�E�スコア高め等）を行う専用クラス
+// チュートリアル時の特別な挙動（スコア高め等）を処理するため
 class Cow_Tutorial : public CowMove
 {
 public:
 	/*
-	 * @brief チュートリアル用の固有パラメータを設定し初期化すめE
-	 * [入力] filename: モチE��ファイルパス, initPos: 初期座樁E
-	 * [出力] �Ȃ�
-	 * [副作用] �Ȃ�
+	 * チュートリアル用の固有パラメータを設定するため
+	 * [入力] filename: モデルファイルパス, initPos: 初期座標
+	 * [出力] なし
+	 * [副作用] なし
 	 */
 	Cow_Tutorial(std::string filename, VECTOR initPos);
 
 	/*
-	 * @brief チE��トラクタ
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] �Ȃ�
+	 * リソース解放によりメモリリークを防ぐため
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] なし
 	 */
 	virtual ~Cow_Tutorial();
 };

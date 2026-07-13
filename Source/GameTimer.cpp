@@ -1,4 +1,4 @@
-#include"GameTimer.h"
+ï»¿#include"GameTimer.h"
 #include"Master.h"
 #include"Utility.h"
 
@@ -11,7 +11,7 @@ GameTimer::GameTimer(VECTOR pos, int timer, Tag_Num num)
 {
 	mLastTime = GetNowCount();
 
-	score_text_image_ = Master::mpResourceManager->LoadGraphics("Resource/2D/rimit.png"); // •`‰æ’x‰„ŒyŒ¸‚Ì‚½‚ßæ“Ç‚İ‚İ
+	score_text_image_ = Master::mpResourceManager->LoadGraphics("Resource/2D/rimit.png"); // æç”»é…å»¶è»½æ¸›ã®ãŸã‚å…ˆèª­ã¿è¾¼ã¿
 }
 
 GameTimer::~GameTimer()
@@ -22,7 +22,7 @@ void GameTimer::Draw()
 {
 	if (tag_ == Tag_NoGame) return;
 
-	// ‰ğ‘œ“x•ÏX‚ğ‘z’è‚µAŠî€À•W(position_)‚©‚ç‚Ì‘Š‘ÎˆÊ’u‚Å•`‰æ
+	// è§£åƒåº¦å¤‰æ›´ã‚’æƒ³å®šã—ã€åŸºæº–åº§æ¨™(position_)ã‹ã‚‰ã®ç›¸å¯¾ä½ç½®ã§æç”»
 	DrawExtendGraph(
 		static_cast<int>(position_.x + Utility::kUiBaseX),
 		static_cast<int>(position_.y + Utility::kUiTimerY),
@@ -50,13 +50,13 @@ void GameTimer::Update()
 
 	int now = GetNowCount();
 
-	// ƒtƒŒ[ƒ€ƒŒ[ƒg”ñˆË‘¶‚ÅŠÔ‚ğŒv‘ª‚·‚é‚½‚ßGetNowCount‚Ì·•ª‚ğg—p
+	// ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆéä¾å­˜ã§æ™‚é–“ã‚’è¨ˆæ¸¬ã™ã‚‹ãŸã‚GetNowCountã®å·®åˆ†ã‚’ä½¿ç”¨
 	if (now - mLastTime >= 1000)
 	{
 		mLastTime = now;
 		Time--;
 
-		// 0–¢–‚Ì•\¦‚âƒ}ƒCƒiƒX’l‚É‚æ‚éƒoƒO‚ğ–h‚®‚½‚ß‰ºŒÀ‚ğƒXƒgƒbƒv
+		// 0æœªæº€ã®è¡¨ç¤ºã‚„ãƒã‚¤ãƒŠã‚¹å€¤ã«ã‚ˆã‚‹ãƒã‚°ã‚’é˜²ããŸã‚ä¸‹é™ã‚’ã‚¹ãƒˆãƒƒãƒ—
 		if (Time <= 0)
 		{
 			Time = 0;

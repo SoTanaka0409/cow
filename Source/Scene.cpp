@@ -1,4 +1,4 @@
-#include"Scene.h"
+﻿#include"Scene.h"
 #include"ObjectManager.h"
 #include"Master.h"
 #include"ColliderManager.h"
@@ -7,6 +7,12 @@
 #include"Fever.h"
 #include"AnimalManager.h"
 
+/*
+ * シーンの基底クラスの初期化
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 各種マネージャーの生成とフェード用変数の初期化を行う
+ */
 Scene::Scene()
 {
 
@@ -22,13 +28,19 @@ Scene::Scene()
 	fade_speed_ = 5.0f;
 }
 
+/*
+ * リソースの解放
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 動的確保した各マネージャーのメモリを解放する
+ */
 Scene::~Scene()
 {
 
 	if (object_manager_ != nullptr)
 	{
 		object_manager_->DeleteAll3D();
-		object_manager_->DeleteAll2D(); // �V�[��?E??�ւ����̃��������[�N�h�~
+		object_manager_->DeleteAll2D();
 		delete object_manager_;
 	}
 
@@ -58,6 +70,12 @@ Scene::~Scene()
 	}
 }
 
+/*
+ * 画面への描画処理
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 管理中のオブジェクトや当たり判定を描画バッファに登録する
+ */
 void Scene::Draw()
 {
 	if (object_manager_ != nullptr)
@@ -66,7 +84,7 @@ void Scene::Draw()
 	}
 	if (collider_manager_ != nullptr)
 	{
-		collider_manager_->Draw(); // �`E??�`E??�p�̓����蔻�����
+		collider_manager_->Draw();
 	}
 	if (animal_manager_ != nullptr)
 	{
@@ -74,6 +92,12 @@ void Scene::Draw()
 	}
 }
 
+/*
+ * シーンの状態更新
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 管理中オブジェクトの更新と、フェードアウト完了時のシーン遷移を行う
+ */
 void Scene::Update()
 {
 	if (object_manager_ != nullptr)
@@ -103,38 +127,37 @@ void Scene::Update()
 		}
 	}
 }
+
+/*
+ * 画面の暗転表現
+ * [入力] fade: 進行するフェード状態
+ * [出力] なし
+ * [副作用] ブレンドモードを変更し黒い矩形を描画する
+ */
 void Scene::Fade(SceneFade fade)
 {
-	// �t�F�[�h�C��
 	if (fade == SceneFade::kSceneFadeIn)
 	{
-
 		fade_alpha_ -= fade_speed_;
 		if (fade_alpha_ < 0) fade_alpha_ = 0; 
-
 
 		if (fade_alpha_ > 0)
 		{
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)fade_alpha_);
-			DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE); // ��ʑS�̂��Ó]
+			DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);          
 		}
 	}
-	// �t�F�[�h�A�E�`E
 	else if (fade == SceneFade::kSceneFadeOut)
 	{
-
 		fade_alpha_ += fade_speed_;
-		if (fade_alpha_ > 255) fade_alpha_ = 255; // DxLib�̎d�l�ɂ��A���t�@�l�����255
-
+		if (fade_alpha_ > 255) fade_alpha_ = 255; 
 
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)fade_alpha_);
 		DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);          
 	}
-	// ���[�h��
 	else if (fade == SceneFade::kSceneFadeLoad)
 	{
-		// ��E??�̃��[�h��ʊg���p�X�y?E�X
 	}
 }

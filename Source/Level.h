@@ -1,9 +1,9 @@
-#pragma once
+﻿#pragma once
 #include"Dxlib.h"
 #include"Object3D.h"
 #include"Utility.h"
 
-// �v���C���[�̐�����ԁi���x���E�o���l�j����ѐi�s�xUI���Ǘ�����N���X
+// プレイヤーの成長状態（レベル・経験値）および進行度UIを管理するクラス
 class Level
 {
 public:
@@ -11,52 +11,52 @@ public:
 	~Level();
 
 	/*
-	 * @brief ���݂̐i�s�x���v���C���[�ɓ`�B���邽��UI��`�悷��
-	 * [����] �Ȃ�
-	 * [�o��] �Ȃ�
-	 * [���l] ���x��������A�o���l�o�[�̉�ʕ`��
+	 * @brief 現在の進行度をプレイヤーに伝達するためUIを描画する
+	 * [入力] なし
+	 * [出力] なし
+	 * [備考] レベル文字列、経験値バーの画面描画
 	 */
 	void Draw();
 
 	/*
-	 * @brief ��ԕύX�������s���i���݂͊g���p�Ƀv���[�X�z���_�Ƃ��Ďc���j
-	 * [����] �Ȃ�
-	 * [�o��] �Ȃ�
-	 * [���l] �Ȃ�
+	 * @brief 状態変更処理を行う（現在は拡張用にプレースホルダとして残す）
+	 * [入力] なし
+	 * [出力] なし
+	 * [備考] なし
 	 */
 	void Update();
 
 	/*
-	 * @brief �o���l�����Z���A���~�ώ��Ƀ��x���A�b�v������s��
-	 * [����] xp: ���Z����o���l��
-	 * [�o��] �Ȃ�
-	 * [���l] �o���l�̍X�V�A����у��x���A�b�v���ɃX�L���I���t���O��L����
+	 * @brief 経験値を加算し、一定蓄積時にレベルアップ判定を行う
+	 * [入力] xp: 加算する経験値量
+	 * [出力] なし
+	 * [備考] 経験値の更新、およびレベルアップ時にスキル選択フラグを有効化
 	 */
 	void AddXp(float xp);
 
 	/*
-	 * @brief ���x���A�b�v�̐i�s�x���������������x���̕K�v�o���l��ݒ肷��
-	 * [����] �Ȃ�
-	 * [�o��] �Ȃ�
-	 * [���l] mfMaxXp�̍X�V
+	 * @brief レベルアップの進行度を初期化し次レベルの必要経験値を設定する
+	 * [入力] なし
+	 * [出力] なし
+	 * [備考] mfMaxXpの更新
 	 */
 	void SetNextLevel();
 
 private:
 	/*
-	 * @brief �o���l�̐i�s���������o�I�ɓǂݎ��郁�[�^�[�Ƃ��ĕ`�悷��
-	 * [����] �Ȃ�
-	 * [�o��] �Ȃ�
-	 * [���l] �i���w�i�A�o�[�i�s�A�S�����̕`��
+	 * @brief 経験値の進行割合を視覚的に読み取れるメーターとして描画する
+	 * [入力] なし
+	 * [出力] なし
+	 * [備考] 進捗背景、バー進行、全長縁の描画
 	 */
 	void DrawBar();
 
 	Object3D* parent_;
-	int mnGaugeFrameGraph;  // �X�L���I���Ȃǂ̔��l�p�Ɏc�����߂̑ΏۃI�u�W�F�N�g�̃C���^
-	float mfxp;             // ���x���A�b�v����̊�ƂȂ錻�݂̗ݐόo���l��
-	float mfMaxXp;          // ��Փx�������`�����邽�߂̎����x���K�v�o���l
-	int mnNowLevel;         // �v���C���[�̋�����K�v�o���l�ݒ�̊�ƂȂ郌�x���l
+	int mnGaugeFrameGraph;  // スキル選択などの備考用に残すための対象オブジェクトのインタ
+	float mfxp;             // レベルアップ判定の基準となる現在の累積経験値量
+	float mfMaxXp;          // 難易度調整を形成するための次レベル必要経験値
+	int mnNowLevel;         // プレイヤーの強さや必要経験値設定の基準となるレベル値
 
-	VECTOR pos  = VGet(Utility::kUiBaseX, Utility::kUiLevelY, 0);   // �𑜓x�ɍ��킹��UI�z�u�̊���W
-	VECTOR size = VGet(Utility::kUiLevelW, Utility::kUiLevelH, 0);  // ���o�����m�肷�邽�߂̃o�[�̌`��
+	VECTOR pos  = VGet(Utility::kUiBaseX, Utility::kUiLevelY, 0);   // 解像度に合わせたUI配置の基準座標
+	VECTOR size = VGet(Utility::kUiLevelW, Utility::kUiLevelH, 0);  // 視覚幅を確定するためのバーの形状
 };

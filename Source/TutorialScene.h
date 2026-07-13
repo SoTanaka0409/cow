@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Scene.h"
 #include "ModelUtility.h"
 #include "CowManager.h"
@@ -8,11 +8,11 @@
 class Camera;
 class Combo;
 
-// ƒvƒŒƒCƒ„[‚ÉŠî–{‘€ì‚ÆƒQ[ƒ€ƒVƒXƒ`E??‚ğ‰ğà‚·‚éƒV[ƒ“
+// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«åŸºæœ¬æ“ä½œã¨ã‚²ãƒ¼ãƒ ã‚·ã‚¹ãƒE??ã‚’è§£èª¬ã™ã‚‹ã‚·ãƒ¼ãƒ³
 class TutorialScene : public Scene
 {
 public:
-	// isƒtƒF[ƒY‚ğŠÇ?E??‚éƒXƒ`E?Eƒg’è‹`
+	// é€²è¡Œãƒ•ã‚§ãƒ¼ã‚ºã‚’ç®¡?E??ã‚‹ã‚¹ãƒE?Eãƒˆå®šç¾©
 	enum State
 	{
 		kStateMove,
@@ -24,7 +24,7 @@ public:
 		kStateEnd
 	};
 
-	// ƒtƒB[ƒo?Eƒ‚[ƒh‘ÌŒ±’†‚ÌƒTƒuƒXƒ`E?Eƒ`E
+	// ãƒ•ã‚£ãƒ¼ãƒ?Eãƒ¢ãƒ¼ãƒ‰ä½“é¨“ä¸­ã®ã‚µãƒ–ã‚¹ãƒE?EãƒE
 	enum State_fever
 	{
 		kFever1,
@@ -35,29 +35,29 @@ public:
 	TutorialScene();
 	virtual ~TutorialScene();
 
-	// [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ƒ`E??ƒXƒ`ƒƒƒAƒZƒ`E??“ÇAƒIƒuƒWƒFƒNƒg?E’uABGMÄ¶
+	// [å…¥åŠ›] ãªã—[å‡ºåŠ›] ãªã—[å‰¯ä½œç”¨] ãƒE??ã‚¹ãƒãƒ£ã‚¢ã‚»ãƒE??èª­è¾¼ã€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ?Eç½®ã€BGMå†ç”Ÿ
 	void Initialize() override;
 
-	// [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ƒXƒ`E?Eƒg‚ÉŠî‚Ã‚­‘€ì”»’è‚ÆƒtƒF[ƒhXV
+	// [å…¥åŠ›] ãªã—[å‡ºåŠ›] ãªã—[å‰¯ä½œç”¨] ã‚¹ãƒE?Eãƒˆã«åŸºã¥ãæ“ä½œåˆ¤å®šã¨ãƒ•ã‚§ãƒ¼ãƒ‰æ›´æ–°
 	void Update() override;
 
-	// [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ‰æ–Ê‚Éƒ`E??ƒXƒg‚Æ3D‹óŠÔ‚ğ•`‰æ
+	// [å…¥åŠ›] ãªã—[å‡ºåŠ›] ãªã—[å‰¯ä½œç”¨] ç”»é¢ã«ãƒE??ã‚¹ãƒˆã¨3Dç©ºé–“ã‚’æç”»
 	void Draw() override;
 
-	// [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] BGM’â~‚È‚ÇI?E?E?E
+	// [å…¥åŠ›] ãªã—[å‡ºåŠ›] ãªã—[å‰¯ä½œç”¨] BGMåœæ­¢ãªã©çµ‚?E?E?E
 	void Finalize() override;
 
 	void SetCamera(Camera* camera);
-	void OnCowSucked() { is_cow_sucked_ = true; } // ‰ñû¬Œ÷‚ğŠO•”‚©‚çó‚¯æ‚éƒR[ƒ‹ƒoƒbƒN
+	void OnCowSucked() { is_cow_sucked_ = true; } // å›åæˆåŠŸã‚’å¤–éƒ¨ã‹ã‚‰å—ã‘å–ã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
 
 private:
-	// [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ?E??—pƒIƒuƒWƒFƒNƒg‚ğ”z’u
+	// [å…¥åŠ›] ãªã—[å‡ºåŠ›] ãªã—[å‰¯ä½œç”¨] ?E??ç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’é…ç½®
 	void CreateFences();
 
-	// [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] —ÌˆæŠO”»’è—p‚Ì“§?E•Ç‚ğ¶?E
+	// [å…¥åŠ›] ãªã—[å‡ºåŠ›] ãªã—[å‰¯ä½œç”¨] é ˜åŸŸå¤–åˆ¤å®šç”¨ã®é€?Eå£ã‚’ç”Ÿ?E
 	void CreateWalls();
 
-	// ™ÜE??ƒ`E?Eƒg?EXVƒƒWƒ`E??
+	// åE??ãƒE?Eãƒˆ?Eæ›´æ–°ãƒ­ã‚¸ãƒE??
 	void UpdateStateMove();
 	void UpdateStateBeam();
 	void UpdateStateComboScore();
@@ -66,12 +66,12 @@ private:
 	void UpdateStateFever();
 	void UpdateStateEnd();
 
-	// [“ü—Í] text:•\¦?E??E yOffset:YÀ•WƒIƒtƒZƒ`E?? [o—Í] ‚È‚µ[•›ì—p] ˆÄ?Eƒ`E??ƒXƒg?E•`‰æ
+	// [å…¥åŠ›] text:è¡¨ç¤º?E??E yOffset:Yåº§æ¨™ã‚ªãƒ•ã‚»ãƒE?? [å‡ºåŠ›] ãªã—[å‰¯ä½œç”¨] æ¡ˆ?EãƒE??ã‚¹ãƒˆ?Eæç”»
 	void DrawTutorialText(const char* text, int yOffset = 0);
 
 	int cow_count_;
-	int font_handle_; // ˆÄ?E—pƒtƒHƒ“ƒ`E
-	int timer_count_; // ”Ä—pªE??ƒ^ƒCƒ}?E
+	int font_handle_; // æ¡ˆ?Eç”¨ãƒ•ã‚©ãƒ³ãƒE
+	int timer_count_; // æ±ç”¨å¾E??ã‚¿ã‚¤ãƒ?E
 
 	State state_ = kStateMove;
 	State_fever fever_state_;

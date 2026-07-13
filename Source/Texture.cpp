@@ -1,4 +1,4 @@
-#include "Texture.h"
+ï»¿#include "Texture.h"
 #include "DxLib.h"
 #include "Master.h"
 
@@ -10,7 +10,7 @@ Texture::Texture(std::string filename, VECTOR centerPosition, int graphsize_x, i
 	, mnTransFlag(transFlag)
 {
 	mnHandle = Master::mpResourceManager->LoadGraphics(filename.c_str());
-	GetGraphSize(mnHandle, &mnSizeX, &mnSizeY); // Šg‘åk¬•`‰æ‚ÌŠî€‚É‚·‚é‚½‚ßƒIƒŠƒWƒiƒ‹ƒTƒCƒY‚ðŽæªE
+	GetGraphSize(mnHandle, &mnSizeX, &mnSizeY); // æ‹¡å¤§ç¸®å°æç”»ã®åŸºæº–ã«ã™ã‚‹ãŸã‚ã‚ªãƒªã‚¸ãƒŠãƒ«ã‚µã‚¤ã‚ºã‚’å–å¾E
 }
 
 Texture::~Texture()
@@ -19,10 +19,10 @@ Texture::~Texture()
 }
 
 /*
-	* @brief Ý’è‚³‚ê‚½ŽE??ƒTƒCƒY(new_game_w_, new_game_h_)‚ÅAmvPosition‚ð’†?E??ˆø‚«L‚Î‚µ•`‰æ‚·‚é
-	* [“ü—Í] ‚È‚µ
-	* [o—Í] ‚È‚µ
-	* [•›ì—p] ŽE??â¹E??‚Öƒ`E??ƒXƒ`ƒƒ•`‰æ
+	* @brief è¨­å®šã•ã‚ŒãŸæŒE??ã‚µã‚¤ã‚º(new_game_w_, new_game_h_)ã§ã€mvPositionã‚’ä¸­?E??å¼•ãä¼¸ã°ã—æç”»ã™ã‚‹
+	* [å…¥åŠ›] ãªã—
+	* [å‡ºåŠ›] ãªã—
+	* [å‰¯ä½œç”¨] æŒE??ç¯E??ã¸ãƒE??ã‚¹ãƒãƒ£æç”»
 	*/
 void Texture::Draw()
 {
@@ -36,14 +36,14 @@ void Texture::Draw()
 }
 
 /*
-	* @brief ƒ{ƒ^ƒ“ƒzƒo[‰‰?E—p‚È‚Ç‚ÉAE??íƒTƒCƒY‚É“Á’è?EŠg’£?Eexpand)‚ð‰Á‚¦‚ÄŠg‘å•`‰æ‚·‚é?E?Œ»Ý–¢Žg—p?E?E
-	* [“ü—Í] ‚È‚µ
-	* [o—Í] ‚È‚µ
-	* [•›ì—p] ŽE??‚³‚ê‚½Šg’£—Ìˆæ‚ÖŠg‘å•`‰æ
+	* @brief ãƒœã‚¿ãƒ³ãƒ›ãƒãƒ¼æ¼”?Eç”¨ãªã©ã«ã€E??å¸¸ã‚µã‚¤ã‚ºã«ç‰¹å®š?Eæ‹¡å¼µ?Eexpand)ã‚’åŠ ãˆã¦æ‹¡å¤§æç”»ã™ã‚‹?E?ç¾åœ¨æœªä½¿ç”¨?E?E
+	* [å…¥åŠ›] ãªã—
+	* [å‡ºåŠ›] ãªã—
+	* [å‰¯ä½œç”¨] æŒE??ã•ã‚ŒãŸæ‹¡å¼µé ˜åŸŸã¸æ‹¡å¤§æç”»
 	*/
 void Texture::SizeDraw()
 {
-	int expand = 15; // Šg‘å•\Ž¦‚·‚éÛ?EŠg’£ƒsƒNƒZƒ‹”
+	int expand = 15; // æ‹¡å¤§è¡¨ç¤ºã™ã‚‹éš›?Eæ‹¡å¼µãƒ”ã‚¯ã‚»ãƒ«æ•°
 	int halfW = (new_game_w_ + expand) / 2;
 	int halfH = (new_game_h_ + expand) / 2;
 
@@ -61,10 +61,10 @@ void Texture::Update()
 }
 
 /*
-	* @brief ’†?E??•W‚ðŽ²‚É‚µ‚ÄA”ä—¦ŽE??Escale)‚É‚æ‚éŠg‘åk¬•`‰æ‚ðs‚¤
-	* [“ü—Í] scale: ƒXƒP[ƒŠƒ“ƒO”{—¦?E?E.0f‚ª“™”{IE
-	* [o—Í] ‚È‚µ
-	* [•›ì—p] ŽE??ƒTƒCƒY‚Åƒ`E??ƒXƒ`ƒƒ•`‰æ
+	* @brief ä¸­?E??æ¨™ã‚’è»¸ã«ã—ã¦ã€æ¯”çŽ‡æŒE??Escale)ã«ã‚ˆã‚‹æ‹¡å¤§ç¸®å°æç”»ã‚’è¡Œã†
+	* [å…¥åŠ›] scale: ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°å€çŽ‡?E?E.0fãŒç­‰å€ï¼E
+	* [å‡ºåŠ›] ãªã—
+	* [å‰¯ä½œç”¨] æŒE??ã‚µã‚¤ã‚ºã§ãƒE??ã‚¹ãƒãƒ£æç”»
 	*/
 void Texture::DrawScale(float scale)
 {

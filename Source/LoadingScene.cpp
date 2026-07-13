@@ -1,10 +1,15 @@
-#include "LoadingScene.h"
+﻿#include "LoadingScene.h"
 #include "DxLib.h"
 #include "Master.h"
 #include "ResourceManager.h"
 #include "SceneManager.h"
 #include "GameConstants.h"
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: 内部タイマーとフラグの初期化
+ */
 LoadingScene::LoadingScene()
 	: loading_timer_(0)
 	, load_started_(false)
@@ -15,20 +20,30 @@ LoadingScene::~LoadingScene()
 {
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: 内部状態のリセット
+ */
 void LoadingScene::Initialize()
 {
 	loading_timer_ = 0;
 	load_started_ = false;
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: 非同期ロードのキックおよびシーン遷移指示
+ */
 void LoadingScene::Update()
 {
 	Scene::Update();
 
 	loading_timer_++;
 
-	// 1フレーム�?E?�?E?描画を優先�?E?、Eフレーム�?E?以降で非同期ロード�?E?開�?E?��?EめE
-	// �E�開始直後�?E GetASyncLoadNum() が�?E?�?E?�?E?0を返�?Eこ�?Eを防ぐ�?E?�E
+	// ロード画面を描画する前に重い処理が走りフリーズするのを防ぐことと、DxLibの非同期ロード関数が
+	// 開始直後に誤って未完了数0を返すバグを回避するため、2フレーム目以降に処理を遅延させる
 	if (!load_started_ && loading_timer_ >= 2)
 	{
 		SetUseASyncLoadFlag(TRUE);
@@ -39,7 +54,7 @@ void LoadingScene::Update()
 		Master::mpResourceManager->PreloadModel(GameConstants::kAnimalBear.model_path);
 		Master::mpResourceManager->PreloadModel(GameConstants::kAnimalSheep.model_path);
 		Master::mpResourceManager->PreloadModel("Resource/3D/ufo2/Ufo.mv1");
-		Master::mpResourceManager->PreloadModel("Resource/3D/新しい柵/fence1.mv1");
+		Master::mpResourceManager->PreloadModel("Resource/3D/柵1/柵1/Fence.mv1");
 		Master::mpResourceManager->PreloadModel("Resource/3D/SkyBox/SkyBox.mv1");
 
 		SetUseASyncLoadFlag(FALSE);
@@ -47,26 +62,37 @@ void LoadingScene::Update()
 		load_started_ = true;
 	}
 
-	// ロードが開�?E?��IE??�てお�?E?、か�?E?全ファ�?E?ル�?E?�?E?�?E?込�?E?が完�?E?�E?E?�?E?ぁE?E??��E移す�?E?E
+	// ロードが即座に終了した際に画面が一瞬だけ暗転してチラつく(3D酔いや不快感に繋がる)のを防ぐため、
+	// 最低でも60フレーム(1秒間)は強制的にローディング画面を維持する
 	if (load_started_ && GetASyncLoadNum() == 0 && loading_timer_ > 60)
 	{
-		// SceneManager�?E?�?E?接遷移を指示す�?E??E�ENextScene�?E?�?E?代入�?E?けで�?E?遷移しなぁE?E?�E
+		// 外部仕様依存: このクラス単体で遷移処理を完結させず、SceneManagerにライフサイクルを委譲する
 		Master::mpSceneManager->SetNextScene(SceneManager::kScene3D);
 	}
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: ローディング画面のUI描画
+ */
 void LoadingScene::Draw()
 {
-	// 黒背景を描画
 	DrawBox(0, 0, 1600, 900, GetColor(0, 0, 0), TRUE);
 
-	// NOW LOADING... �?E?�?E?�?E��E??�メー�?E?ョン
+	// 非同期ロードの裏でアプリケーションがフリーズ(ハングアップ)していないことをユーザーに視覚的に保証するため、
+	// 固定周期で点滅するアニメーションを描画する
 	if ((loading_timer_ / 20) % 2 == 0)
 	{
 		DrawString(1600 / 2 - 60, 900 / 2, "NOW LOADING...", GetColor(255, 255, 255));
 	}
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: なし
+ */
 void LoadingScene::Finalize()
 {
 }

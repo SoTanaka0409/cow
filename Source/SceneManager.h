@@ -1,7 +1,6 @@
-#pragma once
+ï»¿#pragma once
 #include"Scene.h"
-
-// ƒV[ƒ“‘JˆÚ‚¨‚æ‚Ñƒ‰ƒCƒtƒTƒCƒNƒ‹‚ğŠÇ?E??‚éƒNƒ‰ƒX
+// ã‚·ãƒ¼ãƒ³é·ç§»ã‚’ç®¡ç†ã™ã‚‹
 class SceneManager
 {
 public:
@@ -20,51 +19,44 @@ public:
 		kSceneLoading,
 		kScene3D
 	};
-
 public:
 	SceneManager();
 	~SceneManager();
-
 	/*
-	 * ‰Šúİ’è‚ğs‚¢AÅ‰?EƒV[ƒ“?E?ƒ^ƒCƒgƒ‹?E?‚Ö‘JˆÚ‚·‚é
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] mnNextSceneType‚ÌXV‚¨‚æ‚ÑƒV[ƒ“?E??‘Ö‚ŸE
+	 * æœ€åˆã®ã‚·ãƒ¼ãƒ³ã‚’è¨­å®šã—ã€ã‚²ãƒ¼ãƒ ã®åˆæœŸçŠ¶æ…‹ã‚’æ§‹ç¯‰ã™ã‚‹
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] next_scene_type_ã‚’ã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³ã«å¤‰æ›´ã™ã‚‹
 	 */
 	void Initialize();
-
 	/*
-	 * Œ»İƒAƒNƒ`E??ƒu‚ÈƒV[ƒ“‚Ì•`‰æˆ?E??ŒÄ‚Ño‚ŸE
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ‰æ–Ê‚Ö‚Ì•`‰æˆ?E
+	 * ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªã‚·ãƒ¼ãƒ³ã®æç”»å‡¦ç†ã‚’å§”è­²ã™ã‚‹
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ç”»é¢ã«ã‚·ãƒ¼ãƒ³ã®ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚’æç”»ã™ã‚‹
 	 */
 	void Draw();
-
 	/*
-	 * Œ»İƒAƒNƒ`E??ƒu‚ÈƒV[ƒ“‚ÌXVˆ?E??ŒÄ‚Ño‚ŸE
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] Œ»İ‚ÌƒV[ƒ“ó‘Ô?EXV
+	 * ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªã‚·ãƒ¼ãƒ³ã®çŠ¶æ…‹ã‚’1ãƒ•ãƒ¬ãƒ¼ãƒ é€²ã‚ã‚‹
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ã‚·ãƒ¼ãƒ³å†…ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆçŠ¶æ…‹ã‚’æ›´æ–°ã™ã‚‹
 	 */
 	void Update();
-
 	/*
-	 * ƒAƒNƒ`E??ƒu‚ÈƒV[ƒ“ƒIƒuƒWƒFƒNƒg‚ğˆÀ?E‚É‰ğ•úEI?E??‚ßE
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] mpCurrentScene‚Ìƒƒ‚ƒŠ‰ğ•ú
+	 * çµ‚äº†æ™‚ã«ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªã‚·ãƒ¼ãƒ³ã®ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯ã‚’é˜²ããŸã‚ç ´æ£„ã™ã‚‹
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] current_scene_ã®ãƒ¡ãƒ¢ãƒªã‚’è§£æ”¾ã™ã‚‹
 	 */
 	void Finalize();
-
 	/*
-	 * ‘JˆÚ—v‹‚ª‚ ‚éê‡AŒÃ‚ŸE??[ƒ“‚ğ”j?E??V‚µ‚¢ƒV[ƒ“‚ğ¶¬?E‰Šú‰»‚·‚ßE
-	 * [“ü—Í] ‚È‚µ
-	 * [o—Í] ‚È‚µ
-	 * [•›ì—p] ƒV[ƒ“ƒIƒuƒWƒFƒNƒg?Eƒƒ‚ƒŠ‰ğ•ú‚ÆV‹K¶?E
+	 * é·ç§»è¦æ±‚ãŒã‚ã‚‹å ´åˆã€å¤ã„ã‚·ãƒ¼ãƒ³ã‚’ç ´æ£„ã—ã¦æ–°ã—ã„ã‚·ãƒ¼ãƒ³ã‚’ç”Ÿæˆã™ã‚‹
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] current_scene_ã‚’å…¥ã‚Œæ›¿ãˆã‚‹
 	 */
 	void ChangeSceneIfNeeded();
-
 	void SetNextScene(SCENE_TYPE next) { next_scene_type_ = next; }
 	void SetSceneHard(bool Hard) { scene_hard_ = Hard; }
 	bool GetSceneHard() { return scene_hard_; }
@@ -72,12 +64,10 @@ public:
 	bool GetSceneNormal() { return scene_normal_; }
 	Scene* GetCurrentScene() { return current_scene_; }
 	SCENE_TYPE GetSceneType() const { return scene_type_; }
-
 private:
 	SCENE_TYPE scene_type_;
 	SCENE_TYPE next_scene_type_;
 	Scene* current_scene_;
-
 	bool scene_hard_;
 	bool scene_normal_;
 };

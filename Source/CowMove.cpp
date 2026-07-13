@@ -1,4 +1,4 @@
-#include "CowMove.h"
+﻿#include "CowMove.h"
 #include "GameConstants.h"
 #include "Master.h"
 #include "InputManager.h"
@@ -16,12 +16,18 @@
 #include "ServiceLocator.h"
 
 namespace {
+	// 暫定対応: コレクション要素廃止の仕様変更に伴い、これらの同種連続回収管理変数は次回更新で削除（期限: 今月末）
 	int s_mnTagCountCow = 0;
 	CowMove::TagCow s_tag1Cow = CowMove::kNone;
 	CowMove::TagCow s_tag2Cow = CowMove::kNone;
 	CowMove::TagCow s_tag3Cow = CowMove::kNone;
 }
 
+/*
+ * 入力: filename (モデル), initPos (初期座標)
+ * 出力: なし
+ * 副作用: 牛固有のパラメータ（スコア・XP・生存時間）の設定とエフェクトのロード
+ */
 CowMove::CowMove(std::string filename, VECTOR initPos)
 	: CharacterMove(filename, initPos)
 {
@@ -46,10 +52,16 @@ CowMove::~CowMove()
 {
 }
 
+/*
+ * 入力: pos (再配置する座標)
+ * 出力: なし
+ * 副作用: オブジェクトプーリング再利用時の状態初期化
+ */
 void CowMove::Reset(VECTOR pos)
 {
 	CharacterMove::Reset(pos);
 
+	// プールから再利用した際、以前の死亡判定やエフェクト進行度が引き継がれるバグを防ぐため初期化
 	mDeleteFlag = false;
 	effect_timer_ = 0;
 	if (cow_vm_ != nullptr)
@@ -85,6 +97,11 @@ void CowMove::Draw()
 	}
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: コライダーの座標と高さ(position2_)を現在のモデル座標に追従させる
+ */
 void CowMove::ColliderMove()
 {
 	if (capsule_collider_ != nullptr)
@@ -110,6 +127,11 @@ void CowMove::MoveCharacter()
 	model_->SetPosition(position_);
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: 他の牛との距離計算および座標の押し出し補正
+ */
 void CowMove::AvoidOtherCows()
 {
 	const auto& cows = ServiceLocator::GetObjectManager()->GetObject3DListByTag(Object3D::kTag3dCow);
@@ -125,9 +147,11 @@ void CowMove::AvoidOtherCows()
 			float distSq = VSquareSize(diff);
 			float minDist = 50.0f;
 
+			// 多数の牛が完全に重なり、Zファイティング(描画のチラつき)や不自然な密集が発生するのを防ぐ
 			if (distSq < minDist * minDist)
 			{
 				VECTOR dir_ = diff;
+				// 座標が完全に一致した場合、ゼロ除算や押し出し方向の消失を防ぐため微小な乱数ベクトルを与える
 				if (distSq < 0.001f)
 				{
 					dir_ = VGet((float)(GetRand(100) - 50), 0.0f, (float)(GetRand(100) - 50));
@@ -141,8 +165,14 @@ void CowMove::AvoidOtherCows()
 	model_->SetPosition(position_);
 }
 
+/*
+ * 入力: なし
+ * 出力: 餌を検知し追従状態に入った場合はtrue
+ * 副作用: 餌に向かう座標更新
+ */
 bool CowMove::SeekBait()
 {
+	// アクション競合によるスタックを防ぐため、チュートリアル中およびUFO吸引中は餌の追従処理を無効化する
 	if (Master::mpSceneManager->GetSceneType() == SceneManager::kSceneTutorial) return false;
 	if (mCurrentState == STATE_VACUUM) return false;
 
@@ -199,6 +229,11 @@ void CowMove::AddAnimation(AnimationState state, std::string filename)
 {
 }
 
+/*
+ * 入力: collider (自身のコライダー), check (相手のコライダー)
+ * 出力: なし
+ * 副作用: 餌検知フラグの有効化、または他牛との物理的な押し出し処理
+ */
 void CowMove::OnEnter(Collider* collider, Collider* check)
 {
 	if (collider == capsule_collider_ && check->parent_object_ != nullptr)
@@ -210,6 +245,7 @@ void CowMove::OnEnter(Collider* collider, Collider* check)
 
 		if (check->parent_object_->GetTag() == kTag3dCow)
 		{
+			// 物理エンジンの演算遅れでオブジェクト同士が深くめり込んだ際、強引に引き剥がすための補正処理
 			VECTOR otherPos = check->parent_object_->GetPosition();
 			VECTOR dir_ = VSub(position_, otherPos);
 			dir_.y = 0.0f;
@@ -228,12 +264,18 @@ void CowMove::OnEnter(Collider* collider, Collider* check)
 	}
 }
 
+/*
+ * 入力: collider (自身のコライダー), check (相手のコライダー)
+ * 出力: なし
+ * 副作用: 他牛との継続的な重なりに対する押し出し処理
+ */
 void CowMove::OnTrigger(Collider* collider, Collider* check)
 {
 	if (collider == capsule_collider_ && check->parent_object_ != nullptr)
 	{
 		if (check->parent_object_->GetTag() == kTag3dCow)
 		{
+			// OnEnterと同様の理由によるスタック防止策
 			VECTOR otherPos = check->parent_object_->GetPosition();
 			VECTOR dir_ = VSub(position_, otherPos);
 			dir_.y = 0.0f;
@@ -252,6 +294,11 @@ void CowMove::OnTrigger(Collider* collider, Collider* check)
 	}
 }
 
+/*
+ * 入力: collider (自身のコライダー), check (相手のコライダー)
+ * 出力: なし
+ * 副作用: 餌検知フラグの無効化
+ */
 void CowMove::OnExit(Collider* collider, Collider* check)
 {
 	if (collider == capsule_collider_ && check->parent_object_ != nullptr)
@@ -263,6 +310,11 @@ void CowMove::OnExit(Collider* collider, Collider* check)
 	}
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: UFO吸引中の座標追従、エフェクト再生、および一定高度到達による死亡処理
+ */
 void CowMove::CharacterDied()
 {
 	if (mCurrentState == STATE_VACUUM)
@@ -274,6 +326,7 @@ void CowMove::CharacterDied()
 		{
 			position_.y += player->Status(Player3D::Status_AttackS);
 
+			// フィーバー中はプレイヤーの移動速度が上がるため、吸引漏れを防ぐ目的で牛をUFOの真下へ強制的に吸い寄せる
 			if (Master::FeverFlag)
 			{
 				float followSpeed = 0.15f;
@@ -317,6 +370,11 @@ void CowMove::CharacterDied()
 	}
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: 餌による死亡(消失)処理および削除フラグ付与
+ */
 void CowMove::KilledByBait()
 {
 	mbIsVisible = false;
@@ -324,6 +382,11 @@ void CowMove::KilledByBait()
 	mDeleteFlag = true;
 }
 
+/*
+ * 入力: reason (死亡理由)
+ * 出力: なし
+ * 副作用: プレイヤーへのスコア・XP・コンボ加算、および自身への削除フラグ付与
+ */
 void CowMove::Die(DeathReason reason)
 {
 	if (mDeleteFlag) return;
@@ -339,12 +402,13 @@ void CowMove::Die(DeathReason reason)
 			player->combo_->AddHit();
 			player->mpScore->AddScore(mfScore * player->combo_->GetMultiplier());
 
-			// 蜷檎ｨ?E?騾?E?邯壹く繝ｫ縺?E?繧医?E?繝懊・繝翫せ繧?E?繧?E?繧?E?險育?E?・
 			if (tag_cow_ == CowMove::TagCow::kCowT)
 			{
 				Master::mnTutorialcount++;
 			}
 
+			// 暫定対応: コレクション要素を廃止してアクションに特化する仕様変更に伴い、
+			// 以下の同種連続回収ボーナス処理は非推奨コードとする。次回リファクタリング時に削除する（期限：今月末）
 			s_mnTagCountCow++;
 			if (s_mnTagCountCow == 1)
 			{

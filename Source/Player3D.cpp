@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+﻿#include "ServiceLocator.h"
 #include"Player3D.h"
 #include"Model.h"
 #include"ModelAnimation.h"
@@ -10,7 +10,7 @@
 #include"Utility.h"
 #include<string>
 #include <iostream>
-#include <cstring> // strcmp, strncmp
+#include <cstring>
 #include"stage.h"
 #include"Camera.h"
 #include "SphereCollider.h"
@@ -26,6 +26,12 @@
 #include"GameTimer.h"
 #include"GameManager.h"
 
+/*
+ * プレイヤーの初期化処理
+ * [入力] filename: モデルのファイルパス, initPos: 初期座標
+ * [出力] なし
+ * [副作用] 各種コンポーネントの生成と初期化
+ */
 Player3D::Player3D(std::string filename, VECTOR initPos)
 	: Object3D(initPos)
 	, vertical_angle_(0.0f)
@@ -58,7 +64,7 @@ Player3D::Player3D(std::string filename, VECTOR initPos)
 	capsule_collider_->position2_ = position_;
 	capsule_collider_->radius_ = radius_;
 
-	// Y軸方向にスケールを伸ばし真下に向けめE
+	// プレイヤーから真下に向けて光線を出す表現にするため
 	mpBeam = new EffekseerEffect("Resource/3D/EFK/Beam.efk", position_, 80.0f);
 	mpBeam->SetRotation(VGet(DX_PI_F / -2.0f, 0.0f, 0.0f));
 	mpBeam->SetScale(VGet(1.0f, 1.0f, 4.0f));
@@ -66,6 +72,12 @@ Player3D::Player3D(std::string filename, VECTOR initPos)
 	mpSpeed = new EffekseerEffect("Resource/3D/EFK/UseSpItem.efk", VGet(0, 0, 0), 100.0f);
 }
 
+/*
+ * プレイヤーの終了処理
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 各種コンポーネントの破棄
+ */
 Player3D::~Player3D()
 {
 	Utility::SafeDelete(model_);
@@ -77,12 +89,17 @@ Player3D::~Player3D()
 	Utility::SafeDelete(mpSpeed);
 }
 
+/*
+ * 毎フレームの更新処理
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 状態更新、移動処理、当たり判定処理の実行
+ */
 void Player3D::Update()
 {
-	// チE??チE??カメラが有効な場合?Eプレイヤーの挙動をすべて停止
+	// デバッグ時はカメラ操作に専念させるため
 	if (Master::mbIsDebugCamera) return;
 
-	// --- スタン?E?気絶?E?状態?E管?E---
 	if (mIsStunned)
 	{
 		mStunTimer--;
@@ -96,7 +113,7 @@ void Player3D::Update()
 
 	ManagerUpdate();
 
-	// スチE?Eジ外落下時などは復帰のために空中へ退避
+	// 落下時は安全な空中へ移動させ、画面外への永続的な逸脱を防ぐ
 	if (Master::GameFinishFlag || mIsOutOfBounds)
 	{
 		position_ = VGet(0, 2000, 0);
@@ -110,18 +127,22 @@ void Player3D::Update()
 		ColliderUpdate();
 		Play();
 	}
-	// --- スタン中のフォールバック ---
 	else
 	{
-		// 吸ぁE??み判定が残るのを防ぐためコライダーをリセチE??
+		// スタン中は意図しない吸い込みが発生しないようにする
 		mIsVacuumActive = false;
 		ColliderUpdate();
 	}
 
-	// スチE?Eジ外に出てぁE??ぁE??のチェチE??
 	ScreenOutCheck();
 }
 
+/*
+ * プレイヤーの入力処理と吸い込みゲージの管理
+ * [入力] なし
+ * [出力] なし
+ * [副作用] mIsVacuumActiveとmVacuumGaugeの更新
+ */
 void Player3D::Play()
 {
 	int mouseInput = GetMouseInput();
@@ -139,7 +160,7 @@ void Player3D::Play()
 
 		float recoverySpeed = VACUUM_RECOVER_PER_FRAME;
 
-		// ラストスパ?Eト時はゲージ回復速度を上げて難易度を緩和すめE
+		// ラストスパート時はゲージ回復速度を上げ、プレイヤーを有利にする
 		if (Master::mpSceneManager && Master::mpSceneManager->GetCurrentScene() && ServiceLocator::GetGameManager())
 		{
 			auto timer = ServiceLocator::GetGameManager()->GetGameTimer();
@@ -153,15 +174,21 @@ void Player3D::Play()
 		if (mVacuumGauge > VACUUM_GAUGE_MAX) mVacuumGauge = VACUUM_GAUGE_MAX;
 	}
 
-	// フィーバ?E状態?E仕様を満たすため強制発勁E
+	// フィーバー中は無制限に吸い込みを可能にするため
 	if (Master::FeverFlag) mIsVacuumActive = true;
 }
 
+/*
+ * コライダーとエフェクトの更新
+ * [入力] なし
+ * [出力] なし
+ * [副作用] カプセルコライダーのサイズ変更、エフェクトの再生・停止
+ */
 void Player3D::ColliderUpdate()
 {
 	if (mIsVacuumActive)
 	{
-		// 上空の牛まで判定が届くようにY軸方向にカプセルを庁E??めE
+		// 空中の対象も吸い込めるように判定を上に伸ばす
 		capsule_collider_->position_ = VGet(position_.x, -1000, position_.z);
 		capsule_collider_->position2_ = VGet(position_.x, 3000, position_.z);
 		capsule_collider_->radius_ = VACUUM_RADIUS;
@@ -189,7 +216,6 @@ void Player3D::ColliderUpdate()
 		effect_timer_ = 0;
 	}
 
-	// 吁E??エフェクト?E座標追従と更新処?E
 	if (mpBeam != nullptr)
 	{
 		mpBeam->SetPosition(position_);
@@ -203,6 +229,12 @@ void Player3D::ColliderUpdate()
 	}
 }
 
+/*
+ * 画面外への逸脱判定と復帰処理
+ * [入力] なし
+ * [出力] なし
+ * [副作用] mIsOutOfBoundsの更新、座標のリセット
+ */
 void Player3D::ScreenOutCheck()
 {
 	if (position_.x > Utility::StageSize.x || position_.x < -Utility::StageSize.x ||
@@ -210,7 +242,7 @@ void Player3D::ScreenOutCheck()
 	{
 		mIsOutOfBounds = true;
 
-		// 進行不?E回避のためキー入力で復帰させめE
+		// 画面外にスタックした場合、手動で復帰できるようにする
 		if (CheckHitKey(KEY_INPUT_SPACE))
 		{
 			SetPosition(VGet(0, 2000, 0));
@@ -223,17 +255,26 @@ void Player3D::ScreenOutCheck()
 	}
 }
 
+/*
+ * テスト機能の実行
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 経験値の追加、スキルUIの開放
+ */
 void Player3D::test()
 {
 	if (InputManager::CheckDownKey(KEY_INPUT_5))
 	{
 		mpLevel->AddXp(20);
-		mpSkill->SetSkillFlag(true); // スキルUI/効果?E強制開放
+		mpSkill->SetSkillFlag(true);
 	}
 }
 
 /*
- * @brief プレイヤーに紐づく各種サブシスチE??の一括描画・更新呼び出ぁE
+ * サブシステムの更新・描画の統括
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 各マネージャーオブジェクトの更新・描画
  */
 void Player3D::ManagerUpdate()
 {
@@ -249,12 +290,17 @@ void Player3D::ManagerUpdate()
 	test();
 }
 
+/*
+ * プレイヤー固有の描画処理
+ * [入力] なし
+ * [出力] なし
+ * [副作用] サークルやUIの画面出力
+ */
 void Player3D::Draw()
 {
 	const int DIV = 32;
 	unsigned int color;
 
-	// ロチE??オン状態に応じてサークルの色を変更する
 	if (mIsCowInVacuumRange == true)
 	{
 		color = GetColor(255, 0, 0);
@@ -277,6 +323,12 @@ void Player3D::Draw()
 	bar();
 }
 
+/*
+ * 移動処理と壁との衝突判定
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 座標の更新、移動ベクトルの計算
+ */
 void Player3D::MoveEx()
 {
 	old_position_ = position_;
@@ -285,7 +337,6 @@ void Player3D::MoveEx()
 	VECTOR UpMoveVector = VGet(0.0f, 0.0f, 0.0f);
 	VECTOR leftMoveVector = VGet(0.0f, 0.0f, 0.0f);
 
-	// カメラ視点を基準とした移動方向?E算?E
 	{
 		UpMoveVector = VSub(Master::camera_->GetLookAtPosition(), Master::camera_->GetPosition());
 		UpMoveVector.y = 0.0f;
@@ -336,7 +387,6 @@ void Player3D::MoveEx()
 					hitwall = true;
 					VECTOR slide = VGet(0.0f, 0.0f, 0.0f);
 
-					// 法線から壁ずり移動用ベクトルを計?E
 					float a = VDot(VScale(moveVec, -1.0f), vertex.at(0).norm);
 					slide = VAdd(moveVec, VScale(vertex.at(0).norm, a));
 
@@ -346,7 +396,7 @@ void Player3D::MoveEx()
 						position_ = VAdd(position_, VScale(slide, mfSpeed));
 						hitwalls = true;
 					}
-					// 挟まり防止のため進行を制限すめE
+					// 壁へのめり込みや挟まりを防ぐため、移動をキャンセルする
 					else if (hitwalls == true)
 					{
 						position_ = old_position_;
@@ -360,6 +410,12 @@ void Player3D::MoveEx()
 	model_->SetRotation(rotation_);
 }
 
+/*
+ * 指定されたステータス値の取得
+ * [入力] id: 取得したいステータスID
+ * [出力] スキル補正を含めたステータス値
+ * [副作用] なし
+ */
 float Player3D::Status(StatusID id)
 {
 	if (id == Status_AttackS)
@@ -377,11 +433,17 @@ float Player3D::Status(StatusID id)
 	return 0.0f;
 }
 
+/*
+ * 移動方向への回転補間
+ * [入力] なし
+ * [出力] なし
+ * [副作用] プレイヤーモデルの回転角度更新
+ */
 void Player3D::RotationByMove()
 {
 	float subAngle = target_angle_ - angle_;
 
-	// 角度の?E??線を跨ぁE??場合?E最短ルート補正
+	// 回転が不自然に逆回りしないように、最短ルートへ補正する
 	if (subAngle < -DX_PI_F) subAngle += DX_TWO_PI_F;
 	if (subAngle > DX_PI_F)  subAngle -= DX_TWO_PI_F;
 
@@ -403,7 +465,10 @@ void Player3D::RotationByMove()
 }
 
 /*
- * @brief 画面下部に表示する吸ぁE??みゲージ?E?ED UI?E??E描画
+ * 吸い込みゲージのUI描画
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 画面上へのゲージ表示
  */
 void Player3D::bar()
 {
@@ -418,18 +483,23 @@ void Player3D::bar()
 	if (currentWidth < 0) currentWidth = 0;
 	if (currentWidth > gaugeWidth) currentWidth = gaugeWidth;
 
-	// ゲージが空の時?E警告として赤色表示
+	// 吸い込み不可であることを視覚的に強調するため
 	unsigned int gaugeColor = GetColor(0, 255, 255);
 	if (mVacuumGauge <= 0.0f) gaugeColor = GetColor(255, 0, 0);
 
 	DrawBox(gaugeX, gaugeY, gaugeX + currentWidth, gaugeY + gaugeHeight, gaugeColor, TRUE);
 
-	// 牛柄フレームを描画?E??Eの白ぁE???EDrawBox の代わり?E?E
 	DrawExtendGraph(gaugeX - 10, gaugeY - 10, gaugeX + gaugeWidth + 10, gaugeY + gaugeHeight + 10, mnGaugeFrameGraph, TRUE);
 
 	DrawFormatString(gaugeX, gaugeY - 30, GetColor(255, 255, 255), "Vacuum Gauge: %.1f%%", mVacuumGauge);
 }
 
+/*
+ * オブジェクトが範囲内に入った時の処理
+ * [入力] collider: 自身のコライダー, check: 相手のコライダー
+ * [出力] なし
+ * [副作用] 対象オブジェクトの吸い込み状態への移行
+ */
 void Player3D::OnEnter(Collider* collider, Collider* check)
 {
 	if (collider == capsule_collider_ && check->parent_object_->GetTag() == kTag3dCow)
@@ -455,9 +525,15 @@ void Player3D::OnEnter(Collider* collider, Collider* check)
 	}
 }
 
+/*
+ * オブジェクトが範囲外に出た時の処理
+ * [入力] collider: 自身のコライダー, check: 相手のコライダー
+ * [出力] なし
+ * [副作用] 対象オブジェクトの通常状態への復帰
+ */
 void Player3D::OnExit(Collider* collider, Collider* check)
 {
-	// 吸ぁE??み中断時?E対象を地上での徘徊状態に戻ぁE
+	// 吸い込み対象から外れた場合、通常の挙動へ復帰させる
 	if (collider == capsule_collider_ && check->parent_object_->GetTag() == kTag3dCow)
 	{
 		CowMove* cow = dynamic_cast<CowMove*>(check->parent_object_);
@@ -481,21 +557,45 @@ void Player3D::OnExit(Collider* collider, Collider* check)
 	}
 }
 
+/*
+ * 範囲内にとどまっているオブジェクトへの処理
+ * [入力] collider: 自身のコライダー, check: 相手のコライダー
+ * [出力] なし
+ * [副作用] なし
+ */
 void Player3D::OnTrigger(Collider* collider, Collider* check)
 {
 }
 
+/*
+ * スケールの設定
+ * [入力] scale: 変更する倍率
+ * [出力] なし
+ * [副作用] モデルサイズの変更
+ */
 void Player3D::SetScale(float scale)
 {
 	model_->SetScale(scale);
 }
 
+/*
+ * スタン状態の適用
+ * [入力] stunTime: スタンさせるフレーム数
+ * [出力] なし
+ * [副作用] 状態異常フラグとタイマーのセット
+ */
 void Player3D::ApplyStun(int stunTime)
 {
 	mIsStunned = true;
 	mStunTimer = stunTime;
 }
 
+/*
+ * スキルエフェクトの再生
+ * [入力] なし
+ * [出力] なし
+ * [副作用] エフェクトの再生開始
+ */
 void Player3D::PlaySkillEffect()
 {
 	if (mpSpeed != nullptr)

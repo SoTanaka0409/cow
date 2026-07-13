@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+ï»¿#include "ServiceLocator.h"
 #include "CowManager.h"
 #include "CowMove.h"
 #include "Player3D.h"
@@ -11,41 +11,36 @@
 #include "Cow_Tutorial.h"
 #include "GoldCow.h"
 #include "CapsuleCollider.h"
-
 /*
- * @brief ŠÇ?E??ƒuƒWƒFƒNƒg?E‰Šú‰»‚ğs‚¤
- * [“ü—Í] ‚È‚µ
- * [o—Í] ‚È‚µ
- * [•›ì—p] ‚È‚µ
+ * ç‰›ç®¡ç†ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åˆæœŸåŒ–ã‚’è¡Œã†ã€‚
+ * [å…¥åŠ›] ãªã—
+ * [å‡ºåŠ›] ãªã—
+ * [å‰¯ä½œç”¨] ãªã—
  */
 CowManager::CowManager()
 {
 }
-
-
-
 /*
- * @brief E??‚³‚ê‚½í—Ş?E‹‚ğ¶?E‚Ü‚½?Eƒv?Eƒ‹‚©‚çÄ—˜—p‚µ‚Ä”z’u‚·‚é
- * [“ü—Í] filename: ƒ‚ƒ`E??ƒtƒ@ƒCƒ‹, pos: oŒ»Šî€À?E scale: Šg‘å?E tag: ‹?Eƒ^ƒO, count: ¶?E”, is_fever: ƒtƒB[ƒo?Eƒtƒ‰ƒO
- * [o—Í] ‚È‚µ
- * [•›ì—p] ‹?Eƒƒ‚ƒŠŠm•Û‚¨‚æ?EmCows‚Ö‚Ì’Ç‰ÁA‚Ü‚½?Eƒv?Eƒ‹‚©‚ç‚Ìæ‚èo‚ŸE
+ * æŒ‡å®šã•ã‚ŒãŸç¨®é¡ã®ç‰›ã‚’ç”Ÿæˆãƒ»é…ç½®ã™ã‚‹ã€‚ä¸Šé™åˆ°é”æ™‚ã¯æ—¢å­˜ã®ç‰›ã‚’é–“å¼•ãã€‚
+ * [å…¥åŠ›] filename: ãƒ¢ãƒ‡ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹, pos: åŸºæº–åº§æ¨™, scale: ã‚¹ã‚±ãƒ¼ãƒ«, tag: ç‰›ã®ç¨®é¡, count: ç”Ÿæˆæ•°, is_fever: ãƒ•ã‚£ãƒ¼ãƒãƒ¼çŠ¶æ…‹ãƒ•ãƒ©ã‚°
+ * [å‡ºåŠ›] ãªã—
+ * [å‰¯ä½œç”¨] mCreaturesã¸ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆè¿½åŠ ã€ãŠã‚ˆã³ä¸Šé™æ™‚ã¯æ—¢å­˜ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç ´æ£„ã‚’è¡Œã†ã€‚
  */
 void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove::TagCow tag, int count, bool is_fever)
 {
 	for (int i = 0; i < count; i++)
 	{
-		// ƒpƒtƒH[ƒ}ƒ“ƒXˆÛ?E‚½‚ßA“¯?EŒ»”‚ğÅ‘å30•C‚É§ŒÀ‚·‚ßE
+		// ãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹ä½ä¸‹ã‚’é˜²ããŸã‚ã€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ä¸Šã®ç‰›ã®æœ€å¤§æ•°ã‚’30åŒ¹ã«åˆ¶é™ã™ã‚‹ã€‚
 		if (mCreatures.size() >= 30)
 		{
 			if (tag == CowMove::kCowGold)
 			{
-				// ‹à?E‹‚ğŠmÀ‚ÉoŒ»‚³‚¹‚é‚½‚ßA?EƒŒƒCƒ„[‚©‚çÅ‚à‰“‚ŸE??’Ê?E‹‚ğ—Dæ‚µ‚Ä”j?E??˜g‚ğ‹ó‚¯‚é
+				// é‡‘ç‰›ã¯å‡ºç¾å„ªå…ˆåº¦ãŒé«˜ã„ãŸã‚ã€é æ–¹ã«ã„ã‚‹ä¸è¦ãªä¸€èˆ¬ç‰›ã‚’ç ´æ£„ã—ã¦ç”Ÿæˆæ ã‚’ç¢ºä¿ã™ã‚‹ã€‚
 				bool erased = false;
 				float maxDistSq = -1.0f;
 				auto furthestIt = mCreatures.end();
 				
 				VECTOR playerPos = Master::camera_->GetPosition();
-
 				for (auto it = mCreatures.begin(); it != mCreatures.end(); ++it)
 				{
 					if ((*it)->GetTagCow() != CowMove::kCowGold)
@@ -55,7 +50,6 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 						float dy = cowPos.y - playerPos.y;
 						float dz = cowPos.z - playerPos.z;
 						float distSq = dx * dx + dy * dy + dz * dz;
-
 						if (distSq > maxDistSq)
 						{
 							maxDistSq = distSq;
@@ -63,10 +57,8 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 						}
 					}
 				}
-
 				if (furthestIt != mCreatures.end())
 				{
-					// Šù‚Éíœƒtƒ‰ƒO‚ª—§‚Á‚Ä‚ŸE??‹‚È‚Ç‚ÍObjectManager‘¤‚ÅÁ‚³‚ê‚é
 					(*furthestIt)->Die(DEATH_LIMIT);
 					auto cow = *furthestIt;
 					cow->Deactivate();
@@ -76,7 +68,7 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 				}
 				else if (!mCreatures.empty())
 				{
-					// ‘S‚Ä‚Ì‹‚ª‰æ–Ê?E??‚Ç‚Ìê‡Aˆê”ÔŒÃ‚ŸE??‚Ì‚Ìíœƒtƒ‰ƒO‚ğ—§‚Ä‚ÄƒŠƒXƒg‚©‚çœŠO‚·‚ßE
+					// ä¸€èˆ¬ç‰›ãŒã„ãªã„å ´åˆã§ã‚‚ã€æœ€ã‚‚å¤ã„ç‰›ã‚’ç ´æ£„ã—ã¦é‡‘ç‰›ã®æ ã‚’å¼·åˆ¶çš„ã«ç©ºã‘ã‚‹ã€‚
 					mCreatures.front()->Die(DEATH_LIMIT);
 					auto cow = mCreatures.front();
 					cow->Deactivate();
@@ -84,7 +76,6 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 					mCreatures.erase(mCreatures.begin());
 					erased = true;
 				}
-
 				if (!erased) break;
 			}
 			else
@@ -92,11 +83,9 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 				break;
 			}
 		}
-
 		float randX = (float)(GetRand(pos.x) - pos.x / 2);
 		float randZ = (float)(GetRand(pos.z) - pos.z / 2);
 		VECTOR spawnPos = VGet(randX, pos.y, randZ);
-
 		if (tag == CowMove::kCow1)
 		{
 			SpawnAndInit<Cow>(tag, spawnPos, scale, filename, spawnPos, 1.0f);
@@ -117,4 +106,3 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 		}
 	}
 }
-

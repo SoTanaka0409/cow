@@ -1,7 +1,7 @@
-#pragma once
+ï»¿#pragma once
 #include <string>
 
-// ƒQ[ƒ€ƒpƒ‰ƒ[ƒ^‚ğ’è”‚Æ‚µ‚Ä’è‹`‚·‚éƒf[ƒ^‹ì“®İŒv‚ÌQÆæ (Data-Driven Design)
+// ã‚²ãƒ¼ãƒ ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å®šæ•°ã¨ã—ã¦å®šç¾©ã™ã‚‹ãƒ‡ãƒ¼ã‚¿é§†å‹•è¨­è¨ˆã®å‚ç…§å…ˆ (Data-Driven Design)
 namespace GameConstants
 {
 	namespace ImagePaths
@@ -10,23 +10,23 @@ namespace GameConstants
 		const std::string kLimit = "Resource/2D/rimit.png";
 		const std::string kBeam = "Resource/2D/green_beam_transparent.png";
 		const std::string kCowFrame = "Resource/2D/cow_frame.png";
-		const std::string kResult = "Resource/2D/ƒŠƒUƒ‹ƒg.png";
-		const std::string kRank1 = "Resource/2D/1ˆÊ.png";
-		const std::string kRank2 = "Resource/2D/2ˆÊ.png";
-		const std::string kRank3 = "Resource/2D/3ˆÊ.png";
-		const std::string kRankingTitle = "Resource/2D/ƒ‰ƒ“ƒLƒ“ƒO.png";
-		const std::string kScoreTitle = "Resource/2D/ƒXƒRƒA.png";
-		const std::string kPoint = "Resource/2D/“_.png";
-		const std::string kBtnStart = "Resource/2D/ƒXƒ^[ƒgƒ{ƒ^ƒ“1.png";
-		const std::string kBtnExit = "Resource/2D/‚µ‚ã‚¤‚è‚å‚¤‚Ú‚½‚ñ (1).png";
-		const std::string kBtnTutorial = "Resource/2D/ƒ`ƒ…[ƒgƒŠƒAƒ‹‚Ú‚½‚ñ.png";
-		const std::string kBtnSetting = "Resource/2D/‚¹‚Á‚Ä‚¢‚Ú‚½‚ñ1.png";
+		const std::string kResult = "Resource/2D/ãƒªã‚¶ãƒ«ãƒˆ.png";
+		const std::string kRank1 = "Resource/2D/1ä½.png";
+		const std::string kRank2 = "Resource/2D/2ä½.png";
+		const std::string kRank3 = "Resource/2D/3ä½.png";
+		const std::string kRankingTitle = "Resource/2D/ãƒ©ãƒ³ã‚­ãƒ³ã‚°.png";
+		const std::string kScoreTitle = "Resource/2D/ã‚¹ã‚³ã‚¢.png";
+		const std::string kPoint = "Resource/2D/ç‚¹.png";
+		const std::string kBtnStart = "Resource/2D/ã‚¹ã‚¿ãƒ¼ãƒˆãƒœã‚¿ãƒ³1.png";
+		const std::string kBtnExit = "Resource/2D/ã—ã‚…ã†ã‚Šã‚‡ã†ã¼ãŸã‚“ (1).png";
+		const std::string kBtnTutorial = "Resource/2D/ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«ã¼ãŸã‚“.png";
+		const std::string kBtnSetting = "Resource/2D/ã›ã£ã¦ã„ã¼ãŸã‚“1.png";
 		const std::string kSettingsBg = "Resource/2D/settings_bg.png";
 		const std::string kFontBack = "Resource/2D/fontback.png";
 		const std::string kScoreWord = "Resource/2D/SCORE.png";
-		const std::string kMinus = "Resource/2D/ƒ}ƒCƒiƒX.png";
-		const std::string kTitleBg = "Resource/2D/ƒ^ƒCƒgƒ‹ƒV[ƒ“.png";
-		const std::string kTitleUfo = "Resource/2D/‹‚ÆUFO.png";
+		const std::string kMinus = "Resource/2D/ãƒã‚¤ãƒŠã‚¹.png";
+		const std::string kTitleBg = "Resource/2D/ã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³.png";
+		const std::string kTitleUfo = "Resource/2D/ç‰›ã¨UFO.png";
 	}
 	struct CharacterParams
 	{
@@ -37,13 +37,13 @@ namespace GameConstants
 		std::string model_path;
 	};
 
-	// ‹
+	// ç‰›
 	const CharacterParams kCowDefault  = { 10.0f,  30.0f,  10.0f, 1900.0f, "Resource/3D/Cow/uploads_files_3880923_Cow.mv1" };
 	const CharacterParams kCow2        = { 10.0f,  20.0f,  10.0f, 1900.0f, "Resource/3D/Cow/uploads_files_3880923_Cow.mv1" };
 	const CharacterParams kCowGold     = { 15.0f,  30.0f,  20.0f, 1900.0f, "Resource/3D/GOLDCow/GoldCow.mv1" };
 	const CharacterParams kCowTutorial = { 10.0f,  30.0f, 150.0f,  700.0f, "Resource/3D/Cow/uploads_files_3880923_Cow.mv1" };
 
-	// “®•¨i“GƒLƒƒƒ‰ƒNƒ^[j
+	// å‹•ç‰©ï¼ˆæ•µã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ï¼‰
 	const CharacterParams kAnimalSheep   = { 10.0f, -10.0f,   0.0f, 1000.0f, "Resource/3D/Animal/uploads_files_3880923_Sheep.mv1" };
 	const CharacterParams kAnimalChicken = { 10.0f, -10.0f,   0.0f, 1000.0f, "Resource/3D/Animal/uploads_files_3881253_Chicken_Low.mv1" };
 	const CharacterParams kAnimalBear    = { 10.0f, -10.0f,   0.0f, 1000.0f, "Resource/3D/Animal/uploads_files_3887296_Black_Bear.mv1" };

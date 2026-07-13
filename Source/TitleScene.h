@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Scene.h"
 #include "UIButton.h"
 #include"Texture.h"
@@ -7,30 +7,30 @@
 #include "Score.h"
 #include "SceneManager.h"
 
-// UIó‘ÔŠÇ?E??•`‰æ—p‚Ìƒ`E?Eƒ^‚ğ‚Ü‚Æ‚ß‚é‚½‚ß‚Ì\‘¢‘Ì
+// UIçŠ¶æ…‹ç®¡?E??æç”»ç”¨ã®ãƒE?Eã‚¿ã‚’ã¾ã¨ã‚ã‚‹ãŸã‚ã®æ§‹é€ ä½“
 
 
-// ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‹N“®‚Ì‰Šú‰æ–Ê
+// ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³èµ·å‹•æ™‚ã®åˆæœŸç”»é¢
 class TitleScene : public Scene
 {
 public:
 	TitleScene();
 	virtual ~TitleScene();
 
-	// [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ƒAƒZƒ`E??‰Šú‰»AƒXƒRƒA“Ç‚İ‚İABGMÄ¶
+	// [å…¥åŠ›] ãªã—[å‡ºåŠ›] ãªã—[å‰¯ä½œç”¨] ã‚¢ã‚»ãƒE??åˆæœŸåŒ–ã€ã‚¹ã‚³ã‚¢èª­ã¿è¾¼ã¿ã€BGMå†ç”Ÿ
 	virtual void Initialize() override;
 
-	// [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ƒ}ƒEƒX“ü—Í‚âUIó‘ÔAƒtƒF[ƒhXV
+	// [å…¥åŠ›] ãªã—[å‡ºåŠ›] ãªã—[å‰¯ä½œç”¨] ãƒã‚¦ã‚¹å…¥åŠ›ã‚„UIçŠ¶æ…‹ã€ãƒ•ã‚§ãƒ¼ãƒ‰æ›´æ–°
 	virtual void Update() override;
 
-	// [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ”wŒi‚âUIAUFO‚Ì•`‰æƒRƒ}ƒ“ƒh”­?E
+	// [å…¥åŠ›] ãªã—[å‡ºåŠ›] ãªã—[å‰¯ä½œç”¨] èƒŒæ™¯ã‚„UIã€UFOã®æç”»ã‚³ãƒãƒ³ãƒ‰ç™º?E
 	virtual void Draw() override;
 
-	// [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ƒŠƒ\[ƒX‚Ì‰ğ•úABGM’â~
+	// [å…¥åŠ›] ãªã—[å‡ºåŠ›] ãªã—[å‰¯ä½œç”¨] ãƒªã‚½ãƒ¼ã‚¹ã®è§£æ”¾ã€BGMåœæ­¢
 	virtual void Finalize() override;
 
 private:
-	int frame_count_; // ‰‰?EƒAƒjƒ[ƒVƒ‡ƒ“—p‚Ìƒ^ƒCƒ}?E
+	int frame_count_; // æ¼”?Eã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ç”¨ã®ã‚¿ã‚¤ãƒ?E
 
 	int title_graph_handle_;
 	int new_game_;
@@ -54,7 +54,7 @@ private:
 
 	std::vector<UIButton> buttons_;
 
-	// [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ã?E–¼?EƒXƒRƒAUI‚ğ•`‰æ
+	// [å…¥åŠ›] ãªã—[å‡ºåŠ›] ãªã—[å‰¯ä½œç”¨] ä¸Š?Eå?Eã‚¹ã‚³ã‚¢UIã‚’æç”»
 	void DrawRankingUI();
 
 	int rank_image_[3];

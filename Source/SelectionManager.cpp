@@ -1,4 +1,4 @@
-#include "SelectionManager.h"
+﻿#include "SelectionManager.h"
 #include "DxLib.h"
 #include "Utility.h"
 #include "Master.h"

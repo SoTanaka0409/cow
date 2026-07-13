@@ -1,29 +1,24 @@
-#pragma once
-
-// DxLibのキー入力をラチE�Eし、フレーム間�E状態変化を管琁E��めE
+﻿#pragma once
+// DxLibの入力をラップし、状態変化の管理を容易にするため。
 class InputManager
 {
 public:
     InputManager();
     ~InputManager();
-
     /*
-     * 連続�E力を防ぐため、押し始めの1フレームのみを検知する
-     * [入力] KeyCode: DxLibの�L�[�R�[�h
-     * [出力] 1: 押下開始フレーム、E: それ�ȍ~
-     * [副作用] mDownBufferを更新
+     * 連続入力を防ぎ、単発の操作だけを受け付けるため。
+     * [入力] KeyCode: DxLibのキーコード
+     * [出力] 1: 押下開始フレーム、0: それ以外
+     * [副作用] down_buffer_を更新
      */
     static int CheckDownKey(int KeyCode);
-
     /*
-     * 押し続けを許容する通常のキー入力判宁E
-     * [入力] KeyCode: DxLibの�L�[�R�[�h
-     * [出力] 1: 押下中、E: ��\��
-     * [副作用] �Ȃ�
+     * 長押しによる連続的な操作を可能にするため。
+     * [入力] KeyCode: DxLibのキーコード
+     * [出力] 1: 押下中、0: それ以外
+     * [副作用] なし
      */
     static int CheckPressKey(int KeyCode);
-
 private:
-    // トリガー判定に�K�v��な前フレームのキー状態を保持
     static int down_buffer_[256];
 };

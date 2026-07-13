@@ -1,13 +1,18 @@
-#include "ResultScene.h"
+﻿#include "ResultScene.h"
 #include "Master.h"
 #include "GameConstants.h"
 #include "SceneManager.h"
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: UIリソースの読み込み、ボタンの初期化、リザルトBGMの再生
+ */
 ResultScene::ResultScene()
 {
 	flag_ = true;
 	count_ = 0;
-	
+
 	result_graph_handle_ = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kResult);
 	rank_image_[0] = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kRank1);
 	rank_image_[1] = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kRank2);
@@ -16,11 +21,13 @@ ResultScene::ResultScene()
 	your_score_text_img_ = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kScoreTitle);
 	point_img_ = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kPoint);
 
-		UIButton newGameBtn;
+	// 暫定対応: リザルト画面でのボタン操作（タイトルへ戻る、ゲーム終了など）は現在無効化されているが、
+	// UI描画レイアウトの崩れを防ぐため初期化のみ残す（期限：UIリファクタリング完了まで）
+	UIButton newGameBtn;
 	newGameBtn.Initialize(SelectionManager::Title::title, Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kBtnStart), 920, 50, 0.0f);
 	buttons_.push_back(newGameBtn);
 
-		UIButton exitBtn;
+	UIButton exitBtn;
 	exitBtn.Initialize(SelectionManager::Title::titleOUT, Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kBtnExit), 920, 250, 1.5f);
 	buttons_.push_back(exitBtn);
 
@@ -29,11 +36,22 @@ ResultScene::ResultScene()
 	Master::mpScore;
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: 終了処理の呼び出し
+ */
 ResultScene::~ResultScene()
 {
-	Finalize(); // リソースの解放漏れを防ぐため�E示皁E��呼び出ぁE
+	// シーン遷移時にBGMが鳴り続けたり、VRAMのメモリリークが発生するのを防ぐため、デストラクタで確実な破棄を保証する
+	Finalize();
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: フェード状態の初期化とローカルランキングの読み込み
+ */
 void ResultScene::Initialize()
 {
 	fade_state_ = kSceneFadeIn;
@@ -41,13 +59,17 @@ void ResultScene::Initialize()
 	Master::mpScore->LoadRanking();
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: リザルト画面の全UIと最終スコアの描画
+ */
 void ResultScene::Draw()
 {
 	DrawExtendGraph(0, 0, 1600, 900, result_graph_handle_, FALSE);
 
 	DrawRankingUI();
 
-	// プレイヤーの最終獲得スコアを中�K�v��に描画する
 	DrawExtendGraph(500, 300, 1100, 550, your_score_text_img_, TRUE);
 	int score = Score::GetResultScore();
 	int temp = score;
@@ -59,6 +81,8 @@ void ResultScene::Draw()
 			digitCount++;
 		}
 	}
+
+	// スコアが0点などの場合でも、UI全体のレイアウト幅が崩れて見栄えが悪くなるのを防ぐため、最低4桁分の描画幅を担保する
 	if (digitCount < 4) digitCount = 4;
 
 	int startX = 850;
@@ -67,7 +91,8 @@ void ResultScene::Draw()
 	}
 
 	Master::mpScore->DrawNumber(startX, 490, score, 1.0f, 4);
-	
+
+	// スコアの桁数増減に合わせて「PT(ポイント)」画像のX座標を動的にずらし、数値と画像が被って見えなくなるバグを防ぐ
 	int pointX = startX + digitCount * 80;
 	DrawExtendGraph(pointX, 430, pointX + 200, 630, point_img_, TRUE);
 
@@ -77,11 +102,16 @@ void ResultScene::Draw()
 	}
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: シーン遷移タイマーの進行
+ */
 void ResultScene::Update()
 {
 	count_++;
 
-	// 征E��時間経過後、�E動的にタイトル画面へ戻るフェードを開姁E
+	// プレイヤーが操作せずとも自動でタイトルへ戻るアーケードゲーム風のUXを提供するため、約3秒(200F)で画面を遷移させる
 	if (count_ >= 200 && fade_state_ != kSceneFadeOut)
 	{
 		fade_state_ = kSceneFadeOut;
@@ -91,7 +121,11 @@ void ResultScene::Update()
 	Scene::Update();
 }
 
-// [入力] �Ȃ�[出力] �Ȃ�[副作用] 画面上にランキングを描画
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: 過去のトップ3ランキングのUI描画
+ */
 void ResultScene::DrawRankingUI()
 {
 	int baseX = 40;
@@ -142,13 +176,19 @@ void ResultScene::DrawRankingUI()
 				digitCount++;
 			}
 		}
+
+		// 自身のスコア描画時と同様に、レイアウト崩れ防止のため最低4桁分の描画余白を確保する
 		if (digitCount < 4) digitCount = 4;
 		int pointX = baseX + 180 + digitCount * w;
 		DrawExtendGraph(pointX, drawY, pointX + w, drawY + h, point_img_, TRUE);
 	}
 }
 
-// [入力] �Ȃ�[出力] �Ȃ�[副作用] 画像アセチE��削除、BGM停止
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: BGMの停止処理
+ */
 void ResultScene::Finalize()
 {
 	Master::mpSoundManager->StopBGM();

@@ -1,44 +1,52 @@
-#include "ServiceLocator.h"
+﻿#include "ServiceLocator.h"
 #include "Scene3D.h"
 #include "Master.h"
-#include"InputManager.h"
-#include"ObjectManager.h"
-#include"Player3D.h"
-#include"GameTimer.h"
-#include"GameManager.h"
-#include"SkyBox.h"
-#include"Thunder.h"
-#include"CowMove.h"
-#include"Floor.h"
-#include"Wall.h"
-#include"Object_Stage.h"
-#include"Mountain.h"
-#include"Tornado.h"
-#include"Utility.h"
+#include "InputManager.h"
+#include "ObjectManager.h"
+#include "Player3D.h"
+#include "GameTimer.h"
+#include "GameManager.h"
+#include "SkyBox.h"
+#include "Thunder.h"
+#include "CowMove.h"
+#include "Floor.h"
+#include "Wall.h"
+#include "Object_Stage.h"
+#include "Mountain.h"
+#include "Tornado.h"
+#include "Utility.h"
 #include "GameConstants.h"
 
-Thunder* thunder_ = nullptr;     // ???????o?p??A?N?e?B?u??I?u?W?F?N?g?|?C???^
-Tornado* tatumaki = nullptr;   // ?X?e?[?W???????????I?u?W?F?N?g?|?C???^
+Thunder* thunder_ = nullptr;
+Tornado* tatumaki = nullptr;
 
+/*
+ * 3Dシーンの初期化
+ * [入力] なし
+ * [出力] なし
+ * [副作用] メンバ変数の初期化
+ */
 Scene3D::Scene3D()
 {
 	mass_spawn_timer_ = 0;
 	font_back_graph_ = Master::mpResourceManager->LoadGraphics("Resource/2D/fontback.png");
 }
 
+/*
+ * 3Dシーンの破棄
+ * [入力] なし
+ * [出力] なし
+ * [副作用] なし
+ */
 Scene3D::~Scene3D()
 {
-
-	// ?? cow_manager_ ?? thunder_, tatumaki ???? Object3D ??p??????I?u?W?F?N?g??A
-	// ???N???X Scene ??f?X?g???N?^?????? ObjectManager ??????????I?? delete ???????A
-	// ???????�?E? delete ????d????i?N???b?V???????j??h??????s???????B
 }
 
 /*
- * @brief 3D?X?e?[?W?V?[??????????i?}?b?v?A?R???C?_?[?A?v???C???[?A?G?l?~?[?????j??s??
- * [????] ???
- * [?o??] ???
- * [????p] ?e?I?u?W?F?N?g??new?ABGM????J?n?A?R???C?_?[?o?^
+ * 3Dシーンのセットアップ
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 3Dオブジェクトの配置、BGM再生の開始
  */
 void Scene3D::Initialize()
 {
@@ -49,34 +57,32 @@ void Scene3D::Initialize()
 	Master::mpSoundManager->PlayBGM(SoundManager::kBgmGame);
 	Master::mpSoundManager->SetBGMVolume(120);
 	
-	// ?}?b?v???E??????????????????????A?Z?b?g???????
 	for (int i = 0; i < 6; i++)
 	{
-		new Object_Stage("Resource/3D/裁E��/SmallTree1.mv1", VGet(6000, 0, -5000 + 2000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/裁E��/SmallTree1.mv1", VGet(-6000, 0, -5000 + 2000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/裁E��/Flower1.mv1", VGet(5500, 0, -5000 + 2000 * i), 3.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/裁E��/SmallTree1.mv1", VGet(-6000, 0, -5000 + 2000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/裁E��/SmallTree1.mv1", VGet(-5000 + 2000 * i, 0, -6000), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/裁E��/SmallTree1.mv1", VGet(-5000 + 2000 * i, 0, 6000), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/SmallTree1.mv1", VGet(6000, 0, -5000 + 2000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/SmallTree1.mv1", VGet(-6000, 0, -5000 + 2000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/Flower1.mv1", VGet(5500, 0, -5000 + 2000 * i), 3.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/SmallTree1.mv1", VGet(-6000, 0, -5000 + 2000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/SmallTree1.mv1", VGet(-5000 + 2000 * i, 0, -6000), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/SmallTree1.mv1", VGet(-5000 + 2000 * i, 0, 6000), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
 	}
 
 	for (int i = 0; i < 3; i++)
 	{
-		new Object_Stage("Resource/3D/裁E��/BigTree1.mv1", VGet(5500, 0, -4000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/裁E��/BigTree4.mv1", VGet(-5500, 0, -4000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/裁E��/BigTree4.mv1", VGet(-4000 + 4000 * i, 0, 5500), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/裁E��/BigTree3.mv1", VGet(-4000 + 4000 * i, 0, -5500), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/BigTree1.mv1", VGet(5500, 0, -4000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/BigTree4.mv1", VGet(-5500, 0, -4000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/BigTree4.mv1", VGet(-4000 + 4000 * i, 0, 5500), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/BigTree3.mv1", VGet(-4000 + 4000 * i, 0, -5500), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
 	}
 
 	for (int i = 0; i < 2; i++)
 	{
-		new Object_Stage("Resource/3D/裁E��/BigTree3.mv1", VGet(5500, 0, -2000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/裁E��/BigTree2.mv1", VGet(-5500, 0, -2000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/BigTree3.mv1", VGet(5500, 0, -2000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/BigTree2.mv1", VGet(-5500, 0, -2000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
 	}
 	 
-	new Object_Stage("Resource/3D/裁E��/Grass2.mv1", VGet(0, 0, 0), 2.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+	new Object_Stage("Resource/3D/装飾/Grass2.mv1", VGet(0, 0, 0), 2.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
 
-	// ?X?e?[?W??L?????\????????A???E????l????R?iMountain?j??z?u
 	VECTOR mountainScale = VGet(30.0f, 50.0f, 30.0f);
 	float mountainDist = 13000.0f;
 	auto m1 = new Mountain("Resource/3D/山/地形.mv1", VGet(0, 0, mountainDist), mountainScale, VGet(0.0f, DX_PI_F, 0.0f));
@@ -88,7 +94,7 @@ void Scene3D::Initialize()
 	auto m4 = new Mountain("Resource/3D/山/地形.mv1", VGet(-mountainDist, 0, 0), mountainScale, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
 	m4->SetColor(0.2f, 0.3f, 0.2f, 1.0f);
 
-	// プレ�?E?�?E?リ�?E?外に�?E?ら�?E?�?E?ぁE?E?ぁE?E??E?(Rock)を�?E置
+	// プレイヤーがマップ外へ出られないよう、境界に岩を配置
 	for (int i = 0; i < 40; i++)
 	{
 		float rockX = (float)(GetRand(15000) - 7500);
@@ -105,7 +111,6 @@ void Scene3D::Initialize()
 		rock->SetColor(0.4f, 0.7f, 0.3f, 1.0f);
 	}
 
-	// プレ�?E?�?E?リ�?E??E?E���?E?フェン�?E?(Fence)を�?E置
 	for (int i = 0; i < 5; i++)
 	{
 		new Object_Stage("Resource/3D/新しい柵/fence1.mv1", VGet(490.0f + 1000 * i, 0.0f, 5050.0f), 12.80f, VGet(0.0f, 0.0f, 0.0f));
@@ -124,9 +129,8 @@ void Scene3D::Initialize()
 	auto Player = new Player3D("Resource/3D/ufo2/Ufo.mv1", VGet(1000.0f, 2000.0f, 0.0f));
 	Player->SetScale(0.6f);
 
-	VECTOR spawnPos = Utility::StageSize; // �?E?ポ�Eン初�E??位�?E??E?
+	VECTOR spawnPos = Utility::StageSize;
 
-	// 初�E??�?E?�?E�E�?E?�?E?生�?E??��?E置
 	cow_manager_->SpawnCow(GameConstants::kCowDefault.model_path, spawnPos, 50.0f, CowMove::kCow1, 10);
 	cow_manager_->SpawnCow(GameConstants::kCowGold.model_path, spawnPos, 50.0f, CowMove::kCowGold, 2);
 	animal_manager_->SpawnAnimal(GameConstants::kAnimalChicken.model_path, spawnPos, 50.0f, AnimalMove::kAnimal1, 5);
@@ -145,13 +149,18 @@ void Scene3D::Initialize()
 		VGet(11500, 0, 11500)
 	);
 	
-	// マップ外�?E?��?E当�?E??��?E定用�?E?ラ�?E?ダー�?E?宁E
 	new Wall("Resource", VGet(0.0f, 0.0f, 5000.0f), VGet(-5000.0f, 5000.0f, 0.0f), VGet(5000.0f, 0.0f, 0.0f));
 	new Wall("Resource", VGet(0.0f, 0.0f, -5000.0f), VGet(-5000.0f, 5000.0f, 0.0), VGet(5000.0f, 0.0f, 0.0f));
 	new Wall("Resource", VGet(5000.0f, 0.0f, 0.0f), VGet(0.0f, 5000.0f, 5000.0f), VGet(0.0f, 0.0f, -5000.0f));
 	new Wall("Resource", VGet(-5000.0f, 0.0f, 0.0f), VGet(0.0f, 5000.0f, 5000.0f), VGet(0.0f, 0.0f, -5000.0f));
 }
 
+/*
+ * 毎フレームの更新処理
+ * [入力] なし
+ * [出力] なし
+ * [副作用] マネージャー群の更新、制限時間終了時のシーン移行
+ */
 void Scene3D::Update()
 {
 	auto p = ServiceLocator::GetPlayer();
@@ -164,7 +173,7 @@ void Scene3D::Update()
 	PhaseUpdate();
 	tatumaki->Update();
 
-	// �?E?限�?E間終�E??�E��リ�?E?ルト画�?E?�?E?�?E?フェード開姁E
+	// プレイ時間が終了した場合、進行を停止するためリザルト画面に移行
 	if (ServiceLocator::GetGameManager()->GetGameTimer()->GetTime() <= 0)
 	{
 		fade_state_ = kSceneFadeOut;
@@ -172,13 +181,18 @@ void Scene3D::Update()
 	}
 }
 
+/*
+ * 3Dシーンの描画処理
+ * [入力] なし
+ * [出力] なし
+ * [副作用] オブジェクトの描画、UIの表示
+ */
 void Scene3D::Draw()
 {
 	Scene::Draw();
 	const int count = 51;
 	const float distance = -500.0f;
 	
-	// �?E���?E��用�?E?�?E?リ�?E��描画
 	for (int i = 0; i < count; i++)
 	{
 		float base = (count / 2 - i) * -distance;
@@ -203,7 +217,7 @@ void Scene3D::Draw()
 		game_manager_->GetGameTimer()->Draw();
 	}
 
-	// �?E?ベントフ�?E?ー�?E?�?E?応じた�?E??E?告テ�?E?�?E?ト�?E??E?示
+	// プレイヤーに発生中のイベントを通知するため、演出用の警告テキストを描画
 	if (Master::camera_->GetIsPhaseCameraActive())
 	{
 		int currentPhase = (int)game_manager_->GetCurrentPhase();
@@ -218,13 +232,13 @@ void Scene3D::Draw()
 		if (currentPhase == (int)GameManager::GamePhase::kMassSpawn)
 		{
 			SetFontSize(64);
-			DrawFormatString(600, 200, GetColor(255, 100, 100), "牛が大量発�?E!");
+			DrawFormatString(600, 200, GetColor(255, 100, 100), "牛が大量発生！");
 			SetFontSize(16);
 		}
 		else if (currentPhase == (int)GameManager::GamePhase::kTornadoCrisis)
 		{
 			SetFontSize(64);
-			DrawFormatString(600, 200, GetColor(255, 100, 100), "�?E?風が�?E?大匁E!");
+			DrawFormatString(600, 200, GetColor(255, 100, 100), "竜巻が巨大化！");
 			SetFontSize(16);
 		}
 	}
@@ -236,8 +250,10 @@ void Scene3D::Draw()
 }
 
 /*
- * @brief フェー�?E?�?E?行制御
- * [入劉�E�?E?ぁE[?E??劉�E�?E?ぁE[副�?E??] �?E?メラ�E竜�?E??E?�?E?態�?E?�更、�?E?量スポ�Eン?E??��E?E
+ * 現在のフェーズに合わせた処理
+ * [入力] なし
+ * [出力] なし
+ * [副作用] カメラの更新、大量発生時の定期スポーン
  */
 void Scene3D::PhaseUpdate()
 {
@@ -250,7 +266,7 @@ void Scene3D::PhaseUpdate()
 
 		tatumaki->SetCrisisMode(currentPhase == (int)GameManager::GamePhase::kTornadoCrisis);
 
-		// 大量�?E�?E?フェー�?E?時、E0フレーム間隔�?E?牛を�?E?ポ�Eン
+		// 牛を連続して降らせるイベントのため、一定間隔で上空から追加スポーンする
 		if (currentPhase == (int)GameManager::GamePhase::kMassSpawn)
 		{
 			mass_spawn_timer_++;
@@ -259,7 +275,6 @@ void Scene3D::PhaseUpdate()
 				mass_spawn_timer_ = 0;
 
 				VECTOR spawnCenter = player->GetPosition();
-				// �?E?ポ�Eン位�?E??E?を�Eレ�?E?ヤー上�?E?(y+2000)�?E?�?E?宁E
 				VECTOR spawnArgs = VGet(4000.0f, spawnCenter.y + 2000.0f, 4000.0f);
 
 				cow_manager_->SpawnCow(GameConstants::kCowDefault.model_path, spawnArgs, 50.0f, CowMove::kCow1, 2);
@@ -268,7 +283,13 @@ void Scene3D::PhaseUpdate()
 	}
 }
 
+/*
+ * 3Dシーンの終了処理
+ * [入力] なし
+ * [出力] なし
+ * [副作用] BGMの停止
+ */
 void Scene3D::Finalize()
 {
-	Master::mpSoundManager->StopBGM(); // �?E?ーン終�E??�E���?E?BGMを停�E??
+	Master::mpSoundManager->StopBGM();
 }

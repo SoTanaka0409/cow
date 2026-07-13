@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+﻿#include "ServiceLocator.h"
 #include "Thunder.h"
 #include <cmath>
 #include "CapsuleCollider.h"
@@ -9,19 +9,21 @@
 #include "Scene.h"
 #include "ObjectManager.h"
 
+// 入力：落雷の初期中心座標
+// 副作用：EffekseerEffect インスタンスの動的メモリ確保
 Thunder::Thunder(VECTOR pos)
 	: Object3D(pos)
 {
 	has_stunned_ = false;
 	pos_ = pos;
-	// �v���C���[������s�����Ƃ��悤�A�����O��1�b�Ԃ̗P�\��݂���
+	// プレイヤーが予兆を見てから回避行動をとれるよう、落下前に1秒間の猶予を設ける
 	warning_timer_ = 60;
 	strike_timer_ = 20;
 	interval_timer_ = 180;
 
 	state_ = kIdle;
 	active_ = true;
-	
+
 	capsule_collider_->radius_ = 230;
 
 	thunder_ = new EffekseerEffect("Resource/3D/EFK/thud.efk", pos_, 200.0f);
@@ -31,9 +33,10 @@ Thunder::Thunder(VECTOR pos)
 	stun_ = new EffekseerEffect("Resource/3D/EFK/stun.efk", pos_, 20.0f);
 }
 
+// 副作用：動的確保したエフェクトインスタンスのメモリ解放
 Thunder::~Thunder()
 {
-	// �G�t�F�N�g?E���O��?E?E���ߎ蓮�ŉ������
+	// 各エフェクトはマネージャー登録せず個別に生存管理しているため、手動で解放する
 	if (thunder_ != nullptr)
 	{
 		delete thunder_;
@@ -53,6 +56,7 @@ Thunder::~Thunder()
 	}
 }
 
+// 副作用：各種タイマーの更新、エフェクトの再生、SEの再生
 void Thunder::Update()
 {
 	if (thunder_ != nullptr)
@@ -74,15 +78,17 @@ void Thunder::Update()
 
 	if (!active_) return;
 
+	// 上空から地面を突き抜ける縦長のカプセルを形成し、空中・地上の両方に判定を持たせる
 	capsule_collider_->position_ = VSub(position_, VGet(0, 2000, 0));
 	capsule_collider_->position2_ = VAdd(position_, VGet(0, 2000, 0));
-   
+
 	switch (state_)
 	{
 	case kIdle:
 		interval_timer_--;
 		if (interval_timer_ <= 0)
 		{
+			// ステージの中心（0,0）から全方位3000の範囲内にランダムで落雷位置を決定する
 			float range = 3000.0f;
 			pos_.x = (float)(GetRand((int)range * 2) - (int)range);
 			pos_.z = (float)(GetRand((int)range * 2) - (int)range);
@@ -106,11 +112,12 @@ void Thunder::Update()
 			state_ = kStrike;
 			strike_timer_ = 30;
 			has_stunned_ = false;
-			
+
 			if (thunder_ != nullptr)
 			{
 				thunder_->Play();
-				
+
+				// 遠方の落雷による不要な音の乱立を防ぐため、プレイヤーが一定距離内の場合のみ鳴らす
 				auto players = ServiceLocator::GetPlayers();
 				bool playSound = false;
 				for (auto p : players)
@@ -134,7 +141,7 @@ void Thunder::Update()
 		strike_timer_--;
 		if (strike_timer_ <= 0)
 		{
-			interval_timer_ = 120;
+			interval_timer_= 120;
 			state_ = kIdle;
 		}
 		break;
@@ -144,7 +151,7 @@ void Thunder::Update()
 	{
 		stun_effect_timer_--;
 
-		// �G�t�F�N�g?E�Đ����Ԃ��Z��E??�߁A�X�^�����Ԓ��͒��?E??�Đ�������E
+		// スタンアセットの単発再生時間が短いため、効果持続中は30フレーム周期でループ再生する
 		if (stun_effect_timer_ > 0 && stun_effect_timer_ % 30 == 0)
 		{
 			if (stun_ != nullptr)
@@ -159,11 +166,14 @@ void Thunder::Draw()
 {
 }
 
+// 出力：オブジェクトの稼働状態（生存フラグ）
 bool Thunder::IsActive() const
 {
 	return active_;
 }
 
+// 入力：playerPos=判定対象の座標, range=判定半径
+// 出力：衝突しているかどうかの真偽値
 bool Thunder::CheckHit(VECTOR playerPos, float range)
 {
 	if (state_ != kStrike) return false;
@@ -174,10 +184,12 @@ bool Thunder::CheckHit(VECTOR playerPos, float range)
 	return distance < range;
 }
 
+// 入力：collider=自身の衝突判定, check=相手の衝突判定
+// 副作用：プレイヤーのスタン状態遷移、カメラシェイクの起動
 void Thunder::OnEnter(Collider* collider, Collider* check)
 {
 	if (state_ != kStrike) return;
-	// ���i�q�b�g�ɂ��?E??�s�ȃX�^��������h������E
+	// 1回の落雷フレーム中に多段ヒットしてスタン期間が意図せず延長されるのを防ぐ
 	if (has_stunned_) return;
 
 	if (check->parent_object_->GetTag() == kTag3dPlayer)
@@ -194,7 +206,7 @@ void Thunder::OnEnter(Collider* collider, Collider* check)
 
 			player->ApplyStun(120);
 
-			// �����̈З͂����o�I�ɋ������邽�߃J�����V�F�C�N�𔭐�������
+			// 落雷直撃の衝撃を視覚的に強調し、危機的な被弾状況をプレイヤーに伝える
 			Master::camera_->SetupShake(30.0f, 45.0f, 40.0f);
 		}
 	}

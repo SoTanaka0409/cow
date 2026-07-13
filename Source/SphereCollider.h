@@ -1,30 +1,49 @@
-#pragma once
+﻿#pragma once
 #include "Collider.h"
 
-// 琁E��形状�E�中�K�v��と半征E���E当たり判定コライダークラス
+// 複雑な形状の衝突判定負荷を軽減するため、球体による簡易的な判定領域を提供する
 class SphereCollider : public Collider
 {
 public:
 	/*
-	 * @brief 琁E��コライダーの初期設定を行う
-	 * [入力] parent: 親オブジェクチE center: 中�K�v��樁E radius: 半征E
-	 * [出力] �Ȃ�
-	 * [副作用] �Ȃ�
+	 * コライダーの判定領域となる球体を定義する
+	 * [入力] parent: 追従する親オブジェクト, center: ローカル座標での中心点, radius: 判定の半径
+	 * [出力] なし
+	 * [副作用] Colliderの内部状態を初期化する
 	 */
 	SphereCollider(Object3D* parent, VECTOR center, float radius);
 	virtual ~SphereCollider();
 
 	/*
-	 * @brief 琁E�E3Dワイヤーフレームを描画する�E�デバッグ表示用�E�E
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] �Ȃ�
+	 * 判定領域の目視確認を容易にするため、デバッグ用ワイヤーフレームを描画する
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 画面に描画コマンドが発行される
 	 */
 	void Draw() override;
 
+	/*
+	 * 衝突開始時の処理を委譲するため、イベントを発火する
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 親オブジェクトのコールバックを呼び出す
+	 */
 	void OnEnter() override;
+
+	/*
+	 * 衝突中の処理を継続して委譲するため、イベントを発火する
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 親オブジェクトのコールバックを呼び出す
+	 */
 	void OnTrigger() override;
+
+	/*
+	 * 衝突終了時の処理を委譲するため、イベントを発火する
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 親オブジェクトのコールバックを呼び出す
+	 */
 	void OnExit() override;
 
 };
-

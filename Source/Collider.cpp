@@ -1,8 +1,14 @@
-#include "Collider.h"
+﻿#include "Collider.h"
 #include "Object3D.h"
 #include "ColliderManager.h"
 #include <cassert>
 
+/*
+ * コライダー生成時に必須となる親オブジェクトを設定するため
+ * [入力] parent: このコライダーを所有する親オブジェクト
+ * [出力] なし
+ * [副作用] ColliderManagerに自身を登録
+ */
 Collider::Collider(Object3D* parent)
 	: parent_object_(parent)
 	, position_(VGet(0.0f, 0.0f, 0.0f))
@@ -11,25 +17,30 @@ Collider::Collider(Object3D* parent)
 	, delete_flag_(false)
 {
 	assert(parent);
-	ColliderManager::GetInstance()->AddCollider(this); // 生�E時に自動でマネージャーへ登録
-}
-
-Collider::~Collider()
-{
-	ColliderManager::GetInstance()->RemoveCollider(this); // 破棁E��に自動でマネージャーから登録解除
+	ColliderManager::GetInstance()->AddCollider(this);
 }
 
 /*
- * @brief 別のコライダーとの幾何学皁E��交差状態を允E��、E��刁E��コリジョンイベントを通知する
- * [入力] check: 判定対象の相手コライダー, isHit: 当たり判定�E交差計算結果
- * [出力] �Ȃ�
- * [副作用] mCollisionListの挿入�E削除、OnEnter / OnTrigger / OnExit の親アクターへのコールバック通知
+ * 破棄時に他オブジェクトへの影響をなくすため
+ * [入力] なし
+ * [出力] なし
+ * [副作用] ColliderManagerから自身を解除
+ */
+Collider::~Collider()
+{
+	ColliderManager::GetInstance()->RemoveCollider(this);
+}
+
+/*
+ * 衝突状態の変化を検知し、適切なイベントを通知するため
+ * [入力] check: 判定対象のコライダー, isHit: 衝突判定の計算結果
+ * [出力] なし
+ * [副作用] collision_list_の更新、親オブジェクトへのイベント通知
  */
 void Collider::HitCheck(Collider* check, bool isHit)
 {
 	if (isHit)
 	{
-		// 既に前フレームで同じ相手と衝突してぁE��かを検索
 		auto itr = std::find_if(
 			collision_list_.begin(),
 			collision_list_.end(),
@@ -38,7 +49,6 @@ void Collider::HitCheck(Collider* check, bool isHit)
 
 		if (itr != collision_list_.end())
 		{
-			// 前フレームから衝突が継続してぁE��ため、OnTrigger�E�滞在イベント）を通知
 			if (this->parent_object_ != nullptr)
 			{
 				parent_object_->OnTrigger(this, check);
@@ -46,7 +56,6 @@ void Collider::HitCheck(Collider* check, bool isHit)
 		}
 		else
 		{
-			// 新規�E衝突が発生したため、リストに登録して OnEnter�E�開始イベント）を通知
 			collision_list_.push_back(check);
 			if (this->parent_object_ != nullptr)
 			{
@@ -56,7 +65,6 @@ void Collider::HitCheck(Collider* check, bool isHit)
 	}
 	else
 	{
-		// 衝突してぁE��ぁE��合、前フレームまで衝突してぁE��か�E状態をチェチE��する
 		auto itr = std::find_if(
 			collision_list_.begin(),
 			collision_list_.end(),
@@ -65,7 +73,6 @@ void Collider::HitCheck(Collider* check, bool isHit)
 
 		if (itr != collision_list_.end())
 		{
-			// 衝突が刁E��た（離脱した�E�瞬間�Eため、OnExit�E�終亁E��ベント）を通知しリストから除外すめE
 			if (this->parent_object_ != nullptr)
 			{
 				this->parent_object_->OnExit(this, check);
@@ -75,18 +82,42 @@ void Collider::HitCheck(Collider* check, bool isHit)
 	}
 }
 
+/*
+ * デバッグ用描画のため
+ * [入力] なし
+ * [出力] なし
+ * [副作用] なし
+ */
 void Collider::Draw()
 {
 }
 
+/*
+ * 衝突開始時の処理を定義するため
+ * [入力] なし
+ * [出力] なし
+ * [副作用] なし
+ */
 void Collider::OnEnter()
 {
 }
 
+/*
+ * 衝突中の処理を定義するため
+ * [入力] なし
+ * [出力] なし
+ * [副作用] なし
+ */
 void Collider::OnTrigger()
 {
 }
 
+/*
+ * 衝突終了時の処理を定義するため
+ * [入力] なし
+ * [出力] なし
+ * [副作用] なし
+ */
 void Collider::OnExit()
 {
 }

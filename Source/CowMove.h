@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "DxLib.h"
 #include "Object3D.h"
 #include "Model.h"
@@ -9,11 +9,11 @@
 class SphereCollider;
 class CapsuleCollider;
 
-// AIによる自律移動と吸ぁE��み判定を管琁E��る基底クラス
+// AI縺ｫ繧医ｋ閾ｪ蠕狗ｧｻ蜍輔→蜷ｸ縺・ｾｼ縺ｿ蛻､螳壹ｒ邂｡逅・☆繧句渕蠎輔け繝ｩ繧ｹ
 class CowMove : public CharacterMove
 {
 public:
-	// 個別仕様�E岐�Eための牛種類識別用タグ
+	// 蛟句挨莉墓ｧ伜・蟯舌・縺溘ａ縺ｮ迚帷ｨｮ鬘櫁ｭ伜挨逕ｨ繧ｿ繧ｰ
 	enum TagCow
 	{
 		kNone,
@@ -26,10 +26,10 @@ public:
 
 public:
 	/*
-	 * @brief 初期匁E
-	 * [入力] filename: モチE��パス, initPos: 初期配置座樁E
-	 * [出力] �Ȃ�
-	 * [副作用] Effekseerエフェクト�Eインスタンス生�E
+	 * @brief 蛻晄悄蛹・
+	 * [蜈･蜉嫋 filename: 繝｢繝・Ν繝代せ, initPos: 蛻晄悄驟咲ｽｮ蠎ｧ讓・
+	 * [蜃ｺ蜉嫋 なし
+	 * [蜑ｯ菴懃畑] Effekseer繧ｨ繝輔ぉ繧ｯ繝医・繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ逕滓・
 	 */
 	CowMove(std::string filename, VECTOR initPos);
 	virtual ~CowMove();
@@ -38,10 +38,10 @@ public:
 	void Draw() override;
 
 	/*
-	 * @brief 移動�E琁E
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] 座標�E更新、AI自律移動およ�E吸引時上�E同期
+	 * @brief 遘ｻ蜍募・逅・
+	 * [蜈･蜉嫋 なし
+	 * [蜃ｺ蜉嫋 なし
+	 * [蜑ｯ菴懃畑] 蠎ｧ讓吶・譖ｴ譁ｰ縲、I閾ｪ蠕狗ｧｻ蜍輔♀繧医・蜷ｸ蠑墓凾荳頑・蜷梧悄
 	 */
 	virtual void MoveCharacter() override;
 
@@ -68,26 +68,26 @@ public:
 	virtual void OnExit(Collider* collider, Collider* check) override;
 
 	/*
-	 * @brief 限界高度到達時の消滁E�E琁E
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] スコア�E経験値の加算、エフェクト�E甁E
+	 * @brief 髯千阜鬮伜ｺｦ蛻ｰ驕疲凾縺ｮ豸域ｻ・・逅・
+	 * [蜈･蜉嫋 なし
+	 * [蜃ｺ蜉嫋 なし
+	 * [蜑ｯ菴懃畑] 繧ｹ繧ｳ繧｢・邨碁ｨ灘､縺ｮ蜉邂励√お繝輔ぉ繧ｯ繝亥・逕・
 	 */
 	virtual void CharacterDied() override;
 
 	/*
-	 * @brief 餌によるキル処琁E
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] 削除フラグの有効匁E
+	 * @brief 鬢後↓繧医ｋ繧ｭ繝ｫ蜃ｦ逅・
+	 * [蜈･蜉嫋 なし
+	 * [蜃ｺ蜉嫋 なし
+	 * [蜑ｯ菴懃畑] 蜑企勁繝輔Λ繧ｰ縺ｮ譛牙柑蛹・
 	 */
 	virtual void KilledByBait();
 
 	/*
-	 * @brief 死亡時�E共通�E琁E
-	 * [入力] reason: 死亡琁E��
-	 * [出力] �Ȃ�
-	 * [副作用] コンボ�Eスコアの計算、削除フラグの有効匁E
+	 * @brief 豁ｻ莠｡譎ゅ・蜈ｱ騾壼・逅・
+	 * [蜈･蜉嫋 reason: 豁ｻ莠｡逅・罰
+	 * [蜃ｺ蜉嫋 なし
+	 * [蜑ｯ菴懃畑] 繧ｳ繝ｳ繝懊・繧ｹ繧ｳ繧｢縺ｮ險育ｮ励∝炎髯､繝輔Λ繧ｰ縺ｮ譛牙柑蛹・
 	 */
 	virtual void Die(DeathReason reason) override;
 
@@ -97,12 +97,12 @@ public:
 	void SetColliderRadius(float radius) { collider_radius_ = radius; }
 
 protected:
-	TagCow tag_cow_;                  // 個別仕様�E岐�Eためのタグ
-	float collider_radius_ = 50.0f;      // 衝突判定用の半征E��紁E
+	TagCow tag_cow_;                  // 蛟句挨莉墓ｧ伜・蟯舌・縺溘ａ縺ｮ繧ｿ繧ｰ
+	float collider_radius_ = 50.0f;      // 陦晉ｪ∝愛螳夂畑縺ｮ蜊雁ｾ・宛邏・
 
-	EffekseerEffect* cow_vm_;           // 吸引演�E用エフェクチE
-	int effect_timer_;                   // エフェクト�E生完亁E��での征E��フレーム
-	bool tutorial_vacum_flag_;              // チュートリアル用の特別な判定フラグ
+	EffekseerEffect* cow_vm_;           // 蜷ｸ蠑墓ｼ泌・逕ｨ繧ｨ繝輔ぉ繧ｯ繝・
+	int effect_timer_;                   // 繧ｨ繝輔ぉ繧ｯ繝亥・逕溷ｮ御ｺ・∪縺ｧ縺ｮ蠕・ｩ溘ヵ繝ｬ繝ｼ繝
+	bool tutorial_vacum_flag_;              // 繝√Η繝ｼ繝医Μ繧｢繝ｫ逕ｨ縺ｮ迚ｹ蛻･縺ｪ蛻､螳壹ヵ繝ｩ繧ｰ
 };
 
 

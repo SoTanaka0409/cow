@@ -1,26 +1,26 @@
-#pragma once
+﻿#pragma once
 #include <string>
 #include <vector>
 #include "Dxlib.h"
 
-// 2D描画を行うオブジェクト�E基底クラス
+// 2D謠冗判繧定｡後≧繧ｪ繝悶ず繧ｧ繧ｯ繝医・蝓ｺ蠎輔け繝ｩ繧ｹ
 class Object2D
 {
 public:
-	// オブジェクト�E識別用タグ
+	// 繧ｪ繝悶ず繧ｧ繧ｯ繝医・隴伜挨逕ｨ繧ｿ繧ｰ
 	enum Tag2D
 	{
-		kNone2d = 0,      // 設定なぁE
+		kNone2d = 0,      // 險ｭ螳壹↑縺・
 		kTag2dDino1 = 1,
 		kTag2dDino2 = 100,
 	};
 
 public:
 	/*
-	 * @brief 2Dオブジェクトを初期座標で生�Eし、現在のアクチE��ブなオブジェクト�Eネ�Eジャーに自動登録する
-	 * [入力] initPos: 初期座樁E
-	 * [出力] �Ȃ�
-	 * [副作用] シーンのObjectManagerに自身が登録されめE
+	 * @brief 2D繧ｪ繝悶ず繧ｧ繧ｯ繝医ｒ蛻晄悄蠎ｧ讓吶〒逕滓・縺励∫樟蝨ｨ縺ｮ繧｢繧ｯ繝・ぅ繝悶↑繧ｪ繝悶ず繧ｧ繧ｯ繝医・繝阪・繧ｸ繝｣繝ｼ縺ｫ閾ｪ蜍慕匳骭ｲ縺吶ｋ
+	 * [蜈･蜉嫋 initPos: 蛻晄悄蠎ｧ讓・
+	 * [蜃ｺ蜉嫋 なし
+	 * [蜑ｯ菴懃畑] 繧ｷ繝ｼ繝ｳ縺ｮObjectManager縺ｫ閾ｪ霄ｫ縺檎匳骭ｲ縺輔ｌ繧・
 	 */
 	Object2D(VECTOR initPos);
 
@@ -31,7 +31,7 @@ public:
 	virtual void Draw();
 
 public:
-	// ゲチE��ー�EセチE��ー群
+	// 繧ｲ繝・ち繝ｼ・繧ｻ繝・ち繝ｼ鄒､
 	void SetPosition(VECTOR pos) { position_ = pos; };
 	VECTOR GetPosition() { return position_; }
 
@@ -48,11 +48,11 @@ public:
 	Tag2D GetTag() { return tag_; }
 
 protected:
-	VECTOR position_;  // 画面上�E配置座樁E
-	VECTOR rotation_;  // 回転角度
+	VECTOR position_;  // 逕ｻ髱｢荳翫・驟咲ｽｮ蠎ｧ讓・
+	VECTOR rotation_;  // 蝗櫁ｻ｢隗貞ｺｦ
 
 private:
-	bool delete_flag_;  // 削除フラグ�E�Erueでマネージャーから破棁E��れる�E�E
-	Tag2D tag_;        // オブジェクト識別タグ
-	bool draw_flag_;    // 描画を実行するかどぁE��のフラグ
+	bool delete_flag_;  // 蜑企勁繝輔Λ繧ｰ・・rue縺ｧ繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺九ｉ遐ｴ譽・＆繧後ｋ・・
+	Tag2D tag_;        // 繧ｪ繝悶ず繧ｧ繧ｯ繝郁ｭ伜挨繧ｿ繧ｰ
+	bool draw_flag_;    // 謠冗判繧貞ｮ溯｡後☆繧九°縺ｩ縺・°縺ｮ繝輔Λ繧ｰ
 };

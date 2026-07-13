@@ -1,33 +1,27 @@
-#pragma once
-
+﻿#pragma once
 #pragma warning(push)
 #pragma warning(disable : 4819)
 #include "DxLib.h"
 #pragma warning(pop)
-
 #include "Object3D.h"
 #include "Model.h"
 #include "ModelUtility.h"
-
 class SphereCollider;
 class CapsuleCollider;
 class CharacterState;
 class Player3D;
-
 enum AIState
 {
 	STATE_IDLE,
 	STATE_WALK,
 	STATE_VACUUM
 };
-
 enum DeathReason
 {
 	DEATH_VACUUM,
 	DEATH_BAIT,
 	DEATH_LIMIT
 };
-
 class CharacterMove : public Object3D
 {
 public:
@@ -35,122 +29,106 @@ public:
 	Player3D* GetTargetPlayer() const { return mpTargetPlayer; }
 	CharacterMove(std::string filename, VECTOR initPos);
 	virtual ~CharacterMove();
-
 	virtual void Update() override;
 	virtual void Draw() override;
-
 	/*
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] AI更新と壁判定を経て座標を確定すめE
+	 * キャラクターの挙動を毎フレーム反映するため。
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 座標(mvPosition)の更新
 	 */
 	virtual void MoveCharacter();
-
 	/*
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] 現在のStateのUpdateを呼び出ぁE
+	 * 状態に応じた自律移動を実現するため。
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] StateクラスのUpdate実行
 	 */
 	virtual void UpdateWanderAI();
-
 	/*
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] 壁オブジェクトとの判定を行い、mvPositionを補正する
+	 * 壁へのめり込みを防ぐため。
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] mvPositionの補正
 	 */
 	virtual void CheckWallCollision();
-
 	/*
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] コライダーの位置をモチE��に同期させめE
+	 * 当たり判定をモデルの現在位置に合わせるため。
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] コライダーの座標更新
 	 */
 	virtual void ColliderMove();
-
 	/*
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] 移動�Eクトル方向へモチE��を回転させめE
+	 * 進行方向にキャラクターを向かせるため。
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] モデルの回転角更新
 	 */
 	virtual void RotationCharacter();
-
 	/*
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] モチE��を一定速度で旋回させ続けめE
+	 * 演出としてキャラクターを旋回させるため。
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] モデルの回転角更新
 	 */
 	virtual void CharacterRotate();
-
 	virtual void CharacterDied();
-
 	/*
-	 * [入力] reason: 死亡の琁E��(DeathReason)
-	 * [出力] �Ȃ�
-	 * [副作用] 死亡演�EめE��ラグ更新を行う
+	 * キャラクターの死亡状態を確定させるため。
+	 * [入力] reason: 死亡の理由
+	 * [出力] なし
+	 * [副作用] 死亡フラグや演出の開始
 	 */
 	virtual void Die(DeathReason reason);
-
 	virtual void Reset(VECTOR pos);
 	virtual void Deactivate();
-
 	void AddAnimation(AnimationState state, std::string filename) {}
 	void SetScale(float scale);
-
 	AIState GetCurrentState() const { return mCurrentState; }
 	void SetCurrentState(AIState state) { mCurrentState = state; }
-
 	/*
+	 * 行動パターンを切り替えるため。
 	 * [入力] newState: 新しい状態クラスのポインタ
-	 * [出力] �Ȃ�
-	 * [副作用] 古いStateを破棁E��、新しいStateに移行すめE
+	 * [出力] なし
+	 * [副作用] 古いStateの破棄と新しいStateへの移行
 	 */
 	void ChangeState(CharacterState* newState);
-
 	/*
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] 状態を吸引中(STATE_VACUUM)に変更する
+	 * プレイヤーに吸い込まれる挙動を開始するため。
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] mCurrentStateをSTATE_VACUUMに変更
 	 */
 	void ChangeStateToVacuum();
-
 	void SetActionTimer(int timer) { mActionTimer = timer; }
 	void DecreaseActionTimer() { mActionTimer--; }
 	int GetActionTimer() const { return mActionTimer; }
-
 	void SetMoveVec(VECTOR vec) { moveVec = vec; }
 	VECTOR GetMoveVec() const { return moveVec; }
 	float GetSpeed() const { return mfSpeed; }
-
 	void IncreaseVacuumTimer() { mVacuumTimer++; }
 	void ResetVacuumTimer() { mVacuumTimer = 0; }
 	int GetVacuumTimer() const { return mVacuumTimer; }
-
 	bool GetBaitFlag() const { return mbBaitFlag; }
 	bool GetCharacterDelete() const { return mDeleteFlag; }
-
 protected:
 	Player3D* mpTargetPlayer = nullptr;
 	Model* model_;
-
 	AIState mCurrentState;
 	CharacterState* mpCurrentState;
-
 	int mActionTimer;
 	float mfSpeed;
-
 	float target_angle_;
 	float angle_;
 	const float kRotateSpeed = 0.2f;
-
 	VECTOR UpMoveVector;
 	VECTOR moveVec;
 	VECTOR oldmoveVec;
 	VECTOR hitPos;
-
 	int mVacuumTimer;
 	bool mDeleteFlag;
 	float death_timer_;
-
 	float mfScore;
 	float mfXp;
 	bool mbBaitFlag;

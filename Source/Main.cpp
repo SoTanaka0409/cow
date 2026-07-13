@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+ï»¿#include "ServiceLocator.h"
 #include "DxLib.h"
 #include"Master.h"
 #include"Camera.h"
@@ -32,47 +32,45 @@ bool Master::tutorial_vacum_flag_ = false;
 bool Master::FeverFlag = false;
 float Master::mfDeltaTime = 0.01666f;
 
-VECTOR Utility::StageSize= VGet(6000, 0, 6000); // 3D‹óŠÔ?E?E??§?E??‚µ‚ÄƒXƒ`E?EƒWƒTƒCƒY‚ğ’è‹`
+// ä»•æ§˜åˆ¶ç´„ï¼šãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚„ç‰›ãŒã‚¹ãƒ†ãƒ¼ã‚¸å¤–ã¸é£›ã³å‡ºã•ãªã„ã‚ˆã†ã€ä¾µå…¥åˆ¶é™ã‚’ã‹ã‘ã‚‹ãŸã‚ã®å¢ƒç•Œå€¤
+VECTOR Utility::StageSize = VGet(6000, 0, 6000);
 
-/*
- * @brief ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ÌƒGƒ“ƒgƒŠ[ƒ|ƒCƒ“ƒ`E
- * [“ü—Í] hInstance, hPrevInstance, lpCmdLine, nCmdShow
- * [o—Í] I?E??[ƒ`E(³íI?E??‚Í0, ƒGƒ‰[?E-1)
- * [•›ì—p] ƒQ[ƒ€ƒEƒBƒ“ƒhƒE‚Ì‹N“®AƒVƒXƒ`E??‰Šú‰»AƒƒCƒ“ƒ‹[ƒvÀsA?EƒŠƒ\[ƒX‚Ì‰ğ•ú
- */
+// å…¥åŠ›ï¼šWindowsã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³èµ·å‹•ç”¨ã®åŸºæœ¬ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æƒ…å ±
+// å‡ºåŠ›ï¼šæ­£å¸¸çµ‚äº†æ™‚ã¯0ã€ã‚¨ãƒ©ãƒ¼æ™‚ã¯-1
+// å‰¯ä½œç”¨ï¼šã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ç”Ÿæˆã€å„ç¨®ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼åˆæœŸåŒ–ã€ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—èµ·å‹•ã€ãƒ¡ãƒ¢ãƒªè§£æ”¾
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	// ƒ`Eƒ`E‚ßEì‹Æ‚Ì•Às‚ğ—eˆÕ‚É‚·‚é‚½‚ßƒEƒBƒ“ƒhƒEƒ‚[ƒh‚Å‹N™¤E
+	// è¤‡æ•°ç«¯æœ«ã§ã®ãƒ†ã‚¹ãƒˆã‚„ãƒ‡ãƒãƒƒã‚°åŠ¹ç‡åŒ–ã®ãŸã‚ã€ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã§ã¯ãªãã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ¢ãƒ¼ãƒ‰ã§èµ·å‹•ã™ã‚‹
 	ChangeWindowMode(true);
 
 	SetGraphMode(Utility::kScreenWidth, Utility::kScreenHeight, 32, 60);
 	SetWindowSize(Utility::kScreenWidth, Utility::kScreenHeight);
-	
-	SetDoubleStartValidFlag(TRUE); // “ñd‹N“®‚ğ‹–‰Â‚·‚éi•s³‚Èƒ~ƒ…[ƒeƒbƒNƒXc‘¶‚É‚æ‚é‘¦—‚¿‚ğ–h‚®‚½‚ßj
 
-	// DxLib‚Ì‰Šú‰»ƒGƒ‰[EÀsŒp‘±•s‰Â‚Ì‚½‚ß‘¦I?E
+	// å‰å›ã®ä¸æ­£çµ‚äº†æ™‚ã«å†…éƒ¨ãƒŸãƒ¥ãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ãŒæ®‹ã‚Šã€ãƒ—ãƒ­ã‚»ã‚¹ãŒå³è½ã¡ã™ã‚‹ãƒã‚°ã‚’å›é¿ã™ã‚‹è¨­å®š
+	SetDoubleStartValidFlag(TRUE);
+
 	if (DxLib_Init() == -1)
 	{
 		return -1;
 	}
 
-	Master::mpScore = new Score(); // DxLib‰Šú‰»‘O‚¾‚Æ‰æ‘œ“Ç‚İ‚İ‚ª¸”s‚·‚é§?E‚ ‚é‚½‚ß‚±‚±‚Å¶E
+	// ä»•æ§˜åˆ¶ç´„ï¼šå†…éƒ¨ã§ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿ã‚’è¡Œã†ãŸã‚ã€DxLibã®åˆæœŸåŒ–ãŒå®Œäº†ã—ãŸå¾Œã«ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–ã™ã‚‹
+	Master::mpScore = new Score();
 
 	SRand(GetNowCount());
 
 	SetGlobalAmbientLight(GetColorF(0.4f, 0.4f, 0.4f, 1.0f));
-	
+
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	SetUseZBufferFlag(true);
 	SetWriteZBufferFlag(true);
 
-	Master::mpSoundManager->Initialize(); // Ä¶“ÙE??‚ğ–h‚®‚½‚ß?E‰¹Œ¹ƒf[ƒ^‚ğ?EƒŠƒ[ƒh‚·‚ßE
+	// ãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹ç†ç”±ï¼šã‚²ãƒ¼ãƒ ä¸­ã®ãƒ­ãƒ¼ãƒ‰é…å»¶ã«ã‚ˆã‚‹ã‚¹ãƒ‘ã‚¤ã‚¯ã‚’é˜²ããŸã‚ã€åˆæœŸåŒ–æ™‚ã«å…¨SEã‚’ãƒ—ãƒªãƒ­ãƒ¼ãƒ‰ã™ã‚‹
+	Master::mpSoundManager->Initialize();
 
-	// ‰ŠúƒV[ƒ“‚ğ\’z‚·‚ßE
 	Master::mpSceneManager->Initialize();
-	
-	// •`‰æ—p‚Ì™ÜE??ƒƒ‰‚ğ?EŠú‰»‚·‚é
+
 	Master::camera_->Initialize();
 	Master::mpDebugCamera->Initialize();
 
@@ -82,15 +80,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
-		// ‘OƒtƒŒ[ƒ€‚Ì•`‰æ‚ğƒNƒŠƒA‚µ‚ÄV‹K•`‰æ‚Ì€”õ
 		ClearDrawScreen();
 		int time = GetNowCount();
 
+		// ãƒã‚°å›é¿ï¼šã‚¢ãƒ—ãƒªã®æœ€å°åŒ–ã‚„ä¸€æ™‚çš„ãªãƒ•ãƒªãƒ¼ã‚ºã§ãƒ‡ãƒ«ã‚¿ã‚¿ã‚¤ãƒ ãŒç•°å¸¸å€¤ã«ãªã‚Šã€æŒ™å‹•ãŒç ´ç¶»ã™ã‚‹ã®ã‚’é˜²ãä¸Šé™è¨­å®š
 		Master::mfDeltaTime = (time - previousTime) / 1000.0f;
 		if (Master::mfDeltaTime > 0.1f) Master::mfDeltaTime = 0.1f;
 		previousTime = time;
 
-		// ŠJ”­Œø?E??‚Ì‚½‚ßF1ƒL[‚Åƒ`E??ƒ`E??ƒJƒƒ‰‚ğƒgƒOƒ‹
+		// é–‹ç™ºåŠ¹ç‡åŒ–ã®ãŸã‚ã€F1ã‚­ãƒ¼ã®ãƒˆã‚°ãƒ«å…¥åŠ›ã§ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼è¦–ç‚¹ã¨è‡ªç”±ã‚«ãƒ¡ãƒ©è¦–ç‚¹ã‚’åˆ‡ã‚Šæ›¿ãˆå¯èƒ½ã«ã™ã‚‹
 		if (InputManager::CheckDownKey(KEY_INPUT_F1))
 		{
 			Master::mbIsDebugCamera = !Master::mbIsDebugCamera;
@@ -101,27 +99,27 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		if (Master::mbIsDebugCamera) {
 			Master::mpDebugCamera->Update();
-		} else {
+		}
+		else {
 			Master::camera_->Update();
 		}
 
 		Master::mpEffectManager->Update();
 
 		Master::mpSceneManager->Update();
-		
+
 		Master::mpSceneManager->Draw();
-		
+
 		Master::mpEffectManager->Draw();
 
-		// •`‰æ‚Ì‚¿‚ç‚Â‚«‚ğ–h‚®‚½‚ßƒtƒŠƒ`E?E‚·‚é
 		ScreenFlip();
 
-		// ŒÅ’èƒtƒŒ[ƒ€ƒŒ[ƒ`E60FPS)ˆÛ?E‚½‚ßªE??E
+		// ãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹ç†ç”±ï¼šCPUã®ãƒã‚¤ãƒ‘ãƒ¼ãƒˆãƒ¬ãƒƒãƒ‡ã‚£ãƒ³ã‚°ã«ã‚ˆã‚‹éè² è·ã‚’é˜²ãã€60FPSï¼ˆç´„16.6msï¼‰ã‚’ç¶­æŒã™ã‚‹å¾…æ©Ÿå‡¦ç†
 		while (GetNowCount() - time < 17)
 		{
 		}
 
-		// ƒƒ‚ƒŠƒŠ[ƒN‚ğ–h‚®‚½‚ß”j?E??‹?E‚ ‚éƒIƒuƒWƒFƒNƒg‚ğ‰ğ•ú
+		// ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯å›é¿ï¼šå‰Šé™¤ãƒ•ãƒ©ã‚°ãŒç«‹ã£ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨å½“ãŸã‚Šåˆ¤å®šã‚’ã€ãƒ•ãƒ¬ãƒ¼ãƒ çµ‚äº†æ™‚ã«å®‰å…¨ã«ä¸€æ‹¬è§£æ”¾ã™ã‚‹
 		if (auto scene = ServiceLocator::GetCurrentScene())
 		{
 			scene->GetCollisionManager()->DeleteAllColliderIfNeeded();
@@ -131,10 +129,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			objMgr->DeleteAll3DIfNeeded();
 		}
 
-		// ƒtƒŒ[ƒ€I?E??‚ÉˆÀ?E‚ÉƒV[ƒ“‘JˆÚ‚ğs‚¤
+		// ãƒã‚°å›é¿ï¼šUpdateã‚„Drawã®å‡¦ç†é€”ä¸­ã§è§£æ”¾ãŒèµ°ã‚‹ã®ã‚’é˜²ããŸã‚ã€å¿…ãšãƒ•ãƒ¬ãƒ¼ãƒ ã®æœ€å¾Œã§ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆã‚’è¡Œã†
 		Master::mpSceneManager->ChangeSceneIfNeeded();
 	}
-	// ƒAƒvƒŠƒP[ƒVƒ‡ƒ“I?E??”º‚ŸE??ƒ\[ƒX‰ğ•ú
+
 	Master::mpSceneManager->Finalize();
 	delete Master::mpSceneManager;
 	Master::mpSoundManager->Finalize();
@@ -145,12 +143,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	delete Master::mpResourceManager;
 
 	ColliderManager::GetInstance()->Finalize();
-	
+
 	Effkseer_End();
 
 	delete Master::mpScore;
 
-	DxLib_End(); // DxLib‚Ì?E??ƒŠƒ\[ƒX‚ğ‰ğ•ú
+	DxLib_End();
 
 	return 0;
 }

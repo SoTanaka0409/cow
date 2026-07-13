@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+﻿#include "ServiceLocator.h"
 #include "Bait.h"
 #include "Model.h"
 #include "CapsuleCollider.h"
@@ -9,6 +9,12 @@
 #include "SceneManager.h"
 #include "ObjectManager.h"
 
+/*
+ * 牛を引き寄せるための餌オブジェクトを初期化する
+ * [入力] filename: モデルのファイルパス, pos: 初期座標
+ * [出力] なし
+ * [副作用] GameTimerとモデルを生成し、吸引コライダーのサイズを設定する
+ */
 Bait::Bait(std::string filename, VECTOR pos)
 	: Object3D(pos)
 {
@@ -21,6 +27,12 @@ Bait::Bait(std::string filename, VECTOR pos)
 	capsule_collider_->radius_ = 1500.0f;
 }
 
+/*
+ * メモリリークを防ぐため、動的確保したリソースを解放する
+ * [入力] なし
+ * [出力] なし
+ * [副作用] model_ と game_timer_ のメモリが解放される
+ */
 Bait::~Bait()
 {
 	if (model_ != nullptr)
@@ -35,11 +47,23 @@ Bait::~Bait()
 	}
 }
 
+/*
+ * 餌モデルの描画を行う
+ * [入力] なし
+ * [出力] なし
+ * [副作用] なし
+ */
 void Bait::Draw()
 {
 	model_->Draw();
 }
 
+/*
+ * 餌の落下と一定時間経過後の牛のキル判定を行う
+ * [入力] なし
+ * [出力] なし
+ * [副作用] タイマー終了時、範囲内の牛を死亡させて自身を破棄する
+ */
 void Bait::Update()
 {
 	model_->Update();
@@ -71,6 +95,12 @@ void Bait::Update()
 	model_->SetPosition(position_);
 }
 
+/*
+ * コライダー侵入時に牛をキルする処理
+ * [入力] collider: 自身のコライダー, check: 侵入した相手のコライダー
+ * [出力] なし
+ * [副作用] タイマー終了後かつ相手が牛の場合、牛を死亡させる
+ */
 void Bait::OnEnter(Collider* collider, Collider* check)
 {
 	if (collider == capsule_collider_ && check->parent_object_ != nullptr)

@@ -1,6 +1,11 @@
-#include "DxLib.h"
+﻿#include "DxLib.h"
 #include "ModelAnimation.h"
 
+/*
+ * 入力: ModelHandle (管理対象となる3Dモデルのハンドル)
+ * 出力: なし
+ * 副作用: アニメーション変数の初期化、ルートボーンのローカル座標固定
+ */
 ModelAnimation::ModelAnimation(int ModelHandle)
 	: model_handle_(ModelHandle)
 	, mfAnimationTime(0.0f)
@@ -14,7 +19,8 @@ ModelAnimation::ModelAnimation(int ModelHandle)
 	, mnLoopFinishState(AnimationState::kAnimationMax)
 	, mbLoopFinish(false)
 {
-	// 繝ｫ繝ｼ繝医ヵ繝ｬ繝ｼ繝縺檎ｧ�E�蜍輔い繝九Γ繝ｼ繧�E�繝ｧ繝ｳ縺�E�蜍晄焔縺�E�蜍輔＞縺�E�縺壹�E�縺�E�縺�E�E�縺�E√Ο繝ｼ繧�E�繝ｫ陦悟�E繧貞崋螳壹☁E���E
+	// アニメーション再生時にモデルの基準座標が勝手に移動してしまう(ルートモーションの暴走)のを防ぐため、
+	// "root"ボーンのローカル行列を初期状態に完全固定する
 	int moveAnimFrameIndex = MV1SearchFrame(model_handle_, "root");
 	MV1SetFrameUserLocalMatrix(
 		model_handle_,
@@ -29,9 +35,14 @@ ModelAnimation::~ModelAnimation()
 {
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: ブレンド率の更新、再生時間の進行、DxLib側へのアニメーション適用
+ */
 void ModelAnimation::Update()
 {
-	// 繧�E�繝九Γ繝ｼ繧�E�繝ｧ繝ｳ驕ｷ遘ｻ譎ゅ�E繝悶Ξ繝ｳ繝�E紫繧�E繝輔Ξ繝ｼ繝縺斐�E縺�E�騾�E�陦後！E��帙ａE
+	// 状態遷移時にモーションが瞬間的に切り替わりカクつくのを防ぐため、0.1(10フレーム)掛けて滑らかにブレンドする
 	if (mfAnimBlendRate < 1.0f)
 	{
 		mfAnimBlendRate += 0.1f;
@@ -52,13 +63,15 @@ void ModelAnimation::Update()
 		{
 			if (!mbLoop)
 			{
-				// 髱槭Ν繝ｼ繝励ぁE��九Γ繝ｼ繧�E�繝ｧ繝ｳ縺檎ｵめE���E�E�縺溷�E��E�蜷医∵�E��E�縺�E�謖�E�E�夐�E遘ｻ蜈医′縺�E�縺代�E�縺�E�繧�E�繝九Γ繝ｼ繧�E�繝ｧ繝ｳ譎る俣繧呈ｭ�E�繧√ａE
+				// 非ループ(単発)アニメーション終了時、自動的に待機状態などへシームレスに遷移させるための処理
 				if (mnLoopFinishState == kAnimationMax)
 				{
 					mbLoopFinish = true;
 					return;
 				}
 				ChangeAnimation(mnLoopFinishState);
+
+				// 終了から次状態への遷移時は、不自然な逆再生ブレンドが起きないよう即座に切り替える
 				SetAnimationBlend(false);
 				fAnimTotaltime = MV1GetAttachAnimTotalTime(model_handle_, mnAnimationIndex);
 			}
@@ -78,14 +91,19 @@ void ModelAnimation::Update()
 			mfOldAnimationTime = 0.0f;
 		}
 
-		// 蜿�E�縺�EぁE��九Γ繝ｼ繧�E�繝ｧ繝ｳ縺�E�繝悶Ξ繝ｳ繝�E紫繧剁E��九￡縺�E�縺�E″縲∵怙邨ら噪縺�E�繝輔ぉ繝ｼ繝峨ぁE���E�繝医�E�E��帙ａE
+		// 新旧2つのアニメーションの合成比率を常に合計100%に保ち、モデルが縮んだり破綻したりするのを防ぐ
 		MV1SetAttachAnimBlendRate(model_handle_, mnOldAnimationIndex, 1.0f - mfAnimBlendRate);
 	}
 }
 
+/*
+ * 入力: state (遷移先のアニメーション状態), index (未使用)
+ * 出力: なし
+ * 副作用: 古いアニメーションの破棄と、新規アニメーションのアタッチ
+ */
 void ModelAnimation::ChangeAnimation(AnimationState state, int index)
 {
-	// 譌｢縺�E�蜷後§繧�E�繝九Γ繝ｼ繧�E�繝ｧ繝ｳ縺碁�E謚槭�E�E��後※縺�E�E�蝣�E�蜷医�E辟｡鬧�E↑繝�Eち繝�Eメ繝ｻ繧�E�繧�E�繝�Eメ繧帝∩縺代�E�E
+	// 既に同じ状態だった場合、再生位置が0にリセットされてモーションが初期化されるバグを防ぐ
 	if (mnState == state)
 	{
 		return;
@@ -96,7 +114,7 @@ void ModelAnimation::ChangeAnimation(AnimationState state, int index)
 	mnLoopFinishState = AnimationState::kAnimationMax;
 	mbLoopFinish = false;
 
-	// 蜿�E�縺吶℁E��九い繝九Γ繝ｼ繧�E�繝ｧ繝ｳ繝上Φ繝峨Ν縺梧�E�九▲縺�E�縺�E�E�蝣�E�蜷医�E螳悟�E縺�E�蛻�E�E�髮�E�縺�E
+	// DxLibのアタッチ上限(VRAM圧迫やブレンド計算破綻)を防ぐため、2世代前のアニメーションは完全に破棄する
 	if (mnOldAnimationIndex != -1)
 	{
 		MV1DetachAnim(model_handle_, mnOldAnimationIndex);
@@ -110,6 +128,11 @@ void ModelAnimation::ChangeAnimation(AnimationState state, int index)
 	mfAnimationTime = 0.0f;
 }
 
+/*
+ * 入力: isblend (ブレンドを有効にするか)
+ * 出力: なし
+ * 副作用: ブレンド率の強制上書きおよび旧アニメーションのデタッチ
+ */
 void ModelAnimation::SetAnimationBlend(bool isblend)
 {
 	if (isblend)
@@ -118,7 +141,7 @@ void ModelAnimation::SetAnimationBlend(bool isblend)
 	}
 	else
 	{
-		// 繝悶Ξ繝ｳ繝峨�E�縺�E�縺�E�E��E�蜷医�E蜊ｳ蠎ｧ縺�E�譁E��隕上い繝九Γ繝ｼ繧�E�繝ｧ繝ｳ縺�E�螳悟�E蛻�E�E�譖ｿ縺医☁E���E
+		// ダメージ時や死亡時など、モーションの滑らかさよりも即時性を優先すべき演出のためにブレンドを完全カットする
 		mfAnimBlendRate = 1.0f;
 
 		if (mnOldAnimationIndex != -1)
@@ -128,4 +151,3 @@ void ModelAnimation::SetAnimationBlend(bool isblend)
 		}
 	}
 }
-

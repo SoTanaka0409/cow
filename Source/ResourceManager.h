@@ -1,16 +1,16 @@
-#pragma once
+﻿#pragma once
 #include <vector>
 #include <string>
 #include"Dxlib.h"
 
-// 刁E��画像�E読み込みチE�Eタおよびリソースハンドル惁E��を保持する構造佁E
+// 蛻・牡逕ｻ蜒上・隱ｭ縺ｿ霎ｼ縺ｿ繝・・繧ｿ縺翫ｈ縺ｳ繝ｪ繧ｽ繝ｼ繧ｹ繝上Φ繝峨Ν諠・ｱ繧剃ｿ晄戟縺吶ｋ讒矩菴・
 struct DivGraphData
 {
-	std::string file_path_;	// 画像アセチE��のファイルパス
-	int* div_handle_list_;		// 刁E��ロードされたグラフィチE��ハンドルの配�E
-	int div_x_;				// 水平方向�E刁E��数
-	int div_y_;				// 垂直方向�E刁E��数
-	int all_num_;				// 刁E��画像�E総数
+	std::string file_path_;	// 逕ｻ蜒上い繧ｻ繝・ヨ縺ｮ繝輔ぃ繧､繝ｫ繝代せ
+	int* div_handle_list_;		// 蛻・牡繝ｭ繝ｼ繝峨＆繧後◆繧ｰ繝ｩ繝輔ぅ繝・け繝上Φ繝峨Ν縺ｮ驟榊・
+	int div_x_;				// 豌ｴ蟷ｳ譁ｹ蜷代・蛻・牡謨ｰ
+	int div_y_;				// 蝙ら峩譁ｹ蜷代・蛻・牡謨ｰ
+	int all_num_;				// 蛻・牡逕ｻ蜒上・邱乗焚
 
 	DivGraphData(
 		std::string file_path_,
@@ -28,11 +28,11 @@ struct DivGraphData
 
 	~DivGraphData()
 	{
-		delete[] div_handle_list_; // 動的確保されたグラフィチE��ハンドル配�Eの解放漏れを防ぁE
+		delete[] div_handle_list_; // 蜍慕噪遒ｺ菫昴＆繧後◆繧ｰ繝ｩ繝輔ぅ繝・け繝上Φ繝峨Ν驟榊・縺ｮ隗｣謾ｾ貍上ｌ繧帝亟縺・
 	}
 };
 
-// 3DモチE��めEDチE��スチャアセチE��の二重ロードを防止し、一括管琁E��る�Eネ�Eジャークラス
+// 3D繝｢繝・Ν繧・D繝・け繧ｹ繝√Ε繧｢繧ｻ繝・ヨ縺ｮ莠碁㍾繝ｭ繝ｼ繝峨ｒ髦ｲ豁｢縺励∽ｸ諡ｬ邂｡逅・☆繧九・繝阪・繧ｸ繝｣繝ｼ繧ｯ繝ｩ繧ｹ
 class ResourceManager
 {
 public:
@@ -40,41 +40,41 @@ public:
 	~ResourceManager();
 
 	/*
-	 * @brief 3DモチE��ファイルをキャチE��ュ読み込みする�E�二重ロード時は褁E��モチE��を返す�E�E
-	 * [入力] pathName: アセチE��ファイルパス
-	 * [出力] 褁E��されたモチE��ハンドル�E�エラー時�E -1�E�E
-	 * [副作用] 新規ロード時はresourceMapListにオリジナルハンドルを追加登録
+	 * @brief 3D繝｢繝・Ν繝輔ぃ繧､繝ｫ繧偵く繝｣繝・す繝･隱ｭ縺ｿ霎ｼ縺ｿ縺吶ｋ・井ｺ碁㍾繝ｭ繝ｼ繝画凾縺ｯ隍・｣ｽ繝｢繝・Ν繧定ｿ斐☆・・
+	 * [蜈･蜉嫋 pathName: 繧｢繧ｻ繝・ヨ繝輔ぃ繧､繝ｫ繝代せ
+	 * [蜃ｺ蜉嫋 隍・｣ｽ縺輔ｌ縺溘Δ繝・Ν繝上Φ繝峨Ν・医お繝ｩ繝ｼ譎ゅ・ -1・・
+	 * [蜑ｯ菴懃畑] 譁ｰ隕上Ο繝ｼ繝画凾縺ｯresourceMapList縺ｫ繧ｪ繝ｪ繧ｸ繝翫Ν繝上Φ繝峨Ν繧定ｿｽ蜉逋ｻ骭ｲ
 	 */
 	int LoadModel(std::string pathName);
 	void PreloadModel(std::string pathName);
 
 	/*
-	 * @brief 2D画像ファイルをキャチE��ュ読み込みする�E�二重ロード時は既存�Eハンドルを返す�E�E
-	 * [入力] pathName: アセチE��ファイルパス
-	 * [出力] 画像グラフィチE��ハンドル�E�エラー時�E -1�E�E
-	 * [副作用] 新規ロード時はgraphicResourceMapListに登録
+	 * @brief 2D逕ｻ蜒上ヵ繧｡繧､繝ｫ繧偵く繝｣繝・す繝･隱ｭ縺ｿ霎ｼ縺ｿ縺吶ｋ・井ｺ碁㍾繝ｭ繝ｼ繝画凾縺ｯ譌｢蟄倥・繝上Φ繝峨Ν繧定ｿ斐☆・・
+	 * [蜈･蜉嫋 pathName: 繧｢繧ｻ繝・ヨ繝輔ぃ繧､繝ｫ繝代せ
+	 * [蜃ｺ蜉嫋 逕ｻ蜒上げ繝ｩ繝輔ぅ繝・け繝上Φ繝峨Ν・医お繝ｩ繝ｼ譎ゅ・ -1・・
+	 * [蜑ｯ菴懃畑] 譁ｰ隕上Ο繝ｼ繝画凾縺ｯgraphicResourceMapList縺ｫ逋ｻ骭ｲ
 	 */
 	int LoadGraphics(std::string pathName);
 	void PreloadGraphics(std::string pathName);
 
 	/*
-	 * @brief 刁E��画像ファイルをキャチE��ュ読み込みし、�E割チE�Eタ構造体を返す
-	 * [入力] pathName: アセチE��ファイルパス, all_num_: 刁E��総数, numX: 横刁E��数, numY: 縦刁E��数
-	 * [出力] 刁E��画像データ構造体へのポインタ�E�エラー時�E nullptr�E�E
-	 * [副作用] 新規ロード時はdivGraphicResourceMapListに構造体を追加登録
+	 * @brief 蛻・牡逕ｻ蜒上ヵ繧｡繧､繝ｫ繧偵く繝｣繝・す繝･隱ｭ縺ｿ霎ｼ縺ｿ縺励∝・蜑ｲ繝・・繧ｿ讒矩菴薙ｒ霑斐☆
+	 * [蜈･蜉嫋 pathName: 繧｢繧ｻ繝・ヨ繝輔ぃ繧､繝ｫ繝代せ, all_num_: 蛻・牡邱乗焚, numX: 讓ｪ蛻・牡謨ｰ, numY: 邵ｦ蛻・牡謨ｰ
+	 * [蜃ｺ蜉嫋 蛻・牡逕ｻ蜒上ョ繝ｼ繧ｿ讒矩菴薙∈縺ｮ繝昴う繝ｳ繧ｿ・医お繝ｩ繝ｼ譎ゅ・ nullptr・・
+	 * [蜑ｯ菴懃畑] 譁ｰ隕上Ο繝ｼ繝画凾縺ｯdivGraphicResourceMapList縺ｫ讒矩菴薙ｒ霑ｽ蜉逋ｻ骭ｲ
 	 */
 	DivGraphData* LoadDivGraphics(std::string pathName, int all_num_, int numX, int numY);
 
 	/*
-	 * @brief キャチE��ュ管琁E��れてぁE��リソースの総数を取得すめE
-	 * [入力] �Ȃ�
-	 * [出力] 登録されてぁE��リソースの合計数
-	 * [副作用] �Ȃ�
+	 * @brief 繧ｭ繝｣繝・す繝･邂｡逅・＆繧後※縺・ｋ繝ｪ繧ｽ繝ｼ繧ｹ縺ｮ邱乗焚繧貞叙蠕励☆繧・
+	 * [蜈･蜉嫋 なし
+	 * [蜃ｺ蜉嫋 逋ｻ骭ｲ縺輔ｌ縺ｦ縺・ｋ繝ｪ繧ｽ繝ｼ繧ｹ縺ｮ蜷郁ｨ域焚
+	 * [蜑ｯ菴懃畑] なし
 	 */
 	int GetTotalResource() { return static_cast<int>(resource_map_list_.size() + graphic_resource_map_list_.size() + div_graphic_resource_map_list_.size()); }
 
 private:
-	std::vector<std::pair<std::string, int>> resource_map_list_;			// キャチE��ュ管琁E��モチE��アセチE��リスチE(パス名とオリジナルハンドルのペア)
-	std::vector<std::pair<std::string, int>> graphic_resource_map_list_;	// キャチE��ュ管琁E��2DグラフィチE��リスチE
-	std::vector<DivGraphData*> div_graphic_resource_map_list_;				// キャチE��ュ管琁E��刁E��画像データリスチE
+	std::vector<std::pair<std::string, int>> resource_map_list_;			// 繧ｭ繝｣繝・す繝･邂｡逅・畑繝｢繝・Ν繧｢繧ｻ繝・ヨ繝ｪ繧ｹ繝・(繝代せ蜷阪→繧ｪ繝ｪ繧ｸ繝翫Ν繝上Φ繝峨Ν縺ｮ繝壹い)
+	std::vector<std::pair<std::string, int>> graphic_resource_map_list_;	// 繧ｭ繝｣繝・す繝･邂｡逅・畑2D繧ｰ繝ｩ繝輔ぅ繝・け繝ｪ繧ｹ繝・
+	std::vector<DivGraphData*> div_graphic_resource_map_list_;				// 繧ｭ繝｣繝・す繝･邂｡逅・畑蛻・牡逕ｻ蜒上ョ繝ｼ繧ｿ繝ｪ繧ｹ繝・
 };

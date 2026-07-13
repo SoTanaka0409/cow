@@ -1,5 +1,11 @@
-#include "EffectManager.h"
+﻿#include "EffectManager.h"
 
+/*
+ * Effekseerの初期化処理を呼び出す
+ * [入力] なし
+ * [出力] なし
+ * [副作用] メンバ変数の初期化、Effekseer初期化
+ */
 EffectManager::EffectManager()
 	: effect_resource_handle_(-1)
 	, playing_effect_handle_(-1)
@@ -11,36 +17,51 @@ EffectManager::~EffectManager()
 {
 }
 
+/*
+ * 描画デバイスの設定とEffekseerの起動を行う
+ * [入力] なし
+ * [出力] なし
+ * [副作用] Effekseerのシステムが初期化される
+ */
 void EffectManager::Initalize()
 {
-	// DXライブラリ側でDirect3D11を使用するように設定する！Effekseerの要求仕様！E
+	// Effekseerの要求仕様に合わせてDirect3D11を使用する
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
 
-	// 表示可能なパ�EチE��クルの最大数を指定して、EffekseerシスチE��を�E期化する
 	if (Effekseer_Init(kEffectParticleLimit) == -1)
 	{
 		DxLib_End();
 	}
 
-	// 画面モード�E替�E�ウィンドウ/フルスクリーン�E�時、EffekseerのグラフィチE��スチE��イスリセチE��を防ぁE
+	// 画面モード切替時のデバイスリセットによるリソース喪失を防ぐ
 	SetChangeScreenModeGraphicsSystemResetFlag(FALSE);
 
-	// DXライブラリでのチE��イス喪失�E復帰とEffekseerの冁E��リソース再生成を結�Eつけるコールバックを設定すめE
+	// デバイス喪失からの復帰時にEffekseerのリソースを再生成させる
 	Effekseer_SetGraphicsDeviceLostCallbackFunctions();
 
-	// 3Dエフェクト描画時に前後関係（深度値�E�が正しく老E�EされるよぁE��Zバッファ処琁E��有効にする
+	// 3Dエフェクト描画時に前後関係が正しく反映されるようZバッファを有効にする
 	SetUseZBuffer3D(TRUE);
 	SetWriteZBuffer3D(TRUE);
 }
 
+/*
+ * 再生中の全エフェクトの状態を更新する
+ * [入力] なし
+ * [出力] なし
+ * [副作用] エフェクトのアニメーションが進む
+ */
 void EffectManager::Update()
 {
-	// 毎フレーム呼び出し、現在再生中の全Effekseer3Dエフェクト�EアニメーションスチE��プを進める
 	UpdateEffekseer3D();
 }
 
+/*
+ * 空間上に存在する全てのエフェクトを描画する
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 画面にエフェクトが描画される
+ */
 void EffectManager::Draw()
 {
-	// 再生中かつ画面冁E��収まるEffekseerエフェクトを3D描画パスへ送る
 	DrawEffekseer3D();
 }

@@ -1,33 +1,46 @@
-#pragma once
+﻿#pragma once
 #include "DxLib.h"
 #include "Object3D.h"
 #include <vector>
 
-// ゲーム冁E�E壁E���E�四角形ポリゴン�E�を生�E�E描画するクラス
+// 空間の区切りや衝突判定の基準として扱うため
 class Wall : public Object3D
 {
 public:
 	/*
-	 * @brief 壁E��のチE��スチャ画像と篁E��パラメータを設定して初期化すめE
-	 * [入力] filename: チE��スチャ画像へのパス, centerPos: 壁�E中�K�v��樁E topLeft: 左上�E相対座樁E bottomRight: 右下�E相対座樁E
-	 * [出力] �Ȃ�
-	 * [副作用] チE��スチャがロード時にロードされ、E��点バッファ(vertex_)が設定される
+	 * 描画用リソースと空間内の配置位置を初期化するため
+	 * [入力] filename: 画像パス, centerPos: 中心座標, topLeft: 左上相対位置, bottomRight: 右下相対位置
+	 * [出力] なし
+	 * [副作用] 画像メモリの確保と頂点配列の構築を行う
 	 */
 	Wall(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight);
 	virtual ~Wall();
 
+	/*
+	 * 壁の動的な状態変化を毎フレーム反映させるため
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 状態変数を更新する
+	 */
 	void Update() override;
+
+	/*
+	 * プレイヤーに壁の存在を視覚的に伝えるため
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 画面にポリゴンを描画する
+	 */
 	void Draw() override;
 
 	/*
-	 * @brief 壁を構�Eする4つの頂点チE�Eタを取得すめE
-	 * [入力] �Ȃ�
-	 * [出力] VERTEX3D構造体�Eベクター
-	 * [副作用] �Ȃ�
+	 * 外部クラスが壁との当たり判定を計算できるようにするため
+	 * [入力] なし
+	 * [出力] 壁を構成する4つの頂点データ
+	 * [副作用] なし
 	 */
 	std::vector<VERTEX3D> GetVertex();
 
 private:
-	int graph_handle_;      // 壁テクスチャのグラフィチE��ハンドル
-	VERTEX3D vertex_[4];    // 壁E��を構�Eする4つの頂点チE�Eタ
+	int graph_handle_;
+	VERTEX3D vertex_[4];
 };

@@ -1,10 +1,10 @@
-#ifndef _TEXTURE_H_
+﻿#ifndef _TEXTURE_H_
 #define _TEXTURE_H_
 
 #include <string>
 #include "DxLib.h"
 
-// 2D�摜�A�Z�`E??��ǂݍ��݁A�ʒu��E??�C�Y�A�X�P�[�����O���w�肵�ĉ�ʕ`����s���N���X
+// 2D画像アセチE??を読み込み、位置めE??イズ、スケーリングを指定して画面描画を行うクラス
 class Texture
 {
 public:
@@ -12,38 +12,38 @@ public:
 	~Texture();
 
 	/*
-	 * @brief �`E??�X�`����Eposition_ ��?E??��E??�T�C�Y�ŕ`�悷��
-	 * [����] �Ȃ�
-	 * [�o��] �Ȃ�
-	 * [����p] ���?E?�o�`E??�o�b�t�@?E?�ɉ摜��`��
+	 * @brief チE??スチャめEposition_ を中?E??持E??サイズで描画する
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 画面?E?バチE??バッファ?E?に画像を描画
 	 */
 	void Draw();
 
 	/*
-	 * @brief �`E??�X�`����ʏ�T�C�Y��菭���g�債����ԂŒ�?E??�悷��?E??�{�^���z�o�[�p�ȂǁA���ݖ��g�p?E?E
-	 * [����] �Ȃ�
-	 * [�o��] �Ȃ�
-	 * [����p] ��ʂɊg��摜��`��
+	 * @brief チE??スチャを通常サイズより少し拡大した状態で中?E??画する?E??ボタンホバー用など、現在未使用?E?E
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 画面に拡大画像を描画
 	 */
 	void SizeDraw();
 
 	/*
-	 * @brief �`E??�X�`���̖��t���[���̍X�V��?E??���ݏ�?E??���IE
-	 * [����] �Ȃ�
-	 * [�o��] �Ȃ�
-	 * [����p] �Ȃ�
+	 * @brief チE??スチャの毎フレームの更新処?E??現在処?E??し！E
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] なし
 	 */
 	void Update();
 
 	/*
-	 * @brief �`E??�X�`����C��?E�X�P�[���䗦�Œ�?E??�悷��
-	 * [����] scale: �X�P�[�����O�{��?E?E.0f�����{�IE
-	 * [�o��] �Ȃ�
-	 * [����p] ��ʂɊg��/�k�������摜��`��
+	 * @brief チE??スチャを任意?Eスケール比率で中?E??画する
+	 * [入力] scale: スケーリング倍率?E?E.0fが等倍！E
+	 * [出力] なし
+	 * [副作用] 画面に拡大/縮小した画像を描画
 	 */
 	void DrawScale(float scale);
 
-	// �Z�`E??�[�E�Q�`E??�[�Q
+	// セチE??ー・ゲチE??ー群
 	void SetPosition(VECTOR centerPosition) { position_ = centerPosition; }
 	VECTOR GetPosition() { return position_; }
 	int GetSizeX() { return mnSizeX; }
@@ -52,14 +52,14 @@ public:
 	int GetHeight() { return new_game_h_; }
 
 private:
-	int mnHandle;       // ���[�h�����摜?E�O���t�B�`E??�n���h��
-	VECTOR position_;  // ��ʕ`�掞?E��?E???E
-	int mnSizeX;        // �摜�t�@�C���{���̉�?E
-	int mnSizeY;        // �摜�t�@�C���{���̏c?E
-	bool mnTransFlag;   // �w�i�̓���?E?���߃`�����l��?E?��L���ɂ��邩�ǂ�E??�̃t���O
+	int mnHandle;       // ロードした画像?EグラフィチE??ハンドル
+	VECTOR position_;  // 画面描画時?E中?E???E
+	int mnSizeX;        // 画像ファイル本来の横?E
+	int mnSizeY;        // 画像ファイル本来の縦?E
+	bool mnTransFlag;   // 背景の透過?E?透過チャンネル?E?を有効にするかどぁE??のフラグ
 
-	int new_game_w_;      // ��E??���ꂽ�`��p�̉�?E
-	int new_game_h_;      // ��E??���ꂽ�`��p�̏c?E
+	int new_game_w_;      // 持E??された描画用の横?E
+	int new_game_h_;      // 持E??された描画用の縦?E
 };
 
 #endif

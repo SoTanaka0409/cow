@@ -1,4 +1,4 @@
-#include "CharacterMove.h"
+﻿#include "CharacterMove.h"
 #include "CharacterState.h"
 #include "Master.h"
 #include "SceneManager.h"
@@ -10,7 +10,12 @@
 #include "ServiceLocator.h"
 #include "Scene.h"
 #include "ColliderManager.h"
-
+/*
+ * キャラクターの初期化
+ * [入力] filename: モデルのファイルパス, initPos: 初期座標
+ * [出力] なし
+ * [副作用] 各種メンバ変数の初期化、モデルのロード、初期状態(待機)の作成を行う
+ */
 CharacterMove::CharacterMove(std::string filename, VECTOR initPos)
 	: Object3D(initPos)
 	, mCurrentState(STATE_IDLE)
@@ -31,12 +36,16 @@ CharacterMove::CharacterMove(std::string filename, VECTOR initPos)
 	, mbIsVisible(true)
 {
 	model_ = new Model(filename, initPos, false);
-
-	// 蛻晄悄蜷代″繧偵Λ繝ｳ繝繝�縺ｫ蛻・淵縺輔○繧・
+	// 自然な群れを表現するため、初期向きをランダムに分散させる。
 	rotation_.y = (float)GetRand(359) * (DX_PI_F / 180.0f);
 	model_->SetRotation(rotation_);
 }
-
+/*
+ * キャラクターの破棄
+ * [入力] なし
+ * [出力] なし
+ * [副作用] モデルおよび現在の状態オブジェクトのメモリを解放する
+ */
 CharacterMove::~CharacterMove()
 {
 	if (model_ != nullptr)
@@ -50,20 +59,22 @@ CharacterMove::~CharacterMove()
 		mpCurrentState = nullptr;
 	}
 }
-
+/*
+ * キャラクターの再初期化
+ * [入力] pos: 配置する座標
+ * [出力] なし
+ * [副作用] 状態を待機にリセットし、パラメータやフラグを初期化。マネージャーへ再登録する
+ */
 void CharacterMove::Reset(VECTOR pos)
 {
 	position_ = pos;
 	mCurrentState = STATE_IDLE;
 	mpTargetPlayer = nullptr;
-
-	// 迴ｾ蝨ｨ縺ｮState繧剃ｸ蠎ｦ遐ｴ譽・＠縲∵眠縺溘↓蠕・ｩ溽憾諷九ｒ菴懈・
 	if (mpCurrentState != nullptr)
 	{
 		delete mpCurrentState;
 	}
 	mpCurrentState = new StateIdle();
-
 	mActionTimer = 60;
 	rotation_.y = (float)GetRand(359) * (DX_PI_F / 180.0f);
 	moveVec = VGet(0.0f, 0.0f, 0.0f);
@@ -72,9 +83,7 @@ void CharacterMove::Reset(VECTOR pos)
 	mDeleteFlag = false;
 	mbBaitFlag = false;
 	mbIsVisible = true;
-	SetDrawFlag(true); // 謠冗判繧呈怏蜉ｹ蛹・
-
-	// 邂｡逅・け繝ｩ繧ｹ(ObjectManager)縺ｫ閾ｪ霄ｫ繧貞・蠎ｦ逋ｻ骭ｲ
+	SetDrawFlag(true);
 	if (auto scene = Master::mpSceneManager->GetCurrentScene())
 	{
 		if (auto objMgr = scene->GetObjectManager())
@@ -82,37 +91,32 @@ void CharacterMove::Reset(VECTOR pos)
 			objMgr->AddObject(this);
 		}
 	}
-
 	if (model_ != nullptr)
 	{
 		model_->SetPosition(pos);
 		model_->SetRotation(rotation_);
 	}
-
-	// 蠖薙◆繧雁愛螳夲ｼ医さ繝ｩ繧､繝繝ｼ・峨ｒ蜀榊ｺｦ譛牙柑蛹悶＠縺ｦ逋ｻ骭ｲ
 	if (capsule_collider_ != nullptr)
 	{
 		capsule_collider_->SetDeleteFlag(false);
 		ColliderManager::GetInstance()->AddCollider(capsule_collider_);
 	}
 }
-
-// ==============================================================================
-// Deactivate (繧ｪ繝悶ず繧ｧ繧ｯ繝医・辟｡蜉ｹ蛹・
-// 豁ｻ莠｡譎ゅｄ逕ｻ髱｢螟悶↓蜃ｺ縺滓凾縺ｪ縺ｩ縲∵緒逕ｻ縺ｨ蛻､螳壹ｒ繧ｪ繝輔↓縺励※蜃ｦ逅・ｯｾ雎｡縺九ｉ螟悶＠縺ｾ縺吶・
-// ==============================================================================
+/*
+ * オブジェクトの無効化処理
+ * [入力] なし
+ * [出力] なし
+ * [副作用] mbIsVisible, 描画フラグ, コライダーの削除フラグを変更。ObjectManagerのリストから除外。
+ */
 void CharacterMove::Deactivate()
 {
 	mbIsVisible = false;
-	SetDrawFlag(false); // 謠冗判繧堤┌蜉ｹ蛹・
-
-	// 蠖薙◆繧雁愛螳壹ｒ辟｡蜉ｹ蛹・
+	SetDrawFlag(false);
 	if (capsule_collider_ != nullptr)
 	{
 		capsule_collider_->SetDeleteFlag(true);
 	}
-
-	// delete縺ｯ縺帙★縲ゞpdate縺ｮ譖ｴ譁ｰ蟇ｾ雎｡繝ｪ繧ｹ繝医°繧峨・縺ｿ螟悶☆・亥・蛻ｩ逕ｨ縺ｮ縺溘ａ・・
+	// 再利用時の負荷を軽減するため、メモリ破棄ではなく更新対象から外す。
 	if (auto scene = Master::mpSceneManager->GetCurrentScene())
 	{
 		if (auto objMgr = scene->GetObjectManager())
@@ -121,38 +125,53 @@ void CharacterMove::Deactivate()
 		}
 	}
 }
-
+/*
+ * 毎フレームの更新処理
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 座標移動、回転、コライダー追従、死亡判定、モデルの更新を行う
+ */
 void CharacterMove::Update()
 {
 	MoveCharacter();
 	CharacterDied();
-
 	if (mCurrentState != STATE_VACUUM)
 	{
 		RotationCharacter();
 	}
-
 	ColliderMove();
 	model_->Update();
 }
-
+/*
+ * 描画処理
+ * [入力] なし
+ * [出力] なし
+ * [副作用] モデルを描画する
+ */
 void CharacterMove::Draw()
 {
 	model_->Draw();
 }
-
+/*
+ * キャラクターの移動処理
+ * [入力] なし
+ * [出力] なし
+ * [副作用] AIに基づく移動量を計算し、壁判定を経て最終的な座標を決定する
+ */
 void CharacterMove::MoveCharacter()
 {
 	if (mCurrentState == STATE_VACUUM) return;
-
 	old_position_ = position_;
-
 	UpdateWanderAI();
 	CheckWallCollision();
-
 	model_->SetPosition(position_);
 }
-
+/*
+ * AIの更新
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 現在のStateオブジェクトのUpdateを呼び出す
+ */
 void CharacterMove::UpdateWanderAI()
 {
 	if (mpCurrentState != nullptr)
@@ -160,7 +179,12 @@ void CharacterMove::UpdateWanderAI()
 		mpCurrentState->Update(this);
 	}
 }
-
+/*
+ * 状態の変更
+ * [入力] newState: 新しい状態クラスのポインタ
+ * [出力] なし
+ * [副作用] 現在の状態を終了・破棄し、新しい状態へ移行する
+ */
 void CharacterMove::ChangeState(CharacterState* newState)
 {
 	if (mpCurrentState != nullptr)
@@ -174,18 +198,27 @@ void CharacterMove::ChangeState(CharacterState* newState)
 		mpCurrentState->Enter(this);
 	}
 }
-
+/*
+ * 吸い込み状態への変更
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 現在のAI状態をSTATE_VACUUMに変更し、StateVacuumへ移行する
+ */
 void CharacterMove::ChangeStateToVacuum()
 {
 	mCurrentState = STATE_VACUUM;
 	ChangeState(new StateVacuum());
 }
-
+/*
+ * 壁との衝突判定と補正
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 壁に衝突した場合、進行を阻害する方向に座標を押し戻す
+ */
 void CharacterMove::CheckWallCollision()
 {
 	bool hitwall = false;
 	bool hitwalls = false;
-
 	const auto& walls = ServiceLocator::GetObjectManager()->GetObject3DListByTag(Object3D::kTag3dWall);
 	if (!walls.empty())
 	{
@@ -195,7 +228,6 @@ void CharacterMove::CheckWallCollision()
 			if (wall != nullptr)
 			{
 				std::vector<VERTEX3D> vertex = wall->GetVertex();
-
 				if (HitCheck_Capsule_Triangle(
 					position_,
 					VAdd(position_, VGet(0.0f, 200.0f, 0.0f)),
@@ -210,17 +242,15 @@ void CharacterMove::CheckWallCollision()
 				{
 					hitwall = true;
 					VECTOR slide = VGet(0.0f, 0.0f, 0.0f);
-
 					float a = VDot(VScale(moveVec, -1.0f), vertex.at(0).norm);
 					slide = VAdd(moveVec, VScale(vertex.at(0).norm, a));
-
 					if (hitwall && !hitwalls)
 					{
 						position_ = old_position_;
 						position_ = VAdd(position_, VScale(slide, mfSpeed));
 						hitwalls = true;
 					}
-					// 隍・焚螢√↓謖溘∪繧後◆蝣ｴ蜷医・騾ｲ陦後ｒ豁｢繧√ｋ
+					// 複数壁への連続衝突によるめり込みを防ぐため。
 					else if (hitwalls)
 					{
 						position_ = old_position_;
@@ -230,7 +260,12 @@ void CharacterMove::CheckWallCollision()
 		}
 	}
 }
-
+/*
+ * コライダーの追従
+ * [入力] なし
+ * [出力] なし
+ * [副作用] キャラクターの座標に合わせてコライダーの位置と形状を更新する
+ */
 void CharacterMove::ColliderMove()
 {
 	if (capsule_collider_ != nullptr)
@@ -240,30 +275,43 @@ void CharacterMove::ColliderMove()
 		capsule_collider_->radius_ = 50.0f;
 	}
 }
-
+/*
+ * 移動方向への回転
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 現在の移動ベクトルに基づいてモデルのY軸回転角度を更新する
+ */
 void CharacterMove::RotationCharacter()
 {
 	if (moveVec.x != 0.0f || moveVec.z != 0.0f)
 	{
 		float targetAngle = atan2f(moveVec.x, moveVec.z);
-
-		// 繝｢繝・Ν縺ｮ豁｣髱｢譁ｹ蜷代・莉墓ｧ倥↓蜷医ｏ縺帙※180蠎ｦ蜿崎ｻ｢縺輔○繧・
+		// モデルの正面ベクトルが仕様上逆を向いているため、180度補正する。
 		rotation_.y = targetAngle + DX_PI_F;
 		model_->SetRotation(rotation_);
 	}
 }
-
+/*
+ * 強制的な回転
+ * [入力] なし
+ * [出力] なし
+ * [副作用] モデルをY軸に対して一定速度で回転させ続ける
+ */
 void CharacterMove::CharacterRotate()
 {
 	rotation_.y += 0.1f;
-
 	if (rotation_.y > DX_PI_F * 2.0f)
 	{
 		rotation_.y -= DX_PI_F * 2.0f;
 	}
 	model_->SetRotation(rotation_);
 }
-
+/*
+ * モデルのスケール設定
+ * [入力] scale: 設定する倍率
+ * [出力] なし
+ * [副作用] モデルの表示サイズを変更する
+ */
 void CharacterMove::SetScale(float scale)
 {
 	if (model_ != nullptr)
@@ -271,15 +319,24 @@ void CharacterMove::SetScale(float scale)
 		model_->SetScale(scale);
 	}
 }
-
+/*
+ * 死亡判定
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 現在は未実装
+ */
 void CharacterMove::CharacterDied()
 {
 }
-
+/*
+ * キャラクターの死亡処理
+ * [入力] reason: 死亡理由を示す列挙値
+ * [出力] なし
+ * [副作用] 削除フラグの判定や各種死亡に応じた演出・処理を行う
+ */
 void CharacterMove::Die(DeathReason reason)
 {
 	if (mDeleteFlag) return;
-
 	switch (reason)
 	{
 	}

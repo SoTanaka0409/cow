@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include"Scene.h"
 #include"Dxlib.h"
 #include"Master.h"
@@ -6,16 +6,14 @@
 #include"CowManager.h"
 #include"AnimalManager.h"
 
-// 3DƒAƒNƒVƒ‡ƒ“ƒXƒ`E?EƒWŠÇ?E
 class Scene3D : public Scene
 {
 public: 
-	// ƒQ[ƒ€is?EƒtƒF[ƒY
 	enum Phase
 	{
-		kNormal,         // ’Êí
-		kTornadoCrisis,  // —³Šª‹‘å–æE
-		kMobSpawn,       // ¶•¨‘å—ÊƒXƒ|?Eƒ“
+		kNormal,
+		kTornadoCrisis,
+		kMobSpawn,
 	};	
 	
 public:
@@ -23,41 +21,51 @@ public:
 	~Scene3D();
 
 	/*
-	 * @brief ƒXƒ`E?EƒW‰Šú–æE
-	 * [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ƒIƒuƒWƒFƒNƒg¶¬ABGMÄ¶
+	 * ãƒªã‚½ãƒ¼ã‚¹ç¢ºä¿ã¨åˆæœŸçŠ¶æ…‹ã¸ã®ãƒªã‚»ãƒƒãƒˆã‚’è¡Œã†ãŸã‚
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆã€BGMå†ç”Ÿ
 	 */
 	void Initialize() override;
 
 	/*
-	 * @brief ƒV[ƒ“I?E?E?E
-	 * [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] BGM’â~
+	 * ãƒªã‚½ãƒ¼ã‚¹ãƒªãƒ¼ã‚¯ã‚’é˜²ãã€æ¬¡ã®ã‚·ãƒ¼ãƒ³ã¸å®‰å…¨ã«é·ç§»ã™ã‚‹ãŸã‚
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] BGMåœæ­¢ã€ãƒªã‚½ãƒ¼ã‚¹è§£æ”¾
 	 */
 	void Finalize() override;
 
 	/*
-	 * @brief ƒXƒ`E?EƒW•`‰æ
-	 * [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ‰æ–Ê•`‰æ
+	 * 3Dç©ºé–“ã¨UIã‚’åˆæˆã—ã¦ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«çŠ¶æ³ã‚’è¦–è¦šä¼é”ã™ã‚‹ãŸã‚
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ç”»é¢æç”»
 	 */
 	void Draw() override;
 
 	/*
-	 * @brief ƒXƒ`E?EƒWXV
-	 * [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ƒ^ƒCƒ€ƒAƒ`E?E?EƒŠƒUƒ‹ƒg?EˆÚ
+	 * æ¯ãƒ•ãƒ¬ãƒ¼ãƒ ã®ã‚²ãƒ¼ãƒ ãƒ­ã‚¸ãƒƒã‚¯ã¨çŠ¶æ…‹é·ç§»ã‚’å‡¦ç†ã™ã‚‹ãŸã‚
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ã‚¿ã‚¤ãƒ ã‚¢ãƒƒãƒ—æ™‚ã«ãƒªã‚¶ãƒ«ãƒˆã¸é·ç§»
 	 */
 	void Update() override;
 
 	/*
-	 * @brief ƒtƒF[ƒYis‚É‚æ‚éŠÂ?E??‰»
-	 * [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ƒJƒƒ‰E—³Šªó‘Ô•ÏXAƒXƒ|?Eƒ“ˆ?E
+	 * é€²è¡Œåº¦ã«å¿œã˜ã¦é›£æ˜“åº¦ã‚’æ®µéšçš„ã«å¼•ãä¸Šã’ã‚‹ãŸã‚
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ã‚«ãƒ¡ãƒ©ãƒ»ç«œå·»çŠ¶æ…‹å¤‰æ›´ã€ã‚¹ãƒãƒ¼ãƒ³å‡¦ç†
 	 */
 	void PhaseUpdate();
 
 private:
-	float warning_radius_;       // ŒxƒGƒŠƒAŒ»İ”¼ªE(—\?E
-	float max_radius_;           // ŒxƒGƒŠƒAÅ‘å”¼ªE(—\?E
+	float warning_radius_;
+	float max_radius_;
 	
-	int tatumaki_spawn_timer_;   // —³ŠªoŒ»ƒ^ƒCƒ}?E
-	int mass_spawn_timer_;       // ‘å—Ê?EŒ»‚ÌŠÔŠuƒ^ƒCƒ}?E
-	Phase phase_;             // Œ»İ‚ÌƒtƒF[ƒY
-	int font_back_graph_;        // ŒxƒeƒLƒXƒg”wŒi—pƒnƒ“ƒhƒ‹
+	int tatumaki_spawn_timer_;
+	int mass_spawn_timer_;
+	Phase phase_;
+	int font_back_graph_;
 };

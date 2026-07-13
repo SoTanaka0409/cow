@@ -1,7 +1,12 @@
-#include "EffekseerEffect.h"
+﻿#include "EffekseerEffect.h"
 #include <EffekseerForDXLib.h>
 #include "Master.h"
 
+/*
+ * 入力: filename (ファイルパス), initPos (初期座標), kEffectSize (基本スケール)
+ * 出力: なし
+ * 副作用: 内部変数の初期化とエフェクトリソースの読み込み
+ */
 EffekseerEffect::EffekseerEffect(const char* filename, VECTOR initPos, float kEffectSize)
 	: play_pos_(initPos)
 	, rotation_(VGet(0.0f, 0.0f, 0.0f))
@@ -16,43 +21,75 @@ EffekseerEffect::EffekseerEffect(const char* filename, VECTOR initPos, float kEf
 	Load();
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: エフェクトリソースの解放
+ */
 EffekseerEffect::~EffekseerEffect()
 {
-	// �E��E��E�[�E�h�E�ς݂�Effekseer�E�G�E�t�E�F�E�N�E�g�E�A�E�Z�E�b�E�g�E��E��E�\�E�[�E�X�E��E��E��E��E��E��E��E��E��E��E��E��E��E��E��E��E�
+	// アプリケーション終了時やオブジェクト破棄時に、VRAM/RAMのメモリリークが発生するのを防ぐため明示的に破棄する
 	DeleteEffekseerEffect(effect_resource_handle_);
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: VRAMへのエフェクトデータ展開およびリソースハンドルの取得
+ */
 void EffekseerEffect::Load()
 {
-	// �E�w�E�肳�E�ꂽ�E�p�E�X�E��E��E��E�.efk�E�G�E�t�E�F�E�N�E�g�E�f�E�[�E�^�E��E��E��E��E��E��E��E��E�ɁE���E�[�E�h�E��E��E��E�
+	// 外部仕様依存: EffekseerForDXLibの仕様上、ベースサイズ(effectSize)は再生時ではなくロード時に確定させる必要がある
 	effect_resource_handle_ = LoadEffekseerEffect(file_path_, effectSize);
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: 再生中エフェクトのローカルトランスフォーム(座標・回転・スケール)の更新
+ */
 void EffekseerEffect::Update()
 {
 	if (playingEffectHandle != -1)
 	{
-		// �E�Đ��E��E��E�̃G�E�t�E�F�E�N�E�g�E�ʒu�E�A�E��E�]�E�p�E�x�E�A�E�X�E�P�E�[�E��E��E�l�E��E�Effekseer�E��E��E�C�E��E��E�X�E�^�E��E��E�X�E�֖��E�t�E��E��E�[�E��E��E��E��E��E��E��E��E��E�
+		// キャラクター等親オブジェクトの移動に対して、エフェクトが1フレーム遅れて描画される「位置ズレバグ」を防ぐため毎フレーム同期する
 		SetPosPlayingEffekseer3DEffect(playingEffectHandle, play_pos_.x, play_pos_.y, play_pos_.z);
 		SetRotationPlayingEffekseer3DEffect(playingEffectHandle, rotation_.x, rotation_.y, rotation_.z);
 		SetScalePlayingEffekseer3DEffect(playingEffectHandle, mvScale.x, mvScale.y, mvScale.z);
 	}
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: なし
+ */
 void EffekseerEffect::Draw()
 {
+	// 外部仕様依存: 本ライブラリにおける3Dエフェクトの描画はシステム側で一括処理されるため、個別オブジェクトからのDraw呼び出しは不要
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: エフェクトの再生開始と再生ハンドルの保持
+ */
 void EffekseerEffect::Play()
 {
-	// �E�ǂݍ��E�񂾃G�E�t�E�F�E�N�E�g�E��E��E�\�E�[�E�X�E��E��E�ƂɁA3D�E��E�ԂōĐ��E��E�J�E�n�E��E��E��E�
 	playingEffectHandle = PlayEffekseer3DEffect(effect_resource_handle_);
+
+	// 再生直後の1フレーム目にエフェクトが原点(0,0,0)で一瞬だけ描画されて瞬くバグを防ぐため、即座に座標を上書きする
 	SetPosPlayingEffekseer3DEffect(playingEffectHandle, play_pos_.x, play_pos_.y, play_pos_.z);
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: エフェクトの強制停止処理
+ */
 void EffekseerEffect::Stop()
 {
-	// �E��E��E�݂̃G�E�t�E�F�E�N�E�g�E�Đ��E��E�Ԃ�擾�E��E��E�A�E�Đ��E��E��E�̏ꍇ�E�̂݋��E��E��E��E�~�E��E��E��E��E��E��E�
+	// 無効なハンドルや既に自然消滅したエフェクトを停止しようとして、ライブラリ内部でクラッシュするのを防ぐための安全検証
 	int NowPlayEffect = IsEffekseer3DEffectPlaying(playingEffectHandle);
 	if (NowPlayEffect != -1)
 	{

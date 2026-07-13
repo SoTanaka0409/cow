@@ -1,25 +1,22 @@
-#pragma once
+﻿#pragma once
 #include <vector>
 #include <string>
 #include <map>
 #include "DxLib.h"
 #include "CowMove.h"
 #include "CreatureManager.h"
-
-// スチE�Eジ上�E牛たちの動的生�E、更新、タグ判定、上限管琁E��解放などを一括管琁E��るクラス
+// 牛固有の生成ルールやゲーム進行に応じた状態を管理するため。
 class CowManager : public CreatureManager<CowMove, CowMove::TagCow>
 {
 public:
 	CowManager();
-
 	/*
-	 * @brief 持E��された種類�E牛をランダムな位置に褁E��生�Eする�E�最大30匹制限あり！E
-	 * [入力] filename: モチE��のファイルパス, pos: 出現中�K�v��準座樁E scale: モチE��の拡大玁E tag: 牛�E種類識別タグ, count: 生�E個数, is_fever: フィーバ�E中かどぁE��
-	 * [出力] �Ȃ�
-	 * [副作用] 動的メモリ確保された牛オブジェクトが管琁E��ストに追加されるか、�Eールから復帰する
+	 * 状態（フィーバー等）に応じた牛の出現制御を行うため。
+	 * [入力] filename:モデルパス, pos:基準座標, scale:拡大率, tag:牛種類, count:生成個数, is_fever:フィーバー中か
+	 * [出力] なし
+	 * [副作用] 管理リストへ牛を追加、またはプールから復帰
 	 */
 	void SpawnCow(std::string filename, VECTOR pos, float scale, CowMove::TagCow tag, int count, bool is_fever = false);
-
 protected:
 	CowMove::TagCow GetTag(CowMove* creature) override { return creature->GetTagCow(); }
 };

@@ -1,10 +1,8 @@
-#pragma once
+﻿#pragma once
 #include"DxLib.h"
 #include<vector>
-
 class GameTimer;
-
-// イベント進行フェーズを管琁E��るクラス
+// ゲーム全体の進行ステップやフェーズ遷移を統括するため。
 class GameManager
 {
 public:
@@ -13,78 +11,90 @@ public:
 		kCowGet,
 		kFinal,
 	};
-
 	struct GameStepData
 	{
 		GameStepType type;
 		bool TrueFlag = true;
 	};
-
 	enum class GamePhase
 	{
 		kNormal,
 		kMassSpawn,
 		kTornadoCrisis
 	};
-
 public:
-	GameManager();
-	~GameManager();
-
 	/*
-	 * 現在のゲームフェーズを取得すめE
-	 * [入力] �Ȃ�
+	 * ゲーム進行の初期化を行うため。
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] メンバ変数の初期化、タイマーの生成
+	 */
+	GameManager();
+	/*
+	 * 確保したステップデータやタイマーを破棄するため。
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 動的確保したメモリの解放
+	 */
+	~GameManager();
+	/*
+	 * 外部から現在のフェーズ状態を判定するため。
+	 * [入力] なし
 	 * [出力] 現在のGamePhase
-	 * [副作用] �Ȃ�
+	 * [副作用] なし
 	 */
 	GamePhase GetCurrentPhase() const { return current_phase_; }
-
 	/*
-	 * ゲームフェーズを設定しイベント状態を刁E��替える
-	 * [入力] phase: 新しいフェーズ状慁E
-	 * [出力] �Ȃ�
-	 * [副作用] current_phase_ が更新されめE
+	 * イベント進行等で強制的にフェーズを切り替えるため。
+	 * [入力] phase: 新しいフェーズ状態
+	 * [出力] なし
+	 * [副作用] current_phase_が更新される
 	 */
 	void SetCurrentPhase(GamePhase phase) { current_phase_ = phase; }
-
 	/*
-	 * スコア登録を伴ぁE��亁E��チE��プへの遷移を行う
-	 * [入力] type: 遷移先�EスチE��プタイチE
-	 * [出力] �Ȃ�
-	 * [副作用] 進行スチE��プ変更、フラグ更新、ネーム入力開姁E
+	 * 条件達成時に次の進行ステップへ進めるため。
+	 * [入力] type: 遷移先のステップタイプ
+	 * [出力] なし
+	 * [副作用] 進行ステップが変更され、フラグが更新される
 	 */
 	void GameNextStep(GameStepType type);
 	 
-	GameStepType GetType() { return type_; }
-
 	/*
-	 * フェードイン等、ゲーム進行に�K�v��な演�E描画を行う
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] 画面への暗転矩形描画
+	 * 現在のゲーム進行状況を外部から参照するため。
+	 * [入力] なし
+	 * [出力] 現在のステップタイプ
+	 * [副作用] なし
+	 */
+	GameStepType GetType() { return type_; }
+	/*
+	 * フェードイン等の画面演出を描画するため。
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 画面に暗転などの演出が描画される
 	 */
 	void Draw();
-
 	/*
-	 * ゲームの進行状態と制限時間を監視�E更新する
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] タイマ�E更新、フェーズ遷移抽選実衁E
+	 * タイマーやフェーズ遷移など、ゲームの進行を管理するため。
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 各種タイマーが更新され、フェーズが切り替わる
 	 */
 	void Update();
-
+	/*
+	 * 外部から残り時間を参照・操作するため。
+	 * [入力] なし
+	 * [出力] ゲームタイマーのポインタ
+	 * [副作用] なし
+	 */
 	GameTimer* GetGameTimer() const { return game_timer_; }
-
 private:
-	std::vector<GameStepData*> data_; // 動的確保されたスチE��プデータのリスチE
+	std::vector<GameStepData*> data_;
 	GameStepType type_;
 	GamePhase current_phase_;
-
-	float fade_timer_;                  // シーン開始時のフェード演�E用
+	float fade_timer_;
 	bool fade_flag_;
 	
-	int phase_timer_;                 // フェーズ遷移イベント�E発生タイミング基溁E
+	int phase_timer_;
 	int phase_change_count_;
-
-	GameTimer* game_timer_;           // タイマ�E管琁E��インスタンス
+	GameTimer* game_timer_;
 };

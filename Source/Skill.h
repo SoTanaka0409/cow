@@ -1,22 +1,20 @@
-#pragma once
+﻿#pragma once
 #include "dxlib.h"
 #include "Object3D.h"
 #include "Texture.h"
 
-// プレイヤーレベルアチE�E時�Eスキル�E�スチE�Eタス強化�E餌設置�E��EUI選択およ�E効果管琁E��行うクラス
+// プレイヤーレベルアップ時のスキル報酬選択UIおよび効果の適用を管理するため
 class Skill
 {
 public:
-	// スキルカード�E種類定義
 	enum SkillTag
 	{
 		None,
-		kSkill1,    // スチE�Eタス強匁E (吸引速度)
-		kSkill2,    // 餌（デコイ�E�設置
-		kSkill3,    // スチE�Eタス強匁E (プレイヤー速度)
+		kSkill1, // 吸引速度アップ
+		kSkill2, // 餌設置
+		kSkill3, // 移動速度アップ
 	};
 
-	// 強化可能なプレイヤーパラメータのタグ定義
 	enum StatusTag
 	{
 		kStatusAttackSpeed,
@@ -25,84 +23,83 @@ public:
 
 public:
 	/*
-	 * @brief スキル選択画面で表示するUI画像！E枚�Eスキルカード）をロードすめE
+	 * レベルアップ時の報酬として提示するスキルUIの生成と初期化を行う。
 	 * [入力] parent: プレイヤーなど関連付ける親アクター
-	 * [出力] �Ȃ�
-	 * [副作用] スキル選択カード用Textureインスタンスの動的確俁E
+	 * [出力] なし
+	 * [副作用] スキル選択カード用Textureの動的確保
 	 */
 	Skill(Object3D* parent);
 	~Skill();
 
 	/*
-	 * @brief カード登場時、E��択中の退出アニメーション等�E補間計算を行う
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] �ꍇ��ード表示用座標�E更新
+	 * スキル選択中におけるカードの登場・退出アニメーションの補間計算を行う。
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] カード表示用座標の更新
 	 */
 	void Update();
 
 	/*
-	 * @brief 画面上にスキル選択�EカードUIを描画する
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] �Ȃ�
+	 * プレイヤーにスキル選択を促すためのカードUIを画面に描画する。
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] なし
 	 */
 	void Draw();
 
 	/*
-	 * @brief マウスのホバーおよび左クリチE��検知を行い、E��択されたスキルの効果を発動させる
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] スキル効果�E適用�E�EP加算、あるいは餌オブジェクト�Enew�E�E
+	 * マウス入力からプレイヤーの選択を検知し、該当するスキル効果を適用する。
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] ステータス加算、または餌オブジェクトの生成
 	 */
 	void AddSkill();
 
 	SkillTag GetSkillTag() { return tag_; }
 
 	/*
-	 * @brief 持E��された強化スチE�Eタスの合計�Eーナス値を取得すめE
-	 * [入力] tag: スチE�Eタス種顁E
-	 * [出力] 加算されるボ�Eナス実数値
-	 * [副作用] �Ȃ�
+	 * 外部から強化されたステータス値を参照し、プレイヤーの能力計算に反映させる。
+	 * [入力] tag: ステータス種類
+	 * [出力] 加算されるボーナス実数値
+	 * [副作用] なし
 	 */
 	float GetStatusDate(StatusTag tag);
 
 	/*
-	 * @brief スキル選択画面の表示�E非表示フラグを設定し、カード�Eアニメーション変数を�E期化する
-	 * [入力] flag: 有効にするかどぁE��の真偽値
-	 * [出力] �Ȃ�
-	 * [副作用] カード�E初期表示位置、E��択アニメーションフラグの初期匁E
+	 * スキル選択画面の開閉状態を切り替え、アニメーションを最初から再生できるようにする。
+	 * [入力] flag: UIを表示するかどうかのフラグ
+	 * [出力] なし
+	 * [副作用] 各種アニメーションフラグとカード座標の初期化
 	 */
 	void SetSkillFlag(bool flag);
 
-	bool add_skill_flag_;          // スキル選択画面が現在オープンしてぁE��かどぁE��のフラグ
+	bool add_skill_flag_;
 
 private:
-	Object3D* parent_;         // 親アクター
-	SkillTag tag_;               // スキルタグ
-	Texture* texture_;         // カーチE�E�速度アチE�E�E��EチE��スチャ
-	Texture* texture2_;        // カーチE�E�餌にんじん）�EチE��スチャ
-	Texture* texture3_;        // カーチE�E�吸引力アチE�E�E��EチE��スチャ
-	float status_date_;           // パラメータ一時変数
-	float status_a_;             // 吸引速度の合計強化値
-	float status_s_;             // 移動速度の合計強化値
+	Object3D* parent_;
+	SkillTag tag_;
+	Texture* texture_;
+	Texture* texture2_;
+	Texture* texture3_;
+	float status_date_;
+	float status_a_;
+	float status_s_;
 
-	int hover_skill_;            // マウスが�Eバ�EしてぁE��カード�E番号 (1?3)
-	int flash_alpha_;            // 選択時のフラチE��ュ効果用アルファ値
-	bool flash_;                // フラチE��ュ効果がアクチE��ブかどぁE��のフラグ
+	int hover_skill_;
+	int flash_alpha_;
+	bool flash_;
 
-	bool select_anim_;           // カードが画面外へフェードアウトするアニメーション中かどぁE��のフラグ
-	int selected_skill_;         // 選択されたカード番号
-	float select_scale_;         // 選択アニメーション時�Eカードスケール
-	VECTOR select_pos_;          // 選択されたカード�E表示現在位置
+	bool select_anim_;
+	int selected_skill_;
+	float select_scale_;
+	VECTOR select_pos_;
 
-	VECTOR pos1_;               // カーチEの標準�E置座樁E
-	VECTOR pos2_;               // カーチEの標準�E置座樁E
-	VECTOR pos3_;               // カーチEの標準�E置座樁E
+	VECTOR pos1_;
+	VECTOR pos2_;
+	VECTOR pos3_;
 
-	bool open_anim_;             // カードが下からスライドインする登場アニメーション中かどぁE��のフラグ
-	float card1_y_;              // カーチEの現在Y座樁E
-	float card2_y_;              // カーチEの現在Y座樁E
-	float card3_y_;              // カーチEの 現在Y座樁E
+	bool open_anim_;
+	float card1_y_;
+	float card2_y_;
+	float card3_y_;
 };
-

@@ -1,4 +1,4 @@
-#include"Scene.h"
+﻿#include "Scene.h"
 #include "Rule.h"
 #include "DxLib.h"
 #include "Master.h"
@@ -6,22 +6,37 @@
 #include "SceneManager.h"
 #include "InputManager.h"
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: 設定画面用のUI画像およびフォントリソースの読み込みと初期設定
+ */
 Rule::Rule()
 {
 	rule_graph_ = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kSettingsBg);
-	title_font_handle_ = CreateFontToHandle("���C���I", 80, 5);
-	font_handle_ = CreateFontToHandle("���C���I", 50, 3);
-	
+	title_font_handle_ = CreateFontToHandle("メイリオ", 80, 5);
+	font_handle_ = CreateFontToHandle("メイリオ", 50, 3);
+
 	selected_index_ = kMenuBgm;
 	play_se_delay_ = 0;
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: リソースの明示的な解放処理の呼び出し
+ */
 Rule::~Rule()
 {
-	// �V�[���j?E??�̃��������[�N��h������?E��?E??������Ă�
+	// シーン破棄時のフォントハンドルの解放漏れによるメモリリークを防ぐため、デストラクタで確実な破棄を保証する
 	Finalize();
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: ユーザー入力による音量設定の更新およびシーン遷移処理
+ */
 void Rule::Update()
 {
 	Scene::Update();
@@ -46,7 +61,7 @@ void Rule::Update()
 	bool isMouseClicked = (mouseInput & MOUSE_INPUT_LEFT) != 0 && (prevMouseInput & MOUSE_INPUT_LEFT) == 0;
 	bool isMouseHeld = (mouseInput & MOUSE_INPUT_LEFT) != 0;
 
-	// �J�ڑO?E���͎����z���ɂ��둀���h������E0�t���[����E??E
+	// 前シーンからのクリック判定持ち越しによって、意図せず設定が変更されてしまう誤操作バグを防ぐための待機処理
 	if (scene_frames_ < 30)
 	{
 		prevMouseInput = mouseInput;
@@ -93,10 +108,11 @@ void Rule::Update()
 					else if (selected_index_ == kMenuSe)
 					{
 						Master::mpSoundManager->SetMasterSEVolume(newVol);
+
+						// スライダー操作時にSEが毎フレーム連続再生され、ノイズ(爆音)になるのを防ぐためのクールタイム
 						if (play_se_delay_ <= 0)
 						{
 							Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
-							// SE���d�Ȃ���?E??�ɂȂ�?E��h�����߁A?E���Ԋu�𐧌�����E
 							play_se_delay_ = 10;
 						}
 					}
@@ -146,7 +162,8 @@ void Rule::Update()
 		{
 			int currentVol = Master::mpSoundManager->GetMasterSEVolume();
 			Master::mpSoundManager->SetMasterSEVolume(currentVol + volChange);
-			
+
+			// キー入力時のSE爆音化防止処理（マウス操作時と同等の制約を適用）
 			if (play_se_delay_ <= 0)
 			{
 				Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
@@ -166,10 +183,16 @@ void Rule::Update()
 	}
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: 画面の暗転およびUIの描画
+ */
 void Rule::Draw()
 {
-	// ��E?E�V�[���摜�𓧂����Đݒ��ʂł��邱�Ƃ��������邽�߁A����?E�̈Ó]���d�˂�E
 	DrawExtendGraph(0, -100, 1600, 1000, rule_graph_, TRUE);
+
+	// プレイヤーが「ゲーム本編を中断して開いている」と直感的に認識できるよう、背景を黒で塗りつぶさず半透明の暗転を重ねる
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
 	DrawBox(0, 0, 1600, 900, GetColor(0, 0, 0), TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
@@ -219,6 +242,11 @@ void Rule::Draw()
 	}
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: フェード状態の初期化と設定画面用BGMの再生
+ */
 void Rule::Initialize()
 {
 	fade_state_ = kSceneFadeIn;
@@ -228,6 +256,11 @@ void Rule::Initialize()
 	Master::mpSoundManager->PlayBGM(SoundManager::kBgmRule);
 }
 
+/*
+ * 入力: なし
+ * 出力: なし
+ * 副作用: 動的生成したフォントハンドルの破棄およびBGMの停止
+ */
 void Rule::Finalize()
 {
 	DeleteFontToHandle(font_handle_);

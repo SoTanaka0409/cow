@@ -1,15 +1,13 @@
-#pragma once
+﻿#pragma once
 #include "DxLib.h"
 #include <string>
 
 class Collider;
 class CapsuleCollider;
 
-// 3D空間に配置されるオブジェクト�E基底クラス
 class Object3D
 {
 public:
-	// オブジェクト�E識別用タグ
 	enum Tag3D
 	{
 		kNone3d,
@@ -23,11 +21,21 @@ public:
 	};
 
 public:
-	// カメラからの距離を設定すめE
+	/*
+	 * 半透明描画などのZソートに利用するため
+	 * [入力] distance: カメラからの距離
+	 * [出力] なし
+	 * [副作用] current_camera_distance_を更新する
+	 */
 	void SetCameraDistance(float distance) { current_camera_distance_ = distance; }
 
-	// カメラからの距離を基準に遠ぁE��E��E値の降頁E��でソートするため�E比輁E��数
 	struct CompareZOrder {
+		/*
+		 * 半透明オブジェクトの破綻を防ぐため、奥から手前に描画する用途で使用する
+		 * [入力] a, b: 比較する2つのオブジェクト
+		 * [出力] aがbよりカメラから遠い場合はtrue
+		 * [副作用] なし
+		 */
 		bool operator()(Object3D* a, Object3D* b) const {
 			return a->current_camera_distance_ > b->current_camera_distance_;
 		}
@@ -35,45 +43,56 @@ public:
 
 public:
 	/*
-	 * @brief 3Dオブジェクトを初期座標で生�Eし、現在アクチE��ブなシーンのマネージャーへ自動登録する
-	 * [入力] initPos: 初期座樁E
-	 * [出力] �Ȃ�
-	 * [副作用] シーンのObjectManagerに自身が登録される、デフォルト�Eカプセルコライダーが生成される
+	 * 生成と同時にシーンへの自動登録を行い、管理漏れを防ぐ
+	 * [入力] initPos: 初期座標
+	 * [出力] なし
+	 * [副作用] シーンのObjectManagerに自身が登録され、カプセルコライダーが生成される
 	 */
 	Object3D(VECTOR initPos);
 
 	virtual ~Object3D();
 
+	/*
+	 * オブジェクトの毎フレームの振る舞いを実行するため
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] オブジェクトの座標や状態が更新される
+	 */
 	virtual void Update();
 
+	/*
+	 * オブジェクトの現在の状態を画面に反映するため
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 画面にモデルや画像が描画される
+	 */
 	virtual void Draw();
 
 	/*
-	 * @brief コライダー同士の交差が開始した瞬間に呼ばれるコールバック関数
-	 * [入力] collider: 自身のコライダー, check: 相手�Eコライダー
-	 * [出力] �Ȃ�
-	 * [副作用] �Ȃ�
+	 * 衝突判定の開始イベントを処理し、ダメージや効果音のトリガーとするため
+	 * [入力] collider: 自身のコライダー, check: 相手のコライダー
+	 * [出力] なし
+	 * [副作用] 派生クラスでの実装に依存して状態が変更される
 	 */
 	virtual void OnEnter(Collider* collider, Collider* check);
 
 	/*
-	 * @brief コライダー同士が交差してぁE��間、毎フレーム呼ばれるコールバック関数
-	 * [入力] collider: 自身のコライダー, check: 相手�Eコライダー
-	 * [出力] �Ȃ�
-	 * [副作用] �Ȃ�
+	 * 継続的な接触状態（押し出しや継続ダメージなど）を処理するため
+	 * [入力] collider: 自身のコライダー, check: 相手のコライダー
+	 * [出力] なし
+	 * [副作用] 派生クラスでの実装に依存して状態が変更される
 	 */
 	virtual void OnTrigger(Collider* collider, Collider* check);
 
 	/*
-	 * @brief コライダー同士の交差が終亁E��た瞬間に呼ばれるコールバック関数
-	 * [入力] collider: 自身のコライダー, check: 相手�Eコライダー
-	 * [出力] �Ȃ�
-	 * [副作用] �Ȃ�
+	 * 衝突終了イベントを処理し、接触状態のリセットなどを行うため
+	 * [入力] collider: 自身のコライダー, check: 相手のコライダー
+	 * [出力] なし
+	 * [副作用] 派生クラスでの実装に依存して状態が変更される
 	 */
 	virtual void OnExit(Collider* collider, Collider* check);
 
 public:
-	// ゲチE��ー�EセチE��ー群
 	void SetPosition(VECTOR pos) { position_ = pos; };
 	VECTOR GetPosition() { return position_; }
 
@@ -93,15 +112,15 @@ public:
 	Tag3D GetTag() { return tag_; }
 
 protected:
-	VECTOR position_;                  // 現在の座樁E
-	VECTOR rotation_;                  // 回転角度
-	VECTOR old_position_;               // 1フレーム前�E座樁E
-	CapsuleCollider* capsule_collider_; // 所有するカプセルコライダー
-	float radius_;                     // 簡易的な衝突半征E
+	VECTOR position_;
+	VECTOR rotation_;
+	VECTOR old_position_;
+	CapsuleCollider* capsule_collider_;
+	float radius_;
 
 private:
-	bool delete_flag_;                  // 削除フラグ�E�Erueでマネージャーから破棁E��れる�E�E
-	Tag3D tag_;                        // オブジェクト識別タグ
-	bool draw_flag_;                    // 描画フラグ
-	float current_camera_distance_;      // カメラからこ�Eオブジェクトまでの距離
+	bool delete_flag_;
+	Tag3D tag_;
+	bool draw_flag_;
+	float current_camera_distance_;
 };

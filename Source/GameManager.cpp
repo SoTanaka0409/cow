@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+﻿#include "ServiceLocator.h"
 #include"GameManager.h"
 #include"Master.h"
 #include"SceneManager.h"
@@ -7,7 +7,6 @@
 #include"InputManager.h"
 #include"GameTimer.h"
 #include"Utility.h"
-
 GameManager::GameManager()
 	: fade_timer_(300.0f)
 	, fade_flag_(true)
@@ -20,16 +19,13 @@ GameManager::GameManager()
 	data->type = GameStepType::kCowGet;
 	data->TrueFlag = true;
 	data_.push_back(data);
-
 	data = new GameStepData;
 	data->type = GameStepType::kFinal;
 	data->TrueFlag = true;
 	data_.push_back(data);
-
 	phase_timer_ = GetNowCount();
 	phase_change_count_ = 0;
 }
-
 GameManager::~GameManager()
 {
 	for (auto data : data_)
@@ -37,19 +33,17 @@ GameManager::~GameManager()
 		delete data;
 	}
 	data_.clear();
-
 	if (game_timer_ != nullptr)
 	{
 		delete game_timer_;
 		game_timer_ = nullptr;
 	}
 }
-
 /*
- * �?E?�?E?�?E?登�?E?�?E???E?ぁE?E?��E??�E���?E��プへ�?E?遷移を行う
- * [入劉�Etype: 遷移先�E�?E?�?E��プID
- * [?E??劉�E�?E?ぁE
- * [副�?E??] �?E?行ス�?E��プ変更、フラ�?E?更�E??、ネーム入�?E??姁E
+ * 指定した進行ステップへの移行処理を統一するため
+ * [入力] type: 遷移先のステップタイプ
+ * [出力] なし
+ * [副作用] 進行ステップ変更、リザルト画面への遷移フラグ設定など
  */
 void GameManager::GameNextStep(GameStepType type)
 {
@@ -68,40 +62,33 @@ void GameManager::GameNextStep(GameStepType type)
 			Master::mpScore->AddScore(player->mpScore->GetScore());
 			Master::mpScore->SetResultScore(player->mpScore->GetScore());
 			player->mpScore->AddRanking();
-
-			// 名�??入力�?E�?E?�?E?�?E�Eして�?E?動セーブ�?E??��?E?�様�EためE
+			// 不測の事態に備え、リザルト移行前に進行状況を保存しておくため
 			player->mpScore->Save();
 			player->mpScore->SaveRanking();
 		}
-
-		// リ�?E?ルト画�?E?�?E?�?E?フェードゟE???E?ト�?E?開�?E?��?EめE
+		// ゲーム終了に伴い、次シーンへの移行を促すため
 		if (auto scene = Master::mpSceneManager->GetCurrentScene())
 		{
 			scene->fade_state_ = Scene::kSceneFadeOut;
 			scene->next_scene_ = SceneManager::kSceneResult;
 		}
-
 		type_ = type;
 	}
 }
-
 /*
- * フェードゟE??�等、ゲーム�?E?行�?E�K�v?E?��?E演�?E描画を行う
- * [入劉�E�?E?ぁE
- * [?E??劉�E�?E?ぁE
- * [副�?E??] 画�?E?全域�?EDrawBox�?E?よ�?E?黒塗�?E?描画
+ * ゲーム開始時の暗転演出を描画するため
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 画面全域に黒い矩形を描画
  */
 void GameManager::Draw()
 {
 	if (fade_flag_)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(fade_timer_));
-		// �?E?�?E?ンドウ�?E?画�?E?をカ�?E�Eす�?E?ためEUtility 定数�?E?解像�?E?�?E???E?用す�?E?E
 		DrawBox(0, 0, Utility::kScreenWidth, Utility::kScreenHeight, GetColor(0, 0, 0), TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
 		fade_timer_ -= 2.0f;
-
 		if (fade_timer_ <= 0.0f)
 		{
 			fade_timer_ = 0.0f;
@@ -109,7 +96,12 @@ void GameManager::Draw()
 		}
 	}
 }
-
+/*
+ * 制限時間やフェーズ遷移など時間経過に伴う状態更新を行うため
+ * [入力] なし
+ * [出力] なし
+ * [副作用] タイマーの更新、ランダムなフェーズ切り替え
+ */
 void GameManager::Update()
 {
 	Player3D* player = ServiceLocator::GetPlayer();
@@ -118,14 +110,12 @@ void GameManager::Update()
 	{
 	}
 	
-	// �?E?限�?E間タ�?E?マ�E管��E?E��よ�Eランダムフェー�?E?刁E?E?替え�E��E?E
 	if (GameStepType::kCowGet == type_)
 	{
 		if (!game_timer_)
 		{
 			game_timer_ = new GameTimer(VGet(0, 0, 0), 60, GameTimer::Tag_Game);
 		}
-
 		if (game_timer_)
 		{
 			if (game_timer_->OutTimerFlag())
@@ -138,16 +128,14 @@ void GameManager::Update()
 				game_timer_->Update();
 			}
 		}
-
 		int Timer = GetNowCount();
-
 		if (Timer - phase_timer_ >= 1000)
 		{
 			phase_timer_ = Timer;
 			phase_change_count_++;
 		}
 		
-		// 30�?E?E?E???E?�?E?�?E?ーム�?E?フェー�?E?�E�演�?E�E��?E?ランダム�?E?変更す�?E?�?E?�?E
+		// プレイヤーに変化のある体験を提供し続けるため
 		if (phase_change_count_ >= 30)
 		{
 			phase_change_count_ = 0;

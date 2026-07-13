@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+﻿#include "ServiceLocator.h"
 #include "Fever.h"
 #include "GoldCow.h"
 #include "CowManager.h"
@@ -10,6 +10,12 @@
 #include "Utility.h"
 #include "GameConstants.h"
 
+/*
+ * 未定義状態によるバグを防ぐため、メンバ変数を初期化する
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 各種メンバ変数が初期値に設定される
+ */
 Fever::Fever()
 	: drop_time_(0)
 	, drop_count_(0)
@@ -20,14 +26,32 @@ Fever::Fever()
 	is_fever_ = false;
 }
 
+/*
+ * インスタンス破棄時のリソース漏れを防ぐため
+ * [入力] なし
+ * [出力] なし
+ * [副作用] なし
+ */
 Fever::~Fever()
 {
 }
 
+/*
+ * 今後の拡張でフィーバーゲージを任意増加させるために用意
+ * [入力] value: 増加量
+ * [出力] なし
+ * [副作用] なし
+ */
 void Fever::AddGauge(int value)
 {
 }
 
+/*
+ * スコア獲得のチャンスを作るため、プレイヤーを強化しフィーバーを開始する
+ * [入力] player: 対象のプレイヤー
+ * [出力] なし
+ * [副作用] プレイヤーの攻撃力が倍増し、フィーバー関連の変数が初期化される
+ */
 void Fever::StartFever(Player3D* player)
 {
 	if (player == nullptr) return;
@@ -35,12 +59,18 @@ void Fever::StartFever(Player3D* player)
 	player_status_ = player->GetStatusAttack();
 	player->SetStatusAttack(player_status_ * 2.0f);
 	is_fever_ = true;
-	timer_ = 600; // 難易度調整のためフィーバ�E継続時間を10私E600フレーム)に固定すめE
+	timer_ = 600; 
 	drop_count_ = 0;
 	drop_time_ = 60;
 	Master::FeverFlag = true;
 }
 
+/*
+ * フィーバー終了後にゲーム進行が停滞しないよう、元の状態に戻しつつ獲物を補充する
+ * [入力] なし
+ * [出力] なし
+ * [副作用] プレイヤーの攻撃力が元に戻り、ステージに初期配置の動物が生成される
+ */
 void Fever::EndFever()
 {
 	if (fever_player_ != nullptr)
@@ -50,7 +80,6 @@ void Fever::EndFever()
 	}
 	is_fever_ = false;
 	
-	// スチE�Eジ上�E獲物が枯渁E��る�Eを防ぐため終亁E��に基本構�Eで再�E置する
 	VECTOR spawnPos = Utility::StageSize;
 	ServiceLocator::GetCowManager()->SpawnCow(GameConstants::kCowGold.model_path, spawnPos, 50.0f, CowMove::kCowGold, 1);
 	ServiceLocator::GetCowManager()->SpawnCow(GameConstants::kCowDefault.model_path, spawnPos, 50.0f, CowMove::kCow1, 10);
@@ -58,13 +87,18 @@ void Fever::EndFever()
 	Master::FeverFlag = false;
 }
 
+/*
+ * フィーバー状態の進行と、ボーナス要素の定期生成を行うため
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 画面にエフェクトが描画され、タイマーが減少し、金の牛が生成される
+ */
 void Fever::Update()
 {
 	if (!is_fever_) return;
 	
 	SetDrawBlendMode(DX_BLENDMODE_ADD, 180);
 
-	// フィーバ�E状態であることを視覚的に伝えるため画面全体に加算ブレンドでエフェクトを描画する
 	DrawBox(0, 0, Utility::kScreenWidth, Utility::kScreenHeight, GetColor(255, 200, 50), FALSE);
 	DrawBox(1, 1, Utility::kScreenWidth, Utility::kScreenHeight, GetColor(255, 220, 100), FALSE);
 	DrawBox(2, 2, Utility::kScreenWidth, Utility::kScreenHeight, GetColor(255, 255, 180), FALSE);
@@ -86,7 +120,6 @@ void Fever::Update()
 	drop_count_++;
 	timer_--;
 	
-	// ボ�Eナススコア獲得機会を提供するため一定間隔で金�E牛を生�Eする
 	if (drop_count_ > drop_time_)
 	{
 		drop_count_ = 0;
@@ -94,13 +127,18 @@ void Fever::Update()
 		ServiceLocator::GetCowManager()->SpawnCow(GameConstants::kCowGold.model_path, spawnPos, 50.0f, CowMove::kCowGold, 2, true);
 	}
 
-	// フィーバ�E継続時間を趁E��したため状態を通常に戻ぁE
 	if (timer_ <= 0)
 	{
 		EndFever();
 	}
 }
 
+/*
+ * 外部からフィーバー中かどうか判定し、専用の処理を分岐させるため
+ * [入力] なし
+ * [出力] フィーバー中ならtrue
+ * [副作用] なし
+ */
 bool Fever::IsFever()
 {
 	return is_fever_;

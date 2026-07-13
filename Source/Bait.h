@@ -1,20 +1,13 @@
-#pragma once
+﻿#pragma once
 #include "Object3D.h"
 #include "Model.h"
 #include "dxlib.h"
 #include "string"
 #include "GameTimer.h"
 
-// 牛を引き寁E��るため�E餌！Eait�E�オブジェクトを制御するクラス
 class Bait : public Object3D
 {
 public:
-	/*
-	 * @brief 餌オブジェクトを配置し、有効時間用のタイマ�Eと吸引コライダーを設定すめE
-	 * [入力] filename: モチE��のファイルパス, pos: 配置座樁E
-	 * [出力] �Ȃ�
-	 * [副作用] GameTimerインスタンスの生�E、コライダーサイズ設宁E
-	 */
 	Bait(std::string filename, VECTOR pos);
 	virtual ~Bait();
 
@@ -24,8 +17,8 @@ public:
 	virtual void OnEnter(Collider* collider, Collider* check) override;
 
 public:
-	Model* model_;          // 餌�E3DモチE��へのポインタ
+	Model* model_;
 
 private:
-	GameTimer* game_timer_;  // 有効時間をカウントするタイマ�Eオブジェクトへのポインタ
+	GameTimer* game_timer_;
 };

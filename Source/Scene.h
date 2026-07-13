@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include"DxLib.h"
 #include"GameManager.h"
 #include"CowManager.h"
@@ -8,70 +8,117 @@
 class ObjectManager;
 class ColliderManager;
 
-// ™ÜE??[ƒ€ƒV[ƒ“‚Ì’ŠÛŠî’êƒNƒ‰ƒX
 class Scene
 {
 public:
-	// ƒtƒF[ƒhó?E
 	enum SceneFade
 	{
-		kSceneFadeIn,   // ˆÃ“]‚©‚ç–¾“]
-		kSceneFadeOut,  // –¾“]‚©‚çˆÃ“]
-		kSceneFadeNone, // ƒtƒF[ƒh‚È‚µ
-		kSceneFadeLoad, // ƒ[ƒh’†
+		kSceneFadeIn,
+		kSceneFadeOut,
+		kSceneFadeNone,
+		kSceneFadeLoad,
 	};
 	
 public:
+	/*
+	 * ã‚·ãƒ¼ãƒ³å…±é€šã®å¤‰æ•°ã‚’å®‰å…¨ãªåˆæœŸå€¤ã«ã™ã‚‹ãŸã‚
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ãƒ¡ãƒ³ãƒå¤‰æ•°ã®åˆæœŸåŒ–
+	 */
 	Scene();
+
+	/*
+	 * æ´¾ç”Ÿã‚¯ãƒ©ã‚¹ã®ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’æ­£ã—ãå‘¼ã³å‡ºã—ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯ã‚’é˜²ããŸã‚
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ã‚·ãƒ¼ãƒ³ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç ´æ£„
+	 */
 	virtual ~Scene();
 
 	/*
-	 * @brief ƒV[ƒ“‰Šú–æE
-	 * [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ƒŠƒ\[ƒX‰Šú–æE
+	 * æ´¾ç”Ÿã‚¯ãƒ©ã‚¹å›ºæœ‰ã®ãƒªã‚½ãƒ¼ã‚¹ç¢ºä¿ã‚„åˆæœŸè¨­å®šã‚’è¡Œã†ãŸã‚
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ãƒªã‚½ãƒ¼ã‚¹ã‚„å†…éƒ¨çŠ¶æ…‹ã®åˆæœŸåŒ–
 	 */
 	virtual void Initialize() = 0;
 
 	/*
-	 * @brief ƒtƒF[ƒh•`‰æ
-	 * [“ü—Í] fade: ƒtƒF[ƒhó?E[o—Í] ‚È‚µ[•›ì—p] ‰æ–Ê•`‰æAƒAƒ‹ƒtƒ@’lXV
+	 * ç”»é¢ã®æ˜è»¢ãƒ»æš—è»¢æ¼”å‡ºã§ã‚·ãƒ¼ãƒ³é·ç§»ã‚’æ»‘ã‚‰ã‹ã«è¦‹ã›ã‚‹ãŸã‚
+	 * [å…¥åŠ›] fade: ãƒ•ã‚§ãƒ¼ãƒ‰ã®é€²è¡ŒçŠ¶æ…‹
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ã‚¢ãƒ«ãƒ•ã‚¡å€¤ã®æ›´æ–°ã¨é»’çŸ©å½¢ã®æç”»
 	 */
 	virtual void Fade(SceneFade fade);
 
 	/*
-	 * @brief ƒV[ƒ“?E??‘f‚ÌXV
-	 * [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ™ÜE?Eƒl?EƒWƒƒ[‚ÌUpdateŒÄ‚Ño‚ŸE
+	 * ãƒ•ãƒ¬ãƒ¼ãƒ ã”ã¨ã«å…¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®çŠ¶æ…‹ã‚’é€²ã‚ã‚‹ãŸã‚
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] å„ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®Updateé–¢æ•°ã®å‘¼ã³å‡ºã—
 	 */
 	virtual void Update();
 
 	/*
-	 * @brief ƒV[ƒ“?E??‘f‚Ì•`‰æ
-	 * [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ™ÜE?Eƒl?EƒWƒƒ[‚ÌDrawŒÄ‚Ño‚ŸE
+	 * æ›´æ–°ã•ã‚ŒãŸçŠ¶æ…‹ã«åŸºã¥ãç”»é¢è¡¨ç¤ºã‚’æ›´æ–°ã™ã‚‹ãŸã‚
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] å„ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®Drawé–¢æ•°ã®å‘¼ã³å‡ºã—
 	 */
 	virtual void Draw();
 
 	/*
-	 * @brief ƒV[ƒ“I?E?E?E
-	 * [“ü—Í] ‚È‚µ[o—Í] ‚È‚µ[•›ì—p] ƒIƒuƒWƒFƒNƒg“™?E‰ğ•ú
+	 * ä½¿ç”¨ã—ãŸãƒªã‚½ãƒ¼ã‚¹ã‚’è§£æ”¾ã—ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯ã‚’é˜²ããŸã‚
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç­‰ã®è§£æ”¾å‡¦ç†
 	 */
 	virtual void Finalize() = 0;
 
-	// ƒQƒ`E??[EƒZƒ`E??[ŒQ
+	/*
+	 * å¤–éƒ¨ã‹ã‚‰ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ“ä½œãƒ»å–å¾—ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹ãŸã‚
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ObjectManagerã®ãƒã‚¤ãƒ³ã‚¿
+	 * [å‰¯ä½œç”¨] ãªã—
+	 */
 	ObjectManager* GetObjectManager() { return object_manager_; }
+
+	/*
+	 * å¤–éƒ¨ã‹ã‚‰è¡çªåˆ¤å®šã®è¨­å®šã‚’è¡Œãˆã‚‹ã‚ˆã†ã«ã™ã‚‹ãŸã‚
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ColliderManagerã®ãƒã‚¤ãƒ³ã‚¿
+	 * [å‰¯ä½œç”¨] ãªã—
+	 */
 	ColliderManager* GetCollisionManager() { return collider_manager_; }
+
+	/*
+	 * ç¾åœ¨ã®ãƒ•ã‚§ãƒ¼ãƒ‰ä¸é€æ˜åº¦ã‚’å¤–éƒ¨ã‹ã‚‰å‚ç…§ã™ã‚‹ãŸã‚
+	 * [å…¥åŠ›] ãªã—
+	 * [å‡ºåŠ›] ãƒ•ã‚§ãƒ¼ãƒ‰ä¸é€æ˜åº¦
+	 * [å‰¯ä½œç”¨] ãªã—
+	 */
 	float GetFadeAlpha() const { return fade_alpha_; }
+
+	/*
+	 * å¤–éƒ¨ã‹ã‚‰ãƒ•ã‚§ãƒ¼ãƒ‰ã®é€²è¡Œå…·åˆã‚’å¼·åˆ¶çš„ã«å¤‰æ›´ã™ã‚‹ãŸã‚
+	 * [å…¥åŠ›] alpha: è¨­å®šã™ã‚‹ãƒ•ã‚§ãƒ¼ãƒ‰ä¸é€æ˜åº¦
+	 * [å‡ºåŠ›] ãªã—
+	 * [å‰¯ä½œç”¨] fade_alpha_ã®å¤‰æ›´
+	 */
 	void SetFadeAlpha(float alpha) { fade_alpha_ = alpha; }
 	
-	SceneFade fade_state_ = kSceneFadeNone; // ƒtƒF[ƒhó?E
-	int next_scene_ = 0;                    // Ÿ‚ÌƒV[ƒ“ID
+	SceneFade fade_state_ = kSceneFadeNone;
+	int next_scene_ = 0;
 
-	Fever* fever_;                        // ƒtƒB[ƒo?EŠÇ?E
-	AnimalManager* animal_manager_;        // ƒAƒj?Eƒ‹ŠÇ?E
-	CowManager* cow_manager_;              // ‹ŠÇ?E
-	GameManager* game_manager_;            // ƒQ[ƒ€isŠÇ?E
+	Fever* fever_;
+	AnimalManager* animal_manager_;
+	CowManager* cow_manager_;
+	GameManager* game_manager_;
 
 private:
-	ObjectManager* object_manager_;        // ƒIƒuƒWƒFƒNƒgŠÇ?E
-	ColliderManager* collider_manager_;    // ƒRƒ‰ƒCƒ_[ŠÇ?E
-	float fade_alpha_;                     // ƒtƒF[ƒh•s“§?E“x (0-255)
-	float fade_speed_;                     // ƒtƒF[ƒh‘¬“x
+	ObjectManager* object_manager_;
+	ColliderManager* collider_manager_;
+	float fade_alpha_;
+	float fade_speed_;
 };

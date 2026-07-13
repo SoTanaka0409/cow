@@ -1,54 +1,51 @@
-#pragma once
+﻿#pragma once
 #include <EffekseerForDXLib.h>
 #include "DxLib.h"
 
-// Effekseerエフェクトエンジンのグローバルな初期化、毎フレームの更新�E描画サイクルを管琁E��るクラス
 class EffectManager
 {
 public:
 	/*
-	 * @brief メンバ変数を�E期化し、Effekseer初期化メソチE��を呼び出ぁE
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] �Ȃ�
+	 * Effekseerの初期化処理を呼び出す
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] メンバ変数の初期化、Effekseer初期化
 	 */
 	EffectManager();
 	~EffectManager();
 
 	/*
-	 * @brief Direct3D設定、最大パ�EチE��クル数設定、スクリーンリセチE��コールバック等を登録してEffekseerを起動すめE
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] Effekseerライブラリのグローバルな初期匁E
+	 * 描画デバイスの設定とEffekseerの起動を行う
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] Effekseerのシステムが初期化される
 	 */
 	void Initalize();
 
 	/*
-	 * @brief Effekseer全体�E毎フレームの3Dエフェクト�E生状態を更新する
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] 再生中の全Effekseerエフェクト�E進行更新
+	 * 再生中の全エフェクトの状態を更新する
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] エフェクトのアニメーションが進む
 	 */
 	void Update();
 
 	/*
-	 * @brief 再生中のすべてのEffekseerエフェクトを3D空間上にレンダリングする
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] �Ȃ�
+	 * 空間上に存在する全てのエフェクトを描画する
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 画面にエフェクトが描画される
 	 */
 	void Draw();
 
 private:
-	VECTOR play_pos_; // チE��ト�E生用の座標（未使用�E�E
+	VECTOR play_pos_;
 
-	// パラメータ定数
-	const int kEffectParticleLimit = 20000;  // 画面上に同時に表示可能な最大パ�EチE��クル数
-	const float kEffectSize = 1.0f;          // 基準エフェクトサイズ
-	const int kEffectPlayerInterval = 300;   // エフェクト�E生�E間隔フレーム数
-	const float kEffectMoveSpeed = 0.2f;     // エフェクト�E移動速度設宁E
+	const int kEffectParticleLimit = 20000;
+	const float kEffectSize = 1.0f;
+	const int kEffectPlayerInterval = 300;
+	const float kEffectMoveSpeed = 0.2f;
 
-	// エフェクト�E生管琁E��ンドル
-	int effect_resource_handle_;               // ロードされたエフェクト�Eリソースハンドル�E�未使用�E�E
-	int playing_effect_handle_;                // 再生中のエフェクトインスタンスハンドル�E�未使用�E�E
+	int effect_resource_handle_;
+	int playing_effect_handle_;
 };

@@ -1,4 +1,4 @@
-#include "Skill.h"
+﻿#include "Skill.h"
 #include "Player3D.h"
 #include "Texture.h"
 #include "Master.h"
@@ -6,6 +6,12 @@
 #include "Bait.h"
 #include <cmath>
 
+/*
+ * スキル選択画面の表示状態を切り替えるため。
+ * [入力] flag: スキル画面を表示するかどうかのフラグ
+ * [出力] なし
+ * [副作用] add_skill_flag_等のUI関連メンバ変数が初期化される
+ */
 void Skill::SetSkillFlag(bool flag)
 {
 	add_skill_flag_ = flag;
@@ -27,6 +33,12 @@ void Skill::SetSkillFlag(bool flag)
 	}
 }
 
+/*
+ * スキルシステムの初期化とUIテクスチャの準備を行うため。
+ * [入力] parent: スキルを保持する親オブジェクト(プレイヤー等)のポインタ
+ * [出力] なし
+ * [副作用] 各種メンバ変数の初期化、テクスチャの動的メモリ確保
+ */
 Skill::Skill(Object3D* parent)
 	: status_a_(0.0f)
 	, status_s_(0.0f)
@@ -48,6 +60,12 @@ Skill::Skill(Object3D* parent)
 	texture3_ = new Texture("Resource/2D/Kyuusyuu.png", pos3_, 300, 500, true);
 }
 
+/*
+ * 動的確保したテクスチャのメモリリークを防ぐため。
+ * [入力] なし
+ * [出力] なし
+ * [副作用] UIテクスチャのメモリが解放される
+ */
 Skill::~Skill()
 {
 	if (texture_ != nullptr)
@@ -67,11 +85,17 @@ Skill::~Skill()
 	}
 }
 
+/*
+ * スキル選択中や決定時のUIを画面に描画するため。
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 画面にスキルカードが描画される
+ */
 void Skill::Draw()
 {
 	if (!add_skill_flag_ && !select_anim_) return;
 
-	// 選択完亁E���Eカードが上�E�E退出してぁE��演�Eアニメーション
+	// 選択したスキルをプレイヤーに視覚的に強く印象付けるため。
 	if (select_anim_)
 	{
 		if (selected_skill_ == 1)
@@ -97,6 +121,12 @@ void Skill::Draw()
 	texture3_->Draw();
 }
 
+/*
+ * スキルUIのアニメーションや選択状態を毎フレーム更新するため。
+ * [入力] なし
+ * [出力] なし
+ * [副作用] アニメーション進行に伴い、UI座標やフラグが変化する
+ */
 void Skill::Update()
 {
 	if (add_skill_flag_)
@@ -119,7 +149,6 @@ void Skill::Update()
 		}
 	}
 
-	// 選択されたカードが上空へ飛んで消える演�Eアニメーション
 	if (select_anim_)
 	{
 		VECTOR target = VGet(select_pos_.x, -400.0f, 0.0f);
@@ -137,7 +166,6 @@ void Skill::Update()
 		}
 	}
 
-	// カード選択開始時に、カードが画面外から滑らかにスライドインするアニメーション
 	if (open_anim_)
 	{
 		card1_y_ += (450.0f - card1_y_) * 0.15f;
@@ -158,18 +186,23 @@ void Skill::Update()
 	}
 }
 
+/*
+ * プレイヤーの入力に応じて対応するスキル効果を付与するため。
+ * [入力] なし
+ * [出力] なし
+ * [副作用] マウス座標の取得、ステータスの上昇や餌の生成が発生する
+ */
 void Skill::AddSkill()
 {
 	if (!add_skill_flag_) return;
 	
-	SetMouseDispFlag(true); // スキル選択中はマウスポインタを表示
+	SetMouseDispFlag(true); 
 	Master::SelectSkill = true;
 	int mouse_x_, mouse_y_;
 	GetMousePoint(&mouse_x_, &mouse_y_);
 
 	hover_skill_ = 0;
 
-	// スキルカードをホバーまた�E左クリチE��した際�Eコライダー計算を行うラムダ関数
 	auto ProcessSkill = [&](Texture* tex, int id) {
 		if (tex == nullptr) return false;
 
@@ -195,7 +228,6 @@ void Skill::AddSkill()
 
 	if (ProcessSkill(texture_, 1))
 	{
-		// 速度アチE�E
 		status_s_ += 2.0f;
 		selected_skill_ = 1;
 		select_pos_ = texture_->GetPosition();
@@ -207,8 +239,7 @@ void Skill::AddSkill()
 	}
 	else if (ProcessSkill(texture2_, 2))
 	{
-		// 餌（デコイにんじん）設置
-		auto b = new Bait("Resource/3D/牛�E餁ECarrot.mv1", parent_->GetPosition());
+		auto b = new Bait("Resource/3D/牛の餌/Carrot.mv1", parent_->GetPosition());
 		float scale = 5000.0f;
 		b->model_->SetScale(VGet(scale, scale, scale));
 
@@ -222,7 +253,6 @@ void Skill::AddSkill()
 	}
 	else if (ProcessSkill(texture3_, 3))
 	{
-		// 吸引速度�E�攻撁E���E�アチE�E
 		status_a_ += 1.0f;
 		selected_skill_ = 3;
 		select_pos_ = texture3_->GetPosition();
@@ -234,6 +264,12 @@ void Skill::AddSkill()
 	}
 }
 
+/*
+ * 他のクラスから現在の強化状態を参照できるようにするため。
+ * [入力] tag: 取得したいステータスの種類
+ * [出力] 対象ステータスの現在値
+ * [副作用] なし
+ */
 float Skill::GetStatusDate(StatusTag tag)
 {
 	if (tag == kStatusAttackSpeed)

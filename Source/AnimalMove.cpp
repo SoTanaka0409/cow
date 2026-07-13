@@ -1,4 +1,4 @@
-#include "AnimalMove.h"
+﻿#include "AnimalMove.h"
 #include "GameConstants.h"
 #include "Master.h"
 #include "InputManager.h"
@@ -16,17 +16,21 @@
 #include "Player3D.h"
 
 namespace {
-	// 暫定�?E??E?�K�v �?E?ンボ�Eーナス計�?E?�用�?E?�?E?ロー�?E��変数?E?E?
 	int s_mnTagCount = 0;
 	AnimalMove::TagAnimal s_tag1 = AnimalMove::kNone;
 	AnimalMove::TagAnimal s_tag2 = AnimalMove::kNone;
 	AnimalMove::TagAnimal s_tag3 = AnimalMove::kNone;
 }
 
+/*
+ * 動物の初期化
+ * [入力] filename: モデルパス, initPos: 初期座標
+ * [出力] なし
+ * [副作用] 各種ステータスの初期設定
+ */
 AnimalMove::AnimalMove(std::string filename, VECTOR initPos)
 	: CharacterMove(filename, initPos)
 {
-	// 基礎パラメー�?E?�?E?して羊�E定数を�?E用
 	mfSpeed = GameConstants::kAnimalSheep.speed;
 	mActionTimer = 60;
 	mfScore = GameConstants::kAnimalSheep.score;
@@ -36,10 +40,22 @@ AnimalMove::AnimalMove(std::string filename, VECTOR initPos)
 	SetTag(Object3D::kTag3dAnimal);
 }
 
+/*
+ * 終了処理
+ * [入力] なし
+ * [出力] なし
+ * [副作用] なし
+ */
 AnimalMove::~AnimalMove()
 {
 }
 
+/*
+ * 状態のリセット
+ * [入力] pos: 再配置する座標
+ * [出力] なし
+ * [副作用] キャラクターとコライダーの座標を更新
+ */
 void AnimalMove::Reset(VECTOR pos)
 {
 	CharacterMove::Reset(pos);
@@ -50,18 +66,35 @@ void AnimalMove::Reset(VECTOR pos)
 	}
 }
 
+/*
+ * 動物の移動処理
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 座標の更新
+ */
 void AnimalMove::MoveCharacter()
 {
 	CharacterMove::MoveCharacter();
 }
 
+/*
+ * アニメーションの追加
+ * [入力] state: アニメーション状態, filename: ファイルパス
+ * [出力] なし
+ * [副作用] なし
+ */
 void AnimalMove::AddAnimation(AnimationState state, std::string filename)
 {
 }
 
+/*
+ * 接触時の処理
+ * [入力] collider: 自身のコライダー, check: 相手のコライダー
+ * [出力] なし
+ * [副作用] 餌に接触した場合、誘引フラグを有効化
+ */
 void AnimalMove::OnEnter(Collider* collider, Collider* check)
 {
-	// 餌オブジ�?E?�?E?トへ�?E?接触を�?E??し、�?E?�導フラ�?E?を�?E?�てめE
 	if (collider == capsule_collider_ && check->parent_object_ != nullptr)
 	{
 		if (check->parent_object_->GetTag() == kTag3dBait)
@@ -71,13 +104,24 @@ void AnimalMove::OnEnter(Collider* collider, Collider* check)
 	}
 }
 
+/*
+ * 接触中の処理
+ * [入力] collider: 自身のコライダー, check: 相手のコライダー
+ * [出力] なし
+ * [副作用] なし
+ */
 void AnimalMove::OnTrigger(Collider* collider, Collider* check)
 {
 }
 
+/*
+ * 接触終了時の処理
+ * [入力] collider: 自身のコライダー, check: 相手のコライダー
+ * [出力] なし
+ * [副作用] 餌から離れた場合、誘引フラグを無効化
+ */
 void AnimalMove::OnExit(Collider* collider, Collider* check)
 {
-	// 餌�?E有効篁E?E??�に�?E?たため�?E?�導フラ�?E?を�?E?�?E?す�?E?E
 	if (collider == capsule_collider_ && check->parent_object_ != nullptr)
 	{
 		if (check->parent_object_->GetTag() == kTag3dBait)
@@ -87,10 +131,16 @@ void AnimalMove::OnExit(Collider* collider, Collider* check)
 	}
 }
 
+/*
+ * 死亡(捕獲)判定と演出
+ * [入力] なし
+ * [出力] なし
+ * [副作用] 吸い込み演出の進行と捕獲完了時の死亡処理の呼び出し
+ */
 void AnimalMove::CharacterDied()
 {
-	// 演�?E都合上、フ�?E?ー�?E�E�?E?お�?E?�?E?�?E?ぁE?E??E?�?E?�?E?態�?E??E?外で�?E?�E??�?E?�?E?定�?E?行わ�?E?ぁE
 	auto fv = ServiceLocator::GetFever();
+	// 通常状態では捕獲演出へ移行させないため
 	if (mCurrentState != STATE_VACUUM || (fv && fv->IsFever())) return;
 
 	Player3D* player = mpTargetPlayer;
@@ -101,7 +151,7 @@ void AnimalMove::CharacterDied()
 		position_.y += player->Status(Player3D::Status_AttackS);
 	}
 
-	// プレ�?E?ヤー�?E?向�?E?�?E?�?E?遊�?E?、�?E?�定高�?E?�?E?達�?E?た�?E?階で�?E��完�?E?�E��す�?E?E
+	// UFOへの吸い込み演出を完遂したか判定するため
 	if (position_.y > death_timer_ && !mDeleteFlag)
 	{
 		Die(DEATH_VACUUM);
@@ -110,6 +160,12 @@ void AnimalMove::CharacterDied()
 	model_->SetPosition(position_);
 }
 
+/*
+ * 死亡時の処理
+ * [入力] reason: 死亡理由
+ * [出力] なし
+ * [副作用] 経験値・スコアの加算、コンボの更新、削除フラグの有効化
+ */
 void AnimalMove::Die(DeathReason reason)
 {
 	if (mDeleteFlag) return;
@@ -126,12 +182,12 @@ void AnimalMove::Die(DeathReason reason)
 			player->combo_->Reset();
 			player->mpScore->AddScore(mfScore);
 
-			// 暫定�?E??E?�K�v 同�?E?�?E?続捕�?E?時に�?E?加経�E??��?E?�?E???E??��?E??�ため�?E�?E?ンボロ�?E?�?E��E
 			if (tag_animal_ == AnimalMove::TagAnimal::kAnimalT)
 			{
 				Master::mnTutorialcount++;
 			}
 
+			// 同種の連続捕獲ボーナスを判定・付与するため
 			s_mnTagCount++;
 			if (s_mnTagCount == 1)
 			{

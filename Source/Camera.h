@@ -1,72 +1,70 @@
-#pragma once
+﻿#pragma once
 #include "DxLib.h"
 #include "Model.h"
-#include"Object3D.h"
+#include "Object3D.h"
 
 class Skill;
 
-// ゲーム冁E�E3Dカメラ制御、位置�E注視点計算、およ�E振動（シェイク�E�演�Eを管琁E��るクラス
 class Camera
 {
 public:
 	/*
-	 * @brief メンバ変数を�E期設定角度とチE��ォルト値に初期設定すめE
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] �Ȃ�
+	 * カメラの基本情報や揺れ状態を初期状態にするため
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 各種カメラパラメータ変数のリセット
 	 */
 	Camera();
 	~Camera();
 
 	/*
-	 * @brief カメラの位置、角度、およ�Eシェイクパラメータを�E期値にリセチE��する
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] �ꍇ��カメラパラメータ変数のリセチE��
+	 * 再スタートやシーン切り替え時にカメラ状態をリセットするため
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] カメラ座標やシェイクなどのメンバ変数を初期値に戻す
 	 */
 	void Initialize();
 
 	/*
-	 * @brief カメラ解放処琁E��現在は空メソチE���E�E
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] �Ȃ�
+	 * リソース解放など終了処理用
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] なし
 	 */
 	void Finalize();
 
 	/*
-	 * @brief カメラの現在惁E��をデバッグ等�E目皁E��画面描画する�E�現在は空メソチE���E�E
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] �Ȃ�
+	 * デバッグや状態確認用の情報を画面に表示するため
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] なし
 	 */
 	void Draw();
 
 	/*
-	 * @brief マウスの移動量めE��ームの進行フェーズ、シェイク状態を計算し、最終的な3Dカメラ位置と注視点をDXライブラリに反映する
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] DXライブラリ of 3Dカメラ状態�E設定変更
+	 * 毎フレームのマウス入力や状態変化をDXライブラリのカメラに反映するため
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] DXライブラリのカメラ座標・注視点の更新
 	 */
 	void Update();
 
 	/*
-	 * @brief 3D空間上でマウス移動量とキー入劁E0キー)に基づくカメラ角度の更新計算を行う
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] 水平回転角�E垂直回転角変数の更新
+	 * プレイヤーの視点操作をカメラの回転角に反映させるため
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 水平回転角・垂直回転角を更新
 	 */
 	void UpdateRotate();
 
 	/*
-	 * @brief ゲームのフェーズ�E�演�Eカメラ、�Eレイヤー追従など�E�に合わせた専用のカメラ位置�E注視点更新処琁E��行う
-	 * [入力] phase: 現在のゲームフェーズ, ufoPos: プレイヤーUFOの座樁E tornadoPos: 竜巻の座樁E
-	 * [出力] �Ȃ�
-	 * [副作用] カメラ座標およ�E注視点座標�E更新
+	 * ゲーム進行状況に応じて専用の視点へ切り替えるため
+	 * [入力] phase: 現在のゲームフェーズ, ufoPos: プレイヤー座標, tornadoPos: 竜巻の座標
+	 * [出力] なし
+	 * [副作用] phaseに応じたカメラ座標および注視点の更新
 	 */
 	void UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos);
 
-	// ポジション、注視点などのゲチE��ー�EセチE��ー
 	void SetPosition(VECTOR pos) { position_ = pos; }
 	void SetTarget(Object3D* target) { target_ = target; }
 	VECTOR GetPosition() { return position_; }
@@ -74,66 +72,65 @@ public:
 	VECTOR GetLookAtPosition() { return look_at_position_; }
 
 	/*
-	 * @brief 前フレームからマウスが移動したかどぁE��を検知する
-	 * [入力] �Ȃ�
-	 * [出力] マウスが移動した場合�Etrue
-	 * [副作用] �Ȃ�
+	 * カメラの視点移動処理を行うべきか判定するため
+	 * [入力] なし
+	 * [出力] 前フレームからマウスが移動していればtrue
+	 * [副作用] なし
 	 */
 	bool IsMouseMoved();
 
 	/*
-	 * @brief カメラの座標に対して現在累積されてぁE��シェイク量�E減衰と加算�E琁E��行う
-	 * [入力] �Ȃ�
-	 * [出力] �Ȃ�
-	 * [副作用] mvShakePositionの書き換ぁE
+	 * ダメージや演出などでの画面揺れを適用するため
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] shake_position_を更新
 	 */
 	void Shake();
 
 	/*
-	 * @brief カメラを揺らすシェイク演�Eの初期値を設定すめE
-	 * [入力] time: 継続時間（秒！E width: 揺れ幁E angleSpeed: 揺れ周期速度, stepTime: 時間経過間隔
-	 * [出力] �Ȃ�
-	 * [副作用] シェイク再生用タイマ�Eとパラメータの初期設宁E
+	 * 特定の演出や被弾時に画面を揺らすパラメータを登録するため
+	 * [入力] time: 揺れ時間, width: 揺れ幅, angleSpeed: 揺れ速度, stepTime: 時間経過幅
+	 * [出力] なし
+	 * [副作用] シェイク時間や揺れ幅などのメンバ変数を設定
 	 */
 	void SetupShake(float time, float width, float angleSpeed, float stepTime = 1.0f);
 
-	// フェーズごとの演�E用特殊カメラが有効化されてぁE��か�E判定ゲチE��ー
 	bool GetIsPhaseCameraActive() const { return is_phase_camera_active_; }
 
 private:
-	float horizontal_angle_;  // カメラの水平回転角（ラジアン�E�E
-	float vertical_angle_;    // カメラの垂直回転角（ラジアン�E�E
+	float horizontal_angle_;
+	float vertical_angle_;
 
-	bool is_phase_camera_active_; // フェーズ専用カメラが有効かどぁE��のフラグ
+	bool is_phase_camera_active_;
 
-	VECTOR position_;        // カメラの基準位置座樁E
-	VECTOR look_at_position_;  // カメラの注視点�E�ルチE��アチE���E�座樁E
-	VECTOR dir_;               // カメラの視線向き�Eクトル
+	VECTOR position_;
+	VECTOR look_at_position_;
+	VECTOR dir_;
 
-	Object3D* target_;       // 注視対象となめEDオブジェクトへのポインタ
+	Object3D* target_;
 
-	const float kRotateSpeed = 0.2f; // カメラ回転の追従速度係数
-	float target_angle_;      // 目標とする水平回転角度
-	float angle_;            // 現在の補間中水平回転角度
-	int center_x_;              // 画面中�K�v�EX座樁E
-	int center_y_;              // 画面中�K�v�EY座樁E
+	const float kRotateSpeed = 0.2f;
+	float target_angle_;
+	float angle_;
+	int center_x_;
+	int center_y_;
 
-	int mouse_x_, mouse_y_;       // マウスの現在位置座標（一時変数�E�E
+	int mouse_x_, mouse_y_;
 
-	int current_mouse_x_ = 0;          // 現在フレームでのマウス位置X
-	int current_mouse_y_ = 0;          // 現在フレームでのマウス位置Y
+	int current_mouse_x_ = 0;
+	int current_mouse_y_ = 0;
 
-	int prev_mouse_x_ = 0;      // 1フレーム前でのマウス位置X
-	int prev_mouse_y_ = 0;      // 1フレーム前でのマウス位置Y
+	int prev_mouse_x_ = 0;
+	int prev_mouse_y_ = 0;
 
-	int shake_time_;          // シェイク持続時間フレームカウンタ
-	int shake_time_count_;     // シェイク経過フレームカウンタ
+	int shake_time_;
+	int shake_time_count_;
 
-	float shake_angle_;       // シェイク計算用の正弦波角度カウンタ
-	float shake_time_counter_; // シェイクのフェードアウト用時間カウンタ
-	float mfShakeTime;        // 設定されたシェイク時間
-	float shake_width_;       // 設定された最大揺れ幁E
-	float shake_angle_speed_;  // 設定された揺れ�E周期速度
-	float step_time_;         // 毎フレームのシェイク時間減算幁E
-	VECTOR shake_position_;   // シェイク計算によって加算されるカメラオフセチE��座標値
+	float shake_angle_;
+	float shake_time_counter_;
+	float mfShakeTime;
+	float shake_width_;
+	float shake_angle_speed_;
+	float step_time_;
+	VECTOR shake_position_;
 };

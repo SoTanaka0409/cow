@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+ï»¿#include "ServiceLocator.h"
 #include "Master.h"
 #include "SceneManager.h"
 #include "Scene.h"
@@ -11,7 +11,7 @@
 
 Scene* ServiceLocator::GetCurrentScene()
 {
-	// –¢‰Šú‰»‚ÌƒNƒ‰ƒ`E??ƒ…‚ğ–h‚®‚½‚ß?EƒCƒ“ƒ^‚Ì—LŒø«‚ğŒŸØ
+	// æœªåˆæœŸåŒ–æ™‚ã®ã‚¯ãƒ©ãƒE??ãƒ¥ã‚’é˜²ããŸã‚?Eã‚¤ãƒ³ã‚¿ã®æœ‰åŠ¹æ€§ã‚’æ¤œè¨¼
 	if (Master::mpSceneManager != nullptr)
 	{
 		return Master::mpSceneManager->GetCurrentScene();
@@ -31,7 +31,7 @@ ObjectManager* ServiceLocator::GetObjectManager()
 
 Player3D* ServiceLocator::GetPlayer()
 {
-	// ƒ^ƒOŒŸõ‚É‚æ‚èƒvƒŒƒCƒ„[ƒIƒuƒWƒFƒNƒg‚ğ“®“I‚É“Á?E
+	// ã‚¿ã‚°æ¤œç´¢ã«ã‚ˆã‚Šãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å‹•çš„ã«ç‰¹?E
 	ObjectManager* objMgr = GetObjectManager();
 	if (objMgr != nullptr)
 	{
@@ -42,7 +42,7 @@ Player3D* ServiceLocator::GetPlayer()
 
 std::vector<Player3D*> ServiceLocator::GetPlayers()
 {
-	// ƒ}ƒ‹ƒ`?EƒŒƒC‘Î‰“™‚ğ˜VE?E‚µA‘¶İ‚·‚é‘SƒvƒŒƒCƒ„[‚ğûŠåE
+	// ãƒãƒ«ãƒ?Eãƒ¬ã‚¤å¯¾å¿œç­‰ã‚’è€E?Eã—ã€å­˜åœ¨ã™ã‚‹å…¨ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’åé›E
 	std::vector<Player3D*> players;
 	ObjectManager* objMgr = GetObjectManager();
 	if (objMgr != nullptr)
