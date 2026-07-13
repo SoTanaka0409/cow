@@ -77,30 +77,30 @@ void TutorialScene::CreateFences()
 	for (int i = 0; i < 5; ++i) {
 		float z = 5050.0f;
 		float x = 500.0f + (i * 1000.0f);
-		new Object_Stage("Resource/3D/譟ｵ1/譟ｵ1/Fence.mv1", VGet(x, -25.0f, z), 2.5f, VGet(0.0f, 0.0f, 0.0f));
-		new Object_Stage("Resource/3D/譟ｵ1/譟ｵ1/Fence.mv1", VGet(-x, -25.0f, z), 2.5f, VGet(0.0f, 0.0f, 0.0f));
+		new Object_Stage("Resource/3D/Fence1/Fence1/Fence.mv1", VGet(x, -25.0f, z), 2.5f, VGet(0.0f, 0.0f, 0.0f));
+		new Object_Stage("Resource/3D/Fence1/Fence1/Fence.mv1", VGet(-x, -25.0f, z), 2.5f, VGet(0.0f, 0.0f, 0.0f));
 		
-		new Object_Stage("Resource/3D/譟ｵ1/譟ｵ1/Fence.mv1", VGet(x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F, 0.0f));
-		new Object_Stage("Resource/3D/譟ｵ1/譟ｵ1/Fence.mv1", VGet(-x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F, 0.0f));
+		new Object_Stage("Resource/3D/Fence1/Fence1/Fence.mv1", VGet(x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F, 0.0f));
+		new Object_Stage("Resource/3D/Fence1/Fence1/Fence.mv1", VGet(-x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F, 0.0f));
 	}
 
 	for (int i = 0; i < 5; ++i) {
 		float x = 5050.0f;
 		float z = 500.0f + (i * 1000.0f);
-		new Object_Stage("Resource/3D/譟ｵ1/譟ｵ1/Fence.mv1", VGet(x, -25.0f, z), 2.5f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
-		new Object_Stage("Resource/3D/譟ｵ1/譟ｵ1/Fence.mv1", VGet(x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
+		new Object_Stage("Resource/3D/Fence1/Fence1/Fence.mv1", VGet(x, -25.0f, z), 2.5f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
+		new Object_Stage("Resource/3D/Fence1/Fence1/Fence.mv1", VGet(x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
 
-		new Object_Stage("Resource/3D/譟ｵ1/譟ｵ1/Fence.mv1", VGet(-x, -25.0f, z), 2.5f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
-		new Object_Stage("Resource/3D/譟ｵ1/譟ｵ1/Fence.mv1", VGet(-x, -25.0f, -z), 2.5f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
+		new Object_Stage("Resource/3D/Fence1/Fence1/Fence.mv1", VGet(-x, -25.0f, z), 2.5f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
+		new Object_Stage("Resource/3D/Fence1/Fence1/Fence.mv1", VGet(-x, -25.0f, -z), 2.5f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
 	}
 }
 
 void TutorialScene::CreateWalls()
 {
-	new Wall("Resource", VGet(0.0f, 0.0f, 5000.0f), VGet(-5000.0f, 5000.0f, 0.0f), VGet(5000.0f, 0.0f, 0.0f));
-	new Wall("Resource", VGet(0.0f, 0.0f, -5000.0f), VGet(-5000.0f, 5000.0f, 0.0), VGet(5000.0f, 0.0f, 0.0f));
-	new Wall("Resource", VGet(5000.0f, 0.0f, 0.0f), VGet(0.0f, 5000.0f, 5000.0f), VGet(0.0f, 0.0f, -5000.0f));
-	new Wall("Resource", VGet(-5000.0f, 0.0f, 0.0f), VGet(0.0f, 5000.0f, 5000.0f), VGet(0.0f, 0.0f, -5000.0f));
+	new Wall("", VGet(0.0f, 0.0f, 5000.0f), VGet(-5000.0f, 5000.0f, 0.0f), VGet(5000.0f, 0.0f, 0.0f));
+	new Wall("", VGet(0.0f, 0.0f, -5000.0f), VGet(-5000.0f, 5000.0f, 0.0), VGet(5000.0f, 0.0f, 0.0f));
+	new Wall("", VGet(5000.0f, 0.0f, 0.0f), VGet(0.0f, 5000.0f, 5000.0f), VGet(0.0f, 0.0f, -5000.0f));
+	new Wall("", VGet(-5000.0f, 0.0f, 0.0f), VGet(0.0f, 5000.0f, 5000.0f), VGet(0.0f, 0.0f, -5000.0f));
 }
 
 void TutorialScene::SetCamera(Camera* camera)
@@ -167,8 +167,8 @@ void TutorialScene::UpdateStateMove()
 		Master::mpSoundManager->PlaySE(SoundManager::kSeTutorialChange);
 		state_ = kStateBeam;
 		
-		VECTOR spawnPos = VGet(0, 0.0f, 1000.0f);
-		cow_manager_->SpawnCow(GameConstants::kCowDefault.model_path, spawnPos, 50.0f, CowMove::kCow1, 1);
+		VECTOR spawnPos = VGet(0, 0.0f, 150.0f);
+		cow_manager_->SpawnCow(GameConstants::kCowDefault.model_path, spawnPos, 50.0f, CowMove::kCowT, 1);
 	}
 }
 
@@ -183,8 +183,8 @@ void TutorialScene::UpdateStateBeam()
 		state_ = kStateComboScore;
 
 		// コンボ稼ぎ用として牛の群れをスポーン
-		cow_manager_->SpawnCow(GameConstants::kCowDefault.model_path, VGet(500, 0.0f, 1000.0f), 50.0f, CowMove::kCow1, 2);
-		cow_manager_->SpawnCow(GameConstants::kCowDefault.model_path, VGet(-500, 0.0f, 1000.0f), 50.0f, CowMove::kCow1, 2);
+		cow_manager_->SpawnCow(GameConstants::kCowDefault.model_path, VGet(150.0f, 0.0f, 150.0f), 50.0f, CowMove::kCowT, 2);
+		cow_manager_->SpawnCow(GameConstants::kCowDefault.model_path, VGet(-150.0f, 0.0f, 150.0f), 50.0f, CowMove::kCowT, 2);
 	}
 }
 
@@ -265,7 +265,7 @@ void TutorialScene::UpdateStateEnd()
 {
 	DrawTutorialText("Enterでチュートリアルを終了します");
 
-	if (CheckHitKey(KEY_INPUT_RETURN))
+	if(CheckHitKey(KEY_INPUT_RETURN))
 	{
 		fade_state_ = kSceneFadeOut;
 		next_scene_ = SceneManager::kSceneTitle;
@@ -287,3 +287,6 @@ void TutorialScene::Finalize()
 {
 	Master::mpSoundManager->StopBGM();  
 }
+
+
+

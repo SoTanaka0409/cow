@@ -26,7 +26,7 @@ CowManager::CowManager()
  * [出力] なし
  * [副作用] mCreaturesへのオブジェクト追加、および上限時は既存オブジェクトの破棄を行う。
  */
-void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove::TagCow tag, int count, bool is_fever)
+void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove::TagCow tag, int count, bool is_fever, float scatterRadius)
 {
 	for (int i = 0; i < count; i++)
 	{
@@ -83,8 +83,16 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 				break;
 			}
 		}
-		float randX = (float)(GetRand(pos.x) - pos.x / 2);
-		float randZ = (float)(GetRand(pos.z) - pos.z / 2);
+		float randX = pos.x;
+		float randZ = pos.z;
+		if (count > 1 || scatterRadius > 200.0f)
+		{
+			if (scatterRadius > 0.0f)
+			{
+				randX += (float)(GetRand((int)(scatterRadius * 2.0f)) - scatterRadius);
+				randZ += (float)(GetRand((int)(scatterRadius * 2.0f)) - scatterRadius);
+			}
+		}
 		VECTOR spawnPos = VGet(randX, pos.y, randZ);
 		if (tag == CowMove::kCow1)
 		{
@@ -106,3 +114,5 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 		}
 	}
 }
+
+

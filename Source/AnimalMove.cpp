@@ -1,4 +1,4 @@
-﻿#include "AnimalMove.h"
+#include "AnimalMove.h"
 #include "GameConstants.h"
 #include "Master.h"
 #include "InputManager.h"
@@ -148,7 +148,7 @@ void AnimalMove::CharacterDied()
 	CharacterRotate();
 	if (player != nullptr)
 	{
-		position_.y += player->Status(Player3D::Status_AttackS);
+		position_.y += player->Status(Player3D::Status_AttackS) * Master::GetDeltaTimeScaler();
 	}
 
 	// UFOへの吸い込み演出を完遂したか判定するため

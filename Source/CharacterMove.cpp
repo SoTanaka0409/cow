@@ -1,4 +1,4 @@
-﻿#include "CharacterMove.h"
+#include "CharacterMove.h"
 #include "CharacterState.h"
 #include "Master.h"
 #include "SceneManager.h"
@@ -8,8 +8,8 @@
 #include "CapsuleCollider.h"
 #include <cmath>
 #include "ServiceLocator.h"
-#include "Scene.h"
 #include "ColliderManager.h"
+#include "Utility.h"
 /*
  * キャラクターの初期化
  * [入力] filename: モデルのファイルパス, initPos: 初期座標
@@ -164,6 +164,12 @@ void CharacterMove::MoveCharacter()
 	old_position_ = position_;
 	UpdateWanderAI();
 	CheckWallCollision();
+
+	if (position_.x > Utility::StageSize.x) position_.x = Utility::StageSize.x;
+	if (position_.x < -Utility::StageSize.x) position_.x = -Utility::StageSize.x;
+	if (position_.z > Utility::StageSize.z) position_.z = Utility::StageSize.z;
+	if (position_.z < -Utility::StageSize.z) position_.z = -Utility::StageSize.z;
+
 	model_->SetPosition(position_);
 }
 /*
@@ -247,7 +253,7 @@ void CharacterMove::CheckWallCollision()
 					if (hitwall && !hitwalls)
 					{
 						position_ = old_position_;
-						position_ = VAdd(position_, VScale(slide, mfSpeed));
+						position_ = VAdd(position_, VScale(slide, mfSpeed * Master::GetDeltaTimeScaler()));
 						hitwalls = true;
 					}
 					// 複数壁への連続衝突によるめり込みを防ぐため。

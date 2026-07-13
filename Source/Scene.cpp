@@ -1,4 +1,4 @@
-﻿#include"Scene.h"
+#include"Scene.h"
 #include"ObjectManager.h"
 #include"Master.h"
 #include"ColliderManager.h"
@@ -17,7 +17,7 @@ Scene::Scene()
 {
 
 	object_manager_ = new ObjectManager();
-	collider_manager_ = new ColliderManager();
+	collider_manager_ = ColliderManager::GetInstance();
 	game_manager_ = new GameManager();
 	cow_manager_ = new CowManager();
 	animal_manager_ = new AnimalManager();
@@ -48,7 +48,6 @@ Scene::~Scene()
 	if (collider_manager_ != nullptr)
 	{
 		collider_manager_->DeleteAllCollider();
-		delete collider_manager_;
 	}
 
 

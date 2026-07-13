@@ -16,7 +16,7 @@ public:
 	 * [出力] なし
 	 * [副作用] 管理リストへ牛を追加、またはプールから復帰
 	 */
-	void SpawnCow(std::string filename, VECTOR pos, float scale, CowMove::TagCow tag, int count, bool is_fever = false);
+	void SpawnCow(std::string filename, VECTOR pos, float scale, CowMove::TagCow tag, int count, bool is_fever = false, float scatterRadius = 200.0f);
 protected:
 	CowMove::TagCow GetTag(CowMove* creature) override { return creature->GetTagCow(); }
 };

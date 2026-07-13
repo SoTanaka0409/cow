@@ -21,13 +21,20 @@ AnimalManager::AnimalManager()
  * 出力: なし
  * 副作用: オブジェクトのメモリ確保(またはプールからの再利用)と管理リストへの追加
  */
-void AnimalManager::SpawnAnimal(std::string filename, VECTOR pos, float scale, AnimalMove::TagAnimal tag, int count)
+void AnimalManager::SpawnAnimal(std::string filename, VECTOR pos, float scale, AnimalMove::TagAnimal tag, int count, float scatterRadius)
 {
 	for (int i = 0; i < count; i++)
 	{
-		// 複数生成時に同じ座標に重なって描画（Zファイティング等）されるのを防ぐため座標を散らす
-		float randX = (float)(GetRand(pos.x) - pos.x / 2);
-		float randZ = (float)(GetRand(pos.z) - pos.z / 2);
+		float randX = pos.x;
+		float randZ = pos.z;
+		if (count > 1 || scatterRadius > 200.0f)
+		{
+			if (scatterRadius > 0.0f)
+			{
+				randX += (float)(GetRand((int)(scatterRadius * 2.0f)) - scatterRadius);
+				randZ += (float)(GetRand((int)(scatterRadius * 2.0f)) - scatterRadius);
+			}
+		}
 		VECTOR spawnPos = VGet(randX, 0.0f, randZ);
 
 		// 暫定対応: 現在はkAnimal1(牛)の実装のみ。他種別追加時はFactory等へのリファクタリングを推奨

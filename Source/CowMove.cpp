@@ -1,4 +1,4 @@
-﻿#include "CowMove.h"
+#include "CowMove.h"
 #include "GameConstants.h"
 #include "Master.h"
 #include "InputManager.h"
@@ -158,7 +158,7 @@ void CowMove::AvoidOtherCows()
 					if (VSquareSize(dir_) < 0.001f) dir_ = VGet(1.0f, 0.0f, 0.0f);
 				}
 				dir_ = VNorm(dir_);
-				position_ = VAdd(position_, VScale(dir_, 15.0f));
+				position_ = VAdd(position_, VScale(dir_, 15.0f * Master::GetDeltaTimeScaler()));
 			}
 		}
 	}
@@ -191,7 +191,7 @@ bool CowMove::SeekBait()
 
 				if (distSq > 100.0f)
 				{
-					position_ = VAdd(position_, VScale(VNorm(diff), 25.0f));
+					position_ = VAdd(position_, VScale(VNorm(diff), 25.0f * Master::GetDeltaTimeScaler()));
 				}
 				else
 				{
@@ -259,7 +259,7 @@ void CowMove::OnEnter(Collider* collider, Collider* check)
 			}
 
 			dir_ = VNorm(dir_);
-			position_ = VAdd(position_, VScale(dir_, 3.0f));
+			position_ = VAdd(position_, VScale(dir_, 3.0f * Master::GetDeltaTimeScaler()));
 		}
 	}
 }
@@ -289,7 +289,7 @@ void CowMove::OnTrigger(Collider* collider, Collider* check)
 			}
 
 			dir_ = VNorm(dir_);
-			position_ = VAdd(position_, VScale(dir_, 3.0f));
+			position_ = VAdd(position_, VScale(dir_, 3.0f * Master::GetDeltaTimeScaler()));
 		}
 	}
 }
@@ -324,7 +324,7 @@ void CowMove::CharacterDied()
 		CharacterRotate();
 		if (player != nullptr)
 		{
-			position_.y += player->Status(Player3D::Status_AttackS);
+			position_.y += player->Status(Player3D::Status_AttackS) * Master::GetDeltaTimeScaler();
 
 			// フィーバー中はプレイヤーの移動速度が上がるため、吸引漏れを防ぐ目的で牛をUFOの真下へ強制的に吸い寄せる
 			if (Master::FeverFlag)

@@ -1,4 +1,4 @@
-﻿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include "Player3D.h"
 #include "Camera.h"
 #include <cmath>
@@ -287,7 +287,7 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 	}
 
 	// 画面の突然の切り替わりによる3D酔いを防ぐため、現在地から目標地点まで線形補間(Lerp)で滑らかに移動させる
-	float lerpSpeed = 0.1f;
+	float lerpSpeed = 0.1f * Master::GetDeltaTimeScaler();
 	position_ = LerpVector(position_, targetPos, lerpSpeed);
 	look_at_position_ = LerpVector(look_at_position_, targetLookAt, lerpSpeed);
 

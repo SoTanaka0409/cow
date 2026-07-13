@@ -12,7 +12,7 @@ Wall::Wall(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottom
 	: Object3D(centerPos)
 {
 	SetTag(Object3D::kTag3dWall);
-	graph_handle_ = Master::mpResourceManager->LoadGraphics(filename.c_str());
+	if (!filename.empty()) { graph_handle_ = Master::mpResourceManager->LoadGraphics(filename.c_str()); } else { graph_handle_ = -1; }
 
 	vertex_[0].pos = VAdd(centerPos, topLeft);
 	vertex_[0].norm = VGet(1.0f, 0.0f, 0.0f);
@@ -120,3 +120,4 @@ void Wall::Draw()
 	DrawPolygonIndexed3D(vertex_, 4, index, 2, graph_handle_, true);
 	SetUseLighting(true);
 }
+

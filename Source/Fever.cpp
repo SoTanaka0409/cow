@@ -80,10 +80,11 @@ void Fever::EndFever()
 	}
 	is_fever_ = false;
 	
-	VECTOR spawnPos = Utility::StageSize;
-	ServiceLocator::GetCowManager()->SpawnCow(GameConstants::kCowGold.model_path, spawnPos, 50.0f, CowMove::kCowGold, 1);
-	ServiceLocator::GetCowManager()->SpawnCow(GameConstants::kCowDefault.model_path, spawnPos, 50.0f, CowMove::kCow1, 10);
-	ServiceLocator::GetAnimalManager()->SpawnAnimal(GameConstants::kAnimalSheep.model_path, spawnPos, 50.0f, AnimalMove::kAnimal1, 5);
+	VECTOR spawnPos = VGet(0.0f, 0.0f, 0.0f);
+	float scatterArea = Utility::StageSize.x;
+	ServiceLocator::GetCowManager()->SpawnCow(GameConstants::kCowGold.model_path, spawnPos, 50.0f, CowMove::kCowGold, 2, false, scatterArea);
+	ServiceLocator::GetCowManager()->SpawnCow(GameConstants::kCowDefault.model_path, spawnPos, 50.0f, CowMove::kCow1, 20, false, scatterArea);
+	ServiceLocator::GetAnimalManager()->SpawnAnimal(GameConstants::kAnimalSheep.model_path, spawnPos, 50.0f, AnimalMove::kAnimal1, 5, scatterArea);
 	Master::FeverFlag = false;
 }
 
@@ -123,8 +124,8 @@ void Fever::Update()
 	if (drop_count_ > drop_time_)
 	{
 		drop_count_ = 0;
-		VECTOR spawnPos = Utility::StageSize;
-		ServiceLocator::GetCowManager()->SpawnCow(GameConstants::kCowGold.model_path, spawnPos, 50.0f, CowMove::kCowGold, 2, true);
+		VECTOR spawnPos = VGet(0.0f, 0.0f, 0.0f);
+		ServiceLocator::GetCowManager()->SpawnCow(GameConstants::kCowGold.model_path, spawnPos, 50.0f, CowMove::kCowGold, 2, true, Utility::StageSize.x);
 	}
 
 	if (timer_ <= 0)

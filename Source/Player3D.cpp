@@ -1,4 +1,4 @@
-﻿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include"Player3D.h"
 #include"Model.h"
 #include"ModelAnimation.h"
@@ -360,7 +360,7 @@ void Player3D::MoveEx()
 		target_angle_ = atan2f(moveVec.x, moveVec.z);
 		oldmoveVec = moveVec;
 
-		currentSpeed = Status(kStatusSpeed);
+		currentSpeed = Status(kStatusSpeed) * Master::GetDeltaTimeScaler();
 		position_ = VAdd(position_, VScale(moveVec, currentSpeed));
 	}
 
@@ -393,7 +393,7 @@ void Player3D::MoveEx()
 					if (hitwall == true && hitwalls == false)
 					{
 						position_ = old_position_;
-						position_ = VAdd(position_, VScale(slide, mfSpeed));
+						position_ = VAdd(position_, VScale(slide, mfSpeed * Master::GetDeltaTimeScaler()));
 						hitwalls = true;
 					}
 					// 壁へのめり込みや挟まりを防ぐため、移動をキャンセルする

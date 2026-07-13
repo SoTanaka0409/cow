@@ -54,7 +54,7 @@ void LoadingScene::Update()
 		Master::mpResourceManager->PreloadModel(GameConstants::kAnimalBear.model_path);
 		Master::mpResourceManager->PreloadModel(GameConstants::kAnimalSheep.model_path);
 		Master::mpResourceManager->PreloadModel("Resource/3D/ufo2/Ufo.mv1");
-		Master::mpResourceManager->PreloadModel("Resource/3D/柵1/柵1/Fence.mv1");
+		Master::mpResourceManager->PreloadModel("Resource/3D/Fence1/Fence1/Fence.mv1");
 		Master::mpResourceManager->PreloadModel("Resource/3D/SkyBox/SkyBox.mv1");
 
 		SetUseASyncLoadFlag(FALSE);
