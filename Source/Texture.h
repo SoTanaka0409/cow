@@ -4,46 +4,29 @@
 #include <string>
 #include "DxLib.h"
 
-// 2D画像アセチE??を読み込み、位置めE??イズ、スケーリングを指定して画面描画を行うクラス
+// 設計ルール：テクスチャファイルの重複ロードを防ぎ、基準点を「中心」に統一して直感的な2Dレイアウトを行うための画像描画クラス
 class Texture
 {
 public:
+	// 入力：filename=画像パス, centerPosition=中心描画の基準座標, graphsize_x/y=指定描画サイズ, transFlag=透過有無
+	// 副作用：DxLibによる画像リソースの読み込みとグラフィックハンドルの生成
 	Texture(std::string filename, VECTOR centerPosition, int graphsize_x, int graphsize_y, int transFlag);
 	~Texture();
 
-	/*
-	 * @brief チE??スチャめEposition_ を中?E??持E??サイズで描画する
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 画面?E?バチE??バッファ?E?に画像を描画
-	 */
+	// 副作用：バックバッファへの画像描画
+	// 設計ルール：回転やスケール変更の基準点を制御しやすくするため、左上ではなく常に指定された「中心座標」を軸に描画する
 	void Draw();
 
-	/*
-	 * @brief チE??スチャを通常サイズより少し拡大した状態で中?E??画する?E??ボタンホバー用など、現在未使用?E?E
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 画面に拡大画像を描画
-	 */
+	// 副作用：バックバッファへの拡大画像描画
+	// 一時対応：UIのボタンホバー時のポップアップ演出用として作成。現在リデザインに伴い一時的に未呼出し状態
 	void SizeDraw();
 
-	/*
-	 * @brief チE??スチャの毎フレームの更新処?E??現在処?E??し！E
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] なし
-	 */
 	void Update();
 
-	/*
-	 * @brief チE??スチャを任意?Eスケール比率で中?E??画する
-	 * [入力] scale: スケーリング倍率?E?E.0fが等倍！E
-	 * [出力] なし
-	 * [副作用] 画面に拡大/縮小した画像を描画
-	 */
+	// 入力：scale=拡大縮小率（1.0fが等倍）
+	// 副作用：バックバッファへの変形描画
 	void DrawScale(float scale);
 
-	// セチE??ー・ゲチE??ー群
 	void SetPosition(VECTOR centerPosition) { position_ = centerPosition; }
 	VECTOR GetPosition() { return position_; }
 	int GetSizeX() { return mnSizeX; }
@@ -52,14 +35,15 @@ public:
 	int GetHeight() { return new_game_h_; }
 
 private:
-	int mnHandle;       // ロードした画像?EグラフィチE??ハンドル
-	VECTOR position_;  // 画面描画時?E中?E???E
-	int mnSizeX;        // 画像ファイル本来の横?E
-	int mnSizeY;        // 画像ファイル本来の縦?E
-	bool mnTransFlag;   // 背景の透過?E?透過チャンネル?E?を有効にするかどぁE??のフラグ
+	int mnHandle;
+	VECTOR position_;
+	int mnSizeX;
+	int mnSizeY;
+	bool mnTransFlag;
 
-	int new_game_w_;      // 持E??された描画用の横?E
-	int new_game_h_;      // 持E??された描画用の縦?E
+	// 仕様制約：アセット本来の解像度とは別に、画面レイアウト上のUI枠に合わせて強制拡縮して描画するための指定サイズ
+	int new_game_w_;
+	int new_game_h_;
 };
 
 #endif

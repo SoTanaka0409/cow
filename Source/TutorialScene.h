@@ -8,11 +8,10 @@
 class Camera;
 class Combo;
 
-// プレイヤーに基本操作とゲームシスチE??を解説するシーン
+// 設計ルール：ゲーム本編（牛の拉致アクション）の基本操作や各システムを段階的に学ばせるための練習用シーン
 class TutorialScene : public Scene
 {
 public:
-	// 進行フェーズを管?E??るスチE?Eト定義
 	enum State
 	{
 		kStateMove,
@@ -24,7 +23,6 @@ public:
 		kStateEnd
 	};
 
-	// フィーバ?Eモード体験中のサブスチE?EチE
 	enum State_fever
 	{
 		kFever1,
@@ -35,29 +33,39 @@ public:
 	TutorialScene();
 	virtual ~TutorialScene();
 
-	// [入力] なし[出力] なし[副作用] チE??スチャアセチE??読込、オブジェクト?E置、BGM再生
+	// 入力：なし
+	// 出力：なし
+	// 副作用：操作解説用テクスチャのロード、初期配置オブジェクトの設定、専用BGMの再生
 	void Initialize() override;
 
-	// [入力] なし[出力] なし[副作用] スチE?Eトに基づく操作判定とフェード更新
+	// 入力：なし
+	// 出力：なし
+	// 副作用：現在の進捗ステートに応じた操作クリア判定、および段階的な説明UI・フラグの更新
 	void Update() override;
 
-	// [入力] なし[出力] なし[副作用] 画面にチE??ストと3D空間を描画
+	// 入力：なし
+	// 出力：なし
+	// 副作用：3Dゲーム空間、および画面中央への固定メッセージ・操作ナビゲーションUIの描画
 	void Draw() override;
 
-	// [入力] なし[出力] なし[副作用] BGM停止など終?E?E?E
+	// 入力：なし
+	// 出力：なし
+	// 副作用：チュートリアル専用BGMの停止、ロードしたUI用リソースの全解放
 	void Finalize() override;
 
 	void SetCamera(Camera* camera);
-	void OnCowSucked() { is_cow_sucked_ = true; } // 回収成功を外部から受け取るコールバック
+
+	// 出力：なし
+	// 副作用：プレイヤーが牛の格納（アブダクション）に成功したというトリガーをシーン側に通知する
+	void OnCowSucked() { is_cow_sucked_ = true; }
 
 private:
-	// [入力] なし[出力] なし[副作用] ?E??用オブジェクトを配置
+	// 副作用：プレイヤーが勝手に遠くへ行かないよう、初期位置の周囲を囲う障害物（柵）を生成・配置する
 	void CreateFences();
 
-	// [入力] なし[出力] なし[副作用] 領域外判定用の透?E壁を生?E
+	// 副作用：カメラやプレイヤーがステージ外の暗黒空間に落下するのを防ぐ透明な衝突判定（防壁）を生成する
 	void CreateWalls();
 
-	// 吁E??チE?Eト?E更新ロジチE??
 	void UpdateStateMove();
 	void UpdateStateBeam();
 	void UpdateStateComboScore();
@@ -66,31 +74,33 @@ private:
 	void UpdateStateFever();
 	void UpdateStateEnd();
 
-	// [入力] text:表示?E??E yOffset:Y座標オフセチE?? [出力] なし[副作用] 案?EチE??スト?E描画
+	// 入力：text=表示したい文章, yOffset=標準描画位置からの上下ズレ（px）
+	// 副作用：指定された文字列を画面中央に見やすくレイアウトして描画する
 	void DrawTutorialText(const char* text, int yOffset = 0);
 
-	int cow_count_;
-	int font_handle_; // 案?E用フォンチE
-	int timer_count_; // 汎用征E??タイマ?E
+private:
+	int cow_count_;                  // クリア条件（例：牛を3匹吸い出す）を満たしたか監視する捕獲カウンター
+	int font_handle_;                // 画面上に大きく操作方法を表示するためのアンチエイリアス付きフォントハンドル
+	int timer_count_;                // テキストの文字送りや、課題クリアから次の解説へ進むまでの暗転猶予タイマー
 
-	State state_ = kStateMove;
-	State_fever fever_state_;
+	State state_ = kStateMove;       // チュートリアル全体が現在どの解説フェーズにあるかを示す進行管理変数
+	State_fever fever_state_;        // 後半のフィーバー体験セクションにおける、内部の演出ステップ管理用ステート
 
-	Texture* texture_;
-	Texture* texture2_;
-	Texture* texture3_;
-	Texture* texture4_;
-	Texture* texture5_;
-	Texture* texture6_;
+	Texture* texture_;               // 各ステップの背景に表示する、操作図解（コントローラー画像など）の個別テクスチャ
+	Texture* texture2_;             
+	Texture* texture3_;             
+	Texture* texture4_;             
+	Texture* texture5_;             
+	Texture* texture6_;             
 
-	int mouse_x_;
+	int mouse_x_;                    // ビーム照射やUIクリックにおける、マウスポインタのX軸入力キャッシュ
 
-	Thunder* thunder_;
-	Camera* camera_ = nullptr;
-	Combo* combo_ = nullptr;
+	Thunder* thunder_;               // 雷トラップの回避テストを体験させるために、シーン内で個別生成する環境オブジェクト
+	Camera* camera_ = nullptr;       // プレイヤーの視点を解説用（固定俯瞰）に強制クランプするための制御用カメラ
+	Combo* combo_ = nullptr;         
 
-	bool is_cow_sucked_ = false;
-	bool cow_delete_;
-	bool skill_flag_{};
-	bool fever_flag_{};
+	bool is_cow_sucked_ = false;     // ビームによる吸い込み（アブダクション）の成功イベントを検知するクリア判定用フラグ
+	bool cow_delete_;                // チュートリアル終了時やリセット時に、場にいる練習用の牛を消去するための消去フラグ
+	bool skill_flag_{};              // スキル選択画面のシステム解説がすでに完了したかを記憶する進行スキップ防止フラグ
+	bool fever_flag_{};              // フィーバータイムの発生演出がすでにトリガーされたかを確認する多重発生防止フラグ
 };
