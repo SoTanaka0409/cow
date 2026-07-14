@@ -1,4 +1,4 @@
-ï»¿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include "Scene3D.h"
 #include "Master.h"
 #include "InputManager.h"
@@ -21,10 +21,10 @@ Thunder* thunder_ = nullptr;
 Tornado* tatumaki = nullptr;
 
 /*
- * 3Dã‚·ãƒ¼ãƒ³ã®åˆæœŸåŒ–
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ãƒ¡ãƒ³ãƒå¤‰æ•°ã®åˆæœŸåŒ–
+ * 3DƒV[ƒ“‚Ì‰Šú‰»
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ƒƒ“ƒo•Ï”‚Ì‰Šú‰»
  */
 Scene3D::Scene3D()
 {
@@ -33,23 +33,25 @@ Scene3D::Scene3D()
 }
 
 /*
- * 3Dã‚·ãƒ¼ãƒ³ã®ç ´æ£„
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ãªã—
+ * 3DƒV[ƒ“‚Ì”jŠü
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ‚È‚µ
  */
 Scene3D::~Scene3D()
 {
 }
 
 /*
- * 3Dã‚·ãƒ¼ãƒ³ã®ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é…ç½®ã€BGMå†ç”Ÿã®é–‹å§‹
+ * 3DƒV[ƒ“‚ÌƒZƒbƒgƒAƒbƒv
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] 3DƒIƒuƒWƒFƒNƒg‚Ì”z’uABGMÄ¶‚ÌŠJn
  */
 void Scene3D::Initialize()
 {
+	Master::camera_->Initialize();
+
 	Master::mnCaughtCowCount = 0;
 	fade_state_ = kSceneFadeIn;
 	SetFadeAlpha(255.0f);
@@ -59,42 +61,42 @@ void Scene3D::Initialize()
 	
 	for (int i = 0; i < 6; i++)
 	{
-		new Object_Stage("Resource/3D/è£…é£¾/SmallTree1.mv1", VGet(6000, 0, -5000 + 2000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/è£…é£¾/SmallTree1.mv1", VGet(-6000, 0, -5000 + 2000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/è£…é£¾/Flower1.mv1", VGet(5500, 0, -5000 + 2000 * i), 3.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/è£…é£¾/SmallTree1.mv1", VGet(-6000, 0, -5000 + 2000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/è£…é£¾/SmallTree1.mv1", VGet(-5000 + 2000 * i, 0, -6000), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/è£…é£¾/SmallTree1.mv1", VGet(-5000 + 2000 * i, 0, 6000), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/‘•ü/SmallTree1.mv1", VGet(6000, 0, -5000 + 2000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/‘•ü/SmallTree1.mv1", VGet(-6000, 0, -5000 + 2000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/‘•ü/Flower1.mv1", VGet(5500, 0, -5000 + 2000 * i), 3.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/‘•ü/SmallTree1.mv1", VGet(-6000, 0, -5000 + 2000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/‘•ü/SmallTree1.mv1", VGet(-5000 + 2000 * i, 0, -6000), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/‘•ü/SmallTree1.mv1", VGet(-5000 + 2000 * i, 0, 6000), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
 	}
 
 	for (int i = 0; i < 3; i++)
 	{
-		new Object_Stage("Resource/3D/è£…é£¾/BigTree1.mv1", VGet(5500, 0, -4000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/è£…é£¾/BigTree4.mv1", VGet(-5500, 0, -4000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/è£…é£¾/BigTree4.mv1", VGet(-4000 + 4000 * i, 0, 5500), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/è£…é£¾/BigTree3.mv1", VGet(-4000 + 4000 * i, 0, -5500), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/‘•ü/BigTree1.mv1", VGet(5500, 0, -4000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/‘•ü/BigTree4.mv1", VGet(-5500, 0, -4000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/‘•ü/BigTree4.mv1", VGet(-4000 + 4000 * i, 0, 5500), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/‘•ü/BigTree3.mv1", VGet(-4000 + 4000 * i, 0, -5500), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
 	}
 
 	for (int i = 0; i < 2; i++)
 	{
-		new Object_Stage("Resource/3D/è£…é£¾/BigTree3.mv1", VGet(5500, 0, -2000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/è£…é£¾/BigTree2.mv1", VGet(-5500, 0, -2000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/‘•ü/BigTree3.mv1", VGet(5500, 0, -2000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/‘•ü/BigTree2.mv1", VGet(-5500, 0, -2000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
 	}
 	 
-	new Object_Stage("Resource/3D/è£…é£¾/Grass2.mv1", VGet(0, 0, 0), 2.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+	new Object_Stage("Resource/3D/‘•ü/Grass2.mv1", VGet(0, 0, 0), 2.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
 
 	VECTOR mountainScale = VGet(30.0f, 50.0f, 30.0f);
 	float mountainDist = 13000.0f;
-	auto m1 = new Mountain("Resource/3D/å±±/åœ°å½¢.mv1", VGet(0, 0, mountainDist), mountainScale, VGet(0.0f, DX_PI_F, 0.0f));
+	auto m1 = new Mountain("Resource/3D/R/’nŒ`.mv1", VGet(0, 0, mountainDist), mountainScale, VGet(0.0f, DX_PI_F, 0.0f));
 	m1->SetColor(0.2f, 0.3f, 0.2f, 1.0f);
-	auto m2 = new Mountain("Resource/3D/å±±/åœ°å½¢.mv1", VGet(0, 0, -mountainDist), mountainScale, VGet(0.0f, 0.0f, 0.0f));
+	auto m2 = new Mountain("Resource/3D/R/’nŒ`.mv1", VGet(0, 0, -mountainDist), mountainScale, VGet(0.0f, 0.0f, 0.0f));
 	m2->SetColor(0.2f, 0.3f, 0.2f, 1.0f);
-	auto m3 = new Mountain("Resource/3D/å±±/åœ°å½¢.mv1", VGet(mountainDist, 0, 0), mountainScale, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
+	auto m3 = new Mountain("Resource/3D/R/’nŒ`.mv1", VGet(mountainDist, 0, 0), mountainScale, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
 	m3->SetColor(0.2f, 0.3f, 0.2f, 1.0f);
-	auto m4 = new Mountain("Resource/3D/å±±/åœ°å½¢.mv1", VGet(-mountainDist, 0, 0), mountainScale, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
+	auto m4 = new Mountain("Resource/3D/R/’nŒ`.mv1", VGet(-mountainDist, 0, 0), mountainScale, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
 	m4->SetColor(0.2f, 0.3f, 0.2f, 1.0f);
 
-	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒãƒãƒƒãƒ—å¤–ã¸å‡ºã‚‰ã‚Œãªã„ã‚ˆã†ã€å¢ƒç•Œã«å²©ã‚’é…ç½®
+	// ƒvƒŒƒCƒ„[‚ªƒ}ƒbƒvŠO‚Öo‚ç‚ê‚È‚¢‚æ‚¤A‹«ŠE‚ÉŠâ‚ğ”z’u
 	for (int i = 0; i < 40; i++)
 	{
 		float rockX = (float)(GetRand(15000) - 7500);
@@ -107,20 +109,20 @@ void Scene3D::Initialize()
 		float rockScale = 1.0f + (float)(GetRand(30)) / 10.0f;
 		float rockRot = (float)(GetRand(360)) * DX_PI_F / 180.0f;
 		
-		auto rock = new Object_Stage("Resource/3D/çŸ³/rock.mv1", VGet(rockX, 0, rockZ), rockScale, VGet(0.0f, rockRot, 0.0f));
+		auto rock = new Object_Stage("Resource/3D/Î/rock.mv1", VGet(rockX, 0, rockZ), rockScale, VGet(0.0f, rockRot, 0.0f));
 		rock->SetColor(0.4f, 0.7f, 0.3f, 1.0f);
 	}
 
 	for (int i = 0; i < 5; i++)
 	{
-		new Object_Stage("Resource/3D/æ–°ã—ã„æŸµ/fence1.mv1", VGet(490.0f + 1000 * i, 0.0f, 5050.0f), 12.80f, VGet(0.0f, 0.0f, 0.0f));
-		new Object_Stage("Resource/3D/æ–°ã—ã„æŸµ/fence1.mv1", VGet(-490.0f + -1000 * i, 0.0f, 5050.0f), 12.80f, VGet(0.0f, 0.0f, 0.0f));
-		new Object_Stage("Resource/3D/æ–°ã—ã„æŸµ/fence1.mv1", VGet(490.0f + 1000 * i, 0.0f, -5050.0f), 12.80f, VGet(0.0f, DX_PI_F, 0.0f));
-		new Object_Stage("Resource/3D/æ–°ã—ã„æŸµ/fence1.mv1", VGet(-490.0f + -1000 * i, 0.0f, -5050.0f), 12.80f, VGet(0.0f, DX_PI_F, 0.0f));
-		new Object_Stage("Resource/3D/æ–°ã—ã„æŸµ/fence1.mv1", VGet(5050.0f , 0.0f, 490.0f + 1000* i), 12.80f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
-		new Object_Stage("Resource/3D/æ–°ã—ã„æŸµ/fence1.mv1", VGet(5050.0f, 0.0f, -490.0f + -1000 * i), 12.80f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
-		new Object_Stage("Resource/3D/æ–°ã—ã„æŸµ/fence1.mv1", VGet(-5050.0f, 0.0f, 490.0f + 1000 * i), 12.80f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
-		new Object_Stage("Resource/3D/æ–°ã—ã„æŸµ/fence1.mv1", VGet(-5050.0f, 0.0f, -490.0f + -1000 * i), 12.80f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
+		new Object_Stage("Resource/3D/V‚µ‚¢ò/fence1.mv1", VGet(490.0f + 1000 * i, 0.0f, 5050.0f), 12.80f, VGet(0.0f, 0.0f, 0.0f));
+		new Object_Stage("Resource/3D/V‚µ‚¢ò/fence1.mv1", VGet(-490.0f + -1000 * i, 0.0f, 5050.0f), 12.80f, VGet(0.0f, 0.0f, 0.0f));
+		new Object_Stage("Resource/3D/V‚µ‚¢ò/fence1.mv1", VGet(490.0f + 1000 * i, 0.0f, -5050.0f), 12.80f, VGet(0.0f, DX_PI_F, 0.0f));
+		new Object_Stage("Resource/3D/V‚µ‚¢ò/fence1.mv1", VGet(-490.0f + -1000 * i, 0.0f, -5050.0f), 12.80f, VGet(0.0f, DX_PI_F, 0.0f));
+		new Object_Stage("Resource/3D/V‚µ‚¢ò/fence1.mv1", VGet(5050.0f , 0.0f, 490.0f + 1000* i), 12.80f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
+		new Object_Stage("Resource/3D/V‚µ‚¢ò/fence1.mv1", VGet(5050.0f, 0.0f, -490.0f + -1000 * i), 12.80f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
+		new Object_Stage("Resource/3D/V‚µ‚¢ò/fence1.mv1", VGet(-5050.0f, 0.0f, 490.0f + 1000 * i), 12.80f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
+		new Object_Stage("Resource/3D/V‚µ‚¢ò/fence1.mv1", VGet(-5050.0f, 0.0f, -490.0f + -1000 * i), 12.80f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
 	}
 
 	thunder_ = new Thunder(VGet(0.0f, 0.0f, 0.0f));
@@ -133,7 +135,7 @@ void Scene3D::Initialize()
 	float scatterArea = Utility::StageSize.x;
 
 	cow_manager_->SpawnCow(GameConstants::kCowDefault.model_path, spawnPos, 50.0f, CowMove::kCow1, 20, false, scatterArea);
-	cow_manager_->SpawnCow(GameConstants::kCowGold.model_path, spawnPos, 50.0f, CowMove::kCowGold, 2, false, scatterArea);
+	cow_manager_->SpawnCow(GameConstants::kCowGold.model_path, spawnPos, 50.0f, CowMove::kCowGold, 2, false, 500.0f);
 	animal_manager_->SpawnAnimal(GameConstants::kAnimalChicken.model_path, spawnPos, 50.0f, AnimalMove::kAnimal1, 5, scatterArea);
 	animal_manager_->SpawnAnimal(GameConstants::kAnimalBear.model_path, spawnPos, 50.0f, AnimalMove::kAnimal1, 5, scatterArea);
 	
@@ -157,10 +159,10 @@ void Scene3D::Initialize()
 }
 
 /*
- * æ¯ãƒ•ãƒ¬ãƒ¼ãƒ ã®æ›´æ–°å‡¦ç†
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ç¾¤ã®æ›´æ–°ã€åˆ¶é™æ™‚é–“çµ‚äº†æ™‚ã®ã‚·ãƒ¼ãƒ³ç§»è¡Œ
+ * –ˆƒtƒŒ[ƒ€‚ÌXVˆ—
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ƒ}ƒl[ƒWƒƒ[ŒQ‚ÌXVA§ŒÀŠÔI—¹‚ÌƒV[ƒ“ˆÚs
  */
 void Scene3D::Update()
 {
@@ -174,7 +176,7 @@ void Scene3D::Update()
 	PhaseUpdate();
 	tatumaki->Update();
 
-	// ãƒ—ãƒ¬ã‚¤æ™‚é–“ãŒçµ‚äº†ã—ãŸå ´åˆã€é€²è¡Œã‚’åœæ­¢ã™ã‚‹ãŸã‚ãƒªã‚¶ãƒ«ãƒˆç”»é¢ã«ç§»è¡Œ
+	// ƒvƒŒƒCŠÔ‚ªI—¹‚µ‚½ê‡Ais‚ğ’â~‚·‚é‚½‚ßƒŠƒUƒ‹ƒg‰æ–Ê‚ÉˆÚs
 	if (ServiceLocator::GetGameManager()->GetGameTimer()->GetTime() <= 0)
 	{
 		fade_state_ = kSceneFadeOut;
@@ -183,10 +185,10 @@ void Scene3D::Update()
 }
 
 /*
- * 3Dã‚·ãƒ¼ãƒ³ã®æç”»å‡¦ç†
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æç”»ã€UIã®è¡¨ç¤º
+ * 3DƒV[ƒ“‚Ì•`‰æˆ—
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ƒIƒuƒWƒFƒNƒg‚Ì•`‰æAUI‚Ì•\¦
  */
 void Scene3D::Draw()
 {
@@ -218,7 +220,7 @@ void Scene3D::Draw()
 		game_manager_->GetGameTimer()->Draw();
 	}
 
-	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ç™ºç”Ÿä¸­ã®ã‚¤ãƒ™ãƒ³ãƒˆã‚’é€šçŸ¥ã™ã‚‹ãŸã‚ã€æ¼”å‡ºç”¨ã®è­¦å‘Šãƒ†ã‚­ã‚¹ãƒˆã‚’æç”»
+	// ƒvƒŒƒCƒ„[‚É”­¶’†‚ÌƒCƒxƒ“ƒg‚ğ’Ê’m‚·‚é‚½‚ßA‰‰o—p‚ÌŒxƒeƒLƒXƒg‚ğ•`‰æ
 	if (Master::camera_->GetIsPhaseCameraActive())
 	{
 		int currentPhase = (int)game_manager_->GetCurrentPhase();
@@ -233,13 +235,13 @@ void Scene3D::Draw()
 		if (currentPhase == (int)GameManager::GamePhase::kMassSpawn)
 		{
 			SetFontSize(64);
-			DrawFormatString(600, 200, GetColor(255, 100, 100), "ç‰›ãŒå¤§é‡ç™ºç”Ÿï¼");
+			DrawFormatString(600, 200, GetColor(255, 100, 100), "‹‚ª‘å—Ê”­¶I");
 			SetFontSize(16);
 		}
 		else if (currentPhase == (int)GameManager::GamePhase::kTornadoCrisis)
 		{
 			SetFontSize(64);
-			DrawFormatString(600, 200, GetColor(255, 100, 100), "ç«œå·»ãŒå·¨å¤§åŒ–ï¼");
+			DrawFormatString(600, 200, GetColor(255, 100, 100), "—³Šª‚ª‹‘å‰»I");
 			SetFontSize(16);
 		}
 	}
@@ -251,10 +253,10 @@ void Scene3D::Draw()
 }
 
 /*
- * ç¾åœ¨ã®ãƒ•ã‚§ãƒ¼ã‚ºã«åˆã‚ã›ãŸå‡¦ç†
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ã‚«ãƒ¡ãƒ©ã®æ›´æ–°ã€å¤§é‡ç™ºç”Ÿæ™‚ã®å®šæœŸã‚¹ãƒãƒ¼ãƒ³
+ * Œ»İ‚ÌƒtƒF[ƒY‚É‡‚í‚¹‚½ˆ—
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ƒJƒƒ‰‚ÌXVA‘å—Ê”­¶‚Ì’èŠúƒXƒ|[ƒ“
  */
 void Scene3D::PhaseUpdate()
 {
@@ -267,7 +269,7 @@ void Scene3D::PhaseUpdate()
 
 		tatumaki->SetCrisisMode(currentPhase == (int)GameManager::GamePhase::kTornadoCrisis);
 
-		// ç‰›ã‚’é€£ç¶šã—ã¦é™ã‚‰ã›ã‚‹ã‚¤ãƒ™ãƒ³ãƒˆã®ãŸã‚ã€ä¸€å®šé–“éš”ã§ä¸Šç©ºã‹ã‚‰è¿½åŠ ã‚¹ãƒãƒ¼ãƒ³ã™ã‚‹
+		// ‹‚ğ˜A‘±‚µ‚Ä~‚ç‚¹‚éƒCƒxƒ“ƒg‚Ì‚½‚ßAˆê’èŠÔŠu‚Åã‹ó‚©‚ç’Ç‰ÁƒXƒ|[ƒ“‚·‚é
 		if (currentPhase == (int)GameManager::GamePhase::kMassSpawn)
 		{
 			mass_spawn_timer_++;
@@ -286,10 +288,10 @@ void Scene3D::PhaseUpdate()
 }
 
 /*
- * 3Dã‚·ãƒ¼ãƒ³ã®çµ‚äº†å‡¦ç†
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] BGMã®åœæ­¢
+ * 3DƒV[ƒ“‚ÌI—¹ˆ—
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] BGM‚Ì’â~
  */
 void Scene3D::Finalize()
 {

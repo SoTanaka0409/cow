@@ -35,7 +35,6 @@ public:
 	void SetCrisisMode(bool isCrisis) { is_crisis_ = isCrisis; }
 
 private:
-	VECTOR pos_;                     // 竜巻の中心位置座標
 	VECTOR velocity_;                 // ステージ内をランダムに巡回するための移動方向ベクトル
 	int move_timer_;                 // 移動方向を変更するまでの残フレーム数カウンター
 	float speed_;                    // プレイヤーがギリギリ走って逃げ切れる速度基準値
