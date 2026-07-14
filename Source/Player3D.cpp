@@ -40,6 +40,7 @@ Player3D::Player3D(std::string filename, VECTOR initPos)
 	, mfHp(0)
 	, mfAttack_Speed(3.0f)
 	, CatchNowCount(0)
+	
 {
 	mIsStunned = false;
 	mStunTimer = 0;
@@ -177,6 +178,8 @@ void Player3D::Play()
 	// フィーバー中は無制限に吸い込みを可能にするため
 	if (Master::FeverFlag) mIsVacuumActive = true;
 }
+
+
 
 /*
  * コライダーとエフェクトの更新

@@ -1,9 +1,13 @@
-﻿#pragma once
+#pragma once
 #include "Object3D.h"
 #include "EffekseerEffect.h"
 
+#include <vector>
+
 class SphereCollider;
 class CapsuleCollider;
+class Player3D;
+
 
 // 業務ルール：ステージ上を自律走行してプレイヤーを妨害し、接触時にペナルティを与える環境トラップ（竜巻）クラス
 class Tornado : public Object3D
@@ -43,4 +47,11 @@ private:
 
 	int effect_timer_;               // 定期的なエフェクト再再生とSE暴発を防ぐインターバルタイマー
 	int tatumaki_spawn_timer_; // 前回の竜巻消失から次に出現するまでの湧き待ち猶予カウンタ
+
+	// ノックバック中のプレイヤー情報
+	struct KnockbackInfo {
+		Player3D* player;
+		VECTOR velocity;
+	};
+	std::vector<KnockbackInfo> knockbacks_;
 };

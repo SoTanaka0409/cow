@@ -1,4 +1,4 @@
-﻿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include "Tornado.h"
 #include "Player3D.h"
 #include "CapsuleCollider.h"
@@ -7,6 +7,8 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "ObjectManager.h"
+#include "Wall.h"
+#include <vector>
 
 // 入力：竜巻の初期発生座標
 // 副作用：EffekseerEffect インスタンスの動的メモリ確保
@@ -129,6 +131,50 @@ void Tornado::Update()
 		tatu_->SetPosition(pos_);
 		tatu_->Update();
 	}
+
+	// ノックバック中のプレイヤーの処理
+	for (auto it = knockbacks_.begin(); it != knockbacks_.end(); ) {
+		Player3D* p_knock = it->player;
+		VECTOR& vel = it->velocity;
+
+		VECTOR oldPos = p_knock->GetPosition();
+		VECTOR newPos = VAdd(oldPos, vel);
+
+		// 壁との衝突判定
+		bool hitwall = false;
+		const auto& walls = ServiceLocator::GetObjectManager()->GetObject3DListByTag(Object3D::kTag3dWall);
+		for (auto& w : walls) {
+			Wall* wall = dynamic_cast<Wall*>(w);
+			if (wall != nullptr) {
+				std::vector<VERTEX3D> vertex = wall->GetVertex();
+				if (HitCheck_Capsule_Triangle(
+					newPos, VAdd(newPos, VGet(0.0f, 200.0f, 0.0f)), 80.0f,
+					vertex.at(0).pos, vertex.at(1).pos, vertex.at(2).pos) ||
+					HitCheck_Capsule_Triangle(
+					newPos, VAdd(newPos, VGet(0.0f, 200.0f, 0.0f)), 80.0f,
+					vertex.at(3).pos, vertex.at(1).pos, vertex.at(2).pos))
+				{
+					hitwall = true;
+					// 壁に当たった場合はその場で停止させる
+					newPos = oldPos;
+					vel = VGet(0.0f, 0.0f, 0.0f);
+					break;
+				}
+			}
+		}
+
+		p_knock->SetPosition(newPos);
+
+		// 速度の減衰（摩擦）
+		vel = VScale(vel, 0.9f);
+
+		// 速度が十分に小さくなったらリストから除外
+		if (VSize(vel) < 0.5f) {
+			it = knockbacks_.erase(it);
+		} else {
+			++it;
+		}
+	}
 }
 
 void Tornado::Draw()
@@ -144,11 +190,30 @@ void Tornado::OnEnter(Collider* collider, Collider* check)
 	{
 		Player3D* Player = dynamic_cast<Player3D*>(check->parent_object_);
 
-		float rangeLimit = 4000.0f;
-		float warpX = (float)GetRand((int)rangeLimit * 2) - rangeLimit;
-		float warpZ = (float)GetRand((int)rangeLimit * 2) - rangeLimit;
-
-		Player->SetPosition(VGet(warpX, 2000.0f, warpZ));
+		// 台風からプレイヤーへ向かうベクトルを計算（Y軸の高さは無視）
+		VECTOR diff = VSub(Player->GetPosition(), pos_);
+		diff.y = 0.0f;
+		
+		// 完全に重なっている場合は適当な方向に飛ばす
+		if (VSize(diff) < 0.1f) {
+			diff = VGet(1.0f, 0.0f, 0.0f);
+		}
+		
+		// 吹き飛ばす初速（30.0f）
+		VECTOR knockbackVelocity = VScale(VNorm(diff), 30.0f);
+		
+		// 既にリストにあるかチェックして更新、なければ追加
+		bool found = false;
+		for (auto& kb : knockbacks_) {
+			if (kb.player == Player) {
+				kb.velocity = knockbackVelocity;
+				found = true;
+				break;
+			}
+		}
+		if (!found) {
+			knockbacks_.push_back({ Player, knockbackVelocity });
+		}
 
 		// 竜巻に直撃した衝撃を視覚的にフィードバックし、危機感を演出する
 		Master::camera_->SetupShake(20.0f, 35.0f, 30.0f);
