@@ -75,6 +75,11 @@ void Score::AddScore(int value)
 		// 負のスコアを防ぐため
 		score_ = 0;
 	}
+	else if (score_ >=9999)
+	{
+		//規定値を超えないように
+		score_ = 9999;
+	}
 }
 /*
  * スコアをリセットするため

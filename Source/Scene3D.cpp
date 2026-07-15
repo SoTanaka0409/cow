@@ -156,6 +156,10 @@ void Scene3D::Initialize()
 	new Wall("", VGet(0.0f, 0.0f, -5000.0f), VGet(-5000.0f, 5000.0f, 0.0), VGet(5000.0f, 0.0f, 0.0f));
 	new Wall("", VGet(5000.0f, 0.0f, 0.0f), VGet(0.0f, 5000.0f, 5000.0f), VGet(0.0f, 0.0f, -5000.0f));
 	new Wall("", VGet(-5000.0f, 0.0f, 0.0f), VGet(0.0f, 5000.0f, 5000.0f), VGet(0.0f, 0.0f, -5000.0f));
+
+	// Wall is registered with kNone3d tag in Object3D ctor before SetTag(kTag3dWall) is called.
+	// Rebuild the tag cache after all Walls are created so collision detection works correctly.
+	ServiceLocator::GetObjectManager()->RebuildTagCache3D();
 }
 
 /*
