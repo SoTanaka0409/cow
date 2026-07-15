@@ -185,6 +185,7 @@
     <ClCompile Include="Source\LoadingScene.cpp" />
     <ClCompile Include="Source\InputManager.cpp" />
     <ClCompile Include="Source\Level.cpp" />
+    <ClCompile Include="Source\Master.cpp" />
     <ClCompile Include="Source\ServiceLocator.cpp" />
     <ClCompile Include="Source\CharacterState.cpp" />
     <ClCompile Include="Source\Main.cpp" />
@@ -209,11 +210,11 @@
     <ClCompile Include="Source\SoundManager.cpp" />
     <ClCompile Include="Source\SphereCollider.cpp" />
     <ClCompile Include="Source\Stage.cpp" />
+    <ClCompile Include="Source\test_constants.cpp" />
     <ClCompile Include="Source\Tornado.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Thunder.cpp" />
-    
     <ClCompile Include="Source\TitleScene.cpp" />
     <ClCompile Include="Source\UIButton.cpp" />
     <ClCompile Include="Source\TutorialScene.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="Source\Bait.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\CapsuleCollider.h" />
+    <ClInclude Include="Source\CharacterState.h" />
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\ColliderManager.h" />
     <ClInclude Include="Source\Combo.h" />
@@ -235,6 +237,8 @@
     <ClInclude Include="Source\CowMove.h" />
     <ClInclude Include="Source\CharacterMove.h" />
     <ClInclude Include="Source\Cow_2.h" />
+    <ClInclude Include="Source\CreatureManager.h" />
+    <ClInclude Include="Source\GameConstants.h" />
     <ClInclude Include="Source\GoldCow.h" />
     <ClInclude Include="Source\DebugCamera.h" />
     <ClInclude Include="Source\Cow_Tutorial.h" />
@@ -265,6 +269,7 @@
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\Score.h" />
     <ClInclude Include="Source\SelectionManager.h" />
+    <ClInclude Include="Source\ServiceLocator.h" />
     <ClInclude Include="Source\Skill.h" />
     <ClInclude Include="Source\SkyBox.h" />
     <ClInclude Include="Source\SoundManager.h" />
@@ -273,13 +278,14 @@
     <ClInclude Include="Source\Tornado.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Thunder.h" />
-    
     <ClInclude Include="Source\TitleScene.h" />
     <ClInclude Include="Source\UIButton.h" />
     <ClInclude Include="Source\TutorialScene.h" />
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\StageLoader.h" />
     <ClInclude Include="Source\Wall.h" />
+  </ItemGroup>
+  <ItemGroup>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

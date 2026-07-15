@@ -8,6 +8,7 @@
 #include "Scene.h"
 #include "ObjectManager.h"
 #include "Wall.h"
+#include <algorithm>
 #include <vector>
 
 // 入力：竜巻の初期発生座標
@@ -172,50 +173,48 @@ void Tornado::UpdateEffectAndSound()
 void Tornado::UpdateKnockback()
 {
 	// 竜巻接触により吹き飛ばされたプレイヤーの減衰（フリクション）およびコリジョン判定処理
-	for (auto it = knockbacks_.begin(); it != knockbacks_.end(); ) {
-		Player3D* p_knock = it->player;
-		VECTOR& vel = it->velocity;
+	knockbacks_.erase(
+		std::remove_if(knockbacks_.begin(), knockbacks_.end(), [](auto& knockback) {
+			Player3D* p_knock = knockback.player;
+			VECTOR& vel = knockback.velocity;
 
-		VECTOR oldPos = p_knock->GetPosition();
-		VECTOR newPos = VAdd(oldPos, vel);
+			VECTOR oldPos = p_knock->GetPosition();
+			VECTOR newPos = VAdd(oldPos, vel);
 
-		// バグ回避：ノックバックの勢いでプレイヤーがステージの壁を貫通し、異次元へ落下するのを防ぐ
-		bool hitwall = false;
-		const auto& walls = ServiceLocator::GetObjectManager()->GetObject3DListByTag(Object3D::kTag3dWall);
-		for (auto& w : walls) {
-			Wall* wall = dynamic_cast<Wall*>(w);
-			if (wall != nullptr) {
-				std::vector<VERTEX3D> vertex = wall->GetVertex();
+			// バグ回避：ノックバックの勢いでプレイヤーがステージの壁を貫通し、異次元へ落下するのを防ぐ
+			bool hitwall = false;
+			const auto& walls = ServiceLocator::GetObjectManager()->GetObject3DListByTag(Object3D::kTag3dWall);
+			for (auto& w : walls) {
+				Wall* wall = dynamic_cast<Wall*>(w);
+				if (wall != nullptr) {
+					std::vector<VERTEX3D> vertex = wall->GetVertex();
 
-				if (HitCheck_Capsule_Triangle(
-					newPos, VAdd(newPos, VGet(0.0f, 200.0f, 0.0f)), 80.0f,
-					vertex.at(0).pos, vertex.at(1).pos, vertex.at(2).pos) ||
-					HitCheck_Capsule_Triangle(
+					if (HitCheck_Capsule_Triangle(
 						newPos, VAdd(newPos, VGet(0.0f, 200.0f, 0.0f)), 80.0f,
-						vertex.at(3).pos, vertex.at(1).pos, vertex.at(2).pos))
-				{
-					hitwall = true;
-					// 壁衝突時は即座にその位置で慣性エネルギーを失わせ、めり込みを防止する
-					newPos = oldPos;
-					vel = VGet(0.0f, 0.0f, 0.0f);
-					break;
+						vertex.at(0).pos, vertex.at(1).pos, vertex.at(2).pos) ||
+						HitCheck_Capsule_Triangle(
+							newPos, VAdd(newPos, VGet(0.0f, 200.0f, 0.0f)), 80.0f,
+							vertex.at(3).pos, vertex.at(1).pos, vertex.at(2).pos))
+					{
+						hitwall = true;
+						// 壁衝突時は即座にその位置で慣性エネルギーを失わせ、めり込みを防止する
+						newPos = oldPos;
+						vel = VGet(0.0f, 0.0f, 0.0f);
+						break;
+					}
 				}
 			}
-		}
 
-		p_knock->SetPosition(newPos);
+			p_knock->SetPosition(newPos);
 
-		// 物理演算：空気抵抗および地面との摩擦をシミュレートし、ノックバック速度を毎フレーム 10% 減衰させる
-		vel = VScale(vel, 0.9f);
+			// 物理演算：空気抵抗および地面との摩擦をシミュレートし、ノックバック速度を毎フレーム 10% 減衰させる
+			vel = VScale(vel, 0.9f);
 
-		// 移動速度が一定以下になり、ほぼ静止したとみなせる場合は物理演算リストから除外する
-		if (VSize(vel) < 0.5f) {
-			it = knockbacks_.erase(it);
-		}
-		else {
-			++it;
-		}
-	}
+			// 移動速度が一定以下になり、ほぼ静止したとみなせる場合は物理演算リストから除外する
+			return VSize(vel) < 0.5f;
+		}),
+		knockbacks_.end()
+	);
 }
 
 void Tornado::Draw()

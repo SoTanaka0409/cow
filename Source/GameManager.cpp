@@ -119,7 +119,7 @@ void GameManager::UpdateGameTimerAndPhase()
 {
 	if (!game_timer_)
 	{
-		game_timer_ = new GameTimer(VGet(0, 0, 0), 60, GameTimer::Tag_Game);
+		game_timer_ = new GameTimer(VGet(0, 0, 0), 70, GameTimer::Tag_Game);
 	}
 	if (game_timer_)
 	{

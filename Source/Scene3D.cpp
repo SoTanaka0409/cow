@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+ï»¿#include "ServiceLocator.h"
 #include "Scene3D.h"
 #include "Master.h"
 #include "InputManager.h"
@@ -22,10 +22,10 @@ Thunder* thunder_ = nullptr;
 Tornado* tatumaki = nullptr;
 
 /*
- * 3DƒV[ƒ“‚Ì‰Šú‰»
- * [“ü—Í] ‚È‚µ
- * [o—Í] ‚È‚µ
- * [•›ì—p] ƒƒ“ƒo•Ï”‚Ì‰Šú‰»
+ * 3Dã‚·ãƒ¼ãƒ³ã®åˆæœŸåŒ–
+ * [å…¥åŠ›] ãªã—
+ * [å‡ºåŠ›] ãªã—
+ * [å‰¯ä½œç”¨] ãƒ¡ãƒ³ãƒå¤‰æ•°ã®åˆæœŸåŒ–
  */
 Scene3D::Scene3D()
 {
@@ -34,20 +34,20 @@ Scene3D::Scene3D()
 }
 
 /*
- * 3DƒV[ƒ“‚Ì”jŠü
- * [“ü—Í] ‚È‚µ
- * [o—Í] ‚È‚µ
- * [•›ì—p] ‚È‚µ
+ * 3Dã‚·ãƒ¼ãƒ³ã®ç ´æ£„
+ * [å…¥åŠ›] ãªã—
+ * [å‡ºåŠ›] ãªã—
+ * [å‰¯ä½œç”¨] ãªã—
  */
 Scene3D::~Scene3D()
 {
 }
 
 /*
- * 3DƒV[ƒ“‚ÌƒZƒbƒgƒAƒbƒv
- * [“ü—Í] ‚È‚µ
- * [o—Í] ‚È‚µ
- * [•›ì—p] 3DƒIƒuƒWƒFƒNƒg‚Ì”z’uABGMÄ¶‚ÌŠJn
+ * 3Dã‚·ãƒ¼ãƒ³ã®ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—
+ * [å…¥åŠ›] ãªã—
+ * [å‡ºåŠ›] ãªã—
+ * [å‰¯ä½œç”¨] 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é…ç½®ã€BGMå†ç”Ÿã®é–‹å§‹
  */
 void Scene3D::Initialize()
 {
@@ -62,16 +62,41 @@ void Scene3D::Initialize()
 	
 	StageLoader::LoadFromCSV("Resource/Data/stage_objects.csv");
 
-	// Wall is registered with kNone3d tag in Object3D ctor before SetTag(kTag3dWall) is called.
-	// Rebuild the tag cache after all Walls are created so collision detection works correctly.
+	thunder_ = new Thunder(VGet(0.0f, 0.0f, 0.0f));
+	tatumaki = new Tornado(VGet(3000.0f, 0.0f, 3000.0f));
+
+	auto Player = new Player3D("Resource/3D/ufo2/UFO.mv1", VGet(1000.0f, 2000.0f, 0.0f));
+	Player->SetScale(0.6f);
+
+	VECTOR spawnPos = VGet(0.0f, 0.0f, 0.0f); // ã‚¹ãƒãƒ¼ãƒ³ä¸­å¿ƒä½ç½®
+
+	// ç‰›ã¨å‹•ç‰©ã®ã‚¹ãƒãƒ¼ãƒ³
+	cow_manager_->SpawnCow(GameConstants::kCowDefault.model_path, spawnPos, 50.0f, CowMove::kCow1, 10, false, Utility::StageSize.x);
+	cow_manager_->SpawnCow(GameConstants::kCowGold.model_path, spawnPos, 50.0f, CowMove::kCowGold, 2, false, Utility::StageSize.x);
+	animal_manager_->SpawnAnimal(GameConstants::kAnimalChicken.model_path, spawnPos, 50.0f, AnimalMove::kAnimal1, 5, Utility::StageSize.x);
+	animal_manager_->SpawnAnimal(GameConstants::kAnimalBear.model_path, spawnPos, 50.0f, AnimalMove::kAnimal1, 5, Utility::StageSize.x);
+	
+	phase_ = kNormal;
+
+	auto skybox = new SkyBox("Resource/3D/SkyBox/SkyBox.mv1", VGet(0, 0, 0));
+	skybox->SetScale(30.0f);
+	skybox->SetModelTexture("Resource/3D/SkyBox/sky000.jpg", 0);
+
+	new Floor(
+		"Resource/2D/haikei.png",
+		VGet(0, 0, 0),
+		VGet(-11500, 0, -11500),
+		VGet(11500, 0, 11500)
+	);
+
 	ServiceLocator::GetObjectManager()->RebuildTagCache3D();
 }
 
 /*
- * –ˆƒtƒŒ[ƒ€‚ÌXVˆ—
- * [“ü—Í] ‚È‚µ
- * [o—Í] ‚È‚µ
- * [•›ì—p] ƒ}ƒl[ƒWƒƒ[ŒQ‚ÌXVA§ŒÀŠÔI—¹‚ÌƒV[ƒ“ˆÚs
+ * æ¯ãƒ•ãƒ¬ãƒ¼ãƒ ã®æ›´æ–°å‡¦ç†
+ * [å…¥åŠ›] ãªã—
+ * [å‡ºåŠ›] ãªã—
+ * [å‰¯ä½œç”¨] ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ç¾¤ã®æ›´æ–°ã€åˆ¶é™æ™‚é–“çµ‚äº†æ™‚ã®ã‚·ãƒ¼ãƒ³ç§»è¡Œ
  */
 void Scene3D::Update()
 {
@@ -85,7 +110,7 @@ void Scene3D::Update()
 	PhaseUpdate();
 	tatumaki->Update();
 
-	// ƒvƒŒƒCŠÔ‚ªI—¹‚µ‚½ê‡Ais‚ğ’â~‚·‚é‚½‚ßƒŠƒUƒ‹ƒg‰æ–Ê‚ÉˆÚs
+	// ãƒ—ãƒ¬ã‚¤æ™‚é–“ãŒçµ‚äº†ã—ãŸå ´åˆã€é€²è¡Œã‚’åœæ­¢ã™ã‚‹ãŸã‚ãƒªã‚¶ãƒ«ãƒˆç”»é¢ã«ç§»è¡Œ
 	if (ServiceLocator::GetGameManager()->GetGameTimer()->GetTime() <= 0)
 	{
 		fade_state_ = kSceneFadeOut;
@@ -94,10 +119,10 @@ void Scene3D::Update()
 }
 
 /*
- * 3DƒV[ƒ“‚Ì•`‰æˆ—
- * [“ü—Í] ‚È‚µ
- * [o—Í] ‚È‚µ
- * [•›ì—p] ƒIƒuƒWƒFƒNƒg‚Ì•`‰æAUI‚Ì•\¦
+ * 3Dã‚·ãƒ¼ãƒ³ã®æç”»å‡¦ç†
+ * [å…¥åŠ›] ãªã—
+ * [å‡ºåŠ›] ãªã—
+ * [å‰¯ä½œç”¨] ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æç”»ã€UIã®è¡¨ç¤º
  */
 void Scene3D::Draw()
 {
@@ -141,7 +166,7 @@ void Scene3D::DrawGrid()
 void Scene3D::DrawPhaseUI()
 {
 	int fontSize = GetFontSize();
-	// ƒvƒŒƒCƒ„[‚É‰½‚ÌƒCƒxƒ“ƒg‚ª‹N‚«‚Ä‚¢‚é‚©’m‚ç‚¹‚é‚½‚ßA‘S‰æ–Ê‚Ì“§‰ßƒeƒLƒXƒg‚ğ•`‰æ
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ä½•ã®ã‚¤ãƒ™ãƒ³ãƒˆãŒèµ·ãã¦ã„ã‚‹ã‹çŸ¥ã‚‰ã›ã‚‹ãŸã‚ã€å…¨ç”»é¢ã®é€éãƒ†ã‚­ã‚¹ãƒˆã‚’æç”»
 	if (Master::camera_->GetIsPhaseCameraActive())
 	{
 		int currentPhase = (int)game_manager_->GetCurrentPhase();
@@ -156,22 +181,22 @@ void Scene3D::DrawPhaseUI()
 		if (currentPhase == (int)GameManager::GamePhase::kMassSpawn)
 		{
 			DrawString(200, 300, "MASS SPAWN!", GetColor(255, 50, 50), true);
-			DrawString(200, 350, "‹‚ª‘å—Ê”­¶I", GetColor(255, 255, 255), true);
+			DrawString(200, 350, "ç‰›ãŒå¤§é‡ç™ºç”Ÿï¼", GetColor(255, 255, 255), true);
 		}
 		else if (currentPhase == (int)GameManager::GamePhase::kTornadoCrisis)
 		{
 			DrawString(200, 300, "TORNADO CRISIS!", GetColor(255, 100, 0), true);
-			DrawString(200, 350, "‹‘å—³Šª‚ªÚ‹ß’†I", GetColor(255, 255, 255), true);
+			DrawString(200, 350, "å·¨å¤§ç«œå·»ãŒæ¥è¿‘ä¸­ï¼", GetColor(255, 255, 255), true);
 		}
 		SetFontSize(fontSize);
 	}
 }
 
 /*
- * Œ»İ‚ÌƒtƒF[ƒY‚É‡‚í‚¹‚½ˆ—
- * [“ü—Í] ‚È‚µ
- * [o—Í] ‚È‚µ
- * [•›ì—p] ƒJƒƒ‰‚ÌXVA‘å—Ê”­¶‚Ì’èŠúƒXƒ|[ƒ“
+ * ç¾åœ¨ã®ãƒ•ã‚§ãƒ¼ã‚ºã«åˆã‚ã›ãŸå‡¦ç†
+ * [å…¥åŠ›] ãªã—
+ * [å‡ºåŠ›] ãªã—
+ * [å‰¯ä½œç”¨] ã‚«ãƒ¡ãƒ©ã®æ›´æ–°ã€å¤§é‡ç™ºç”Ÿæ™‚ã®å®šæœŸã‚¹ãƒãƒ¼ãƒ³
  */
 void Scene3D::PhaseUpdate()
 {
@@ -184,7 +209,7 @@ void Scene3D::PhaseUpdate()
 
 		tatumaki->SetCrisisMode(currentPhase == (int)GameManager::GamePhase::kTornadoCrisis);
 
-		// ‹‚ğ˜A‘±‚µ‚Ä~‚ç‚¹‚éƒCƒxƒ“ƒg‚Ì‚½‚ßAˆê’èŠÔŠu‚Åã‹ó‚©‚ç’Ç‰ÁƒXƒ|[ƒ“‚·‚é
+		// ç‰›ã‚’é€£ç¶šã—ã¦é™ã‚‰ã›ã‚‹ã‚¤ãƒ™ãƒ³ãƒˆã®ãŸã‚ã€ä¸€å®šé–“éš”ã§ä¸Šç©ºã‹ã‚‰è¿½åŠ ã‚¹ãƒãƒ¼ãƒ³ã™ã‚‹
 		if (currentPhase == (int)GameManager::GamePhase::kMassSpawn)
 		{
 			mass_spawn_timer_++;
@@ -203,10 +228,10 @@ void Scene3D::PhaseUpdate()
 }
 
 /*
- * 3DƒV[ƒ“‚ÌI—¹ˆ—
- * [“ü—Í] ‚È‚µ
- * [o—Í] ‚È‚µ
- * [•›ì—p] BGM‚Ì’â~
+ * 3Dã‚·ãƒ¼ãƒ³ã®çµ‚äº†å‡¦ç†
+ * [å…¥åŠ›] ãªã—
+ * [å‡ºåŠ›] ãªã—
+ * [å‰¯ä½œç”¨] BGMã®åœæ­¢
  */
 void Scene3D::Finalize()
 {
