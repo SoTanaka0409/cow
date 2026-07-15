@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include"DxLib.h"
 #include<vector>
 class GameTimer;
@@ -97,4 +97,6 @@ private:
 	int phase_timer_;
 	int phase_change_count_;
 	GameTimer* game_timer_;
+
+	void UpdateGameTimerAndPhase();
 };

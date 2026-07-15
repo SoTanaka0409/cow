@@ -58,7 +58,7 @@ void Camera::Initialize()
 // 副作用：カメラ座標および注視点の設定、平行光源方向の更新、Effekseerカメラ行列の同期
 void Camera::Update()
 {
-	// スキル選択中やデバッグカメラの稼働中に、マウス移動による予期せぬ視点変更を防止するための入力クランプ
+	// スキル選択時やデバッグカメラ起動時に、マウス移動により視点が変わるのを防ぐための入力カット
 	if (Master::SelectSkill) return;
 	if (Master::mbIsDebugCamera) return;
 
@@ -71,38 +71,45 @@ void Camera::Update()
 
 	if (target_ != nullptr)
 	{
-		// 追従対象（プレイヤー）の足元ではなく、UFOのコックピット付近を中心として画面内に収めるための注視点調整
+		// 追従対象（プレイヤー）の足元ではなく、UFOのコックピット付近を中心に捉えるための注視点補正
 		look_at_position_ = target_->GetPosition();
 		look_at_position_.y += 340.0f;
 	}
 
 	Shake();
-
-	{
-		const float distance = 1000.0f;
-		VECTOR temp;
-		// カメラが常に一定距離（1000px）を保ちつつ、注視点を中心に球体軌道を描いて回るための極座標変換計算
-		temp.x = distance * cosf(vertical_angle_ / 180.0f * 3.14159265f) * sinf(horizontal_angle_ / 180.0f * DX_PI_F);
-		temp.y = distance * sinf(-vertical_angle_ / 180.0f * 3.14159265f);
-		temp.z = -(distance * cosf(vertical_angle_ / 180.0f * DX_PI_F) * cosf(horizontal_angle_ / 180.0f * DX_PI_F));
-
-		if (!is_phase_camera_active_)
-		{
-			position_ = VAdd(temp, look_at_position_);
-
-			// 被弾シェイク等の微小な移動成分を最後に加算し、カメラ本来のワールド基準座標が永久にズレていくバグを防止する
-			SetCameraPositionAndTarget_UpVecY(VAdd(position_, shake_position_), VAdd(look_at_position_, shake_position_));
-		}
-	}
+	UpdatePositionAndTarget();
 
 	prev_mouse_x_ = current_mouse_x_;
 	prev_mouse_y_ = current_mouse_y_;
 	GetMousePoint(&current_mouse_x_, &current_mouse_y_);
 
-	// 3Dエフェクトがカメラの回転や移動に追従し、ゲーム画面上で正しい遠近感で描画されるように同期する
+	UpdateEffekseerAndLight();
+}
+
+void Camera::UpdatePositionAndTarget()
+{
+	const float distance = 1000.0f;
+	VECTOR temp;
+	// カメラを一定距離（1000px）保ちつつ、注視点を中心に球を軌道を描くための極座標変換計算
+	temp.x = distance * cosf(vertical_angle_ / 180.0f * 3.14159265f) * sinf(horizontal_angle_ / 180.0f * DX_PI_F);
+	temp.y = distance * sinf(-vertical_angle_ / 180.0f * 3.14159265f);
+	temp.z = -(distance * cosf(vertical_angle_ / 180.0f * DX_PI_F) * cosf(horizontal_angle_ / 180.0f * DX_PI_F));
+
+	if (!is_phase_camera_active_)
+	{
+		position_ = VAdd(temp, look_at_position_);
+
+		// 竜巻シェイク等の微小移動を最後に加算し、カメラのローカル座標系が上にズレてしまうのを防ぐ
+		SetCameraPositionAndTarget_UpVecY(VAdd(position_, shake_position_), VAdd(look_at_position_, shake_position_));
+	}
+}
+
+void Camera::UpdateEffekseerAndLight()
+{
+	// 3Dエフェクトがカメラの回転移動に追従し、ゲーム画面上で正しい位置に描画されるように同期する
 	Effekseer_Sync3DSetting();
 
-	// プレイヤーが自機の死角を旋回した際も常に正面が明るくなるよう、カメラの視線方向へライトの照射角を一致させる
+	// プレイヤーがどの視点から見ても影の落ち方が暗くなりすぎないよう、カメラの視点からライトの照射角を逆算する
 	VECTOR lightDir = VSub(look_at_position_, position_);
 	SetLightDirection(lightDir);
 }

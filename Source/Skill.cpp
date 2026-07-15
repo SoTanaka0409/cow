@@ -139,6 +139,13 @@ void Skill::Update()
 		Master::SelectSkill = false;
 	}
 
+	UpdateFlashAnimation();
+	UpdateSelectAnimation();
+	UpdateOpenAnimation();
+}
+
+void Skill::UpdateFlashAnimation()
+{
 	if (flash_)
 	{
 		flash_alpha_ -= 20;
@@ -148,7 +155,10 @@ void Skill::Update()
 			flash_ = false;
 		}
 	}
+}
 
+void Skill::UpdateSelectAnimation()
+{
 	if (select_anim_)
 	{
 		VECTOR target = VGet(select_pos_.x, -400.0f, 0.0f);
@@ -165,7 +175,10 @@ void Skill::Update()
 			Master::SelectSkill = false;
 		}
 	}
+}
 
+void Skill::UpdateOpenAnimation()
+{
 	if (open_anim_)
 	{
 		card1_y_ += (450.0f - card1_y_) * 0.15f;

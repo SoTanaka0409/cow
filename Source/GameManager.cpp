@@ -112,47 +112,52 @@ void GameManager::Update()
 	
 	if (GameStepType::kCowGet == type_)
 	{
-		if (!game_timer_)
+		UpdateGameTimerAndPhase();
+	}
+}
+
+void GameManager::UpdateGameTimerAndPhase()
+{
+	if (!game_timer_)
+	{
+		game_timer_ = new GameTimer(VGet(0, 0, 0), 60, GameTimer::Tag_Game);
+	}
+	if (game_timer_)
+	{
+		if (game_timer_->OutTimerFlag())
 		{
-			game_timer_ = new GameTimer(VGet(0, 0, 0), 60, GameTimer::Tag_Game);
+			game_timer_->SetOutTimerFlag(false);
+			GameNextStep(GameManager::kFinal);
 		}
-		if (game_timer_)
+		else
 		{
-			if (game_timer_->OutTimerFlag())
-			{
-				game_timer_->SetOutTimerFlag(false);
-				GameNextStep(GameManager::kFinal);
-			}
-			else
-			{
-				game_timer_->Update();
-			}
+			game_timer_->Update();
 		}
-		int Timer = GetNowCount();
-		if (Timer - phase_timer_ >= 1000)
-		{
-			phase_timer_ = Timer;
-			phase_change_count_++;
-		}
+	}
+	int Timer = GetNowCount();
+	if (Timer - phase_timer_ >= 1000)
+	{
+		phase_timer_ = Timer;
+		phase_change_count_++;
+	}
+	
+	// プレイヤーに変化を楽しんでもらうため
+	if (phase_change_count_ >= 30)
+	{
+		phase_change_count_ = 0;
+		int m_Num = rand() % 2 + 1;
 		
-		// プレイヤーに変化のある体験を提供し続けるため
-		if (phase_change_count_ >= 30)
+		if (m_Num == 1)
 		{
-			phase_change_count_ = 0;
-			int m_Num = rand() % 2 + 1;
-			
-			if (m_Num == 1)
-			{
-				current_phase_ = GamePhase::kTornadoCrisis;
-			}
-			else if (m_Num == 2)
-			{
-				current_phase_ = GamePhase::kMassSpawn;
-			}
-			else
-			{
-				current_phase_ = GamePhase::kNormal;
-			}
+			current_phase_ = GamePhase::kTornadoCrisis;
+		}
+		else if (m_Num == 2)
+		{
+			current_phase_ = GamePhase::kMassSpawn;
+		}
+		else
+		{
+			current_phase_ = GamePhase::kNormal;
 		}
 	}
 }

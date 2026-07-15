@@ -59,6 +59,15 @@ Thunder::~Thunder()
 // 副作用：各種タイマーの更新、エフェクトの再生、SEの再生
 void Thunder::Update()
 {
+	UpdateEffects();
+	if (!active_) return;
+	UpdateCollider();
+	UpdateState();
+	UpdateStunEffect();
+}
+
+void Thunder::UpdateEffects()
+{
 	if (thunder_ != nullptr)
 	{
 		thunder_->SetPosition(pos_);
@@ -75,20 +84,24 @@ void Thunder::Update()
 	{
 		stun_->Update();
 	}
+}
 
-	if (!active_) return;
-
-	// 上空から地面を突き抜ける縦長のカプセルを形成し、空中・地上の両方に判定を持たせる
+void Thunder::UpdateCollider()
+{
+	// 上空から地面を貫く形にカプセル形状を上空へ伸ばす
 	capsule_collider_->position_ = VSub(position_, VGet(0, 2000, 0));
 	capsule_collider_->position2_ = VAdd(position_, VGet(0, 2000, 0));
+}
 
+void Thunder::UpdateState()
+{
 	switch (state_)
 	{
 	case kIdle:
 		interval_timer_--;
 		if (interval_timer_ <= 0)
 		{
-			// ステージの中心（0,0）から全方位3000の範囲内にランダムで落雷位置を決定する
+			// ステージの中心（0,0）から3000の範囲内にランダムで位置決めする
 			float range = 3000.0f;
 			pos_.x = (float)(GetRand((int)range * 2) - (int)range);
 			pos_.z = (float)(GetRand((int)range * 2) - (int)range);
@@ -117,7 +130,7 @@ void Thunder::Update()
 			{
 				thunder_->Play();
 
-				// 遠方の落雷による不要な音の乱立を防ぐため、プレイヤーが一定距離内の場合のみ鳴らす
+				// 距離が遠すぎる音を鳴らさないよう、プレイヤーが近い場合のみ鳴らす
 				auto players = ServiceLocator::GetPlayers();
 				bool playSound = false;
 				for (auto p : players)
@@ -146,12 +159,15 @@ void Thunder::Update()
 		}
 		break;
 	}
+}
 
+void Thunder::UpdateStunEffect()
+{
 	if (stun_effect_timer_ > 0)
 	{
 		stun_effect_timer_--;
 
-		// スタンアセットの単発再生時間が短いため、効果持続中は30フレーム周期でループ再生する
+		// スタンエフェクトの単発再生を避け、毎秒(30フレーム)でループ再生
 		if (stun_effect_timer_ > 0 && stun_effect_timer_ % 30 == 0)
 		{
 			if (stun_ != nullptr)

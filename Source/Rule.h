@@ -37,6 +37,10 @@ public:
 	};
 
 private:
+	void DrawBackground();
+	void DrawMenu();
+
+
 	int rule_graph_;
 	int font_handle_;
 	int title_font_handle_;
@@ -48,4 +52,7 @@ private:
 
 	// バグ回避：前シーンの決定キー入力の「長押し」を誤検知し、ロード直後に意図せずページがめくれてしまう挙動を防ぐ猶予カウンター
 	int scene_frames_ = 0;
+
+	bool UpdateFadeState();
+	void UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClicked, bool isMouseHeld);
 };

@@ -193,6 +193,21 @@ void Scene3D::Update()
 void Scene3D::Draw()
 {
 	Scene::Draw();
+	
+	DrawGrid();
+	
+	cow_manager_->Draw();
+  
+	if (game_manager_->GetGameTimer() && !(game_manager_->GetGameTimer()->OutTimerFlag()))
+	{
+		game_manager_->GetGameTimer()->Draw();
+	}
+
+	DrawPhaseUI();
+}
+
+void Scene3D::DrawGrid()
+{
 	const int count = 51;
 	const float distance = -500.0f;
 	
@@ -212,15 +227,11 @@ void Scene3D::Draw()
 			GetColor(255, 255, 255)
 		);
 	}
-	
-	cow_manager_->Draw();
-  
-	if (game_manager_->GetGameTimer() && !(game_manager_->GetGameTimer()->OutTimerFlag()))
-	{
-		game_manager_->GetGameTimer()->Draw();
-	}
+}
 
-	// プレイヤーに発生中のイベントを通知するため、演出用の警告テキストを描画
+void Scene3D::DrawPhaseUI()
+{
+	// プレイヤーに何のイベントが起きているか知らせるため、全画面の透過テキストを描画
 	if (Master::camera_->GetIsPhaseCameraActive())
 	{
 		int currentPhase = (int)game_manager_->GetCurrentPhase();
@@ -234,21 +245,14 @@ void Scene3D::Draw()
 
 		if (currentPhase == (int)GameManager::GamePhase::kMassSpawn)
 		{
-			SetFontSize(64);
-			DrawFormatString(600, 200, GetColor(255, 100, 100), "牛が大量発生！");
-			SetFontSize(16);
+			DrawString(200, 300, "MASS SPAWN!", GetColor(255, 50, 50), true);
+			DrawString(200, 350, "牛が大量発生！", GetColor(255, 255, 255), true);
 		}
 		else if (currentPhase == (int)GameManager::GamePhase::kTornadoCrisis)
 		{
-			SetFontSize(64);
-			DrawFormatString(600, 200, GetColor(255, 100, 100), "竜巻が巨大化！");
-			SetFontSize(16);
+			DrawString(200, 300, "TORNADO CRISIS!", GetColor(255, 100, 0), true);
+			DrawString(200, 350, "巨大竜巻が接近中！", GetColor(255, 255, 255), true);
 		}
-	}
-
-	if (fade_state_ != kSceneFadeNone)
-	{
-		Scene::Fade(fade_state_);
 	}
 }
 

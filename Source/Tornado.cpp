@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+﻿#include "ServiceLocator.h"
 #include "Tornado.h"
 #include "Player3D.h"
 #include "CapsuleCollider.h"
@@ -48,6 +48,15 @@ Tornado::~Tornado()
 // 副作用：サイズ補間計算、追尾対象の選定、座標および移動ベクトルの更新、SEの再生、ノックバック物理シミュレーション
 void Tornado::Update()
 {
+	UpdateScaleAndRadius();
+	UpdateHomingPlayer();
+	UpdateWallBounce();
+	UpdateEffectAndSound();
+	UpdateKnockback();
+}
+
+void Tornado::UpdateScaleAndRadius()
+{
 	// サイズが急激に変化する視覚的違和感を防ぐため、目標値に向けて毎フレーム Lerp（線形補間）する
 	float targetScale = is_crisis_ ? 1.0f : 0.5f;
 	float targetRadius = is_crisis_ ? 800.0f : 400.0f;
@@ -57,12 +66,15 @@ void Tornado::Update()
 
 	tatu_->SetScale(VGet(1.0f * current_scale_ratio_, 1.4f * current_scale_ratio_, 1.0f * current_scale_ratio_));
 	capsule_collider_->radius_ = current_radius_;
+}
 
+void Tornado::UpdateHomingPlayer()
+{
 	auto players = ServiceLocator::GetPlayers();
 	Player3D* p = nullptr;
 	float minDistSq = -1.0f;
 
-	// マルチプレイ時の挙動として、最も近くにいて脅威度の高いプレイヤーを追尾対象として選出する
+	// マルチプレイ時の挙動として、最も近くにいる（危険度の高い）プレイヤーを追尾対象として選出する
 	for (auto player : players)
 	{
 		VECTOR diff = VSub(player->GetPosition(), position_);
@@ -98,12 +110,18 @@ void Tornado::Update()
 	// プレイヤーがジャンプ等で垂直に逃げても捕捉できるよう、上空 2000px まで判定を伸ばす
 	capsule_collider_->position_ = VSub(position_, VGet(0, 2000, 0));
 	capsule_collider_->position2_ = VAdd(position_, VGet(0, 2000, 0));
+}
 
-	// 竜巻がステージ外へ消失してゲーム進行不能になるのを防ぐため、5000 の境界で跳ね返らせる
+void Tornado::UpdateWallBounce()
+{
+	// 竜巻がステージ外へ消失してゲーム進行不可になるのを防ぐため、5000 の壁で跳ね返らせる
 	float limit = 5000.0f;
 	if (position_.x < -limit || position_.x > limit) { velocity_.x *= -1; }
 	if (position_.z < -limit || position_.z > limit) { velocity_.z *= -1; }
+}
 
+void Tornado::UpdateEffectAndSound()
+{
 	effect_timer_--;
 	if (effect_timer_ <= 0)
 	{
@@ -112,6 +130,21 @@ void Tornado::Update()
 			tatu_->Play();
 
 			// パフォーマンスと聴覚的乱雑さを抑えるため、近くのプレイヤーにのみSEを鳴らす
+			auto players = ServiceLocator::GetPlayers();
+			Player3D* p = nullptr;
+			float minDistSq = -1.0f;
+			for (auto player : players)
+			{
+				VECTOR diff = VSub(player->GetPosition(), position_);
+				diff.y = 0; 
+				float distSq = VSquareSize(diff);
+				if (minDistSq < 0 || distSq < minDistSq)
+				{
+					minDistSq = distSq;
+					p = player;
+				}
+			}
+
 			if (p != nullptr)
 			{
 				VECTOR diff = VSub(p->GetPosition(), position_);
@@ -130,7 +163,10 @@ void Tornado::Update()
 		tatu_->SetPosition(position_);
 		tatu_->Update();
 	}
+}
 
+void Tornado::UpdateKnockback()
+{
 	// 竜巻接触により吹き飛ばされたプレイヤーの減衰（フリクション）およびコリジョン判定処理
 	for (auto it = knockbacks_.begin(); it != knockbacks_.end(); ) {
 		Player3D* p_knock = it->player;
@@ -146,6 +182,7 @@ void Tornado::Update()
 			Wall* wall = dynamic_cast<Wall*>(w);
 			if (wall != nullptr) {
 				std::vector<VERTEX3D> vertex = wall->GetVertex();
+
 				if (HitCheck_Capsule_Triangle(
 					newPos, VAdd(newPos, VGet(0.0f, 200.0f, 0.0f)), 80.0f,
 					vertex.at(0).pos, vertex.at(1).pos, vertex.at(2).pos) ||
@@ -164,7 +201,7 @@ void Tornado::Update()
 
 		p_knock->SetPosition(newPos);
 
-		// 物理制約：空気抵抗および地面との摩擦をシミュレートし、ノックバック速度を毎フレーム 10% 減衰させる
+		// 物理演算：空気抵抗および地面との摩擦をシミュレートし、ノックバック速度を毎フレーム 10% 減衰させる
 		vel = VScale(vel, 0.9f);
 
 		// 移動速度が一定以下になり、ほぼ静止したとみなせる場合は物理演算リストから除外する

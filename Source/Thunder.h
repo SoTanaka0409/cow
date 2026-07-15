@@ -44,6 +44,12 @@ public:
 	virtual void OnExit(Collider* collider, Collider* check) override;
 
 private:
+	void UpdateEffects();
+	void UpdateCollider();
+	void UpdateState();
+	void UpdateStunEffect();
+
+
 	VECTOR pos_;
 	int warning_timer_;
 	int strike_timer_;

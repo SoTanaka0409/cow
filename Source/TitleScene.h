@@ -35,6 +35,10 @@ public:
 	virtual void Finalize() override;
 
 private:
+	void DrawBackground();
+	void DrawMenuButtons();
+
+
 	// 画面全体の共通演出（サイン波によるボタンやUFOの浮遊アニメーション）の位相を同期させるための共通タイマー
 	int frame_count_;
 
@@ -79,4 +83,9 @@ private:
 	// イースターエッグ（UFOクリック時）として、画面中央を一定時間自動でぐるぐる回る演出用の制御変数群
 	bool  is_auto_patrol_;
 	int auto_patrol_timer_;
+
+	void UpdateCowVoice();
+	void UpdateUFOInteraction(int mouseInput, int mouse_x, int mouse_y, int ufoSize);
+	void UpdateUFOAutoPatrol(int ufoSize);
+	void UpdateMenuButtons(int mouse_x, int mouse_y);
 };

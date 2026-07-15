@@ -83,53 +83,12 @@ void TitleScene::Initialize()
 void TitleScene::Draw()
 {
 	Scene::Draw();
-	DrawExtendGraph(0, 0, 1600, 900, title_graph_handle_, FALSE);
-
-	int ufoDrawY = ufo_y_;
-
-	// 静止時の違和感を減らし生き生きと見せるため、非ドラッグ時は自動でサイン波浮遊させる
-	if (!is_dragging_ufo_)
-	{
-		float ufoWave = sin(frame_count_ * 0.03f) * 20.0f;
-		ufoDrawY += (int)ufoWave;
-	}
-
-	int ufoSize = 360;
-	DrawExtendGraph(
-		ufo_x_,
-		ufoDrawY,
-		ufo_x_ + ufoSize,
-		ufoDrawY + ufoSize,
-		ufo_graph_handle_,
-		TRUE
-	);
-
-	// ボタン配置が単調になるのを防ぐため、サイン波の初期位相（i * 1.5f）をずらして波打たせる
-	for (int i = 0; i < buttons_.size(); i++)
-	{
-		float wave = sin(frame_count_ * 0.05f + (i * 1.5f)) * 10.0f;
-		int drawY = buttons_[i].y + (int)wave;
-
-		// 選択中の視覚的なフィードバックを強調するため、ホバー時は中心から15px拡大する
-		if (buttons_[i].is_hover == true)
-		{
-			int expand = 15;
-			DrawExtendGraph(
-				buttons_[i].x - expand,
-				drawY - expand,
-				buttons_[i].x + buttons_[i].w + expand,
-				drawY + buttons_[i].h + expand,
-				buttons_[i].graph_handle, TRUE);
-		}
-		else
-		{
-			DrawGraph(buttons_[i].x, drawY, buttons_[i].graph_handle, TRUE);
-		}
-	}
-
+	
+	DrawBackground();
+	DrawMenuButtons();
 	DrawRankingUI();
 
-	// 初期化直後のリソースバインド成否を検証するため、描画2フレーム目のみログを追記する
+	// 初回読み込み時のリソース解放漏れを検証するため、描画2フレーム目のみログ追記を行う
 	if (frame_count_ == 2) {
 		FILE* fp = NULL;
 		fopen_s(&fp, "debug_log.txt", "a");
@@ -146,32 +105,96 @@ void TitleScene::Draw()
 	}
 }
 
+void TitleScene::DrawBackground()
+{
+	DrawExtendGraph(0, 0, 1600, 900, title_graph_handle_, FALSE);
+
+	int ufoDrawY = ufo_y_;
+
+	// 静止時の単調さを避けるため、ドラッグ中以外はサイン波でフワフワ浮遊させる
+	if (!is_dragging_ufo_)
+	{
+		float ufoWave = sin(frame_count_ * 0.03f) * 20.0f;
+		ufoDrawY += (int)ufoWave;
+	}
+
+	int ufoSize = 360;
+	DrawExtendGraph(
+		ufo_x_,
+		ufoDrawY,
+		ufo_x_ + ufoSize,
+		ufoDrawY + ufoSize,
+		ufo_graph_handle_,
+		TRUE
+	);
+}
+
+void TitleScene::DrawMenuButtons()
+{
+	// ボタンが同時に同じ波形にならないよう、サイン波の位相（i * 1.5f）をずらして波打たせる
+	for (int i = 0; i < buttons_.size(); i++)
+	{
+		float wave = sin(frame_count_ * 0.05f + (i * 1.5f)) * 10.0f;
+		int drawY = buttons_[i].y + (int)wave;
+
+		// 選択時の視覚的フィードバックを得るため、ホバー時は全体を15px拡縮して描画する
+		if (buttons_[i].is_hover == true)
+		{
+			int expand = 15;
+			DrawExtendGraph(
+				buttons_[i].x - expand,
+				drawY - expand,
+				buttons_[i].x + buttons_[i].w + expand,
+				drawY + buttons_[i].h + expand,
+				buttons_[i].graph_handle, TRUE);
+		}
+		else
+		{
+			DrawGraph(buttons_[i].x, drawY, buttons_[i].graph_handle, TRUE);
+		}
+	}
+}
+
 // 副作用：フレームカウンターの加算、各種タイマーの更新、入力状態に基づく座標変更
 void TitleScene::Update()
 {
 	frame_count_++;
 
-	if (fade_state_ != kSceneFadeOut)
-	{
-		cow_voice_timer_--;
-		if (cow_voice_timer_ <= 0)
-		{
-			Master::mpSoundManager->PlaySE(SoundManager::kSeCow);
-			// 機械的な周期感を無くし自然な環境音にするため、次回鳴動までの間隔を5〜15秒で散らす
-			cow_voice_timer_ = GetRand(600) + 300;
-		}
-	}
+	UpdateCowVoice();
 
 	int mouse_x_, mouse_y_;
 	GetMousePoint(&mouse_x_, &mouse_y_);
 	int mouseInput = GetMouseInput();
 	int ufoSize = 360;
 
+	UpdateUFOInteraction(mouseInput, mouse_x_, mouse_y_, ufoSize);
+	UpdateUFOAutoPatrol(ufoSize);
+	UpdateMenuButtons(mouse_x_, mouse_y_);
+
+	Scene::Update();
+}
+
+void TitleScene::UpdateCowVoice()
+{
+	if (fade_state_ != kSceneFadeOut)
+	{
+		cow_voice_timer_--;
+		if (cow_voice_timer_ <= 0)
+		{
+			Master::mpSoundManager->PlaySE(SoundManager::kSeCow);
+			// 機墁E的な周期感を無くし自然な環境音にするため、次回鳴動までの間隔を5〜15秒で散らす
+			cow_voice_timer_ = GetRand(600) + 300;
+		}
+	}
+}
+
+void TitleScene::UpdateUFOInteraction(int mouseInput, int mouse_x, int mouse_y, int ufoSize)
+{
 	// イースターエッグ（隠し要素）として、UFO突っつき時に一定時間自動巡回モードへ移行させる
 	if ((mouseInput & MOUSE_INPUT_LEFT) != 0)
 	{
-		if (mouse_x_ >= ufo_x_ && mouse_x_ <= ufo_x_ + ufoSize &&
-			mouse_y_ >= ufo_y_ && mouse_y_ <= ufo_y_ + ufoSize)
+		if (mouse_x >= ufo_x_ && mouse_x <= ufo_x_ + ufoSize &&
+			mouse_y >= ufo_y_ && mouse_y <= ufo_y_ + ufoSize)
 		{
 			is_auto_patrol_ = true;
 			auto_patrol_timer_ = 240;
@@ -182,7 +205,10 @@ void TitleScene::Update()
 	{
 		is_dragging_ufo_ = false;
 	}
+}
 
+void TitleScene::UpdateUFOAutoPatrol(int ufoSize)
+{
 	// 画面中央（800, 450）を起点とした綺麗な長楕円の軌道を描かせるための極座標計算
 	if (is_auto_patrol_)
 	{
@@ -197,14 +223,17 @@ void TitleScene::Update()
 			is_auto_patrol_ = false;
 		}
 	}
+}
 
-	// メニューボタンのインタラクション処理。UFOドラッグ中は誤爆を防ぐため判定をパスする
+void TitleScene::UpdateMenuButtons(int mouse_x, int mouse_y)
+{
+	// メニューボタンのインタラクション処琁EUFOドラッグ中は誤爆を防ぐため判定をパスする
 	if (is_dragging_ufo_ == false)
 	{
 		for (int i = 0; i < buttons_.size(); i++)
 		{
-			if (mouse_x_ >= buttons_[i].x && mouse_x_ <= buttons_[i].x + buttons_[i].w &&
-				mouse_y_ >= buttons_[i].y && mouse_y_ <= buttons_[i].y + buttons_[i].h)
+			if (mouse_x >= buttons_[i].x && mouse_x <= buttons_[i].x + buttons_[i].w &&
+				mouse_y >= buttons_[i].y && mouse_y <= buttons_[i].y + buttons_[i].h)
 			{
 				buttons_[i].is_hover = true;
 
@@ -242,13 +271,11 @@ void TitleScene::Update()
 	}
 	else
 	{
-		// UFO操作中の画面のちらつきや誤動作を防止するため、全ボタンのホバー演出を消去する
+		// UFO操作中の画面のちらつきや誤動作を防止するため、全ボタンのホバー演Eを消去する
 		for (int i = 0; i < buttons_.size(); i++) {
 			buttons_[i].is_hover = false;
 		}
 	}
-
-	Scene::Update();
 }
 
 // 副作用：マウスカーソル非表示化、BGMの停止

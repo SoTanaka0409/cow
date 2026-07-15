@@ -98,6 +98,10 @@ public:
 	bool GetIsPhaseCameraActive() const { return is_phase_camera_active_; }
 
 private:
+	void UpdatePositionAndTarget();
+	void UpdateEffekseerAndLight();
+
+
 	// ジンバルロック（特異点による回転異常）回避のため、縦回転の適用時は±89度のクランプ処理を必須とする
 	float horizontal_angle_;
 	float vertical_angle_;

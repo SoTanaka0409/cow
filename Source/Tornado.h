@@ -53,4 +53,10 @@ private:
 		VECTOR velocity;
 	};
 	std::vector<KnockbackInfo> knockbacks_;
+
+	void UpdateScaleAndRadius();
+	void UpdateHomingPlayer();
+	void UpdateWallBounce();
+	void UpdateEffectAndSound();
+	void UpdateKnockback();
 };

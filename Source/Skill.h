@@ -50,7 +50,13 @@ public:
 	bool add_skill_flag_;
 
 private:
+	void UpdateFlashAnimation();
+	void UpdateSelectAnimation();
+	void UpdateOpenAnimation();
+
+
 private:
+
 	Object3D* parent_;
 	SkillTag tag_;
 

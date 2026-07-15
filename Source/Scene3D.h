@@ -61,6 +61,10 @@ public:
 	void PhaseUpdate();
 
 private:
+	void DrawGrid();
+	void DrawPhaseUI();
+
+
 	float warning_radius_;
 	float max_radius_;
 	
