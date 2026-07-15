@@ -1,4 +1,4 @@
-#include "AnimalMove.h"
+﻿#include "AnimalMove.h"
 #include "GameConstants.h"
 #include "Master.h"
 #include "InputManager.h"
@@ -180,7 +180,7 @@ void AnimalMove::Die(DeathReason reason)
 		{
 			player->mpLevel->AddXp(mfXp);
 			player->combo_->Reset();
-			player->mpScore->AddScore(mfScore);
+			player->mpScore->AddScore(static_cast<int>(mfScore));
 
 			if (tag_animal_ == AnimalMove::TagAnimal::kAnimalT)
 			{

@@ -1,4 +1,4 @@
-#include "CowMove.h"
+﻿#include "CowMove.h"
 #include "GameConstants.h"
 #include "Master.h"
 #include "InputManager.h"
@@ -114,6 +114,7 @@ void CowMove::ColliderMove()
 
 void CowMove::MoveCharacter()
 {
+	
 	AvoidOtherCows();
 
 	if (SeekBait())
@@ -400,7 +401,7 @@ void CowMove::Die(DeathReason reason)
 		{
 			player->mpLevel->AddXp(mfXp);
 			player->combo_->AddHit();
-			player->mpScore->AddScore(mfScore * player->combo_->GetMultiplier());
+			player->mpScore->AddScore(static_cast<int>(mfScore * player->combo_->GetMultiplier()));
 
 			if (tag_cow_ == CowMove::TagCow::kCowT)
 			{
@@ -440,7 +441,7 @@ void CowMove::Die(DeathReason reason)
 		{
 			player->mpLevel->AddXp(mfXp);
 			player->combo_->AddHit();
-			player->mpScore->AddScore(mfScore * player->combo_->GetMultiplier());
+			player->mpScore->AddScore(static_cast<int>(mfScore * player->combo_->GetMultiplier()));
 		}
 		mDeleteFlag = true;
 		break;

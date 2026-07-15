@@ -65,8 +65,6 @@ private:
 	void DrawPhaseUI();
 
 
-	float warning_radius_;
-	float max_radius_;
 	
 	int tatumaki_spawn_timer_;
 	int mass_spawn_timer_;

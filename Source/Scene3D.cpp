@@ -61,26 +61,26 @@ void Scene3D::Initialize()
 	
 	for (int i = 0; i < 6; i++)
 	{
-		new Object_Stage("Resource/3D/装飾/SmallTree1.mv1", VGet(6000, 0, -5000 + 2000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/装飾/SmallTree1.mv1", VGet(-6000, 0, -5000 + 2000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/装飾/Flower1.mv1", VGet(5500, 0, -5000 + 2000 * i), 3.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/装飾/SmallTree1.mv1", VGet(-6000, 0, -5000 + 2000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/装飾/SmallTree1.mv1", VGet(-5000 + 2000 * i, 0, -6000), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/装飾/SmallTree1.mv1", VGet(-5000 + 2000 * i, 0, 6000), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/SmallTree1.mv1", VGet(6000.0f, 0.0f, -5000.0f + 2000.0f * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/SmallTree1.mv1", VGet(-6000.0f, 0.0f, -5000.0f + 2000.0f * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/Flower1.mv1", VGet(5500.0f, 0.0f, -5000.0f + 2000.0f * i), 3.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/SmallTree1.mv1", VGet(-6000.0f, 0.0f, -5000.0f + 2000.0f * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/SmallTree1.mv1", VGet(-5000.0f + 2000.0f * i, 0, -6000), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/SmallTree1.mv1", VGet(-5000.0f + 2000.0f * i, 0, 6000), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
 	}
 
 	for (int i = 0; i < 3; i++)
 	{
-		new Object_Stage("Resource/3D/装飾/BigTree1.mv1", VGet(5500, 0, -4000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/装飾/BigTree4.mv1", VGet(-5500, 0, -4000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/装飾/BigTree4.mv1", VGet(-4000 + 4000 * i, 0, 5500), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/装飾/BigTree3.mv1", VGet(-4000 + 4000 * i, 0, -5500), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/BigTree1.mv1", VGet(5500.0f, 0.0f, -4000.0f + 4000.0f * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/BigTree4.mv1", VGet(-5500.0f, 0.0f, -4000.0f + 4000.0f * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/BigTree4.mv1", VGet(-4000.0f + 4000.0f * i, 0, 5500), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/BigTree3.mv1", VGet(-4000.0f + 4000.0f * i, 0, -5500), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
 	}
 
 	for (int i = 0; i < 2; i++)
 	{
-		new Object_Stage("Resource/3D/装飾/BigTree3.mv1", VGet(5500, 0, -2000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/装飾/BigTree2.mv1", VGet(-5500, 0, -2000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/BigTree3.mv1", VGet(5500.0f, 0.0f, -2000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
+		new Object_Stage("Resource/3D/装飾/BigTree2.mv1", VGet(-5500.0f, 0.0f, -2000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
 	}
 	 
 	new Object_Stage("Resource/3D/装飾/Grass2.mv1", VGet(0, 0, 0), 2.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
@@ -231,6 +231,7 @@ void Scene3D::DrawGrid()
 
 void Scene3D::DrawPhaseUI()
 {
+	int fontSize = GetFontSize();
 	// プレイヤーに何のイベントが起きているか知らせるため、全画面の透過テキストを描画
 	if (Master::camera_->GetIsPhaseCameraActive())
 	{
@@ -242,7 +243,7 @@ void Scene3D::DrawPhaseUI()
 			DrawExtendGraph(0, 0, 1920, 1080, font_back_graph_, TRUE);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		}
-
+		SetFontSize(40);
 		if (currentPhase == (int)GameManager::GamePhase::kMassSpawn)
 		{
 			DrawString(200, 300, "MASS SPAWN!", GetColor(255, 50, 50), true);
@@ -253,6 +254,7 @@ void Scene3D::DrawPhaseUI()
 			DrawString(200, 300, "TORNADO CRISIS!", GetColor(255, 100, 0), true);
 			DrawString(200, 350, "巨大竜巻が接近中！", GetColor(255, 255, 255), true);
 		}
+		SetFontSize(fontSize);
 	}
 }
 

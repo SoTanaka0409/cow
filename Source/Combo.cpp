@@ -19,6 +19,8 @@ Combo::Combo()
 
 Combo::~Combo()
 {
+	
+	
 }
 
 void Combo::Draw()
@@ -58,8 +60,9 @@ void Combo::Update()
 	{
 		combo_timer_ -= 0.01f;
 
+		auto currentScene = Master::mpSceneManager->GetSceneType();
 		// コンボ継続時間を使い切ったため状態をリセットする
-		if (combo_timer_ <= 0.0f)
+		if (combo_timer_ <= 0.0f&&!(currentScene==SceneManager::kSceneTutorial))
 		{
 			Reset();
 		}

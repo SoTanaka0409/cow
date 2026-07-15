@@ -64,7 +64,6 @@ private:
 	Texture* texture_;
 	Texture* texture2_;
 	Texture* texture3_;
-	float status_date_;
 
 	// 将来の拡張性（a = AttackSpeed, s = Speed）のバフ加算量を個別に永続保持するためのワーク変数
 	float status_a_;

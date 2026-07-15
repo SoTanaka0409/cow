@@ -57,7 +57,6 @@ public:
 
 	// 出力：なし
 	// 副作用：プレイヤーが牛の格納（アブダクション）に成功したというトリガーをシーン側に通知する
-	void OnCowSucked() { is_cow_sucked_ = true; }
 
 private:
 	// 副作用：プレイヤーが勝手に遠くへ行かないよう、初期位置の周囲を囲う障害物（柵）を生成・配置する
@@ -79,7 +78,6 @@ private:
 	void DrawTutorialText(const char* text, int yOffset = 0);
 
 private:
-	int cow_count_;                  // クリア条件（例：牛を3匹吸い出す）を満たしたか監視する捕獲カウンター
 	int font_handle_;                // 画面上に大きく操作方法を表示するためのアンチエイリアス付きフォントハンドル
 	int timer_count_;                // テキストの文字送りや、課題クリアから次の解説へ進むまでの暗転猶予タイマー
 
@@ -99,7 +97,6 @@ private:
 	Camera* camera_ = nullptr;       // プレイヤーの視点を解説用（固定俯瞰）に強制クランプするための制御用カメラ
 	Combo* combo_ = nullptr;         
 
-	bool is_cow_sucked_ = false;     // ビームによる吸い込み（アブダクション）の成功イベントを検知するクリア判定用フラグ
 	bool cow_delete_;                // チュートリアル終了時やリセット時に、場にいる練習用の牛を消去するための消去フラグ
 	bool skill_flag_{};              // スキル選択画面のシステム解説がすでに完了したかを記憶する進行スキップ防止フラグ
 	bool fever_flag_{};              // フィーバータイムの発生演出がすでにトリガーされたかを確認する多重発生防止フラグ

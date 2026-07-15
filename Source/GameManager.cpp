@@ -1,4 +1,4 @@
-﻿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include"GameManager.h"
 #include"Master.h"
 #include"SceneManager.h"
@@ -104,7 +104,6 @@ void GameManager::Draw()
  */
 void GameManager::Update()
 {
-	Player3D* player = ServiceLocator::GetPlayer();
 	
 	if (GameStepType::kFinal == type_)
 	{

@@ -18,7 +18,7 @@ Tornado::Tornado(VECTOR pos)
 	tatumaki_spawn_timer_ = 0;
 	move_timer_ = 0;
 	speed_ = 5.0f;
-	velocity_ = VGet(0, 0, 0);
+	velocity_ = VGet(1.0f, 0.0f, 0.0f);
 
 	effect_timer_ = 360;
 
@@ -100,8 +100,12 @@ void Tornado::UpdateHomingPlayer()
 			targetDir = VNorm(targetDir);
 
 			float homingStrength = 0.001f;
-			velocity_ = VAdd(velocity_, VScale(targetDir, homingStrength));
-			velocity_ = VNorm(velocity_);
+			if (VSquareSize(velocity_) < 0.001f) {
+				velocity_ = targetDir;
+			} else {
+				velocity_ = VAdd(velocity_, VScale(targetDir, homingStrength));
+				velocity_ = VNorm(velocity_);
+			}
 		}
 	}
 

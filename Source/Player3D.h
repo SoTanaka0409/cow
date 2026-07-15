@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "DxLib.h"
 #include <string>
 #include "Object3D.h"
@@ -148,7 +148,6 @@ private:
 	bool mIsVacuumActive = false;        // 吸引アクション実行中フラグ
 	int CatchNowCount;                   // 現在の同時捕獲数
 	float currentSpeed;                  // 最終計算された実際の移動速度
-	VECTOR UpMoveVector;                 // 上下方向(Y軸)の移動ベクトル
 	VECTOR moveVec = VGet(0.0f, 0.0f, 0.0f); // 最終的な移動ベクトル
 	VECTOR oldmoveVec;                   // 前フレームの移動ベクトル
 	VECTOR hitPos = VGet(0.0f, 0.0f, 0.0f);  // 当たり判定の衝突検知座標

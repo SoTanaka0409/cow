@@ -43,20 +43,14 @@ private:
 	int frame_count_;
 
 	int title_graph_handle_;
-	int new_game_;
-	int tutorial_;
-	int operation_procedures_;
 
 	int ranking_title_image_;
 	int point_img_;
 
-	SelectionManager* title_select_;
 	Texture* texture_;
 	Texture* texture2_;
 	Texture* texture3_;
 
-	int new_game_x_;
-	int new_game_y_;
 	int new_game_w_;
 	int new_game_h_;
 

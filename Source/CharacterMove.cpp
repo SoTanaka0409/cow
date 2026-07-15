@@ -343,7 +343,4 @@ void CharacterMove::CharacterDied()
 void CharacterMove::Die(DeathReason reason)
 {
 	if (mDeleteFlag) return;
-	switch (reason)
-	{
-	}
 }
