@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+﻿#include "ServiceLocator.h"
 #include"Player3D.h"
 #include"Model.h"
 #include"ModelAnimation.h"
@@ -58,8 +58,8 @@ Player3D::Player3D(std::string filename, VECTOR initPos)
 
 	Master::camera_->Initialize();
 
-	mnLighGraph = Master::mpResourceManager->LoadGraphics("Resource/2D/green_beam_transparent.png");
-	mnGaugeFrameGraph = Master::mpResourceManager->LoadGraphics("Resource/2D/cow_frame.png");
+	mnLighGraph = Master::mpResourceManager->LoadGraphics("Resource/2D/PlayerCaptureBeam.png");
+	mnGaugeFrameGraph = Master::mpResourceManager->LoadGraphics("Resource/2D/CowGaugeFrame.png");
 
 	capsule_collider_->position_ = VGet(position_.x, 0, position_.z);
 	capsule_collider_->position2_ = position_;

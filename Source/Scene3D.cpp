@@ -30,7 +30,7 @@ Tornado* tatumaki = nullptr;
 Scene3D::Scene3D()
 {
 	mass_spawn_timer_ = 0;
-	font_back_graph_ = Master::mpResourceManager->LoadGraphics("Resource/2D/fontback.png");
+	font_back_graph_ = Master::mpResourceManager->LoadGraphics("Resource/2D/FontPanelBackground.png");
 	shadow_map_handle_ = -1;
 }
 
@@ -74,7 +74,7 @@ void Scene3D::Initialize()
 	thunder_ = new Thunder(VGet(0.0f, 0.0f, 0.0f));
 	tatumaki = new Tornado(VGet(3000.0f, 0.0f, 3000.0f));
 
-	auto Player = new Player3D("Resource/3D/ufo2/UFO.mv1", VGet(1000.0f, 2000.0f, 0.0f));
+	auto Player = new Player3D("Resource/3D/Player/UFO.mv1", VGet(1000.0f, 2000.0f, 0.0f));
 	Player->SetScale(0.6f);
 
 	VECTOR spawnPos = VGet(0.0f, 0.0f, 0.0f); // スポーン中心位置
@@ -92,7 +92,7 @@ void Scene3D::Initialize()
 	skybox->SetModelTexture("Resource/3D/SkyBox/sky000.jpg", 0);
 
 	new Floor(
-		"Resource/2D/haikei.png",
+		"Resource/2D/GameBackground.png",
 		VGet(0, 0, 0),
 		VGet(-11500, 0, -11500),
 		VGet(11500, 0, 11500)

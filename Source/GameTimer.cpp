@@ -11,7 +11,7 @@ GameTimer::GameTimer(VECTOR pos, int timer, Tag_Num num)
 {
 	mLastTime = GetNowCount();
 
-	score_text_image_ = Master::mpResourceManager->LoadGraphics("Resource/2D/rimit.png"); // 描画遅延軽減のため先読み込み
+	score_text_image_ = Master::mpResourceManager->LoadGraphics("Resource/2D/TimeLimitText.png"); // 描画遅延軽減のため先読み込み
 }
 
 GameTimer::~GameTimer()

@@ -55,9 +55,9 @@ Skill::Skill(Object3D* parent)
 	pos2_ = VGet(800.0f, 450.0f, 0.0f);
 	pos3_ = VGet(1400.0f, 450.0f, 0.0f);
 
-	texture_ = new Texture("Resource/2D/Speed.png", pos1_, 300, 500, true);
-	texture2_ = new Texture("Resource/2D/food.png", pos2_, 300, 500, true);
-	texture3_ = new Texture("Resource/2D/Kyuusyuu.png", pos3_, 300, 500, true);
+	texture_ = new Texture("Resource/2D/SkillSpeedCard.png", pos1_, 300, 500, true);
+	texture2_ = new Texture("Resource/2D/SkillFoodCard.png", pos2_, 300, 500, true);
+	texture3_ = new Texture("Resource/2D/SkillAbsorbCard.png", pos3_, 300, 500, true);
 }
 
 /*

@@ -1,423 +1,423 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ">
+    <Filter Include="Source">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Source\Scene">
+      <UniqueIdentifier>{0C8CF9C7-AEAD-4302-86F5-F88B9397ADF9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="繝ｪ繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ">
+    <Filter Include="Source\System">
+      <UniqueIdentifier>{18E5859A-3417-47CB-A112-A46BEB61558D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Object">
+      <UniqueIdentifier>{D6E2AD74-93A5-47A8-93B8-DFA94A5F4DF0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Manager">
+      <UniqueIdentifier>{559262DA-0B48-494E-A1DF-BB64EC6309EC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Collision">
+      <UniqueIdentifier>{34F583C1-8BAD-4DD5-8D63-984E083F4449}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Character">
+      <UniqueIdentifier>{A4430562-F233-45E3-BD64-8E8DD6A1298C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Scene">
-      <UniqueIdentifier>{0C8CF9C7-AEAD-4302-86F5-F88B9397ADF9}</UniqueIdentifier>
+    <Filter Include="h">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Scene">
+    <Filter Include="h\Scene">
       <UniqueIdentifier>{49877BED-08A9-43E7-AB3B-446E9B465B54}</UniqueIdentifier>
     </Filter>
-    <Filter Include="繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\System">
-      <UniqueIdentifier>{18E5859A-3417-47CB-A112-A46BEB61558D}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Object">
-      <UniqueIdentifier>{D6E2AD74-93A5-47A8-93B8-DFA94A5F4DF0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\System">
+    <Filter Include="h\System">
       <UniqueIdentifier>{D32BF633-8BBA-4831-8E10-19DE1BA2129C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Manager">
-      <UniqueIdentifier>{559262DA-0B48-494E-A1DF-BB64EC6309EC}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Object">
+    <Filter Include="h\Object">
       <UniqueIdentifier>{9FC14834-A1A4-4312-BFA9-BE5AC15A1E0D}</UniqueIdentifier>
     </Filter>
-    <Filter Include="繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Manager">
+    <Filter Include="h\Manager">
       <UniqueIdentifier>{130A8E66-0ACD-4F33-8866-8DA42F567F66}</UniqueIdentifier>
     </Filter>
-    <Filter Include="繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Collision">
-      <UniqueIdentifier>{34F583C1-8BAD-4DD5-8D63-984E083F4449}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Character">
-      <UniqueIdentifier>{A4430562-F233-45E3-BD64-8E8DD6A1298C}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Character">
+    <Filter Include="h\Character">
       <UniqueIdentifier>{FB445487-BD19-4B46-9834-36E00D74C0C6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Collision">
+    <Filter Include="h\Collision">
       <UniqueIdentifier>{F8A804DD-2BA1-4FDC-A17C-EC166E8225AF}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Animal.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Character</Filter>
+      <Filter>Source\Character</Filter>
     </ClCompile>
     <ClCompile Include="Source\AnimalManager.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Manager</Filter>
+      <Filter>Source\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Source\AnimalMove.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Character</Filter>
+      <Filter>Source\Character</Filter>
     </ClCompile>
     <ClCompile Include="Source\Bait.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>Source\Object</Filter>
     </ClCompile>
     <ClCompile Include="Source\Camera.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>Source\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\CapsuleCollider.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Collision</Filter>
+      <Filter>Source\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Source\Collider.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Collision</Filter>
+      <Filter>Source\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Source\ColliderManager.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Manager</Filter>
+      <Filter>Source\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Source\Combo.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>Source\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\Cow.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Character</Filter>
+      <Filter>Source\Character</Filter>
     </ClCompile>
     <ClCompile Include="Source\CowManager.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Manager</Filter>
+      <Filter>Source\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Source\CowMove.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Character</Filter>
+      <Filter>Source\Character</Filter>
     </ClCompile>
     <ClCompile Include="Source\CharacterMove.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Character</Filter>
+      <Filter>Source\Character</Filter>
     </ClCompile>
     <ClCompile Include="Source\Cow_2.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Character</Filter>
+      <Filter>Source\Character</Filter>
     </ClCompile>
     <ClCompile Include="Source\GoldCow.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Character</Filter>
+      <Filter>Source\Character</Filter>
     </ClCompile>
     <ClCompile Include="Source\DebugCamera.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>Source\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\Cow_Tutorial.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Character</Filter>
+      <Filter>Source\Character</Filter>
     </ClCompile>
     <ClCompile Include="Source\EffectManager.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Manager</Filter>
+      <Filter>Source\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Source\EffekseerEffect.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>Source\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\Fever.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>Source\Object</Filter>
     </ClCompile>
     <ClCompile Include="Source\Floor.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>Source\Object</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameManager.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Manager</Filter>
+      <Filter>Source\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameTimer.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>Source\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\LoadingScene.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Scene</Filter>
+      <Filter>Source\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Source\InputManager.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Manager</Filter>
+      <Filter>Source\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Source\Level.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>Source\Object</Filter>
     </ClCompile>
     <ClCompile Include="Source\ServiceLocator.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>Source\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\CharacterState.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Character</Filter>
+      <Filter>Source\Character</Filter>
     </ClCompile>
     <ClCompile Include="Source\Main.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>Source\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\Model.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>Source\Object</Filter>
     </ClCompile>
     <ClCompile Include="Source\ModelAnimation.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>Source\Object</Filter>
     </ClCompile>
     <ClCompile Include="Source\Object2D.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>Source\Object</Filter>
     </ClCompile>
     <ClCompile Include="Source\Object3D.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>Source\Object</Filter>
     </ClCompile>
     <ClCompile Include="Source\ObjectManager.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Manager</Filter>
+      <Filter>Source\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Source\Object_Stage.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>Source\Object</Filter>
     </ClCompile>
     <ClCompile Include="Source\Mountain.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>Source\Object</Filter>
     </ClCompile>
     <ClCompile Include="Source\Player3D.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Character</Filter>
+      <Filter>Source\Character</Filter>
     </ClCompile>
     <ClCompile Include="Source\ResourceManager.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Manager</Filter>
+      <Filter>Source\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Source\ResultScene.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Scene</Filter>
+      <Filter>Source\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Source\Rule.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>Source\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Scene</Filter>
+      <Filter>Source\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene3D.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Scene</Filter>
+      <Filter>Source\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneManager.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Scene</Filter>
+      <Filter>Source\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Source\Score.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>Source\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\SelectionManager.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Manager</Filter>
+      <Filter>Source\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Source\Skill.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>Source\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\SkyBox.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>Source\Object</Filter>
     </ClCompile>
     <ClCompile Include="Source\SoundManager.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Manager</Filter>
+      <Filter>Source\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Source\SphereCollider.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Collision</Filter>
+      <Filter>Source\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Source\Stage.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>Source\Object</Filter>
     </ClCompile>
     <ClCompile Include="Source\test_constants.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>Source\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\Tornado.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>Source\Object</Filter>
     </ClCompile>
     <ClCompile Include="Source\Utility.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>Source\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\Texture.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>Source\Object</Filter>
     </ClCompile>
     <ClCompile Include="Source\Thunder.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>Source\Object</Filter>
     </ClCompile>
     <ClCompile Include="Source\TitleScene.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Scene</Filter>
+      <Filter>Source\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Source\UIButton.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>Source\Object</Filter>
     </ClCompile>
     <ClCompile Include="Source\TutorialScene.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Scene</Filter>
+      <Filter>Source\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Source\StageLoader.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>Source\Object</Filter>
     </ClCompile>
     <ClCompile Include="Source\Wall.cpp">
-      <Filter>繧ｽ繝ｼ繧ｹ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>Source\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animal.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Character</Filter>
+      <Filter>h\Character</Filter>
     </ClInclude>
     <ClInclude Include="Source\AnimalManager.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Manager</Filter>
+      <Filter>h\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\AnimalMove.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Character</Filter>
+      <Filter>h\Character</Filter>
     </ClInclude>
     <ClInclude Include="Source\Bait.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>h\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\Camera.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>h\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\CapsuleCollider.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Collision</Filter>
+      <Filter>h\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Source\CharacterState.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Character</Filter>
+      <Filter>h\Character</Filter>
     </ClInclude>
     <ClInclude Include="Source\Collider.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Collision</Filter>
+      <Filter>h\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Source\ColliderManager.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Manager</Filter>
+      <Filter>h\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\Combo.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>h\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\Cow.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Character</Filter>
+      <Filter>h\Character</Filter>
     </ClInclude>
     <ClInclude Include="Source\CowManager.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Manager</Filter>
+      <Filter>h\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\CowMove.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Character</Filter>
+      <Filter>h\Character</Filter>
     </ClInclude>
     <ClInclude Include="Source\CharacterMove.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Character</Filter>
+      <Filter>h\Character</Filter>
     </ClInclude>
     <ClInclude Include="Source\Cow_2.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Character</Filter>
+      <Filter>h\Character</Filter>
     </ClInclude>
     <ClInclude Include="Source\CreatureManager.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Manager</Filter>
+      <Filter>h\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameConstants.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>h\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\GoldCow.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Character</Filter>
+      <Filter>h\Character</Filter>
     </ClInclude>
     <ClInclude Include="Source\DebugCamera.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>h\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\Cow_Tutorial.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Character</Filter>
+      <Filter>h\Character</Filter>
     </ClInclude>
     <ClInclude Include="Source\EffectManager.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Manager</Filter>
+      <Filter>h\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\EffekseerEffect.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>h\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\Fever.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>h\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\Floor.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>h\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameManager.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Manager</Filter>
+      <Filter>h\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameTimer.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>h\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\InputManager.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Manager</Filter>
+      <Filter>h\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\LoadingScene.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Scene</Filter>
+      <Filter>h\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Source\Level.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>h\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\Master.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>h\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\Model.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>h\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\ModelAnimation.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>h\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\ModelUtility.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>h\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\Object2D.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>h\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\Object3D.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>h\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\ObjectManager.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Manager</Filter>
+      <Filter>h\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\Object_Stage.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>h\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\Mountain.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>h\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\Player3D.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Character</Filter>
+      <Filter>h\Character</Filter>
     </ClInclude>
     <ClInclude Include="Source\ResourceManager.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Manager</Filter>
+      <Filter>h\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\ResultScene.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Scene</Filter>
+      <Filter>h\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Source\Rule.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>h\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Scene</Filter>
+      <Filter>h\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene3D.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Scene</Filter>
+      <Filter>h\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Source\SceneManager.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Scene</Filter>
+      <Filter>h\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Source\Score.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>h\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\SelectionManager.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Manager</Filter>
+      <Filter>h\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\ServiceLocator.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>h\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\Skill.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>h\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\SkyBox.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>h\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\SoundManager.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Manager</Filter>
+      <Filter>h\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Source\SphereCollider.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Collision</Filter>
+      <Filter>h\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Source\Stage.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>h\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\Tornado.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>h\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\Texture.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>h\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\Thunder.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>h\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\TitleScene.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Scene</Filter>
+      <Filter>h\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Source\UIButton.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>h\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\TutorialScene.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Scene</Filter>
+      <Filter>h\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Source\Utility.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\System</Filter>
+      <Filter>h\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\StageLoader.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>h\Object</Filter>
     </ClInclude>
     <ClInclude Include="Source\Wall.h">
-      <Filter>繝倥ャ繝繝ｼ 繝輔ぃ繧､繝ｫ\Object</Filter>
+      <Filter>h\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

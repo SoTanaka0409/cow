@@ -52,26 +52,26 @@ void TutorialScene::Initialize()
 	CreateWalls();
 
 	new Floor(
-		"Resource/2D/haikei.png",
+		"Resource/2D/GameBackground.png",
 		VGet(0, 0, 0),
 		VGet(-11500, 0, -11500),
 		VGet(11500, 0, 11500)
 	);
 	
 	Master::mpSoundManager->PlayBGM(SoundManager::kBgmTutorial);
-	auto Player = new Player3D("Resource/3D/ufo2/Ufo.mv1", VGet(0.0f, 1000.0f, 0.0f));
+	auto Player = new Player3D("Resource/3D/Player/UFO.mv1", VGet(0.0f, 1000.0f, 0.0f));
 	Player->SetScale(0.6f);
 
 	SetCamera(Master::camera_);
 
 	VECTOR pos = VGet(1200, 150, 0);
 	float GraphSize_x = 800, GraphSize_y = 300;
-	texture_  = new Texture("Resource/2D/tutorial_1_move.png", pos, GraphSize_x, GraphSize_y, true);
-	texture2_ = new Texture("Resource/2D/tutorial_2_beam.png", pos, GraphSize_x, GraphSize_y, true);
-	texture3_ = new Texture("Resource/2D/tutorial_3_combo.png", pos, GraphSize_x, GraphSize_y, true);
-	texture4_ = new Texture("Resource/2D/tutorial_4_phase.png", pos, GraphSize_x, GraphSize_y, true);
-	texture5_ = new Texture("Resource/2D/tutorial_5_skill.png", pos, GraphSize_x, GraphSize_y, true);
-	texture6_ = new Texture("Resource/2D/tutorial_6_fever.png", pos, GraphSize_x, GraphSize_y, true);
+	texture_  = new Texture("Resource/2D/TutorialMove.png", pos, GraphSize_x, GraphSize_y, true);
+	texture2_ = new Texture("Resource/2D/TutorialBeam.png", pos, GraphSize_x, GraphSize_y, true);
+	texture3_ = new Texture("Resource/2D/TutorialCombo.png", pos, GraphSize_x, GraphSize_y, true);
+	texture4_ = new Texture("Resource/2D/TutorialPhase.png", pos, GraphSize_x, GraphSize_y, true);
+	texture5_ = new Texture("Resource/2D/TutorialSkill.png", pos, GraphSize_x, GraphSize_y, true);
+	texture6_ = new Texture("Resource/2D/TutorialFever.png", pos, GraphSize_x, GraphSize_y, true);
 }
 
 void TutorialScene::CreateFences()
@@ -238,7 +238,7 @@ void TutorialScene::UpdateStateSkill()
 		Master::mpSoundManager->PlaySE(SoundManager::kSeTutorialChange);
 		
 		// フィーバーモード用でゴールド牛を召喚
-		auto g = new GoldCow("Resource/3D/GOLDCow/GoldCow.mv1", VGet(1000, 0, 1000), GoldCow::kNoFever);
+		auto g = new GoldCow("Resource/3D/GoldCow/GoldCow.mv1", VGet(1000, 0, 1000), GoldCow::kNoFever);
 		g->SetScale(100);
 	}
 }
