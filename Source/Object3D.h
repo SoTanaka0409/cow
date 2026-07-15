@@ -67,6 +67,7 @@ public:
 	 * [副作用] 画面にモデルや画像が描画される
 	 */
 	virtual void Draw();
+	virtual void DrawShadowCaster();
 
 	/*
 	 * 衝突判定の開始イベントを処理し、ダメージや効果音のトリガーとするため

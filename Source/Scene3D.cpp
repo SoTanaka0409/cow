@@ -31,6 +31,7 @@ Scene3D::Scene3D()
 {
 	mass_spawn_timer_ = 0;
 	font_back_graph_ = Master::mpResourceManager->LoadGraphics("Resource/2D/fontback.png");
+	shadow_map_handle_ = -1;
 }
 
 /*
@@ -51,6 +52,14 @@ Scene3D::~Scene3D()
  */
 void Scene3D::Initialize()
 {
+	shadow_map_handle_ = MakeShadowMap(2048, 2048);
+	if (shadow_map_handle_ != -1)
+	{
+		SetShadowMapDrawArea(shadow_map_handle_, VGet(-7000.0f, -100.0f, -7000.0f), VGet(7000.0f, 3500.0f, 7000.0f));
+		SetShadowMapLightDirection(shadow_map_handle_, VNorm(VGet(-1.0f, -2.0f, -1.0f)));
+		SetShadowMapAdjustDepth(shadow_map_handle_, 0.0005f);
+	}
+
 	Master::camera_->Initialize();
 
 	Master::mnCaughtCowCount = 0;
@@ -126,6 +135,14 @@ void Scene3D::Update()
  */
 void Scene3D::Draw()
 {
+	DrawShadowMap();
+
+	if (shadow_map_handle_ != -1)
+	{
+		SetUseShadowMap(0, shadow_map_handle_);
+		SetLightUseShadowMap(0, TRUE);
+	}
+
 	Scene::Draw();
 	
 	DrawGrid();
@@ -138,6 +155,37 @@ void Scene3D::Draw()
 	}
 
 	DrawPhaseUI();
+
+	if (shadow_map_handle_ != -1)
+	{
+		SetUseShadowMap(0, -1);
+	}
+}
+
+void Scene3D::DrawShadowMap()
+{
+	if (shadow_map_handle_ == -1) return;
+
+	ShadowMap_DrawSetup(shadow_map_handle_);
+
+	auto objMgr = ServiceLocator::GetObjectManager();
+	if (objMgr != nullptr)
+	{
+		for (auto obj : objMgr->GetObject3DListByTag(Object3D::kTag3dPlayer))
+		{
+			obj->DrawShadowCaster();
+		}
+		for (auto obj : objMgr->GetObject3DListByTag(Object3D::kTag3dCow))
+		{
+			obj->DrawShadowCaster();
+		}
+		for (auto obj : objMgr->GetObject3DListByTag(Object3D::kTag3dAnimal))
+		{
+			obj->DrawShadowCaster();
+		}
+	}
+
+	ShadowMap_DrawEnd();
 }
 
 void Scene3D::DrawGrid()
@@ -235,5 +283,10 @@ void Scene3D::PhaseUpdate()
  */
 void Scene3D::Finalize()
 {
+	if (shadow_map_handle_ != -1)
+	{
+		DeleteShadowMap(shadow_map_handle_);
+		shadow_map_handle_ = -1;
+	}
 	Master::mpSoundManager->StopBGM();
 }

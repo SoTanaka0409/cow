@@ -31,6 +31,7 @@ public:
 	virtual ~CharacterMove();
 	virtual void Update() override;
 	virtual void Draw() override;
+	virtual void DrawShadowCaster() override;
 	/*
 	 * キャラクターの挙動を毎フレーム反映するため。
 	 * [入力] なし

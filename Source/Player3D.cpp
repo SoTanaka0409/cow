@@ -284,7 +284,6 @@ void Player3D::ManagerUpdate()
 	mpLevel->Draw();
 	mpLevel->Update();
 	model_->Update();
-	model_->Draw();
 	mpSkill->Update();
 	mpSkill->Draw();
 	combo_->Draw();
@@ -301,6 +300,11 @@ void Player3D::ManagerUpdate()
  */
 void Player3D::Draw()
 {
+	if (model_ != nullptr)
+	{
+		model_->Draw();
+	}
+
 	const int DIV = 32;
 	unsigned int color;
 
@@ -324,6 +328,14 @@ void Player3D::Draw()
 	}
 
 	bar();
+}
+
+void Player3D::DrawShadowCaster()
+{
+	if (model_ != nullptr)
+	{
+		model_->Draw();
+	}
 }
 
 /*

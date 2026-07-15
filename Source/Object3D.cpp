@@ -51,6 +51,10 @@ void Object3D::Draw()
 {
 }
 
+void Object3D::DrawShadowCaster()
+{
+}
+
 /*
  * 更新処理。派生クラスでオーバーライドする。
  * [入力] なし

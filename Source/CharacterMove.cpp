@@ -152,6 +152,14 @@ void CharacterMove::Draw()
 {
 	model_->Draw();
 }
+
+void CharacterMove::DrawShadowCaster()
+{
+	if (model_ != nullptr && mbIsVisible)
+	{
+		model_->Draw();
+	}
+}
 /*
  * キャラクターの移動処理
  * [入力] なし

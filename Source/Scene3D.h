@@ -61,6 +61,7 @@ public:
 	void PhaseUpdate();
 
 private:
+	void DrawShadowMap();
 	void DrawGrid();
 	void DrawPhaseUI();
 
@@ -70,4 +71,5 @@ private:
 	int mass_spawn_timer_;
 	Phase phase_;
 	int font_back_graph_;
+	int shadow_map_handle_;
 };

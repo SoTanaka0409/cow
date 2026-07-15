@@ -48,6 +48,7 @@ public:
 	// [入力] なし [出力] なし [副作用] 3Dモデルの描画コール
 	// Zバッファの仕様上、半透明オブジェクトより先に描画されるようマネージャ側で制御すること
 	void Draw() override;
+	void DrawShadowCaster() override;
 
 	// [入力] なし [出力] なし [副作用] 各種状態の更新処理
 	void Update() override;

@@ -37,16 +37,9 @@ Floor::Floor(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bott
 	vertex_[3].u = 1.0f;
 	vertex_[3].v = 1.0f;
 
-	// 外部仕様依存: DxLibの背面カリング処理が正しく働き、地中の裏面から見た際に描画がスキップされるよう法線を設定する
-	VECTOR norm = VCross(
-		VSub(vertex_[0].pos, vertex_[1].pos),
-		VSub(vertex_[0].pos, vertex_[2].pos)
-	);
-	norm = VNorm(norm);
-
 	for (int i = 0; i < 4; i++)
 	{
-		vertex_[i].norm = norm;
+		vertex_[i].norm = VGet(0.0f, 1.0f, 0.0f);
 	}
 }
 
@@ -85,8 +78,5 @@ void Floor::Draw()
 	index[4] = 2;
 	index[5] = 1;
 
-	// 環境光の影響で床全体が暗くなり、キャラクターや影の視認性が低下するバグを防ぐため、床の描画時のみライティングを無効化する
-	SetUseLighting(false);
 	DrawPolygonIndexed3D(vertex_, 4, index, 2, graph_handle_, TRUE);
-	SetUseLighting(true);
 }
