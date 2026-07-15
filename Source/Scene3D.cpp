@@ -15,6 +15,7 @@
 #include "Mountain.h"
 #include "Tornado.h"
 #include "Utility.h"
+#include "StageLoader.h"
 #include "GameConstants.h"
 
 Thunder* thunder_ = nullptr;
@@ -59,103 +60,7 @@ void Scene3D::Initialize()
 	Master::mpSoundManager->PlayBGM(SoundManager::kBgmGame);
 	Master::mpSoundManager->SetBGMVolume(120);
 	
-	for (int i = 0; i < 6; i++)
-	{
-		new Object_Stage("Resource/3D/装飾/SmallTree1.mv1", VGet(6000.0f, 0.0f, -5000.0f + 2000.0f * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/装飾/SmallTree1.mv1", VGet(-6000.0f, 0.0f, -5000.0f + 2000.0f * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/装飾/Flower1.mv1", VGet(5500.0f, 0.0f, -5000.0f + 2000.0f * i), 3.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/装飾/SmallTree1.mv1", VGet(-6000.0f, 0.0f, -5000.0f + 2000.0f * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/装飾/SmallTree1.mv1", VGet(-5000.0f + 2000.0f * i, 0, -6000), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/装飾/SmallTree1.mv1", VGet(-5000.0f + 2000.0f * i, 0, 6000), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-	}
-
-	for (int i = 0; i < 3; i++)
-	{
-		new Object_Stage("Resource/3D/装飾/BigTree1.mv1", VGet(5500.0f, 0.0f, -4000.0f + 4000.0f * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/装飾/BigTree4.mv1", VGet(-5500.0f, 0.0f, -4000.0f + 4000.0f * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/装飾/BigTree4.mv1", VGet(-4000.0f + 4000.0f * i, 0, 5500), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/装飾/BigTree3.mv1", VGet(-4000.0f + 4000.0f * i, 0, -5500), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-	}
-
-	for (int i = 0; i < 2; i++)
-	{
-		new Object_Stage("Resource/3D/装飾/BigTree3.mv1", VGet(5500.0f, 0.0f, -2000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-		new Object_Stage("Resource/3D/装飾/BigTree2.mv1", VGet(-5500.0f, 0.0f, -2000 + 4000 * i), 1.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-	}
-	 
-	new Object_Stage("Resource/3D/装飾/Grass2.mv1", VGet(0, 0, 0), 2.0f, VGet(0.0f, DX_PI_F / 1.0f, 0.0f));
-
-	VECTOR mountainScale = VGet(30.0f, 50.0f, 30.0f);
-	float mountainDist = 13000.0f;
-	auto m1 = new Mountain("Resource/3D/山/地形.mv1", VGet(0, 0, mountainDist), mountainScale, VGet(0.0f, DX_PI_F, 0.0f));
-	m1->SetColor(0.2f, 0.3f, 0.2f, 1.0f);
-	auto m2 = new Mountain("Resource/3D/山/地形.mv1", VGet(0, 0, -mountainDist), mountainScale, VGet(0.0f, 0.0f, 0.0f));
-	m2->SetColor(0.2f, 0.3f, 0.2f, 1.0f);
-	auto m3 = new Mountain("Resource/3D/山/地形.mv1", VGet(mountainDist, 0, 0), mountainScale, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
-	m3->SetColor(0.2f, 0.3f, 0.2f, 1.0f);
-	auto m4 = new Mountain("Resource/3D/山/地形.mv1", VGet(-mountainDist, 0, 0), mountainScale, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
-	m4->SetColor(0.2f, 0.3f, 0.2f, 1.0f);
-
-	// プレイヤーがマップ外へ出られないよう、境界に岩を配置
-	for (int i = 0; i < 40; i++)
-	{
-		float rockX = (float)(GetRand(15000) - 7500);
-		float rockZ = (float)(GetRand(15000) - 7500);
-		
-		if (rockX > -4500 && rockX < 4500 && rockZ > -4500 && rockZ < 4500) {
-			continue;
-		}
-
-		float rockScale = 1.0f + (float)(GetRand(30)) / 10.0f;
-		float rockRot = (float)(GetRand(360)) * DX_PI_F / 180.0f;
-		
-		auto rock = new Object_Stage("Resource/3D/石/rock.mv1", VGet(rockX, 0, rockZ), rockScale, VGet(0.0f, rockRot, 0.0f));
-		rock->SetColor(0.4f, 0.7f, 0.3f, 1.0f);
-	}
-
-	for (int i = 0; i < 5; i++)
-	{
-		new Object_Stage("Resource/3D/新しい柵/fence1.mv1", VGet(490.0f + 1000 * i, 0.0f, 5050.0f), 12.80f, VGet(0.0f, 0.0f, 0.0f));
-		new Object_Stage("Resource/3D/新しい柵/fence1.mv1", VGet(-490.0f + -1000 * i, 0.0f, 5050.0f), 12.80f, VGet(0.0f, 0.0f, 0.0f));
-		new Object_Stage("Resource/3D/新しい柵/fence1.mv1", VGet(490.0f + 1000 * i, 0.0f, -5050.0f), 12.80f, VGet(0.0f, DX_PI_F, 0.0f));
-		new Object_Stage("Resource/3D/新しい柵/fence1.mv1", VGet(-490.0f + -1000 * i, 0.0f, -5050.0f), 12.80f, VGet(0.0f, DX_PI_F, 0.0f));
-		new Object_Stage("Resource/3D/新しい柵/fence1.mv1", VGet(5050.0f , 0.0f, 490.0f + 1000* i), 12.80f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
-		new Object_Stage("Resource/3D/新しい柵/fence1.mv1", VGet(5050.0f, 0.0f, -490.0f + -1000 * i), 12.80f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
-		new Object_Stage("Resource/3D/新しい柵/fence1.mv1", VGet(-5050.0f, 0.0f, 490.0f + 1000 * i), 12.80f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
-		new Object_Stage("Resource/3D/新しい柵/fence1.mv1", VGet(-5050.0f, 0.0f, -490.0f + -1000 * i), 12.80f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
-	}
-
-	thunder_ = new Thunder(VGet(0.0f, 0.0f, 0.0f));
-	tatumaki = new Tornado(VGet(3000.0f, 0.0f, 3000.0f));
-
-	auto Player = new Player3D("Resource/3D/ufo2/Ufo.mv1", VGet(1000.0f, 2000.0f, 0.0f));
-	Player->SetScale(0.6f);
-
-	VECTOR spawnPos = VGet(0.0f, 0.0f, 0.0f);
-	float scatterArea = Utility::StageSize.x;
-
-	cow_manager_->SpawnCow(GameConstants::kCowDefault.model_path, spawnPos, 50.0f, CowMove::kCow1, 20, false, scatterArea);
-	cow_manager_->SpawnCow(GameConstants::kCowGold.model_path, spawnPos, 50.0f, CowMove::kCowGold, 2, false, 500.0f);
-	animal_manager_->SpawnAnimal(GameConstants::kAnimalChicken.model_path, spawnPos, 50.0f, AnimalMove::kAnimal1, 5, scatterArea);
-	animal_manager_->SpawnAnimal(GameConstants::kAnimalBear.model_path, spawnPos, 50.0f, AnimalMove::kAnimal1, 5, scatterArea);
-	
-	phase_ = kNormal;
-
-	auto skybox = new SkyBox("Resource/3D/SkyBox/SkyBox.mv1", VGet(0, 0, 0));
-	skybox->SetScale(30.0f);
-	skybox->SetModelTexture("Resource/3D/SkyBox/sky000.jpg", 0);
-
-	new Floor(
-		"Resource/2D/haikei.png",
-		VGet(0, 0, 0),
-		VGet(-11500, 0, -11500),
-		VGet(11500, 0, 11500)
-	);
-	
-	new Wall("", VGet(0.0f, 0.0f, 5000.0f), VGet(-5000.0f, 5000.0f, 0.0f), VGet(5000.0f, 0.0f, 0.0f));
-	new Wall("", VGet(0.0f, 0.0f, -5000.0f), VGet(-5000.0f, 5000.0f, 0.0), VGet(5000.0f, 0.0f, 0.0f));
-	new Wall("", VGet(5000.0f, 0.0f, 0.0f), VGet(0.0f, 5000.0f, 5000.0f), VGet(0.0f, 0.0f, -5000.0f));
-	new Wall("", VGet(-5000.0f, 0.0f, 0.0f), VGet(0.0f, 5000.0f, 5000.0f), VGet(0.0f, 0.0f, -5000.0f));
+	StageLoader::LoadFromCSV("Resource/Data/stage_objects.csv");
 
 	// Wall is registered with kNone3d tag in Object3D ctor before SetTag(kTag3dWall) is called.
 	// Rebuild the tag cache after all Walls are created so collision detection works correctly.

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -217,6 +217,7 @@
     <ClCompile Include="Source\TitleScene.cpp" />
     <ClCompile Include="Source\UIButton.cpp" />
     <ClCompile Include="Source\TutorialScene.cpp" />
+    <ClCompile Include="Source\StageLoader.cpp" />
     <ClCompile Include="Source\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -277,6 +278,7 @@
     <ClInclude Include="Source\UIButton.h" />
     <ClInclude Include="Source\TutorialScene.h" />
     <ClInclude Include="Source\Utility.h" />
+    <ClInclude Include="Source\StageLoader.h" />
     <ClInclude Include="Source\Wall.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
