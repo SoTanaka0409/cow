@@ -185,7 +185,6 @@
     <ClCompile Include="Source\LoadingScene.cpp" />
     <ClCompile Include="Source\InputManager.cpp" />
     <ClCompile Include="Source\Level.cpp" />
-    <ClCompile Include="Source\Master.cpp" />
     <ClCompile Include="Source\ServiceLocator.cpp" />
     <ClCompile Include="Source\CharacterState.cpp" />
     <ClCompile Include="Source\Main.cpp" />

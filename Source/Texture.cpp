@@ -2,6 +2,8 @@
 #include "DxLib.h"
 #include "Master.h"
 
+// 入力：filename=アセット画像パス, centerPosition=描画の中心となる座標, graphsize_x/y=指定描画サイズ, transFlag=透過の有無
+// 副作用：ResourceManagerを介したグラフィックハンドルのロード、およびオリジナル画像解像度の取得
 Texture::Texture(std::string filename, VECTOR centerPosition, int graphsize_x, int graphsize_y, int transFlag)
 	: mnHandle(-1)
 	, position_(centerPosition)
@@ -10,22 +12,20 @@ Texture::Texture(std::string filename, VECTOR centerPosition, int graphsize_x, i
 	, mnTransFlag(transFlag)
 {
 	mnHandle = Master::mpResourceManager->LoadGraphics(filename.c_str());
-	GetGraphSize(mnHandle, &mnSizeX, &mnSizeY); // 拡大縮小描画の基準にするためオリジナルサイズを取征E
+	// アセット自体の元解像度を保持しておき、将来的にアスペクト比を維持した自動リサイズ処理等に拡張できるようにする
+	GetGraphSize(mnHandle, &mnSizeX, &mnSizeY);
 }
 
 Texture::~Texture()
 {
-
 }
 
-/*
-	* @brief 設定された持E??サイズ(new_game_w_, new_game_h_)で、mvPositionを中?E??引き伸ばし描画する
-	* [入力] なし
-	* [出力] なし
-	* [副作用] 持E??篁E??へチE??スチャ描画
-	*/
+// 入力：なし
+// 出力：なし
+// 副作用：バックバッファへの拡大縮小描画
 void Texture::Draw()
 {
+	// 設計ルール：回転や拡縮のアニメーション基準点を直感的に制御するため、左上基準ではなく指定の中心座標から逆算して描画
 	DrawExtendGraph(
 		static_cast<int>(position_.x - (new_game_w_ / 2)),
 		static_cast<int>(position_.y - (new_game_h_ / 2)),
@@ -35,15 +35,13 @@ void Texture::Draw()
 	);
 }
 
-/*
-	* @brief ボタンホバー演?E用などに、E??常サイズに特定?E拡張?Eexpand)を加えて拡大描画する?E?現在未使用?E?E
-	* [入力] なし
-	* [出力] なし
-	* [副作用] 持E??された拡張領域へ拡大描画
-	*/
+// 入力：なし
+// 出力：なし
+// 副作用：指定の拡張幅（15px）を加えたサイズでのバックバッファ描画
 void Texture::SizeDraw()
 {
-	int expand = 15; // 拡大表示する際?E拡張ピクセル数
+	// 一時対応：UIの決定アニメーション等で、一時的に現在の見た目を少し強調（ポップアップ）させるための拡大処理
+	int expand = 15;
 	int halfW = (new_game_w_ + expand) / 2;
 	int halfH = (new_game_h_ + expand) / 2;
 
@@ -60,14 +58,12 @@ void Texture::Update()
 {
 }
 
-/*
-	* @brief 中?E??標を軸にして、比率持E??Escale)による拡大縮小描画を行う
-	* [入力] scale: スケーリング倍率?E?E.0fが等倍！E
-	* [出力] なし
-	* [副作用] 持E??サイズでチE??スチャ描画
-	*/
+// 入力：scale=拡縮倍率（1.0fが指定サイズでの等倍）
+// 出力：なし
+// 副作用：指定倍率でスケーリングされたバックバッファ描画
 void Texture::DrawScale(float scale)
 {
+	// レベルアップ時のカードUIが滑らかに出現・拡大フェードする演出（サイン波補間）をピクセル単位で正確に描画するための小数演算
 	float halfW = (new_game_w_ * scale) / 2.0f;
 	float halfH = (new_game_h_ * scale) / 2.0f;
 
