@@ -62,7 +62,7 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 					(*furthestIt)->Die(DEATH_LIMIT);
 					auto cow = *furthestIt;
 					cow->Deactivate();
-					mPools[cow->GetTagCow()].push_back(cow);
+					pools_[cow->GetTagCow()].push_back(cow);
 					mCreatures.erase(furthestIt);
 					erased = true;
 				}
@@ -72,7 +72,7 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 					mCreatures.front()->Die(DEATH_LIMIT);
 					auto cow = mCreatures.front();
 					cow->Deactivate();
-					mPools[cow->GetTagCow()].push_back(cow);
+					pools_[cow->GetTagCow()].push_back(cow);
 					mCreatures.erase(mCreatures.begin());
 					erased = true;
 				}

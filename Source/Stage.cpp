@@ -13,8 +13,8 @@ Stage::Stage(VECTOR initPos, std::string stageModelName, std::string stageCollis
 
 	// ハイポリゴンの描画用モデルで直接当たり判定を行うと処理落ち(パフォーマンス低下)を招くため、
 	// 軽量な判定専用モデルを別途読み込んで使用する
-	model_handle_ = Master::mpResourceManager->LoadModel(stageModelName);
-	collision_handle_ = Master::mpResourceManager->LoadModel(stageCollisionModelName);
+	model_handle_ = Master::resource_manager_->LoadModel(stageModelName);
+	collision_handle_ = Master::resource_manager_->LoadModel(stageCollisionModelName);
 
 	float StageSize = 5.0f;
 	MV1SetScale(model_handle_, VGet(StageSize, 0.3f, StageSize));

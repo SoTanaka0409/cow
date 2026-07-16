@@ -52,10 +52,10 @@ private:
 	void DrawBar();
 
 	Object3D* parent_;
-	int mnGaugeFrameGraph;  // スキル選択などの備考用に残すための対象オブジェクトのインタ
-	float mfxp;             // レベルアップ判定の基準となる現在の累積経験値量
-	float mfMaxXp;          // 難易度調整を形成するための次レベル必要経験値
-	int mnNowLevel;         // プレイヤーの強さや必要経験値設定の基準となるレベル値
+	int gauge_frame_graph_;  // スキル選択などの備考用に残すための対象オブジェクトのインタ
+	float xp_;             // レベルアップ判定の基準となる現在の累積経験値量
+	float max_xp_;          // 難易度調整を形成するための次レベル必要経験値
+	int now_level_;         // プレイヤーの強さや必要経験値設定の基準となるレベル値
 
 	VECTOR pos  = VGet(Utility::kUiBaseX, Utility::kUiLevelY, 0);   // 解像度に合わせたUI配置の基準座標
 	VECTOR size = VGet(Utility::kUiLevelW, Utility::kUiLevelH, 0);  // 視覚幅を確定するためのバーの形状

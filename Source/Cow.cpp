@@ -10,8 +10,8 @@
 Cow::Cow(std::string filename, VECTOR initPos, float num)
 	: CowMove(filename, initPos)
 {
-	mfScore = num;
-	mfXp = 10;
+	score_ = num;
+	xp_ = 10;
 	SetTagCow(CowMove::kCow1);
 	mCurrentState = STATE_IDLE;
 }

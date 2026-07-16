@@ -13,27 +13,27 @@ ResultScene::ResultScene()
 	flag_ = true;
 	count_ = 0;
 
-	result_graph_handle_ = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kResult);
-	rank_image_[0] = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kRank1);
-	rank_image_[1] = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kRank2);
-	rank_image_[2] = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kRank3);
-	ranking_title_image_ = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kRankingTitle);
-	your_score_text_img_ = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kScoreTitle);
-	point_img_ = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kPoint);
+	result_graph_handle_ = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kResult);
+	rank_image_[0] = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kRank1);
+	rank_image_[1] = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kRank2);
+	rank_image_[2] = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kRank3);
+	ranking_title_image_ = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kRankingTitle);
+	your_score_text_img_ = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kScoreTitle);
+	point_img_ = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kPoint);
 
 	// 暫定対応: リザルト画面でのボタン操作（タイトルへ戻る、ゲーム終了など）は現在無効化されているが、
 	// UI描画レイアウトの崩れを防ぐため初期化のみ残す（期限：UIリファクタリング完了まで）
 	UIButton newGameBtn;
-	newGameBtn.Initialize(SelectionManager::Title::title, Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kBtnStart), 920, 50, 0.0f);
+	newGameBtn.Initialize(SelectionManager::Title::title, Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kBtnStart), 920, 50, 0.0f);
 	buttons_.push_back(newGameBtn);
 
 	UIButton exitBtn;
-	exitBtn.Initialize(SelectionManager::Title::titleOUT, Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kBtnExit), 920, 250, 1.5f);
+	exitBtn.Initialize(SelectionManager::Title::titleOUT, Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kBtnExit), 920, 250, 1.5f);
 	buttons_.push_back(exitBtn);
 
-	Master::mpSoundManager->PlayBGM(SoundManager::kBgmResult);
-	Master::mpSoundManager->SetBGMVolume(120);
-	Master::mpScore;
+	Master::sound_manager_->PlayBGM(SoundManager::kBgmResult);
+	Master::sound_manager_->SetBGMVolume(120);
+	Master::score_manager_;
 }
 
 /*
@@ -56,7 +56,7 @@ void ResultScene::Initialize()
 {
 	fade_state_ = kSceneFadeIn;
 	SetFadeAlpha(255.0f);
-	Master::mpScore->LoadRanking();
+	Master::score_manager_->LoadRanking();
 }
 
 /*
@@ -90,7 +90,7 @@ void ResultScene::Draw()
 		startX = 850 - (digitCount - 3) * 40;
 	}
 
-	Master::mpScore->DrawNumber(startX, 490, score, 1.0f, 4);
+	Master::score_manager_->DrawNumber(startX, 490, score, 1.0f, 4);
 
 	// スコアの桁数増減に合わせて「PT(ポイント)」画像のX座標を動的にずらし、数値と画像が被って見えなくなるバグを防ぐ
 	int pointX = startX + digitCount * 80;
@@ -142,7 +142,7 @@ void ResultScene::DrawRankingUI()
 
 	for (int i = 0; i < 3; i++)
 	{
-		const Score::RankData& data = Master::mpScore->GetRanking(i);
+		const Score::RankData& data = Master::score_manager_->GetRanking(i);
 		int y = baseY + 60 + i * 80;
 
 		DrawExtendGraph(
@@ -159,7 +159,7 @@ void ResultScene::DrawRankingUI()
 		int h = (int)(80 * scale);
 		int drawY = y - 10 + (80 - h) / 2;
 
-		Master::mpScore->DrawNumber(
+		Master::score_manager_->DrawNumber(
 			baseX + 180,
 			drawY,
 			data.score_,
@@ -191,5 +191,5 @@ void ResultScene::DrawRankingUI()
  */
 void ResultScene::Finalize()
 {
-	Master::mpSoundManager->StopBGM();
+	Master::sound_manager_->StopBGM();
 }

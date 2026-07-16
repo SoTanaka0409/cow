@@ -132,7 +132,7 @@ void DebugCamera::UpdateRotate()
 
 	const float MOUSE_SENSITIVITY = 0.05f;
 
-	if (Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::kScene3D || Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::kSceneTutorial)
+	if (Master::scene_manager_->GetSceneType() == SceneManager::SCENE_TYPE::kScene3D || Master::scene_manager_->GetSceneType() == SceneManager::SCENE_TYPE::kSceneTutorial)
 	{
 		int mouse_x_, mouse_y_;
 		GetMousePoint(&mouse_x_, &mouse_y_);

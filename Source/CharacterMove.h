@@ -25,8 +25,8 @@ enum DeathReason
 class CharacterMove : public Object3D
 {
 public:
-	void SetTargetPlayer(Player3D* player) { mpTargetPlayer = player; }
-	Player3D* GetTargetPlayer() const { return mpTargetPlayer; }
+	void SetTargetPlayer(Player3D* player) { target_player_ = player; }
+	Player3D* GetTargetPlayer() const { return target_player_; }
 	CharacterMove(std::string filename, VECTOR initPos);
 	virtual ~CharacterMove();
 	virtual void Update() override;
@@ -107,19 +107,19 @@ public:
 	int GetActionTimer() const { return mActionTimer; }
 	void SetMoveVec(VECTOR vec) { moveVec = vec; }
 	VECTOR GetMoveVec() const { return moveVec; }
-	float GetSpeed() const { return mfSpeed; }
+	float GetSpeed() const { return speed_; }
 	void IncreaseVacuumTimer() { mVacuumTimer++; }
 	void ResetVacuumTimer() { mVacuumTimer = 0; }
 	int GetVacuumTimer() const { return mVacuumTimer; }
-	bool GetBaitFlag() const { return mbBaitFlag; }
+	bool GetBaitFlag() const { return bait_flag_; }
 	bool GetCharacterDelete() const { return mDeleteFlag; }
 protected:
-	Player3D* mpTargetPlayer = nullptr;
+	Player3D* target_player_ = nullptr;
 	Model* model_;
 	AIState mCurrentState;
-	CharacterState* mpCurrentState;
+	CharacterState* current_state_;
 	int mActionTimer;
-	float mfSpeed;
+	float speed_;
 	float target_angle_;
 	float angle_;
 	const float kRotateSpeed = 0.2f;
@@ -130,8 +130,8 @@ protected:
 	int mVacuumTimer;
 	bool mDeleteFlag;
 	float death_timer_;
-	float mfScore;
-	float mfXp;
-	bool mbBaitFlag;
-	bool mbIsVisible;
+	float score_;
+	float xp_;
+	bool bait_flag_;
+	bool is_visible_;
 };

@@ -247,7 +247,7 @@ void Skill::AddSkill()
 		select_anim_ = true;
 		flash_ = true;
 		flash_alpha_ = 255;
-		Master::mpSoundManager->PlaySE(SoundManager::kSeSkillStatus);
+		Master::sound_manager_->PlaySE(SoundManager::kSeSkillStatus);
 		SetMouseDispFlag(false);
 	}
 	else if (ProcessSkill(texture2_, 2))
@@ -261,7 +261,7 @@ void Skill::AddSkill()
 		select_anim_ = true;
 		flash_ = true;
 		flash_alpha_ = 255;
-		Master::mpSoundManager->PlaySE(SoundManager::kSeSkillFood);
+		Master::sound_manager_->PlaySE(SoundManager::kSeSkillFood);
 		SetMouseDispFlag(false);
 	}
 	else if (ProcessSkill(texture3_, 3))
@@ -272,7 +272,7 @@ void Skill::AddSkill()
 		select_anim_ = true;
 		flash_ = true;
 		flash_alpha_ = 255;
-		Master::mpSoundManager->PlaySE(SoundManager::kSeSkillStatus);
+		Master::sound_manager_->PlaySE(SoundManager::kSeSkillStatus);
 		SetMouseDispFlag(false);
 	}
 }

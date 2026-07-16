@@ -58,7 +58,7 @@ void TutorialScene::Initialize()
 		VGet(11500, 0, 11500)
 	);
 	
-	Master::mpSoundManager->PlayBGM(SoundManager::kBgmTutorial);
+	Master::sound_manager_->PlayBGM(SoundManager::kBgmTutorial);
 	auto Player = new Player3D("Resource/3D/Player/UFO.mv1", VGet(0.0f, 1000.0f, 0.0f));
 	Player->SetScale(0.6f);
 
@@ -166,7 +166,7 @@ void TutorialScene::UpdateStateMove()
 
 	if (CheckHitKey(KEY_INPUT_W) || CheckHitKey(KEY_INPUT_A) || CheckHitKey(KEY_INPUT_S) || CheckHitKey(KEY_INPUT_D))
 	{
-		Master::mpSoundManager->PlaySE(SoundManager::kSeTutorialChange);
+		Master::sound_manager_->PlaySE(SoundManager::kSeTutorialChange);
 		state_ = kStateBeam;
 		
 		VECTOR spawnPos = VGet(0, 0.0f, 150.0f);
@@ -181,7 +181,7 @@ void TutorialScene::UpdateStateBeam()
 
 	if (GetMouseInput() & MOUSE_INPUT_LEFT)
 	{
-		Master::mpSoundManager->PlaySE(SoundManager::kSeTutorialChange);
+		Master::sound_manager_->PlaySE(SoundManager::kSeTutorialChange);
 		state_ = kStateComboScore;
 
 		// コンボ稼ぎ用として牛の群れをスポーン
@@ -199,7 +199,7 @@ void TutorialScene::UpdateStateComboScore()
 
 	if (player && player->combo_->GetCombo() >= 2)
 	{
-		Master::mpSoundManager->PlaySE(SoundManager::kSeTutorialChange);
+		Master::sound_manager_->PlaySE(SoundManager::kSeTutorialChange);
 		state_ = kStatePhase;
 		timer_count_ = 0; 
 	}
@@ -213,7 +213,7 @@ void TutorialScene::UpdateStatePhase()
 	timer_count_++;
 	if (timer_count_ > 180)
 	{
-		Master::mpSoundManager->PlaySE(SoundManager::kSeTutorialChange);
+		Master::sound_manager_->PlaySE(SoundManager::kSeTutorialChange);
 		state_ = kStateSkill;
 	}
 }
@@ -225,17 +225,17 @@ void TutorialScene::UpdateStateSkill()
 
 	if (!player) return;
 
-	if (player->mpSkill->add_skill_flag_)
+	if (player->skill_->add_skill_flag_)
 	{
 		if(texture5_) texture5_->Draw();
 		skill_flag_ = true;
 	}
 
-	if (player->mpSkill->add_skill_flag_ == false && skill_flag_)
+	if (player->skill_->add_skill_flag_ == false && skill_flag_)
 	{
 		skill_flag_ = false;
 		state_ = kStateFever;
-		Master::mpSoundManager->PlaySE(SoundManager::kSeTutorialChange);
+		Master::sound_manager_->PlaySE(SoundManager::kSeTutorialChange);
 		
 		// フィーバーモード用でゴールド牛を召喚
 		auto g = new GoldCow("Resource/3D/GoldCow/GoldCow.mv1", VGet(1000, 0, 1000), GoldCow::kNoFever);
@@ -287,7 +287,7 @@ void TutorialScene::DrawTutorialText(const char* text, int yOffset)
 
 void TutorialScene::Finalize()
 {
-	Master::mpSoundManager->StopBGM();  
+	Master::sound_manager_->StopBGM();  
 }
 
 

@@ -155,7 +155,7 @@ void Tornado::UpdateEffectAndSound()
 				VECTOR diff = VSub(p->GetPosition(), position_);
 				if (VSquareSize(diff) < 3000.0f * 3000.0f)
 				{
-					Master::mpSoundManager->PlaySE(SoundManager::kSeTornado);
+					Master::sound_manager_->PlaySE(SoundManager::kSeTornado);
 				}
 			}
 		}

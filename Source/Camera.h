@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "DxLib.h"
 #include "Model.h"
 #include "Object3D.h"
@@ -144,7 +144,7 @@ private:
 	float shake_time_counter_;
 
 	// 旧シェイクアセット仕様との互換性を保つための変数。命名規則外だが外部仕様依存のため維持（リファクタリング保留）
-	float mfShakeTime;
+	float old_shake_time_;
 
 	float shake_width_;
 	float shake_angle_speed_;

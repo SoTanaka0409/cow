@@ -8,16 +8,16 @@
  */
 ModelAnimation::ModelAnimation(int ModelHandle)
 	: model_handle_(ModelHandle)
-	, mfAnimationTime(0.0f)
-	, mnAnimationIndex(-1)
-	, mnState(AnimationState::kAnimationMax)
-	, mfOldAnimationTime(0.0f)
-	, mnOldAnimationIndex(-1)
-	, mfAnimBlendRate(1.0f)
-	, mfAnimationCount(0.5f)
-	, mbLoop(true)
-	, mnLoopFinishState(AnimationState::kAnimationMax)
-	, mbLoopFinish(false)
+	, animation_time_(0.0f)
+	, animation_index_(-1)
+	, state_(AnimationState::kAnimationMax)
+	, old_animation_time_(0.0f)
+	, old_animation_index_(-1)
+	, anim_blend_rate_(1.0f)
+	, animation_count_(0.5f)
+	, is_loop_(true)
+	, loop_finish_state_(AnimationState::kAnimationMax)
+	, is_loop_finish_(false)
 {
 	// アニメーション再生時にモデルの基準座標が勝手に移動してしまう(ルートモーションの暴走)のを防ぐため、
 	// "root"ボーンのローカル行列を初期状態に完全固定する
@@ -43,56 +43,56 @@ ModelAnimation::~ModelAnimation()
 void ModelAnimation::Update()
 {
 	// 状態遷移時にモーションが瞬間的に切り替わりカクつくのを防ぐため、0.1(10フレーム)掛けて滑らかにブレンドする
-	if (mfAnimBlendRate < 1.0f)
+	if (anim_blend_rate_ < 1.0f)
 	{
-		mfAnimBlendRate += 0.1f;
-		if (mfAnimBlendRate > 1.0f)
+		anim_blend_rate_ += 0.1f;
+		if (anim_blend_rate_ > 1.0f)
 		{
-			mfAnimBlendRate = 1.0f;
+			anim_blend_rate_ = 1.0f;
 		}
 	}
 
 	float fAnimTotaltime = 0.0f;
 
-	if (mnAnimationIndex != -1)
+	if (animation_index_ != -1)
 	{
-		fAnimTotaltime = MV1GetAttachAnimTotalTime(model_handle_, mnAnimationIndex);
-		mfAnimationTime += mfAnimationCount;
+		fAnimTotaltime = MV1GetAttachAnimTotalTime(model_handle_, animation_index_);
+		animation_time_ += animation_count_;
 
-		if (mfAnimationTime > fAnimTotaltime)
+		if (animation_time_ > fAnimTotaltime)
 		{
-			if (!mbLoop)
+			if (!is_loop_)
 			{
 				// 非ループ(単発)アニメーション終了時、自動的に待機状態などへシームレスに遷移させるための処理
-				if (mnLoopFinishState == kAnimationMax)
+				if (loop_finish_state_ == kAnimationMax)
 				{
-					mbLoopFinish = true;
+					is_loop_finish_ = true;
 					return;
 				}
-				ChangeAnimation(mnLoopFinishState);
+				ChangeAnimation(loop_finish_state_);
 
 				// 終了から次状態への遷移時は、不自然な逆再生ブレンドが起きないよう即座に切り替える
 				SetAnimationBlend(false);
-				fAnimTotaltime = MV1GetAttachAnimTotalTime(model_handle_, mnAnimationIndex);
+				fAnimTotaltime = MV1GetAttachAnimTotalTime(model_handle_, animation_index_);
 			}
-			mfAnimationTime = 0.0f;
+			animation_time_ = 0.0f;
 		}
 
-		MV1SetAttachAnimTime(model_handle_, mnAnimationIndex, mfAnimationTime);
-		MV1SetAttachAnimBlendRate(model_handle_, mnAnimationIndex, mfAnimBlendRate);
+		MV1SetAttachAnimTime(model_handle_, animation_index_, animation_time_);
+		MV1SetAttachAnimBlendRate(model_handle_, animation_index_, anim_blend_rate_);
 	}
 
-	if (mnOldAnimationIndex != -1)
+	if (old_animation_index_ != -1)
 	{
-		fAnimTotaltime = MV1GetAttachAnimTotalTime(model_handle_, mnOldAnimationIndex);
+		fAnimTotaltime = MV1GetAttachAnimTotalTime(model_handle_, old_animation_index_);
 
-		if (mfOldAnimationTime > fAnimTotaltime)
+		if (old_animation_time_ > fAnimTotaltime)
 		{
-			mfOldAnimationTime = 0.0f;
+			old_animation_time_ = 0.0f;
 		}
 
 		// 新旧2つのアニメーションの合成比率を常に合計100%に保ち、モデルが縮んだり破綻したりするのを防ぐ
-		MV1SetAttachAnimBlendRate(model_handle_, mnOldAnimationIndex, 1.0f - mfAnimBlendRate);
+		MV1SetAttachAnimBlendRate(model_handle_, old_animation_index_, 1.0f - anim_blend_rate_);
 	}
 }
 
@@ -104,28 +104,28 @@ void ModelAnimation::Update()
 void ModelAnimation::ChangeAnimation(AnimationState state, int index)
 {
 	// 既に同じ状態だった場合、再生位置が0にリセットされてモーションが初期化されるバグを防ぐ
-	if (mnState == state)
+	if (state_ == state)
 	{
 		return;
 	}
 
-	mnState = state;
-	mbLoop = true;
-	mnLoopFinishState = AnimationState::kAnimationMax;
-	mbLoopFinish = false;
+	state_ = state;
+	is_loop_ = true;
+	loop_finish_state_ = AnimationState::kAnimationMax;
+	is_loop_finish_ = false;
 
 	// DxLibのアタッチ上限(VRAM圧迫やブレンド計算破綻)を防ぐため、2世代前のアニメーションは完全に破棄する
-	if (mnOldAnimationIndex != -1)
+	if (old_animation_index_ != -1)
 	{
-		MV1DetachAnim(model_handle_, mnOldAnimationIndex);
-		mnOldAnimationIndex = -1;
+		MV1DetachAnim(model_handle_, old_animation_index_);
+		old_animation_index_ = -1;
 	}
 
-	mnOldAnimationIndex = mnAnimationIndex;
-	mfOldAnimationTime = mfAnimationTime;
+	old_animation_index_ = animation_index_;
+	old_animation_time_ = animation_time_;
 
-	mnAnimationIndex = MV1AttachAnim(model_handle_, (int)state);
-	mfAnimationTime = 0.0f;
+	animation_index_ = MV1AttachAnim(model_handle_, (int)state);
+	animation_time_ = 0.0f;
 }
 
 /*
@@ -137,17 +137,17 @@ void ModelAnimation::SetAnimationBlend(bool isblend)
 {
 	if (isblend)
 	{
-		mfAnimBlendRate = (mnOldAnimationIndex == -1 ? 1.0f : 0.0f);
+		anim_blend_rate_ = (old_animation_index_ == -1 ? 1.0f : 0.0f);
 	}
 	else
 	{
 		// ダメージ時や死亡時など、モーションの滑らかさよりも即時性を優先すべき演出のためにブレンドを完全カットする
-		mfAnimBlendRate = 1.0f;
+		anim_blend_rate_ = 1.0f;
 
-		if (mnOldAnimationIndex != -1)
+		if (old_animation_index_ != -1)
 		{
-			MV1DetachAnim(model_handle_, mnOldAnimationIndex);
-			mnOldAnimationIndex = -1;
+			MV1DetachAnim(model_handle_, old_animation_index_);
+			old_animation_index_ = -1;
 		}
 	}
 }

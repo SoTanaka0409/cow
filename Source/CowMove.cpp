@@ -32,15 +32,15 @@ CowMove::CowMove(std::string filename, VECTOR initPos)
 	: CharacterMove(filename, initPos)
 {
 	death_timer_ = GameConstants::kCowDefault.death_time_height;
-	mfScore = GameConstants::kCowDefault.score;
-	mfXp = GameConstants::kCowDefault.xp;
-	mbBaitFlag = false;
+	score_ = GameConstants::kCowDefault.score;
+	xp_ = GameConstants::kCowDefault.xp;
+	bait_flag_ = false;
 
-	mbIsVisible = true;
+	is_visible_ = true;
 	effect_timer_ = 0;
 	SetTag(Object3D::kTag3dCow);
 
-	if (Master::mpSceneManager->GetSceneType() == SceneManager::kSceneTutorial)
+	if (Master::scene_manager_->GetSceneType() == SceneManager::kSceneTutorial)
 	{
 		death_timer_ = GameConstants::kCowTutorial.death_time_height;
 	}
@@ -79,7 +79,7 @@ void CowMove::Update()
 {
 	CharacterMove::Update();
 
-	if (cow_vm_ != nullptr && mbIsVisible == false)
+	if (cow_vm_ != nullptr && is_visible_ == false)
 	{
 		cow_vm_->Update();
 	}
@@ -87,11 +87,11 @@ void CowMove::Update()
 
 void CowMove::Draw()
 {
-	if (mbIsVisible)
+	if (is_visible_)
 	{
 		CharacterMove::Draw();
 	}
-	if (cow_vm_ != nullptr && mbIsVisible == false)
+	if (cow_vm_ != nullptr && is_visible_ == false)
 	{
 		cow_vm_->Draw();
 	}
@@ -174,12 +174,12 @@ void CowMove::AvoidOtherCows()
 bool CowMove::SeekBait()
 {
 	// アクション競合によるスタックを防ぐため、チュートリアル中およびUFO吸引中は餌の追従処理を無効化する
-	if (Master::mpSceneManager->GetSceneType() == SceneManager::kSceneTutorial) return false;
+	if (Master::scene_manager_->GetSceneType() == SceneManager::kSceneTutorial) return false;
 	if (mCurrentState == STATE_VACUUM) return false;
 
 	old_position_ = position_;
 
-	if (mbBaitFlag)
+	if (bait_flag_)
 	{
 		const auto& b = ServiceLocator::GetObjectManager()->GetObject3DListByTag(Object3D::kTag3dBait);
 		if (!b.empty())
@@ -241,7 +241,7 @@ void CowMove::OnEnter(Collider* collider, Collider* check)
 	{
 		if (check->parent_object_->GetTag() == kTag3dBait)
 		{
-			mbBaitFlag = true;
+			bait_flag_ = true;
 		}
 
 		if (check->parent_object_->GetTag() == kTag3dCow)
@@ -306,7 +306,7 @@ void CowMove::OnExit(Collider* collider, Collider* check)
 	{
 		if (check->parent_object_->GetTag() == kTag3dBait)
 		{
-			mbBaitFlag = false;
+			bait_flag_ = false;
 		}
 	}
 }
@@ -320,7 +320,7 @@ void CowMove::CharacterDied()
 {
 	if (mCurrentState == STATE_VACUUM)
 	{
-		Player3D* player = mpTargetPlayer;
+		Player3D* player = target_player_;
 
 		CharacterRotate();
 		if (player != nullptr)
@@ -342,20 +342,20 @@ void CowMove::CharacterDied()
 		{
 			if (position_.y > death_timer_)
 			{
-				if (effect_timer_ <= 0 && mbIsVisible == true)
+				if (effect_timer_ <= 0 && is_visible_ == true)
 				{
 					cow_vm_->Play();
 					effect_timer_ = 60;
-					mbIsVisible = false;
+					is_visible_ = false;
 					capsule_collider_->SetDeleteFlag(true);
 				}
 
-				if (!mbIsVisible)
+				if (!is_visible_)
 				{
 					effect_timer_--;
 				}
 
-				if (effect_timer_ <= 0 && !mbIsVisible)
+				if (effect_timer_ <= 0 && !is_visible_)
 				{
 					Die(DEATH_VACUUM);
 				}
@@ -378,7 +378,7 @@ void CowMove::CharacterDied()
  */
 void CowMove::KilledByBait()
 {
-	mbIsVisible = false;
+	is_visible_ = false;
 	Die(DEATH_BAIT);
 	mDeleteFlag = true;
 }
@@ -392,20 +392,20 @@ void CowMove::Die(DeathReason reason)
 {
 	if (mDeleteFlag) return;
 
-	Player3D* player = mpTargetPlayer;
+	Player3D* player = target_player_;
 
 	switch (reason)
 	{
 	case DEATH_VACUUM:
 		if (player != nullptr)
 		{
-			player->mpLevel->AddXp(mfXp);
+			player->level_manager_->AddXp(xp_);
 			player->combo_->AddHit();
-			player->mpScore->AddScore(static_cast<int>(mfScore * player->combo_->GetMultiplier()));
+			player->score_manager_->AddScore(static_cast<int>(score_ * player->combo_->GetMultiplier()));
 
 			if (tag_cow_ == CowMove::TagCow::kCowT)
 			{
-				Master::mnTutorialcount++;
+				Master::tutorial_count_++;
 			}
 
 			// 暫定対応: コレクション要素を廃止してアクションに特化する仕様変更に伴い、
@@ -422,8 +422,8 @@ void CowMove::Die(DeathReason reason)
 			else if (s_mnTagCountCow == 3 && s_tag2Cow == tag_cow_)
 			{
 				s_tag3Cow = tag_cow_;
-				if (s_tag3Cow == CowMove::kCow1) player->mpScore->AddScore(300);
-				if (s_tag2Cow == CowMove::kCow2) player->mpScore->AddScore(600);
+				if (s_tag3Cow == CowMove::kCow1) player->score_manager_->AddScore(300);
+				if (s_tag2Cow == CowMove::kCow2) player->score_manager_->AddScore(600);
 			}
 			else
 			{
@@ -439,9 +439,9 @@ void CowMove::Die(DeathReason reason)
 	case DEATH_BAIT:
 		if (player != nullptr)
 		{
-			player->mpLevel->AddXp(mfXp);
+			player->level_manager_->AddXp(xp_);
 			player->combo_->AddHit();
-			player->mpScore->AddScore(static_cast<int>(mfScore * player->combo_->GetMultiplier()));
+			player->score_manager_->AddScore(static_cast<int>(score_ * player->combo_->GetMultiplier()));
 		}
 		mDeleteFlag = true;
 		break;

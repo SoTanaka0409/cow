@@ -13,7 +13,7 @@
  */
 Rule::Rule()
 {
-	rule_graph_ = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kSettingsBg);
+	rule_graph_ = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kSettingsBg);
 	title_font_handle_ = CreateFontToHandle("メイリオ", 80, 5);
 	font_handle_ = CreateFontToHandle("メイリオ", 50, 3);
 
@@ -68,11 +68,11 @@ bool Rule::UpdateFadeState()
 {
 	if (fade_state_ == kSceneFadeOut)
 	{
-		Master::mpSoundManager->SetBGMVolume((Master::mpSoundManager->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
+		Master::sound_manager_->SetBGMVolume((Master::sound_manager_->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
 		if (GetFadeAlpha() >= 255)
 		{
 			SetFadeAlpha(255);
-			Master::mpSceneManager->SetNextScene((SceneManager::SCENE_TYPE)next_scene_);
+			Master::scene_manager_->SetNextScene((SceneManager::SCENE_TYPE)next_scene_);
 			return true;
 		}
 	}
@@ -116,16 +116,16 @@ void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClic
 
 					if (selected_index_ == kMenuBgm)
 					{
-						Master::mpSoundManager->SetMasterBGMVolume(newVol);
+						Master::sound_manager_->SetMasterBGMVolume(newVol);
 					}
 					else if (selected_index_ == kMenuSe)
 					{
-						Master::mpSoundManager->SetMasterSEVolume(newVol);
+						Master::sound_manager_->SetMasterSEVolume(newVol);
 
 						// スライダー操作時SE暴発、耳障り(音割れ)になるのを防ぐためのクールタイム
 						if (play_se_delay_ <= 0)
 						{
-							Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
+							Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
 							play_se_delay_ = 10;
 						}
 					}
@@ -139,7 +139,7 @@ void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClic
 		int y = startY + kMenuBack * gapY;
 		if (mouse_y >= y && mouse_y <= y + 60)
 		{
-			Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
+			Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
 			fade_state_ = kSceneFadeOut;
 			next_scene_ = SceneManager::kSceneTitle;
 		}
@@ -149,13 +149,13 @@ void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClic
 	{
 		selected_index_ = (MenuType)((int)selected_index_ - 1);
 		if (selected_index_ < 0) selected_index_ = (MenuType)(kMenuMax - 1);
-		Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
+		Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
 	}
 	if (InputManager::CheckDownKey(KEY_INPUT_DOWN) || InputManager::CheckDownKey(KEY_INPUT_S))
 	{
 		selected_index_ = (MenuType)((int)selected_index_ + 1);
 		if (selected_index_ >= kMenuMax) selected_index_ = kMenuBgm;
-		Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
+		Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
 	}
 
 	int volChange = 0;
@@ -166,18 +166,18 @@ void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClic
 	{
 		if (selected_index_ == kMenuBgm)
 		{
-			int currentVol = Master::mpSoundManager->GetMasterBGMVolume();
-			Master::mpSoundManager->SetMasterBGMVolume(currentVol + volChange);
+			int currentVol = Master::sound_manager_->GetMasterBGMVolume();
+			Master::sound_manager_->SetMasterBGMVolume(currentVol + volChange);
 		}
 		else if (selected_index_ == kMenuSe)
 		{
-			int currentVol = Master::mpSoundManager->GetMasterSEVolume();
-			Master::mpSoundManager->SetMasterSEVolume(currentVol + volChange);
+			int currentVol = Master::sound_manager_->GetMasterSEVolume();
+			Master::sound_manager_->SetMasterSEVolume(currentVol + volChange);
 
 			// キー操作時SE防爆(マウス操作時と同様の対策)
 			if (play_se_delay_ <= 0)
 			{
-				Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
+				Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
 				play_se_delay_ = 10;
 			}
 		}
@@ -187,7 +187,7 @@ void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClic
 	{
 		if (selected_index_ == kMenuBack)
 		{
-			Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
+			Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
 			fade_state_ = kSceneFadeOut;
 			next_scene_ = SceneManager::kSceneTitle;
 		}
@@ -241,7 +241,7 @@ void Rule::DrawMenu()
 
 		if (i == kMenuBgm)
 		{
-			int vol = Master::mpSoundManager->GetMasterBGMVolume();
+			int vol = Master::sound_manager_->GetMasterBGMVolume();
 			DrawFormatStringToHandle(startX, y, color, font_handle_, "BGM Volume");
 			DrawBox(startX + 350, y + 15, startX + 350 + (vol * 2), y + 45, color, TRUE);
 			DrawBox(startX + 350, y + 15, startX + 350 + (255 * 2), y + 45, GetColor(255, 255, 255), FALSE);
@@ -249,7 +249,7 @@ void Rule::DrawMenu()
 		}
 		else if (i == kMenuSe)
 		{
-			int vol = Master::mpSoundManager->GetMasterSEVolume();
+			int vol = Master::sound_manager_->GetMasterSEVolume();
 			DrawFormatStringToHandle(startX, y, color, font_handle_, "SE Volume");
 			DrawBox(startX + 350, y + 15, startX + 350 + (vol * 2), y + 45, color, TRUE);
 			DrawBox(startX + 350, y + 15, startX + 350 + (255 * 2), y + 45, GetColor(255, 255, 255), FALSE);
@@ -273,7 +273,7 @@ void Rule::Initialize()
 	SetFadeAlpha(255.0f);
 	selected_index_ = kMenuBgm;
 	scene_frames_ = 0;
-	Master::mpSoundManager->PlayBGM(SoundManager::kBgmRule);
+	Master::sound_manager_->PlayBGM(SoundManager::kBgmRule);
 }
 
 /*
@@ -285,5 +285,5 @@ void Rule::Finalize()
 {
 	DeleteFontToHandle(font_handle_);
 	DeleteFontToHandle(title_font_handle_);
-	Master::mpSoundManager->StopBGM();
+	Master::sound_manager_->StopBGM();
 }

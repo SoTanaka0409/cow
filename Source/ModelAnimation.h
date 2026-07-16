@@ -20,25 +20,25 @@ public:
 	// 毎フレーム連続で呼び出すとブレンド率が初期化され続けモーションが固まるバグが発生するため、状態変化時のみ呼ぶようガードすること
 	void ChangeAnimation(AnimationState state, int index = 1);
 
-	void SetLoop(bool isLoop) { mbLoop = isLoop; }
-	void SetLoopFinishState(AnimationState state) { mnLoopFinishState = state; }
+	void SetLoop(bool isLoop) { is_loop_ = isLoop; }
+	void SetLoopFinishState(AnimationState state) { loop_finish_state_ = state; }
 	void SetAnimationBlend(bool isBlend);
 
-	AnimationState GetNowState() { return mnState; }
-	bool IsLoopFinish() { return mbLoopFinish; }
+	AnimationState GetNowState() { return state_; }
+	bool IsLoopFinish() { return is_loop_finish_; }
 
-	void SetAnimationCount(float count) { mfAnimationCount = count; }
+	void SetAnimationCount(float count) { animation_count_ = count; }
 
 private:
 	int model_handle_;                 // DXライブラリのモデルハンドル
-	float mfAnimationTime;             // 現在のアニメーション再生時間
-	float mfAnimationCount;            // アニメーションの再生速度倍率
-	int mnAnimationIndex;              // 現在のアニメーション番号
-	float mfOldAnimationTime;          // ブレンド前の旧アニメーション再生時間
-	int mnOldAnimationIndex;           // ブレンド前の旧アニメーション番号
-	float mfAnimBlendRate;             // モーション補間のブレンド率
-	AnimationState mnState;            // 現在のアニメーション状態
-	bool mbLoop;                       // ループ再生するかどうかのフラグ
-	AnimationState mnLoopFinishState;  // 非ループ再生終了後の遷移先状態
-	bool mbLoopFinish;                 // アニメーションが終了したかどうかのフラグ
+	float animation_time_;             // 現在のアニメーション再生時間
+	float animation_count_;            // アニメーションの再生速度倍率
+	int animation_index_;              // 現在のアニメーション番号
+	float old_animation_time_;          // ブレンド前の旧アニメーション再生時間
+	int old_animation_index_;           // ブレンド前の旧アニメーション番号
+	float anim_blend_rate_;             // モーション補間のブレンド率
+	AnimationState state_;            // 現在のアニメーション状態
+	bool is_loop_;                       // ループ再生するかどうかのフラグ
+	AnimationState loop_finish_state_;  // 非ループ再生終了後の遷移先状態
+	bool is_loop_finish_;                 // アニメーションが終了したかどうかのフラグ
 };

@@ -12,7 +12,7 @@ Wall::Wall(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottom
 	: Object3D(centerPos)
 {
 	SetTag(Object3D::kTag3dWall);
-	if (!filename.empty()) { graph_handle_ = Master::mpResourceManager->LoadGraphics(filename.c_str()); } else { graph_handle_ = -1; }
+	if (!filename.empty()) { graph_handle_ = Master::resource_manager_->LoadGraphics(filename.c_str()); } else { graph_handle_ = -1; }
 
 	vertex_[0].pos = VAdd(centerPos, topLeft);
 	vertex_[0].norm = VGet(1.0f, 0.0f, 0.0f);

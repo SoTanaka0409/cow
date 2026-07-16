@@ -9,7 +9,7 @@ Animal::Animal(std::string filename, VECTOR initPos)
 	: AnimalMove(filename, initPos)
 {
 	// スコア計算時の基準仕様として、生成時の初期経験値(XP)を10に固定
-	mfXp = 10;
+	xp_ = 10;
 	SetTagAnimal(AnimalMove::kAnimal1);
 }
 

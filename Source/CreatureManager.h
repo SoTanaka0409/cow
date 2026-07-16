@@ -20,14 +20,14 @@ public:
 	{
 		// バグ回避：稼働中のキャラはObjectManager側が一括破棄するため、ここでdeleteすると多重解放（二重解放バグ）になるためクリアのみ行う
 		mCreatures.clear();
-		for (auto& pair : mPools)
+		for (auto& pair : pools_)
 		{
 			for (auto creature : pair.second)
 			{
 				delete creature;
 			}
 		}
-		mPools.clear();
+		pools_.clear();
 	}
 
 	// 入力：なし
@@ -61,7 +61,7 @@ public:
 						creature->Deactivate();
 
 						TTag tag = GetTag(creature);
-						mPools[tag].push_back(creature);
+						pools_[tag].push_back(creature);
 						return true;
 					}
 					return false;
@@ -84,10 +84,10 @@ protected:
 	{
 		TConcrete* creature = nullptr;
 		// パフォーマンス理由：プールに休止オブジェクトがある場合はメモリ確保をバイパスし、Resetを呼んで初期値に戻して再利用する
-		if (!mPools[tag].empty())
+		if (!pools_[tag].empty())
 		{
-			creature = static_cast<TConcrete*>(mPools[tag].back());
-			mPools[tag].pop_back();
+			creature = static_cast<TConcrete*>(pools_[tag].back());
+			pools_[tag].pop_back();
 			creature->Reset(spawnPos);
 		}
 		else
@@ -101,5 +101,5 @@ protected:
 
 protected:
 	std::vector<TMove*> mCreatures;                  // 現在ステージ上で稼働しており、毎フレームの更新処理が走る生存キャラクターリスト
-	std::map<TTag, std::vector<TMove*>> mPools;      // メモリ再確保を回避するために、待機（非アクティブ）状態のアクターをプールしておく連想配列
+	std::map<TTag, std::vector<TMove*>> pools_;      // メモリ再確保を回避するために、待機（非アクティブ）状態のアクターをプールしておく連想配列
 };

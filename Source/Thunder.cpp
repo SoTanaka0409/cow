@@ -144,7 +144,7 @@ void Thunder::UpdateState()
 				}
 				if (playSound)
 				{
-					Master::mpSoundManager->PlaySE(SoundManager::kSeKaminari);
+					Master::sound_manager_->PlaySE(SoundManager::kSeKaminari);
 				}
 			}
 		}

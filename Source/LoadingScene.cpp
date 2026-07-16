@@ -48,14 +48,14 @@ void LoadingScene::Update()
 	{
 		SetUseASyncLoadFlag(TRUE);
 
-		Master::mpResourceManager->PreloadModel(GameConstants::kCowDefault.model_path);
-		Master::mpResourceManager->PreloadModel(GameConstants::kCowGold.model_path);
-		Master::mpResourceManager->PreloadModel(GameConstants::kAnimalChicken.model_path);
-		Master::mpResourceManager->PreloadModel(GameConstants::kAnimalBear.model_path);
-		Master::mpResourceManager->PreloadModel(GameConstants::kAnimalSheep.model_path);
-		Master::mpResourceManager->PreloadModel("Resource/3D/Player/UFO.mv1");
-		Master::mpResourceManager->PreloadModel("Resource/3D/Fence1/Fence1/Fence.mv1");
-		Master::mpResourceManager->PreloadModel("Resource/3D/SkyBox/SkyBox.mv1");
+		Master::resource_manager_->PreloadModel(GameConstants::kCowDefault.model_path);
+		Master::resource_manager_->PreloadModel(GameConstants::kCowGold.model_path);
+		Master::resource_manager_->PreloadModel(GameConstants::kAnimalChicken.model_path);
+		Master::resource_manager_->PreloadModel(GameConstants::kAnimalBear.model_path);
+		Master::resource_manager_->PreloadModel(GameConstants::kAnimalSheep.model_path);
+		Master::resource_manager_->PreloadModel("Resource/3D/Player/UFO.mv1");
+		Master::resource_manager_->PreloadModel("Resource/3D/Fence1/Fence1/Fence.mv1");
+		Master::resource_manager_->PreloadModel("Resource/3D/SkyBox/SkyBox.mv1");
 
 		SetUseASyncLoadFlag(FALSE);
 
@@ -67,7 +67,7 @@ void LoadingScene::Update()
 	if (load_started_ && GetASyncLoadNum() == 0 && loading_timer_ > 60)
 	{
 		// 外部仕様依存: このクラス単体で遷移処理を完結させず、SceneManagerにライフサイクルを委譲する
-		Master::mpSceneManager->SetNextScene(SceneManager::kScene3D);
+		Master::scene_manager_->SetNextScene(SceneManager::kScene3D);
 	}
 }
 

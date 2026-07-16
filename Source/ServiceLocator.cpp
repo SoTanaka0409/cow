@@ -12,9 +12,9 @@
 Scene* ServiceLocator::GetCurrentScene()
 {
 	// 未初期化時のクラチE??ュを防ぐため?Eインタの有効性を検証
-	if (Master::mpSceneManager != nullptr)
+	if (Master::scene_manager_ != nullptr)
 	{
-		return Master::mpSceneManager->GetCurrentScene();
+		return Master::scene_manager_->GetCurrentScene();
 	}
 	return nullptr;
 }

@@ -1,11 +1,11 @@
-﻿#include"Level.h"
+#include"Level.h"
 #include"Master.h"
 #include"Player3D.h"
 
 Level::Level(Object3D* obj)
-	: mfxp(0.0f)
-	, mfMaxXp(1.0f)
-	, mnNowLevel(1)
+	: xp_(0.0f)
+	, max_xp_(1.0f)
+	, now_level_(1)
 {
 	this->parent_ = obj;
 }
@@ -17,7 +17,7 @@ Level::~Level()
 void Level::Draw()
 {
 	DrawBar();
-	DrawFormatString(Utility::kUiBaseX, Utility::kUiLevelY - 35, GetColor(255, 255, 255), "Level : %d", mnNowLevel);
+	DrawFormatString(Utility::kUiBaseX, Utility::kUiLevelY - 35, GetColor(255, 255, 255), "Level : %d", now_level_);
 }
 
 void Level::Update()
@@ -32,19 +32,19 @@ void Level::Update()
  */
 void Level::AddXp(float xp)
 {
-	mfxp += xp;
+	xp_ += xp;
 
-	if (mfxp >= mfMaxXp)
+	if (xp_ >= max_xp_)
 	{
-		mnNowLevel++;
-		mfxp = 0;
+		now_level_++;
+		xp_ = 0;
 		SetNextLevel();
 		
 		// プレイヤーの成長演出を進めるため、レベルアップ直後のスキル選択フラグを有効化する
 		if (parent_->GetTag() == Object3D::kTag3dPlayer)
 		{
 			auto player = dynamic_cast<Player3D*>(parent_);
-			player->mpSkill->SetSkillFlag(true);
+			player->skill_->SetSkillFlag(true);
 		}
 	}
 }
@@ -53,11 +53,11 @@ void Level::AddXp(float xp)
  * @brief レベル増加に必要な目標経験値を設定する
  * [入力] なし
  * [出力] なし
- * [備考] mfMaxXp の更新（レベルが高くなるほど必要経験値が増加）
+ * [備考] max_xp_ の更新（レベルが高くなるほど必要経験値が増加）
  */
 void Level::SetNextLevel()
 {
-	mfMaxXp = 50.0f * mnNowLevel;
+	max_xp_ = 50.0f * now_level_;
 }
 
 /*
@@ -68,22 +68,38 @@ void Level::SetNextLevel()
  */
 void Level::DrawBar()
 {
-	float bar = mfxp / mfMaxXp;
+	float bar = xp_ / max_xp_;
 	if (bar > 1.0f) bar = 1.0f;
 	if (bar < 0.0f) bar = 0.0f;
 
-	// 視覚幅上端のため背景を黒で塗りつぶす
-	DrawBox(static_cast<int>(pos.x), static_cast<int>(pos.y), static_cast<int>(pos.x + size.x), static_cast<int>(pos.y + size.y), GetColor(0, 0, 0), TRUE);
-	
-	// 進行度を表示するため割合に応じて緑色のバーを一定長させる
+	int x1 = static_cast<int>(pos.x);
+	int y1 = static_cast<int>(pos.y);
+	int x2 = static_cast<int>(pos.x + size.x);
+	int y2 = static_cast<int>(pos.y + size.y);
+
+	// --- Western Wood Background ---
+	// 木目のような暗い茶色
+	DrawBox(x1, y1, x2, y2, GetColor(60, 30, 15), TRUE);
+
+	// --- Alien Magenta Experience Fill ---
 	if (bar > 0.0f)
 	{
-		DrawBox(static_cast<int>(pos.x + 1), static_cast<int>(pos.y + 1),
-			static_cast<int>(pos.x + size.x * bar - 1),
-			static_cast<int>(pos.y + size.y - 1),
-			GetColor(0, 255, 0), TRUE);
+		int fillX = static_cast<int>(pos.x + size.x * bar);
+		// 内側の明るい芯
+		DrawBox(x1 + 2, y1 + 4, fillX - 2, y2 - 4, GetColor(255, 100, 255), TRUE);
+		
+		// 外側のエイリアン発光（加算ブレンド）
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 128);
+		DrawBox(x1, y1 + 1, fillX, y2 - 1, GetColor(200, 0, 255), TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 	
-	// バーの全長縁を表示するための枠線を描画
-	DrawBox(static_cast<int>(pos.x), static_cast<int>(pos.y), static_cast<int>(pos.x + size.x), static_cast<int>(pos.y + size.y), GetColor(255, 255, 255), FALSE);
+	// --- Alien Tech Border ---
+	// 外枠のシアン発光
+	DrawBox(x1 - 1, y1 - 1, x2 + 1, y2 + 1, GetColor(0, 255, 255), FALSE);
+	// 装飾的な四隅のポインター
+	DrawBox(x1 - 2, y1 - 2, x1 + 4, y1 + 4, GetColor(200, 0, 255), TRUE);
+	DrawBox(x2 - 4, y1 - 2, x2 + 2, y1 + 4, GetColor(200, 0, 255), TRUE);
+	DrawBox(x1 - 2, y2 - 4, x1 + 4, y2 + 2, GetColor(200, 0, 255), TRUE);
+	DrawBox(x2 - 4, y2 - 4, x2 + 2, y2 + 2, GetColor(200, 0, 255), TRUE);
 }

@@ -18,7 +18,7 @@ class CapsuleCollider;
 class Player3D : public Object3D
 {
 private:
-	bool mbVacuumFlag = true; // 吸い込みの有効状態
+	bool vacuum_flag_ = true; // 吸い込みの有効状態
 
 public:
 	// ステータスID
@@ -33,7 +33,7 @@ public:
 	// チュートリアル中など、特定イベント進行前に吸い込みが暴発して進行不能になるのを防ぐための状態参照
 	bool GetVacuumFlag() const
 	{
-		return mbVacuumFlag;
+		return vacuum_flag_;
 	}
 
 public:
@@ -91,10 +91,10 @@ public:
 	float Status(StatusID id);
 
 	// [入力] f: 設定する速度 [出力] なし [副作用] 攻撃速度の更新
-	void SetStatusAttack(float f) { mfAttack_Speed = f; }
+	void SetStatusAttack(float f) { attack_speed_ = f; }
 
 	// [入力] なし [出力] 現在の攻撃速度 [副作用] なし
-	float GetStatusAttack() { return mfAttack_Speed; }
+	float GetStatusAttack() { return attack_speed_; }
 
 	// [入力] state: アニメーション状態, filename: モデルパス [出力] なし [副作用] アニメーションのロードと追加
 	// 事前ロード機構を持たないため、ゲーム中の動的追加はスパイク（処理落ち）を招く点に留意して使用すること
@@ -123,22 +123,22 @@ public:
 
 public:
 	Model* model_;               // プレイヤーの3Dモデル
-	Skill* mpSkill;              // スキル管理
-	Level* mpLevel;              // レベル・経験値管理
+	Skill* skill_;              // スキル管理
+	Level* level_manager_;              // レベル・経験値管理
 	Combo* combo_;               // コンボ管理
-	Score* mpScore;              // スコア管理
+	Score* score_manager_;              // スコア管理
 
 private:
-	float mfSpeed;                       // ベース移動速度
-	float mfHp;                          // 現在体力
-	float mfAttack_Speed;                // ベース攻撃速度
+	float speed_;                       // ベース移動速度
+	float hp_;                          // 現在体力
+	float attack_speed_;                // ベース攻撃速度
 	float target_angle_;                 // 旋回目標の角度
 	float angle_;                        // 現在の旋回角度
 	const float kRotateSpeed = 0.2f;     // 旋回時の補間係数
 	const float JUMP_POWER = 30.0f;      // ジャンプ力
 	bool mIsOutOfBounds = false;         // 画面外判定フラグ
-	int mnLighGraph;                     // ライティング用画像ハンドル
-	int mnGaugeFrameGraph;               // ゲージ枠の画像ハンドル
+	int light_graph_;                     // ライティング用画像ハンドル
+	int gauge_frame_graph_;               // ゲージ枠の画像ハンドル
 	bool mIsCowInVacuumRange;            // 吸引対象が範囲内にいるかのフラグ
 	const float VACUUM_RADIUS = 300.0f;  // 吸引有効半径
 	const int VACUUM_REQUIRE_TIME = 120; // 吸引完了に必要なフレーム数
@@ -159,7 +159,7 @@ private:
 	const int VISIBLE_TIME_RAND_MAX = 30; // エフェクト等のランダム表示時間最大値
 	const int VISIBLE_TIME_RAND_MIN = 5;  // エフェクト等のランダム表示時間最小値
 	EffekseerEffect* mpSpeed;            // スピードバフ用エフェクト
-	EffekseerEffect* mpBeam;             // ビーム攻撃用エフェクト
+	EffekseerEffect* beam_;             // ビーム攻撃用エフェクト
 	int effect_timer_;                   // エフェクトの再生時間管理タイマー
 	bool mIsStunned;                     // スタン(行動不能)状態フラグ
 	int mStunTimer;                      // スタン解除までの残りフレーム数

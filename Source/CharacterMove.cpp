@@ -19,9 +19,9 @@
 CharacterMove::CharacterMove(std::string filename, VECTOR initPos)
 	: Object3D(initPos)
 	, mCurrentState(STATE_IDLE)
-	, mpCurrentState(new StateIdle())
+	, current_state_(new StateIdle())
 	, mActionTimer(60)
-	, mfSpeed(10.0f)
+	, speed_(10.0f)
 	, target_angle_(0.0f)
 	, angle_(0.0f)
 	, moveVec(VGet(0.0f, 0.0f, 0.0f))
@@ -30,10 +30,10 @@ CharacterMove::CharacterMove(std::string filename, VECTOR initPos)
 	, mVacuumTimer(0)
 	, mDeleteFlag(false)
 	, death_timer_(1000.0f)
-	, mfScore(0.0f)
-	, mfXp(0.0f)
-	, mbBaitFlag(false)
-	, mbIsVisible(true)
+	, score_(0.0f)
+	, xp_(0.0f)
+	, bait_flag_(false)
+	, is_visible_(true)
 {
 	model_ = new Model(filename, initPos, false);
 	// 自然な群れを表現するため、初期向きをランダムに分散させる。
@@ -53,10 +53,10 @@ CharacterMove::~CharacterMove()
 		delete model_;
 		model_ = nullptr;
 	}
-	if (mpCurrentState != nullptr)
+	if (current_state_ != nullptr)
 	{
-		delete mpCurrentState;
-		mpCurrentState = nullptr;
+		delete current_state_;
+		current_state_ = nullptr;
 	}
 }
 /*
@@ -69,22 +69,22 @@ void CharacterMove::Reset(VECTOR pos)
 {
 	position_ = pos;
 	mCurrentState = STATE_IDLE;
-	mpTargetPlayer = nullptr;
-	if (mpCurrentState != nullptr)
+	target_player_ = nullptr;
+	if (current_state_ != nullptr)
 	{
-		delete mpCurrentState;
+		delete current_state_;
 	}
-	mpCurrentState = new StateIdle();
+	current_state_ = new StateIdle();
 	mActionTimer = 60;
 	rotation_.y = (float)GetRand(359) * (DX_PI_F / 180.0f);
 	moveVec = VGet(0.0f, 0.0f, 0.0f);
 	oldmoveVec = VGet(0.0f, 0.0f, 0.0f);
 	mVacuumTimer = 0;
 	mDeleteFlag = false;
-	mbBaitFlag = false;
-	mbIsVisible = true;
+	bait_flag_ = false;
+	is_visible_ = true;
 	SetDrawFlag(true);
-	if (auto scene = Master::mpSceneManager->GetCurrentScene())
+	if (auto scene = Master::scene_manager_->GetCurrentScene())
 	{
 		if (auto objMgr = scene->GetObjectManager())
 		{
@@ -106,18 +106,18 @@ void CharacterMove::Reset(VECTOR pos)
  * オブジェクトの無効化処理
  * [入力] なし
  * [出力] なし
- * [副作用] mbIsVisible, 描画フラグ, コライダーの削除フラグを変更。ObjectManagerのリストから除外。
+ * [副作用] is_visible_, 描画フラグ, コライダーの削除フラグを変更。ObjectManagerのリストから除外。
  */
 void CharacterMove::Deactivate()
 {
-	mbIsVisible = false;
+	is_visible_ = false;
 	SetDrawFlag(false);
 	if (capsule_collider_ != nullptr)
 	{
 		capsule_collider_->SetDeleteFlag(true);
 	}
 	// 再利用時の負荷を軽減するため、メモリ破棄ではなく更新対象から外す。
-	if (auto scene = Master::mpSceneManager->GetCurrentScene())
+	if (auto scene = Master::scene_manager_->GetCurrentScene())
 	{
 		if (auto objMgr = scene->GetObjectManager())
 		{
@@ -155,7 +155,7 @@ void CharacterMove::Draw()
 
 void CharacterMove::DrawShadowCaster()
 {
-	if (model_ != nullptr && mbIsVisible)
+	if (model_ != nullptr && is_visible_)
 	{
 		model_->Draw();
 	}
@@ -188,9 +188,9 @@ void CharacterMove::MoveCharacter()
  */
 void CharacterMove::UpdateWanderAI()
 {
-	if (mpCurrentState != nullptr)
+	if (current_state_ != nullptr)
 	{
-		mpCurrentState->Update(this);
+		current_state_->Update(this);
 	}
 }
 /*
@@ -201,15 +201,15 @@ void CharacterMove::UpdateWanderAI()
  */
 void CharacterMove::ChangeState(CharacterState* newState)
 {
-	if (mpCurrentState != nullptr)
+	if (current_state_ != nullptr)
 	{
-		mpCurrentState->Exit(this);
-		delete mpCurrentState;
+		current_state_->Exit(this);
+		delete current_state_;
 	}
-	mpCurrentState = newState;
-	if (mpCurrentState != nullptr)
+	current_state_ = newState;
+	if (current_state_ != nullptr)
 	{
-		mpCurrentState->Enter(this);
+		current_state_->Enter(this);
 	}
 }
 /*
@@ -261,7 +261,7 @@ void CharacterMove::CheckWallCollision()
 					if (hitwall && !hitwalls)
 					{
 						position_ = old_position_;
-						position_ = VAdd(position_, VScale(slide, mfSpeed * Master::GetDeltaTimeScaler()));
+						position_ = VAdd(position_, VScale(slide, speed_ * Master::GetDeltaTimeScaler()));
 						hitwalls = true;
 					}
 					// 複数壁への連続衝突によるめり込みを防ぐため。

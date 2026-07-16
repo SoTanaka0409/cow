@@ -21,8 +21,8 @@ GoldCow::GoldCow(std::string filename, VECTOR initPos, TagFever kFever)
 	, death_timer_(1200)
 {
 	SetTagCow(CowMove::kCowGold);
-	mfXp = 20;
-	mfScore = 30;
+	xp_ = 20;
+	score_ = 30;
 	// プレイヤーが触れやすくするため、当たり判定を大きく設定する
 	collider_radius_ = 150.0f;
 }
@@ -86,7 +86,7 @@ void GoldCow::Die(DeathReason reason)
 		{
 			if (auto fv = ServiceLocator::GetFever())
 			{
-				fv->StartFever(mpTargetPlayer);
+				fv->StartFever(target_player_);
 			}
 		}
 	}

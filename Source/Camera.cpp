@@ -9,7 +9,7 @@
 #include "Scene.h"
 #include "GameManager.h"
 
-// •›ì—pFƒJƒƒ‰ƒpƒ‰ƒ[ƒ^‚¨‚æ‚ÑƒJƒƒ‰ƒVƒFƒCƒN§Œä•Ï”‚Ì‰Šú‰»
+// å‰¯ä½œç”¨ï¼šã‚«ãƒ¡ãƒ©ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãŠã‚ˆã³ã‚«ãƒ¡ãƒ©ã‚·ã‚§ã‚¤ã‚¯åˆ¶å¾¡å¤‰æ•°ã®åˆæœŸåŒ–
 Camera::Camera()
 	: horizontal_angle_(0.0f)
 	, vertical_angle_(-55.0f)
@@ -21,7 +21,7 @@ Camera::Camera()
 	, shake_time_count_(0)
 	, shake_angle_(0.0f)
 	, shake_time_counter_(0.0f)
-	, mfShakeTime(0.0f)
+	, old_shake_time_(0.0f)
 	, shake_width_(0.0f)
 	, shake_angle_speed_(0.0f)
 	, step_time_(0.0f)
@@ -33,7 +33,7 @@ Camera::~Camera()
 {
 }
 
-// •›ì—pFDxLib‚ÌƒjƒAEƒtƒ@[ƒNƒŠƒbƒvA”wŒiF‚Ì“K—pA‰ŠúˆÊ’u‚Ì”½‰f
+// å‰¯ä½œç”¨ï¼šDxLibã®ãƒ‹ã‚¢ãƒ»ãƒ•ã‚¡ãƒ¼ã‚¯ãƒªãƒƒãƒ—ã€èƒŒæ™¯è‰²ã®é©ç”¨ã€åˆæœŸä½ç½®ã®åæ˜ 
 void Camera::Initialize()
 {
 	target_ = nullptr;
@@ -45,22 +45,22 @@ void Camera::Initialize()
 	shake_time_counter_ = 0.0f;
 	shake_position_ = VGet(0.0f, 0.0f, 0.0f);
 
-	// ‰“Œiƒ‚ƒfƒ‹‚Ì•s©‘R‚ÈÁ¸‚âAUI•\¦“™‚É‚æ‚éè‘Oƒ|ƒŠƒSƒ“‚ÌŒ‡‚¯iƒNƒŠƒbƒsƒ“ƒOj‚ğ–h‚®‚½‚ß‚Ì•`‰æ[“xİ’è
+	// é æ™¯ãƒ¢ãƒ‡ãƒ«ã®ä¸è‡ªç„¶ãªæ¶ˆå¤±ã‚„ã€UIè¡¨ç¤ºç­‰ã«ã‚ˆã‚‹æ‰‹å‰ãƒãƒªã‚´ãƒ³ã®æ¬ ã‘ï¼ˆã‚¯ãƒªãƒƒãƒ”ãƒ³ã‚°ï¼‰ã‚’é˜²ããŸã‚ã®æç”»æ·±åº¦è¨­å®š
 	SetCameraNearFar(100.0f, 50000.0f);
 
-	// ƒXƒJƒCƒ{ƒbƒNƒX–¢ƒ[ƒhó‘Ô‚Ì‚ÉA‰æ–ÊŠO‚É‘OƒtƒŒ[ƒ€‚Ì•`‰æc‘œ‚ªc‚éƒoƒO‚ğ–h‚®‚½‚ß‚Ì”wŒiƒNƒŠƒAƒJƒ‰[
+	// ã‚¹ã‚«ã‚¤ãƒœãƒƒã‚¯ã‚¹æœªãƒ­ãƒ¼ãƒ‰çŠ¶æ…‹ã®æ™‚ã«ã€ç”»é¢å¤–ã«å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã®æç”»æ®‹åƒãŒæ®‹ã‚‹ãƒã‚°ã‚’é˜²ããŸã‚ã®èƒŒæ™¯ã‚¯ãƒªã‚¢ã‚«ãƒ©ãƒ¼
 	SetBackgroundColor(128, 128, 128);
 
 	SetCameraPositionAndTarget_UpVecY(position_, look_at_position_);
 	Update();
 }
 
-// •›ì—pFƒJƒƒ‰À•W‚¨‚æ‚Ñ’‹“_‚Ìİ’èA•½sŒõŒ¹•ûŒü‚ÌXVAEffekseerƒJƒƒ‰s—ñ‚Ì“¯Šú
+// å‰¯ä½œç”¨ï¼šã‚«ãƒ¡ãƒ©åº§æ¨™ãŠã‚ˆã³æ³¨è¦–ç‚¹ã®è¨­å®šã€å¹³è¡Œå…‰æºæ–¹å‘ã®æ›´æ–°ã€Effekseerã‚«ãƒ¡ãƒ©è¡Œåˆ—ã®åŒæœŸ
 void Camera::Update()
 {
-	// ƒXƒLƒ‹‘I‘ğ‚âƒfƒoƒbƒOƒJƒƒ‰‹N“®‚ÉAƒ}ƒEƒXˆÚ“®‚É‚æ‚è‹“_‚ª•Ï‚í‚é‚Ì‚ğ–h‚®‚½‚ß‚Ì“ü—ÍƒJƒbƒg
+	// ã‚¹ã‚­ãƒ«é¸æŠæ™‚ã‚„ãƒ‡ãƒãƒƒã‚°ã‚«ãƒ¡ãƒ©èµ·å‹•æ™‚ã«ã€ãƒã‚¦ã‚¹ç§»å‹•ã«ã‚ˆã‚Šè¦–ç‚¹ãŒå¤‰ã‚ã‚‹ã®ã‚’é˜²ããŸã‚ã®å…¥åŠ›ã‚«ãƒƒãƒˆ
 	if (Master::SelectSkill) return;
-	if (Master::mbIsDebugCamera) return;
+	if (Master::is_debug_camera_) return;
 
 	if (target_ == nullptr)
 	{
@@ -71,7 +71,7 @@ void Camera::Update()
 
 	if (target_ != nullptr)
 	{
-		// ’Ç]‘ÎÛiƒvƒŒƒCƒ„[j‚Ì‘«Œ³‚Å‚Í‚È‚­AUFO‚ÌƒRƒbƒNƒsƒbƒg•t‹ß‚ğ’†S‚É‘¨‚¦‚é‚½‚ß‚Ì’‹“_•â³
+		// è¿½å¾“å¯¾è±¡ï¼ˆãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ï¼‰ã®è¶³å…ƒã§ã¯ãªãã€UFOã®ã‚³ãƒƒã‚¯ãƒ”ãƒƒãƒˆä»˜è¿‘ã‚’ä¸­å¿ƒã«æ‰ãˆã‚‹ãŸã‚ã®æ³¨è¦–ç‚¹è£œæ­£
 		look_at_position_ = target_->GetPosition();
 		look_at_position_.y += 340.0f;
 	}
@@ -90,7 +90,7 @@ void Camera::UpdatePositionAndTarget()
 {
 	const float distance = 1000.0f;
 	VECTOR temp;
-	// ƒJƒƒ‰‚ğˆê’è‹——£i1000pxj•Û‚¿‚Â‚ÂA’‹“_‚ğ’†S‚É‹…‚ğ‹O“¹‚ğ•`‚­‚½‚ß‚Ì‹ÉÀ•W•ÏŠ·ŒvZ
+	// ã‚«ãƒ¡ãƒ©ã‚’ä¸€å®šè·é›¢ï¼ˆ1000pxï¼‰ä¿ã¡ã¤ã¤ã€æ³¨è¦–ç‚¹ã‚’ä¸­å¿ƒã«çƒã‚’è»Œé“ã‚’æããŸã‚ã®æ¥µåº§æ¨™å¤‰æ›è¨ˆç®—
 	temp.x = distance * cosf(vertical_angle_ / 180.0f * 3.14159265f) * sinf(horizontal_angle_ / 180.0f * DX_PI_F);
 	temp.y = distance * sinf(-vertical_angle_ / 180.0f * 3.14159265f);
 	temp.z = -(distance * cosf(vertical_angle_ / 180.0f * DX_PI_F) * cosf(horizontal_angle_ / 180.0f * DX_PI_F));
@@ -99,25 +99,25 @@ void Camera::UpdatePositionAndTarget()
 	{
 		position_ = VAdd(temp, look_at_position_);
 
-		// —³ŠªƒVƒFƒCƒN“™‚Ì”÷¬ˆÚ“®‚ğÅŒã‚É‰ÁZ‚µAƒJƒƒ‰‚Ìƒ[ƒJƒ‹À•WŒn‚ªã‚ÉƒYƒŒ‚Ä‚µ‚Ü‚¤‚Ì‚ğ–h‚®
+		// ç«œå·»ã‚·ã‚§ã‚¤ã‚¯ç­‰ã®å¾®å°ç§»å‹•ã‚’æœ€å¾Œã«åŠ ç®—ã—ã€ã‚«ãƒ¡ãƒ©ã®ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ç³»ãŒä¸Šã«ã‚ºãƒ¬ã¦ã—ã¾ã†ã®ã‚’é˜²ã
 		SetCameraPositionAndTarget_UpVecY(VAdd(position_, shake_position_), VAdd(look_at_position_, shake_position_));
 	}
 }
 
 void Camera::UpdateEffekseerAndLight()
 {
-	// 3DƒGƒtƒFƒNƒg‚ªƒJƒƒ‰‚Ì‰ñ“]ˆÚ“®‚É’Ç]‚µAƒQ[ƒ€‰æ–Êã‚Å³‚µ‚¢ˆÊ’u‚É•`‰æ‚³‚ê‚é‚æ‚¤‚É“¯Šú‚·‚é
+	// 3Dã‚¨ãƒ•ã‚§ã‚¯ãƒˆãŒã‚«ãƒ¡ãƒ©ã®å›è»¢ç§»å‹•ã«è¿½å¾“ã—ã€ã‚²ãƒ¼ãƒ ç”»é¢ä¸Šã§æ­£ã—ã„ä½ç½®ã«æç”»ã•ã‚Œã‚‹ã‚ˆã†ã«åŒæœŸã™ã‚‹
 	Effekseer_Sync3DSetting();
 
-	// ƒvƒŒƒCƒ„[‚ª‚Ç‚Ì‹“_‚©‚çŒ©‚Ä‚à‰e‚Ì—‚¿•û‚ªˆÃ‚­‚È‚è‚·‚¬‚È‚¢‚æ‚¤AƒJƒƒ‰‚Ì‹“_‚©‚çƒ‰ƒCƒg‚ÌÆËŠp‚ğ‹tZ‚·‚é
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã©ã®è¦–ç‚¹ã‹ã‚‰è¦‹ã¦ã‚‚å½±ã®è½ã¡æ–¹ãŒæš—ããªã‚Šã™ããªã„ã‚ˆã†ã€ã‚«ãƒ¡ãƒ©ã®è¦–ç‚¹ã‹ã‚‰ãƒ©ã‚¤ãƒˆã®ç…§å°„è§’ã‚’é€†ç®—ã™ã‚‹
 	VECTOR lightDir = VSub(look_at_position_, position_);
 	SetLightDirection(lightDir);
 }
 
-// •›ì—pFƒRƒ“ƒgƒ[ƒ‰[‚âƒ}ƒEƒX“ü—Í‚ÉŠî‚Ã‚¢‚½ƒJƒƒ‰ù‰ñŠp“x‚ÌXVAƒ}ƒEƒXƒJ[ƒ\ƒ‹‚Ì’†‰›ŒÅ’è
+// å‰¯ä½œç”¨ï¼šã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã‚„ãƒã‚¦ã‚¹å…¥åŠ›ã«åŸºã¥ã„ãŸã‚«ãƒ¡ãƒ©æ—‹å›è§’åº¦ã®æ›´æ–°ã€ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã®ä¸­å¤®å›ºå®š
 void Camera::UpdateRotate()
 {
-	// “V’n‹t“]Œ»ÛiƒWƒ“ƒoƒ‹ƒƒbƒNj‚ğ–h‚®‚½‚ß‚Éƒsƒbƒ`Špi‹Â˜ëŠpj‚ğ§ŒÀ‚µAƒˆ[Šp‚Í360“xƒV[ƒ€ƒŒƒX‚Éƒ‹[ƒv‚³‚¹‚é
+	// å¤©åœ°é€†è»¢ç¾è±¡ï¼ˆã‚¸ãƒ³ãƒãƒ«ãƒ­ãƒƒã‚¯ï¼‰ã‚’é˜²ããŸã‚ã«ãƒ”ãƒƒãƒè§’ï¼ˆä»°ä¿¯è§’ï¼‰ã‚’åˆ¶é™ã—ã€ãƒ¨ãƒ¼è§’ã¯360åº¦ã‚·ãƒ¼ãƒ ãƒ¬ã‚¹ã«ãƒ«ãƒ¼ãƒ—ã•ã›ã‚‹
 	if (horizontal_angle_ >= 180.0f)
 	{
 		horizontal_angle_ -= 360.0f;
@@ -138,16 +138,16 @@ void Camera::UpdateRotate()
 
 	const float MOUSE_SENSITIVITY = 0.05f;
 
-	if (Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::kScene3D || Master::mpSceneManager->GetSceneType() == SceneManager::SCENE_TYPE::kSceneTutorial)
+	if (Master::scene_manager_->GetSceneType() == SceneManager::SCENE_TYPE::kScene3D || Master::scene_manager_->GetSceneType() == SceneManager::SCENE_TYPE::kSceneTutorial)
 	{
-		// ‰æ–Ê’[‚Ö‚Ìƒ}ƒEƒX“’B‚ÅƒJƒƒ‰‰ñ“]‚ªƒXƒgƒbƒv‚·‚éŒ»Û‚ğ‰ñ”ğ‚·‚é‚½‚ßAƒQ[ƒ€’†‚ÍƒJ[ƒ\ƒ‹‚ğ•s‰Â‹‰»‚µ‚Ä‰æ–Ê’†‰›‚ÖƒNƒ‰ƒ“ƒv‚·‚é
+		// ç”»é¢ç«¯ã¸ã®ãƒã‚¦ã‚¹åˆ°é”ã§ã‚«ãƒ¡ãƒ©å›è»¢ãŒã‚¹ãƒˆãƒƒãƒ—ã™ã‚‹ç¾è±¡ã‚’å›é¿ã™ã‚‹ãŸã‚ã€ã‚²ãƒ¼ãƒ ä¸­ã¯ã‚«ãƒ¼ã‚½ãƒ«ã‚’ä¸å¯è¦–åŒ–ã—ã¦ç”»é¢ä¸­å¤®ã¸ã‚¯ãƒ©ãƒ³ãƒ—ã™ã‚‹
 		SetMouseDispFlag(false);
 		GetMousePoint(&mouse_x_, &mouse_y_);
 
 		int center_x_ = 640;
 		int center_y_ = 200;
 
-		// ƒfƒoƒbƒO‚É‘¼‰æ–Ê‚ÖƒXƒ€[ƒY‚ÉƒJ[ƒ\ƒ‹‚ğˆÚ“®‚Å‚«‚é‚æ‚¤AƒL[ƒ{[ƒh‚Ìu0v‚ğ‰Ÿ‚µ‚Ä‚¢‚éŠÔ‚Íˆê“I‚É’†‰›ŒÅ’è‚ğ‰ğœ‚·‚é
+		// ãƒ‡ãƒãƒƒã‚°æ™‚ã«ä»–ç”»é¢ã¸ã‚¹ãƒ ãƒ¼ã‚ºã«ã‚«ãƒ¼ã‚½ãƒ«ã‚’ç§»å‹•ã§ãã‚‹ã‚ˆã†ã€ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®ã€Œ0ã€ã‚’æŠ¼ã—ã¦ã„ã‚‹é–“ã¯ä¸€æ™‚çš„ã«ä¸­å¤®å›ºå®šã‚’è§£é™¤ã™ã‚‹
 		if (!CheckHitKey(KEY_INPUT_0))
 		{
 			SetMousePoint(center_x_, center_y_);
@@ -162,7 +162,7 @@ void Camera::UpdateRotate()
 	}
 }
 
-// o—ÍFƒ}ƒEƒX‚ª‹K’èƒsƒNƒZƒ‹ˆÈãˆÚ“®‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©‚Ì^‹U’l
+// å‡ºåŠ›ï¼šãƒã‚¦ã‚¹ãŒè¦å®šãƒ”ã‚¯ã‚»ãƒ«ä»¥ä¸Šç§»å‹•ã—ã¦ã„ã‚‹ã‹ã©ã†ã‹ã®çœŸå½å€¤
 bool Camera::IsMouseMoved()
 {
 	int moveX = abs(current_mouse_x_ - prev_mouse_x_);
@@ -175,13 +175,13 @@ void Camera::Finalize()
 {
 }
 
-// •›ì—pFƒTƒCƒ“”g‚ÉŠî‚Ã‚­ƒVƒFƒCƒNƒIƒtƒZƒbƒgÀ•W‚ÌXVAŒ¸Š”ä—¦‚Ì‰ÁZ
+// å‰¯ä½œç”¨ï¼šã‚µã‚¤ãƒ³æ³¢ã«åŸºã¥ãã‚·ã‚§ã‚¤ã‚¯ã‚ªãƒ•ã‚»ãƒƒãƒˆåº§æ¨™ã®æ›´æ–°ã€æ¸›è¡°æ¯”ç‡ã®åŠ ç®—
 void Camera::Shake()
 {
-	if (shake_time_counter_ < mfShakeTime)
+	if (shake_time_counter_ < old_shake_time_)
 	{
-		// ƒJƒƒ‰‚Ì—h‚ê‚ª“Ë‘Ruƒsƒ^ƒbv‚Æ~‚Ü‚é•s©‘R‚³‚ğ”ğ‚¯‚é‚½‚ßAŒo‰ßŠÔ‚É‡‚í‚¹‚Ä™X‚ÉU•i—h‚ê•j‚ğüŒ`Œ¸ŠiƒtƒF[ƒhƒAƒEƒgj‚³‚¹‚é
-		shake_position_.y = sinf(shake_angle_) * (1.0f - (shake_time_counter_ / mfShakeTime)) * shake_width_;
+		// æºã‚Œå‡¦ç†ã«ã‚ˆã‚‹æœ¬æ¥ã®ã‚«ãƒ¡ãƒ©åº§æ¨™(position_)ã®æ„å›³ã›ã¬åº§æ¨™ã‚ºãƒ¬ï¼ˆæ±šæŸ“ï¼‰ã‚’é˜²ããŸã‚ã€æç”»ç›´å‰ã«ã®ã¿ã‚ªãƒ•ã‚»ãƒƒãƒˆåº§æ¨™ã¨ã—ã¦åŠ ç®—ã™ã‚‹
+		shake_position_.y = sinf(shake_angle_) * (1.0f - (shake_time_counter_ / old_shake_time_)) * shake_width_;
 		shake_position_.x = 0.0f;
 		shake_position_.z = 0.0f;
 
@@ -194,22 +194,22 @@ void Camera::Shake()
 	}
 }
 
-// “ü—ÍFtime=Œp‘±ŠÔ(s), width=Å‘å—h‚ê•, angleSpeed=”gŒ`‚ÌŠp‘¬“x, stepTime=1ƒtƒŒ[ƒ€‚ÌisŠÔ(s)
-// •›ì—pFƒVƒFƒCƒN§Œäƒpƒ‰ƒ[ƒ^‚Ì‰Šú‰»
+// å…¥åŠ›ï¼štime=ç¶™ç¶šæ™‚é–“(s), width=æœ€å¤§æºã‚Œå¹…, angleSpeed=æ³¢å½¢ã®è§’é€Ÿåº¦, stepTime=1ãƒ•ãƒ¬ãƒ¼ãƒ ã®é€²è¡Œæ™‚é–“(s)
+// å‰¯ä½œç”¨ï¼šã‚·ã‚§ã‚¤ã‚¯åˆ¶å¾¡ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®åˆæœŸåŒ–
 void Camera::SetupShake(float time, float width, float angleSpeed, float stepTime)
 {
 	shake_time_counter_ = 0.0f;
-	mfShakeTime = time;
+	old_shake_time_ = time;
 	shake_width_ = width;
 	shake_angle_speed_ = angleSpeed;
 	step_time_ = stepTime;
 }
 
-// “ü—ÍFphase=Œ»İ‚ÌƒQ[ƒ€is’iŠK, ufoPos=UFO‚ÌÀ•W, tornadoPos=—³Šª‚ÌÀ•W
-// •›ì—pFw’èƒtƒF[ƒY‚É‘Î‰‚·‚éƒAƒ“ƒOƒ‹•âŠÔALerp‚É‚æ‚éÀ•W•Ï‰»
+// å…¥åŠ›ï¼šphase=ç¾åœ¨ã®ã‚²ãƒ¼ãƒ é€²è¡Œæ®µéš, ufoPos=UFOã®åº§æ¨™, tornadoPos=ç«œå·»ã®åº§æ¨™
+// å‰¯ä½œç”¨ï¼šæŒ‡å®šãƒ•ã‚§ãƒ¼ã‚ºã«å¯¾å¿œã™ã‚‹ã‚¢ãƒ³ã‚°ãƒ«è£œé–“ã€Lerpã«ã‚ˆã‚‹åº§æ¨™å¤‰åŒ–
 void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 {
-	if (Master::mbIsDebugCamera) return;
+	if (Master::is_debug_camera_) return;
 
 	static int lastPhase = -1;
 	static int phaseTimer = 0;
@@ -233,7 +233,7 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 		return;
 	}
 
-	// ‰‰o’†‚Ì‘€ì•s”\iƒJƒƒ‰ŒÅ’èj‚É‚æ‚éƒeƒ“ƒ|ˆ«‰»‚ğ–h‚®‚½‚ßAÅ‘å3•bi180fjŒo‰ß‚Å‹­§“I‚É’Êí˜ëáÕƒJƒƒ‰‚Ö·‚µ–ß‚·
+	// æ¼”å‡ºä¸­ã®æ“ä½œä¸èƒ½ï¼ˆã‚«ãƒ¡ãƒ©å›ºå®šï¼‰ã«ã‚ˆã‚‹ãƒ†ãƒ³ãƒæ‚ªåŒ–ã‚’é˜²ããŸã‚ã€æœ€å¤§3ç§’ï¼ˆ180fï¼‰çµŒéã§å¼·åˆ¶çš„ã«é€šå¸¸ä¿¯ç°ã‚«ãƒ¡ãƒ©ã¸å·®ã—æˆ»ã™
 	if (phaseTimer > 180)
 	{
 		is_phase_camera_active_ = false;
@@ -244,7 +244,7 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 
 	if (phase == (int)GameManager::GamePhase::kMassSpawn)
 	{
-		// ‹‚Ì‘å”­¶ƒtƒF[ƒYFƒCƒxƒ“ƒgŠJn‚ÍUFO‚Ì‹‘åƒr[ƒ€‚ğŒ©ã‚°‚éŒ€“I‚ÈƒAƒ“ƒOƒ‹‚É‚µAŠÔŒo‰ß‚ÅƒvƒŒƒCƒ„[‚Ì‹ü‚ÉŠÉ‚â‚©‚É–ß‚·
+		// ç‰›ã®å¤§ç™ºç”Ÿãƒ•ã‚§ãƒ¼ã‚ºï¼šã‚¤ãƒ™ãƒ³ãƒˆé–‹å§‹æ™‚ã¯UFOã®å·¨å¤§ãƒ“ãƒ¼ãƒ ã‚’è¦‹ä¸Šã’ã‚‹åŠ‡çš„ãªã‚¢ãƒ³ã‚°ãƒ«ã«ã—ã€æ™‚é–“çµŒéã§ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è¦–ç·šã«ç·©ã‚„ã‹ã«æˆ»ã™
 		targetPos = VAdd(ufoPos, VGet(0.0f, 150.0f, -300.0f));
 
 		if (phaseTimer < 180)
@@ -259,13 +259,13 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 	}
 	else if (phase == (int)GameManager::GamePhase::kTornadoCrisis)
 	{
-		// —³ŠªP—ˆƒtƒF[ƒYFŠëŒ¯‚ğ‘Šú‚É”F¯‚³‚¹‚é‚½‚ßA©‹@iUFOj‚Æ—³Šª‚Ì‘o•û‚ª1‚Â‚Ì‰æ–Ê‚Éû‚Ü‚é‚æ‚¤ƒJƒƒ‰‚ğÎ‚ßã‹ó‚Öˆø‚­
+		// ç«œå·»è¥²æ¥ãƒ•ã‚§ãƒ¼ã‚ºï¼šå±é™ºã‚’æ—©æœŸã«èªè­˜ã•ã›ã‚‹ãŸã‚ã€è‡ªæ©Ÿï¼ˆUFOï¼‰ã¨ç«œå·»ã®åŒæ–¹ãŒ1ã¤ã®ç”»é¢ã«åã¾ã‚‹ã‚ˆã†ã‚«ãƒ¡ãƒ©ã‚’æ–œã‚ä¸Šç©ºã¸å¼•ã
 		targetPos = VAdd(ufoPos, VGet(0.0f, 500.0f, -200.0f));
 		VECTOR toTornado = VSub(tornadoPos, ufoPos);
 		targetLookAt = VAdd(ufoPos, toTornado);
 	}
 
-	// u‚ÉƒJƒƒ‰‚ğØ‚è‘Ö‚¦‚é‚±‚Æ‚É‚æ‚é‹}Œƒ‚È‰æ–Ê•Ï‰»i3DŒ‚¢j‚ğ–h~‚·‚é‚½‚ßAŒ»İ‚ÌƒJƒƒ‰ˆÊ’u‚©‚ç–Ú•WˆÊ’u‚ÖüŒ`•âŠÔiLerpj‚ÅŠŠ‚ç‚©‚ÉˆÚ“®‚³‚¹‚é
+	// ç¬æ™‚ã«ã‚«ãƒ¡ãƒ©ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹ã“ã¨ã«ã‚ˆã‚‹æ€¥æ¿€ãªç”»é¢å¤‰åŒ–ï¼ˆ3Dé…”ã„ï¼‰ã‚’é˜²æ­¢ã™ã‚‹ãŸã‚ã€ç¾åœ¨ã®ã‚«ãƒ¡ãƒ©ä½ç½®ã‹ã‚‰ç›®æ¨™ä½ç½®ã¸ç·šå½¢è£œé–“ï¼ˆLerpï¼‰ã§æ»‘ã‚‰ã‹ã«ç§»å‹•ã•ã›ã‚‹
 	float lerpSpeed = 0.1f * Master::GetDeltaTimeScaler();
 	position_ = LerpVector(position_, targetPos, lerpSpeed);
 	look_at_position_ = LerpVector(look_at_position_, targetLookAt, lerpSpeed);

@@ -31,11 +31,11 @@ namespace {
 AnimalMove::AnimalMove(std::string filename, VECTOR initPos)
 	: CharacterMove(filename, initPos)
 {
-	mfSpeed = GameConstants::kAnimalSheep.speed;
+	speed_ = GameConstants::kAnimalSheep.speed;
 	mActionTimer = 60;
-	mfScore = GameConstants::kAnimalSheep.score;
-	mfXp = GameConstants::kAnimalSheep.xp;
-	mbBaitFlag = false;
+	score_ = GameConstants::kAnimalSheep.score;
+	xp_ = GameConstants::kAnimalSheep.xp;
+	bait_flag_ = false;
 	death_timer_ = GameConstants::kAnimalSheep.death_time_height;
 	SetTag(Object3D::kTag3dAnimal);
 }
@@ -99,7 +99,7 @@ void AnimalMove::OnEnter(Collider* collider, Collider* check)
 	{
 		if (check->parent_object_->GetTag() == kTag3dBait)
 		{
-			mbBaitFlag = true;
+			bait_flag_ = true;
 		}
 	}
 }
@@ -126,7 +126,7 @@ void AnimalMove::OnExit(Collider* collider, Collider* check)
 	{
 		if (check->parent_object_->GetTag() == kTag3dBait)
 		{
-			mbBaitFlag = false;
+			bait_flag_ = false;
 		}
 	}
 }
@@ -143,7 +143,7 @@ void AnimalMove::CharacterDied()
 	// 通常状態では捕獲演出へ移行させないため
 	if (mCurrentState != STATE_VACUUM || (fv && fv->IsFever())) return;
 
-	Player3D* player = mpTargetPlayer;
+	Player3D* player = target_player_;
 
 	CharacterRotate();
 	if (player != nullptr)
@@ -170,7 +170,7 @@ void AnimalMove::Die(DeathReason reason)
 {
 	if (mDeleteFlag) return;
 
-	Player3D* player = mpTargetPlayer;
+	Player3D* player = target_player_;
 
 	switch (reason)
 	{
@@ -178,13 +178,13 @@ void AnimalMove::Die(DeathReason reason)
 	case DEATH_BAIT:
 		if (player != nullptr)
 		{
-			player->mpLevel->AddXp(mfXp);
+			player->level_manager_->AddXp(xp_);
 			player->combo_->Reset();
-			player->mpScore->AddScore(static_cast<int>(mfScore));
+			player->score_manager_->AddScore(static_cast<int>(score_));
 
 			if (tag_animal_ == AnimalMove::TagAnimal::kAnimalT)
 			{
-				Master::mnTutorialcount++;
+				Master::tutorial_count_++;
 			}
 
 			// 同種の連続捕獲ボーナスを判定・付与するため
@@ -200,9 +200,9 @@ void AnimalMove::Die(DeathReason reason)
 			else if (s_mnTagCount == 3 && s_tag2 == tag_animal_)
 			{
 				s_tag3 = tag_animal_;
-				if (s_tag3 == AnimalMove::kAnimal1) player->mpLevel->AddXp(10);
-				if (s_tag2 == AnimalMove::kAnimal2) player->mpLevel->AddXp(20);
-				if (s_tag3 == AnimalMove::kAnimal3) player->mpLevel->AddXp(30);
+				if (s_tag3 == AnimalMove::kAnimal1) player->level_manager_->AddXp(10);
+				if (s_tag2 == AnimalMove::kAnimal2) player->level_manager_->AddXp(20);
+				if (s_tag3 == AnimalMove::kAnimal3) player->level_manager_->AddXp(30);
 			}
 			else
 			{

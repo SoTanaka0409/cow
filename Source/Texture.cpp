@@ -5,15 +5,15 @@
 // 入力：filename=アセット画像パス, centerPosition=描画の中心となる座標, graphsize_x/y=指定描画サイズ, transFlag=透過の有無
 // 副作用：ResourceManagerを介したグラフィックハンドルのロード、およびオリジナル画像解像度の取得
 Texture::Texture(std::string filename, VECTOR centerPosition, int graphsize_x, int graphsize_y, int transFlag)
-	: mnHandle(-1)
+	: handle_(-1)
 	, position_(centerPosition)
 	, new_game_w_(graphsize_x)
 	, new_game_h_(graphsize_y)
-	, mnTransFlag(transFlag)
+	, trans_flag_(transFlag)
 {
-	mnHandle = Master::mpResourceManager->LoadGraphics(filename.c_str());
+	handle_ = Master::resource_manager_->LoadGraphics(filename.c_str());
 	// アセット自体の元解像度を保持しておき、将来的にアスペクト比を維持した自動リサイズ処理等に拡張できるようにする
-	GetGraphSize(mnHandle, &mnSizeX, &mnSizeY);
+	GetGraphSize(handle_, &size_x_, &size_y_);
 }
 
 Texture::~Texture()
@@ -31,7 +31,7 @@ void Texture::Draw()
 		static_cast<int>(position_.y - (new_game_h_ / 2)),
 		static_cast<int>(position_.x + (new_game_w_ / 2)),
 		static_cast<int>(position_.y + (new_game_h_ / 2)),
-		mnHandle, mnTransFlag
+		handle_, trans_flag_
 	);
 }
 
@@ -50,7 +50,7 @@ void Texture::SizeDraw()
 		static_cast<int>(position_.y - halfH),
 		static_cast<int>(position_.x + halfW),
 		static_cast<int>(position_.y + halfH),
-		mnHandle, mnTransFlag
+		handle_, trans_flag_
 	);
 }
 
@@ -72,6 +72,6 @@ void Texture::DrawScale(float scale)
 		static_cast<int>(position_.y - halfH),
 		static_cast<int>(position_.x + halfW),
 		static_cast<int>(position_.y + halfH),
-		mnHandle, mnTransFlag
+		handle_, trans_flag_
 	);
 }

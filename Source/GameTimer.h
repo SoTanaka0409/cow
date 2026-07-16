@@ -29,8 +29,8 @@ public:
 	void Draw();
 
 	// タイムアップ演出の多重再生や、シーンの重複遷移バグを防ぐために外部から参照・制御するフラグ
-	bool OutTimerFlag() { return mbFlag; }
-	void SetOutTimerFlag(bool flag) { mbFlag = flag; }
+	bool OutTimerFlag() { return flag_; }
+	void SetOutTimerFlag(bool flag) { flag_ = flag; }
 
 	// スコア計算や演出分岐のためのゲッター。値のマイナス転落（UI表示崩れ）がないことを保証する前提
 	int GetTime() const { return Time; }
@@ -38,8 +38,8 @@ public:
 private:
 	int Time;                  // 残り秒数
 	VECTOR position_;          // UI描画の基準座標
-	bool mbFlag;               // タイムアップ判定フラグ
-	bool mbStopFlag;           // 時間進行の停止フラグ
+	bool flag_;               // タイムアップ判定フラグ
+	bool stop_flag_;           // 時間進行の停止フラグ
 	int score_text_image_;     // 制限時間UIの画像ハンドル
 	int mLastTime;             // 前回計算時のシステム時刻
 	Tag_Num tag_;              // 現在のタイマー動作モード

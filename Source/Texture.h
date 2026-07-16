@@ -29,17 +29,17 @@ public:
 
 	void SetPosition(VECTOR centerPosition) { position_ = centerPosition; }
 	VECTOR GetPosition() { return position_; }
-	int GetSizeX() { return mnSizeX; }
-	int GetSizeY() { return mnSizeY; }
+	int GetSizeX() { return size_x_; }
+	int GetSizeY() { return size_y_; }
 	int GetWidth() { return new_game_w_; }
 	int GetHeight() { return new_game_h_; }
 
 private:
-	int mnHandle;
+	int handle_;
 	VECTOR position_;
-	int mnSizeX;
-	int mnSizeY;
-	bool mnTransFlag;
+	int size_x_;
+	int size_y_;
+	bool trans_flag_;
 
 	// 仕様制約：アセット本来の解像度とは別に、画面レイアウト上のUI枠に合わせて強制拡縮して描画するための指定サイズ
 	int new_game_w_;

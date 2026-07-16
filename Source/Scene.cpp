@@ -118,11 +118,11 @@ void Scene::Update()
 
 	if (fade_state_ == kSceneFadeOut)
 	{
-		Master::mpSoundManager->SetBGMVolume((Master::mpSoundManager->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
+		Master::sound_manager_->SetBGMVolume((Master::sound_manager_->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
 		if (GetFadeAlpha() >= 255)
 		{
 			SetFadeAlpha(255);
-			Master::mpSceneManager->SetNextScene((SceneManager::SCENE_TYPE)next_scene_);
+			Master::scene_manager_->SetNextScene((SceneManager::SCENE_TYPE)next_scene_);
 		}
 	}
 }

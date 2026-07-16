@@ -30,7 +30,7 @@ Tornado* tatumaki = nullptr;
 Scene3D::Scene3D()
 {
 	mass_spawn_timer_ = 0;
-	font_back_graph_ = Master::mpResourceManager->LoadGraphics("Resource/2D/FontPanelBackground.png");
+	font_back_graph_ = Master::resource_manager_->LoadGraphics("Resource/2D/FontPanelBackground.png");
 	shadow_map_handle_ = -1;
 }
 
@@ -62,12 +62,12 @@ void Scene3D::Initialize()
 
 	Master::camera_->Initialize();
 
-	Master::mnCaughtCowCount = 0;
+	Master::caught_cow_count_ = 0;
 	fade_state_ = kSceneFadeIn;
 	SetFadeAlpha(255.0f);
 
-	Master::mpSoundManager->PlayBGM(SoundManager::kBgmGame);
-	Master::mpSoundManager->SetBGMVolume(120);
+	Master::sound_manager_->PlayBGM(SoundManager::kBgmGame);
+	Master::sound_manager_->SetBGMVolume(120);
 	
 	StageLoader::LoadFromCSV("Resource/Data/stage_objects.csv");
 
@@ -288,5 +288,5 @@ void Scene3D::Finalize()
 		DeleteShadowMap(shadow_map_handle_);
 		shadow_map_handle_ = -1;
 	}
-	Master::mpSoundManager->StopBGM();
+	Master::sound_manager_->StopBGM();
 }

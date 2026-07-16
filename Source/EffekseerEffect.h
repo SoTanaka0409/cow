@@ -44,7 +44,7 @@ public:
 	void SetScale(VECTOR scale) { mvScale = scale; }
 	VECTOR GetScale() { return mvScale; }
 
-	void SetLoop(bool mfLoop) { LoopFlag = mfLoop; }
+	void SetLoop(bool loop_value_) { LoopFlag = loop_value_; }
 
 	// [入力] なし [出力] 再生中ならtrue [副作用] なし
 	// 戻り値-1(無効値)の判定。ワンショットエフェクト再生終了後の自動破棄処理のトリガーなどに使用する

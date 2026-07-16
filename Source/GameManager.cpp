@@ -59,15 +59,15 @@ void GameManager::GameNextStep(GameStepType type)
 		Master::GameFinishFlag = true;
 		if (player != nullptr)
 		{
-			Master::mpScore->AddScore(player->mpScore->GetScore());
-			Master::mpScore->SetResultScore(player->mpScore->GetScore());
-			player->mpScore->AddRanking();
+			Master::score_manager_->AddScore(player->score_manager_->GetScore());
+			Master::score_manager_->SetResultScore(player->score_manager_->GetScore());
+			player->score_manager_->AddRanking();
 			// 不測の事態に備え、リザルト移行前に進行状況を保存しておくため
-			player->mpScore->Save();
-			player->mpScore->SaveRanking();
+			player->score_manager_->Save();
+			player->score_manager_->SaveRanking();
 		}
 		// ゲーム終了に伴い、次シーンへの移行を促すため
-		if (auto scene = Master::mpSceneManager->GetCurrentScene())
+		if (auto scene = Master::scene_manager_->GetCurrentScene())
 		{
 			scene->fade_state_ = Scene::kSceneFadeOut;
 			scene->next_scene_ = SceneManager::kSceneResult;

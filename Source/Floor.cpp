@@ -10,7 +10,7 @@
 Floor::Floor(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight)
 	: Object3D(centerPos)
 {
-	graph_handle_ = Master::mpResourceManager->LoadGraphics(filename.c_str());
+	graph_handle_ = Master::resource_manager_->LoadGraphics(filename.c_str());
 
 	// テクスチャ本来の色を出力しつつ、光源による不自然なテカり(反射)を防ぐため、頂点色を白・スペキュラを無効化する
 	vertex_[0].pos = VAdd(centerPos, topLeft);

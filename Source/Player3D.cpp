@@ -1,4 +1,4 @@
-﻿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include"Player3D.h"
 #include"Model.h"
 #include"ModelAnimation.h"
@@ -36,9 +36,9 @@ Player3D::Player3D(std::string filename, VECTOR initPos)
 	: Object3D(initPos)
 	, vertical_angle_(0.0f)
 	, horizontal_angle_(0.0f)
-	, mfSpeed(35.0f)
-	, mfHp(0)
-	, mfAttack_Speed(3.0f)
+	, speed_(35.0f)
+	, hp_(0)
+	, attack_speed_(3.0f)
 	, CatchNowCount(0)
 	
 {
@@ -50,25 +50,25 @@ Player3D::Player3D(std::string filename, VECTOR initPos)
 	SetTag(Object3D::kTag3dPlayer);
 
 	model_ = new Model(filename, initPos, false);
-	mpLevel = new Level(this);
-	mpLevel->SetNextLevel();
-	mpSkill = new Skill(this);
+	level_manager_ = new Level(this);
+	level_manager_->SetNextLevel();
+	skill_ = new Skill(this);
 	combo_ = new Combo();
-	mpScore = new Score();
+	score_manager_ = new Score();
 
 	Master::camera_->Initialize();
 
-	mnLighGraph = Master::mpResourceManager->LoadGraphics("Resource/2D/PlayerCaptureBeam.png");
-	mnGaugeFrameGraph = Master::mpResourceManager->LoadGraphics("Resource/2D/CowGaugeFrame.png");
+	light_graph_ = Master::resource_manager_->LoadGraphics("Resource/2D/PlayerCaptureBeam.png");
+	gauge_frame_graph_ = Master::resource_manager_->LoadGraphics("Resource/2D/CowGaugeFrame.png");
 
 	capsule_collider_->position_ = VGet(position_.x, 0, position_.z);
 	capsule_collider_->position2_ = position_;
 	capsule_collider_->radius_ = radius_;
 
 	// プレイヤーから真下に向けて光線を出す表現にするため
-	mpBeam = new EffekseerEffect("Resource/3D/EFK/Beam.efk", position_, 80.0f);
-	mpBeam->SetRotation(VGet(DX_PI_F / -2.0f, 0.0f, 0.0f));
-	mpBeam->SetScale(VGet(1.0f, 1.0f, 4.0f));
+	beam_ = new EffekseerEffect("Resource/3D/EFK/Beam.efk", position_, 80.0f);
+	beam_->SetRotation(VGet(DX_PI_F / -2.0f, 0.0f, 0.0f));
+	beam_->SetScale(VGet(1.0f, 1.0f, 4.0f));
 
 	mpSpeed = new EffekseerEffect("Resource/3D/EFK/UseSpItem.efk", VGet(0, 0, 0), 100.0f);
 }
@@ -82,11 +82,11 @@ Player3D::Player3D(std::string filename, VECTOR initPos)
 Player3D::~Player3D()
 {
 	Utility::SafeDelete(model_);
-	Utility::SafeDelete(mpLevel);
-	Utility::SafeDelete(mpSkill);
+	Utility::SafeDelete(level_manager_);
+	Utility::SafeDelete(skill_);
 	Utility::SafeDelete(combo_);
-	Utility::SafeDelete(mpScore);
-	Utility::SafeDelete(mpBeam);
+	Utility::SafeDelete(score_manager_);
+	Utility::SafeDelete(beam_);
 	Utility::SafeDelete(mpSpeed);
 }
 
@@ -99,7 +99,7 @@ Player3D::~Player3D()
 void Player3D::Update()
 {
 	// デバッグ時はカメラ操作に専念させるため
-	if (Master::mbIsDebugCamera) return;
+	if (Master::is_debug_camera_) return;
 
 	if (mIsStunned)
 	{
@@ -162,7 +162,7 @@ void Player3D::Play()
 		float recoverySpeed = VACUUM_RECOVER_PER_FRAME;
 
 		// ラストスパート時はゲージ回復速度を上げ、プレイヤーを有利にする
-		if (Master::mpSceneManager && Master::mpSceneManager->GetCurrentScene() && ServiceLocator::GetGameManager())
+		if (Master::scene_manager_ && Master::scene_manager_->GetCurrentScene() && ServiceLocator::GetGameManager())
 		{
 			auto timer = ServiceLocator::GetGameManager()->GetGameTimer();
 			if (timer && timer->GetTime() <= 60)
@@ -199,9 +199,9 @@ void Player3D::ColliderUpdate()
 		effect_timer_--;
 		if (effect_timer_ <= 0)
 		{
-			if (mpBeam != nullptr)
+			if (beam_ != nullptr)
 			{
-				mpBeam->Play();
+				beam_->Play();
 			}
 			effect_timer_ = 80;
 		}
@@ -212,17 +212,17 @@ void Player3D::ColliderUpdate()
 		capsule_collider_->position2_ = position_;
 		capsule_collider_->radius_ = 0.0f;
 
-		if (mpBeam != nullptr && mpBeam->IsPlaying())
+		if (beam_ != nullptr && beam_->IsPlaying())
 		{
-			mpBeam->Stop();
+			beam_->Stop();
 		}
 		effect_timer_ = 0;
 	}
 
-	if (mpBeam != nullptr)
+	if (beam_ != nullptr)
 	{
-		mpBeam->SetPosition(position_);
-		mpBeam->Update();
+		beam_->SetPosition(position_);
+		beam_->Update();
 	}
 
 	if (mpSpeed != nullptr)
@@ -268,8 +268,8 @@ void Player3D::test()
 {
 	if (InputManager::CheckDownKey(KEY_INPUT_5))
 	{
-		mpLevel->AddXp(20);
-		mpSkill->SetSkillFlag(true);
+		level_manager_->AddXp(20);
+		skill_->SetSkillFlag(true);
 	}
 }
 
@@ -281,14 +281,14 @@ void Player3D::test()
  */
 void Player3D::ManagerUpdate()
 {
-	mpLevel->Draw();
-	mpLevel->Update();
+	level_manager_->Draw();
+	level_manager_->Update();
 	model_->Update();
-	mpSkill->Update();
-	mpSkill->Draw();
+	skill_->Update();
+	skill_->Draw();
 	combo_->Draw();
 	combo_->Update();
-	mpScore->Draw();
+	score_manager_->Draw();
 	test();
 }
 
@@ -408,7 +408,7 @@ void Player3D::MoveEx()
 					if (hitwall == true && hitwalls == false)
 					{
 						position_ = old_position_;
-						position_ = VAdd(position_, VScale(slide, mfSpeed * Master::GetDeltaTimeScaler()));
+						position_ = VAdd(position_, VScale(slide, speed_ * Master::GetDeltaTimeScaler()));
 						hitwalls = true;
 					}
 					// 壁へのめり込みや挟まりを防ぐため、移動をキャンセルする
@@ -435,15 +435,15 @@ float Player3D::Status(StatusID id)
 {
 	if (id == Status_AttackS)
 	{
-		return mfAttack_Speed + mpSkill->GetStatusDate(Skill::kStatusAttackSpeed);
+		return attack_speed_ + skill_->GetStatusDate(Skill::kStatusAttackSpeed);
 	}
 	if (id == Status_Hp)
 	{
-		return mfHp;
+		return hp_;
 	}
 	if (id == kStatusSpeed)
 	{
-		return mfSpeed + mpSkill->GetStatusDate(Skill::kStatusSpeed);
+		return speed_ + skill_->GetStatusDate(Skill::kStatusSpeed);
 	}
 	return 0.0f;
 }
@@ -492,21 +492,52 @@ void Player3D::bar()
 	int gaugeX = Utility::kUiBaseX;
 	int gaugeY = Utility::kUiVacuumY;
 
-	DrawBox(gaugeX, gaugeY, gaugeX + gaugeWidth, gaugeY + gaugeHeight, GetColor(100, 100, 100), TRUE);
+	int x1 = gaugeX;
+	int y1 = gaugeY;
+	int x2 = gaugeX + gaugeWidth;
+	int y2 = gaugeY + gaugeHeight;
+
+	// --- Western Wood Background ---
+	// 木目調の暗い茶色
+	DrawBox(x1, y1, x2, y2, GetColor(60, 30, 15), TRUE);
 
 	int currentWidth = (int)((mVacuumGauge / VACUUM_GAUGE_MAX) * gaugeWidth);
 	if (currentWidth < 0) currentWidth = 0;
-	if (currentWidth > gaugeWidth) currentWidth = gaugeWidth;
 
-	// 吸い込み不可であることを視覚的に強調するため
-	unsigned int gaugeColor = GetColor(0, 255, 255);
-	if (mVacuumGauge <= 0.0f) gaugeColor = GetColor(255, 0, 0);
+	// --- Alien Tractor Beam (HP Fill) ---
+	if (currentWidth > 0)
+	{
+		int fillX = x1 + currentWidth;
+		
+		unsigned int coreColor = GetColor(200, 255, 255);
+		unsigned int glowColor = GetColor(0, 255, 255);
+		if (mVacuumGauge <= 0.0f) 
+		{
+			coreColor = GetColor(255, 100, 100);
+			glowColor = GetColor(255, 0, 0);
+		}
 
-	DrawBox(gaugeX, gaugeY, gaugeX + currentWidth, gaugeY + gaugeHeight, gaugeColor, TRUE);
+		// 内側の明るい芯（トラクタービームの中心）
+		DrawBox(x1 + 2, y1 + 4, fillX - 2, y2 - 4, coreColor, TRUE);
+		
+		// 外側の発光（加算ブレンド）
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 160);
+		DrawBox(x1, y1 + 1, fillX, y2 - 1, glowColor, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
 
-	DrawExtendGraph(gaugeX - 10, gaugeY - 10, gaugeX + gaugeWidth + 10, gaugeY + gaugeHeight + 10, mnGaugeFrameGraph, TRUE);
+	// --- Alien Tech Border ---
+	// 紫色のエイリアン・ルーン風枠線
+	DrawBox(x1 - 1, y1 - 1, x2 + 1, y2 + 1, GetColor(200, 0, 255), FALSE);
+	
+	// コーナーのシアンのアクセント（SF的なジョイント）
+	DrawBox(x1 - 2, y1 - 2, x1 + 4, y1 + 4, GetColor(0, 255, 255), TRUE);
+	DrawBox(x2 - 4, y1 - 2, x2 + 2, y1 + 4, GetColor(0, 255, 255), TRUE);
+	DrawBox(x1 - 2, y2 - 4, x1 + 4, y2 + 2, GetColor(0, 255, 255), TRUE);
+	DrawBox(x2 - 4, y2 - 4, x2 + 2, y2 + 2, GetColor(0, 255, 255), TRUE);
 
-	DrawFormatString(gaugeX, gaugeY - 30, GetColor(255, 255, 255), "Vacuum Gauge: %.1f%%", mVacuumGauge);
+	// SF風テキスト表示（シアン色で表示）
+	DrawFormatString(gaugeX, gaugeY - 30, GetColor(0, 255, 255), "TRACTOR BEAM: %.1f%%", mVacuumGauge);
 }
 
 /*

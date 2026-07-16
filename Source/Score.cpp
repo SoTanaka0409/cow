@@ -23,18 +23,18 @@ Score::Score()
 		strcpy_s(ranking_[i].name_, sizeof(ranking_[i].name_), "NONE");
 		ranking_[i].score_ = 0;
 	}
-	score_text_image_ = Master::mpResourceManager->LoadGraphics("Resource/2D/ScoreHudText.png");
-	minus_img_ = Master::mpResourceManager->LoadGraphics("Resource/2D/MinusText.png");
-	number_img_[0] = Master::mpResourceManager->LoadGraphics("Resource/2D/ComboDigit00.png");
-	number_img_[1] = Master::mpResourceManager->LoadGraphics("Resource/2D/ComboDigit01.png");
-	number_img_[2] = Master::mpResourceManager->LoadGraphics("Resource/2D/ComboDigit02.png");
-	number_img_[3] = Master::mpResourceManager->LoadGraphics("Resource/2D/ComboDigit03.png");
-	number_img_[4] = Master::mpResourceManager->LoadGraphics("Resource/2D/ComboDigit04.png");
-	number_img_[5] = Master::mpResourceManager->LoadGraphics("Resource/2D/ComboDigit05.png");
-	number_img_[6] = Master::mpResourceManager->LoadGraphics("Resource/2D/ComboDigit06.png");
-	number_img_[7] = Master::mpResourceManager->LoadGraphics("Resource/2D/ComboDigit07.png");
-	number_img_[8] = Master::mpResourceManager->LoadGraphics("Resource/2D/ComboDigit08.png");
-	number_img_[9] = Master::mpResourceManager->LoadGraphics("Resource/2D/ComboDigit09.png");
+	score_text_image_ = Master::resource_manager_->LoadGraphics("Resource/2D/ScoreHudText.png");
+	minus_img_ = Master::resource_manager_->LoadGraphics("Resource/2D/MinusText.png");
+	number_img_[0] = Master::resource_manager_->LoadGraphics("Resource/2D/ComboDigit00.png");
+	number_img_[1] = Master::resource_manager_->LoadGraphics("Resource/2D/ComboDigit01.png");
+	number_img_[2] = Master::resource_manager_->LoadGraphics("Resource/2D/ComboDigit02.png");
+	number_img_[3] = Master::resource_manager_->LoadGraphics("Resource/2D/ComboDigit03.png");
+	number_img_[4] = Master::resource_manager_->LoadGraphics("Resource/2D/ComboDigit04.png");
+	number_img_[5] = Master::resource_manager_->LoadGraphics("Resource/2D/ComboDigit05.png");
+	number_img_[6] = Master::resource_manager_->LoadGraphics("Resource/2D/ComboDigit06.png");
+	number_img_[7] = Master::resource_manager_->LoadGraphics("Resource/2D/ComboDigit07.png");
+	number_img_[8] = Master::resource_manager_->LoadGraphics("Resource/2D/ComboDigit08.png");
+	number_img_[9] = Master::resource_manager_->LoadGraphics("Resource/2D/ComboDigit09.png");
 	LoadRanking();
 }
 /*

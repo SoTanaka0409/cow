@@ -14,23 +14,23 @@
 #include"InputManager.h"
 #include <EffekseerForDXLib.h>
 
-SceneManager* Master::mpSceneManager = new SceneManager();
+SceneManager* Master::scene_manager_ = new SceneManager();
 Camera* Master::camera_ = new Camera();
-DebugCamera* Master::mpDebugCamera = new DebugCamera();
-bool Master::mbIsDebugCamera = false;
-ResourceManager* Master::mpResourceManager = new ResourceManager();
-SoundManager* Master::mpSoundManager = new SoundManager();
+DebugCamera* Master::debug_camera_ = new DebugCamera();
+bool Master::is_debug_camera_ = false;
+ResourceManager* Master::resource_manager_ = new ResourceManager();
+SoundManager* Master::sound_manager_ = new SoundManager();
 
-EffectManager* Master::mpEffectManager = new EffectManager();
+EffectManager* Master::effect_manager_ = new EffectManager();
 
-Score* Master::mpScore = nullptr;
+Score* Master::score_manager_ = nullptr;
 bool Master::SelectSkill = false;
-int Master::mnTutorialcount = 0;
+int Master::tutorial_count_ = 0;
 bool Master::GameFinishFlag = false;
-int Master::mnCaughtCowCount = 0;
+int Master::caught_cow_count_ = 0;
 bool Master::tutorial_vacum_flag_ = false;
 bool Master::FeverFlag = false;
-float Master::mfDeltaTime = 0.01666f;
+float Master::delta_time_ = 0.01666f;
 
 // 仕様制約：プレイヤーや牛がステージ外へ飛び出さないよう、侵入制限をかけるための境界値
 VECTOR Utility::StageSize = VGet(6000, 0, 6000);
@@ -55,7 +55,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	// 仕様制約：内部でテクスチャ読み込みを行うため、DxLibの初期化が完了した後にインスタンス化する
-	Master::mpScore = new Score();
+	Master::score_manager_ = new Score();
 
 	SRand(GetNowCount());
 
@@ -67,14 +67,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetWriteZBufferFlag(true);
 
 	// パフォーマンス理由：ゲーム中のロード遅延によるスパイクを防ぐため、初期化時に全SEをプリロードする
-	Master::mpSoundManager->Initialize();
+	Master::sound_manager_->Initialize();
 
-	Master::mpSceneManager->Initialize();
+	Master::scene_manager_->Initialize();
 
 	Master::camera_->Initialize();
-	Master::mpDebugCamera->Initialize();
+	Master::debug_camera_->Initialize();
 
-	Master::mpEffectManager->Initalize();
+	Master::effect_manager_->Initalize();
 
 	int previousTime = GetNowCount();
 
@@ -84,33 +84,33 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		int time = GetNowCount();
 
 		// バグ回避：アプリの最小化や一時的なフリーズでデルタタイムが異常値になり、挙動が破綻するのを防ぐ上限設定
-		Master::mfDeltaTime = (time - previousTime) / 1000.0f;
-		if (Master::mfDeltaTime > 0.1f) Master::mfDeltaTime = 0.1f;
+		Master::delta_time_ = (time - previousTime) / 1000.0f;
+		if (Master::delta_time_ > 0.1f) Master::delta_time_ = 0.1f;
 		previousTime = time;
 
 		// 開発効率化のため、F1キーのトグル入力でプレイヤー視点と自由カメラ視点を切り替え可能にする
 		if (InputManager::CheckDownKey(KEY_INPUT_F1))
 		{
-			Master::mbIsDebugCamera = !Master::mbIsDebugCamera;
-			if (Master::mbIsDebugCamera) {
-				Master::mpDebugCamera->Initialize();
+			Master::is_debug_camera_ = !Master::is_debug_camera_;
+			if (Master::is_debug_camera_) {
+				Master::debug_camera_->Initialize();
 			}
 		}
 
-		if (Master::mbIsDebugCamera) {
-			Master::mpDebugCamera->Update();
+		if (Master::is_debug_camera_) {
+			Master::debug_camera_->Update();
 		}
 		else {
 			Master::camera_->Update();
 		}
 
-		Master::mpEffectManager->Update();
+		Master::effect_manager_->Update();
 
-		Master::mpSceneManager->Update();
+		Master::scene_manager_->Update();
 
-		Master::mpSceneManager->Draw();
+		Master::scene_manager_->Draw();
 
-		Master::mpEffectManager->Draw();
+		Master::effect_manager_->Draw();
 
 		ScreenFlip();
 
@@ -130,23 +130,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 
 		// バグ回避：UpdateやDrawの処理途中で解放が走るのを防ぐため、必ずフレームの最後でシーン切り替えを行う
-		Master::mpSceneManager->ChangeSceneIfNeeded();
+		Master::scene_manager_->ChangeSceneIfNeeded();
 	}
 
-	Master::mpSceneManager->Finalize();
-	delete Master::mpSceneManager;
-	Master::mpSoundManager->Finalize();
-	delete Master::mpSoundManager;
+	Master::scene_manager_->Finalize();
+	delete Master::scene_manager_;
+	Master::sound_manager_->Finalize();
+	delete Master::sound_manager_;
 	Master::camera_->Finalize();
 	delete Master::camera_;
-	delete Master::mpDebugCamera;
-	delete Master::mpResourceManager;
+	delete Master::debug_camera_;
+	delete Master::resource_manager_;
 
 	ColliderManager::GetInstance()->Finalize();
 
 	Effkseer_End();
 
-	delete Master::mpScore;
+	delete Master::score_manager_;
 
 	DxLib_End();
 

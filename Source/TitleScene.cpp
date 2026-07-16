@@ -13,8 +13,8 @@ TitleScene::TitleScene()
 	// 賑やかしとして、タイトル画面で一定時間ごとに再生する環境音の間隔カウンター
 	cow_voice_timer_ = 180;
 
-	title_graph_handle_ = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kTitleBg);
-	ufo_graph_handle_ = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kTitleUfo);
+	title_graph_handle_ = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kTitleBg);
+	ufo_graph_handle_ = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kTitleUfo);
 	GetGraphSize(ufo_graph_handle_, &ufo_w_, &ufo_h_);
 
 	ufo_x_ = 540;
@@ -33,19 +33,19 @@ TitleScene::TitleScene()
 
 	// 各メニュー項目を画面右側に縦一列に等間隔（200px）で並べるための座標初期化
 	UIButton newGameBtn;
-	newGameBtn.Initialize(SelectionManager::Title::NewGame, Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kBtnStart), 920, 50, 0.0f);
+	newGameBtn.Initialize(SelectionManager::Title::NewGame, Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kBtnStart), 920, 50, 0.0f);
 	buttons_.push_back(newGameBtn);
 
 	UIButton tutorialBtn;
-	tutorialBtn.Initialize(SelectionManager::Title::Tutorial, Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kBtnTutorial), 920, 250, 1.5f);
+	tutorialBtn.Initialize(SelectionManager::Title::Tutorial, Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kBtnTutorial), 920, 250, 1.5f);
 	buttons_.push_back(tutorialBtn);
 
 	UIButton opeBtn;
-	opeBtn.Initialize(SelectionManager::Title::OperationProcedures, Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kBtnSetting), 920, 450, 3.0f);
+	opeBtn.Initialize(SelectionManager::Title::OperationProcedures, Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kBtnSetting), 920, 450, 3.0f);
 	buttons_.push_back(opeBtn);
 
 	UIButton exitBtn;
-	exitBtn.Initialize(SelectionManager::Title::titleOUT, Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kBtnExit), 920, 650, 4.5f);
+	exitBtn.Initialize(SelectionManager::Title::titleOUT, Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kBtnExit), 920, 650, 4.5f);
 	buttons_.push_back(exitBtn);
 
 	fade_state_ = kSceneFadeIn;
@@ -56,11 +56,11 @@ TitleScene::TitleScene()
 	frame_count_ = 0;
 
 	// ランキング描画用の各テクスチャ。DxLibの初期化完了後に呼び出す必要がある仕様上の制約
-	rank_image_[0] = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kRank1);
-	rank_image_[1] = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kRank2);
-	rank_image_[2] = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kRank3);
-	ranking_title_image_ = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kRankingTitle);
-	point_img_ = Master::mpResourceManager->LoadGraphics(GameConstants::ImagePaths::kPoint);
+	rank_image_[0] = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kRank1);
+	rank_image_[1] = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kRank2);
+	rank_image_[2] = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kRank3);
+	ranking_title_image_ = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kRankingTitle);
+	point_img_ = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kPoint);
 }
 
 TitleScene::~TitleScene()
@@ -73,10 +73,10 @@ void TitleScene::Initialize()
 	Master::GameFinishFlag = false;
 	// メニュー選択操作を行うため、ゲーム本編中（非表示）と異なりカーソルを可視化する
 	SetMouseDispFlag(true);
-	Master::mpScore->LoadRanking();
+	Master::score_manager_->LoadRanking();
 	Master::camera_->Initialize();
 
-	Master::mpSoundManager->PlayBGM(SoundManager::kBgmTitle);
+	Master::sound_manager_->PlayBGM(SoundManager::kBgmTitle);
 }
 
 // 副作用：各種背景・UFO・ボタン・ランキングUIの描画、デバッグログの出力
@@ -181,7 +181,7 @@ void TitleScene::UpdateCowVoice()
 		cow_voice_timer_--;
 		if (cow_voice_timer_ <= 0)
 		{
-			Master::mpSoundManager->PlaySE(SoundManager::kSeCow);
+			Master::sound_manager_->PlaySE(SoundManager::kSeCow);
 			// 機墁E的な周期感を無くし自然な環境音にするため、次回鳴動までの間隔を5〜15秒で散らす
 			cow_voice_timer_ = GetRand(600) + 300;
 		}
@@ -244,17 +244,17 @@ void TitleScene::UpdateMenuButtons(int mouse_x, int mouse_y)
 					case SelectionManager::Title::NewGame:
 						next_scene_ = SceneManager::kSceneLoading;
 						fade_state_ = kSceneFadeOut;
-						Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
+						Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
 						break;
 					case SelectionManager::Title::Tutorial:
 						next_scene_ = SceneManager::kSceneTutorial;
 						fade_state_ = kSceneFadeOut;
-						Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
+						Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
 						break;
 					case SelectionManager::Title::OperationProcedures:
 						next_scene_ = SceneManager::kSceneRule;
 						fade_state_ = kSceneFadeOut;
-						Master::mpSoundManager->PlaySE(SoundManager::kSeDecide);
+						Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
 						break;
 					case SelectionManager::Title::titleOUT:
 						// Win32 API のメッセージループを終了させ、アプリケーションを閉じる
@@ -283,7 +283,7 @@ void TitleScene::Finalize()
 {
 	// グラフィックメモリは ResourceManager が一括管理・自動解放するため、個別Deleteは行わない
 	SetMouseDispFlag(false);
-	Master::mpSoundManager->StopBGM();
+	Master::sound_manager_->StopBGM();
 }
 
 // 副作用：ランキングタイトル、上位3名の順位バッジおよびハイスコアの画面描画
@@ -304,7 +304,7 @@ void TitleScene::DrawRankingUI()
 	// ハイスコア上位3名分のデータを抽出し、等間隔（80px）で縦並びにする描画ループ
 	for (int i = 0; i < 3; i++)
 	{
-		const Score::RankData& data = Master::mpScore->GetRanking(i);
+		const Score::RankData& data = Master::score_manager_->GetRanking(i);
 		int y = baseY + 60 + i * 80;
 
 		DrawExtendGraph(
@@ -322,7 +322,7 @@ void TitleScene::DrawRankingUI()
 		int h = (int)(80 * scale);
 		int drawY = y - 10 + (80 - h) / 2;
 
-		Master::mpScore->DrawScoreWithPoint(
+		Master::score_manager_->DrawScoreWithPoint(
 			baseX + 180,
 			drawY,
 			data.score_,

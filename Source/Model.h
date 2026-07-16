@@ -46,11 +46,11 @@ public:
 
 private:
 	
-	int mnHandle;
+	int handle_;
 	VECTOR position_;
 	VECTOR rotation_;
-	float mfScale;
+	float scale_;
 
 	// 動的に差し替えたテクスチャハンドルの解放漏れ（VRAMリーク）を防ぐため、破棄時に参照して始末するための保持変数
-	int mnChangeTextureHandle;
+	int change_texture_handle_;
 };

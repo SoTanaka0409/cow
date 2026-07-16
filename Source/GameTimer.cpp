@@ -5,13 +5,13 @@
 GameTimer::GameTimer(VECTOR pos, int timer, Tag_Num num)
 	: Time(timer)
 	, position_(pos)
-	, mbFlag(false)
-	, mbStopFlag(false)
+	, flag_(false)
+	, stop_flag_(false)
 	, tag_(num)
 {
 	mLastTime = GetNowCount();
 
-	score_text_image_ = Master::mpResourceManager->LoadGraphics("Resource/2D/TimeLimitText.png"); // 描画遅延軽減のため先読み込み
+	score_text_image_ = Master::resource_manager_->LoadGraphics("Resource/2D/TimeLimitText.png"); // 描画遅延軽減のため先読み込み
 }
 
 GameTimer::~GameTimer()
@@ -32,9 +32,9 @@ void GameTimer::Draw()
 		TRUE
 	);
 
-	if (Master::mpScore)
+	if (Master::score_manager_)
 	{
-		Master::mpScore->DrawNumber(
+		Master::score_manager_->DrawNumber(
 			static_cast<int>(position_.x + Utility::kUiDigitX),
 			static_cast<int>(position_.y + Utility::kUiTimerY),
 			Time,
@@ -46,7 +46,7 @@ void GameTimer::Draw()
 
 void GameTimer::Update()
 {
-	if (mbStopFlag) return;
+	if (stop_flag_) return;
 
 	int now = GetNowCount();
 
@@ -60,8 +60,8 @@ void GameTimer::Update()
 		if (Time <= 0)
 		{
 			Time = 0;
-			mbFlag = true;
-			mbStopFlag = true;
+			flag_ = true;
+			stop_flag_ = true;
 		}
 	}
 }

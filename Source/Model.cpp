@@ -8,11 +8,11 @@
  */
 Model::Model(std::string filename, VECTOR initPos, bool isSeparateAnimation)
 	: position_(initPos)
-	, mfScale(1.0f)
-	, mnChangeTextureHandle(-1)
+	, scale_(1.0f)
+	, change_texture_handle_(-1)
 {
 	// 同一モデルの複数生成時にVRAMを圧迫するのを防ぐため、独自のリソースマネージャ経由でハンドルを共有取得する
-	mnHandle = Master::mpResourceManager->LoadModel(filename.c_str());
+	handle_ = Master::resource_manager_->LoadModel(filename.c_str());
 }
 
 /*
@@ -22,12 +22,12 @@ Model::Model(std::string filename, VECTOR initPos, bool isSeparateAnimation)
  */
 Model::~Model()
 {
-	if (mnChangeTextureHandle != -1)
+	if (change_texture_handle_ != -1)
 	{
 		// 二重解放によるクラッシュや他オブジェクトのテクスチャ消失バグを防ぐため、
-		// 独自ロードしたテクスチャ(mnChangeTextureHandle)の破棄はResourceManager側の管理に一任する
+		// 独自ロードしたテクスチャ(change_texture_handle_)の破棄はResourceManager側の管理に一任する
 	}
-	MV1DeleteModel(mnHandle);
+	MV1DeleteModel(handle_);
 }
 
 /*
@@ -37,8 +37,8 @@ Model::~Model()
  */
 void Model::Update()
 {
-	MV1SetPosition(mnHandle, position_);
-	MV1SetRotationXYZ(mnHandle, rotation_);
+	MV1SetPosition(handle_, position_);
+	MV1SetRotationXYZ(handle_, rotation_);
 }
 
 /*
@@ -50,8 +50,8 @@ void Model::Draw()
 {
 	// 外部仕様依存: DxLibの仕様上、他オブジェクトの半透明設定がグローバルステートとして残留し、
 	// 意図せずモデルが透けて描画されるバグを防ぐため、描画直前にアルファ乗算を明示的に無効化する
-	MV1SetUseDrawMulAlphaColor(mnHandle, FALSE);
-	MV1DrawModel(mnHandle);
+	MV1SetUseDrawMulAlphaColor(handle_, FALSE);
+	MV1DrawModel(handle_);
 }
 
 /*
@@ -61,7 +61,7 @@ void Model::Draw()
  */
 void Model::SetScale(VECTOR scale)
 {
-	MV1SetScale(mnHandle, scale);
+	MV1SetScale(handle_, scale);
 }
 
 /*
@@ -81,12 +81,12 @@ void Model::SetScale(float scale)
  */
 void Model::SetTexture(std::string filename, int index)
 {
-	if (mnChangeTextureHandle != -1)
+	if (change_texture_handle_ != -1)
 	{
 		// デストラクタ同様、リソースマネージャが管理するメモリ領域の安全性を担保するため明示的な破棄は行わない
 	}
-	mnChangeTextureHandle = Master::mpResourceManager->LoadGraphics(filename);
-	MV1SetTextureGraphHandle(mnHandle, index, mnChangeTextureHandle, FALSE);
+	change_texture_handle_ = Master::resource_manager_->LoadGraphics(filename);
+	MV1SetTextureGraphHandle(handle_, index, change_texture_handle_, FALSE);
 }
 
 /*
@@ -96,12 +96,12 @@ void Model::SetTexture(std::string filename, int index)
  */
 void Model::SetColor(float r, float g, float b, float a)
 {
-	int matNum = MV1GetMaterialNum(mnHandle);
+	int matNum = MV1GetMaterialNum(handle_);
 
 	// 複数パーツで構成されるモデルにおいて、特定の部位だけ元の色が残り不自然な見た目になるのを防ぐため、
 	// 内部の全マテリアルを走査して指定色で強制上書きする
 	for (int i = 0; i < matNum; ++i)
 	{
-		MV1SetMaterialDifColor(mnHandle, i, GetColorF(r, g, b, a));
+		MV1SetMaterialDifColor(handle_, i, GetColorF(r, g, b, a));
 	}
 }

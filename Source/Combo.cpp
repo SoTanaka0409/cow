@@ -11,7 +11,7 @@ Combo::Combo()
 	combo_timer_ = 0.0f;
 	combo_max_time_ = 3.0f; // 難易度調整のためコンボ継続時間は3秒に固定
 
-	combo_image_ = Master::mpResourceManager->LoadGraphics("Resource/2D/ComboText.png");
+	combo_image_ = Master::resource_manager_->LoadGraphics("Resource/2D/ComboText.png");
 
 	combo_show_ = false;
 	combo_show_timer_ = 0.0f;
@@ -35,9 +35,9 @@ void Combo::Draw()
 
 		DrawExtendGraph(x, y, x + width, y + height, combo_image_, TRUE);
 
-		if (Master::mpScore)
+		if (Master::score_manager_)
 		{
-			Master::mpScore->DrawNumber(
+			Master::score_manager_->DrawNumber(
 				Utility::kUiDigitX,
 				y,
 				combo_count_,
@@ -60,7 +60,7 @@ void Combo::Update()
 	{
 		combo_timer_ -= 0.01f;
 
-		auto currentScene = Master::mpSceneManager->GetSceneType();
+		auto currentScene = Master::scene_manager_->GetSceneType();
 		// コンボ継続時間を使い切ったため状態をリセットする
 		if (combo_timer_ <= 0.0f&&!(currentScene==SceneManager::kSceneTutorial))
 		{
