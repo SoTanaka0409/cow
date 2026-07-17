@@ -37,49 +37,33 @@ public:
 private:
 	void DrawBackground();
 	void DrawMenuButtons();
-
-
-	// 画面全体の共通演出（サイン波によるボタンやUFOの浮遊アニメーション）の位相を同期させるための共通タイマー
-	int frame_count_;
-
-	int title_graph_handle_;
-
-	int ranking_title_image_;
-	int point_img_;
-
-	Texture* texture_;
-	Texture* texture2_;
-	Texture* texture3_;
-
-	int new_game_w_;
-	int new_game_h_;
-
-	bool is_hover_new_game_;
-
-	std::vector<UIButton> buttons_;
-
-	// 入力：なし
-	// 出力：なし
-	// 副作用：ハイスコア上位3名のデータと順位アイコンの画面描画
 	void DrawRankingUI();
-
-	int rank_image_[3];
-
-	int ufo_graph_handle_;
-	int ufo_x_, ufo_y_;
-	int ufo_w_, ufo_h_;
-	bool is_dragging_ufo_;
-	int offset_x_, offset_y_;
-	int cow_voice_timer_;
-	float ufo_vx_, ufo_vy_;
-	float ufo_angle_;
-
-	// イースターエッグ（UFOクリック時）として、画面中央を一定時間自動でぐるぐる回る演出用の制御変数群
-	bool  is_auto_patrol_;
-	int auto_patrol_timer_;
-
 	void UpdateCowVoice();
 	void UpdateUFOInteraction(int mouseInput, int mouse_x, int mouse_y, int ufoSize);
 	void UpdateUFOAutoPatrol(int ufoSize);
 	void UpdateMenuButtons(int mouse_x, int mouse_y);
+
+private:
+	int frame_count_;                // 画面全体の共通演出（サイン波による浮遊等）の位相を同期させるフレームカウンター
+	int title_graph_handle_;         // メイン画面の雰囲気を決定づけるためのタイトルロゴ画像のDxLibグラフィックハンドル
+	int ranking_title_image_;        // ランキングボードのヘッダー部分を装飾するための見出し専用画像ハンドル
+	int point_img_;                  // スコア数値の単位（「pt」など）を綺麗に等幅整列して描画するためのスプライト画像
+	Texture* texture_;               // 背景レイヤーの一部を構成するスクロール対応の広大な牧草地テクスチャオブジェクト
+	Texture* texture2_;              // タイトルロゴの背後で回転し、視覚的な賑やかさを出すためのエフェクト用テクスチャ
+	Texture* texture3_;              // メニュー選択時のローディング表示、または追加のビジュアル装飾用テクスチャ
+	int new_game_w_;                 // マウス衝突判定を汎用化するため、初期化時にアセットから取得したゲーム開始ボタンのピクセル幅
+	int new_game_h_;                 // マウス衝突判定を汎用化するため、初期化時にアセットから取得したゲーム開始ボタンのピクセル高
+	bool is_hover_new_game_;         // ボタン自体がUIButton配列へリファクタリングされるまでの旧判定用のホバー状態フラグ
+	std::vector<UIButton> buttons_;  // 各メニュー項目（ゲーム開始、設定、終了）の矩形や状態を一括走査して更新・描画するための配列
+	int rank_image_[3];              // ランキング上位（1位〜3位）の順位を視覚的に強調するための金・銀・銅の王冠アイコン画像
+	int ufo_graph_handle_;           // イースターエッグ用としてタイトル画面を自由に飛び回るアトラクターUFOの画像ハンドル
+	int ufo_x_, ufo_y_;              // ドラッグ操作や物理挙動によって毎フレームリアルタイムに変位するUFOの画面内座標
+	int ufo_w_, ufo_h_;              // マウスでのクリック当たり判定を正確に行うために保持するUFO画像のサイズ
+	bool is_dragging_ufo_;           // プレイヤーがUFOを掴んで画面内で振り回せるようにするためのドラッグ中フラグ
+	int offset_x_, offset_y_;        // UFOのドラッグ開始時に、クリック位置が中心からずれていることによる描画の瞬間的な跳ね（ブレ）を防ぐ補正値
+	int cow_voice_timer_;            // UFOを激しく振り回した際、牛の鳴き声SE（kSeCow）が毎フレーム爆音で多重再生されるのを防ぐインターバルタイマー
+	float ufo_vx_, ufo_vy_;          // ドラッグを離した後に、慣性でUFOが滑らかに画面外へフェードアウトしていくための移動速度ベクトル
+	float ufo_angle_;                // 直進やドラッグの移動方向に応じて、UFOの機体を自然に傾かせるための回転ラジアン角値
+	bool is_auto_patrol_;            // UFOをクリックした際、遊び心（イースターエッグ）として自動周回モードへ移行したかを示す状態フラグ
+	int auto_patrol_timer_;          // 周回モードが一定時間で自然に終了し、再びプレイヤーがUFOを捕まえられるようにするためのタイマー
 };

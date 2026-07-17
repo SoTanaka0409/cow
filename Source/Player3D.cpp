@@ -504,7 +504,7 @@ void Player3D::bar()
 	int currentWidth = (int)((mVacuumGauge / VACUUM_GAUGE_MAX) * gaugeWidth);
 	if (currentWidth < 0) currentWidth = 0;
 
-	// --- Alien Tractor Beam (HP Fill) ---
+	
 	if (currentWidth > 0)
 	{
 		int fillX = x1 + currentWidth;
@@ -526,7 +526,7 @@ void Player3D::bar()
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 
-	// --- Alien Tech Border ---
+
 	// 紫色のエイリアン・ルーン風枠線
 	DrawBox(x1 - 1, y1 - 1, x2 + 1, y2 + 1, GetColor(200, 0, 255), FALSE);
 	

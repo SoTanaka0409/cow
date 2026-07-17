@@ -6,11 +6,9 @@
 #include "SceneManager.h"
 #include "InputManager.h"
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: 設定画面用のUI画像およびフォントリソースの読み込みと初期設定
- */
+// 入力：なし
+// 出力：なし
+// 副作用：設定画面で使用する専用背景テクスチャおよび各種UIフォントのVRAMロード
 Rule::Rule()
 {
 	rule_graph_ = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kSettingsBg);
@@ -21,22 +19,15 @@ Rule::Rule()
 	play_se_delay_ = 0;
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: リソースの明示的な解放処理の呼び出し
- */
 Rule::~Rule()
 {
-	// シーン破棄時のフォントハンドルの解放漏れによるメモリリークを防ぐため、デストラクタで確実な破棄を保証する
+	// メモリ管理：シーン切り替えが何度も行われた際に、DxLib内部の動的フォントハンドルがVRAMに蓄積して起きるリークを防止
 	Finalize();
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: ユーザー入力による音量設定の更新およびシーン遷移処理
- */
+// 入力：なし
+// 出力：なし
+// 副作用：フレームカウントの進行、およびマウス・キーボード入力に同期した設定項目の更新
 void Rule::Update()
 {
 	Scene::Update();
@@ -52,7 +43,7 @@ void Rule::Update()
 	bool isMouseClicked = (mouseInput & MOUSE_INPUT_LEFT) != 0 && (prevMouseInput & MOUSE_INPUT_LEFT) == 0;
 	bool isMouseHeld = (mouseInput & MOUSE_INPUT_LEFT) != 0;
 
-	// 直前シーンのクリック保持等による誤操作防止のための待機処理
+	// UI設計：前シーン（タイトル等）での決定クリックの入力残響が即座に反映され、予期せぬ誤操作を引き起こすバグを防ぐチャタリング防止猶予
 	if (scene_frames_ < 30)
 	{
 		prevMouseInput = mouseInput;
@@ -64,10 +55,14 @@ void Rule::Update()
 	prevMouseInput = mouseInput;
 }
 
+// 入力：なし
+// 出力：フェードアウト処理中の場合は true、それ以外は false
+// 副作用：BGM音量の線形減衰、およびフェード完了時のシーンマネージャーへの遷移リクエスト
 bool Rule::UpdateFadeState()
 {
 	if (fade_state_ == kSceneFadeOut)
 	{
+		// 演出仕様：無音のタイトル画面へ急に遷移する際の聴覚的違和感を和らげるため、画面の暗転率（Alpha）に同期させて設定BGMをフェードアウト
 		Master::sound_manager_->SetBGMVolume((Master::sound_manager_->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
 		if (GetFadeAlpha() >= 255)
 		{
@@ -79,6 +74,9 @@ bool Rule::UpdateFadeState()
 	return false;
 }
 
+// 入力：mouse_x, mouse_y = 現在のマウス座標, mouseInput = 現在のクリック状態, isMouseClicked = 1フレームクリック判定, isMouseHeld = 押し続け判定
+// 出力：なし
+// 副作用：ボリュームの書き換え、変更音SEのトリガー、フェードアウトステートへの移行処理
 void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClicked, bool isMouseHeld)
 {
 	if (play_se_delay_ > 0) play_se_delay_--;
@@ -122,7 +120,7 @@ void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClic
 					{
 						Master::sound_manager_->SetMasterSEVolume(newVol);
 
-						// スライダー操作時SE暴発、耳障り(音割れ)になるのを防ぐためのクールタイム
+						// 聴覚保護：ドラッグスクロール中にSE再生API（PlaySE）が毎フレーム重複して暴発し、音割れやクラッシュを引き起こすのを抑止
 						if (play_se_delay_ <= 0)
 						{
 							Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
@@ -174,7 +172,7 @@ void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClic
 			int currentVol = Master::sound_manager_->GetMasterSEVolume();
 			Master::sound_manager_->SetMasterSEVolume(currentVol + volChange);
 
-			// キー操作時SE防爆(マウス操作時と同様の対策)
+			// マウスドラッグ操作時と同様、キー押しっぱなしによる短時間での大量のSE多重再生を制限するインターバル
 			if (play_se_delay_ <= 0)
 			{
 				Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
@@ -194,11 +192,9 @@ void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClic
 	}
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: 画面の暗転およびUIの描画
- */
+// 入力：なし
+// 出力：なし
+// 副作用：暗転背景、ボリュームスライダー、各種文字項目のバックバッファへの転送
 void Rule::Draw()
 {
 	DrawBackground();
@@ -211,11 +207,14 @@ void Rule::Draw()
 	}
 }
 
+// 入力：なし
+// 出力：なし
+// 副作用：背景の拡大描画、半透明の暗幕矩形描画、およびタイトルロゴテキストの描画
 void Rule::DrawBackground()
 {
 	DrawExtendGraph(0, -100, 1600, 1000, rule_graph_, TRUE);
 
-	// プレイヤーに「ゲーム本編ではなく設定画面を開いている」と直感的に認識させるため、背景に暗く半透明の覆いを重ねる
+	// 視認性確保：明るい色調の背景画像がロードされた場合でも、重ねて描画される白いフォントや黄色の選択マーカーが潰れないように遮光する
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
 	DrawBox(0, 0, 1600, 900, GetColor(0, 0, 0), TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
@@ -223,6 +222,9 @@ void Rule::DrawBackground()
 	DrawStringToHandle(650, 100, "SETTINGS", GetColor(255, 255, 255), title_font_handle_);
 }
 
+// 入力：なし
+// 出力：なし
+// 副作用：選択状態に連動したカーソル記号、および各メニュー項目の描画
 void Rule::DrawMenu()
 {
 	int startY = 350;
@@ -262,11 +264,9 @@ void Rule::DrawMenu()
 	}
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: フェード状態の初期化と設定画面用BGMの再生
- */
+// 入力：なし
+// 出力：なし
+// 副作用：フェード状態の初期化、選択インデックスの規定、および設定画面用BGM（kBgmRule）の再生開始
 void Rule::Initialize()
 {
 	fade_state_ = kSceneFadeIn;
@@ -276,11 +276,9 @@ void Rule::Initialize()
 	Master::sound_manager_->PlayBGM(SoundManager::kBgmRule);
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: 動的生成したフォントハンドルの破棄およびBGMの停止
- */
+// 入力：なし
+// 出力：なし
+// 副作用：作成したフォントハンドルの破棄およびBGM再生の即時停止
 void Rule::Finalize()
 {
 	DeleteFontToHandle(font_handle_);
