@@ -14,7 +14,7 @@ GameManager::GameManager()
 	, type_(GameStepType::kCowGet)
 {
 	game_timer_ = nullptr;
-	
+
 	auto data = new GameStepData;
 	data->type = GameStepType::kCowGet;
 	data->TrueFlag = true;
@@ -48,7 +48,7 @@ GameManager::~GameManager()
 void GameManager::GameNextStep(GameStepType type)
 {
 	Player3D* player = ServiceLocator::GetPlayer();
-	
+
 	if (GameStepType::kCowGet == type)
 	{
 		fade_flag_ = true;
@@ -104,11 +104,11 @@ void GameManager::Draw()
  */
 void GameManager::Update()
 {
-	
+
 	if (GameStepType::kFinal == type_)
 	{
 	}
-	
+
 	if (GameStepType::kCowGet == type_)
 	{
 		UpdateGameTimerAndPhase();
@@ -139,13 +139,13 @@ void GameManager::UpdateGameTimerAndPhase()
 		phase_timer_ = Timer;
 		phase_change_count_++;
 	}
-	
+
 	// プレイヤーに変化を楽しんでもらうため
 	if (phase_change_count_ >= 30)
 	{
 		phase_change_count_ = 0;
 		int m_Num = rand() % 2 + 1;
-		
+
 		if (m_Num == 1)
 		{
 			current_phase_ = GamePhase::kTornadoCrisis;

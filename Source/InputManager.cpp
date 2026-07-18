@@ -17,7 +17,7 @@ int InputManager::CheckDownKey(int KeyCode)
 {
     int result = 0;
     int keyState = CheckHitKey(KeyCode);
-    
+
     // 長押しによる意図しない連続入力を防ぐため
     if (down_buffer_[KeyCode] == 0 && keyState == 1)
     {

@@ -59,31 +59,17 @@ void Stage::Draw()
 /*
  * 入力: pos1, pos2 (カプセルの両端座標), r (カプセルの半径)
  * 出力: 衝突していればtrue
- * 副作用: なし (一時対応としてデバッグ用のポリゴン描画を含む)
+ * 副作用: なし
  */
 bool Stage::CheckHit_Capsule(VECTOR pos1, VECTOR pos2, float r)
 {
 	MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Capsule(collision_handle_, -1, pos1, pos2, r);
-
-	if (result.HitNum >= 1)
-	{
-		// 暫定対応: 地形抜けバグの検証用として、ヒットしたポリゴンを赤く可視化している（期限: リリースビルド作成時まで）
-		for (int i = 0; i < result.HitNum; i++)
-		{
-			DrawTriangle3D(
-				result.Dim[i].Position[0],
-				result.Dim[i].Position[1],
-				result.Dim[i].Position[2],
-				GetColor(255, 0, 0),
-				0
-			);
-		}
-	}
+	bool is_hit = result.HitNum >= 1;
 
 	// 外部仕様依存: DxLib内部で動的確保された判定結果(配列)を破棄しないと深刻なメモリリークを引き起こすため必ず解放する
 	MV1CollResultPolyDimTerminate(result);
 
-	return (result.HitNum >= 1);
+	return is_hit;
 }
 
 /*

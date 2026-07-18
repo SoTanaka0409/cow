@@ -31,6 +31,7 @@ int Master::caught_cow_count_ = 0;
 bool Master::tutorial_vacum_flag_ = false;
 bool Master::FeverFlag = false;
 float Master::delta_time_ = 0.01666f;
+bool Master::is_shadow_enabled_ = true; // デフォルトは影ON
 
 // 仕様制約：プレイヤーや牛がステージ外へ飛び出さないよう、侵入制限をかけるための境界値
 VECTOR Utility::StageSize = VGet(6000, 0, 6000);

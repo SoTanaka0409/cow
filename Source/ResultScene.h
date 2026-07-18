@@ -48,11 +48,10 @@ private:
 	std::vector<UIButton> buttons_;  // シーン内で選択可能なすべてのUIButton（再挑戦、タイトル、終了等）を管理する動的配列
 	int result_graph_handle_;        // 画面全体の背景を彩る、高解像度のリザルト専用バックグラウンドテクスチャ
 
-	Score score_;                   
+	Score score_;
 
 	int ranking_title_image_;        // ハイスコアボードの最上部に掲げる「RANKING」の見出しロゴ画像
 	int rank_image_[3];              // ランキング上位（1位〜3位）の隣に表示する金・銀・銅の各メダル画像アセット
-
 
 	// 入力：なし
 	// 出力：なし

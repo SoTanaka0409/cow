@@ -11,7 +11,7 @@ Object2D::Object2D(VECTOR initPos)
 	, tag_(Tag2D::kNone2d)
 	, draw_flag_(true)
 {
-	
+
 	ServiceLocator::GetObjectManager()->AddObject(this);
 }
 

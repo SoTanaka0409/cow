@@ -23,7 +23,6 @@ Scene::Scene()
 	animal_manager_ = new AnimalManager();
 	fever_ = new Fever();
 
-
 	fade_alpha_ = 0.0f;
 	fade_speed_ = 5.0f;
 }
@@ -44,12 +43,10 @@ Scene::~Scene()
 		delete object_manager_;
 	}
 
-
 	if (collider_manager_ != nullptr)
 	{
 		collider_manager_->DeleteAllCollider();
 	}
-
 
 	if (game_manager_ != nullptr)
 	{
@@ -138,23 +135,23 @@ void Scene::Fade(SceneFade fade)
 	if (fade == SceneFade::kSceneFadeIn)
 	{
 		fade_alpha_ -= fade_speed_;
-		if (fade_alpha_ < 0) fade_alpha_ = 0; 
+		if (fade_alpha_ < 0) fade_alpha_ = 0;
 
 		if (fade_alpha_ > 0)
 		{
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)fade_alpha_);
 			DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE);
-			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);          
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		}
 	}
 	else if (fade == SceneFade::kSceneFadeOut)
 	{
 		fade_alpha_ += fade_speed_;
-		if (fade_alpha_ > 255) fade_alpha_ = 255; 
+		if (fade_alpha_ > 255) fade_alpha_ = 255;
 
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)fade_alpha_);
 		DrawBox(0, 0, 1920, 1080, GetColor(0, 0, 0), TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);          
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 	else if (fade == SceneFade::kSceneFadeLoad)
 	{

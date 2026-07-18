@@ -157,8 +157,14 @@ void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClic
 	}
 
 	int volChange = 0;
-	if (InputManager::CheckPressKey(KEY_INPUT_LEFT) || InputManager::CheckPressKey(KEY_INPUT_A))  volChange = -2;
-	if (InputManager::CheckPressKey(KEY_INPUT_RIGHT) || InputManager::CheckPressKey(KEY_INPUT_D)) volChange = 2;
+	if (InputManager::CheckPressKey(KEY_INPUT_LEFT) || InputManager::CheckPressKey(KEY_INPUT_A))
+	{
+		volChange = -2;
+	}
+	if (InputManager::CheckPressKey(KEY_INPUT_RIGHT) || InputManager::CheckPressKey(KEY_INPUT_D))
+	{
+		volChange = 2;
+	}
 
 	if (volChange != 0)
 	{
@@ -183,12 +189,25 @@ void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClic
 
 	if (InputManager::CheckDownKey(KEY_INPUT_RETURN) || InputManager::CheckDownKey(KEY_INPUT_SPACE))
 	{
-		if (selected_index_ == kMenuBack)
+		if (selected_index_ == kMenuShadow)
+		{
+			// 決定キーで影のON/OFFを反転させ、SE再生でフィードバックを与える
+			Master::is_shadow_enabled_ = !Master::is_shadow_enabled_;
+			Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
+		}
+		else if (selected_index_ == kMenuBack)
 		{
 			Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
 			fade_state_ = kSceneFadeOut;
 			next_scene_ = SceneManager::kSceneTitle;
 		}
+	}
+
+	// マウスクリックでも影のON/OFFを切り替えられるようにする
+	if (isMouseClicked && selected_index_ == kMenuShadow)
+	{
+		Master::is_shadow_enabled_ = !Master::is_shadow_enabled_;
+		Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
 	}
 }
 
@@ -256,6 +275,14 @@ void Rule::DrawMenu()
 			DrawBox(startX + 350, y + 15, startX + 350 + (vol * 2), y + 45, color, TRUE);
 			DrawBox(startX + 350, y + 15, startX + 350 + (255 * 2), y + 45, GetColor(255, 255, 255), FALSE);
 			DrawFormatStringToHandle(startX + 880, y, color, font_handle_, "%3d", (vol * 100) / 255);
+		}
+		else if (i == kMenuShadow)
+		{
+			// 現在の影の状態を文字列で表示し、クリック or Enterで切り替えできることを示す
+			const char* shadowState = Master::is_shadow_enabled_ ? "[ ON  ]" : "[ OFF ]";
+			unsigned int stateColor = Master::is_shadow_enabled_ ? GetColor(0, 255, 100) : GetColor(180, 180, 180);
+			DrawFormatStringToHandle(startX, y, color, font_handle_, "Shadow");
+			DrawFormatStringToHandle(startX + 370, y, stateColor, font_handle_, shadowState);
 		}
 		else if (i == kMenuBack)
 		{

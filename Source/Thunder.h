@@ -49,7 +49,6 @@ private:
 	void UpdateState();
 	void UpdateStunEffect();
 
-
 	VECTOR pos_;
 	int warning_timer_;
 	int strike_timer_;

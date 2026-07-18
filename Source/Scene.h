@@ -18,7 +18,7 @@ public:
 		kSceneFadeNone,
 		kSceneFadeLoad,
 	};
-	
+
 public:
 	/*
 	 * シーン共通の変数を安全な初期値にするため
@@ -107,7 +107,7 @@ public:
 	 * [副作用] fade_alpha_の変更
 	 */
 	void SetFadeAlpha(float alpha) { fade_alpha_ = alpha; }
-	
+
 	SceneFade fade_state_ = kSceneFadeNone;
 	int next_scene_ = 0;
 

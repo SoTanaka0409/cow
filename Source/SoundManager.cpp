@@ -24,15 +24,15 @@ void SoundManager::Initialize()
 	LoadBGM(SoundBgm::kBgmTutorial, "Resource/BGM/MusMus-BGM-103.mp3");
 	LoadBGM(SoundBgm::kBgmRule, "Resource/BGM/MusMus-BGM-158.mp3");
 
-	LoadSE(SoundSe::kSeDecide, "Resource/SE/決定ボタンを押した2.mp3");
+	LoadSE(SoundSe::kSeDecide, "Resource/SE/決定ボタンを押す42.mp3");
 	LoadSE(SoundSe::kSeCow, "Resource/SE/牛の鳴き声.mp3");
-	LoadSE(SoundSe::kSeChicken, "Resource/SE/MusMus-BGM-084");
-	LoadSE(SoundSe::kSeTornado, "Resource/SE/天候の風一吹き（しらけ表現）.mp3");
-	LoadSE(SoundSe::kSeKaminari, "Resource/SE/天候の雷01.mp3");
-	LoadSE(SoundSe::kSeTutorialChange, "Resource/SE/シーン切り替え.mp3");
-	LoadSE(SoundSe::kSeBeam, "Resource/SE/HP吸収魔法.mp3");
-	LoadSE(SoundSe::kSeSkillStatus, "Resource/SE/ステータス上昇魔法.mp3");
-	LoadSE(SoundSe::kSeSkillFood, "Resource/SE/ロボット起動.mp3");
+	LoadSE(SoundSe::kSeChicken, "Resource/SE/牛の鳴き声.mp3");
+	LoadSE(SoundSe::kSeTornado, "Resource/SE/天候・風一吹き（しらけ表現）.mp3");
+	LoadSE(SoundSe::kSeKaminari, "Resource/SE/天候・雷01.mp3");
+	LoadSE(SoundSe::kSeTutorialChange, "Resource/SE/シーン切り替え2.mp3");
+	LoadSE(SoundSe::kSeBeam, "Resource/SE/HP吸収魔法1.mp3");
+	LoadSE(SoundSe::kSeSkillStatus, "Resource/SE/ステータス上昇魔法2.mp3");
+	LoadSE(SoundSe::kSeSkillFood, "Resource/SE/ロボット起動2.mp3");
 	LoadSE(SoundSe::kSeBaitFinal, "Resource/SE/高速移動.mp3");
 }
 

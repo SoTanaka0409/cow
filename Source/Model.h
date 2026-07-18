@@ -45,7 +45,7 @@ public:
 	void SetColor(float r, float g, float b, float a = 1.0f);
 
 private:
-	
+
 	int handle_;
 	VECTOR position_;
 	VECTOR rotation_;

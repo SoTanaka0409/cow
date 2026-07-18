@@ -39,7 +39,7 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 				bool erased = false;
 				float maxDistSq = -1.0f;
 				auto furthestIt = mCreatures.end();
-				
+
 				VECTOR playerPos = Master::camera_->GetPosition();
 				for (auto it = mCreatures.begin(); it != mCreatures.end(); ++it)
 				{
@@ -114,5 +114,4 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 		}
 	}
 }
-
 

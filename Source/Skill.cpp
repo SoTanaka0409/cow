@@ -208,8 +208,8 @@ void Skill::UpdateOpenAnimation()
 void Skill::AddSkill()
 {
 	if (!add_skill_flag_) return;
-	
-	SetMouseDispFlag(true); 
+
+	SetMouseDispFlag(true);
 	Master::SelectSkill = true;
 	int mouse_x_, mouse_y_;
 	GetMousePoint(&mouse_x_, &mouse_y_);

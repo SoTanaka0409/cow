@@ -259,21 +259,6 @@ void Player3D::ScreenOutCheck()
 }
 
 /*
- * テスト機能の実行
- * [入力] なし
- * [出力] なし
- * [副作用] 経験値の追加、スキルUIの開放
- */
-void Player3D::test()
-{
-	if (InputManager::CheckDownKey(KEY_INPUT_5))
-	{
-		level_manager_->AddXp(20);
-		skill_->SetSkillFlag(true);
-	}
-}
-
-/*
  * サブシステムの更新・描画の統括
  * [入力] なし
  * [出力] なし
@@ -289,7 +274,6 @@ void Player3D::ManagerUpdate()
 	combo_->Draw();
 	combo_->Update();
 	score_manager_->Draw();
-	test();
 }
 
 /*

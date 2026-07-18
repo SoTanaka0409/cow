@@ -33,6 +33,7 @@ public:
 	static bool FeverFlag;                    // ゲームのコアメカニクスを一時的に書き換えるため、有効化時は専用のUI演出やBGM変更の処理を確実に連動させること
 	static int caught_cow_count_;              // スコア計算とは独立した「累計捕獲数」の要件（実績解除や内部ランク変動など）を満たすための専用カウンター
 	static bool tutorial_vacum_flag_;         // チュートリアル中、特定の手順を踏む前に吸い込みアクションが暴発して進行不能になるのを防ぐ制約フラグ
+	static bool is_shadow_enabled_;           // 設定画面でのON/OFF選択を引き継ぐためのフラグ。trueのときのみScene3Dがシャドウマップを生成する
 
 	static float delta_time_;                 // OSやハードウェアの性能差によるゲームスピードの変動（FPS依存バグ）を防ぐために乗算する前フレームからの経過時間(秒)
 

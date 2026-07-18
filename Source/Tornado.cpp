@@ -141,7 +141,7 @@ void Tornado::UpdateEffectAndSound()
 			for (auto player : players)
 			{
 				VECTOR diff = VSub(player->GetPosition(), position_);
-				diff.y = 0; 
+				diff.y = 0;
 				float distSq = VSquareSize(diff);
 				if (minDistSq < 0 || distSq < minDistSq)
 				{

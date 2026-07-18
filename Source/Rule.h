@@ -32,6 +32,7 @@ public:
 	{
 		kMenuBgm,
 		kMenuSe,
+		kMenuShadow,
 		kMenuBack,
 		kMenuMax
 	};
@@ -39,7 +40,6 @@ public:
 private:
 	void DrawBackground();
 	void DrawMenu();
-
 
 	int rule_graph_;
 	int font_handle_;

@@ -8,7 +8,6 @@ class SphereCollider;
 class CapsuleCollider;
 class Player3D;
 
-
 // 業務ルール：ステージ上を自律走行してプレイヤーを妨害し、接触時にペナルティを与える環境トラップ（竜巻）クラス
 class Tornado : public Object3D
 {

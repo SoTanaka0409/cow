@@ -32,7 +32,7 @@ public:
 	 * [入力] value: 加算スコア [出力] なし [副作用] score_の更新
 	 */
 	void AddScore(int value);
-	
+
 	/*
 	 * ゲームオーバー等でやり直すため。
 	 * [入力] なし [出力] なし [副作用] score_を0に設定
@@ -103,7 +103,7 @@ public:
 	 * [入力] x,y: 座標 value: 数値 scale: 拡大率 minDigits: 最小桁数 [出力] なし [副作用] 画面描画
 	 */
 	void DrawNumber(int x, int y, int value, float scale = 1.0f, int minDigits = 1);
-	
+
 	/*
 	 * スコアと特定のアイコンを合わせて表示するため。
 	 * [入力] x, y: 座標 score: スコア scale: 拡大率 minDigits: 最小桁数 point_graph_handle: 画像ハンドル [出力] なし [副作用] 画面描画

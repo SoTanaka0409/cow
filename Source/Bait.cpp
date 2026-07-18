@@ -21,7 +21,7 @@ Bait::Bait(std::string filename, VECTOR pos)
 	model_ = new Model(filename, pos, false);
 	game_timer_ = new GameTimer(pos, 5, GameTimer::Tag_NoGame);
 	SetTag(kTag3dBait);
-	
+
 	capsule_collider_->position_ = position_;
 	capsule_collider_->position2_ = VAdd(position_, VGet(0.0f, 100.0f, 0.0f));
 	capsule_collider_->radius_ = 1500.0f;

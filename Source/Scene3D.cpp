@@ -52,7 +52,15 @@ Scene3D::~Scene3D()
  */
 void Scene3D::Initialize()
 {
-	shadow_map_handle_ = MakeShadowMap(2048, 2048);
+	// 設定画面でのON/OFF選択に従い、シャドウマップの生成を制御する
+	if (Master::is_shadow_enabled_)
+	{
+		shadow_map_handle_ = MakeShadowMap(2048, 2048);
+	}
+	else
+	{
+		shadow_map_handle_ = -1;
+	}
 	if (shadow_map_handle_ != -1)
 	{
 		SetShadowMapDrawArea(shadow_map_handle_, VGet(-7000.0f, -100.0f, -7000.0f), VGet(7000.0f, 3500.0f, 7000.0f));
@@ -68,7 +76,7 @@ void Scene3D::Initialize()
 
 	Master::sound_manager_->PlayBGM(SoundManager::kBgmGame);
 	Master::sound_manager_->SetBGMVolume(120);
-	
+
 	StageLoader::LoadFromCSV("Resource/Data/stage_objects.csv");
 
 	thunder_ = new Thunder(VGet(0.0f, 0.0f, 0.0f));
@@ -84,7 +92,7 @@ void Scene3D::Initialize()
 	cow_manager_->SpawnCow(GameConstants::kCowGold.model_path, spawnPos, 50.0f, CowMove::kCowGold, 2, false, Utility::StageSize.x);
 	animal_manager_->SpawnAnimal(GameConstants::kAnimalChicken.model_path, spawnPos, 50.0f, AnimalMove::kAnimal1, 5, Utility::StageSize.x);
 	animal_manager_->SpawnAnimal(GameConstants::kAnimalBear.model_path, spawnPos, 50.0f, AnimalMove::kAnimal1, 5, Utility::StageSize.x);
-	
+
 	phase_ = kNormal;
 
 	auto skybox = new SkyBox("Resource/3D/SkyBox/SkyBox.mv1", VGet(0, 0, 0));
@@ -111,7 +119,7 @@ void Scene3D::Update()
 {
 	auto p = ServiceLocator::GetPlayer();
 	Player3D* player = dynamic_cast<Player3D*>(p);
-	
+
 	Scene::Update();
 
 	cow_manager_->Update();
@@ -144,11 +152,11 @@ void Scene3D::Draw()
 	}
 
 	Scene::Draw();
-	
+
 	DrawGrid();
-	
+
 	cow_manager_->Draw();
-  
+
 	if (game_manager_->GetGameTimer() && !(game_manager_->GetGameTimer()->OutTimerFlag()))
 	{
 		game_manager_->GetGameTimer()->Draw();
@@ -192,7 +200,7 @@ void Scene3D::DrawGrid()
 {
 	const int count = 51;
 	const float distance = -500.0f;
-	
+
 	for (int i = 0; i < count; i++)
 	{
 		float base = (count / 2 - i) * -distance;
@@ -218,7 +226,7 @@ void Scene3D::DrawPhaseUI()
 	if (Master::camera_->GetIsPhaseCameraActive())
 	{
 		int currentPhase = (int)game_manager_->GetCurrentPhase();
-		
+
 		if (currentPhase == (int)GameManager::GamePhase::kMassSpawn || currentPhase == (int)GameManager::GamePhase::kTornadoCrisis)
 		{
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
@@ -250,7 +258,7 @@ void Scene3D::PhaseUpdate()
 {
 	auto p = ServiceLocator::GetPlayer();
 	Player3D* player = dynamic_cast<Player3D*>(p);
-	
+
 	if (player != nullptr && tatumaki != nullptr) {
 		int currentPhase = (int)game_manager_->GetCurrentPhase();
 		Master::camera_->UpdateCameraByPhase(currentPhase, player->GetPosition(), tatumaki->GetPosition());

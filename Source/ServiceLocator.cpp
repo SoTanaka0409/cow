@@ -11,7 +11,7 @@
 
 Scene* ServiceLocator::GetCurrentScene()
 {
-	// 未初期化時のクラチE??ュを防ぐため?Eインタの有効性を検証
+	// 未初期化時のクラッシュを防ぐため、ポインタの有効性を検証
 	if (Master::scene_manager_ != nullptr)
 	{
 		return Master::scene_manager_->GetCurrentScene();
@@ -31,7 +31,7 @@ ObjectManager* ServiceLocator::GetObjectManager()
 
 Player3D* ServiceLocator::GetPlayer()
 {
-	// タグ検索によりプレイヤーオブジェクトを動的に特?E
+	// タグ検索によりプレイヤーオブジェクトを動的に特定
 	ObjectManager* objMgr = GetObjectManager();
 	if (objMgr != nullptr)
 	{
@@ -42,7 +42,7 @@ Player3D* ServiceLocator::GetPlayer()
 
 std::vector<Player3D*> ServiceLocator::GetPlayers()
 {
-	// マルチ?Eレイ対応等を老E?Eし、存在する全プレイヤーを収雁E
+	// マルチプレイ対応等を考慮し、存在する全プレイヤーを収集
 	std::vector<Player3D*> players;
 	ObjectManager* objMgr = GetObjectManager();
 	if (objMgr != nullptr)

@@ -85,17 +85,17 @@ private:
 	State_fever fever_state_;        // 後半のフィーバー体験セクションにおける、内部の演出ステップ管理用ステート
 
 	Texture* texture_;               // 各ステップの背景に表示する、操作図解（コントローラー画像など）の個別テクスチャ
-	Texture* texture2_;             
-	Texture* texture3_;             
-	Texture* texture4_;             
-	Texture* texture5_;             
-	Texture* texture6_;             
+	Texture* texture2_;
+	Texture* texture3_;
+	Texture* texture4_;
+	Texture* texture5_;
+	Texture* texture6_;
 
 	int mouse_x_;                    // ビーム照射やUIクリックにおける、マウスポインタのX軸入力キャッシュ
 
 	Thunder* thunder_;               // 雷トラップの回避テストを体験させるために、シーン内で個別生成する環境オブジェクト
 	Camera* camera_ = nullptr;       // プレイヤーの視点を解説用（固定俯瞰）に強制クランプするための制御用カメラ
-	Combo* combo_ = nullptr;         
+	Combo* combo_ = nullptr;
 
 	bool cow_delete_;                // チュートリアル終了時やリセット時に、場にいる練習用の牛を消去するための消去フラグ
 	bool skill_flag_{};              // スキル選択画面のシステム解説がすでに完了したかを記憶する進行スキップ防止フラグ

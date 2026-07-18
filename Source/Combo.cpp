@@ -1,6 +1,5 @@
 ﻿#include "Combo.h"
 #include "DxLib.h"
-#include "InputManager.h"
 #include "Master.h"
 #include "Utility.h"
 #include <string>
@@ -19,8 +18,6 @@ Combo::Combo()
 
 Combo::~Combo()
 {
-	
-	
 }
 
 void Combo::Draw()
@@ -50,19 +47,13 @@ void Combo::Draw()
 
 void Combo::Update()
 {
-	// TODO: リリース時に削除（デバッグ用追加ショートカット）
-	if (InputManager::CheckDownKey(KEY_INPUT_R))
-	{
-		AddHit();
-	}
-
 	if (combo_count_ > 0)
 	{
 		combo_timer_ -= 0.01f;
 
 		auto currentScene = Master::scene_manager_->GetSceneType();
 		// コンボ継続時間を使い切ったため状態をリセットする
-		if (combo_timer_ <= 0.0f&&!(currentScene==SceneManager::kSceneTutorial))
+		if (combo_timer_ <= 0.0f && currentScene != SceneManager::kSceneTutorial)
 		{
 			Reset();
 		}

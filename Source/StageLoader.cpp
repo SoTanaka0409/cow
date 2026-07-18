@@ -1,4 +1,4 @@
-#include "StageLoader.h"
+ï»¿#include "StageLoader.h"
 #include "Object_Stage.h"
 #include "Mountain.h"
 #include "Wall.h"
@@ -9,10 +9,10 @@
 #include <string>
 
 /*
- * CSVƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚ñ‚ÅƒXƒe[ƒWƒIƒuƒWƒFƒNƒg‚ğ¶¬‚·‚é‚½‚ß
- * [“ü—Í] csvPath: Shift-JISƒGƒ“ƒR[ƒh‚ÌCSVƒtƒ@ƒCƒ‹ƒpƒX
- * [o—Í] ‚È‚µ
- * [•›ì—p] ObjectManager‚ÉŠeƒIƒuƒWƒFƒNƒg‚ª“o˜^‚³‚ê‚é
+ * CSVãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚“ã§ã‚¹ãƒ†ãƒ¼ã‚¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆã™ã‚‹ãŸã‚
+ * [å…¥åŠ›] csvPath: Shift-JISã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã®CSVãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
+ * [å‡ºåŠ›] ãªã—
+ * [å‰¯ä½œç”¨] ObjectManagerã«å„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒç™»éŒ²ã•ã‚Œã‚‹
  */
 void StageLoader::LoadFromCSV(const std::string& csvPath)
 {
@@ -27,20 +27,20 @@ void StageLoader::LoadFromCSV(const std::string& csvPath)
 
 	while (std::getline(file, line))
 	{
-		// ƒwƒbƒ_[s‚ğƒXƒLƒbƒv
+		// ãƒ˜ãƒƒãƒ€ãƒ¼è¡Œã‚’ã‚¹ã‚­ãƒƒãƒ—
 		if (isFirstLine)
 		{
 			isFirstLine = false;
 			continue;
 		}
 
-		// ‹ósEƒRƒƒ“ƒgs‚ğƒXƒLƒbƒv
+		// ç©ºè¡Œãƒ»ã‚³ãƒ¡ãƒ³ãƒˆè¡Œã‚’ã‚¹ã‚­ãƒƒãƒ—
 		if (line.empty() || line[0] == '#')
 		{
 			continue;
 		}
 
-		// Windows ‰üsƒR[ƒh(\r\n)‘Î‰
+		// Windows æ”¹è¡Œã‚³ãƒ¼ãƒ‰(\r\n)å¯¾å¿œ
 		if (!line.empty() && line.back() == '\r')
 		{
 			line.pop_back();
@@ -67,12 +67,12 @@ void StageLoader::LoadFromCSV(const std::string& csvPath)
 }
 
 /*
- * Object_Stage‚ğ1ŒÂ¶¬‚·‚é‚½‚ß
- * [“ü—Í] cols: CSV‚Ì•ªŠ„Ï‚İ—ñƒŠƒXƒg
+ * Object_Stageã‚’1å€‹ç”Ÿæˆã™ã‚‹ãŸã‚
+ * [å…¥åŠ›] cols: CSVã®åˆ†å‰²æ¸ˆã¿åˆ—ãƒªã‚¹ãƒˆ
  *   cols[1]=model_path, [2-4]=position(x,y,z), [5]=scale(scalar),
- *   [8-10]=rotation(rx,ry,rz), [11-14]=color(r,g,b,a) ¦È—ª‰Â
- * [o—Í] ‚È‚µ
- * [•›ì—p] ObjectManager‚ÉObject_Stage‚ª“o˜^‚³‚ê‚é
+ *   [8-10]=rotation(rx,ry,rz), [11-14]=color(r,g,b,a) â€»çœç•¥å¯
+ * [å‡ºåŠ›] ãªã—
+ * [å‰¯ä½œç”¨] ObjectManagerã«Object_StageãŒç™»éŒ²ã•ã‚Œã‚‹
  */
 void StageLoader::SpawnObjectStage(const std::vector<std::string>& cols)
 {
@@ -85,7 +85,7 @@ void StageLoader::SpawnObjectStage(const std::vector<std::string>& cols)
 
 	auto obj = new Object_Stage(modelPath, pos, scale, rot);
 
-	// ƒJƒ‰[—ñ‚ª‘¶İ‚µA‹ó‚Å‚È‚¯‚ê‚ÎSetColor‚ğŒÄ‚Ô
+	// ã‚«ãƒ©ãƒ¼åˆ—ãŒå­˜åœ¨ã—ã€ç©ºã§ãªã‘ã‚Œã°SetColorã‚’å‘¼ã¶
 	if (cols.size() >= 15 && !cols[11].empty())
 	{
 		float cr = ToFloat(cols[11]);
@@ -97,12 +97,12 @@ void StageLoader::SpawnObjectStage(const std::vector<std::string>& cols)
 }
 
 /*
- * Mountain‚ğ1ŒÂ¶¬‚·‚é‚½‚ß
- * [“ü—Í] cols: CSV‚Ì•ªŠ„Ï‚İ—ñƒŠƒXƒg
+ * Mountainã‚’1å€‹ç”Ÿæˆã™ã‚‹ãŸã‚
+ * [å…¥åŠ›] cols: CSVã®åˆ†å‰²æ¸ˆã¿åˆ—ãƒªã‚¹ãƒˆ
  *   cols[1]=model_path, [2-4]=position(x,y,z), [5-7]=scale(sx,sy,sz),
- *   [8-10]=rotation(rx,ry,rz), [11-14]=color(r,g,b,a) ¦È—ª‰Â
- * [o—Í] ‚È‚µ
- * [•›ì—p] ObjectManager‚ÉMountain‚ª“o˜^‚³‚ê‚é
+ *   [8-10]=rotation(rx,ry,rz), [11-14]=color(r,g,b,a) â€»çœç•¥å¯
+ * [å‡ºåŠ›] ãªã—
+ * [å‰¯ä½œç”¨] ObjectManagerã«MountainãŒç™»éŒ²ã•ã‚Œã‚‹
  */
 void StageLoader::SpawnMountain(const std::vector<std::string>& cols)
 {
@@ -115,7 +115,7 @@ void StageLoader::SpawnMountain(const std::vector<std::string>& cols)
 
 	auto mountain = new Mountain(modelPath, pos, scale, rot);
 
-	// ƒJƒ‰[—ñ‚ª‘¶İ‚µA‹ó‚Å‚È‚¯‚ê‚ÎSetColor‚ğŒÄ‚Ô
+	// ã‚«ãƒ©ãƒ¼åˆ—ãŒå­˜åœ¨ã—ã€ç©ºã§ãªã‘ã‚Œã°SetColorã‚’å‘¼ã¶
 	if (cols.size() >= 15 && !cols[11].empty())
 	{
 		float cr = ToFloat(cols[11]);
@@ -127,12 +127,12 @@ void StageLoader::SpawnMountain(const std::vector<std::string>& cols)
 }
 
 /*
- * Wall‚ğ1–‡¶¬‚·‚é‚½‚ß
- * [“ü—Í] cols: CSV‚Ì•ªŠ„Ï‚İ—ñƒŠƒXƒg
- *   cols[1]=model_path(‹ó‰Â), [2-4]=centerPos(x,y,z),
+ * Wallã‚’1æšç”Ÿæˆã™ã‚‹ãŸã‚
+ * [å…¥åŠ›] cols: CSVã®åˆ†å‰²æ¸ˆã¿åˆ—ãƒªã‚¹ãƒˆ
+ *   cols[1]=model_path(ç©ºå¯), [2-4]=centerPos(x,y,z),
  *   [5-7]=topLeft(x,y,z), [8-10]=bottomRight(x,y,z)
- * [o—Í] ‚È‚µ
- * [•›ì—p] ObjectManager‚ÉWall‚ª“o˜^‚³‚ê‚é
+ * [å‡ºåŠ›] ãªã—
+ * [å‰¯ä½œç”¨] ObjectManagerã«WallãŒç™»éŒ²ã•ã‚Œã‚‹
  */
 void StageLoader::SpawnWall(const std::vector<std::string>& cols)
 {
@@ -147,10 +147,10 @@ void StageLoader::SpawnWall(const std::vector<std::string>& cols)
 }
 
 /*
- * CSV ‚Ì1s‚ğƒJƒ“ƒ}‚Å•ªŠ„‚·‚é‚½‚ß
- * [“ü—Í] line: ˆ—‘ÎÛ‚Ì•¶š—ñ
- * [o—Í] •ªŠ„Œ‹‰Ê‚Ì•¶š—ñƒxƒNƒ^[
- * [•›ì—p] ‚È‚µ
+ * CSV ã®1è¡Œã‚’ã‚«ãƒ³ãƒã§åˆ†å‰²ã™ã‚‹ãŸã‚
+ * [å…¥åŠ›] line: å‡¦ç†å¯¾è±¡ã®æ–‡å­—åˆ—
+ * [å‡ºåŠ›] åˆ†å‰²çµæœã®æ–‡å­—åˆ—ãƒ™ã‚¯ã‚¿ãƒ¼
+ * [å‰¯ä½œç”¨] ãªã—
  */
 std::vector<std::string> StageLoader::SplitCSV(const std::string& line)
 {
@@ -167,10 +167,10 @@ std::vector<std::string> StageLoader::SplitCSV(const std::string& line)
 }
 
 /*
- * •¶š—ñ‚ğfloat‚É•ÏŠ·‚·‚é‚½‚ß
- * [“ü—Í] s: •ÏŠ·‘ÎÛ‚Ì•¶š—ñ
- * [o—Í] •ÏŠ·Œ‹‰Ê‚Ìfloat’lB•ÏŠ·¸”s‚Í 0.0f
- * [•›ì—p] ‚È‚µ
+ * æ–‡å­—åˆ—ã‚’floatã«å¤‰æ›ã™ã‚‹ãŸã‚
+ * [å…¥åŠ›] s: å¤‰æ›å¯¾è±¡ã®æ–‡å­—åˆ—
+ * [å‡ºåŠ›] å¤‰æ›çµæœã®floatå€¤ã€‚å¤‰æ›å¤±æ•—æ™‚ã¯ 0.0f
+ * [å‰¯ä½œç”¨] ãªã—
  */
 float StageLoader::ToFloat(const std::string& s)
 {

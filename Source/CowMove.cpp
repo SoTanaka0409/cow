@@ -114,7 +114,7 @@ void CowMove::ColliderMove()
 
 void CowMove::MoveCharacter()
 {
-	
+
 	AvoidOtherCows();
 
 	if (SeekBait())
@@ -344,7 +344,7 @@ void CowMove::CharacterDied()
 			{
 				if (effect_timer_ <= 0 && is_visible_ == true)
 				{
-					cow_vm_->Play();
+					// cow_vm_->Play();  // エフェクトをOFFにするためコメントアウト
 					effect_timer_ = 60;
 					is_visible_ = false;
 					capsule_collider_->SetDeleteFlag(true);

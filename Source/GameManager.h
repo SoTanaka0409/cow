@@ -58,7 +58,7 @@ public:
 	 * [副作用] 進行ステップが変更され、フラグが更新される
 	 */
 	void GameNextStep(GameStepType type);
-	 
+
 	/*
 	 * 現在のゲーム進行状況を外部から参照するため。
 	 * [入力] なし
@@ -93,7 +93,7 @@ private:
 	GamePhase current_phase_;
 	float fade_timer_;
 	bool fade_flag_;
-	
+
 	int phase_timer_;
 	int phase_change_count_;
 	GameTimer* game_timer_;

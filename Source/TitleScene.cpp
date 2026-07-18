@@ -83,7 +83,7 @@ void TitleScene::Initialize()
 void TitleScene::Draw()
 {
 	Scene::Draw();
-	
+
 	DrawBackground();
 	DrawMenuButtons();
 	DrawRankingUI();

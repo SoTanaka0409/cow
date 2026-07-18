@@ -54,7 +54,6 @@ private:
 	void UpdateSelectAnimation();
 	void UpdateOpenAnimation();
 
-
 private:
 
 	Object3D* parent_;
