@@ -1,18 +1,18 @@
-﻿#include "Floor.h"
+#include "Floor.h"
 #include "DxLib.h"
 #include "Master.h"
 
 /*
- * 入力: filename (テクスチャパス), centerPos (基準座標), topLeft (左上オフセット), bottomRight (右下オフセット)
- * 出力: なし
- * 副作用: テクスチャのロードおよびポリゴン描画用の頂点データの初期化
+ * ����: filename (�e�N�X�`���p�X), centerPos (����W), topLeft (����I�t�Z�b�g), bottomRight (�E���I�t�Z�b�g)
+ * �o��: �Ȃ�
+ * ����p: �e�N�X�`���̃��[�h����у|���S���`��p�̒��_�f�[�^�̏�����
  */
 Floor::Floor(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight)
 	: Object3D(centerPos)
 {
 	graph_handle_ = Master::resource_manager_->LoadGraphics(filename.c_str());
 
-	// テクスチャ本来の色を出力しつつ、光源による不自然なテカり(反射)を防ぐため、頂点色を白・スペキュラを無効化する
+	// �e�N�X�`���{���̐F���o�͂��A�����ɂ��s���R�ȃe�J��(����)��h�����߁A���_�F�𔒁E�X�y�L�����𖳌�������
 	vertex_[0].pos = VAdd(centerPos, topLeft);
 	vertex_[0].dif = GetColorU8(255, 255, 255, 255);
 	vertex_[0].spc = GetColorU8(0, 0, 0, 0);
@@ -44,33 +44,33 @@ Floor::Floor(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bott
 }
 
 /*
- * 入力: なし
- * 出力: なし
- * 副作用: なし
+ * ����: �Ȃ�
+ * �o��: �Ȃ�
+ * ����p: �Ȃ�
  */
 Floor::~Floor()
 {
 }
 
 /*
- * 入力: なし
- * 出力: なし
- * 副作用: なし
+ * ����: �Ȃ�
+ * �o��: �Ȃ�
+ * ����p: �Ȃ�
  */
 void Floor::Update()
 {
 }
 
 /*
- * 入力: なし
- * 出力: なし
- * 副作用: ライティング設定の一時変更と3Dポリゴンの描画
+ * ����: �Ȃ�
+ * �o��: �Ȃ�
+ * ����p: ���C�e�B���O�ݒ�̈ꎞ�ύX��3D�|���S���̕`��
  */
 void Floor::Draw()
 {
 	WORD index[6];
 
-	// 外部仕様依存: DxLibの左手座標系において、時計回りの頂点順序が「表面」として認識されるためインデックス順序を固定する
+	// �O���d�l�ˑ�: DxLib�̍�����W�n�ɂ����āA���v���̒��_�������u�\�ʁv�Ƃ��ĔF������邽�߃C���f�b�N�X�������Œ肷��
 	index[0] = 0;
 	index[1] = 1;
 	index[2] = 2;

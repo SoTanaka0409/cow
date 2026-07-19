@@ -1,23 +1,23 @@
-﻿#pragma once
+#pragma once
 #include "CowMove.h"
 
-// 標準の牛とはスコアやパラメータが異なるため拡張
+// �W���̋��Ƃ̓X�R�A��p�����[�^���قȂ邽�ߊg��
 class Cow_2 : public CowMove
 {
 public:
 	/*
-	 * 特殊なパラメータを持つ牛を生成するため
-	 * [入力] filename: モデルファイルパス, initPos: 初期座標
-	 * [出力] なし
-	 * [副作用] スコア、経験値、コライダー半径が個別に設定される
+	 * ����ȃp�����[�^�������𐶐����邽��
+	 * [����] filename: ���f���t�@�C���p�X, initPos: �������W
+	 * [�o��] �Ȃ�
+	 * [����p] �X�R�A�A�o���l�A�R���C�_�[���a���ʂɐݒ肳���
 	 */
 	Cow_2(std::string filename, VECTOR initPos);
 
 	/*
-	 * 終了処理
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] なし
+	 * �I������
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �Ȃ�
 	 */
 	virtual ~Cow_2();
 };

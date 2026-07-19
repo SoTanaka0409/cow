@@ -1,4 +1,4 @@
-﻿#include "CharacterMove.h"
+#include "CharacterMove.h"
 #include "CharacterState.h"
 #include "Master.h"
 #include "SceneManager.h"
@@ -11,10 +11,10 @@
 #include "ColliderManager.h"
 #include "Utility.h"
 /*
- * キャラクターの初期化
- * [入力] filename: モデルのファイルパス, initPos: 初期座標
- * [出力] なし
- * [副作用] 各種メンバ変数の初期化、モデルのロード、初期状態(待機)の作成を行う
+ * �L�����N�^�[�̏�����
+ * [����] filename: ���f���̃t�@�C���p�X, initPos: �������W
+ * [�o��] �Ȃ�
+ * [����p] �e�탁���o�ϐ��̏������A���f���̃��[�h�A�������(�ҋ@)�̍쐬���s��
  */
 CharacterMove::CharacterMove(std::string filename, VECTOR initPos)
 	: Object3D(initPos)
@@ -36,15 +36,15 @@ CharacterMove::CharacterMove(std::string filename, VECTOR initPos)
 	, is_visible_(true)
 {
 	model_ = new Model(filename, initPos, false);
-	// 自然な群れを表現するため、初期向きをランダムに分散させる。
+	// ���R�ȌQ���\�����邽�߁A���������������_���ɕ��U������B
 	rotation_.y = (float)GetRand(359) * (DX_PI_F / 180.0f);
 	model_->SetRotation(rotation_);
 }
 /*
- * キャラクターの破棄
- * [入力] なし
- * [出力] なし
- * [副作用] モデルおよび現在の状態オブジェクトのメモリを解放する
+ * �L�����N�^�[�̔j��
+ * [����] �Ȃ�
+ * [�o��] �Ȃ�
+ * [����p] ���f������ь��݂̏�ԃI�u�W�F�N�g�̃��������������
  */
 CharacterMove::~CharacterMove()
 {
@@ -60,10 +60,10 @@ CharacterMove::~CharacterMove()
 	}
 }
 /*
- * キャラクターの再初期化
- * [入力] pos: 配置する座標
- * [出力] なし
- * [副作用] 状態を待機にリセットし、パラメータやフラグを初期化。マネージャーへ再登録する
+ * �L�����N�^�[�̍ď�����
+ * [����] pos: �z�u������W
+ * [�o��] �Ȃ�
+ * [����p] ��Ԃ�ҋ@�Ƀ��Z�b�g���A�p�����[�^��t���O���������B�}�l�[�W���[�֍ēo�^����
  */
 void CharacterMove::Reset(VECTOR pos)
 {
@@ -103,10 +103,10 @@ void CharacterMove::Reset(VECTOR pos)
 	}
 }
 /*
- * オブジェクトの無効化処理
- * [入力] なし
- * [出力] なし
- * [副作用] is_visible_, 描画フラグ, コライダーの削除フラグを変更。ObjectManagerのリストから除外。
+ * �I�u�W�F�N�g�̖���������
+ * [����] �Ȃ�
+ * [�o��] �Ȃ�
+ * [����p] is_visible_, �`��t���O, �R���C�_�[�̍폜�t���O��ύX�BObjectManager�̃��X�g���珜�O�B
  */
 void CharacterMove::Deactivate()
 {
@@ -116,7 +116,7 @@ void CharacterMove::Deactivate()
 	{
 		capsule_collider_->SetDeleteFlag(true);
 	}
-	// 再利用時の負荷を軽減するため、メモリ破棄ではなく更新対象から外す。
+	// �ė��p���̕��ׂ��y�����邽�߁A�������j���ł͂Ȃ��X�V�Ώۂ���O���B
 	if (auto scene = Master::scene_manager_->GetCurrentScene())
 	{
 		if (auto objMgr = scene->GetObjectManager())
@@ -126,10 +126,10 @@ void CharacterMove::Deactivate()
 	}
 }
 /*
- * 毎フレームの更新処理
- * [入力] なし
- * [出力] なし
- * [副作用] 座標移動、回転、コライダー追従、死亡判定、モデルの更新を行う
+ * ���t���[���̍X�V����
+ * [����] �Ȃ�
+ * [�o��] �Ȃ�
+ * [����p] ���W�ړ��A��]�A�R���C�_�[�Ǐ]�A���S����A���f���̍X�V���s��
  */
 void CharacterMove::Update()
 {
@@ -143,10 +143,10 @@ void CharacterMove::Update()
 	model_->Update();
 }
 /*
- * 描画処理
- * [入力] なし
- * [出力] なし
- * [副作用] モデルを描画する
+ * �`�揈��
+ * [����] �Ȃ�
+ * [�o��] �Ȃ�
+ * [����p] ���f����`�悷��
  */
 void CharacterMove::Draw()
 {
@@ -161,10 +161,10 @@ void CharacterMove::DrawShadowCaster()
 	}
 }
 /*
- * キャラクターの移動処理
- * [入力] なし
- * [出力] なし
- * [副作用] AIに基づく移動量を計算し、壁判定を経て最終的な座標を決定する
+ * �L�����N�^�[�̈ړ�����
+ * [����] �Ȃ�
+ * [�o��] �Ȃ�
+ * [����p] AI�Ɋ�Â��ړ��ʂ��v�Z���A�ǔ�����o�čŏI�I�ȍ��W�����肷��
  */
 void CharacterMove::MoveCharacter()
 {
@@ -181,10 +181,10 @@ void CharacterMove::MoveCharacter()
 	model_->SetPosition(position_);
 }
 /*
- * AIの更新
- * [入力] なし
- * [出力] なし
- * [副作用] 現在のStateオブジェクトのUpdateを呼び出す
+ * AI�̍X�V
+ * [����] �Ȃ�
+ * [�o��] �Ȃ�
+ * [����p] ���݂�State�I�u�W�F�N�g��Update���Ăяo��
  */
 void CharacterMove::UpdateWanderAI()
 {
@@ -194,10 +194,10 @@ void CharacterMove::UpdateWanderAI()
 	}
 }
 /*
- * 状態の変更
- * [入力] newState: 新しい状態クラスのポインタ
- * [出力] なし
- * [副作用] 現在の状態を終了・破棄し、新しい状態へ移行する
+ * ��Ԃ̕ύX
+ * [����] newState: �V������ԃN���X�̃|�C���^
+ * [�o��] �Ȃ�
+ * [����p] ���݂̏�Ԃ��I���E�j�����A�V������Ԃֈڍs����
  */
 void CharacterMove::ChangeState(CharacterState* newState)
 {
@@ -213,10 +213,10 @@ void CharacterMove::ChangeState(CharacterState* newState)
 	}
 }
 /*
- * 吸い込み状態への変更
- * [入力] なし
- * [出力] なし
- * [副作用] 現在のAI状態をSTATE_VACUUMに変更し、StateVacuumへ移行する
+ * �z�����ݏ�Ԃւ̕ύX
+ * [����] �Ȃ�
+ * [�o��] �Ȃ�
+ * [����p] ���݂�AI��Ԃ�STATE_VACUUM�ɕύX���AStateVacuum�ֈڍs����
  */
 void CharacterMove::ChangeStateToVacuum()
 {
@@ -224,10 +224,10 @@ void CharacterMove::ChangeStateToVacuum()
 	ChangeState(new StateVacuum());
 }
 /*
- * 壁との衝突判定と補正
- * [入力] なし
- * [出力] なし
- * [副作用] 壁に衝突した場合、進行を阻害する方向に座標を押し戻す
+ * �ǂƂ̏Փ˔���ƕ␳
+ * [����] �Ȃ�
+ * [�o��] �Ȃ�
+ * [����p] �ǂɏՓ˂����ꍇ�A�i�s��j�Q��������ɍ��W�������߂�
  */
 void CharacterMove::CheckWallCollision()
 {
@@ -264,7 +264,7 @@ void CharacterMove::CheckWallCollision()
 						position_ = VAdd(position_, VScale(slide, speed_ * Master::GetDeltaTimeScaler()));
 						hitwalls = true;
 					}
-					// 複数壁への連続衝突によるめり込みを防ぐため。
+					// �����ǂւ̘A���Փ˂ɂ��߂荞�݂�h�����߁B
 					else if (hitwalls)
 					{
 						position_ = old_position_;
@@ -275,10 +275,10 @@ void CharacterMove::CheckWallCollision()
 	}
 }
 /*
- * コライダーの追従
- * [入力] なし
- * [出力] なし
- * [副作用] キャラクターの座標に合わせてコライダーの位置と形状を更新する
+ * �R���C�_�[�̒Ǐ]
+ * [����] �Ȃ�
+ * [�o��] �Ȃ�
+ * [����p] �L�����N�^�[�̍��W�ɍ��킹�ăR���C�_�[�̈ʒu�ƌ`����X�V����
  */
 void CharacterMove::ColliderMove()
 {
@@ -290,26 +290,26 @@ void CharacterMove::ColliderMove()
 	}
 }
 /*
- * 移動方向への回転
- * [入力] なし
- * [出力] なし
- * [副作用] 現在の移動ベクトルに基づいてモデルのY軸回転角度を更新する
+ * �ړ������ւ̉�]
+ * [����] �Ȃ�
+ * [�o��] �Ȃ�
+ * [����p] ���݂̈ړ��x�N�g���Ɋ�Â��ă��f����Y����]�p�x���X�V����
  */
 void CharacterMove::RotationCharacter()
 {
 	if (moveVec.x != 0.0f || moveVec.z != 0.0f)
 	{
 		float targetAngle = atan2f(moveVec.x, moveVec.z);
-		// モデルの正面ベクトルが仕様上逆を向いているため、180度補正する。
+		// ���f���̐��ʃx�N�g�����d�l��t�������Ă��邽�߁A180�x�␳����B
 		rotation_.y = targetAngle + DX_PI_F;
 		model_->SetRotation(rotation_);
 	}
 }
 /*
- * 強制的な回転
- * [入力] なし
- * [出力] なし
- * [副作用] モデルをY軸に対して一定速度で回転させ続ける
+ * �����I�ȉ�]
+ * [����] �Ȃ�
+ * [�o��] �Ȃ�
+ * [����p] ���f����Y���ɑ΂��Ĉ�葬�x�ŉ�]����������
  */
 void CharacterMove::CharacterRotate()
 {
@@ -321,10 +321,10 @@ void CharacterMove::CharacterRotate()
 	model_->SetRotation(rotation_);
 }
 /*
- * モデルのスケール設定
- * [入力] scale: 設定する倍率
- * [出力] なし
- * [副作用] モデルの表示サイズを変更する
+ * ���f���̃X�P�[���ݒ�
+ * [����] scale: �ݒ肷��{��
+ * [�o��] �Ȃ�
+ * [����p] ���f���̕\���T�C�Y��ύX����
  */
 void CharacterMove::SetScale(float scale)
 {
@@ -334,19 +334,19 @@ void CharacterMove::SetScale(float scale)
 	}
 }
 /*
- * 死亡判定
- * [入力] なし
- * [出力] なし
- * [副作用] 現在は未実装
+ * ���S����
+ * [����] �Ȃ�
+ * [�o��] �Ȃ�
+ * [����p] ���݂͖�����
  */
 void CharacterMove::CharacterDied()
 {
 }
 /*
- * キャラクターの死亡処理
- * [入力] reason: 死亡理由を示す列挙値
- * [出力] なし
- * [副作用] 削除フラグの判定や各種死亡に応じた演出・処理を行う
+ * �L�����N�^�[�̎��S����
+ * [����] reason: ���S���R�������񋓒l
+ * [�o��] �Ȃ�
+ * [����p] �폜�t���O�̔����e�펀�S�ɉ��������o�E�������s��
  */
 void CharacterMove::Die(DeathReason reason)
 {

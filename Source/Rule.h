@@ -33,6 +33,7 @@ public:
 		kMenuBgm,
 		kMenuSe,
 		kMenuShadow,
+		kMenuDebug,
 		kMenuBack,
 		kMenuMax
 	};

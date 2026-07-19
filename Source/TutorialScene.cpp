@@ -18,12 +18,12 @@
 #include "GoldCow.h"
 
 TutorialScene::TutorialScene()
-	: Scene() 
+	: Scene()
 {
 	// CowManager
 	cow_delete_ = false;
-	fever_state_ = kFever1; 
-	timer_count_ = 0;        
+	fever_state_ = kFever1;
+	timer_count_ = 0;
 }
 
 TutorialScene::~TutorialScene()
@@ -36,7 +36,7 @@ TutorialScene::~TutorialScene()
 	if (texture4_) { delete texture4_; texture4_ = nullptr; }
 	if (texture5_) { delete texture5_; texture5_ = nullptr; }
 	if (texture6_) { delete texture6_; texture6_ = nullptr; }
-	
+
 	// CowManagerの生成と破棄は継承クラスSceneにて行うためここでは行わない
 }
 
@@ -52,26 +52,26 @@ void TutorialScene::Initialize()
 	CreateWalls();
 
 	new Floor(
-		"Resource/2D/GameBackground.png",
+		"Resource/2D/ゲーム画面/ゲーム背景.png",
 		VGet(0, 0, 0),
 		VGet(-11500, 0, -11500),
 		VGet(11500, 0, 11500)
 	);
-	
+
 	Master::sound_manager_->PlayBGM(SoundManager::kBgmTutorial);
-	auto Player = new Player3D("Resource/3D/Player/UFO.mv1", VGet(0.0f, 1000.0f, 0.0f));
+	auto Player = new Player3D("Resource/3D/キャラクター/プレイヤー/プレイヤーUFO.mv1", VGet(0.0f, 1000.0f, 0.0f));
 	Player->SetScale(0.6f);
 
 	SetCamera(Master::camera_);
 
 	VECTOR pos = VGet(1200, 150, 0);
 	float GraphSize_x = 800, GraphSize_y = 300;
-	texture_  = new Texture("Resource/2D/TutorialMove.png", pos, GraphSize_x, GraphSize_y, true);
-	texture2_ = new Texture("Resource/2D/TutorialBeam.png", pos, GraphSize_x, GraphSize_y, true);
-	texture3_ = new Texture("Resource/2D/TutorialCombo.png", pos, GraphSize_x, GraphSize_y, true);
-	texture4_ = new Texture("Resource/2D/TutorialPhase.png", pos, GraphSize_x, GraphSize_y, true);
-	texture5_ = new Texture("Resource/2D/TutorialSkill.png", pos, GraphSize_x, GraphSize_y, true);
-	texture6_ = new Texture("Resource/2D/TutorialFever.png", pos, GraphSize_x, GraphSize_y, true);
+	texture_  = new Texture("Resource/2D/チュートリアル/チュートリアル_移動.png", pos, GraphSize_x, GraphSize_y, true);
+	texture2_ = new Texture("Resource/2D/チュートリアル/チュートリアル_吸い込み.png", pos, GraphSize_x, GraphSize_y, true);
+	texture3_ = new Texture("Resource/2D/チュートリアル/チュートリアル_コンボ.png", pos, GraphSize_x, GraphSize_y, true);
+	texture4_ = new Texture("Resource/2D/チュートリアル/チュートリアル_フェーズ.png", pos, GraphSize_x, GraphSize_y, true);
+	texture5_ = new Texture("Resource/2D/チュートリアル/チュートリアル_スキル.png", pos, GraphSize_x, GraphSize_y, true);
+	texture6_ = new Texture("Resource/2D/チュートリアル/チュートリアル_フィーバー.png", pos, GraphSize_x, GraphSize_y, true);
 }
 
 void TutorialScene::CreateFences()
@@ -79,21 +79,21 @@ void TutorialScene::CreateFences()
 	for (int i = 0; i < 5; ++i) {
 		float z = 5050.0f;
 		float x = 500.0f + (i * 1000.0f);
-		new Object_Stage("Resource/3D/Fence1/Fence1/Fence.mv1", VGet(x, -25.0f, z), 2.5f, VGet(0.0f, 0.0f, 0.0f));
-		new Object_Stage("Resource/3D/Fence1/Fence1/Fence.mv1", VGet(-x, -25.0f, z), 2.5f, VGet(0.0f, 0.0f, 0.0f));
-		
-		new Object_Stage("Resource/3D/Fence1/Fence1/Fence.mv1", VGet(x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F, 0.0f));
-		new Object_Stage("Resource/3D/Fence1/Fence1/Fence.mv1", VGet(-x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F, 0.0f));
+		new Object_Stage("Resource/3D/ステージ/柵/柵.mv1", VGet(x, -25.0f, z), 2.5f, VGet(0.0f, 0.0f, 0.0f));
+		new Object_Stage("Resource/3D/ステージ/柵/柵.mv1", VGet(-x, -25.0f, z), 2.5f, VGet(0.0f, 0.0f, 0.0f));
+
+		new Object_Stage("Resource/3D/ステージ/柵/柵.mv1", VGet(x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F, 0.0f));
+		new Object_Stage("Resource/3D/ステージ/柵/柵.mv1", VGet(-x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F, 0.0f));
 	}
 
 	for (int i = 0; i < 5; ++i) {
 		float x = 5050.0f;
 		float z = 500.0f + (i * 1000.0f);
-		new Object_Stage("Resource/3D/Fence1/Fence1/Fence.mv1", VGet(x, -25.0f, z), 2.5f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
-		new Object_Stage("Resource/3D/Fence1/Fence1/Fence.mv1", VGet(x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
+		new Object_Stage("Resource/3D/ステージ/柵/柵.mv1", VGet(x, -25.0f, z), 2.5f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
+		new Object_Stage("Resource/3D/ステージ/柵/柵.mv1", VGet(x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
 
-		new Object_Stage("Resource/3D/Fence1/Fence1/Fence.mv1", VGet(-x, -25.0f, z), 2.5f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
-		new Object_Stage("Resource/3D/Fence1/Fence1/Fence.mv1", VGet(-x, -25.0f, -z), 2.5f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
+		new Object_Stage("Resource/3D/ステージ/柵/柵.mv1", VGet(-x, -25.0f, z), 2.5f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
+		new Object_Stage("Resource/3D/ステージ/柵/柵.mv1", VGet(-x, -25.0f, -z), 2.5f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
 	}
 }
 
@@ -126,25 +126,25 @@ void TutorialScene::Update()
 	switch (state_)
 	{
 	case kStateMove:
-		UpdateStateMove();         
+		UpdateStateMove();
 		break;
 	case kStateBeam:
-		UpdateStateBeam();         
+		UpdateStateBeam();
 		break;
 	case kStateComboScore:
-		UpdateStateComboScore();   
+		UpdateStateComboScore();
 		break;
 	case kStatePhase:
-		UpdateStatePhase();        
+		UpdateStatePhase();
 		break;
 	case kStateSkill:
-		UpdateStateSkill();        
+		UpdateStateSkill();
 		break;
 	case kStateFever:
-		UpdateStateFever();        
+		UpdateStateFever();
 		break;
 	case kStateEnd:
-		UpdateStateEnd();          
+		UpdateStateEnd();
 		break;
 	}
 
@@ -154,9 +154,9 @@ void TutorialScene::Update()
 		fade_state_ = kSceneFadeOut;
 		next_scene_ = SceneManager::kSceneTitle;
 	}
-	
+
 	Scene::Update();
-	
+
 }
 
 // 移動操作（WASD）を確認し、次のステップへ進行する
@@ -168,7 +168,7 @@ void TutorialScene::UpdateStateMove()
 	{
 		Master::sound_manager_->PlaySE(SoundManager::kSeTutorialChange);
 		state_ = kStateBeam;
-		
+
 		VECTOR spawnPos = VGet(0, 0.0f, 150.0f);
 		cow_manager_->SpawnCow(GameConstants::kCowDefault.model_path, spawnPos, 50.0f, CowMove::kCowT, 1);
 	}
@@ -201,7 +201,7 @@ void TutorialScene::UpdateStateComboScore()
 	{
 		Master::sound_manager_->PlaySE(SoundManager::kSeTutorialChange);
 		state_ = kStatePhase;
-		timer_count_ = 0; 
+		timer_count_ = 0;
 	}
 }
 
@@ -236,9 +236,9 @@ void TutorialScene::UpdateStateSkill()
 		skill_flag_ = false;
 		state_ = kStateFever;
 		Master::sound_manager_->PlaySE(SoundManager::kSeTutorialChange);
-		
+
 		// フィーバーモード用でゴールド牛を召喚
-		auto g = new GoldCow("Resource/3D/GoldCow/GoldCow.mv1", VGet(1000, 0, 1000), GoldCow::kNoFever);
+		auto g = new GoldCow("Resource/3D/キャラクター/牛/金の牛.mv1", VGet(1000, 0, 1000), GoldCow::kNoFever);
 		g->SetScale(100);
 	}
 }
@@ -248,16 +248,16 @@ void TutorialScene::UpdateStateFever()
 {
 	if (fever_state_ == kFever1)
 	{
-		if(texture6_) texture6_->Draw(); 
-		
-		if (fever_ && fever_->IsFever()) { 
-			fever_state_ = kFever2; 
+		if(texture6_) texture6_->Draw();
+
+		if (fever_ && fever_->IsFever()) {
+			fever_state_ = kFever2;
 		}
 	}
 	else if (fever_state_ == kFever2)
 	{
-		if (fever_ && fever_->IsFever() == false) { 
-			state_ = kStateEnd; 
+		if (fever_ && fever_->IsFever() == false) {
+			state_ = kStateEnd;
 		}
 	}
 }
@@ -287,7 +287,7 @@ void TutorialScene::DrawTutorialText(const char* text, int yOffset)
 
 void TutorialScene::Finalize()
 {
-	Master::sound_manager_->StopBGM();  
+	Master::sound_manager_->StopBGM();
 }
 
 

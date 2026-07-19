@@ -1,11 +1,11 @@
-﻿#include "SphereCollider.h"
+#include "SphereCollider.h"
 #include "CapsuleCollider.h"
 
 /*
- * コライダーの判定領域となる球体を定義する
- * [入力] parent: 追従する親オブジェクト, center: ローカル座標での中心点, radius: 判定の半径
- * [出力] なし
- * [副作用] Colliderの内部状態を初期化する
+ * �R���C�_�[�̔���̈�ƂȂ鋅�̂��`����
+ * [����] parent: �Ǐ]����e�I�u�W�F�N�g, center: ���[�J�����W�ł̒��S�_, radius: ����̔��a
+ * [�o��] �Ȃ�
+ * [����p] Collider�̓�����Ԃ�����������
  */
 SphereCollider::SphereCollider(Object3D* parent, VECTOR center, float radius)
 	: Collider(parent)
@@ -15,20 +15,20 @@ SphereCollider::SphereCollider(Object3D* parent, VECTOR center, float radius)
 }
 
 /*
- * 継承先でのクリーンアップを保証するため、仮想デストラクタを定義する
- * [入力] なし
- * [出力] なし
- * [副作用] なし
+ * �p����ł̃N���[���A�b�v��ۏ؂��邽�߁A���z�f�X�g���N�^���`����
+ * [����] �Ȃ�
+ * [�o��] �Ȃ�
+ * [����p] �Ȃ�
  */
 SphereCollider::~SphereCollider()
 {
 }
 
 /*
- * 判定領域の目視確認を容易にするため、デバッグ用ワイヤーフレームを描画する
- * [入力] なし
- * [出力] なし
- * [副作用] 画面に描画コマンドが発行される
+ * ����̈�̖ڎ��m�F��e�Ղɂ��邽�߁A�f�o�b�O�p���C���[�t���[����`�悷��
+ * [����] �Ȃ�
+ * [�o��] �Ȃ�
+ * [����p] ��ʂɕ`��R�}���h�����s�����
  */
 void SphereCollider::Draw()
 {
@@ -43,30 +43,30 @@ void SphereCollider::Draw()
 }
 
 /*
- * 衝突開始時の処理を委譲するため、イベントを発火する
- * [入力] なし
- * [出力] なし
- * [副作用] 親オブジェクトのコールバックを呼び出す
+ * �ՓˊJ�n���̏������Ϗ����邽�߁A�C�x���g�𔭉΂���
+ * [����] �Ȃ�
+ * [�o��] �Ȃ�
+ * [����p] �e�I�u�W�F�N�g�̃R�[���o�b�N���Ăяo��
  */
 void SphereCollider::OnEnter()
 {
 }
 
 /*
- * 衝突中の処理を継続して委譲するため、イベントを発火する
- * [入力] なし
- * [出力] なし
- * [副作用] 親オブジェクトのコールバックを呼び出す
+ * �Փ˒��̏������p�����ĈϏ����邽�߁A�C�x���g�𔭉΂���
+ * [����] �Ȃ�
+ * [�o��] �Ȃ�
+ * [����p] �e�I�u�W�F�N�g�̃R�[���o�b�N���Ăяo��
  */
 void SphereCollider::OnTrigger()
 {
 }
 
 /*
- * 衝突終了時の処理を委譲するため、イベントを発火する
- * [入力] なし
- * [出力] なし
- * [副作用] 親オブジェクトのコールバックを呼び出す
+ * �ՓˏI�����̏������Ϗ����邽�߁A�C�x���g�𔭉΂���
+ * [����] �Ȃ�
+ * [�o��] �Ȃ�
+ * [����p] �e�I�u�W�F�N�g�̃R�[���o�b�N���Ăяo��
  */
 void SphereCollider::OnExit()
 {

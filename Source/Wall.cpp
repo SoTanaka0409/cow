@@ -1,12 +1,12 @@
-﻿#include "Wall.h"
+#include "Wall.h"
 #include "DxLib.h"
 #include "Master.h"
 
 /*
- * 描画用リソースと空間内の配置位置を初期化するため
- * [入力] filename: 画像パス, centerPos: 中心座標, topLeft: 左上相対位置, bottomRight: 右下相対位置
- * [出力] なし
- * [副作用] 画像メモリの確保と頂点配列の構築を行う
+ * �`��p���\�[�X�Ƌ�ԓ��̔z�u�ʒu�����������邽��
+ * [����] filename: �摜�p�X, centerPos: ���S���W, topLeft: ���㑊�Έʒu, bottomRight: �E�����Έʒu
+ * [�o��] �Ȃ�
+ * [����p] �摜�������̊m�ۂƒ��_�z��̍\�z���s��
  */
 Wall::Wall(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight)
 	: Object3D(centerPos)
@@ -62,10 +62,10 @@ Wall::Wall(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottom
 }
 
 /*
- * 外部クラスが壁との当たり判定を計算できるようにするため
- * [入力] なし
- * [出力] 壁を構成する4つの頂点データ
- * [副作用] なし
+ * �O���N���X���ǂƂ̓����蔻����v�Z�ł���悤�ɂ��邽��
+ * [����] �Ȃ�
+ * [�o��] �ǂ��\������4�̒��_�f�[�^
+ * [����p] �Ȃ�
  */
 std::vector<VERTEX3D> Wall::GetVertex()
 {
@@ -78,10 +78,10 @@ std::vector<VERTEX3D> Wall::GetVertex()
 }
 
 /*
- * オブジェクト破棄時の後処理を行うため
- * [入力] なし
- * [出力] なし
- * [副作用] なし
+ * �I�u�W�F�N�g�j�����̌㏈�����s������
+ * [����] �Ȃ�
+ * [�o��] �Ȃ�
+ * [����p] �Ȃ�
  */
 Wall::~Wall()
 {
@@ -89,20 +89,20 @@ Wall::~Wall()
 }
 
 /*
- * 壁の動的な状態変化を毎フレーム反映させるため
- * [入力] なし
- * [出力] なし
- * [副作用] 状態変数を更新する
+ * �ǂ̓��I�ȏ�ԕω��𖈃t���[�����f�����邽��
+ * [����] �Ȃ�
+ * [�o��] �Ȃ�
+ * [����p] ��ԕϐ����X�V����
  */
 void Wall::Update()
 {
 }
 
 /*
- * プレイヤーに壁の存在を視覚的に伝えるため
- * [入力] なし
- * [出力] なし
- * [副作用] 画面にポリゴンを描画する
+ * �v���C���[�ɕǂ̑��݂����o�I�ɓ`���邽��
+ * [����] �Ȃ�
+ * [�o��] �Ȃ�
+ * [����p] ��ʂɃ|���S����`�悷��
  */
 void Wall::Draw()
 {
@@ -115,7 +115,7 @@ void Wall::Draw()
 	index[4] = 2;
 	index[5] = 1;
 
-	// テクスチャ本来の色合いで描画するため
+	// �e�N�X�`���{���̐F�����ŕ`�悷�邽��
 	SetUseLighting(false);
 	DrawPolygonIndexed3D(vertex_, 4, index, 2, graph_handle_, true);
 	SetUseLighting(true);

@@ -1,4 +1,4 @@
-ï»¿#include "CowMove.h"
+#include "CowMove.h"
 #include "GameConstants.h"
 #include "Master.h"
 #include "InputManager.h"
@@ -16,7 +16,7 @@
 #include "ServiceLocator.h"
 
 namespace {
-	// æš«å®šå¯¾å¿œ: ã‚³ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³è¦ç´ å»ƒæ­¢ã®ä»•æ§˜å¤‰æ›´ã«ä¼´ã„ã€ã“ã‚Œã‚‰ã®åŒç¨®é€£ç¶šå›žåŽç®¡ç†å¤‰æ•°ã¯æ¬¡å›žæ›´æ–°ã§å‰Šé™¤ï¼ˆæœŸé™: ä»Šæœˆæœ«ï¼‰
+	// Žb’è‘Î‰ž: ƒRƒŒƒNƒVƒ‡ƒ“—v‘f”pŽ~‚ÌŽd—l•ÏX‚É”º‚¢A‚±‚ê‚ç‚Ì“¯Ží˜A‘±‰ñŽûŠÇ—•Ï”‚ÍŽŸ‰ñXV‚ÅíœiŠúŒÀ: ¡ŒŽ––j
 	int s_mnTagCountCow = 0;
 	CowMove::TagCow s_tag1Cow = CowMove::kNone;
 	CowMove::TagCow s_tag2Cow = CowMove::kNone;
@@ -24,9 +24,9 @@ namespace {
 }
 
 /*
- * å…¥åŠ›: filename (ãƒ¢ãƒ‡ãƒ«), initPos (åˆæœŸåº§æ¨™)
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: ç‰›å›ºæœ‰ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ï¼ˆã‚¹ã‚³ã‚¢ãƒ»XPãƒ»ç”Ÿå­˜æ™‚é–“ï¼‰ã®è¨­å®šã¨ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ãƒ­ãƒ¼ãƒ‰
+ * “ü—Í: filename (ƒ‚ƒfƒ‹), initPos (‰ŠúÀ•W)
+ * o—Í: ‚È‚µ
+ * •›ì—p: ‹ŒÅ—L‚Ìƒpƒ‰ƒ[ƒ^iƒXƒRƒAEXPE¶‘¶ŽžŠÔj‚ÌÝ’è‚ÆƒGƒtƒFƒNƒg‚Ìƒ[ƒh
  */
 CowMove::CowMove(std::string filename, VECTOR initPos)
 	: CharacterMove(filename, initPos)
@@ -45,7 +45,7 @@ CowMove::CowMove(std::string filename, VECTOR initPos)
 		death_timer_ = GameConstants::kCowTutorial.death_time_height;
 	}
 
-	cow_vm_ = new EffekseerEffect("Resource/3D/EFK/MowVm.efk", position_, 50.0f);
+	cow_vm_ = new EffekseerEffect("Resource/3D/ƒGƒtƒFƒNƒg/‹‹z‚¢ž‚Ý.efk", position_, 50.0f);
 }
 
 CowMove::~CowMove()
@@ -53,15 +53,15 @@ CowMove::~CowMove()
 }
 
 /*
- * å…¥åŠ›: pos (å†é…ç½®ã™ã‚‹åº§æ¨™)
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ—ãƒ¼ãƒªãƒ³ã‚°å†åˆ©ç”¨æ™‚ã®çŠ¶æ…‹åˆæœŸåŒ–
+ * “ü—Í: pos (Ä”z’u‚·‚éÀ•W)
+ * o—Í: ‚È‚µ
+ * •›ì—p: ƒIƒuƒWƒFƒNƒgƒv[ƒŠƒ“ƒOÄ—˜—pŽž‚Ìó‘Ô‰Šú‰»
  */
 void CowMove::Reset(VECTOR pos)
 {
 	CharacterMove::Reset(pos);
 
-	// ãƒ—ãƒ¼ãƒ«ã‹ã‚‰å†åˆ©ç”¨ã—ãŸéš›ã€ä»¥å‰ã®æ­»äº¡åˆ¤å®šã‚„ã‚¨ãƒ•ã‚§ã‚¯ãƒˆé€²è¡Œåº¦ãŒå¼•ãç¶™ãŒã‚Œã‚‹ãƒã‚°ã‚’é˜²ããŸã‚åˆæœŸåŒ–
+	// ƒv[ƒ‹‚©‚çÄ—˜—p‚µ‚½ÛAˆÈ‘O‚ÌŽ€–S”»’è‚âƒGƒtƒFƒNƒgis“x‚ªˆø‚«Œp‚ª‚ê‚éƒoƒO‚ð–h‚®‚½‚ß‰Šú‰»
 	mDeleteFlag = false;
 	effect_timer_ = 0;
 	if (cow_vm_ != nullptr)
@@ -98,9 +98,9 @@ void CowMove::Draw()
 }
 
 /*
- * å…¥åŠ›: ãªã—
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®åº§æ¨™ã¨é«˜ã•(position2_)ã‚’ç¾åœ¨ã®ãƒ¢ãƒ‡ãƒ«åº§æ¨™ã«è¿½å¾“ã•ã›ã‚‹
+ * “ü—Í: ‚È‚µ
+ * o—Í: ‚È‚µ
+ * •›ì—p: ƒRƒ‰ƒCƒ_[‚ÌÀ•W‚Æ‚‚³(position2_)‚ðŒ»Ý‚Ìƒ‚ƒfƒ‹À•W‚É’Ç]‚³‚¹‚é
  */
 void CowMove::ColliderMove()
 {
@@ -129,9 +129,9 @@ void CowMove::MoveCharacter()
 }
 
 /*
- * å…¥åŠ›: ãªã—
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: ä»–ã®ç‰›ã¨ã®è·é›¢è¨ˆç®—ãŠã‚ˆã³åº§æ¨™ã®æŠ¼ã—å‡ºã—è£œæ­£
+ * “ü—Í: ‚È‚µ
+ * o—Í: ‚È‚µ
+ * •›ì—p: ‘¼‚Ì‹‚Æ‚Ì‹——£ŒvŽZ‚¨‚æ‚ÑÀ•W‚Ì‰Ÿ‚µo‚µ•â³
  */
 void CowMove::AvoidOtherCows()
 {
@@ -148,11 +148,11 @@ void CowMove::AvoidOtherCows()
 			float distSq = VSquareSize(diff);
 			float minDist = 50.0f;
 
-			// å¤šæ•°ã®ç‰›ãŒå®Œå…¨ã«é‡ãªã‚Šã€Zãƒ•ã‚¡ã‚¤ãƒ†ã‚£ãƒ³ã‚°(æç”»ã®ãƒãƒ©ã¤ã)ã‚„ä¸è‡ªç„¶ãªå¯†é›†ãŒç™ºç”Ÿã™ã‚‹ã®ã‚’é˜²ã
+			// ‘½”‚Ì‹‚ªŠ®‘S‚Éd‚È‚èAZƒtƒ@ƒCƒeƒBƒ“ƒO(•`‰æ‚Ìƒ`ƒ‰‚Â‚«)‚â•sŽ©‘R‚È–§W‚ª”­¶‚·‚é‚Ì‚ð–h‚®
 			if (distSq < minDist * minDist)
 			{
 				VECTOR dir_ = diff;
-				// åº§æ¨™ãŒå®Œå…¨ã«ä¸€è‡´ã—ãŸå ´åˆã€ã‚¼ãƒ­é™¤ç®—ã‚„æŠ¼ã—å‡ºã—æ–¹å‘ã®æ¶ˆå¤±ã‚’é˜²ããŸã‚å¾®å°ãªä¹±æ•°ãƒ™ã‚¯ãƒˆãƒ«ã‚’ä¸Žãˆã‚‹
+				// À•W‚ªŠ®‘S‚Éˆê’v‚µ‚½ê‡Aƒ[ƒœŽZ‚â‰Ÿ‚µo‚µ•ûŒü‚ÌÁŽ¸‚ð–h‚®‚½‚ß”÷¬‚È—”ƒxƒNƒgƒ‹‚ð—^‚¦‚é
 				if (distSq < 0.001f)
 				{
 					dir_ = VGet((float)(GetRand(100) - 50), 0.0f, (float)(GetRand(100) - 50));
@@ -167,13 +167,13 @@ void CowMove::AvoidOtherCows()
 }
 
 /*
- * å…¥åŠ›: ãªã—
- * å‡ºåŠ›: é¤Œã‚’æ¤œçŸ¥ã—è¿½å¾“çŠ¶æ…‹ã«å…¥ã£ãŸå ´åˆã¯true
- * å‰¯ä½œç”¨: é¤Œã«å‘ã‹ã†åº§æ¨™æ›´æ–°
+ * “ü—Í: ‚È‚µ
+ * o—Í: ‰a‚ðŒŸ’m‚µ’Ç]ó‘Ô‚É“ü‚Á‚½ê‡‚Ítrue
+ * •›ì—p: ‰a‚ÉŒü‚©‚¤À•WXV
  */
 bool CowMove::SeekBait()
 {
-	// ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ç«¶åˆã«ã‚ˆã‚‹ã‚¹ã‚¿ãƒƒã‚¯ã‚’é˜²ããŸã‚ã€ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«ä¸­ãŠã‚ˆã³UFOå¸å¼•ä¸­ã¯é¤Œã®è¿½å¾“å‡¦ç†ã‚’ç„¡åŠ¹åŒ–ã™ã‚‹
+	// ƒAƒNƒVƒ‡ƒ“‹£‡‚É‚æ‚éƒXƒ^ƒbƒN‚ð–h‚®‚½‚ßAƒ`ƒ…[ƒgƒŠƒAƒ‹’†‚¨‚æ‚ÑUFO‹zˆø’†‚Í‰a‚Ì’Ç]ˆ—‚ð–³Œø‰»‚·‚é
 	if (Master::scene_manager_->GetSceneType() == SceneManager::kSceneTutorial) return false;
 	if (mCurrentState == STATE_VACUUM) return false;
 
@@ -231,9 +231,9 @@ void CowMove::AddAnimation(AnimationState state, std::string filename)
 }
 
 /*
- * å…¥åŠ›: collider (è‡ªèº«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼), check (ç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼)
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: é¤Œæ¤œçŸ¥ãƒ•ãƒ©ã‚°ã®æœ‰åŠ¹åŒ–ã€ã¾ãŸã¯ä»–ç‰›ã¨ã®ç‰©ç†çš„ãªæŠ¼ã—å‡ºã—å‡¦ç†
+ * “ü—Í: collider (Ž©g‚ÌƒRƒ‰ƒCƒ_[), check (‘ŠŽè‚ÌƒRƒ‰ƒCƒ_[)
+ * o—Í: ‚È‚µ
+ * •›ì—p: ‰aŒŸ’mƒtƒ‰ƒO‚Ì—LŒø‰»A‚Ü‚½‚Í‘¼‹‚Æ‚Ì•¨—“I‚È‰Ÿ‚µo‚µˆ—
  */
 void CowMove::OnEnter(Collider* collider, Collider* check)
 {
@@ -246,7 +246,7 @@ void CowMove::OnEnter(Collider* collider, Collider* check)
 
 		if (check->parent_object_->GetTag() == kTag3dCow)
 		{
-			// ç‰©ç†ã‚¨ãƒ³ã‚¸ãƒ³ã®æ¼”ç®—é…ã‚Œã§ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåŒå£«ãŒæ·±ãã‚ã‚Šè¾¼ã‚“ã éš›ã€å¼·å¼•ã«å¼•ãå‰¥ãŒã™ãŸã‚ã®è£œæ­£å‡¦ç†
+			// •¨—ƒGƒ“ƒWƒ“‚Ì‰‰ŽZ’x‚ê‚ÅƒIƒuƒWƒFƒNƒg“¯Žm‚ª[‚­‚ß‚èž‚ñ‚¾ÛA‹­ˆø‚Éˆø‚«”‚ª‚·‚½‚ß‚Ì•â³ˆ—
 			VECTOR otherPos = check->parent_object_->GetPosition();
 			VECTOR dir_ = VSub(position_, otherPos);
 			dir_.y = 0.0f;
@@ -266,9 +266,9 @@ void CowMove::OnEnter(Collider* collider, Collider* check)
 }
 
 /*
- * å…¥åŠ›: collider (è‡ªèº«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼), check (ç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼)
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: ä»–ç‰›ã¨ã®ç¶™ç¶šçš„ãªé‡ãªã‚Šã«å¯¾ã™ã‚‹æŠ¼ã—å‡ºã—å‡¦ç†
+ * “ü—Í: collider (Ž©g‚ÌƒRƒ‰ƒCƒ_[), check (‘ŠŽè‚ÌƒRƒ‰ƒCƒ_[)
+ * o—Í: ‚È‚µ
+ * •›ì—p: ‘¼‹‚Æ‚ÌŒp‘±“I‚Èd‚È‚è‚É‘Î‚·‚é‰Ÿ‚µo‚µˆ—
  */
 void CowMove::OnTrigger(Collider* collider, Collider* check)
 {
@@ -276,7 +276,7 @@ void CowMove::OnTrigger(Collider* collider, Collider* check)
 	{
 		if (check->parent_object_->GetTag() == kTag3dCow)
 		{
-			// OnEnterã¨åŒæ§˜ã®ç†ç”±ã«ã‚ˆã‚‹ã‚¹ã‚¿ãƒƒã‚¯é˜²æ­¢ç­–
+			// OnEnter‚Æ“¯—l‚Ì——R‚É‚æ‚éƒXƒ^ƒbƒN–hŽ~ô
 			VECTOR otherPos = check->parent_object_->GetPosition();
 			VECTOR dir_ = VSub(position_, otherPos);
 			dir_.y = 0.0f;
@@ -296,9 +296,9 @@ void CowMove::OnTrigger(Collider* collider, Collider* check)
 }
 
 /*
- * å…¥åŠ›: collider (è‡ªèº«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼), check (ç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼)
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: é¤Œæ¤œçŸ¥ãƒ•ãƒ©ã‚°ã®ç„¡åŠ¹åŒ–
+ * “ü—Í: collider (Ž©g‚ÌƒRƒ‰ƒCƒ_[), check (‘ŠŽè‚ÌƒRƒ‰ƒCƒ_[)
+ * o—Í: ‚È‚µ
+ * •›ì—p: ‰aŒŸ’mƒtƒ‰ƒO‚Ì–³Œø‰»
  */
 void CowMove::OnExit(Collider* collider, Collider* check)
 {
@@ -312,9 +312,9 @@ void CowMove::OnExit(Collider* collider, Collider* check)
 }
 
 /*
- * å…¥åŠ›: ãªã—
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: UFOå¸å¼•ä¸­ã®åº§æ¨™è¿½å¾“ã€ã‚¨ãƒ•ã‚§ã‚¯ãƒˆå†ç”Ÿã€ãŠã‚ˆã³ä¸€å®šé«˜åº¦åˆ°é”ã«ã‚ˆã‚‹æ­»äº¡å‡¦ç†
+ * “ü—Í: ‚È‚µ
+ * o—Í: ‚È‚µ
+ * •›ì—p: UFO‹zˆø’†‚ÌÀ•W’Ç]AƒGƒtƒFƒNƒgÄ¶A‚¨‚æ‚Ñˆê’è‚“x“ž’B‚É‚æ‚éŽ€–Sˆ—
  */
 void CowMove::CharacterDied()
 {
@@ -327,7 +327,7 @@ void CowMove::CharacterDied()
 		{
 			position_.y += player->Status(Player3D::Status_AttackS) * Master::GetDeltaTimeScaler();
 
-			// ãƒ•ã‚£ãƒ¼ãƒãƒ¼ä¸­ã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç§»å‹•é€Ÿåº¦ãŒä¸ŠãŒã‚‹ãŸã‚ã€å¸å¼•æ¼ã‚Œã‚’é˜²ãç›®çš„ã§ç‰›ã‚’UFOã®çœŸä¸‹ã¸å¼·åˆ¶çš„ã«å¸ã„å¯„ã›ã‚‹
+			// ƒtƒB[ƒo[’†‚ÍƒvƒŒƒCƒ„[‚ÌˆÚ“®‘¬“x‚ªã‚ª‚é‚½‚ßA‹zˆø˜R‚ê‚ð–h‚®–Ú“I‚Å‹‚ðUFO‚Ì^‰º‚Ö‹­§“I‚É‹z‚¢Šñ‚¹‚é
 			if (Master::FeverFlag)
 			{
 				float followSpeed = 0.15f;
@@ -344,7 +344,7 @@ void CowMove::CharacterDied()
 			{
 				if (effect_timer_ <= 0 && is_visible_ == true)
 				{
-					// cow_vm_->Play();  // ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’OFFã«ã™ã‚‹ãŸã‚ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆ
+					// cow_vm_->Play();  // ƒGƒtƒFƒNƒg‚ðOFF‚É‚·‚é‚½‚ßƒRƒƒ“ƒgƒAƒEƒg
 					effect_timer_ = 60;
 					is_visible_ = false;
 					capsule_collider_->SetDeleteFlag(true);
@@ -372,9 +372,9 @@ void CowMove::CharacterDied()
 }
 
 /*
- * å…¥åŠ›: ãªã—
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: é¤Œã«ã‚ˆã‚‹æ­»äº¡(æ¶ˆå¤±)å‡¦ç†ãŠã‚ˆã³å‰Šé™¤ãƒ•ãƒ©ã‚°ä»˜ä¸Ž
+ * “ü—Í: ‚È‚µ
+ * o—Í: ‚È‚µ
+ * •›ì—p: ‰a‚É‚æ‚éŽ€–S(ÁŽ¸)ˆ—‚¨‚æ‚Ñíœƒtƒ‰ƒO•t—^
  */
 void CowMove::KilledByBait()
 {
@@ -384,9 +384,9 @@ void CowMove::KilledByBait()
 }
 
 /*
- * å…¥åŠ›: reason (æ­»äº¡ç†ç”±)
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¸ã®ã‚¹ã‚³ã‚¢ãƒ»XPãƒ»ã‚³ãƒ³ãƒœåŠ ç®—ã€ãŠã‚ˆã³è‡ªèº«ã¸ã®å‰Šé™¤ãƒ•ãƒ©ã‚°ä»˜ä¸Ž
+ * “ü—Í: reason (Ž€–S——R)
+ * o—Í: ‚È‚µ
+ * •›ì—p: ƒvƒŒƒCƒ„[‚Ö‚ÌƒXƒRƒAEXPEƒRƒ“ƒ{‰ÁŽZA‚¨‚æ‚ÑŽ©g‚Ö‚Ìíœƒtƒ‰ƒO•t—^
  */
 void CowMove::Die(DeathReason reason)
 {
@@ -408,8 +408,8 @@ void CowMove::Die(DeathReason reason)
 				Master::tutorial_count_++;
 			}
 
-			// æš«å®šå¯¾å¿œ: ã‚³ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³è¦ç´ ã‚’å»ƒæ­¢ã—ã¦ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã«ç‰¹åŒ–ã™ã‚‹ä»•æ§˜å¤‰æ›´ã«ä¼´ã„ã€
-			// ä»¥ä¸‹ã®åŒç¨®é€£ç¶šå›žåŽãƒœãƒ¼ãƒŠã‚¹å‡¦ç†ã¯éžæŽ¨å¥¨ã‚³ãƒ¼ãƒ‰ã¨ã™ã‚‹ã€‚æ¬¡å›žãƒªãƒ•ã‚¡ã‚¯ã‚¿ãƒªãƒ³ã‚°æ™‚ã«å‰Šé™¤ã™ã‚‹ï¼ˆæœŸé™ï¼šä»Šæœˆæœ«ï¼‰
+			// Žb’è‘Î‰ž: ƒRƒŒƒNƒVƒ‡ƒ“—v‘f‚ð”pŽ~‚µ‚ÄƒAƒNƒVƒ‡ƒ“‚É“Á‰»‚·‚éŽd—l•ÏX‚É”º‚¢A
+			// ˆÈ‰º‚Ì“¯Ží˜A‘±‰ñŽûƒ{[ƒiƒXˆ—‚Í”ñ„§ƒR[ƒh‚Æ‚·‚éBŽŸ‰ñƒŠƒtƒ@ƒNƒ^ƒŠƒ“ƒOŽž‚Éíœ‚·‚éiŠúŒÀF¡ŒŽ––j
 			s_mnTagCountCow++;
 			if (s_mnTagCountCow == 1)
 			{

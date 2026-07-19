@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "DxLib.h"
 #include <string>
 #include "Object3D.h"
@@ -13,15 +13,15 @@
 
 class CapsuleCollider;
 
-// プレイヤーの入力処理、移動、状態遷移、ステータス計算を一元管理するクラス
-// 各種サブマネージャーを内包するため、ライフサイクルの管理（メモリリーク）に注意すること
+// �v���C���[�̓��͏����A�ړ��A��ԑJ�ځA�X�e�[�^�X�v�Z���ꌳ�Ǘ�����N���X
+// �e��T�u�}�l�[�W���[�����邽�߁A���C�t�T�C�N���̊Ǘ��i���������[�N�j�ɒ��ӂ��邱��
 class Player3D : public Object3D
 {
 private:
-	bool vacuum_flag_ = true; // 吸い込みの有効状態
+	bool vacuum_flag_ = true; // �z�����݂̗L�����
 
 public:
-	// ステータスID
+	// �X�e�[�^�XID
 	enum StatusID
 	{
 		Status_Hp,
@@ -29,137 +29,137 @@ public:
 		kStatusSpeed,
 	};
 
-	// [入力] なし [出力] 吸い込みフラグの真偽値 [副作用] なし
-	// チュートリアル中など、特定イベント進行前に吸い込みが暴発して進行不能になるのを防ぐための状態参照
+	// [����] �Ȃ� [�o��] �z�����݃t���O�̐^�U�l [����p] �Ȃ�
+	// �`���[�g���A�����ȂǁA����C�x���g�i�s�O�ɋz�����݂��\�����Đi�s�s�\�ɂȂ�̂�h�����߂̏�ԎQ��
 	bool GetVacuumFlag() const
 	{
 		return vacuum_flag_;
 	}
 
 public:
-	// [入力] filename: モデルパス, initPos: 初期座標 [出力] なし [副作用] 各種リソースの動的確保
-	// 動的確保するポインタ群（サブシステムや判定）のメモリリークを防ぐため、破棄時のdeleteと対にすること
+	// [����] filename: ���f���p�X, initPos: �������W [�o��] �Ȃ� [����p] �e�탊�\�[�X�̓��I�m��
+	// ���I�m�ۂ���|�C���^�Q�i�T�u�V�X�e���┻��j�̃��������[�N��h�����߁A�j������delete�Ƒ΂ɂ��邱��
 	Player3D(std::string filename, VECTOR initPos);
 
-	// [入力] なし [出力] なし [副作用] 確保したポインタの解放
-	// EffekseerやModelなどのリソース解放順序を間違えるとアクセス違反でクラッシュするため注意
+	// [����] �Ȃ� [�o��] �Ȃ� [����p] �m�ۂ����|�C���^�̉��
+	// Effekseer��Model�Ȃǂ̃��\�[�X����������ԈႦ��ƃA�N�Z�X�ᔽ�ŃN���b�V�����邽�ߒ���
 	virtual ~Player3D();
 
-	// [入力] なし [出力] なし [副作用] 3Dモデルの描画コール
-	// Zバッファの仕様上、半透明オブジェクトより先に描画されるようマネージャ側で制御すること
+	// [����] �Ȃ� [�o��] �Ȃ� [����p] 3D���f���̕`��R�[��
+	// Z�o�b�t�@�̎d�l��A�������I�u�W�F�N�g����ɕ`�悳���悤�}�l�[�W�����Ő��䂷�邱��
 	void Draw() override;
 	void DrawShadowCaster() override;
 
-	// [入力] なし [出力] なし [副作用] 各種状態の更新処理
+	// [����] �Ȃ� [�o��] �Ȃ� [����p] �e���Ԃ̍X�V����
 	void Update() override;
 
-	// [入力] なし [出力] なし [副作用] プレイヤー座標の更新
-	// カメラの向きに依存するため、必ずカメラのUpdateより後に実行して進行方向のズレを防ぐこと
+	// [����] �Ȃ� [�o��] �Ȃ� [����p] �v���C���[���W�̍X�V
+	// �J�����̌����Ɉˑ����邽�߁A�K���J������Update����Ɏ��s���Đi�s�����̃Y����h������
 	void MoveEx();
 
-	// [入力] なし [出力] なし [副作用] ゲージ消費と吸い込み状態の変更
-	// 多重呼び出しによるゲージの異常消費を防ぐため、アクション制限状態（スタン等）では必ずガードをかけること
+	// [����] �Ȃ� [�o��] �Ȃ� [����p] �Q�[�W����Ƌz�����ݏ�Ԃ̕ύX
+	// ���d�Ăяo���ɂ��Q�[�W�ُ̈�����h�����߁A�A�N�V����������ԁi�X�^�����j�ł͕K���K�[�h�������邱��
 	void Play();
 
-	// [入力] なし [出力] なし [副作用] コライダーの座標同期
-	// モデル移動の後に呼ばないと、当たり判定が1フレーム取り残されて壁抜けバグの原因になるため順序厳守
+	// [����] �Ȃ� [�o��] �Ȃ� [����p] �R���C�_�[�̍��W����
+	// ���f���ړ��̌�ɌĂ΂Ȃ��ƁA�����蔻�肪1�t���[�����c����ĕǔ����o�O�̌����ɂȂ邽�ߏ�������
 	void ColliderUpdate();
 
-	// [入力] なし [出力] なし [副作用] 座標のクランプ処理
-	// 敵との押し出し判定等で画面外（奈落）へ落ちて進行不能になるバグを防ぐ最終防波堤
+	// [����] �Ȃ� [�o��] �Ȃ� [����p] ���W�̃N�����v����
+	// �G�Ƃ̉����o�����蓙�ŉ�ʊO�i�ޗ��j�֗����Đi�s�s�\�ɂȂ�o�O��h���ŏI�h�g��
 	void ScreenOutCheck();
 
-	// [入力] なし [出力] なし [副作用] モデル回転角の更新
-	// ジンバルロックや逆方向への急旋回時のカクつきを防ぐため、現在角から目標角へLerp補間して向かせること
+	// [����] �Ȃ� [�o��] �Ȃ� [����p] ���f����]�p�̍X�V
+	// �W���o�����b�N��t�����ւ̋}���񎞂̃J�N����h�����߁A���݊p����ڕW�p��Lerp��Ԃ��Č������邱��
 	void RotationByMove();
 
-	// [入力] なし [出力] なし [副作用] 内部保持する各サブマネージャーの更新
-	// プレイヤーのライフサイクルと紐づく機能（Skill等）の更新を一元化し、外部マネージャからの呼び出し忘れを防ぐ
+	// [����] �Ȃ� [�o��] �Ȃ� [����p] �����ێ�����e�T�u�}�l�[�W���[�̍X�V
+	// �v���C���[�̃��C�t�T�C�N���ƕR�Â��@�\�iSkill���j�̍X�V���ꌳ�����A�O���}�l�[�W������̌Ăяo���Y���h��
 	void ManagerUpdate();
 
-	// [入力] なし [出力] なし [副作用] HUD（UI）の描画
-	// 3D空間描画の完了後に呼ばないとZテストでUIが裏に隠れるため、2D描画フェーズで呼び出すこと
+	// [����] �Ȃ� [�o��] �Ȃ� [����p] HUD�iUI�j�̕`��
+	// 3D��ԕ`��̊�����ɌĂ΂Ȃ���Z�e�X�g��UI�����ɉB��邽�߁A2D�`��t�F�[�Y�ŌĂяo������
 	void bar();
 
-	// [入力] なし [出力] なし [副作用] デバッグ用テキスト等の描画
-	// リリースビルドでの意図せぬ情報露出を防ぐため、本番環境ではコンパイルスイッチ等で確実に除外すること
+	// [����] �Ȃ� [�o��] �Ȃ� [����p] �f�o�b�O�p�e�L�X�g���̕`��
+	// �����[�X�r���h�ł̈Ӑ}���ʏ��I�o��h�����߁A�{�Ԋ��ł̓R���p�C���X�C�b�`���Ŋm���ɏ��O���邱��
 
-	// [入力] id: 対象のステータスID [出力] 最終計算値 [副作用] なし
-	// スキルバフやレベル補正が乗算されるため、計算漏れバグを防ぐべく元ステータスは直接参照せず必ず本関数を通すこと
+	// [����] id: �Ώۂ̃X�e�[�^�XID [�o��] �ŏI�v�Z�l [����p] �Ȃ�
+	// �X�L���o�t�⃌�x���␳����Z����邽�߁A�v�Z�R��o�O��h���ׂ����X�e�[�^�X�͒��ڎQ�Ƃ����K���{�֐���ʂ�����
 	float Status(StatusID id);
 
-	// [入力] f: 設定する速度 [出力] なし [副作用] 攻撃速度の更新
+	// [����] f: �ݒ肷�鑬�x [�o��] �Ȃ� [����p] �U�����x�̍X�V
 	void SetStatusAttack(float f) { attack_speed_ = f; }
 
-	// [入力] なし [出力] 現在の攻撃速度 [副作用] なし
+	// [����] �Ȃ� [�o��] ���݂̍U�����x [����p] �Ȃ�
 	float GetStatusAttack() { return attack_speed_; }
 
-	// [入力] state: アニメーション状態, filename: モデルパス [出力] なし [副作用] アニメーションのロードと追加
-	// 事前ロード機構を持たないため、ゲーム中の動的追加はスパイク（処理落ち）を招く点に留意して使用すること
+	// [����] state: �A�j���[�V�������, filename: ���f���p�X [�o��] �Ȃ� [����p] �A�j���[�V�����̃��[�h�ƒǉ�
+	// ���O���[�h�@�\�������Ȃ����߁A�Q�[�����̓��I�ǉ��̓X�p�C�N�i���������j�������_�ɗ��ӂ��Ďg�p���邱��
 	void AddAnimation(AnimationState state, std::string filename);
 
-	// [入力] collider: 自身のコライダー, check: 相手のコライダー [出力] なし [副作用] 衝突イベントの発火
-	// 多段ヒットによる即死バグを防ぐため、ダメージ処理を行う場合は必ず無敵時間（インビンシブル）のフラグガードを噛ませること
+	// [����] collider: ���g�̃R���C�_�[, check: ����̃R���C�_�[ [�o��] �Ȃ� [����p] �Փ˃C�x���g�̔���
+	// ���i�q�b�g�ɂ�鑦���o�O��h�����߁A�_���[�W�������s���ꍇ�͕K�����G���ԁi�C���r���V�u���j�̃t���O�K�[�h�����܂��邱��
 	virtual void OnEnter(Collider* collider, Collider* check) override;
 	virtual void OnTrigger(Collider* collider, Collider* check) override;
 	virtual void OnExit(Collider* collider, Collider* check) override;
 
-	// [入力] なし [出力] カプセルコライダーのポインタ [副作用] なし
+	// [����] �Ȃ� [�o��] �J�v�Z���R���C�_�[�̃|�C���^ [����p] �Ȃ�
 	CapsuleCollider* GetCollisionCollider() { return capsule_collider_; }
 
-	// [入力] scale: 倍率 [出力] なし [副作用] モデルスケールと判定半径の変更
-	// 当たり判定と見た目の乖離を防ぐため、必ずコライダーの半径も同期して変更する実装にすること
+	// [����] scale: �{�� [�o��] �Ȃ� [����p] ���f���X�P�[���Ɣ��蔼�a�̕ύX
+	// �����蔻��ƌ����ڂ̘�����h�����߁A�K���R���C�_�[�̔��a���������ĕύX��������ɂ��邱��
 	void SetScale(float scale);
 
-	// [入力] stunTime: スタン時間(フレーム) [出力] なし [副作用] スタン状態のフラグ設定
-	// 行動不能時に吸い込みや移動が暴発しないよう、Update内の各アクション処理でこのフラグを監視すること
+	// [����] stunTime: �X�^������(�t���[��) [�o��] �Ȃ� [����p] �X�^����Ԃ̃t���O�ݒ�
+	// �s���s�\���ɋz�����݂�ړ����\�����Ȃ��悤�AUpdate���̊e�A�N�V���������ł��̃t���O���Ď����邱��
 	void ApplyStun(int stunTime);
 
-	// [入力] なし [出力] なし [副作用] エフェクトの生成と再生
-	// 毎フレーム呼ばれるとVRAM枯渇と処理落ちを引き起こすため、スキル発動の瞬間（エッジ）のみ発火させること
+	// [����] �Ȃ� [�o��] �Ȃ� [����p] �G�t�F�N�g�̐����ƍĐ�
+	// ���t���[���Ă΂���VRAM�͊��Ə��������������N�������߁A�X�L�������̏u�ԁi�G�b�W�j�̂ݔ��΂����邱��
 	void PlaySkillEffect();
 
 public:
-	Model* model_;               // プレイヤーの3Dモデル
-	Skill* skill_;              // スキル管理
-	Level* level_manager_;              // レベル・経験値管理
-	Combo* combo_;               // コンボ管理
-	Score* score_manager_;              // スコア管理
+	Model* model_;               // �v���C���[��3D���f��
+	Skill* skill_;              // �X�L���Ǘ�
+	Level* level_manager_;              // ���x���E�o���l�Ǘ�
+	Combo* combo_;               // �R���{�Ǘ�
+	Score* score_manager_;              // �X�R�A�Ǘ�
 
 private:
-	float speed_;                       // ベース移動速度
-	float hp_;                          // 現在体力
-	float attack_speed_;                // ベース攻撃速度
-	float target_angle_;                 // 旋回目標の角度
-	float angle_;                        // 現在の旋回角度
-	const float kRotateSpeed = 0.2f;     // 旋回時の補間係数
-	const float JUMP_POWER = 30.0f;      // ジャンプ力
-	bool mIsOutOfBounds = false;         // 画面外判定フラグ
-	int light_graph_;                     // ライティング用画像ハンドル
-	int gauge_frame_graph_;               // ゲージ枠の画像ハンドル
-	bool mIsCowInVacuumRange;            // 吸引対象が範囲内にいるかのフラグ
-	const float VACUUM_RADIUS = 300.0f;  // 吸引有効半径
-	const int VACUUM_REQUIRE_TIME = 120; // 吸引完了に必要なフレーム数
-	float mVacuumGauge = 100.0f;         // 現在の吸引ゲージ残量
-	const float VACUUM_GAUGE_MAX = 100.0f; // 吸引ゲージの最大値
-	const float VACUUM_COST_PER_FRAME = 0.2f; // 吸引中の毎フレーム消費量
-	const float VACUUM_RECOVER_PER_FRAME = 0.4f; // 非吸引時の毎フレーム回復量
-	bool mIsVacuumActive = false;        // 吸引アクション実行中フラグ
-	int CatchNowCount;                   // 現在の同時捕獲数
-	float currentSpeed;                  // 最終計算された実際の移動速度
-	VECTOR moveVec = VGet(0.0f, 0.0f, 0.0f); // 最終的な移動ベクトル
-	VECTOR oldmoveVec;                   // 前フレームの移動ベクトル
-	VECTOR hitPos = VGet(0.0f, 0.0f, 0.0f);  // 当たり判定の衝突検知座標
-	float horizontal_angle_;             // カメラ基準の水平回転角
-	float vertical_angle_;               // カメラ基準の垂直回転角
-	const int SIZE_RAND_MAX = 800;       // エフェクト等のランダムサイズ最大値
-	const int SIZE_RAND_MIN = 400;       // エフェクト等のランダムサイズ最小値
-	const int VISIBLE_TIME_RAND_MAX = 30; // エフェクト等のランダム表示時間最大値
-	const int VISIBLE_TIME_RAND_MIN = 5;  // エフェクト等のランダム表示時間最小値
-	EffekseerEffect* mpSpeed;            // スピードバフ用エフェクト
-	EffekseerEffect* beam_;             // ビーム攻撃用エフェクト
-	int effect_timer_;                   // エフェクトの再生時間管理タイマー
-	bool mIsStunned;                     // スタン(行動不能)状態フラグ
-	int mStunTimer;                      // スタン解除までの残りフレーム数
+	float speed_;                       // �x�[�X�ړ����x
+	float hp_;                          // ���ݑ̗�
+	float attack_speed_;                // �x�[�X�U�����x
+	float target_angle_;                 // ����ڕW�̊p�x
+	float angle_;                        // ���݂̐���p�x
+	const float kRotateSpeed = 0.2f;     // ���񎞂̕�ԌW��
+	const float JUMP_POWER = 30.0f;      // �W�����v��
+	bool mIsOutOfBounds = false;         // ��ʊO����t���O
+	int light_graph_;                     // ���C�e�B���O�p�摜�n���h��
+	int gauge_frame_graph_;               // �Q�[�W�g�̉摜�n���h��
+	bool mIsCowInVacuumRange;            // �z���Ώۂ��͈͓��ɂ��邩�̃t���O
+	const float VACUUM_RADIUS = 300.0f;  // �z���L�����a
+	const int VACUUM_REQUIRE_TIME = 120; // �z�������ɕK�v�ȃt���[����
+	float mVacuumGauge = 100.0f;         // ���݂̋z���Q�[�W�c��
+	const float VACUUM_GAUGE_MAX = 100.0f; // �z���Q�[�W�̍ő�l
+	const float VACUUM_COST_PER_FRAME = 0.2f; // �z�����̖��t���[�������
+	const float VACUUM_RECOVER_PER_FRAME = 0.4f; // ��z�����̖��t���[���񕜗�
+	bool mIsVacuumActive = false;        // �z���A�N�V�������s���t���O
+	int CatchNowCount;                   // ���݂̓����ߊl��
+	float currentSpeed;                  // �ŏI�v�Z���ꂽ���ۂ̈ړ����x
+	VECTOR moveVec = VGet(0.0f, 0.0f, 0.0f); // �ŏI�I�Ȉړ��x�N�g��
+	VECTOR oldmoveVec;                   // �O�t���[���̈ړ��x�N�g��
+	VECTOR hitPos = VGet(0.0f, 0.0f, 0.0f);  // �����蔻��̏Փˌ��m���W
+	float horizontal_angle_;             // �J������̐�����]�p
+	float vertical_angle_;               // �J������̐�����]�p
+	const int SIZE_RAND_MAX = 800;       // �G�t�F�N�g���̃����_���T�C�Y�ő�l
+	const int SIZE_RAND_MIN = 400;       // �G�t�F�N�g���̃����_���T�C�Y�ŏ��l
+	const int VISIBLE_TIME_RAND_MAX = 30; // �G�t�F�N�g���̃����_���\�����ԍő�l
+	const int VISIBLE_TIME_RAND_MIN = 5;  // �G�t�F�N�g���̃����_���\�����ԍŏ��l
+	EffekseerEffect* mpSpeed;            // �X�s�[�h�o�t�p�G�t�F�N�g
+	EffekseerEffect* beam_;             // �r�[���U���p�G�t�F�N�g
+	int effect_timer_;                   // �G�t�F�N�g�̍Đ����ԊǗ��^�C�}�[
+	bool mIsStunned;                     // �X�^��(�s���s�\)��ԃt���O
+	int mStunTimer;                      // �X�^�������܂ł̎c��t���[����
 
 };

@@ -1,4 +1,4 @@
-ï»¿#include "Combo.h"
+#include "Combo.h"
 #include "DxLib.h"
 #include "Master.h"
 #include "Utility.h"
@@ -8,9 +8,9 @@ Combo::Combo()
 {
 	combo_count_ = 0;
 	combo_timer_ = 0.0f;
-	combo_max_time_ = 3.0f; // é›£æ˜“åº¦èª¿æ•´ã®ãŸã‚ã‚³ãƒ³ãƒœç¶™ç¶šæ™‚é–“ã¯3ç§’ã«å›ºå®š
+	combo_max_time_ = 3.0f; // “ïˆÕ“x’²®‚Ì‚½‚ßƒRƒ“ƒ{Œp‘±ŽžŠÔ‚Í3•b‚ÉŒÅ’è
 
-	combo_image_ = Master::resource_manager_->LoadGraphics("Resource/2D/ComboText.png");
+	combo_image_ = Master::resource_manager_->LoadGraphics("Resource/2D/ƒRƒ“ƒ{/ƒRƒ“ƒ{•¶Žš.png");
 
 	combo_show_ = false;
 	combo_show_timer_ = 0.0f;
@@ -22,7 +22,7 @@ Combo::~Combo()
 
 void Combo::Draw()
 {
-	// 0ã‚³ãƒ³ãƒœæ™‚ã¯è¡¨ç¤ºã‚’çœç•¥ã—UIã®æç”»è² è·ã‚’æŠ‘ãˆã‚‹
+	// 0ƒRƒ“ƒ{Žž‚Í•\Ž¦‚ðÈ—ª‚µUI‚Ì•`‰æ•‰‰×‚ð—}‚¦‚é
 	if (combo_count_ >= 1)
 	{
 		int x = Utility::kUiBaseX;
@@ -52,7 +52,7 @@ void Combo::Update()
 		combo_timer_ -= 0.01f;
 
 		auto currentScene = Master::scene_manager_->GetSceneType();
-		// ã‚³ãƒ³ãƒœç¶™ç¶šæ™‚é–“ã‚’ä½¿ã„åˆ‡ã£ãŸãŸã‚çŠ¶æ…‹ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
+		// ƒRƒ“ƒ{Œp‘±ŽžŠÔ‚ðŽg‚¢Ø‚Á‚½‚½‚ßó‘Ô‚ðƒŠƒZƒbƒg‚·‚é
 		if (combo_timer_ <= 0.0f && currentScene != SceneManager::kSceneTutorial)
 		{
 			Reset();
@@ -67,7 +67,7 @@ void Combo::AddHit()
 
 	if (combo_count_ > 1000)
 	{
-		combo_count_ = 1000; // æç”»æ¡æ•°ã®ã‚ªãƒ¼ãƒãƒ¼ãƒ•ãƒ­ãƒ¼ã‚’é˜²ããŸã‚ã®ä¸Šé™å€¤
+		combo_count_ = 1000; // •`‰æŒ…”‚ÌƒI[ƒo[ƒtƒ[‚ð–h‚®‚½‚ß‚ÌãŒÀ’l
 	}
 }
 

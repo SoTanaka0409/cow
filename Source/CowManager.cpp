@@ -1,4 +1,4 @@
-ï»¿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include "CowManager.h"
 #include "CowMove.h"
 #include "Player3D.h"
@@ -12,30 +12,30 @@
 #include "GoldCow.h"
 #include "CapsuleCollider.h"
 /*
- * ç‰›ç®¡ç†ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åˆæœŸåŒ–ã‚’è¡Œã†ã€‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ãªã—
+ * ‹ŠÇ—ƒIƒuƒWƒFƒNƒg‚Ì‰Šú‰»‚ğs‚¤B
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ‚È‚µ
  */
 CowManager::CowManager()
 {
 }
 /*
- * æŒ‡å®šã•ã‚ŒãŸç¨®é¡ã®ç‰›ã‚’ç”Ÿæˆãƒ»é…ç½®ã™ã‚‹ã€‚ä¸Šé™åˆ°é”æ™‚ã¯æ—¢å­˜ã®ç‰›ã‚’é–“å¼•ãã€‚
- * [å…¥åŠ›] filename: ãƒ¢ãƒ‡ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹, pos: åŸºæº–åº§æ¨™, scale: ã‚¹ã‚±ãƒ¼ãƒ«, tag: ç‰›ã®ç¨®é¡, count: ç”Ÿæˆæ•°, is_fever: ãƒ•ã‚£ãƒ¼ãƒãƒ¼çŠ¶æ…‹ãƒ•ãƒ©ã‚°
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] mCreaturesã¸ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆè¿½åŠ ã€ãŠã‚ˆã³ä¸Šé™æ™‚ã¯æ—¢å­˜ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç ´æ£„ã‚’è¡Œã†ã€‚
+ * w’è‚³‚ê‚½í—Ş‚Ì‹‚ğ¶¬E”z’u‚·‚éBãŒÀ“’B‚ÍŠù‘¶‚Ì‹‚ğŠÔˆø‚­B
+ * [“ü—Í] filename: ƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹ƒpƒX, pos: Šî€À•W, scale: ƒXƒP[ƒ‹, tag: ‹‚Ìí—Ş, count: ¶¬”, is_fever: ƒtƒB[ƒo[ó‘Ôƒtƒ‰ƒO
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] mCreatures‚Ö‚ÌƒIƒuƒWƒFƒNƒg’Ç‰ÁA‚¨‚æ‚ÑãŒÀ‚ÍŠù‘¶ƒIƒuƒWƒFƒNƒg‚Ì”jŠü‚ğs‚¤B
  */
 void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove::TagCow tag, int count, bool is_fever, float scatterRadius)
 {
 	for (int i = 0; i < count; i++)
 	{
-		// ãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹ä½ä¸‹ã‚’é˜²ããŸã‚ã€ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ä¸Šã®ç‰›ã®æœ€å¤§æ•°ã‚’30åŒ¹ã«åˆ¶é™ã™ã‚‹ã€‚
+		// ƒpƒtƒH[ƒ}ƒ“ƒX’á‰º‚ğ–h‚®‚½‚ßAƒtƒB[ƒ‹ƒhã‚Ì‹‚ÌÅ‘å”‚ğ30•C‚É§ŒÀ‚·‚éB
 		if (mCreatures.size() >= 30)
 		{
 			if (tag == CowMove::kCowGold)
 			{
-				// é‡‘ç‰›ã¯å‡ºç¾å„ªå…ˆåº¦ãŒé«˜ã„ãŸã‚ã€é æ–¹ã«ã„ã‚‹ä¸è¦ãªä¸€èˆ¬ç‰›ã‚’ç ´æ£„ã—ã¦ç”Ÿæˆæ ã‚’ç¢ºä¿ã™ã‚‹ã€‚
+				// ‹à‹‚ÍoŒ»—Dæ“x‚ª‚‚¢‚½‚ßA‰“•û‚É‚¢‚é•s—v‚Èˆê”Ê‹‚ğ”jŠü‚µ‚Ä¶¬˜g‚ğŠm•Û‚·‚éB
 				bool erased = false;
 				float maxDistSq = -1.0f;
 				auto furthestIt = mCreatures.end();
@@ -68,7 +68,7 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 				}
 				else if (!mCreatures.empty())
 				{
-					// ä¸€èˆ¬ç‰›ãŒã„ãªã„å ´åˆã§ã‚‚ã€æœ€ã‚‚å¤ã„ç‰›ã‚’ç ´æ£„ã—ã¦é‡‘ç‰›ã®æ ã‚’å¼·åˆ¶çš„ã«ç©ºã‘ã‚‹ã€‚
+					// ˆê”Ê‹‚ª‚¢‚È‚¢ê‡‚Å‚àAÅ‚àŒÃ‚¢‹‚ğ”jŠü‚µ‚Ä‹à‹‚Ì˜g‚ğ‹­§“I‚É‹ó‚¯‚éB
 					mCreatures.front()->Die(DEATH_LIMIT);
 					auto cow = mCreatures.front();
 					cow->Deactivate();

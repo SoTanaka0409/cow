@@ -1,4 +1,4 @@
-ï»¿#include "AnimalMove.h"
+#include "AnimalMove.h"
 #include "GameConstants.h"
 #include "Master.h"
 #include "InputManager.h"
@@ -23,10 +23,10 @@ namespace {
 }
 
 /*
- * å‹•ç‰©ã®åˆæœŸåŒ–
- * [å…¥åŠ›] filename: ãƒ¢ãƒ‡ãƒ«ãƒ‘ã‚¹, initPos: åˆæœŸåº§æ¨™
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] å„ç¨®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã®åˆæœŸè¨­å®š
+ * “®•¨‚Ì‰Šú‰»
+ * [“ü—Í] filename: ƒ‚ƒfƒ‹ƒpƒX, initPos: ‰ŠúÀ•W
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ŠeíƒXƒe[ƒ^ƒX‚Ì‰Šúİ’è
  */
 AnimalMove::AnimalMove(std::string filename, VECTOR initPos)
 	: CharacterMove(filename, initPos)
@@ -41,20 +41,20 @@ AnimalMove::AnimalMove(std::string filename, VECTOR initPos)
 }
 
 /*
- * çµ‚äº†å‡¦ç†
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ãªã—
+ * I—¹ˆ—
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ‚È‚µ
  */
 AnimalMove::~AnimalMove()
 {
 }
 
 /*
- * çŠ¶æ…‹ã®ãƒªã‚»ãƒƒãƒˆ
- * [å…¥åŠ›] pos: å†é…ç½®ã™ã‚‹åº§æ¨™
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã¨ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®åº§æ¨™ã‚’æ›´æ–°
+ * ó‘Ô‚ÌƒŠƒZƒbƒg
+ * [“ü—Í] pos: Ä”z’u‚·‚éÀ•W
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ƒLƒƒƒ‰ƒNƒ^[‚ÆƒRƒ‰ƒCƒ_[‚ÌÀ•W‚ğXV
  */
 void AnimalMove::Reset(VECTOR pos)
 {
@@ -67,10 +67,10 @@ void AnimalMove::Reset(VECTOR pos)
 }
 
 /*
- * å‹•ç‰©ã®ç§»å‹•å‡¦ç†
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] åº§æ¨™ã®æ›´æ–°
+ * “®•¨‚ÌˆÚ“®ˆ—
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] À•W‚ÌXV
  */
 void AnimalMove::MoveCharacter()
 {
@@ -78,20 +78,20 @@ void AnimalMove::MoveCharacter()
 }
 
 /*
- * ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®è¿½åŠ 
- * [å…¥åŠ›] state: ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³çŠ¶æ…‹, filename: ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ãªã—
+ * ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì’Ç‰Á
+ * [“ü—Í] state: ƒAƒjƒ[ƒVƒ‡ƒ“ó‘Ô, filename: ƒtƒ@ƒCƒ‹ƒpƒX
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ‚È‚µ
  */
 void AnimalMove::AddAnimation(AnimationState state, std::string filename)
 {
 }
 
 /*
- * æ¥è§¦æ™‚ã®å‡¦ç†
- * [å…¥åŠ›] collider: è‡ªèº«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼, check: ç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] é¤Œã«æ¥è§¦ã—ãŸå ´åˆã€èª˜å¼•ãƒ•ãƒ©ã‚°ã‚’æœ‰åŠ¹åŒ–
+ * ÚG‚Ìˆ—
+ * [“ü—Í] collider: ©g‚ÌƒRƒ‰ƒCƒ_[, check: ‘Šè‚ÌƒRƒ‰ƒCƒ_[
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ‰a‚ÉÚG‚µ‚½ê‡A—Uˆøƒtƒ‰ƒO‚ğ—LŒø‰»
  */
 void AnimalMove::OnEnter(Collider* collider, Collider* check)
 {
@@ -105,20 +105,20 @@ void AnimalMove::OnEnter(Collider* collider, Collider* check)
 }
 
 /*
- * æ¥è§¦ä¸­ã®å‡¦ç†
- * [å…¥åŠ›] collider: è‡ªèº«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼, check: ç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ãªã—
+ * ÚG’†‚Ìˆ—
+ * [“ü—Í] collider: ©g‚ÌƒRƒ‰ƒCƒ_[, check: ‘Šè‚ÌƒRƒ‰ƒCƒ_[
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ‚È‚µ
  */
 void AnimalMove::OnTrigger(Collider* collider, Collider* check)
 {
 }
 
 /*
- * æ¥è§¦çµ‚äº†æ™‚ã®å‡¦ç†
- * [å…¥åŠ›] collider: è‡ªèº«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼, check: ç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] é¤Œã‹ã‚‰é›¢ã‚ŒãŸå ´åˆã€èª˜å¼•ãƒ•ãƒ©ã‚°ã‚’ç„¡åŠ¹åŒ–
+ * ÚGI—¹‚Ìˆ—
+ * [“ü—Í] collider: ©g‚ÌƒRƒ‰ƒCƒ_[, check: ‘Šè‚ÌƒRƒ‰ƒCƒ_[
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ‰a‚©‚ç—£‚ê‚½ê‡A—Uˆøƒtƒ‰ƒO‚ğ–³Œø‰»
  */
 void AnimalMove::OnExit(Collider* collider, Collider* check)
 {
@@ -132,15 +132,15 @@ void AnimalMove::OnExit(Collider* collider, Collider* check)
 }
 
 /*
- * æ­»äº¡(æ•ç²)åˆ¤å®šã¨æ¼”å‡º
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] å¸ã„è¾¼ã¿æ¼”å‡ºã®é€²è¡Œã¨æ•ç²å®Œäº†æ™‚ã®æ­»äº¡å‡¦ç†ã®å‘¼ã³å‡ºã—
+ * €–S(•ßŠl)”»’è‚Æ‰‰o
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ‹z‚¢‚İ‰‰o‚Ìis‚Æ•ßŠlŠ®—¹‚Ì€–Sˆ—‚ÌŒÄ‚Ño‚µ
  */
 void AnimalMove::CharacterDied()
 {
 	auto fv = ServiceLocator::GetFever();
-	// é€šå¸¸çŠ¶æ…‹ã§ã¯æ•ç²æ¼”å‡ºã¸ç§»è¡Œã•ã›ãªã„ãŸã‚
+	// ’Êíó‘Ô‚Å‚Í•ßŠl‰‰o‚ÖˆÚs‚³‚¹‚È‚¢‚½‚ß
 	if (mCurrentState != STATE_VACUUM || (fv && fv->IsFever())) return;
 
 	Player3D* player = target_player_;
@@ -151,7 +151,7 @@ void AnimalMove::CharacterDied()
 		position_.y += player->Status(Player3D::Status_AttackS) * Master::GetDeltaTimeScaler();
 	}
 
-	// UFOã¸ã®å¸ã„è¾¼ã¿æ¼”å‡ºã‚’å®Œé‚ã—ãŸã‹åˆ¤å®šã™ã‚‹ãŸã‚
+	// UFO‚Ö‚Ì‹z‚¢‚İ‰‰o‚ğŠ®‹‚µ‚½‚©”»’è‚·‚é‚½‚ß
 	if (position_.y > death_timer_ && !mDeleteFlag)
 	{
 		Die(DEATH_VACUUM);
@@ -161,10 +161,10 @@ void AnimalMove::CharacterDied()
 }
 
 /*
- * æ­»äº¡æ™‚ã®å‡¦ç†
- * [å…¥åŠ›] reason: æ­»äº¡ç†ç”±
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] çµŒé¨“å€¤ãƒ»ã‚¹ã‚³ã‚¢ã®åŠ ç®—ã€ã‚³ãƒ³ãƒœã®æ›´æ–°ã€å‰Šé™¤ãƒ•ãƒ©ã‚°ã®æœ‰åŠ¹åŒ–
+ * €–S‚Ìˆ—
+ * [“ü—Í] reason: €–S——R
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ŒoŒ±’lEƒXƒRƒA‚Ì‰ÁZAƒRƒ“ƒ{‚ÌXVAíœƒtƒ‰ƒO‚Ì—LŒø‰»
  */
 void AnimalMove::Die(DeathReason reason)
 {
@@ -187,7 +187,7 @@ void AnimalMove::Die(DeathReason reason)
 				Master::tutorial_count_++;
 			}
 
-			// åŒç¨®ã®é€£ç¶šæ•ç²ãƒœãƒ¼ãƒŠã‚¹ã‚’åˆ¤å®šãƒ»ä»˜ä¸ã™ã‚‹ãŸã‚
+			// “¯í‚Ì˜A‘±•ßŠlƒ{[ƒiƒX‚ğ”»’èE•t—^‚·‚é‚½‚ß
 			s_mnTagCount++;
 			if (s_mnTagCount == 1)
 			{

@@ -1,31 +1,31 @@
-ï»¿#pragma once
+#pragma once
 #include "InputManager.h"
 
-// 3Dãƒ¢ãƒ‡ãƒ«ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³çŠ¶æ…‹ã‚’è¡¨ã™åˆ—æŒ™åž‹
+// 3Dƒ‚ƒfƒ‹‚ÌƒAƒjƒ[ƒVƒ‡ƒ“ó‘Ô‚ð•\‚·—ñ‹“Œ^
 enum AnimationState
 {
-	kAnimationNeutral = 0,    // å¾…æ©ŸçŠ¶æ…‹
-	kAnimationRun,            // èµ°ã‚ŠçŠ¶æ…‹
-	kAnimationAttackJump,     // ç©ºä¸­æ”»æ’ƒçŠ¶æ…‹
-	kAnimationJumpIn,         // ã‚¸ãƒ£ãƒ³ãƒ—é–‹å§‹çŠ¶æ…‹
-	kAnimationJumpLoop,       // ã‚¸ãƒ£ãƒ³ãƒ—æ»žç©ºçŠ¶æ…‹
-	kAnimationJumpOut,        // ç€åœ°çŠ¶æ…‹
-	kAnimationAttack,         // æ”»æ’ƒçŠ¶æ…‹
-	kAnimationAttackSlide,    // ã‚¹ãƒ©ã‚¤ãƒ‡ã‚£ãƒ³ã‚°æ”»æ’ƒçŠ¶æ…‹
-	kAnimationSlide,          // ã‚¹ãƒ©ã‚¤ãƒ‡ã‚£ãƒ³ã‚°çŠ¶æ…‹
-	kAnimationAttackMagic,    // é­”æ³•æ”»æ’ƒçŠ¶æ…‹
+	kAnimationNeutral = 0,    // ‘Ò‹@ó‘Ô
+	kAnimationRun,            // ‘–‚èó‘Ô
+	kAnimationAttackJump,     // ‹ó’†UŒ‚ó‘Ô
+	kAnimationJumpIn,         // ƒWƒƒƒ“ƒvŠJŽnó‘Ô
+	kAnimationJumpLoop,       // ƒWƒƒƒ“ƒv‘Ø‹óó‘Ô
+	kAnimationJumpOut,        // ’…’nó‘Ô
+	kAnimationAttack,         // UŒ‚ó‘Ô
+	kAnimationAttackSlide,    // ƒXƒ‰ƒCƒfƒBƒ“ƒOUŒ‚ó‘Ô
+	kAnimationSlide,          // ƒXƒ‰ƒCƒfƒBƒ“ƒOó‘Ô
+	kAnimationAttackMagic,    // –‚–@UŒ‚ó‘Ô
 
-	// å„ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼å›ºæœ‰ã¾ãŸã¯æ–°è¦è¿½åŠ ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³çŠ¶æ…‹
-	kAnimationWalking,        // æ­©ãçŠ¶æ…‹
-	kAnimationDying,          // æ­»äº¡çŠ¶æ…‹
-	kAnimationDropKick,       // ãƒ‰ãƒ­ãƒƒãƒ—ã‚­ãƒƒã‚¯çŠ¶æ…‹
+	// ŠeƒLƒƒƒ‰ƒNƒ^[ŒÅ—L‚Ü‚½‚ÍV‹K’Ç‰Á‚ÌƒAƒjƒ[ƒVƒ‡ƒ“ó‘Ô
+	kAnimationWalking,        // •à‚«ó‘Ô
+	kAnimationDying,          // Ž€–Só‘Ô
+	kAnimationDropKick,       // ƒhƒƒbƒvƒLƒbƒNó‘Ô
 
-	kAnimationMax             // åž‹ã®æœ€å¤§æ•°å®šç¾©ç”¨
+	kAnimationMax             // Œ^‚ÌÅ‘å”’è‹`—p
 };
 
-// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³çŠ¶æ…‹ã¨DXãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®ç™»éŒ²ãƒãƒ³ãƒ‰ãƒ«ã®ãƒžãƒƒãƒ”ãƒ³ã‚°æƒ…å ±æ§‹é€ ä½“
+// ƒAƒjƒ[ƒVƒ‡ƒ“ó‘Ô‚ÆDXƒ‰ƒCƒuƒ‰ƒŠ‚Ì“o˜^ƒnƒ“ƒhƒ‹‚Ìƒ}ƒbƒsƒ“ƒOî•ñ\‘¢‘Ì
 struct AnimationInfo
 {
-	AnimationState state;      // ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³çŠ¶æ…‹
-	int animation_handle;      // ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒãƒ³ãƒ‰ãƒ«
+	AnimationState state;      // ƒAƒjƒ[ƒVƒ‡ƒ“ó‘Ô
+	int animation_handle;      // ƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚éƒAƒjƒ[ƒVƒ‡ƒ“‚Ìƒnƒ“ƒhƒ‹
 };

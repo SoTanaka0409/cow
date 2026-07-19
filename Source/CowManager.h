@@ -1,20 +1,20 @@
-ï»¿#pragma once
+#pragma once
 #include <vector>
 #include <string>
 #include <map>
 #include "DxLib.h"
 #include "CowMove.h"
 #include "CreatureManager.h"
-// ç‰›å›ºæœ‰ã®ç”Ÿæˆãƒ«ãƒ¼ãƒ«ã‚„ã‚²ãƒ¼ãƒ é€²è¡Œã«å¿œã˜ãŸçŠ¶æ…‹ã‚’ç®¡ç†ã™ã‚‹ãŸã‚ã€‚
+// ‹ŒÅ—L‚Ì¶¬ƒ‹[ƒ‹‚âƒQ[ƒ€is‚É‰‚¶‚½ó‘Ô‚ğŠÇ—‚·‚é‚½‚ßB
 class CowManager : public CreatureManager<CowMove, CowMove::TagCow>
 {
 public:
 	CowManager();
 	/*
-	 * çŠ¶æ…‹ï¼ˆãƒ•ã‚£ãƒ¼ãƒãƒ¼ç­‰ï¼‰ã«å¿œã˜ãŸç‰›ã®å‡ºç¾åˆ¶å¾¡ã‚’è¡Œã†ãŸã‚ã€‚
-	 * [å…¥åŠ›] filename:ãƒ¢ãƒ‡ãƒ«ãƒ‘ã‚¹, pos:åŸºæº–åº§æ¨™, scale:æ‹¡å¤§ç‡, tag:ç‰›ç¨®é¡, count:ç”Ÿæˆå€‹æ•°, is_fever:ãƒ•ã‚£ãƒ¼ãƒãƒ¼ä¸­ã‹
-	 * [å‡ºåŠ›] ãªã—
-	 * [å‰¯ä½œç”¨] ç®¡ç†ãƒªã‚¹ãƒˆã¸ç‰›ã‚’è¿½åŠ ã€ã¾ãŸã¯ãƒ—ãƒ¼ãƒ«ã‹ã‚‰å¾©å¸°
+	 * ó‘ÔiƒtƒB[ƒo[“™j‚É‰‚¶‚½‹‚ÌoŒ»§Œä‚ğs‚¤‚½‚ßB
+	 * [“ü—Í] filename:ƒ‚ƒfƒ‹ƒpƒX, pos:Šî€À•W, scale:Šg‘å—¦, tag:‹í—Ş, count:¶¬ŒÂ”, is_fever:ƒtƒB[ƒo[’†‚©
+	 * [o—Í] ‚È‚µ
+	 * [•›ì—p] ŠÇ—ƒŠƒXƒg‚Ö‹‚ğ’Ç‰ÁA‚Ü‚½‚Íƒv[ƒ‹‚©‚ç•œ‹A
 	 */
 	void SpawnCow(std::string filename, VECTOR pos, float scale, CowMove::TagCow tag, int count, bool is_fever = false, float scatterRadius = 200.0f);
 protected:

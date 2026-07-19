@@ -1,22 +1,22 @@
-﻿#pragma once
-// DxLibの入力をラップし、状態変化の管理を容易にするため。
+#pragma once
+// DxLib�̓��͂����b�v���A��ԕω��̊Ǘ���e�Ղɂ��邽�߁B
 class InputManager
 {
 public:
     InputManager();
     ~InputManager();
     /*
-     * 連続入力を防ぎ、単発の操作だけを受け付けるため。
-     * [入力] KeyCode: DxLibのキーコード
-     * [出力] 1: 押下開始フレーム、0: それ以外
-     * [副作用] down_buffer_を更新
+     * �A�����͂�h���A�P���̑��삾�����󂯕t���邽�߁B
+     * [����] KeyCode: DxLib�̃L�[�R�[�h
+     * [�o��] 1: �����J�n�t���[���A0: ����ȊO
+     * [����p] down_buffer_���X�V
      */
     static int CheckDownKey(int KeyCode);
     /*
-     * 長押しによる連続的な操作を可能にするため。
-     * [入力] KeyCode: DxLibのキーコード
-     * [出力] 1: 押下中、0: それ以外
-     * [副作用] なし
+     * �������ɂ��A���I�ȑ�����\�ɂ��邽�߁B
+     * [����] KeyCode: DxLib�̃L�[�R�[�h
+     * [�o��] 1: �������A0: ����ȊO
+     * [����p] �Ȃ�
      */
     static int CheckPressKey(int KeyCode);
 private:

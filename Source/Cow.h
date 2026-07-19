@@ -1,23 +1,23 @@
-﻿#pragma once
+#pragma once
 #include "CowMove.h"
 
-// Cow1型の標準的な敵キャラクターとして振る舞いを定義するため
+// Cow1�^�̕W���I�ȓG�L�����N�^�[�Ƃ��ĐU�镑�����`���邽��
 class Cow : public CowMove
 {
 public:
 	/*
-	 * 標準の牛キャラクターとしてスコアと経験値を設定するため
-	 * [入力] filename: モデルパス, initPos: 初期配置座標, num: 基礎スコア値
-	 * [出力] なし
-	 * [副作用] 基礎スコアと経験値を初期化
+	 * �W���̋��L�����N�^�[�Ƃ��ăX�R�A�ƌo���l��ݒ肷�邽��
+	 * [����] filename: ���f���p�X, initPos: �����z�u���W, num: ��b�X�R�A�l
+	 * [�o��] �Ȃ�
+	 * [����p] ��b�X�R�A�ƌo���l��������
 	 */
 	Cow(std::string filename, VECTOR initPos, float num);
 
 	/*
-	 * 派生クラスでの安全なリソース解放を保証するため
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] なし
+	 * �h���N���X�ł̈��S�ȃ��\�[�X�����ۏ؂��邽��
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �Ȃ�
 	 */
 	virtual ~Cow();
 };

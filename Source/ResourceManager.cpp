@@ -1,4 +1,4 @@
-ï»¿#include "DxLib.h"
+#include "DxLib.h"
 #include "ResourceManager.h"
 
 ResourceManager::ResourceManager()
@@ -7,13 +7,13 @@ ResourceManager::ResourceManager()
 
 ResourceManager::~ResourceManager()
 {
-	// ç™»éŒ²ã•ã‚ŒãŸã™ã¹ã¦ã®ã‚ªãƒªã‚¸ãƒŠãƒ«ãƒ¢ãƒ‡ãƒ«ãƒãƒ³ãƒ‰ãƒ«ã‚’è§£æ”¾
+	// “o˜^‚³‚ê‚½‚·‚×‚Ä‚ÌƒIƒŠƒWƒiƒ‹ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹‚ğ‰ğ•ú
 	for (int i = 0; i < resource_map_list_.size(); i++)
 	{
 		MV1DeleteModel(resource_map_list_.at(i).second);
 	}
 
-	// ç¢ºä¿ã—ãŸåˆ†å‰²ç”»åƒãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ãƒ¡ãƒ¢ãƒªã‹ã‚‰è§£æ”¾
+	// Šm•Û‚µ‚½•ªŠ„‰æ‘œƒƒ^ƒf[ƒ^ƒIƒuƒWƒFƒNƒg‚ğƒƒ‚ƒŠ‚©‚ç‰ğ•ú
 	for (int i = 0; i < div_graphic_resource_map_list_.size(); i++)
 	{
 		delete div_graphic_resource_map_list_.at(i);
@@ -21,12 +21,12 @@ ResourceManager::~ResourceManager()
 	div_graphic_resource_map_list_.clear();
 
 	MV1InitModel();
-	InitGraph(); // DxLibã«èª­ã¿è¾¼ã¾ã‚Œã¦ã„ã‚‹ã™ã¹ã¦ã®ç”»åƒã‚’ä¸€æ‹¬å‰Šé™¤
+	InitGraph(); // DxLib‚É“Ç‚İ‚Ü‚ê‚Ä‚¢‚é‚·‚×‚Ä‚Ì‰æ‘œ‚ğˆêŠ‡íœ
 }
 
 int ResourceManager::LoadModel(std::string pathName)
 {
-	// æ—¢ã«åŒã˜ãƒ¢ãƒ‡ãƒ«ãŒãƒ­ãƒ¼ãƒ‰æ¸ˆã¿ã®å ´åˆã¯ã€ãã®ã‚ªãƒªã‚¸ãƒŠãƒ«ã‹ã‚‰è¤‡è£½ã‚’ä½œæˆã—ã¦è¿”ã™
+	// Šù‚É“¯‚¶ƒ‚ƒfƒ‹‚ªƒ[ƒhÏ‚İ‚Ìê‡‚ÍA‚»‚ÌƒIƒŠƒWƒiƒ‹‚©‚ç•¡»‚ğì¬‚µ‚Ä•Ô‚·
 	for (int i = 0; i < resource_map_list_.size(); i++)
 	{
 		if (resource_map_list_.at(i).first == pathName)
@@ -60,9 +60,9 @@ void ResourceManager::PreloadModel(std::string pathName)
 }
 
 /*
- * @brief 2Dç”»åƒãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚­ãƒ£ãƒƒã‚·ãƒ¥èª­ã¿è¾¼ã¿ã™ã‚‹ï¼ˆæ—¢å­˜ãƒ­ãƒ¼ãƒ‰æ™‚ã¯æ—¢å­˜ã®ãƒãƒ³ãƒ‰ãƒ«ã‚’è¿”ã™ï¼‰
- * [æ³¨æ„] ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒ’ãƒƒãƒˆæ™‚ã‚‚ãƒãƒ³ãƒ‰ãƒ«ã®æœ‰åŠ¹æ€§ã‚’æ¤œè¨¼ã—ã€ç„¡åŠ¹ãªã‚‰å†ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
- *        ã“ã‚Œã«ã‚ˆã‚Šã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆå¾Œã«ãƒãƒ³ãƒ‰ãƒ«ãŒç„¡åŠ¹ã«ãªã£ãŸå ´åˆã§ã‚‚æ­£ã—ãå¾©å…ƒã§ãã‚‹
+ * @brief 2D‰æ‘œƒtƒ@ƒCƒ‹‚ğƒLƒƒƒbƒVƒ…“Ç‚İ‚İ‚·‚éiŠù‘¶ƒ[ƒh‚ÍŠù‘¶‚Ìƒnƒ“ƒhƒ‹‚ğ•Ô‚·j
+ * [’ˆÓ] ƒLƒƒƒbƒVƒ…ƒqƒbƒg‚àƒnƒ“ƒhƒ‹‚Ì—LŒø«‚ğŒŸØ‚µA–³Œø‚È‚çÄƒ[ƒh‚·‚é
+ *        ‚±‚ê‚É‚æ‚èƒV[ƒ“Ø‚è‘Ö‚¦Œã‚Éƒnƒ“ƒhƒ‹‚ª–³Œø‚É‚È‚Á‚½ê‡‚Å‚à³‚µ‚­•œŒ³‚Å‚«‚é
  */
 int ResourceManager::LoadGraphics(std::string pathName)
 {
@@ -71,13 +71,13 @@ int ResourceManager::LoadGraphics(std::string pathName)
 		if (graphic_resource_map_list_.at(i).first == pathName)
 		{
 			int cachedHandle = graphic_resource_map_list_.at(i).second;
-			// ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒ’ãƒƒãƒˆæ™‚ã«ãƒãƒ³ãƒ‰ãƒ«ã®æœ‰åŠ¹æ€§ã‚’ç¢ºèªã€‚ç„¡åŠ¹ãªå ´åˆã¯å†ãƒ­ãƒ¼ãƒ‰
+			// ƒLƒƒƒbƒVƒ…ƒqƒbƒg‚Éƒnƒ“ƒhƒ‹‚Ì—LŒø«‚ğŠm”FB–³Œø‚Èê‡‚ÍÄƒ[ƒh
 			int checkW, checkH;
 			if (GetGraphSize(cachedHandle, &checkW, &checkH) != -1)
 			{
-				return cachedHandle; // æœ‰åŠ¹ãªãƒãƒ³ãƒ‰ãƒ«ã‚’ãã®ã¾ã¾è¿”ã™
+				return cachedHandle; // —LŒø‚Èƒnƒ“ƒhƒ‹‚ğ‚»‚Ì‚Ü‚Ü•Ô‚·
 			}
-			// ãƒãƒ³ãƒ‰ãƒ«ãŒç„¡åŠ¹ã«ãªã£ã¦ã„ã‚‹å ´åˆã¯å†ãƒ­ãƒ¼ãƒ‰
+			// ƒnƒ“ƒhƒ‹‚ª–³Œø‚É‚È‚Á‚Ä‚¢‚éê‡‚ÍÄƒ[ƒh
 			int newHandle = LoadGraph(pathName.c_str());
 			if (newHandle == -1) return -1;
 			graphic_resource_map_list_.at(i).second = newHandle;
@@ -119,7 +119,7 @@ DivGraphData* ResourceManager::LoadDivGraphics(std::string pathName, int all_num
 		}
 	}
 
-	// åˆ†å‰²å‡¦ç†ã‚’è¡Œã†ãŸã‚ã®åŸºåº•ç”»åƒã‚µã‚¤ã‚ºæƒ…å ±å–å¾—ç”¨ã¨ã—ã¦ã€ä¸€æ™‚çš„ã«ç”»åƒã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
+	// •ªŠ„ˆ—‚ğs‚¤‚½‚ß‚ÌŠî’ê‰æ‘œƒTƒCƒYî•ñæ“¾—p‚Æ‚µ‚ÄAˆê“I‚É‰æ‘œ‚ğƒ[ƒh‚·‚é
 	int handle = LoadGraph(pathName.c_str());
 	if (handle == -1)
 	{
@@ -134,9 +134,9 @@ DivGraphData* ResourceManager::LoadDivGraphics(std::string pathName, int all_num
 
 	int sizeX, sizeY;
 	GetGraphSize(handle, &sizeX, &sizeY);
-	DeleteGraph(handle); // ã‚µã‚¤ã‚ºå–å¾—å¾Œã®ä¸€æ™‚ãƒãƒ³ãƒ‰ãƒ«ã¯ä¸è¦ãªãŸã‚è§£æ”¾
+	DeleteGraph(handle); // ƒTƒCƒYæ“¾Œã‚Ìˆêƒnƒ“ƒhƒ‹‚Í•s—v‚È‚½‚ß‰ğ•ú
 
-	// æŒ‡å®šã•ã‚ŒãŸã‚°ãƒªãƒƒãƒ‰åˆ†å‰²æ•°ã¨1ã‚³ãƒã‚µã‚¤ã‚ºã‚’åŸºã«ã€åˆ†å‰²ç”»åƒã¨ã—ã¦ãƒãƒ³ãƒ‰ãƒ«ã‚’ãƒ­ãƒ¼ãƒ‰
+	// w’è‚³‚ê‚½ƒOƒŠƒbƒh•ªŠ„”‚Æ1ƒRƒ}ƒTƒCƒY‚ğŠî‚ÉA•ªŠ„‰æ‘œ‚Æ‚µ‚Äƒnƒ“ƒhƒ‹‚ğƒ[ƒh
 	int loadResult = LoadDivGraph(pathName.c_str(), all_num_, numX, numY, sizeX / numX, sizeY / numY, data->div_handle_list_);
 	if (loadResult == -1)
 	{

@@ -1,32 +1,32 @@
-﻿#pragma once
+#pragma once
 class Model;
 
 #include "Object3D.h"
 
-// 設計ルール：プレイヤーの移動に追従し、世界の広がりを演出するための巨大な天球（背景モデル）を管理するクラス
+// �݌v���[���F�v���C���[�̈ړ��ɒǏ]���A���E�̍L��������o���邽�߂̋���ȓV���i�w�i���f���j���Ǘ�����N���X
 class SkyBox : public Object3D
 {
 public:
-	// 入力：filename=スカイボックスのモデルファイルパス, pos=初期座標
-	// 副作用：天球用Modelクラスのインスタンス生成
+	// ���́Ffilename=�X�J�C�{�b�N�X�̃��f���t�@�C���p�X, pos=�������W
+	// ����p�F�V���pModel�N���X�̃C���X�^���X����
 	SkyBox(std::string filename, VECTOR pos);
 	virtual ~SkyBox();
 
-	// 副作用：天球モデルのトランスフォーム（位置・回転・縮尺）行列の更新
+	// ����p�F�V�����f���̃g�����X�t�H�[���i�ʒu�E��]�E�k�ځj�s��̍X�V
 	void Update() override;
 
-	// 副作用：3D空間への背景描画
-	// パフォーマンス理由：光源計算による陰影が空に発生して不自然に見えるのを防ぐため、一時的にライティングを無効化して描画する
+	// ����p�F3D��Ԃւ̔w�i�`��
+	// �p�t�H�[�}���X���R�F�����v�Z�ɂ��A�e����ɔ������ĕs���R�Ɍ�����̂�h�����߁A�ꎞ�I�Ƀ��C�e�B���O�𖳌������ĕ`�悷��
 	void Draw() override;
 
-	// 入力：scale=拡大率
+	// ���́Fscale=�g�嗦
 	void SetScale(float scale);
 
-	// 入力：filename=テクスチャ画像パス, index=マテリアルインデックス
-	// 業務ルール：時間経過や天候変化（昼・夜・フェーバータイム等）に応じて、空のテクスチャを動的に差し替える
+	// ���́Ffilename=�e�N�X�`���摜�p�X, index=�}�e���A���C���f�b�N�X
+	// �Ɩ����[���F���Ԍo�߂�V��ω��i���E��E�t�F�[�o�[�^�C�����j�ɉ����āA��̃e�N�X�`���𓮓I�ɍ����ւ���
 	void SetModelTexture(std::string filename, int index = 0);
 
 private:
-	// バグ回避：カメラが天球のポリゴン外に飛び出して背景が消失するのを防ぐため、プレイヤーの現在座標を毎フレーム追従させる
+	// �o�O����F�J�������V���̃|���S���O�ɔ�яo���Ĕw�i����������̂�h�����߁A�v���C���[�̌��ݍ��W�𖈃t���[���Ǐ]������
 	Model* model_;
 };

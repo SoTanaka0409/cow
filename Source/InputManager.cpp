@@ -1,4 +1,4 @@
-ï»¿#include"InputManager.h"
+#include"InputManager.h"
 #include"DxLib.h"
 int InputManager::down_buffer_[256] = { 0 };
 InputManager::InputManager()
@@ -8,30 +8,30 @@ InputManager::~InputManager()
 {
 }
 /*
- * é€£ç¶šå…¥åŠ›ã‚’é˜²ãã€æŠ¼ä¸‹é–‹å§‹ãƒ•ãƒ¬ãƒ¼ãƒ ã®ã¿ã‚’æ¤œçŸ¥ã™ã‚‹
- * [å…¥åŠ›] KeyCode: DxLibã®ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰
- * [å‡ºåŠ›] 1: æŠ¼ä¸‹é–‹å§‹ãƒ•ãƒ¬ãƒ¼ãƒ ã€0: ãã‚Œä»¥å¤–
- * [å‰¯ä½œç”¨] down_buffer_ã®æ›´æ–°
+ * ˜A‘±“ü—Í‚ğ–h‚¬A‰Ÿ‰ºŠJnƒtƒŒ[ƒ€‚Ì‚İ‚ğŒŸ’m‚·‚é
+ * [“ü—Í] KeyCode: DxLib‚ÌƒL[ƒR[ƒh
+ * [o—Í] 1: ‰Ÿ‰ºŠJnƒtƒŒ[ƒ€A0: ‚»‚êˆÈŠO
+ * [•›ì—p] down_buffer_‚ÌXV
  */
 int InputManager::CheckDownKey(int KeyCode)
 {
     int result = 0;
     int keyState = CheckHitKey(KeyCode);
 
-    // é•·æŠ¼ã—ã«ã‚ˆã‚‹æ„å›³ã—ãªã„é€£ç¶šå…¥åŠ›ã‚’é˜²ããŸã‚
+    // ’·‰Ÿ‚µ‚É‚æ‚éˆÓ}‚µ‚È‚¢˜A‘±“ü—Í‚ğ–h‚®‚½‚ß
     if (down_buffer_[KeyCode] == 0 && keyState == 1)
     {
         result = 1;
     }
-    // æ¬¡ãƒ•ãƒ¬ãƒ¼ãƒ ã®ãƒˆãƒªã‚¬ãƒ¼åˆ¤å®šã§å‰å›çŠ¶æ…‹ã‚’å‚ç…§ã™ã‚‹ãŸã‚
+    // ŸƒtƒŒ[ƒ€‚ÌƒgƒŠƒK[”»’è‚Å‘O‰ñó‘Ô‚ğQÆ‚·‚é‚½‚ß
     down_buffer_[KeyCode] = keyState;
     return result;
 }
 /*
- * æŠ¼ã—ç¶šã‘ã‚’è¨±å®¹ã™ã‚‹é€šå¸¸ã®ã‚­ãƒ¼å…¥åŠ›åˆ¤å®šã‚’è¡Œã†
- * [å…¥åŠ›] KeyCode: DxLibã®ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰
- * [å‡ºåŠ›] 1: æŠ¼ä¸‹ä¸­ã€0: ãã‚Œä»¥å¤–
- * [å‰¯ä½œç”¨] ãªã—
+ * ‰Ÿ‚µ‘±‚¯‚ğ‹–—e‚·‚é’Êí‚ÌƒL[“ü—Í”»’è‚ğs‚¤
+ * [“ü—Í] KeyCode: DxLib‚ÌƒL[ƒR[ƒh
+ * [o—Í] 1: ‰Ÿ‰º’†A0: ‚»‚êˆÈŠO
+ * [•›ì—p] ‚È‚µ
  */
 int InputManager::CheckPressKey(int KeyCode)
 {

@@ -68,6 +68,7 @@ public:
 	 */
 	virtual void Draw();
 	virtual void DrawShadowCaster();
+	virtual void DrawDebug();
 
 	/*
 	 * 衝突判定の開始イベントを処理し、ダメージや効果音のトリガーとするため

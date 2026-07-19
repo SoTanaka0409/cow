@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <vector>
 
 class Scene;
@@ -9,40 +9,40 @@ class GameManager;
 class Fever;
 class Player3D;
 
-// 設計ルール：各アクターやマネージャー間の結合度を下げ、シーン遷移時の依存関係の絡まり（循環参照バグ）を回避するための共通窓口
+// �݌v���[���F�e�A�N�^�[��}�l�[�W���[�Ԃ̌����x�������A�V�[���J�ڎ��̈ˑ��֌W�̗��܂�i�z�Q�ƃo�O�j��������邽�߂̋��ʑ���
 class ServiceLocator
 {
 public:
-	// 入力：なし
-	// 出力：現在アクティブなSceneクラスのポインタ（失敗時はnullptr）
+	// ���́F�Ȃ�
+	// �o�́F���݃A�N�e�B�u��Scene�N���X�̃|�C���^�i���s����nullptr�j
 	static Scene* GetCurrentScene();
 
-	// 入力：なし
-	// 出力：すべての3D・2Dオブジェクトを一括管理するObjectManagerのポインタ
+	// ���́F�Ȃ�
+	// �o�́F���ׂĂ�3D�E2D�I�u�W�F�N�g���ꊇ�Ǘ�����ObjectManager�̃|�C���^
 	static ObjectManager* GetObjectManager();
 
-	// 入力：なし
-	// 出力：1P（メインプレイヤー）として機能するPlayer3Dオブジェクトのポインタ
+	// ���́F�Ȃ�
+	// �o�́F1P�i���C���v���C���[�j�Ƃ��ċ@�\����Player3D�I�u�W�F�N�g�̃|�C���^
 	static Player3D* GetPlayer();
 
-	// 入力：なし
-	// 出力：すべてのプレイヤーオブジェクトが格納された動的配列
-	// パフォーマンス理由：内部配列のコピーによる一時オブジェクトのオーバーヘッドが発生するため、毎フレームの過度な呼び出しは避ける
+	// ���́F�Ȃ�
+	// �o�́F���ׂẴv���C���[�I�u�W�F�N�g���i�[���ꂽ���I�z��
+	// �p�t�H�[�}���X���R�F�����z��̃R�s�[�ɂ��ꎞ�I�u�W�F�N�g�̃I�[�o�[�w�b�h���������邽�߁A���t���[���̉ߓx�ȌĂяo���͔�����
 	static std::vector<Player3D*> GetPlayers();
 
-	// 入力：なし
-	// 出力：牛（拉致対象）の生成・再利用・削除タイミングを管理するCowManagerのポインタ
+	// ���́F�Ȃ�
+	// �o�́F���i�f�v�Ώہj�̐����E�ė��p�E�폜�^�C�~���O���Ǘ�����CowManager�̃|�C���^
 	static CowManager* GetCowManager();
 
-	// 入力：なし
-	// 出力：牛以外の動物（鶏など）の行動AIとオブジェクトプールを管理するAnimalManagerのポインタ
+	// ���́F�Ȃ�
+	// �o�́F���ȊO�̓����i�{�Ȃǁj�̍s��AI�ƃI�u�W�F�N�g�v�[�����Ǘ�����AnimalManager�̃|�C���^
 	static AnimalManager* GetAnimalManager();
 
-	// 入力：なし
-	// 出力：ゲームの勝敗判定やタイムアップ、フェーズ進行を統括するGameManagerのポインタ
+	// ���́F�Ȃ�
+	// �o�́F�Q�[���̏��s�����^�C���A�b�v�A�t�F�[�Y�i�s�𓝊�����GameManager�̃|�C���^
 	static GameManager* GetGameManager();
 
-	// 入力：なし
-	// 出力：特定のコンボ条件を満たしたときに発生するフィーバータイムの演出やバフ情報を制御するFeverのポインタ
+	// ���́F�Ȃ�
+	// �o�́F����̃R���{�����𖞂������Ƃ��ɔ�������t�B�[�o�[�^�C���̉��o��o�t���𐧌䂷��Fever�̃|�C���^
 	static Fever* GetFever();
 };

@@ -1,5 +1,5 @@
-ï»¿#include "SceneManager.h"
-#include "Scene3D.h"
+#include "SceneManager.h"
+#include "GameScene.h"
 #include "Scene.h"
 #include "TitleScene.h"
 #include "TutorialScene.h"
@@ -7,10 +7,10 @@
 #include "Rule.h"
 #include "LoadingScene.h"
 /*
- * ãƒ¡ãƒ³ãƒå¤‰æ•°ã®åˆæœŸçŠ¶æ…‹ã‚’å®‰å…¨ã«å®šç¾©ã™ã‚‹ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ãƒ¡ãƒ³ãƒå¤‰æ•°ãŒåˆæœŸåŒ–ã•ã‚Œã‚‹
+ * ƒƒ“ƒo•Ï”‚Ì‰Šúó‘Ô‚ğˆÀ‘S‚É’è‹`‚·‚é‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ƒƒ“ƒo•Ï”‚ª‰Šú‰»‚³‚ê‚é
  */
 SceneManager::SceneManager()
 	: scene_type_(SCENE_TYPE::kSceneNone)
@@ -21,20 +21,20 @@ SceneManager::SceneManager()
 {
 }
 /*
- * ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç ´æ£„æ™‚ã«ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªã‚·ãƒ¼ãƒ³ã‚’å®‰å…¨ã«è§£æ”¾ã™ã‚‹ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ãªã—
+ * ƒCƒ“ƒXƒ^ƒ“ƒX”jŠü‚ÉƒAƒNƒeƒBƒu‚ÈƒV[ƒ“‚ğˆÀ‘S‚É‰ğ•ú‚·‚é‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ‚È‚µ
  */
 SceneManager::~SceneManager()
 {
 	Finalize();
 }
 /*
- * ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³èµ·å‹•æ™‚ã®åˆæœŸçŠ¶æ…‹ã‚’æ§‹æˆã™ã‚‹ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] next_scene_type_ ãŒ kSceneTitle ã«å¤‰æ›´ã•ã‚Œã‚‹
+ * ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‹N“®‚Ì‰Šúó‘Ô‚ğ\¬‚·‚é‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] next_scene_type_ ‚ª kSceneTitle ‚É•ÏX‚³‚ê‚é
  */
 void SceneManager::Initialize()
 {
@@ -42,10 +42,10 @@ void SceneManager::Initialize()
 	ChangeSceneIfNeeded();
 }
 /*
- * ãƒ•ãƒ¬ãƒ¼ãƒ ã”ã¨ã®çŠ¶æ…‹æ›´æ–°ã‚’å§”è­²ã™ã‚‹ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] current_scene_ ã®å†…éƒ¨çŠ¶æ…‹ãŒæ›´æ–°ã•ã‚Œã‚‹
+ * ƒtƒŒ[ƒ€‚²‚Æ‚Ìó‘ÔXV‚ğˆÏ÷‚·‚é‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] current_scene_ ‚Ì“à•”ó‘Ô‚ªXV‚³‚ê‚é
  */
 void SceneManager::Update()
 {
@@ -55,10 +55,10 @@ void SceneManager::Update()
 	}
 }
 /*
- * ãƒ•ãƒ¬ãƒ¼ãƒ ã”ã¨ã®æç”»å‡¦ç†ã‚’å§”è­²ã™ã‚‹ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ç”»é¢ã«æç”»ã•ã‚Œã‚‹
+ * ƒtƒŒ[ƒ€‚²‚Æ‚Ì•`‰æˆ—‚ğˆÏ÷‚·‚é‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ‰æ–Ê‚É•`‰æ‚³‚ê‚é
  */
 void SceneManager::Draw()
 {
@@ -68,10 +68,10 @@ void SceneManager::Draw()
 	}
 }
 /*
- * ã‚·ãƒ¼ãƒ³çµ‚äº†æ™‚ã‚„åˆ‡ã‚Šæ›¿ãˆæ™‚ã«ãƒªã‚½ãƒ¼ã‚¹ãƒªãƒ¼ã‚¯ã‚’é˜²ããŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] current_scene_ ãŒç ´æ£„ã•ã‚Œ nullptr ã«ãªã‚‹
+ * ƒV[ƒ“I—¹‚âØ‚è‘Ö‚¦‚ÉƒŠƒ\[ƒXƒŠ[ƒN‚ğ–h‚®‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] current_scene_ ‚ª”jŠü‚³‚ê nullptr ‚É‚È‚é
  */
 void SceneManager::Finalize()
 {
@@ -83,10 +83,10 @@ void SceneManager::Finalize()
 	}
 }
 /*
- * è¦æ±‚ã•ã‚ŒãŸã‚·ãƒ¼ãƒ³ã¸ã®é·ç§»ã‚’é…å»¶å®Ÿè¡Œã—ã€å®‰å…¨ã«åˆ‡ã‚Šæ›¿ãˆã‚‹ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] current_scene_ ãŒæ–°ã—ã„ã‚·ãƒ¼ãƒ³ã«ç½®ãæ›ã‚ã‚‹
+ * —v‹‚³‚ê‚½ƒV[ƒ“‚Ö‚Ì‘JˆÚ‚ğ’x‰„Às‚µAˆÀ‘S‚ÉØ‚è‘Ö‚¦‚é‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] current_scene_ ‚ªV‚µ‚¢ƒV[ƒ“‚É’u‚«Š·‚í‚é
  */
 void SceneManager::ChangeSceneIfNeeded()
 {
@@ -106,8 +106,8 @@ void SceneManager::ChangeSceneIfNeeded()
 	case SCENE_TYPE::kSceneLoading:
 		current_scene_ = new LoadingScene();
 		break;
-	case SCENE_TYPE::kScene3D:
-		current_scene_ = new Scene3D();
+	case SCENE_TYPE::kGameScene:
+		current_scene_ = new GameScene();
 		break;
 	case SCENE_TYPE::kSceneTitle:
 		current_scene_ = new TitleScene();

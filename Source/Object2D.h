@@ -1,14 +1,14 @@
-﻿#pragma once
+#pragma once
 #include <string>
 #include <vector>
 #include "Dxlib.h"
 
-// UIやHUDなど、2D描画される全オブジェクトの共通基盤となるポリモーフィズム用基底クラス
-// 動的生成時にObjectManagerへ自動登録されるアーキテクチャのため、ライフサイクル管理に注意すること
+// UI��HUD�ȂǁA2D�`�悳���S�I�u�W�F�N�g�̋��ʊ�ՂƂȂ�|�����[�t�B�Y���p���N���X
+// ���I��������ObjectManager�֎����o�^�����A�[�L�e�N�`���̂��߁A���C�t�T�C�N���Ǘ��ɒ��ӂ��邱��
 class Object2D
 {
 public:
-	// RTTI(dynamic_cast)の多用によるパフォーマンス低下を避け、キャストを安全に行うための識別タグ
+	// RTTI(dynamic_cast)�̑��p�ɂ��p�t�H�[�}���X�ቺ������A�L���X�g�����S�ɍs�����߂̎��ʃ^�O
 	enum Tag2D
 	{
 		kNone2d = 0,
@@ -17,20 +17,20 @@ public:
 	};
 
 public:
-	// [入力] initPos: 初期座標 [出力] なし [副作用] 現在のアクティブなObjectManagerへの自身の自動登録
-	// 登録後にスコープを抜けるとダングリングポインタとなりクラッシュするため、必ずヒープ領域（new）で生成すること
+	// [����] initPos: �������W [�o��] �Ȃ� [����p] ���݂̃A�N�e�B�u��ObjectManager�ւ̎��g�̎����o�^
+	// �o�^��ɃX�R�[�v�𔲂���ƃ_���O�����O�|�C���^�ƂȂ�N���b�V�����邽�߁A�K���q�[�v�̈�inew�j�Ő������邱��
 	Object2D(VECTOR initPos);
 
-	// [入力] なし [出力] なし [副作用] なし
-	// 派生クラス側で確保した画像ハンドルなどのリソース解放漏れを防ぐため、virtual修飾は絶対に外さないこと
+	// [����] �Ȃ� [�o��] �Ȃ� [����p] �Ȃ�
+	// �h���N���X���Ŋm�ۂ����摜�n���h���Ȃǂ̃��\�[�X����R���h�����߁Avirtual�C���͐�΂ɊO���Ȃ�����
 	virtual ~Object2D();
 
-	// [入力] なし [出力] なし [副作用] 各種パラメータの更新
-	// ポーズ中などの時間停止処理を考慮し、マネージャー経由での一括呼び出しを前提とする
+	// [����] �Ȃ� [�o��] �Ȃ� [����p] �e��p�����[�^�̍X�V
+	// �|�[�Y���Ȃǂ̎��Ԓ�~�������l�����A�}�l�[�W���[�o�R�ł̈ꊇ�Ăяo����O��Ƃ���
 	virtual void Update();
 
-	// [入力] なし [出力] なし [副作用] 2Dバックバッファへの描画コール
-	// UIの重なり（Zオーダー）はマネージャー側のリスト登録順に依存するため、生成順序に注意すること
+	// [����] �Ȃ� [�o��] �Ȃ� [����p] 2D�o�b�N�o�b�t�@�ւ̕`��R�[��
+	// UI�̏d�Ȃ�iZ�I�[�_�[�j�̓}�l�[�W���[���̃��X�g�o�^���Ɉˑ����邽�߁A���������ɒ��ӂ��邱��
 	virtual void Draw();
 
 public:
@@ -50,11 +50,11 @@ public:
 	Tag2D GetTag() { return tag_; }
 
 protected:
-	VECTOR position_;   // 画面上の配置座標
-	VECTOR rotation_;   // 回転角度
+	VECTOR position_;   // ��ʏ�̔z�u���W
+	VECTOR rotation_;   // ��]�p�x
 
 private:
-	bool delete_flag_;  // 削除判定フラグ
-	Tag2D tag_;         // オブジェクト識別タグ
-	bool draw_flag_;    // 描画実行フラグ
+	bool delete_flag_;  // �폜����t���O
+	Tag2D tag_;         // �I�u�W�F�N�g���ʃ^�O
+	bool draw_flag_;    // �`����s�t���O
 };

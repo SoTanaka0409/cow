@@ -1,12 +1,12 @@
-﻿#include "ResultScene.h"
+#include "ResultScene.h"
 #include "Master.h"
 #include "GameConstants.h"
 #include "SceneManager.h"
 
 /*
- * 入力: なし
- * 出力: なし
- * 副作用: UIリソースの読み込み、ボタンの初期化、リザルトBGMの再生
+ * ����: �Ȃ�
+ * �o��: �Ȃ�
+ * ����p: UI���\�[�X�̓ǂݍ��݁A�{�^���̏������A���U���gBGM�̍Đ�
  */
 ResultScene::ResultScene()
 {
@@ -21,8 +21,8 @@ ResultScene::ResultScene()
 	your_score_text_img_ = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kScoreTitle);
 	point_img_ = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kPoint);
 
-	// 暫定対応: リザルト画面でのボタン操作（タイトルへ戻る、ゲーム終了など）は現在無効化されているが、
-	// UI描画レイアウトの崩れを防ぐため初期化のみ残す（期限：UIリファクタリング完了まで）
+	// �b��Ή�: ���U���g��ʂł̃{�^������i�^�C�g���֖߂�A�Q�[���I���Ȃǁj�͌��ݖ���������Ă��邪�A
+	// UI�`�惌�C�A�E�g�̕����h�����ߏ������̂ݎc���i�����FUI���t�@�N�^�����O�����܂Łj
 	UIButton newGameBtn;
 	newGameBtn.Initialize(SelectionManager::Title::title, Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kBtnStart), 920, 50, 0.0f);
 	buttons_.push_back(newGameBtn);
@@ -37,20 +37,20 @@ ResultScene::ResultScene()
 }
 
 /*
- * 入力: なし
- * 出力: なし
- * 副作用: 終了処理の呼び出し
+ * ����: �Ȃ�
+ * �o��: �Ȃ�
+ * ����p: �I�������̌Ăяo��
  */
 ResultScene::~ResultScene()
 {
-	// シーン遷移時にBGMが鳴り続けたり、VRAMのメモリリークが発生するのを防ぐため、デストラクタで確実な破棄を保証する
+	// �V�[���J�ڎ���BGM���葱������AVRAM�̃��������[�N����������̂�h�����߁A�f�X�g���N�^�Ŋm���Ȕj����ۏ؂���
 	Finalize();
 }
 
 /*
- * 入力: なし
- * 出力: なし
- * 副作用: フェード状態の初期化とローカルランキングの読み込み
+ * ����: �Ȃ�
+ * �o��: �Ȃ�
+ * ����p: �t�F�[�h��Ԃ̏������ƃ��[�J�������L���O�̓ǂݍ���
  */
 void ResultScene::Initialize()
 {
@@ -60,9 +60,9 @@ void ResultScene::Initialize()
 }
 
 /*
- * 入力: なし
- * 出力: なし
- * 副作用: リザルト画面の全UIと最終スコアの描画
+ * ����: �Ȃ�
+ * �o��: �Ȃ�
+ * ����p: ���U���g��ʂ̑SUI�ƍŏI�X�R�A�̕`��
  */
 void ResultScene::Draw()
 {
@@ -82,7 +82,7 @@ void ResultScene::Draw()
 		}
 	}
 
-	// スコアが0点などの場合でも、UI全体のレイアウト幅が崩れて見栄えが悪くなるのを防ぐため、最低4桁分の描画幅を担保する
+	// �X�R�A��0�_�Ȃǂ̏ꍇ�ł��AUI�S�̂̃��C�A�E�g��������Č��h���������Ȃ�̂�h�����߁A�Œ�4�����̕`�敝��S�ۂ���
 	if (digitCount < 4) digitCount = 4;
 
 	int startX = 850;
@@ -92,7 +92,7 @@ void ResultScene::Draw()
 
 	Master::score_manager_->DrawNumber(startX, 490, score, 1.0f, 4);
 
-	// スコアの桁数増減に合わせて「PT(ポイント)」画像のX座標を動的にずらし、数値と画像が被って見えなくなるバグを防ぐ
+	// �X�R�A�̌��������ɍ��킹�āuPT(�|�C���g)�v�摜��X���W�𓮓I�ɂ��炵�A���l�Ɖ摜������Č����Ȃ��Ȃ�o�O��h��
 	int pointX = startX + digitCount * 80;
 	DrawExtendGraph(pointX, 430, pointX + 200, 630, point_img_, TRUE);
 
@@ -103,15 +103,15 @@ void ResultScene::Draw()
 }
 
 /*
- * 入力: なし
- * 出力: なし
- * 副作用: シーン遷移タイマーの進行
+ * ����: �Ȃ�
+ * �o��: �Ȃ�
+ * ����p: �V�[���J�ڃ^�C�}�[�̐i�s
  */
 void ResultScene::Update()
 {
 	count_++;
 
-	// プレイヤーが操作せずとも自動でタイトルへ戻るアーケードゲーム風のUXを提供するため、約3秒(200F)で画面を遷移させる
+	// �v���C���[�����삹���Ƃ������Ń^�C�g���֖߂�A�[�P�[�h�Q�[������UX��񋟂��邽�߁A��3�b(200F)�ŉ�ʂ�J�ڂ�����
 	if (count_ >= 200 && fade_state_ != kSceneFadeOut)
 	{
 		fade_state_ = kSceneFadeOut;
@@ -122,9 +122,9 @@ void ResultScene::Update()
 }
 
 /*
- * 入力: なし
- * 出力: なし
- * 副作用: 過去のトップ3ランキングのUI描画
+ * ����: �Ȃ�
+ * �o��: �Ȃ�
+ * ����p: �ߋ��̃g�b�v3�����L���O��UI�`��
  */
 void ResultScene::DrawRankingUI()
 {
@@ -177,7 +177,7 @@ void ResultScene::DrawRankingUI()
 			}
 		}
 
-		// 自身のスコア描画時と同様に、レイアウト崩れ防止のため最低4桁分の描画余白を確保する
+		// ���g�̃X�R�A�`�掞�Ɠ��l�ɁA���C�A�E�g����h�~�̂��ߍŒ�4�����̕`��]�����m�ۂ���
 		if (digitCount < 4) digitCount = 4;
 		int pointX = baseX + 180 + digitCount * w;
 		DrawExtendGraph(pointX, drawY, pointX + w, drawY + h, point_img_, TRUE);
@@ -185,9 +185,9 @@ void ResultScene::DrawRankingUI()
 }
 
 /*
- * 入力: なし
- * 出力: なし
- * 副作用: BGMの停止処理
+ * ����: �Ȃ�
+ * �o��: �Ȃ�
+ * ����p: BGM�̒�~����
  */
 void ResultScene::Finalize()
 {

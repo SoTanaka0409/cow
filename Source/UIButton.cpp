@@ -1,6 +1,6 @@
-ï»¿#include "UIButton.h"
+#include "UIButton.h"
 
-// å‰¯ä½œç”¨ï¼šãƒœã‚¿ãƒ³ã®ç¨®é¡ã€åº§æ¨™ã€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒ³ãƒ‰ãƒ«ã€ãƒ›ãƒãƒ¼çŠ¶æ…‹ã€ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ä½ç›¸ã®åˆæœŸåŒ–
+// •›ì—pFƒ{ƒ^ƒ“‚Ìí—ŞAÀ•WAƒeƒNƒXƒ`ƒƒƒnƒ“ƒhƒ‹Aƒzƒo[ó‘ÔAƒAƒjƒ[ƒVƒ‡ƒ“ˆÊ‘Š‚Ì‰Šú‰»
 UIButton::UIButton()
 	: type(SelectionManager::Title::title)
 	, graph_handle(-1)
@@ -11,8 +11,8 @@ UIButton::UIButton()
 {
 }
 
-// å…¥åŠ›ï¼št=ãƒœã‚¿ãƒ³ã®ç¨®é¡ID, handle=DxLibç”»åƒãƒãƒ³ãƒ‰ãƒ«, px/py=æç”»åŸºæº–åº§æ¨™, anim_offset=æ³¢å½¢ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®åˆæœŸä½ç›¸
-// å‰¯ä½œç”¨ï¼šç”»åƒã‚¢ã‚»ãƒƒãƒˆæœ¬æ¥ã®è§£åƒåº¦ï¼ˆw, hï¼‰ã®è‡ªå‹•å–å¾—
+// “ü—ÍFt=ƒ{ƒ^ƒ“‚Ìí—ŞID, handle=DxLib‰æ‘œƒnƒ“ƒhƒ‹, px/py=•`‰æŠî€À•W, anim_offset=”gŒ`ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‰ŠúˆÊ‘Š
+// •›ì—pF‰æ‘œƒAƒZƒbƒg–{—ˆ‚Ì‰ğ‘œ“xiw, hj‚Ì©“®æ“¾
 void UIButton::Initialize(SelectionManager::Title t, int handle, int px, int py, float anim_offset)
 {
 	type = t;
@@ -31,8 +31,8 @@ void UIButton::Initialize(SelectionManager::Title t, int handle, int px, int py,
 	}
 }
 
-// å…¥åŠ›ï¼šmouse_x, mouse_y = ç¾åœ¨ã®ç”»é¢ä¸Šã®ãƒã‚¦ã‚¹ãƒã‚¤ãƒ³ã‚¿åº§æ¨™
-// å‰¯ä½œç”¨ï¼šãƒã‚¦ã‚¹ãŒãƒœã‚¿ãƒ³ã®çŸ©å½¢é ˜åŸŸï¼ˆAABBï¼‰ã¨é‡ãªã£ã¦ã„ã‚‹ã‹ã©ã†ã‹ã«å¿œã˜ãŸãƒ›ãƒãƒ¼çŠ¶æ…‹ï¼ˆis_hoverï¼‰ã®æ›´æ–°
+// “ü—ÍFmouse_x, mouse_y = Œ»İ‚Ì‰æ–Êã‚Ìƒ}ƒEƒXƒ|ƒCƒ“ƒ^À•W
+// •›ì—pFƒ}ƒEƒX‚ªƒ{ƒ^ƒ“‚Ì‹éŒ`—ÌˆæiAABBj‚Æd‚È‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚É‰‚¶‚½ƒzƒo[ó‘Ôiis_hoverj‚ÌXV
 void UIButton::Update(int mouse_x, int mouse_y)
 {
 	if (mouse_x >= x && mouse_x <= x + w &&
@@ -46,17 +46,17 @@ void UIButton::Update(int mouse_x, int mouse_y)
 	}
 }
 
-// å…¥åŠ›ï¼šframe_count = ã‚²ãƒ¼ãƒ å…¨ä½“ã®å…±é€šãƒ•ãƒ¬ãƒ¼ãƒ ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼
-// å‰¯ä½œç”¨ï¼šãƒœã‚¿ãƒ³ç”»åƒã®ç”»é¢æç”»
+// “ü—ÍFframe_count = ƒQ[ƒ€‘S‘Ì‚Ì‹¤’ÊƒtƒŒ[ƒ€ƒJƒEƒ“ƒ^[
+// •›ì—pFƒ{ƒ^ƒ“‰æ‘œ‚Ì‰æ–Ê•`‰æ
 void UIButton::Draw(int frame_count) const
 {
 	if (graph_handle == -1) return;
 
-	// ãƒœã‚¿ãƒ³é…ç½®ãŒå˜èª¿ã«ãªã‚‹ã®ã‚’é˜²ããŸã‚ã€å€‹åˆ¥ã®åˆæœŸä½ç›¸ï¼ˆanimation_offsetï¼‰ã‚’ç”¨ã„ã¦äº’ã„é•ã„ã«æµ®éŠã•ã›ã‚‹
+	// ƒ{ƒ^ƒ“”z’u‚ª’P’²‚É‚È‚é‚Ì‚ğ–h‚®‚½‚ßAŒÂ•Ê‚Ì‰ŠúˆÊ‘Šianimation_offsetj‚ğ—p‚¢‚ÄŒİ‚¢ˆá‚¢‚É•‚—V‚³‚¹‚é
 	float wave = sin(frame_count * 0.05f + animation_offset) * 10.0f;
 	int drawY = y + (int)wave;
 
-	// é¸æŠä¸­ã®è¦–è¦šçš„ãƒ•ã‚£ãƒ¼ãƒ‰ãƒãƒƒã‚¯ã‚’å¼·èª¿ã™ã‚‹ãŸã‚ã€ãƒ›ãƒãƒ¼æ™‚ã¯ä¸­å¿ƒã‹ã‚‰å¤–å´ã¸15pxãšã¤æ‹¡å¤§ã—ã¦æç”»ã™ã‚‹
+	// ‘I‘ğ’†‚Ì‹Šo“IƒtƒB[ƒhƒoƒbƒN‚ğ‹­’²‚·‚é‚½‚ßAƒzƒo[‚Í’†S‚©‚çŠO‘¤‚Ö15px‚¸‚ÂŠg‘å‚µ‚Ä•`‰æ‚·‚é
 	if (is_hover)
 	{
 		int expand = 15;

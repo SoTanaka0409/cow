@@ -1,4 +1,4 @@
-ï»¿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include"GameManager.h"
 #include"Master.h"
 #include"SceneManager.h"
@@ -40,10 +40,10 @@ GameManager::~GameManager()
 	}
 }
 /*
- * æŒ‡å®šã—ãŸé€²è¡Œã‚¹ãƒ†ãƒƒãƒ—ã¸ã®ç§»è¡Œå‡¦ç†ã‚’çµ±ä¸€ã™ã‚‹ãŸã‚
- * [å…¥åŠ›] type: é·ç§»å…ˆã®ã‚¹ãƒ†ãƒƒãƒ—ã‚¿ã‚¤ãƒ—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] é€²è¡Œã‚¹ãƒ†ãƒƒãƒ—å¤‰æ›´ã€ãƒªã‚¶ãƒ«ãƒˆç”»é¢ã¸ã®é·ç§»ãƒ•ãƒ©ã‚°è¨­å®šãªã©
+ * w’è‚µ‚½isƒXƒeƒbƒv‚Ö‚ÌˆÚsˆ—‚ğ“ˆê‚·‚é‚½‚ß
+ * [“ü—Í] type: ‘JˆÚæ‚ÌƒXƒeƒbƒvƒ^ƒCƒv
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] isƒXƒeƒbƒv•ÏXAƒŠƒUƒ‹ƒg‰æ–Ê‚Ö‚Ì‘JˆÚƒtƒ‰ƒOİ’è‚È‚Ç
  */
 void GameManager::GameNextStep(GameStepType type)
 {
@@ -62,11 +62,11 @@ void GameManager::GameNextStep(GameStepType type)
 			Master::score_manager_->AddScore(player->score_manager_->GetScore());
 			Master::score_manager_->SetResultScore(player->score_manager_->GetScore());
 			player->score_manager_->AddRanking();
-			// ä¸æ¸¬ã®äº‹æ…‹ã«å‚™ãˆã€ãƒªã‚¶ãƒ«ãƒˆç§»è¡Œå‰ã«é€²è¡ŒçŠ¶æ³ã‚’ä¿å­˜ã—ã¦ãŠããŸã‚
+			// •s‘ª‚Ì–‘Ô‚É”õ‚¦AƒŠƒUƒ‹ƒgˆÚs‘O‚Éisó‹µ‚ğ•Û‘¶‚µ‚Ä‚¨‚­‚½‚ß
 			player->score_manager_->Save();
 			player->score_manager_->SaveRanking();
 		}
-		// ã‚²ãƒ¼ãƒ çµ‚äº†ã«ä¼´ã„ã€æ¬¡ã‚·ãƒ¼ãƒ³ã¸ã®ç§»è¡Œã‚’ä¿ƒã™ãŸã‚
+		// ƒQ[ƒ€I—¹‚É”º‚¢AŸƒV[ƒ“‚Ö‚ÌˆÚs‚ğ‘£‚·‚½‚ß
 		if (auto scene = Master::scene_manager_->GetCurrentScene())
 		{
 			scene->fade_state_ = Scene::kSceneFadeOut;
@@ -76,10 +76,10 @@ void GameManager::GameNextStep(GameStepType type)
 	}
 }
 /*
- * ã‚²ãƒ¼ãƒ é–‹å§‹æ™‚ã®æš—è»¢æ¼”å‡ºã‚’æç”»ã™ã‚‹ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ç”»é¢å…¨åŸŸã«é»’ã„çŸ©å½¢ã‚’æç”»
+ * ƒQ[ƒ€ŠJn‚ÌˆÃ“]‰‰o‚ğ•`‰æ‚·‚é‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ‰æ–Ê‘Sˆæ‚É•‚¢‹éŒ`‚ğ•`‰æ
  */
 void GameManager::Draw()
 {
@@ -97,10 +97,10 @@ void GameManager::Draw()
 	}
 }
 /*
- * åˆ¶é™æ™‚é–“ã‚„ãƒ•ã‚§ãƒ¼ã‚ºé·ç§»ãªã©æ™‚é–“çµŒéã«ä¼´ã†çŠ¶æ…‹æ›´æ–°ã‚’è¡Œã†ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ã‚¿ã‚¤ãƒãƒ¼ã®æ›´æ–°ã€ãƒ©ãƒ³ãƒ€ãƒ ãªãƒ•ã‚§ãƒ¼ã‚ºåˆ‡ã‚Šæ›¿ãˆ
+ * §ŒÀŠÔ‚âƒtƒF[ƒY‘JˆÚ‚È‚ÇŠÔŒo‰ß‚É”º‚¤ó‘ÔXV‚ğs‚¤‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ƒ^ƒCƒ}[‚ÌXVAƒ‰ƒ“ƒ_ƒ€‚ÈƒtƒF[ƒYØ‚è‘Ö‚¦
  */
 void GameManager::Update()
 {
@@ -140,7 +140,7 @@ void GameManager::UpdateGameTimerAndPhase()
 		phase_change_count_++;
 	}
 
-	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«å¤‰åŒ–ã‚’æ¥½ã—ã‚“ã§ã‚‚ã‚‰ã†ãŸã‚
+	// ƒvƒŒƒCƒ„[‚É•Ï‰»‚ğŠy‚µ‚ñ‚Å‚à‚ç‚¤‚½‚ß
 	if (phase_change_count_ >= 30)
 	{
 		phase_change_count_ = 0;

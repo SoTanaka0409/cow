@@ -1,4 +1,4 @@
-﻿#include "TitleScene.h"
+#include "TitleScene.h"
 #include "DxLib.h"
 #include "Utility.h"
 #include "Master.h"
@@ -6,11 +6,11 @@
 #include "InputManager.h"
 #include "SelectionManager.h"
 
-// 副作用：各種UIボタンの生成と配置、フェード状態の初期化
+// ����p�F�e��UI�{�^���̐����Ɣz�u�A�t�F�[�h��Ԃ̏�����
 TitleScene::TitleScene()
 	: Scene()
 {
-	// 賑やかしとして、タイトル画面で一定時間ごとに再生する環境音の間隔カウンター
+	// ���₩���Ƃ��āA�^�C�g����ʂň�莞�Ԃ��ƂɍĐ���������̊Ԋu�J�E���^�[
 	cow_voice_timer_ = 180;
 
 	title_graph_handle_ = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kTitleBg);
@@ -31,7 +31,7 @@ TitleScene::TitleScene()
 	is_auto_patrol_ = false;
 	auto_patrol_timer_ = 0;
 
-	// 各メニュー項目を画面右側に縦一列に等間隔（200px）で並べるための座標初期化
+	// �e���j���[���ڂ���ʉE���ɏc���ɓ��Ԋu�i200px�j�ŕ��ׂ邽�߂̍��W������
 	UIButton newGameBtn;
 	newGameBtn.Initialize(SelectionManager::Title::NewGame, Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kBtnStart), 920, 50, 0.0f);
 	buttons_.push_back(newGameBtn);
@@ -55,7 +55,7 @@ TitleScene::TitleScene()
 	is_hover_new_game_ = false;
 	frame_count_ = 0;
 
-	// ランキング描画用の各テクスチャ。DxLibの初期化完了後に呼び出す必要がある仕様上の制約
+	// �����L���O�`��p�̊e�e�N�X�`���BDxLib�̏�����������ɌĂяo���K�v������d�l��̐���
 	rank_image_[0] = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kRank1);
 	rank_image_[1] = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kRank2);
 	rank_image_[2] = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kRank3);
@@ -67,11 +67,11 @@ TitleScene::~TitleScene()
 {
 }
 
-// 副作用：システムフラグ・カメラ設定・BGMの再生、ファイルからのスコア読み込み
+// ����p�F�V�X�e���t���O�E�J�����ݒ�EBGM�̍Đ��A�t�@�C������̃X�R�A�ǂݍ���
 void TitleScene::Initialize()
 {
 	Master::GameFinishFlag = false;
-	// メニュー選択操作を行うため、ゲーム本編中（非表示）と異なりカーソルを可視化する
+	// ���j���[�I�𑀍���s�����߁A�Q�[���{�Ғ��i��\���j�ƈقȂ�J�[�\������������
 	SetMouseDispFlag(true);
 	Master::score_manager_->LoadRanking();
 	Master::camera_->Initialize();
@@ -79,7 +79,7 @@ void TitleScene::Initialize()
 	Master::sound_manager_->PlayBGM(SoundManager::kBgmTitle);
 }
 
-// 副作用：各種背景・UFO・ボタン・ランキングUIの描画、デバッグログの出力
+// ����p�F�e��w�i�EUFO�E�{�^���E�����L���OUI�̕`��A�f�o�b�O���O�̏o��
 void TitleScene::Draw()
 {
 	Scene::Draw();
@@ -88,7 +88,7 @@ void TitleScene::Draw()
 	DrawMenuButtons();
 	DrawRankingUI();
 
-	// 初回読み込み時のリソース解放漏れを検証するため、描画2フレーム目のみログ追記を行う
+	// ����ǂݍ��ݎ��̃��\�[�X����R������؂��邽�߁A�`��2�t���[���ڂ̂݃��O�ǋL���s��
 	if (frame_count_ == 2) {
 		FILE* fp = NULL;
 		fopen_s(&fp, "debug_log.txt", "a");
@@ -111,7 +111,7 @@ void TitleScene::DrawBackground()
 
 	int ufoDrawY = ufo_y_;
 
-	// 静止時の単調さを避けるため、ドラッグ中以外はサイン波でフワフワ浮遊させる
+	// �Î~���̒P����������邽�߁A�h���b�O���ȊO�̓T�C���g�Ńt���t�����V������
 	if (!is_dragging_ufo_)
 	{
 		float ufoWave = sin(frame_count_ * 0.03f) * 20.0f;
@@ -131,13 +131,13 @@ void TitleScene::DrawBackground()
 
 void TitleScene::DrawMenuButtons()
 {
-	// ボタンが同時に同じ波形にならないよう、サイン波の位相（i * 1.5f）をずらして波打たせる
+	// �{�^���������ɓ����g�`�ɂȂ�Ȃ��悤�A�T�C���g�̈ʑ��ii * 1.5f�j�����炵�Ĕg�ł�����
 	for (int i = 0; i < buttons_.size(); i++)
 	{
 		float wave = sin(frame_count_ * 0.05f + (i * 1.5f)) * 10.0f;
 		int drawY = buttons_[i].y + (int)wave;
 
-		// 選択時の視覚的フィードバックを得るため、ホバー時は全体を15px拡縮して描画する
+		// �I�����̎��o�I�t�B�[�h�o�b�N�𓾂邽�߁A�z�o�[���͑S�̂�15px�g�k���ĕ`�悷��
 		if (buttons_[i].is_hover == true)
 		{
 			int expand = 15;
@@ -155,7 +155,7 @@ void TitleScene::DrawMenuButtons()
 	}
 }
 
-// 副作用：フレームカウンターの加算、各種タイマーの更新、入力状態に基づく座標変更
+// ����p�F�t���[���J�E���^�[�̉��Z�A�e��^�C�}�[�̍X�V�A���͏�ԂɊ�Â����W�ύX
 void TitleScene::Update()
 {
 	frame_count_++;
@@ -182,7 +182,7 @@ void TitleScene::UpdateCowVoice()
 		if (cow_voice_timer_ <= 0)
 		{
 			Master::sound_manager_->PlaySE(SoundManager::kSeCow);
-			// 機墁E的な周期感を無くし自然な環境音にするため、次回鳴動までの間隔を5〜15秒で散らす
+			// �@?E�I�Ȏ������𖳂������R�Ȋ����ɂ��邽�߁A������܂ł̊Ԋu��5?15�b�ŎU�炷
 			cow_voice_timer_ = GetRand(600) + 300;
 		}
 	}
@@ -190,7 +190,7 @@ void TitleScene::UpdateCowVoice()
 
 void TitleScene::UpdateUFOInteraction(int mouseInput, int mouse_x, int mouse_y, int ufoSize)
 {
-	// イースターエッグ（隠し要素）として、UFO突っつき時に一定時間自動巡回モードへ移行させる
+	// �C�[�X�^�[�G�b�O�i�B���v�f�j�Ƃ��āAUFO�˂������Ɉ�莞�Ԏ������񃂁[�h�ֈڍs������
 	if ((mouseInput & MOUSE_INPUT_LEFT) != 0)
 	{
 		if (mouse_x >= ufo_x_ && mouse_x <= ufo_x_ + ufoSize &&
@@ -209,7 +209,7 @@ void TitleScene::UpdateUFOInteraction(int mouseInput, int mouse_x, int mouse_y, 
 
 void TitleScene::UpdateUFOAutoPatrol(int ufoSize)
 {
-	// 画面中央（800, 450）を起点とした綺麗な長楕円の軌道を描かせるための極座標計算
+	// ��ʒ����i800, 450�j���N�_�Ƃ����Y��Ȓ��ȉ~�̋O����`�����邽�߂̋ɍ��W�v�Z
 	if (is_auto_patrol_)
 	{
 		ufo_angle_ += 0.02f;
@@ -227,7 +227,7 @@ void TitleScene::UpdateUFOAutoPatrol(int ufoSize)
 
 void TitleScene::UpdateMenuButtons(int mouse_x, int mouse_y)
 {
-	// メニューボタンのインタラクション処琁EUFOドラッグ中は誤爆を防ぐため判定をパスする
+	// ���j���[�{�^���̃C���^���N�V������?EUFO�h���b�O���͌딚��h�����ߔ�����p�X����
 	if (is_dragging_ufo_ == false)
 	{
 		for (int i = 0; i < buttons_.size(); i++)
@@ -257,7 +257,7 @@ void TitleScene::UpdateMenuButtons(int mouse_x, int mouse_y)
 						Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
 						break;
 					case SelectionManager::Title::titleOUT:
-						// Win32 API のメッセージループを終了させ、アプリケーションを閉じる
+						// Win32 API �̃��b�Z�[�W���[�v���I�������A�A�v���P�[�V���������
 						PostQuitMessage(0);
 						break;
 					}
@@ -271,22 +271,22 @@ void TitleScene::UpdateMenuButtons(int mouse_x, int mouse_y)
 	}
 	else
 	{
-		// UFO操作中の画面のちらつきや誤動作を防止するため、全ボタンのホバー演Eを消去する
+		// UFO���쒆�̉�ʂ̂������듮���h�~���邽�߁A�S�{�^���̃z�o�[��E����������
 		for (int i = 0; i < buttons_.size(); i++) {
 			buttons_[i].is_hover = false;
 		}
 	}
 }
 
-// 副作用：マウスカーソル非表示化、BGMの停止
+// ����p�F�}�E�X�J�[�\����\�����ABGM�̒�~
 void TitleScene::Finalize()
 {
-	// グラフィックメモリは ResourceManager が一括管理・自動解放するため、個別Deleteは行わない
+	// �O���t�B�b�N�������� ResourceManager ���ꊇ�Ǘ��E����������邽�߁A��Delete�͍s��Ȃ�
 	SetMouseDispFlag(false);
 	Master::sound_manager_->StopBGM();
 }
 
-// 副作用：ランキングタイトル、上位3名の順位バッジおよびハイスコアの画面描画
+// ����p�F�����L���O�^�C�g���A���3���̏��ʃo�b�W����уn�C�X�R�A�̉�ʕ`��
 void TitleScene::DrawRankingUI()
 {
 	int baseX = 40;
@@ -301,7 +301,7 @@ void TitleScene::DrawRankingUI()
 		TRUE
 	);
 
-	// ハイスコア上位3名分のデータを抽出し、等間隔（80px）で縦並びにする描画ループ
+	// �n�C�X�R�A���3�����̃f�[�^�𒊏o���A���Ԋu�i80px�j�ŏc���тɂ���`�惋�[�v
 	for (int i = 0; i < 3; i++)
 	{
 		const Score::RankData& data = Master::score_manager_->GetRanking(i);
@@ -316,7 +316,7 @@ void TitleScene::DrawRankingUI()
 			TRUE
 		);
 
-		// 画像フォントの等倍サイズ（80px）をベースに、UIレイアウトに適した縮尺へ調整
+		// �摜�t�H���g�̓��{�T�C�Y�i80px�j���x�[�X�ɁAUI���C�A�E�g�ɓK�����k�ڂ֒���
 		float scale = 0.6f;
 		int w = (int)(80 * scale);
 		int h = (int)(80 * scale);

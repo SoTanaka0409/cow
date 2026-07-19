@@ -1,11 +1,11 @@
-ï»¿#include "Cow.h"
+#include "Cow.h"
 #include "CapsuleCollider.h"
 #include "Master.h"
 /*
- * ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å¯¾è±¡ã¨ãªã‚‹æ¨™æº–ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã‚’åˆæœŸåŒ–ã™ã‚‹ã€‚
- * [å…¥åŠ›] filename: ãƒ¢ãƒ‡ãƒ«ãƒ‘ã‚¹, initPos: åˆæœŸä½ç½®, num: åŸºç¤ã‚¹ã‚³ã‚¢å€¤
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ã‚¹ã‚³ã‚¢ã¨çµŒé¨“å€¤ãŒè¨­å®šã•ã‚Œã‚‹
+ * ƒvƒŒƒCƒ„[‚Ì‘ÎÛ‚Æ‚È‚é•W€ƒLƒƒƒ‰ƒNƒ^[‚ğ‰Šú‰»‚·‚éB
+ * [“ü—Í] filename: ƒ‚ƒfƒ‹ƒpƒX, initPos: ‰ŠúˆÊ’u, num: Šî‘bƒXƒRƒA’l
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ƒXƒRƒA‚ÆŒoŒ±’l‚ªİ’è‚³‚ê‚é
  */
 Cow::Cow(std::string filename, VECTOR initPos, float num)
 	: CowMove(filename, initPos)
@@ -16,10 +16,10 @@ Cow::Cow(std::string filename, VECTOR initPos, float num)
 	mCurrentState = STATE_IDLE;
 }
 /*
- * ãƒªã‚½ãƒ¼ã‚¹è§£æ”¾ã€‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ãªã—
+ * ƒŠƒ\[ƒX‰ğ•úB
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ‚È‚µ
  */
 Cow::~Cow()
 {

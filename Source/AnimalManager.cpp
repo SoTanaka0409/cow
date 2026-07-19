@@ -1,4 +1,4 @@
-ï»¿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include "AnimalManager.h"
 #include "AnimalMove.h"
 #include "Player3D.h"
@@ -8,18 +8,18 @@
 #include "Animal.h"
 
 /*
- * å…¥åŠ›: ãªã—
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: ãªã—
+ * “ü—Í: ‚È‚µ
+ * o—Í: ‚È‚µ
+ * •›ì—p: ‚È‚µ
  */
 AnimalManager::AnimalManager()
 {
 }
 
 /*
- * å…¥åŠ›: filename (ãƒ¢ãƒ‡ãƒ«), pos (åŸºæº–åº§æ¨™), scale (å€ç‡), tag (å‹•ç‰©ç¨®åˆ¥), count (ç”Ÿæˆæ•°)
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ¡ãƒ¢ãƒªç¢ºä¿(ã¾ãŸã¯ãƒ—ãƒ¼ãƒ«ã‹ã‚‰ã®å†åˆ©ç”¨)ã¨ç®¡ç†ãƒªã‚¹ãƒˆã¸ã®è¿½åŠ 
+ * “ü—Í: filename (ƒ‚ƒfƒ‹), pos (Šî€À•W), scale (”{—¦), tag (“®•¨í•Ê), count (¶¬”)
+ * o—Í: ‚È‚µ
+ * •›ì—p: ƒIƒuƒWƒFƒNƒg‚Ìƒƒ‚ƒŠŠm•Û(‚Ü‚½‚Íƒv[ƒ‹‚©‚ç‚ÌÄ—˜—p)‚ÆŠÇ—ƒŠƒXƒg‚Ö‚Ì’Ç‰Á
  */
 void AnimalManager::SpawnAnimal(std::string filename, VECTOR pos, float scale, AnimalMove::TagAnimal tag, int count, float scatterRadius)
 {
@@ -37,7 +37,7 @@ void AnimalManager::SpawnAnimal(std::string filename, VECTOR pos, float scale, A
 		}
 		VECTOR spawnPos = VGet(randX, 0.0f, randZ);
 
-		// æš«å®šå¯¾å¿œ: ç¾åœ¨ã¯kAnimal1(ç‰›)ã®å®Ÿè£…ã®ã¿ã€‚ä»–ç¨®åˆ¥è¿½åŠ æ™‚ã¯Factoryç­‰ã¸ã®ãƒªãƒ•ã‚¡ã‚¯ã‚¿ãƒªãƒ³ã‚°ã‚’æ¨å¥¨
+		// b’è‘Î‰: Œ»İ‚ÍkAnimal1(‹)‚ÌÀ‘•‚Ì‚İB‘¼í•Ê’Ç‰Á‚ÍFactory“™‚Ö‚ÌƒŠƒtƒ@ƒNƒ^ƒŠƒ“ƒO‚ğ„§
 		if (tag == AnimalMove::kAnimal1)
 		{
 			SpawnAndInit<Animal>(tag, spawnPos, scale, filename, spawnPos);

@@ -1,18 +1,18 @@
-﻿#pragma once
+#pragma once
 #include "dxlib.h"
 #include "Object3D.h"
 #include "Texture.h"
 
-// 業務ルール：UFOのパワーアップ体験を提供するため、レベルアップ時に出現する3枚のスキル選択カードと能力上昇効果を制御するクラス
+// �Ɩ����[���FUFO�̃p���[�A�b�v�̌���񋟂��邽�߁A���x���A�b�v���ɏo������3���̃X�L���I���J�[�h�Ɣ\�͏㏸���ʂ𐧌䂷��N���X
 class Skill
 {
 public:
 	enum SkillTag
 	{
 		None,
-		kSkill1, // 吸引速度アップ
-		kSkill2, // 餌設置
-		kSkill3, // 移動速度アップ
+		kSkill1, // �z�����x�A�b�v
+		kSkill2, // �a�ݒu
+		kSkill3, // �ړ����x�A�b�v
 	};
 
 	enum StatusTag
@@ -22,31 +22,31 @@ public:
 	};
 
 public:
-	// 入力：parent=プレイヤーなど関連付ける親アクター
-	// 副作用：スキル選択カード用Textureの動的確保
+	// ���́Fparent=�v���C���[�ȂǊ֘A�t����e�A�N�^�[
+	// ����p�F�X�L���I���J�[�h�pTexture�̓��I�m��
 	Skill(Object3D* parent);
 	~Skill();
 
-	// 副作用：カード表示用座標の更新
+	// ����p�F�J�[�h�\���p���W�̍X�V
 	void Update();
 
-	// 副作用：画面へのカードUI描画
+	// ����p�F��ʂւ̃J�[�hUI�`��
 	void Draw();
 
-	// 副作用：プレイヤーのステータス加算、または餌オブジェクトの生成トリガーの発行
+	// ����p�F�v���C���[�̃X�e�[�^�X���Z�A�܂��͉a�I�u�W�F�N�g�̐����g���K�[�̔��s
 	void AddSkill();
 
 	SkillTag GetSkillTag() { return tag_; }
 
-	// 入力：tag=ステータス種類
-	// 出力：加算されるボーナス実数値
+	// ���́Ftag=�X�e�[�^�X���
+	// �o�́F���Z�����{�[�i�X�����l
 	float GetStatusDate(StatusTag tag);
 
-	// 入力：flag=UIを表示するかどうかのフラグ
-	// 副作用：各種アニメーションフラグとカード初期位置の初期化
+	// ���́Fflag=UI��\�����邩�ǂ����̃t���O
+	// ����p�F�e��A�j���[�V�����t���O�ƃJ�[�h�����ʒu�̏�����
 	void SetSkillFlag(bool flag);
 
-	// バグ回避：フレーム跨ぎの複数回クリックによる、スキルの二重取得バグを防止するための購入確定フラグ
+	// �o�O����F�t���[���ׂ��̕�����N���b�N�ɂ��A�X�L���̓�d�擾�o�O��h�~���邽�߂̍w���m��t���O
 	bool add_skill_flag_;
 
 private:
@@ -59,12 +59,12 @@ private:
 	Object3D* parent_;
 	SkillTag tag_;
 
-	// 仕様制約：UI上にランダム提示される「3枚の異なる選択肢カード」の見た目を個別に制御するための個別テクスチャ
+	// �d�l����FUI��Ƀ����_���񎦂����u3���̈قȂ�I�����J�[�h�v�̌����ڂ��ʂɐ��䂷�邽�߂̌ʃe�N�X�`��
 	Texture* texture_;
 	Texture* texture2_;
 	Texture* texture3_;
 
-	// 将来の拡張性（a = AttackSpeed, s = Speed）のバフ加算量を個別に永続保持するためのワーク変数
+	// �����̊g�����ia = AttackSpeed, s = Speed�j�̃o�t���Z�ʂ��ʂɉi���ێ����邽�߂̃��[�N�ϐ�
 	float status_a_;
 	float status_s_;
 
@@ -72,18 +72,18 @@ private:
 	int flash_alpha_;
 	bool flash_;
 
-	// 仕様制約：カード決定時に即画面を閉じず、選択したカードが拡大フェードする演出（0.5秒）を挟むための状態フラグ
+	// �d�l����F�J�[�h���莞�ɑ���ʂ�����A�I�������J�[�h���g��t�F�[�h���鉉�o�i0.5�b�j�����ނ��߂̏�ԃt���O
 	bool select_anim_;
 	int selected_skill_;
 	float select_scale_;
 	VECTOR select_pos_;
 
-	// 画面解像度やアスペクト比の変更時に、3枚のカードの均等な横並びレイアウトを維持するための基準座標群
+	// ��ʉ𑜓x��A�X�y�N�g��̕ύX���ɁA3���̃J�[�h�̋ϓ��ȉ����у��C�A�E�g���ێ����邽�߂̊���W�Q
 	VECTOR pos1_;
 	VECTOR pos2_;
 	VECTOR pos3_;
 
-	// 3枚のカードが画面下部から時間差（ディレイ）を持って滑らかに浮上する演出を制御するフラグ
+	// 3���̃J�[�h����ʉ������玞�ԍ��i�f�B���C�j�������Ċ��炩�ɕ��シ�鉉�o�𐧌䂷��t���O
 	bool open_anim_;
 	float card1_y_;
 	float card2_y_;

@@ -1,27 +1,27 @@
-﻿#pragma once
+#pragma once
 
 class CharacterMove;
 
-// 設計ルール：キャラクターの複雑な状態遷移（アイドル・移動・吸引等）のバグを防ぎ、追加・保守を容易にするStateパターンの基底クラス
+// �݌v���[���F�L�����N�^�[�̕��G�ȏ�ԑJ�ځi�A�C�h���E�ړ��E�z�����j�̃o�O��h���A�ǉ��E�ێ��e�Ղɂ���State�p�^�[���̊��N���X
 class CharacterState
 {
 public:
 	virtual ~CharacterState() = default;
 
-	// 入力：character=状態を適用する対象キャラクターのポインタ
-	// 副作用：アニメーションの切り替え、タイマーリセットなど状態遷移時の初期化
+	// ���́Fcharacter=��Ԃ�K�p����ΏۃL�����N�^�[�̃|�C���^
+	// ����p�F�A�j���[�V�����̐؂�ւ��A�^�C�}�[���Z�b�g�ȂǏ�ԑJ�ڎ��̏�����
 	virtual void Enter(CharacterMove* character) {}
 
-	// 入力：character=更新対象のキャラクターのポインタ
-	// 副作用：キャラクター座標、移動ベクトル、アニメーションフレームの毎フレーム更新
+	// ���́Fcharacter=�X�V�Ώۂ̃L�����N�^�[�̃|�C���^
+	// ����p�F�L�����N�^�[���W�A�ړ��x�N�g���A�A�j���[�V�����t���[���̖��t���[���X�V
 	virtual void Update(CharacterMove* character) = 0;
 
-	// 入力：character=状態を解除する対象キャラクターのポインタ
-	// 副作用：エフェクトの停止、一時的な移動バフや制限フラグのクリーンアップ
+	// ���́Fcharacter=��Ԃ���������ΏۃL�����N�^�[�̃|�C���^
+	// ����p�F�G�t�F�N�g�̒�~�A�ꎞ�I�Ȉړ��o�t�␧���t���O�̃N���[���A�b�v
 	virtual void Exit(CharacterMove* character) {}
 };
 
-// 業務ルール：入力がない時、または現在の移動速度がゼロの時に遷移する待機（アイドル）状態
+// �Ɩ����[���F���͂��Ȃ����A�܂��͌��݂̈ړ����x���[���̎��ɑJ�ڂ���ҋ@�i�A�C�h���j���
 class StateIdle : public CharacterState
 {
 public:
@@ -29,7 +29,7 @@ public:
 	void Update(CharacterMove* character) override;
 };
 
-// 業務ルール：コントローラーやキーボードによる移動入力中に遷移する通常の歩行状態
+// �Ɩ����[���F�R���g���[���[��L�[�{�[�h�ɂ��ړ����͒��ɑJ�ڂ���ʏ�̕��s���
 class StateWalk : public CharacterState
 {
 public:
@@ -37,7 +37,7 @@ public:
 	void Update(CharacterMove* character) override;
 };
 
-// 業務ルール：UFOからのアブダクションビームに囚われ、空中へ吸い上げられている最中の特殊被ダメージ状態
+// �Ɩ����[���FUFO����̃A�u�_�N�V�����r�[���Ɏ����A�󒆂֋z���グ���Ă���Œ��̓����_���[�W���
 class StateVacuum : public CharacterState
 {
 public:

@@ -1,9 +1,9 @@
-﻿#include "Texture.h"
+#include "Texture.h"
 #include "DxLib.h"
 #include "Master.h"
 
-// 入力：filename=アセット画像パス, centerPosition=描画の中心となる座標, graphsize_x/y=指定描画サイズ, transFlag=透過の有無
-// 副作用：ResourceManagerを介したグラフィックハンドルのロード、およびオリジナル画像解像度の取得
+// ���́Ffilename=�A�Z�b�g�摜�p�X, centerPosition=�`��̒��S�ƂȂ���W, graphsize_x/y=�w��`��T�C�Y, transFlag=���߂̗L��
+// ����p�FResourceManager������O���t�B�b�N�n���h���̃��[�h�A����уI���W�i���摜�𑜓x�̎擾
 Texture::Texture(std::string filename, VECTOR centerPosition, int graphsize_x, int graphsize_y, int transFlag)
 	: handle_(-1)
 	, position_(centerPosition)
@@ -12,7 +12,7 @@ Texture::Texture(std::string filename, VECTOR centerPosition, int graphsize_x, i
 	, trans_flag_(transFlag)
 {
 	handle_ = Master::resource_manager_->LoadGraphics(filename.c_str());
-	// アセット自体の元解像度を保持しておき、将来的にアスペクト比を維持した自動リサイズ処理等に拡張できるようにする
+	// �A�Z�b�g���̂̌��𑜓x��ێ����Ă����A�����I�ɃA�X�y�N�g����ێ������������T�C�Y�������Ɋg���ł���悤�ɂ���
 	GetGraphSize(handle_, &size_x_, &size_y_);
 }
 
@@ -20,12 +20,12 @@ Texture::~Texture()
 {
 }
 
-// 入力：なし
-// 出力：なし
-// 副作用：バックバッファへの拡大縮小描画
+// ���́F�Ȃ�
+// �o�́F�Ȃ�
+// ����p�F�o�b�N�o�b�t�@�ւ̊g��k���`��
 void Texture::Draw()
 {
-	// 設計ルール：回転や拡縮のアニメーション基準点を直感的に制御するため、左上基準ではなく指定の中心座標から逆算して描画
+	// �݌v���[���F��]��g�k�̃A�j���[�V������_�𒼊��I�ɐ��䂷�邽�߁A�����ł͂Ȃ��w��̒��S���W����t�Z���ĕ`��
 	DrawExtendGraph(
 		static_cast<int>(position_.x - (new_game_w_ / 2)),
 		static_cast<int>(position_.y - (new_game_h_ / 2)),
@@ -35,12 +35,12 @@ void Texture::Draw()
 	);
 }
 
-// 入力：なし
-// 出力：なし
-// 副作用：指定の拡張幅（15px）を加えたサイズでのバックバッファ描画
+// ���́F�Ȃ�
+// �o�́F�Ȃ�
+// ����p�F�w��̊g�����i15px�j���������T�C�Y�ł̃o�b�N�o�b�t�@�`��
 void Texture::SizeDraw()
 {
-	// 一時対応：UIの決定アニメーション等で、一時的に現在の見た目を少し強調（ポップアップ）させるための拡大処理
+	// �ꎞ�Ή��FUI�̌���A�j���[�V�������ŁA�ꎞ�I�Ɍ��݂̌����ڂ����������i�|�b�v�A�b�v�j�����邽�߂̊g�又��
 	int expand = 15;
 	int halfW = (new_game_w_ + expand) / 2;
 	int halfH = (new_game_h_ + expand) / 2;
@@ -58,12 +58,12 @@ void Texture::Update()
 {
 }
 
-// 入力：scale=拡縮倍率（1.0fが指定サイズでの等倍）
-// 出力：なし
-// 副作用：指定倍率でスケーリングされたバックバッファ描画
+// ���́Fscale=�g�k�{���i1.0f���w��T�C�Y�ł̓��{�j
+// �o�́F�Ȃ�
+// ����p�F�w��{���ŃX�P�[�����O���ꂽ�o�b�N�o�b�t�@�`��
 void Texture::DrawScale(float scale)
 {
-	// レベルアップ時のカードUIが滑らかに出現・拡大フェードする演出（サイン波補間）をピクセル単位で正確に描画するための小数演算
+	// ���x���A�b�v���̃J�[�hUI�����炩�ɏo���E�g��t�F�[�h���鉉�o�i�T�C���g��ԁj���s�N�Z���P�ʂŐ��m�ɕ`�悷�邽�߂̏������Z
 	float halfW = (new_game_w_ * scale) / 2.0f;
 	float halfH = (new_game_h_ * scale) / 2.0f;
 

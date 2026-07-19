@@ -1,8 +1,8 @@
-﻿#pragma once
+#pragma once
 #include<string>
 #include<vector>
 
-// 設計ルール：重複ロードの防止や音量の一括制御、および同フレーム内でのSE暴発による爆音化を防ぐための音響管理クラス
+// �݌v���[���F�d�����[�h�̖h�~�≹�ʂ̈ꊇ����A����ѓ��t���[�����ł�SE�\���ɂ�锚������h�����߂̉����Ǘ��N���X
 class SoundManager
 {
 public:
@@ -32,18 +32,18 @@ public:
 	SoundManager();
 	~SoundManager();
 
-	// 副作用：全BGM・SEアセットの事前読み込み、および初期マスターボリュームの適用
+	// ����p�F�SBGM�ESE�A�Z�b�g�̎��O�ǂݍ��݁A����я����}�X�^�[�{�����[���̓K�p
 	void Initialize();
 
-	// 副作用：DxLibのサウンドメモリハンドルをすべて一括解放
+	// ����p�FDxLib�̃T�E���h�������n���h�������ׂĈꊇ���
 	void Finalize();
 
-	// 入力：bgm=再生対象のID, IsTop=最初からループ再生するか（falseでレジューム）
-	// 副作用：指定BGMの再生開始、現在再生中のBGM状態の更新
+	// ���́Fbgm=�Đ��Ώۂ�ID, IsTop=�ŏ����烋�[�v�Đ����邩�ifalse�Ń��W���[���j
+	// ����p�F�w��BGM�̍Đ��J�n�A���ݍĐ�����BGM��Ԃ̍X�V
 	void PlayBGM(SoundBgm bgm, bool IsTop = true);
 
-	// 入力：se=再生対象のID
-	// 副作用：指定SEの単発再生（同一SEが重複した場合は多重再生）
+	// ���́Fse=�Đ��Ώۂ�ID
+	// ����p�F�w��SE�̒P���Đ��i����SE���d�������ꍇ�͑��d�Đ��j
 	void PlaySE(SoundSe se);
 
 	void LoadBGM(SoundBgm bgm, std::string filename);
@@ -59,15 +59,15 @@ public:
 	void SetMasterSEVolume(int volume);
 
 private:
-	// 仕様制約：DxLibの最大音量値（255）を基準とした、ユーザー設定用のシステム音量基準値
+	// �d�l����FDxLib�̍ő剹�ʒl�i255�j����Ƃ����A���[�U�[�ݒ�p�̃V�X�e�����ʊ�l
 	int master_bgm_volume_ = 255;
 	int master_se_volume_ = 255;
 
-	// バグ回避：同じBGMを重ねて再生しようとした際のリスタート（音途切れ）を検知・防御するための現在再生ID
+	// �o�O����F����BGM���d�˂čĐ����悤�Ƃ����ۂ̃��X�^�[�g�i���r�؂�j�����m�E�h�䂷�邽�߂̌��ݍĐ�ID
 	SoundBgm now_playing_bgm_;
 	SoundSe now_playing_se_;
 
-	// パフォーマンス理由：シーン切り替え時の同期ズレ（プチノイズ）を防ぐため、IDとDxLibハンドルをペアでキャッシュ管理
+	// �p�t�H�[�}���X���R�F�V�[���؂�ւ����̓����Y���i�v�`�m�C�Y�j��h�����߁AID��DxLib�n���h�����y�A�ŃL���b�V���Ǘ�
 	std::vector<std::pair<SoundBgm, int>> bgm_handle_list_;
 	std::vector<std::pair<SoundSe, int>> se_handle_list_;
 };

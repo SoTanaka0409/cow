@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "SelectionManager.h"
 #include "DxLib.h"
 #include <cmath>

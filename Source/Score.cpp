@@ -1,4 +1,4 @@
-ï»¿#include "Score.h"
+#include "Score.h"
 #include <stdio.h>
 #include <string.h>
 #include "DxLib.h"
@@ -6,10 +6,10 @@
 #include "Master.h"
 int Score::result_score_ = 0;
 /*
- * ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åˆæœŸåŒ–ã‚’è¡Œã†ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ãƒ¡ãƒ³ãƒå¤‰æ•°ã®åˆæœŸåŒ–ã€ç”»åƒã®èª­ã¿è¾¼ã¿
+ * ƒIƒuƒWƒFƒNƒg‚Ì‰Šú‰»‚ğs‚¤‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ƒƒ“ƒo•Ï”‚Ì‰Šú‰»A‰æ‘œ‚Ì“Ç‚İ‚İ
  */
 Score::Score()
 {
@@ -23,34 +23,34 @@ Score::Score()
 		strcpy_s(ranking_[i].name_, sizeof(ranking_[i].name_), "NONE");
 		ranking_[i].score_ = 0;
 	}
-	score_text_image_ = Master::resource_manager_->LoadGraphics("Resource/2D/ScoreHudText.png");
-	minus_img_ = Master::resource_manager_->LoadGraphics("Resource/2D/MinusText.png");
-	number_img_[0] = Master::resource_manager_->LoadGraphics("Resource/2D/ComboDigit00.png");
-	number_img_[1] = Master::resource_manager_->LoadGraphics("Resource/2D/ComboDigit01.png");
-	number_img_[2] = Master::resource_manager_->LoadGraphics("Resource/2D/ComboDigit02.png");
-	number_img_[3] = Master::resource_manager_->LoadGraphics("Resource/2D/ComboDigit03.png");
-	number_img_[4] = Master::resource_manager_->LoadGraphics("Resource/2D/ComboDigit04.png");
-	number_img_[5] = Master::resource_manager_->LoadGraphics("Resource/2D/ComboDigit05.png");
-	number_img_[6] = Master::resource_manager_->LoadGraphics("Resource/2D/ComboDigit06.png");
-	number_img_[7] = Master::resource_manager_->LoadGraphics("Resource/2D/ComboDigit07.png");
-	number_img_[8] = Master::resource_manager_->LoadGraphics("Resource/2D/ComboDigit08.png");
-	number_img_[9] = Master::resource_manager_->LoadGraphics("Resource/2D/ComboDigit09.png");
+	score_text_image_ = Master::resource_manager_->LoadGraphics("Resource/2D/ƒXƒRƒA/ƒXƒRƒA•¶š.png");
+	minus_img_ = Master::resource_manager_->LoadGraphics("Resource/2D/ƒXƒRƒA/ƒ}ƒCƒiƒX•¶š.png");
+	number_img_[0] = Master::resource_manager_->LoadGraphics("Resource/2D/ƒXƒRƒA/ƒXƒRƒA‰æ‘œ‚O‚O.png");
+	number_img_[1] = Master::resource_manager_->LoadGraphics("Resource/2D/ƒXƒRƒA/ƒXƒRƒA‰æ‘œ‚O‚P.png");
+	number_img_[2] = Master::resource_manager_->LoadGraphics("Resource/2D/ƒXƒRƒA/ƒXƒRƒA‰æ‘œ‚O‚Q.png");
+	number_img_[3] = Master::resource_manager_->LoadGraphics("Resource/2D/ƒXƒRƒA/ƒXƒRƒA‰æ‘œ‚O‚R.png");
+	number_img_[4] = Master::resource_manager_->LoadGraphics("Resource/2D/ƒXƒRƒA/ƒXƒRƒA‰æ‘œ‚O‚S.png");
+	number_img_[5] = Master::resource_manager_->LoadGraphics("Resource/2D/ƒXƒRƒA/ƒXƒRƒA‰æ‘œ‚O‚T.png");
+	number_img_[6] = Master::resource_manager_->LoadGraphics("Resource/2D/ƒXƒRƒA/ƒXƒRƒA‰æ‘œ‚O‚U.png");
+	number_img_[7] = Master::resource_manager_->LoadGraphics("Resource/2D/ƒXƒRƒA/ƒXƒRƒA‰æ‘œ‚O‚V.png");
+	number_img_[8] = Master::resource_manager_->LoadGraphics("Resource/2D/ƒXƒRƒA/ƒXƒRƒA‰æ‘œ‚O‚W.png");
+	number_img_[9] = Master::resource_manager_->LoadGraphics("Resource/2D/ƒXƒRƒA/ƒXƒRƒA‰æ‘œ‚O‚X.png");
 	LoadRanking();
 }
 /*
- * ãƒ¡ãƒ¢ãƒªè§£æ”¾ã®ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ãªã—
+ * ƒƒ‚ƒŠ‰ğ•ú‚Ì‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ‚È‚µ
  */
 Score::~Score()
 {
 }
 /*
- * ç¾åœ¨ã®ã‚¹ã‚³ã‚¢ã‚’ç”»é¢ã«æç”»ã™ã‚‹ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ç”»é¢æç”»
+ * Œ»İ‚ÌƒXƒRƒA‚ğ‰æ–Ê‚É•`‰æ‚·‚é‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ‰æ–Ê•`‰æ
  */
 void Score::Draw()
 {
@@ -62,60 +62,60 @@ void Score::Draw()
 	DrawNumber(Utility::kUiDigitX, y, score_, 1.0f, 4);
 }
 /*
- * ç²å¾—ã—ãŸã‚¹ã‚³ã‚¢ã‚’åŠ ç®—ã™ã‚‹ãŸã‚
- * [å…¥åŠ›] value: åŠ ç®—ã™ã‚‹ã‚¹ã‚³ã‚¢
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] score_ã®æ›´æ–°
+ * Šl“¾‚µ‚½ƒXƒRƒA‚ğ‰ÁZ‚·‚é‚½‚ß
+ * [“ü—Í] value: ‰ÁZ‚·‚éƒXƒRƒA
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] score_‚ÌXV
  */
 void Score::AddScore(int value)
 {
 	score_ += value;
 	if (score_ < 0)
 	{
-		// è² ã®ã‚¹ã‚³ã‚¢ã‚’é˜²ããŸã‚
+		// •‰‚ÌƒXƒRƒA‚ğ–h‚®‚½‚ß
 		score_ = 0;
 	}
 	else if (score_ >=9999)
 	{
-		//è¦å®šå€¤ã‚’è¶…ãˆãªã„ã‚ˆã†ã«
+		//‹K’è’l‚ğ’´‚¦‚È‚¢‚æ‚¤‚É
 		score_ = 9999;
 	}
 }
 /*
- * ã‚¹ã‚³ã‚¢ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] score_ã‚’0ã«è¨­å®š
+ * ƒXƒRƒA‚ğƒŠƒZƒbƒg‚·‚é‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] score_‚ğ0‚Éİ’è
  */
 void Score::ResetScore()
 {
 	score_ = 0;
 }
 /*
- * ç¾åœ¨ã®ã‚¹ã‚³ã‚¢ã‚’å–å¾—ã™ã‚‹ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ç¾åœ¨ã®ã‚¹ã‚³ã‚¢
- * [å‰¯ä½œç”¨] ãªã—
+ * Œ»İ‚ÌƒXƒRƒA‚ğæ“¾‚·‚é‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] Œ»İ‚ÌƒXƒRƒA
+ * [•›ì—p] ‚È‚µ
  */
 int Score::GetScore() const
 {
 	return score_;
 }
 /*
- * å…¥åŠ›ã•ã‚ŒãŸãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼åã‚’å–å¾—ã™ã‚‹ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼åã®æ–‡å­—åˆ—
- * [å‰¯ä½œç”¨] ãªã—
+ * “ü—Í‚³‚ê‚½ƒvƒŒƒCƒ„[–¼‚ğæ“¾‚·‚é‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ƒvƒŒƒCƒ„[–¼‚Ì•¶š—ñ
+ * [•›ì—p] ‚È‚µ
  */
 const char* Score::GetName() const
 {
 	return player_name_;
 }
 /*
- * ãƒ‡ãƒãƒƒã‚°ç”¨ã«ã‚¹ã‚³ã‚¢æƒ…å ±ã‚’ãƒ•ã‚¡ã‚¤ãƒ«ã«ä¿å­˜ã™ã‚‹ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] score_.txtã¸ã®æ›¸ãè¾¼ã¿
+ * ƒfƒoƒbƒO—p‚ÉƒXƒRƒAî•ñ‚ğƒtƒ@ƒCƒ‹‚É•Û‘¶‚·‚é‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] score_.txt‚Ö‚Ì‘‚«‚İ
  */
 void Score::Save()
 {
@@ -131,10 +131,10 @@ void Score::Save()
 	}
 }
 /*
- * ãƒ‡ãƒãƒƒã‚°ç”¨ã«ã‚¹ã‚³ã‚¢æƒ…å ±ã‚’ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰èª­ã¿è¾¼ã‚€ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] score_ã¨ranking_ã®æ›´æ–°
+ * ƒfƒoƒbƒO—p‚ÉƒXƒRƒAî•ñ‚ğƒtƒ@ƒCƒ‹‚©‚ç“Ç‚İ‚Ş‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] score_‚Æranking_‚ÌXV
  */
 void Score::Load()
 {
@@ -153,31 +153,31 @@ void Score::Load()
 	}
 }
 /*
- * ãƒªã‚¶ãƒ«ãƒˆç”»é¢ã§ãƒãƒ¼ãƒ ã‚¨ãƒ³ãƒˆãƒªãƒ¼ã‚’é–‹å§‹ã™ã‚‹ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ã‚­ãƒ¼å…¥åŠ›ãƒãƒ³ãƒ‰ãƒ«ã®ä½œæˆã¨æœ‰åŠ¹åŒ–
+ * ƒŠƒUƒ‹ƒg‰æ–Ê‚Åƒl[ƒ€ƒGƒ“ƒgƒŠ[‚ğŠJn‚·‚é‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ƒL[“ü—Íƒnƒ“ƒhƒ‹‚Ìì¬‚Æ—LŒø‰»
  */
 void Score::StartNameInput()
 {
 	name_input_mode_ = true;
 	name_index_ = 0;
 	player_name_[0] = '\0';
-	// æ–‡å­—å…¥åŠ›å‡¦ç†ã‚’DxLibã«å§”è­²ã™ã‚‹ãŸã‚
+	// •¶š“ü—Íˆ—‚ğDxLib‚ÉˆÏ÷‚·‚é‚½‚ß
 	input_handle_ = MakeKeyInput(0, 0, 64, 1);
 	SetActiveKeyInput(input_handle_);
 }
 /*
- * ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰å…¥åŠ›ã‹ã‚‰ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼åã‚’æ›´æ–°ã™ã‚‹ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] player_name_ã®æ›´æ–°ã€å…¥åŠ›å®Œäº†çŠ¶æ…‹ã®å¤‰æ›´
+ * ƒL[ƒ{[ƒh“ü—Í‚©‚çƒvƒŒƒCƒ„[–¼‚ğXV‚·‚é‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] player_name_‚ÌXVA“ü—ÍŠ®—¹ó‘Ô‚Ì•ÏX
  */
 void Score::UpdateNameInput()
 {
 	if (!name_input_mode_) return;
 	GetKeyInputString(player_name_, input_handle_);
-	// å…¥åŠ›ç¢ºå®šã‚’æ¤œçŸ¥ã—ã¦å—ä»˜ã‚’çµ‚äº†ã™ã‚‹ãŸã‚
+	// “ü—ÍŠm’è‚ğŒŸ’m‚µ‚Äó•t‚ğI—¹‚·‚é‚½‚ß
 	if (CheckHitKey(KEY_INPUT_RETURN) && strlen(player_name_) > 0)
 	{
 		name_input_mode_ = false;
@@ -188,36 +188,36 @@ void Score::UpdateNameInput()
 	}
 }
 /*
- * ãƒãƒ¼ãƒ ã‚¨ãƒ³ãƒˆãƒªãƒ¼ãŒå®Œäº†ã—ãŸã‹åˆ¤å®šã™ã‚‹ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] å®Œäº†ã—ãŸã‹ã©ã†ã‹
- * [å‰¯ä½œç”¨] ãªã—
+ * ƒl[ƒ€ƒGƒ“ƒgƒŠ[‚ªŠ®—¹‚µ‚½‚©”»’è‚·‚é‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] Š®—¹‚µ‚½‚©‚Ç‚¤‚©
+ * [•›ì—p] ‚È‚µ
  */
 bool Score::IsNameInputFinished() const
 {
 	return !name_input_mode_;
 }
 /*
- * ç²å¾—ã‚¹ã‚³ã‚¢ã‚’ãƒ©ãƒ³ã‚­ãƒ³ã‚°ã«åæ˜ ã•ã›ã‚‹ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ranking_ã®æ›´æ–°
+ * Šl“¾ƒXƒRƒA‚ğƒ‰ƒ“ƒLƒ“ƒO‚É”½‰f‚³‚¹‚é‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ranking_‚ÌXV
  */
 void Score::AddRanking()
 {
 	int target = score_;
 	name_index_ = -1;
-	// ä¸Šä½3ä½ä»¥å†…ã«ãƒ©ãƒ³ã‚¯ã‚¤ãƒ³ã—ãŸå ´åˆã«é †ä½ã‚’æ›´æ–°ã™ã‚‹ãŸã‚
+	// ãˆÊ3ˆÊˆÈ“à‚Éƒ‰ƒ“ƒNƒCƒ“‚µ‚½ê‡‚É‡ˆÊ‚ğXV‚·‚é‚½‚ß
 	for (int i = 0; i < 3; i++)
 	{
 		if (target > ranking_[i].score_)
 		{
-			// ä¸‹ä½ã®ãƒ©ãƒ³ã‚­ãƒ³ã‚°ã‚’æŠ¼ã—ä¸‹ã’ã‚‹ãŸã‚
+			// ‰ºˆÊ‚Ìƒ‰ƒ“ƒLƒ“ƒO‚ğ‰Ÿ‚µ‰º‚°‚é‚½‚ß
 			for (int j = 2; j > i; j--)
 			{
 				ranking_[j] = ranking_[j - 1];
 			}
-			// ä»®åã§ç™»éŒ²ã—ãƒãƒ¼ãƒ ã‚¨ãƒ³ãƒˆãƒªãƒ¼ã§ç¢ºå®šã•ã›ã‚‹ãŸã‚
+			// ‰¼–¼‚Å“o˜^‚µƒl[ƒ€ƒGƒ“ƒgƒŠ[‚ÅŠm’è‚³‚¹‚é‚½‚ß
 			strcpy_s(ranking_[i].name_, "PLAYER");
 			ranking_[i].score_ = target;
 			name_index_ = i;
@@ -226,10 +226,10 @@ void Score::AddRanking()
 	}
 }
 /*
- * ãƒ©ãƒ³ã‚­ãƒ³ã‚°çµæœã‚’ç”»é¢ã«æç”»ã™ã‚‹ãŸã‚
- * [å…¥åŠ›] x: æç”»Xåº§æ¨™, y: æç”»Yåº§æ¨™
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ç”»é¢æç”»
+ * ƒ‰ƒ“ƒLƒ“ƒOŒ‹‰Ê‚ğ‰æ–Ê‚É•`‰æ‚·‚é‚½‚ß
+ * [“ü—Í] x: •`‰æXÀ•W, y: •`‰æYÀ•W
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ‰æ–Ê•`‰æ
  */
 void Score::DrawRanking(int x, int y)
 {
@@ -240,7 +240,7 @@ void Score::DrawRanking(int x, int y)
 			x,
 			y + 30 + i * 20,
 			GetColor(255, 255, 255),
-			"%dä½ %s : %d",
+			"%dˆÊ %s : %d",
 			i + 1,
 			ranking_[i].name_,
 			ranking_[i].score_
@@ -248,10 +248,10 @@ void Score::DrawRanking(int x, int y)
 	}
 }
 /*
- * ãƒ©ãƒ³ã‚­ãƒ³ã‚°æƒ…å ±ã‚’ãƒ•ã‚¡ã‚¤ãƒ«ã«ä¿å­˜ã™ã‚‹ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] rank.txtã¸ã®æ›¸ãè¾¼ã¿
+ * ƒ‰ƒ“ƒLƒ“ƒOî•ñ‚ğƒtƒ@ƒCƒ‹‚É•Û‘¶‚·‚é‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] rank.txt‚Ö‚Ì‘‚«‚İ
  */
 void Score::SaveRanking()
 {
@@ -266,10 +266,10 @@ void Score::SaveRanking()
 	}
 }
 /*
- * ãƒ©ãƒ³ã‚­ãƒ³ã‚°æƒ…å ±ã‚’ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰èª­ã¿è¾¼ã‚€ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ranking_ã®æ›´æ–°ã€ãƒ•ã‚¡ã‚¤ãƒ«ãŒãªã„å ´åˆã¯æ–°è¦ä½œæˆ
+ * ƒ‰ƒ“ƒLƒ“ƒOî•ñ‚ğƒtƒ@ƒCƒ‹‚©‚ç“Ç‚İ‚Ş‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ranking_‚ÌXVAƒtƒ@ƒCƒ‹‚ª‚È‚¢ê‡‚ÍV‹Kì¬
  */
 void Score::LoadRanking()
 {
@@ -287,7 +287,7 @@ void Score::LoadRanking()
 	}
 	else
 	{
-		// è¨˜éŒ²ãƒ•ã‚¡ã‚¤ãƒ«ãŒãªã„å ´åˆã¯ãƒ€ãƒŸãƒ¼ãƒ‡ãƒ¼ã‚¿ã§æ–°è¦ä½œæˆã™ã‚‹ãŸã‚
+		// ‹L˜^ƒtƒ@ƒCƒ‹‚ª‚È‚¢ê‡‚Íƒ_ƒ~[ƒf[ƒ^‚ÅV‹Kì¬‚·‚é‚½‚ß
 		for (int i = 0; i < 3; i++)
 		{
 			strcpy_s(ranking_[i].name_, "NONE");
@@ -297,14 +297,14 @@ void Score::LoadRanking()
 	}
 }
 /*
- * ã‚³ãƒ³ãƒœãƒœãƒ¼ãƒŠã‚¹ã‚’å«ã‚ãŸã‚¹ã‚³ã‚¢ã‚’åŠ ç®—ã™ã‚‹ãŸã‚
- * [å…¥åŠ›] baseScore: åŸºæœ¬ã‚¹ã‚³ã‚¢, combo_count_: ã‚³ãƒ³ãƒœæ•°
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] score_ã®æ›´æ–°
+ * ƒRƒ“ƒ{ƒ{[ƒiƒX‚ğŠÜ‚ß‚½ƒXƒRƒA‚ğ‰ÁZ‚·‚é‚½‚ß
+ * [“ü—Í] baseScore: Šî–{ƒXƒRƒA, combo_count_: ƒRƒ“ƒ{”
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] score_‚ÌXV
  */
 void Score::AddScoreWithCombo(int baseScore, int combo_count_)
 {
-	// ã‚³ãƒ³ãƒœæ•°ã«å¿œã˜ã¦ãƒœãƒ¼ãƒŠã‚¹å€ç‡ã‚’æ±ºå®šã™ã‚‹ãŸã‚
+	// ƒRƒ“ƒ{”‚É‰‚¶‚Äƒ{[ƒiƒX”{—¦‚ğŒˆ’è‚·‚é‚½‚ß
 	float multiplier = 1.0f + combo_count_ * 0.2f;
 	int finalScore = static_cast<int>(baseScore * multiplier);
 	score_ += finalScore;
@@ -314,20 +314,20 @@ void Score::AddScoreWithCombo(int baseScore, int combo_count_)
 	}
 }
 /*
- * ã‚²ãƒ¼ãƒ å†é–‹æ™‚ã«ã‚¹ã‚³ã‚¢ã‚’åˆæœŸåŒ–ã™ã‚‹ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] score_ã®åˆæœŸåŒ–
+ * ƒQ[ƒ€ÄŠJ‚ÉƒXƒRƒA‚ğ‰Šú‰»‚·‚é‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] score_‚Ì‰Šú‰»
  */
 void Score::Initialize()
 {
 	score_ = 0;
 }
 /*
- * ç”»åƒã‚’ä½¿ã£ã¦æ•°å€¤ã‚’ç”»é¢ã«æç”»ã™ã‚‹ãŸã‚
- * [å…¥åŠ›] x: Xåº§æ¨™, y: Yåº§æ¨™, value: æ•°å€¤, scale: æ‹¡å¤§ç‡, minDigits: æœ€å°æ¡æ•°
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ç”»é¢æç”»
+ * ‰æ‘œ‚ğg‚Á‚Ä”’l‚ğ‰æ–Ê‚É•`‰æ‚·‚é‚½‚ß
+ * [“ü—Í] x: XÀ•W, y: YÀ•W, value: ”’l, scale: Šg‘å—¦, minDigits: Å¬Œ…”
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ‰æ–Ê•`‰æ
  */
 void Score::DrawNumber(int x, int y, int value, float scale, int minDigits)
 {
@@ -371,40 +371,40 @@ void Score::DrawNumber(int x, int y, int value, float scale, int minDigits)
 	}
 }
 /*
- * æŒ‡å®šã—ãŸé †ä½ã®ãƒ©ãƒ³ã‚­ãƒ³ã‚°ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹ãŸã‚
- * [å…¥åŠ›] index: å–å¾—ã™ã‚‹é †ä½ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
- * [å‡ºåŠ›] ãƒ©ãƒ³ã‚­ãƒ³ã‚°ãƒ‡ãƒ¼ã‚¿
- * [å‰¯ä½œç”¨] ãªã—
+ * w’è‚µ‚½‡ˆÊ‚Ìƒ‰ƒ“ƒLƒ“ƒOƒf[ƒ^‚ğæ“¾‚·‚é‚½‚ß
+ * [“ü—Í] index: æ“¾‚·‚é‡ˆÊ‚ÌƒCƒ“ƒfƒbƒNƒX
+ * [o—Í] ƒ‰ƒ“ƒLƒ“ƒOƒf[ƒ^
+ * [•›ì—p] ‚È‚µ
  */
 const Score::RankData& Score::GetRanking(int index) const
 {
 	return ranking_[index];
 }
 /*
- * ã‚·ãƒ¼ãƒ³é–“ã§ãƒªã‚¶ãƒ«ãƒˆã‚¹ã‚³ã‚¢ã‚’å¼•ãç¶™ããŸã‚
- * [å…¥åŠ›] value: ä¿å­˜ã™ã‚‹ã‚¹ã‚³ã‚¢
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] result_score_ã®æ›´æ–°
+ * ƒV[ƒ“ŠÔ‚ÅƒŠƒUƒ‹ƒgƒXƒRƒA‚ğˆø‚«Œp‚®‚½‚ß
+ * [“ü—Í] value: •Û‘¶‚·‚éƒXƒRƒA
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] result_score_‚ÌXV
  */
 void Score::SetResultScore(int value)
 {
 	result_score_ = value;
 }
 /*
- * ãƒªã‚¶ãƒ«ãƒˆã‚¹ã‚³ã‚¢ã‚’å–å¾—ã™ã‚‹ãŸã‚
- * [å…¥åŠ›] ãªã—
- * [å‡ºåŠ›] ãƒªã‚¶ãƒ«ãƒˆã‚¹ã‚³ã‚¢
- * [å‰¯ä½œç”¨] ãªã—
+ * ƒŠƒUƒ‹ƒgƒXƒRƒA‚ğæ“¾‚·‚é‚½‚ß
+ * [“ü—Í] ‚È‚µ
+ * [o—Í] ƒŠƒUƒ‹ƒgƒXƒRƒA
+ * [•›ì—p] ‚È‚µ
  */
 int Score::GetResultScore()
 {
 	return result_score_;
 }
 /*
- * ã‚¹ã‚³ã‚¢ã¨å˜ä½ç”»åƒã‚’ä¸¦ã¹ã¦æç”»ã™ã‚‹ãŸã‚
- * [å…¥åŠ›] x: Xåº§æ¨™, y: Yåº§æ¨™, score: ã‚¹ã‚³ã‚¢, scale: æ‹¡å¤§ç‡, minDigits: æœ€å°æ¡æ•°, point_graph_handle: ç”»åƒãƒãƒ³ãƒ‰ãƒ«
- * [å‡ºåŠ›] ãªã—
- * [å‰¯ä½œç”¨] ç”»é¢æç”»
+ * ƒXƒRƒA‚Æ’PˆÊ‰æ‘œ‚ğ•À‚×‚Ä•`‰æ‚·‚é‚½‚ß
+ * [“ü—Í] x: XÀ•W, y: YÀ•W, score: ƒXƒRƒA, scale: Šg‘å—¦, minDigits: Å¬Œ…”, point_graph_handle: ‰æ‘œƒnƒ“ƒhƒ‹
+ * [o—Í] ‚È‚µ
+ * [•›ì—p] ‰æ–Ê•`‰æ
  */
 void Score::DrawScoreWithPoint(int x, int y, int score, float scale, int minDigits, int point_graph_handle)
 {

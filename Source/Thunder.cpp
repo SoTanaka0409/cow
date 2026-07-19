@@ -1,4 +1,4 @@
-ï»¿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include "Thunder.h"
 #include <cmath>
 #include "CapsuleCollider.h"
@@ -9,14 +9,14 @@
 #include "Scene.h"
 #include "ObjectManager.h"
 
-// å…¥åŠ›ï¼šè½é›·ã®åˆæœŸä¸­å¿ƒåº§æ¨™
-// å‰¯ä½œç”¨ï¼šEffekseerEffect ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®å‹•çš„ãƒ¡ãƒ¢ãƒªç¢ºä¿
+// “ü—ÍF——‹‚Ì‰Šú’†SÀ•W
+// •›ì—pFEffekseerEffect ƒCƒ“ƒXƒ^ƒ“ƒX‚Ì“®“Iƒƒ‚ƒŠŠm•Û
 Thunder::Thunder(VECTOR pos)
 	: Object3D(pos)
 {
 	has_stunned_ = false;
 	pos_ = pos;
-	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒäºˆå…†ã‚’è¦‹ã¦ã‹ã‚‰å›é¿è¡Œå‹•ã‚’ã¨ã‚Œã‚‹ã‚ˆã†ã€è½ä¸‹å‰ã«1ç§’é–“ã®çŒ¶äºˆã‚’è¨­ã‘ã‚‹
+	// ƒvƒŒƒCƒ„[‚ª—\’›‚ğŒ©‚Ä‚©‚ç‰ñ”ğs“®‚ğ‚Æ‚ê‚é‚æ‚¤A—‰º‘O‚É1•bŠÔ‚Ì—P—\‚ğİ‚¯‚é
 	warning_timer_ = 60;
 	strike_timer_ = 20;
 	interval_timer_ = 180;
@@ -26,17 +26,17 @@ Thunder::Thunder(VECTOR pos)
 
 	capsule_collider_->radius_ = 230;
 
-	thunder_ = new EffekseerEffect("Resource/3D/EFK/thud.efk", pos_, 200.0f);
+	thunder_ = new EffekseerEffect("Resource/3D/ƒGƒtƒFƒNƒg/—‹—‰º.efk", pos_, 200.0f);
 	thunder_->SetScale(VGet(1.0f, 1.0f, 1.0f));
 
-	warning_ = new EffekseerEffect("Resource/3D/EFK/warning2.efk", pos_, 40.0f);
-	stun_ = new EffekseerEffect("Resource/3D/EFK/stun.efk", pos_, 20.0f);
+	warning_ = new EffekseerEffect("Resource/3D/ƒGƒtƒFƒNƒg/—‹Œx.efk", pos_, 40.0f);
+	stun_ = new EffekseerEffect("Resource/3D/ƒGƒtƒFƒNƒg/ƒXƒ^ƒ“.efk", pos_, 20.0f);
 }
 
-// å‰¯ä½œç”¨ï¼šå‹•çš„ç¢ºä¿ã—ãŸã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®ãƒ¡ãƒ¢ãƒªè§£æ”¾
+// •›ì—pF“®“IŠm•Û‚µ‚½ƒGƒtƒFƒNƒgƒCƒ“ƒXƒ^ƒ“ƒX‚Ìƒƒ‚ƒŠ‰ğ•ú
 Thunder::~Thunder()
 {
-	// å„ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã¯ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ç™»éŒ²ã›ãšå€‹åˆ¥ã«ç”Ÿå­˜ç®¡ç†ã—ã¦ã„ã‚‹ãŸã‚ã€æ‰‹å‹•ã§è§£æ”¾ã™ã‚‹
+	// ŠeƒGƒtƒFƒNƒg‚Íƒ}ƒl[ƒWƒƒ[“o˜^‚¹‚¸ŒÂ•Ê‚É¶‘¶ŠÇ—‚µ‚Ä‚¢‚é‚½‚ßAè“®‚Å‰ğ•ú‚·‚é
 	if (thunder_ != nullptr)
 	{
 		delete thunder_;
@@ -56,7 +56,7 @@ Thunder::~Thunder()
 	}
 }
 
-// å‰¯ä½œç”¨ï¼šå„ç¨®ã‚¿ã‚¤ãƒãƒ¼ã®æ›´æ–°ã€ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®å†ç”Ÿã€SEã®å†ç”Ÿ
+// •›ì—pFŠeíƒ^ƒCƒ}[‚ÌXVAƒGƒtƒFƒNƒg‚ÌÄ¶ASE‚ÌÄ¶
 void Thunder::Update()
 {
 	UpdateEffects();
@@ -88,7 +88,7 @@ void Thunder::UpdateEffects()
 
 void Thunder::UpdateCollider()
 {
-	// ä¸Šç©ºã‹ã‚‰åœ°é¢ã‚’è²«ãå½¢ã«ã‚«ãƒ—ã‚»ãƒ«å½¢çŠ¶ã‚’ä¸Šç©ºã¸ä¼¸ã°ã™
+	// ã‹ó‚©‚ç’n–Ê‚ğŠÑ‚­Œ`‚ÉƒJƒvƒZƒ‹Œ`ó‚ğã‹ó‚ÖL‚Î‚·
 	capsule_collider_->position_ = VSub(position_, VGet(0, 2000, 0));
 	capsule_collider_->position2_ = VAdd(position_, VGet(0, 2000, 0));
 }
@@ -101,7 +101,7 @@ void Thunder::UpdateState()
 		interval_timer_--;
 		if (interval_timer_ <= 0)
 		{
-			// ã‚¹ãƒ†ãƒ¼ã‚¸ã®ä¸­å¿ƒï¼ˆ0,0ï¼‰ã‹ã‚‰3000ã®ç¯„å›²å†…ã«ãƒ©ãƒ³ãƒ€ãƒ ã§ä½ç½®æ±ºã‚ã™ã‚‹
+			// ƒXƒe[ƒW‚Ì’†Si0,0j‚©‚ç3000‚Ì”ÍˆÍ“à‚Éƒ‰ƒ“ƒ_ƒ€‚ÅˆÊ’uŒˆ‚ß‚·‚é
 			float range = 3000.0f;
 			pos_.x = (float)(GetRand((int)range * 2) - (int)range);
 			pos_.z = (float)(GetRand((int)range * 2) - (int)range);
@@ -130,7 +130,7 @@ void Thunder::UpdateState()
 			{
 				thunder_->Play();
 
-				// è·é›¢ãŒé ã™ãã‚‹éŸ³ã‚’é³´ã‚‰ã•ãªã„ã‚ˆã†ã€ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒè¿‘ã„å ´åˆã®ã¿é³´ã‚‰ã™
+				// ‹——£‚ª‰“‚·‚¬‚é‰¹‚ğ–Â‚ç‚³‚È‚¢‚æ‚¤AƒvƒŒƒCƒ„[‚ª‹ß‚¢ê‡‚Ì‚İ–Â‚ç‚·
 				auto players = ServiceLocator::GetPlayers();
 				bool playSound = false;
 				for (auto p : players)
@@ -167,7 +167,7 @@ void Thunder::UpdateStunEffect()
 	{
 		stun_effect_timer_--;
 
-		// ã‚¹ã‚¿ãƒ³ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®å˜ç™ºå†ç”Ÿã‚’é¿ã‘ã€æ¯ç§’(30ãƒ•ãƒ¬ãƒ¼ãƒ )ã§ãƒ«ãƒ¼ãƒ—å†ç”Ÿ
+		// ƒXƒ^ƒ“ƒGƒtƒFƒNƒg‚Ì’P”­Ä¶‚ğ”ğ‚¯A–ˆ•b(30ƒtƒŒ[ƒ€)‚Åƒ‹[ƒvÄ¶
 		if (stun_effect_timer_ > 0 && stun_effect_timer_ % 30 == 0)
 		{
 			if (stun_ != nullptr)
@@ -182,14 +182,14 @@ void Thunder::Draw()
 {
 }
 
-// å‡ºåŠ›ï¼šã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç¨¼åƒçŠ¶æ…‹ï¼ˆç”Ÿå­˜ãƒ•ãƒ©ã‚°ï¼‰
+// o—ÍFƒIƒuƒWƒFƒNƒg‚Ì‰Ò“­ó‘Ôi¶‘¶ƒtƒ‰ƒOj
 bool Thunder::IsActive() const
 {
 	return active_;
 }
 
-// å…¥åŠ›ï¼šplayerPos=åˆ¤å®šå¯¾è±¡ã®åº§æ¨™, range=åˆ¤å®šåŠå¾„
-// å‡ºåŠ›ï¼šè¡çªã—ã¦ã„ã‚‹ã‹ã©ã†ã‹ã®çœŸå½å€¤
+// “ü—ÍFplayerPos=”»’è‘ÎÛ‚ÌÀ•W, range=”»’è”¼Œa
+// o—ÍFÕ“Ë‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©‚Ì^‹U’l
 bool Thunder::CheckHit(VECTOR playerPos, float range)
 {
 	if (state_ != kStrike) return false;
@@ -200,12 +200,12 @@ bool Thunder::CheckHit(VECTOR playerPos, float range)
 	return distance < range;
 }
 
-// å…¥åŠ›ï¼šcollider=è‡ªèº«ã®è¡çªåˆ¤å®š, check=ç›¸æ‰‹ã®è¡çªåˆ¤å®š
-// å‰¯ä½œç”¨ï¼šãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚¹ã‚¿ãƒ³çŠ¶æ…‹é·ç§»ã€ã‚«ãƒ¡ãƒ©ã‚·ã‚§ã‚¤ã‚¯ã®èµ·å‹•
+// “ü—ÍFcollider=©g‚ÌÕ“Ë”»’è, check=‘Šè‚ÌÕ“Ë”»’è
+// •›ì—pFƒvƒŒƒCƒ„[‚ÌƒXƒ^ƒ“ó‘Ô‘JˆÚAƒJƒƒ‰ƒVƒFƒCƒN‚Ì‹N“®
 void Thunder::OnEnter(Collider* collider, Collider* check)
 {
 	if (state_ != kStrike) return;
-	// 1å›ã®è½é›·ãƒ•ãƒ¬ãƒ¼ãƒ ä¸­ã«å¤šæ®µãƒ’ãƒƒãƒˆã—ã¦ã‚¹ã‚¿ãƒ³æœŸé–“ãŒæ„å›³ã›ãšå»¶é•·ã•ã‚Œã‚‹ã®ã‚’é˜²ã
+	// 1‰ñ‚Ì——‹ƒtƒŒ[ƒ€’†‚É‘½’iƒqƒbƒg‚µ‚ÄƒXƒ^ƒ“ŠúŠÔ‚ªˆÓ}‚¹‚¸‰„’·‚³‚ê‚é‚Ì‚ğ–h‚®
 	if (has_stunned_) return;
 
 	if (check->parent_object_->GetTag() == kTag3dPlayer)
@@ -222,7 +222,7 @@ void Thunder::OnEnter(Collider* collider, Collider* check)
 
 			player->ApplyStun(120);
 
-			// è½é›·ç›´æ’ƒã®è¡æ’ƒã‚’è¦–è¦šçš„ã«å¼·èª¿ã—ã€å±æ©Ÿçš„ãªè¢«å¼¾çŠ¶æ³ã‚’ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ä¼ãˆã‚‹
+			// ——‹’¼Œ‚‚ÌÕŒ‚‚ğ‹Šo“I‚É‹­’²‚µAŠë‹@“I‚È”í’eó‹µ‚ğƒvƒŒƒCƒ„[‚É“`‚¦‚é
 			Master::camera_->SetupShake(30.0f, 45.0f, 40.0f);
 		}
 	}

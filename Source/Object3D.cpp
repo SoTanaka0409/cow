@@ -55,8 +55,16 @@ void Object3D::DrawShadowCaster()
 {
 }
 
+void Object3D::DrawDebug()
+{
+	if (capsule_collider_ != nullptr)
+	{
+		capsule_collider_->Draw();
+	}
+}
+
 /*
- * 更新処理。派生クラスでオーバーライドする。
+ * 衝突判定の開始イベントを処理し、ダメージや効果音のトリガーとするため。
  * [入力] なし
  * [出力] なし
  * [副作用] オブジェクト状態の変更

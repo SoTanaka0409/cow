@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include"dxlib.h"
 #include "Scene.h"
 #include "UIButton.h"
@@ -7,61 +7,61 @@
 #include"vector"
 #include "Score.h"
 
-// 設計ルール：ゲーム本編終了後に今回の最終スコアを表示し、歴代ハイスコアランキングを提示して次のアクション（再挑戦や終了）へ促すシーン
+// �݌v���[���F�Q�[���{�ҏI����ɍ���̍ŏI�X�R�A��\�����A���n�C�X�R�A�����L���O��񎦂��Ď��̃A�N�V�����i�Ē����I���j�֑����V�[��
 class ResultScene : public Scene
 {
 public:
 	ResultScene();
 	virtual ~ResultScene();
 
-	// 入力：なし
-	// 出力：なし
-	// 副作用：今回の最終獲得スコアの登録、最新ランキングデータのロード、およびBGM再生
+	// ���́F�Ȃ�
+	// �o�́F�Ȃ�
+	// ����p�F����̍ŏI�l���X�R�A�̓o�^�A�ŐV�����L���O�f�[�^�̃��[�h�A�����BGM�Đ�
 	void Initialize() override;
 
-	// 入力：なし
-	// 出力：なし
-	// 副作用：最終スコアのポップ演出、ランクメダル、ハイスコアボード、各メニュー操作ボタンの描画
+	// ���́F�Ȃ�
+	// �o�́F�Ȃ�
+	// ����p�F�ŏI�X�R�A�̃|�b�v���o�A�����N���_���A�n�C�X�R�A�{�[�h�A�e���j���[����{�^���̕`��
 	void Draw() override;
 
-	// 入力：なし
-	// 出力：なし
-	// 副作用：ボタンに対するマウスクリック判定、および一定時間キー入力がない場合のタイトル画面自動遷移タイマーの更新
+	// ���́F�Ȃ�
+	// �o�́F�Ȃ�
+	// ����p�F�{�^���ɑ΂���}�E�X�N���b�N����A����ш�莞�ԃL�[���͂��Ȃ��ꍇ�̃^�C�g����ʎ����J�ڃ^�C�}�[�̍X�V
 	void Update() override;
 
-	// 入力：なし
-	// 出力：なし
-	// 副作用：リザルト専用BGMの停止、ロードしたスプライト・テキストフォントハンドルの解放
+	// ���́F�Ȃ�
+	// �o�́F�Ȃ�
+	// ����p�F���U���g��pBGM�̒�~�A���[�h�����X�v���C�g�E�e�L�X�g�t�H���g�n���h���̉��
 	void Finalize() override;
 
 private:
-	// 画面レイアウトの崩れを防ぎ、決まったグリッド幅にスコアを表示するための動的配置テクスチャ
+	// ��ʃ��C�A�E�g�̕����h���A���܂����O���b�h���ɃX�R�A��\�����邽�߂̓��I�z�u�e�N�X�`��
 	Texture* texture_;
 	Texture* texture2_;
 	Texture* texture3_;
 
-	int new_game_w_;                 // 画面比率が変わった際もボタンの「ホバー判定エリア」を正しく一致させるための基準横幅
-	int new_game_h_;                 // 画面比率が変わった際もボタンの「ホバー判定エリア」を正しく一致させるための基準縦幅
+	int new_game_w_;                 // ��ʔ䗦���ς�����ۂ��{�^���́u�z�o�[����G���A�v�𐳂�����v�����邽�߂̊����
+	int new_game_h_;                 // ��ʔ䗦���ς�����ۂ��{�^���́u�z�o�[����G���A�v�𐳂�����v�����邽�߂̊�c��
 
-	bool is_hover_new_game_;         // リトライボタンにマウスカーソルが乗った瞬間のハイライト表示用フラグ
+	bool is_hover_new_game_;         // ���g���C�{�^���Ƀ}�E�X�J�[�\����������u�Ԃ̃n�C���C�g�\���p�t���O
 
-	std::vector<UIButton> buttons_;  // シーン内で選択可能なすべてのUIButton（再挑戦、タイトル、終了等）を管理する動的配列
-	int result_graph_handle_;        // 画面全体の背景を彩る、高解像度のリザルト専用バックグラウンドテクスチャ
+	std::vector<UIButton> buttons_;  // �V�[�����őI���\�Ȃ��ׂĂ�UIButton�i�Ē���A�^�C�g���A�I�����j���Ǘ����铮�I�z��
+	int result_graph_handle_;        // ��ʑS�̂̔w�i���ʂ�A���𑜓x�̃��U���g��p�o�b�N�O���E���h�e�N�X�`��
 
 	Score score_;
 
-	int ranking_title_image_;        // ハイスコアボードの最上部に掲げる「RANKING」の見出しロゴ画像
-	int rank_image_[3];              // ランキング上位（1位〜3位）の隣に表示する金・銀・銅の各メダル画像アセット
+	int ranking_title_image_;        // �n�C�X�R�A�{�[�h�̍ŏ㕔�Ɍf����uRANKING�v�̌��o�����S�摜
+	int rank_image_[3];              // �����L���O��ʁi1��?3�ʁj�ׂ̗ɕ\��������E��E���̊e���_���摜�A�Z�b�g
 
-	// 入力：なし
-	// 出力：なし
-	// 副作用：今回のスコアと歴代ベスト3のランキングを縦一列に画面左側へ描画
+	// ���́F�Ȃ�
+	// �o�́F�Ȃ�
+	// ����p�F����̃X�R�A�Ɨ��x�X�g3�̃����L���O���c���ɉ�ʍ����֕`��
 	void DrawRankingUI();
 
-	int your_score_text_img_;        // 今回の最終結果を強調するために描画する「YOUR SCORE」の飾り帯テキスト画像
-	int point_img_;                  // 数値（点数）の末尾に単位として付与する「pts」専用のフォントテクスチャ
+	int your_score_text_img_;        // ����̍ŏI���ʂ��������邽�߂ɕ`�悷��uYOUR SCORE�v�̏���уe�L�X�g�摜
+	int point_img_;                  // ���l�i�_���j�̖����ɒP�ʂƂ��ĕt�^����upts�v��p�̃t�H���g�e�N�X�`��
 
-	int frame_count_;                // UIが出現する際のポップアップ（サイン波アニメーション）を動かすための経過フレーム数
-	int count_;                      // 放置された際にタイトルへ自動的に遷移させるためのタイムアウト計測用カウンター
-	bool flag_;                      // リザルト遷移直後の操作不能（ロック）期間を解除するための演出完了フラグ
+	int frame_count_;                // UI���o������ۂ̃|�b�v�A�b�v�i�T�C���g�A�j���[�V�����j�𓮂������߂̌o�߃t���[����
+	int count_;                      // ���u���ꂽ�ۂɃ^�C�g���֎����I�ɑJ�ڂ����邽�߂̃^�C���A�E�g�v���p�J�E���^�[
+	bool flag_;                      // ���U���g�J�ڒ���̑���s�\�i���b�N�j���Ԃ��������邽�߂̉��o�����t���O
 };

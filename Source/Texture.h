@@ -1,30 +1,30 @@
-﻿#ifndef _TEXTURE_H_
+#ifndef _TEXTURE_H_
 #define _TEXTURE_H_
 
 #include <string>
 #include "DxLib.h"
 
-// 設計ルール：テクスチャファイルの重複ロードを防ぎ、基準点を「中心」に統一して直感的な2Dレイアウトを行うための画像描画クラス
+// �݌v���[���F�e�N�X�`���t�@�C���̏d�����[�h��h���A��_���u���S�v�ɓ��ꂵ�Ē����I��2D���C�A�E�g���s�����߂̉摜�`��N���X
 class Texture
 {
 public:
-	// 入力：filename=画像パス, centerPosition=中心描画の基準座標, graphsize_x/y=指定描画サイズ, transFlag=透過有無
-	// 副作用：DxLibによる画像リソースの読み込みとグラフィックハンドルの生成
+	// ���́Ffilename=�摜�p�X, centerPosition=���S�`��̊���W, graphsize_x/y=�w��`��T�C�Y, transFlag=���ߗL��
+	// ����p�FDxLib�ɂ��摜���\�[�X�̓ǂݍ��݂ƃO���t�B�b�N�n���h���̐���
 	Texture(std::string filename, VECTOR centerPosition, int graphsize_x, int graphsize_y, int transFlag);
 	~Texture();
 
-	// 副作用：バックバッファへの画像描画
-	// 設計ルール：回転やスケール変更の基準点を制御しやすくするため、左上ではなく常に指定された「中心座標」を軸に描画する
+	// ����p�F�o�b�N�o�b�t�@�ւ̉摜�`��
+	// �݌v���[���F��]��X�P�[���ύX�̊�_�𐧌䂵�₷�����邽�߁A����ł͂Ȃ���Ɏw�肳�ꂽ�u���S���W�v�����ɕ`�悷��
 	void Draw();
 
-	// 副作用：バックバッファへの拡大画像描画
-	// 一時対応：UIのボタンホバー時のポップアップ演出用として作成。現在リデザインに伴い一時的に未呼出し状態
+	// ����p�F�o�b�N�o�b�t�@�ւ̊g��摜�`��
+	// �ꎞ�Ή��FUI�̃{�^���z�o�[���̃|�b�v�A�b�v���o�p�Ƃ��č쐬�B���݃��f�U�C���ɔ����ꎞ�I�ɖ��ďo�����
 	void SizeDraw();
 
 	void Update();
 
-	// 入力：scale=拡大縮小率（1.0fが等倍）
-	// 副作用：バックバッファへの変形描画
+	// ���́Fscale=�g��k�����i1.0f�����{�j
+	// ����p�F�o�b�N�o�b�t�@�ւ̕ό`�`��
 	void DrawScale(float scale);
 
 	void SetPosition(VECTOR centerPosition) { position_ = centerPosition; }
@@ -41,7 +41,7 @@ private:
 	int size_y_;
 	bool trans_flag_;
 
-	// 仕様制約：アセット本来の解像度とは別に、画面レイアウト上のUI枠に合わせて強制拡縮して描画するための指定サイズ
+	// �d�l����F�A�Z�b�g�{���̉𑜓x�Ƃ͕ʂɁA��ʃ��C�A�E�g���UI�g�ɍ��킹�ċ����g�k���ĕ`�悷�邽�߂̎w��T�C�Y
 	int new_game_w_;
 	int new_game_h_;
 };

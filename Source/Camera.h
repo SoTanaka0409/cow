@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "DxLib.h"
 #include "Model.h"
 #include "Object3D.h"
@@ -9,28 +9,28 @@ public:
 	Camera();
 	~Camera();
 
-	// 入力：なし
-	// 副作用：カメラパラメータおよびシェイク状態の初期化
+	// ���́F�Ȃ�
+	// ����p�F�J�����p�����[�^����уV�F�C�N��Ԃ̏�����
 	void Initialize();
 
-	// 入力：なし
-	// 副作用：なし
+	// ���́F�Ȃ�
+	// ����p�F�Ȃ�
 	void Finalize();
 
-	// 入力：なし
-	// 副作用：カメラ座標やデバッグ情報を画面へレンダリング
+	// ���́F�Ȃ�
+	// ����p�F�J�������W��f�o�b�O������ʂփ����_�����O
 	void Draw();
 
-	// 入力：なし
-	// 副作用：マウス入力による視点操作およびカメラ座標・注視点の再計算
+	// ���́F�Ȃ�
+	// ����p�F�}�E�X���͂ɂ�鎋�_���삨��уJ�������W�E�����_�̍Čv�Z
 	void Update();
 
-	// 入力：なし
-	// 副作用：マウス入力のデルタ値を水平・垂直回転角へ変換
+	// ���́F�Ȃ�
+	// ����p�F�}�E�X���͂̃f���^�l�𐅕��E������]�p�֕ϊ�
 	void UpdateRotate();
 
-	// 入力：phase = 現在の演出フェーズ, ufoPos/tornadoPos = ターゲット座標
-	// 副作用：プレイヤー操作を遮断し、特定の座標を強制注視させるカメラワークへの移行
+	// ���́Fphase = ���݂̉��o�t�F�[�Y, ufoPos/tornadoPos = �^�[�Q�b�g���W
+	// ����p�F�v���C���[������Ւf���A����̍��W����������������J�������[�N�ւ̈ڍs
 	void UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos);
 
 	void SetPosition(VECTOR pos) { position_ = pos; }
@@ -38,16 +38,16 @@ public:
 	VECTOR GetPosition() { return position_; }
 	VECTOR GetLookAtPosition() { return look_at_position_; }
 
-	// 入力：なし
-	// 出力：前フレームとのマウス座標差分があれば true
+	// ���́F�Ȃ�
+	// �o�́F�O�t���[���Ƃ̃}�E�X���W����������� true
 	bool IsMouseMoved();
 
-	// 入力：なし
-	// 副作用：三角関数を用いた加算的な揺れ（shake_position_）の計算
+	// ���́F�Ȃ�
+	// ����p�F�O�p�֐���p�������Z�I�ȗh��ishake_position_�j�̌v�Z
 	void Shake();
 
-	// 入力：time = 揺れ継続時間, width = 揺れ幅, angleSpeed = 回転速度, stepTime = 時間経過係数
-	// 副作用：シェイク制御用カウンタの初期化
+	// ���́Ftime = �h��p������, width = �h�ꕝ, angleSpeed = ��]���x, stepTime = ���Ԍo�ߌW��
+	// ����p�F�V�F�C�N����p�J�E���^�̏�����
 	void SetupShake(float time, float width, float angleSpeed, float stepTime = 1.0f);
 
 	bool GetIsPhaseCameraActive() const { return is_phase_camera_active_; }
@@ -56,43 +56,43 @@ private:
 	void UpdatePositionAndTarget();
 	void UpdateEffekseerAndLight();
 
-	// 設計ルール：ジンバルロック回避のため、垂直回転は±89度のクランプ処理により計算の特異点を排除する
+	// �݌v���[���F�W���o�����b�N����̂��߁A������]�́}89�x�̃N�����v�����ɂ��v�Z�̓��ٓ_��r������
 	float horizontal_angle_;
 	float vertical_angle_;
 
-	// 設計ルール：演出中はプレイヤーの入力を遮断し、シネマティックな視点遷移を保護するロックフラグ
+	// �݌v���[���F���o���̓v���C���[�̓��͂��Ւf���A�V�l�}�e�B�b�N�Ȏ��_�J�ڂ�ی삷�郍�b�N�t���O
 	bool is_phase_camera_active_;
 
 	VECTOR position_;
 	VECTOR look_at_position_;
 	VECTOR dir_;
 
-	// メモリ管理：追従対象オブジェクトが破棄された際の参照エラーを回避するため、使用前には必ずポインタのnullチェックを行うこと
+	// �������Ǘ��F�Ǐ]�ΏۃI�u�W�F�N�g���j�����ꂽ�ۂ̎Q�ƃG���[��������邽�߁A�g�p�O�ɂ͕K���|�C���^��null�`�F�b�N���s������
 	Object3D* target_;
 
-	// UX仕様：3D酔いを軽減しつつレスポンスを担保するための、プランナー仕様に基づく旋回速度
+	// UX�d�l�F3D�������y�������X�|���X��S�ۂ��邽�߂́A�v�����i�[�d�l�Ɋ�Â����񑬓x
 	const float kRotateSpeed = 0.2f;
 
-	// UX仕様：視点のカクつきを防ぐため、目標角度と現在角度の間で滑らかな補間処理を行う
+	// UX�d�l�F���_�̃J�N����h�����߁A�ڕW�p�x�ƌ��݊p�x�̊ԂŊ��炩�ȕ�ԏ������s��
 	float target_angle_;
 	float angle_;
 
-	// アーキテクチャ設計：画面端でのマウス到達による視点操作停止を回避するため、カーソル位置の強制リセットを行うための基準点
+	// �A�[�L�e�N�`���݌v�F��ʒ[�ł̃}�E�X���B�ɂ�鎋�_�����~��������邽�߁A�J�[�\���ʒu�̋������Z�b�g���s�����߂̊�_
 	int center_x_, center_y_;
 
-	// アーキテクチャ設計：マウスの移動量（デルタ）をフレーム間で算出し、カメラの回転量へ反映させるための位置保持用
+	// �A�[�L�e�N�`���݌v�F�}�E�X�̈ړ��ʁi�f���^�j���t���[���ԂŎZ�o���A�J�����̉�]�ʂ֔��f�����邽�߂̈ʒu�ێ��p
 	int mouse_x_, mouse_y_;
 	int current_mouse_x_ = 0, current_mouse_y_ = 0;
 	int prev_mouse_x_ = 0, prev_mouse_y_ = 0;
 
-	// 【カメラシェイク制御】
-	// 揺れ処理は本来の座標(position_)を汚染しないよう「加算用のオフセット(shake_position_)」として計算し、最終描画直前のみ適用する設計
+	// �y�J�����V�F�C�N����z
+	// �h�ꏈ���͖{���̍��W(position_)���������Ȃ��悤�u���Z�p�̃I�t�Z�b�g(shake_position_)�v�Ƃ��Čv�Z���A�ŏI�`�撼�O�̂ݓK�p����݌v
 	int shake_time_;
 	int shake_time_count_;
 	float shake_angle_;
 	float shake_time_counter_;
 
-	// メモリ管理：旧アセット互換維持用（リファクタリング保留）
+	// �������Ǘ��F���A�Z�b�g�݊��ێ��p�i���t�@�N�^�����O�ۗ��j
 	float old_shake_time_;
 	float shake_width_;
 	float shake_angle_speed_;

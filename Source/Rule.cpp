@@ -79,20 +79,31 @@ bool Rule::UpdateFadeState()
 // 副作用：ボリュームの書き換え、変更音SEのトリガー、フェードアウトステートへの移行処理
 void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClicked, bool isMouseHeld)
 {
+	static int last_mouse_x = -1;
+	static int last_mouse_y = -1;
+	bool mouse_moved = (mouse_x != last_mouse_x || mouse_y != last_mouse_y);
+	last_mouse_x = mouse_x;
+	last_mouse_y = mouse_y;
+
 	if (play_se_delay_ > 0) play_se_delay_--;
 
-	int startY = 350;
-	int gapY = 150;
+	int startY = 250;
+	int gapY = 120;
 	int startX = 400;
 
-	for (int i = 0; i < kMenuMax; i++)
+	// マウスが実際に動いた時のみ、マウス座標によるメニュー選択の上書きを行う
+	// （これによりキーボード操作とマウスが干渉してメニューが選べなくなるバグを防ぐ）
+	if (mouse_moved)
 	{
-		int y = startY + i * gapY;
-		if (mouse_y >= y && mouse_y <= y + 60)
+		for (int i = 0; i < kMenuMax; i++)
 		{
-			if (selected_index_ != (MenuType)i)
+			int y = startY + i * gapY;
+			if (mouse_y >= y && mouse_y <= y + 60)
 			{
-				selected_index_ = (MenuType)i;
+				if (selected_index_ != (MenuType)i)
+				{
+					selected_index_ = (MenuType)i;
+				}
 			}
 		}
 	}
@@ -156,6 +167,14 @@ void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClic
 		Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
 	}
 
+	// Backspaceキーが押された場合は無条件でタイトルへ戻る
+	if (InputManager::CheckDownKey(KEY_INPUT_BACK))
+	{
+		Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
+		fade_state_ = kSceneFadeOut;
+		next_scene_ = SceneManager::kSceneTitle;
+	}
+
 	int volChange = 0;
 	if (InputManager::CheckPressKey(KEY_INPUT_LEFT) || InputManager::CheckPressKey(KEY_INPUT_A))
 	{
@@ -195,6 +214,12 @@ void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClic
 			Master::is_shadow_enabled_ = !Master::is_shadow_enabled_;
 			Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
 		}
+		else if (selected_index_ == kMenuDebug)
+		{
+			// デバッグモードのON/OFFを反転
+			Master::is_debug_mode_ = !Master::is_debug_mode_;
+			Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
+		}
 		else if (selected_index_ == kMenuBack)
 		{
 			Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
@@ -203,11 +228,19 @@ void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClic
 		}
 	}
 
-	// マウスクリックでも影のON/OFFを切り替えられるようにする
-	if (isMouseClicked && selected_index_ == kMenuShadow)
+	// マウスクリックでもON/OFFを切り替えられるようにする
+	if (isMouseClicked)
 	{
-		Master::is_shadow_enabled_ = !Master::is_shadow_enabled_;
-		Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
+		if (selected_index_ == kMenuShadow)
+		{
+			Master::is_shadow_enabled_ = !Master::is_shadow_enabled_;
+			Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
+		}
+		else if (selected_index_ == kMenuDebug)
+		{
+			Master::is_debug_mode_ = !Master::is_debug_mode_;
+			Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
+		}
 	}
 }
 
@@ -246,8 +279,8 @@ void Rule::DrawBackground()
 // 副作用：選択状態に連動したカーソル記号、および各メニュー項目の描画
 void Rule::DrawMenu()
 {
-	int startY = 350;
-	int gapY = 150;
+	int startY = 250;
+	int gapY = 120;
 	int startX = 400;
 
 	for (int i = 0; i < kMenuMax; i++)
@@ -284,6 +317,14 @@ void Rule::DrawMenu()
 			DrawFormatStringToHandle(startX, y, color, font_handle_, "Shadow");
 			DrawFormatStringToHandle(startX + 370, y, stateColor, font_handle_, shadowState);
 		}
+		else if (i == kMenuDebug)
+		{
+			// デバッグモードの状態を表示
+			const char* debugState = Master::is_debug_mode_ ? "[ ON  ]" : "[ OFF ]";
+			unsigned int stateColor = Master::is_debug_mode_ ? GetColor(0, 255, 100) : GetColor(180, 180, 180);
+			DrawFormatStringToHandle(startX, y, color, font_handle_, "Debug Mode");
+			DrawFormatStringToHandle(startX + 370, y, stateColor, font_handle_, debugState);
+		}
 		else if (i == kMenuBack)
 		{
 			DrawFormatStringToHandle(startX, y, color, font_handle_, "Back to Title");
@@ -296,6 +337,8 @@ void Rule::DrawMenu()
 // 副作用：フェード状態の初期化、選択インデックスの規定、および設定画面用BGM（kBgmRule）の再生開始
 void Rule::Initialize()
 {
+	SetMouseDispFlag(true); // 設定画面ではマウスカーソルを表示する
+
 	fade_state_ = kSceneFadeIn;
 	SetFadeAlpha(255.0f);
 	selected_index_ = kMenuBgm;

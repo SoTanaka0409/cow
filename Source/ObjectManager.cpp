@@ -70,6 +70,14 @@ void ObjectManager::Draw()
 	{
 		obj->Draw();
 	}
+
+	if (Master::is_debug_mode_)
+	{
+		for (auto& obj : object3d_list_)
+		{
+			obj->DrawDebug();
+		}
+	}
 }
 
 /*

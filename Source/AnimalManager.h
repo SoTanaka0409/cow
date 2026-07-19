@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 
 #include <vector>
 #include <string>
@@ -7,18 +7,18 @@
 #include "AnimalMove.h"
 #include "CreatureManager.h"
 
-// ä»•æ§˜åˆ¶ç´„: ç†Šä»¥å¤–ã®ä¸€èˆ¬ç’°å¢ƒç”Ÿç‰©ç¾¤ã®ãƒ©ã‚¤ãƒ•ã‚µã‚¤ã‚¯ãƒ«ã‚’ä¸€æ‹¬ç®¡ç†ã™ã‚‹
-// ãƒ¡ãƒ¢ãƒªæ–­ç‰‡åŒ–ã¨é »ç¹ãªnew/deleteã«ã‚ˆã‚‹è² è·ã‚’é˜²ããŸã‚ã€åŸºåº•ã‚¯ãƒ©ã‚¹ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ—ãƒ¼ãƒ«æ©Ÿèƒ½ã§é‹ç”¨ã™ã‚‹
+// d—l§–ñ: ŒFˆÈŠO‚Ìˆê”ÊŠÂ‹«¶•¨ŒQ‚Ìƒ‰ƒCƒtƒTƒCƒNƒ‹‚ğˆêŠ‡ŠÇ—‚·‚é
+// ƒƒ‚ƒŠ’f•Ğ‰»‚Æ•p”É‚Ènew/delete‚É‚æ‚é•‰‰×‚ğ–h‚®‚½‚ßAŠî’êƒNƒ‰ƒX‚ÌƒIƒuƒWƒFƒNƒgƒv[ƒ‹‹@”\‚Å‰^—p‚·‚é
 class AnimalManager : public CreatureManager<AnimalMove, AnimalMove::TagAnimal>
 {
 public:
 	AnimalManager();
 
-	// å…¥åŠ›: filename, pos, scale, tag, count | å‡ºåŠ›: ãªã—
-	// å‰¯ä½œç”¨: æ–°è¦ãƒ¡ãƒ¢ãƒªç¢ºä¿ã¾ãŸã¯ãƒ—ãƒ¼ãƒ«ã‹ã‚‰ã®å¾©å¸°ãŒç™ºç”Ÿã™ã‚‹ã€‚ãƒ•ãƒ¬ãƒ¼ãƒ è½ã¡å›é¿ã®ãŸã‚å¤§é‡ç”Ÿæˆ(count)ã«æ³¨æ„
+	// “ü—Í: filename, pos, scale, tag, count | o—Í: ‚È‚µ
+	// •›ì—p: V‹Kƒƒ‚ƒŠŠm•Û‚Ü‚½‚Íƒv[ƒ‹‚©‚ç‚Ì•œ‹A‚ª”­¶‚·‚éBƒtƒŒ[ƒ€—‚¿‰ñ”ğ‚Ì‚½‚ß‘å—Ê¶¬(count)‚É’ˆÓ
 	void SpawnAnimal(std::string filename, VECTOR pos, float scale, AnimalMove::TagAnimal tag, int count, float scatterRadius = 200.0f);
 
 protected:
-	// ä»•æ§˜åˆ¶ç´„: åŸºåº•ã‚¯ãƒ©ã‚¹å´ã§å¯¾è±¡ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®ç¨®åˆ¥ï¼ˆã‚¿ã‚°ï¼‰ã‚’å‹å®‰å…¨ã«ç‰¹å®šãƒ»åˆ†é¡ã•ã›ã‚‹ãŸã‚ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰å¿…é ˆ
+	// d—l§–ñ: Šî’êƒNƒ‰ƒX‘¤‚Å‘ÎÛƒCƒ“ƒXƒ^ƒ“ƒX‚Ìí•Êiƒ^ƒOj‚ğŒ^ˆÀ‘S‚É“Á’èE•ª—Ş‚³‚¹‚é‚½‚ßƒI[ƒo[ƒ‰ƒCƒh•K{
 	AnimalMove::TagAnimal GetTag(AnimalMove* creature) override { return creature->GetTagAnimal(); }
 };

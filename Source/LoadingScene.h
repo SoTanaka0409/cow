@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 #include "Scene.h"
 
 // Scene to preload heavy 3D models asynchronously to prevent stuttering
@@ -15,5 +15,5 @@ public:
 
 private:
 	int loading_timer_;
-	bool load_started_; // éåŒæœŸãƒ­ãƒ¼ãƒ‰ãŒæ—¢ã«é–‹å§‹æ¸ˆã¿ã‹?Eãƒ•ãƒ©ã‚°
+	bool load_started_; // ”ñ“¯Šúƒ[ƒh‚ªŠù‚ÉŠJnÏ‚İ‚©?Eƒtƒ‰ƒO
 };

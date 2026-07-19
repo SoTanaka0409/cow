@@ -1,4 +1,4 @@
-﻿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include "Object2D.h"
 #include "Master.h"
 #include "ObjectManager.h"

@@ -1,18 +1,18 @@
-﻿#include "Stage.h"
+#include "Stage.h"
 #include "Master.h"
 
 /*
- * 入力: initPos (初期座標), stageModelName (描画用モデル), stageCollisionModelName (判定用モデル)
- * 出力: なし
- * 副作用: 描画用および判定用モデルの読み込みと、判定情報(コリジョン)のセットアップ
+ * ����: initPos (�������W), stageModelName (�`��p���f��), stageCollisionModelName (����p���f��)
+ * �o��: �Ȃ�
+ * ����p: �`��p����є���p���f���̓ǂݍ��݂ƁA������(�R���W����)�̃Z�b�g�A�b�v
  */
 Stage::Stage(VECTOR initPos, std::string stageModelName, std::string stageCollisionModelName)
 	: Object3D(initPos)
 {
 	SetTag(Object3D::kTag3dStage);
 
-	// ハイポリゴンの描画用モデルで直接当たり判定を行うと処理落ち(パフォーマンス低下)を招くため、
-	// 軽量な判定専用モデルを別途読み込んで使用する
+	// �n�C�|���S���̕`��p���f���Œ��ړ����蔻����s���Ə�������(�p�t�H�[�}���X�ቺ)���������߁A
+	// �y�ʂȔ����p���f����ʓr�ǂݍ���Ŏg�p����
 	model_handle_ = Master::resource_manager_->LoadModel(stageModelName);
 	collision_handle_ = Master::resource_manager_->LoadModel(stageCollisionModelName);
 
@@ -22,14 +22,14 @@ Stage::Stage(VECTOR initPos, std::string stageModelName, std::string stageCollis
 	MV1SetPosition(collision_handle_, initPos);
 	MV1SetPosition(model_handle_, initPos);
 
-	// パフォーマンス制約: 毎フレームの衝突判定負荷を軽減するため、ロード時に空間分割などの判定メタデータを事前構築する
+	// �p�t�H�[�}���X����: ���t���[���̏Փ˔��蕉�ׂ��y�����邽�߁A���[�h���ɋ�ԕ����Ȃǂ̔��胁�^�f�[�^�����O�\�z����
 	MV1SetupCollInfo(collision_handle_);
 }
 
 /*
- * 入力: なし
- * 出力: なし
- * 副作用: ロードしたモデルリソースの破棄
+ * ����: �Ȃ�
+ * �o��: �Ȃ�
+ * ����p: ���[�h�������f�����\�[�X�̔j��
  */
 Stage::~Stage()
 {
@@ -38,18 +38,18 @@ Stage::~Stage()
 }
 
 /*
- * 入力: なし
- * 出力: なし
- * 副作用: なし
+ * ����: �Ȃ�
+ * �o��: �Ȃ�
+ * ����p: �Ȃ�
  */
 void Stage::Update()
 {
 }
 
 /*
- * 入力: なし
- * 出力: なし
- * 副作用: ステージの3Dモデル描画
+ * ����: �Ȃ�
+ * �o��: �Ȃ�
+ * ����p: �X�e�[�W��3D���f���`��
  */
 void Stage::Draw()
 {
@@ -57,25 +57,25 @@ void Stage::Draw()
 }
 
 /*
- * 入力: pos1, pos2 (カプセルの両端座標), r (カプセルの半径)
- * 出力: 衝突していればtrue
- * 副作用: なし
+ * ����: pos1, pos2 (�J�v�Z���̗��[���W), r (�J�v�Z���̔��a)
+ * �o��: �Փ˂��Ă����true
+ * ����p: �Ȃ�
  */
 bool Stage::CheckHit_Capsule(VECTOR pos1, VECTOR pos2, float r)
 {
 	MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Capsule(collision_handle_, -1, pos1, pos2, r);
 	bool is_hit = result.HitNum >= 1;
 
-	// 外部仕様依存: DxLib内部で動的確保された判定結果(配列)を破棄しないと深刻なメモリリークを引き起こすため必ず解放する
+	// �O���d�l�ˑ�: DxLib�����œ��I�m�ۂ��ꂽ���茋��(�z��)��j�����Ȃ��Ɛ[���ȃ��������[�N�������N�������ߕK���������
 	MV1CollResultPolyDimTerminate(result);
 
 	return is_hit;
 }
 
 /*
- * 入力: pos1, pos2 (線分の始点と終点)
- * 出力: 衝突点の座標 (未衝突時はゼロベクトル)
- * 副作用: なし
+ * ����: pos1, pos2 (�����̎n�_�ƏI�_)
+ * �o��: �Փ˓_�̍��W (���Փˎ��̓[���x�N�g��)
+ * ����p: �Ȃ�
  */
 VECTOR Stage::CheckHit_Line(VECTOR pos1, VECTOR pos2)
 {
@@ -92,9 +92,9 @@ VECTOR Stage::CheckHit_Line(VECTOR pos1, VECTOR pos2)
 }
 
 /*
- * 入力: pos1, pos2 (線分の始点と終点)
- * 出力: 衝突点の座標
- * 副作用: 画面左上へのヒット座標のテキスト描画
+ * ����: pos1, pos2 (�����̎n�_�ƏI�_)
+ * �o��: �Փ˓_�̍��W
+ * ����p: ��ʍ���ւ̃q�b�g���W�̃e�L�X�g�`��
  */
 VECTOR Stage::CheckHit_LineDebug(VECTOR pos1, VECTOR pos2)
 {
@@ -102,7 +102,7 @@ VECTOR Stage::CheckHit_LineDebug(VECTOR pos1, VECTOR pos2)
 
 	auto result = MV1CollCheck_Line(collision_handle_, -1, pos1, pos2);
 
-	// デバッグ表示専用関数。キャラクターの接地判定や、カメラが壁にめり込んだ際の座標を視覚的に検証するために用いる
+	// �f�o�b�O�\����p�֐��B�L�����N�^�[�̐ڒn�����A�J�������ǂɂ߂荞�񂾍ۂ̍��W�����o�I�Ɍ��؂��邽�߂ɗp����
 	if (result.HitFlag)
 	{
 		ret = result.HitPosition;

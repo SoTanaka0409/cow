@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #pragma warning(push)
 #pragma warning(disable : 4819)
 #include "DxLib.h"
@@ -33,53 +33,53 @@ public:
 	virtual void Draw() override;
 	virtual void DrawShadowCaster() override;
 	/*
-	 * キャラクターの挙動を毎フレーム反映するため。
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 座標(mvPosition)の更新
+	 * �L�����N�^�[�̋����𖈃t���[�����f���邽�߁B
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] ���W(mvPosition)�̍X�V
 	 */
 	virtual void MoveCharacter();
 	/*
-	 * 状態に応じた自律移動を実現するため。
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] StateクラスのUpdate実行
+	 * ��Ԃɉ����������ړ����������邽�߁B
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] State�N���X��Update���s
 	 */
 	virtual void UpdateWanderAI();
 	/*
-	 * 壁へのめり込みを防ぐため。
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] mvPositionの補正
+	 * �ǂւ̂߂荞�݂�h�����߁B
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] mvPosition�̕␳
 	 */
 	virtual void CheckWallCollision();
 	/*
-	 * 当たり判定をモデルの現在位置に合わせるため。
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] コライダーの座標更新
+	 * �����蔻������f���̌��݈ʒu�ɍ��킹�邽�߁B
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �R���C�_�[�̍��W�X�V
 	 */
 	virtual void ColliderMove();
 	/*
-	 * 進行方向にキャラクターを向かせるため。
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] モデルの回転角更新
+	 * �i�s�����ɃL�����N�^�[���������邽�߁B
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] ���f���̉�]�p�X�V
 	 */
 	virtual void RotationCharacter();
 	/*
-	 * 演出としてキャラクターを旋回させるため。
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] モデルの回転角更新
+	 * ���o�Ƃ��ăL�����N�^�[����񂳂��邽�߁B
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] ���f���̉�]�p�X�V
 	 */
 	virtual void CharacterRotate();
 	virtual void CharacterDied();
 	/*
-	 * キャラクターの死亡状態を確定させるため。
-	 * [入力] reason: 死亡の理由
-	 * [出力] なし
-	 * [副作用] 死亡フラグや演出の開始
+	 * �L�����N�^�[�̎��S��Ԃ��m�肳���邽�߁B
+	 * [����] reason: ���S�̗��R
+	 * [�o��] �Ȃ�
+	 * [����p] ���S�t���O�≉�o�̊J�n
 	 */
 	virtual void Die(DeathReason reason);
 	virtual void Reset(VECTOR pos);
@@ -89,17 +89,17 @@ public:
 	AIState GetCurrentState() const { return mCurrentState; }
 	void SetCurrentState(AIState state) { mCurrentState = state; }
 	/*
-	 * 行動パターンを切り替えるため。
-	 * [入力] newState: 新しい状態クラスのポインタ
-	 * [出力] なし
-	 * [副作用] 古いStateの破棄と新しいStateへの移行
+	 * �s���p�^�[����؂�ւ��邽�߁B
+	 * [����] newState: �V������ԃN���X�̃|�C���^
+	 * [�o��] �Ȃ�
+	 * [����p] �Â�State�̔j���ƐV����State�ւ̈ڍs
 	 */
 	void ChangeState(CharacterState* newState);
 	/*
-	 * プレイヤーに吸い込まれる挙動を開始するため。
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] mCurrentStateをSTATE_VACUUMに変更
+	 * �v���C���[�ɋz�����܂�鋓�����J�n���邽�߁B
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] mCurrentState��STATE_VACUUM�ɕύX
 	 */
 	void ChangeStateToVacuum();
 	void SetActionTimer(int timer) { mActionTimer = timer; }

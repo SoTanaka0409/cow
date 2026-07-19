@@ -1,11 +1,11 @@
-ï»¿#include "EffekseerEffect.h"
+#include "EffekseerEffect.h"
 #include <EffekseerForDXLib.h>
 #include "Master.h"
 
 /*
- * å…¥åŠ›: filename (ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹), initPos (åˆæœŸåº§æ¨™), kEffectSize (åŸºæœ¬ã‚¹ã‚±ãƒ¼ãƒ«)
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: å†…éƒ¨å¤‰æ•°ã®åˆæœŸåŒ–ã¨ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãƒªã‚½ãƒ¼ã‚¹ã®èª­ã¿è¾¼ã¿
+ * “ü—Í: filename (ƒtƒ@ƒCƒ‹ƒpƒX), initPos (‰ŠúÀ•W), kEffectSize (Šî–{ƒXƒP[ƒ‹)
+ * o—Í: ‚È‚µ
+ * •›ì—p: “à•”•Ï”‚Ì‰Šú‰»‚ÆƒGƒtƒFƒNƒgƒŠƒ\[ƒX‚Ì“Ç‚Ýž‚Ý
  */
 EffekseerEffect::EffekseerEffect(const char* filename, VECTOR initPos, float kEffectSize)
 	: play_pos_(initPos)
@@ -22,37 +22,37 @@ EffekseerEffect::EffekseerEffect(const char* filename, VECTOR initPos, float kEf
 }
 
 /*
- * å…¥åŠ›: ãªã—
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãƒªã‚½ãƒ¼ã‚¹ã®è§£æ”¾
+ * “ü—Í: ‚È‚µ
+ * o—Í: ‚È‚µ
+ * •›ì—p: ƒGƒtƒFƒNƒgƒŠƒ\[ƒX‚Ì‰ð•ú
  */
 EffekseerEffect::~EffekseerEffect()
 {
-	// ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³çµ‚äº†æ™‚ã‚„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç ´æ£„æ™‚ã«ã€VRAM/RAMã®ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯ãŒç™ºç”Ÿã™ã‚‹ã®ã‚’é˜²ããŸã‚æ˜Žç¤ºçš„ã«ç ´æ£„ã™ã‚‹
+	// ƒAƒvƒŠƒP[ƒVƒ‡ƒ“I—¹Žž‚âƒIƒuƒWƒFƒNƒg”jŠüŽž‚ÉAVRAM/RAM‚Ìƒƒ‚ƒŠƒŠ[ƒN‚ª”­¶‚·‚é‚Ì‚ð–h‚®‚½‚ß–¾Ž¦“I‚É”jŠü‚·‚é
 	DeleteEffekseerEffect(effect_resource_handle_);
 }
 
 /*
- * å…¥åŠ›: ãªã—
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: VRAMã¸ã®ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãƒ‡ãƒ¼ã‚¿å±•é–‹ãŠã‚ˆã³ãƒªã‚½ãƒ¼ã‚¹ãƒãƒ³ãƒ‰ãƒ«ã®å–å¾—
+ * “ü—Í: ‚È‚µ
+ * o—Í: ‚È‚µ
+ * •›ì—p: VRAM‚Ö‚ÌƒGƒtƒFƒNƒgƒf[ƒ^“WŠJ‚¨‚æ‚ÑƒŠƒ\[ƒXƒnƒ“ƒhƒ‹‚ÌŽæ“¾
  */
 void EffekseerEffect::Load()
 {
-	// å¤–éƒ¨ä»•æ§˜ä¾å­˜: EffekseerForDXLibã®ä»•æ§˜ä¸Šã€ãƒ™ãƒ¼ã‚¹ã‚µã‚¤ã‚º(effectSize)ã¯å†ç”Ÿæ™‚ã§ã¯ãªããƒ­ãƒ¼ãƒ‰æ™‚ã«ç¢ºå®šã•ã›ã‚‹å¿…è¦ãŒã‚ã‚‹
+	// ŠO•”Žd—lˆË‘¶: EffekseerForDXLib‚ÌŽd—lãAƒx[ƒXƒTƒCƒY(effectSize)‚ÍÄ¶Žž‚Å‚Í‚È‚­ƒ[ƒhŽž‚ÉŠm’è‚³‚¹‚é•K—v‚ª‚ ‚é
 	effect_resource_handle_ = LoadEffekseerEffect(file_path_, effectSize);
 }
 
 /*
- * å…¥åŠ›: ãªã—
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: å†ç”Ÿä¸­ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ãƒ­ãƒ¼ã‚«ãƒ«ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ (åº§æ¨™ãƒ»å›žè»¢ãƒ»ã‚¹ã‚±ãƒ¼ãƒ«)ã®æ›´æ–°
+ * “ü—Í: ‚È‚µ
+ * o—Í: ‚È‚µ
+ * •›ì—p: Ä¶’†ƒGƒtƒFƒNƒg‚Ìƒ[ƒJƒ‹ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€(À•WE‰ñ“]EƒXƒP[ƒ‹)‚ÌXV
  */
 void EffekseerEffect::Update()
 {
 	if (playingEffectHandle != -1)
 	{
-		// ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ç­‰è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç§»å‹•ã«å¯¾ã—ã¦ã€ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãŒ1ãƒ•ãƒ¬ãƒ¼ãƒ é…ã‚Œã¦æç”»ã•ã‚Œã‚‹ã€Œä½ç½®ã‚ºãƒ¬ãƒã‚°ã€ã‚’é˜²ããŸã‚æ¯Žãƒ•ãƒ¬ãƒ¼ãƒ åŒæœŸã™ã‚‹
+		// ƒLƒƒƒ‰ƒNƒ^[“™eƒIƒuƒWƒFƒNƒg‚ÌˆÚ“®‚É‘Î‚µ‚ÄAƒGƒtƒFƒNƒg‚ª1ƒtƒŒ[ƒ€’x‚ê‚Ä•`‰æ‚³‚ê‚éuˆÊ’uƒYƒŒƒoƒOv‚ð–h‚®‚½‚ß–ˆƒtƒŒ[ƒ€“¯Šú‚·‚é
 		SetPosPlayingEffekseer3DEffect(playingEffectHandle, play_pos_.x, play_pos_.y, play_pos_.z);
 		SetRotationPlayingEffekseer3DEffect(playingEffectHandle, rotation_.x, rotation_.y, rotation_.z);
 		SetScalePlayingEffekseer3DEffect(playingEffectHandle, mvScale.x, mvScale.y, mvScale.z);
@@ -60,36 +60,36 @@ void EffekseerEffect::Update()
 }
 
 /*
- * å…¥åŠ›: ãªã—
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: ãªã—
+ * “ü—Í: ‚È‚µ
+ * o—Í: ‚È‚µ
+ * •›ì—p: ‚È‚µ
  */
 void EffekseerEffect::Draw()
 {
-	// å¤–éƒ¨ä»•æ§˜ä¾å­˜: æœ¬ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã«ãŠã‘ã‚‹3Dã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®æç”»ã¯ã‚·ã‚¹ãƒ†ãƒ å´ã§ä¸€æ‹¬å‡¦ç†ã•ã‚Œã‚‹ãŸã‚ã€å€‹åˆ¥ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‹ã‚‰ã®Drawå‘¼ã³å‡ºã—ã¯ä¸è¦
+	// ŠO•”Žd—lˆË‘¶: –{ƒ‰ƒCƒuƒ‰ƒŠ‚É‚¨‚¯‚é3DƒGƒtƒFƒNƒg‚Ì•`‰æ‚ÍƒVƒXƒeƒ€‘¤‚ÅˆêŠ‡ˆ—‚³‚ê‚é‚½‚ßAŒÂ•ÊƒIƒuƒWƒFƒNƒg‚©‚ç‚ÌDrawŒÄ‚Ño‚µ‚Í•s—v
 }
 
 /*
- * å…¥åŠ›: ãªã—
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®å†ç”Ÿé–‹å§‹ã¨å†ç”Ÿãƒãƒ³ãƒ‰ãƒ«ã®ä¿æŒ
+ * “ü—Í: ‚È‚µ
+ * o—Í: ‚È‚µ
+ * •›ì—p: ƒGƒtƒFƒNƒg‚ÌÄ¶ŠJŽn‚ÆÄ¶ƒnƒ“ƒhƒ‹‚Ì•ÛŽ
  */
 void EffekseerEffect::Play()
 {
 	playingEffectHandle = PlayEffekseer3DEffect(effect_resource_handle_);
 
-	// å†ç”Ÿç›´å¾Œã®1ãƒ•ãƒ¬ãƒ¼ãƒ ç›®ã«ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãŒåŽŸç‚¹(0,0,0)ã§ä¸€çž¬ã ã‘æç”»ã•ã‚Œã¦çž¬ããƒã‚°ã‚’é˜²ããŸã‚ã€å³åº§ã«åº§æ¨™ã‚’ä¸Šæ›¸ãã™ã‚‹
+	// Ä¶’¼Œã‚Ì1ƒtƒŒ[ƒ€–Ú‚ÉƒGƒtƒFƒNƒg‚ªŒ´“_(0,0,0)‚Åˆêu‚¾‚¯•`‰æ‚³‚ê‚Äu‚­ƒoƒO‚ð–h‚®‚½‚ßA‘¦À‚ÉÀ•W‚ðã‘‚«‚·‚é
 	SetPosPlayingEffekseer3DEffect(playingEffectHandle, play_pos_.x, play_pos_.y, play_pos_.z);
 }
 
 /*
- * å…¥åŠ›: ãªã—
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®å¼·åˆ¶åœæ­¢å‡¦ç†
+ * “ü—Í: ‚È‚µ
+ * o—Í: ‚È‚µ
+ * •›ì—p: ƒGƒtƒFƒNƒg‚Ì‹­§’âŽ~ˆ—
  */
 void EffekseerEffect::Stop()
 {
-	// ç„¡åŠ¹ãªãƒãƒ³ãƒ‰ãƒ«ã‚„æ—¢ã«è‡ªç„¶æ¶ˆæ»…ã—ãŸã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’åœæ­¢ã—ã‚ˆã†ã¨ã—ã¦ã€ãƒ©ã‚¤ãƒ–ãƒ©ãƒªå†…éƒ¨ã§ã‚¯ãƒ©ãƒƒã‚·ãƒ¥ã™ã‚‹ã®ã‚’é˜²ããŸã‚ã®å®‰å…¨æ¤œè¨¼
+	// –³Œø‚Èƒnƒ“ƒhƒ‹‚âŠù‚ÉŽ©‘RÁ–Å‚µ‚½ƒGƒtƒFƒNƒg‚ð’âŽ~‚µ‚æ‚¤‚Æ‚µ‚ÄAƒ‰ƒCƒuƒ‰ƒŠ“à•”‚ÅƒNƒ‰ƒbƒVƒ…‚·‚é‚Ì‚ð–h‚®‚½‚ß‚ÌˆÀ‘SŒŸØ
 	int NowPlayEffect = IsEffekseer3DEffectPlaying(playingEffectHandle);
 	if (NowPlayEffect != -1)
 	{

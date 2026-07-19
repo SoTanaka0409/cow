@@ -1,31 +1,28 @@
-ï»¿#pragma once
+#pragma once
 #include <string>
 #include <vector>
 
-// CSVãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ã‚¹ãƒ†ãƒ¼ã‚¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä¸€æ‹¬ç”Ÿæˆã™ã‚‹ãƒ­ãƒ¼ãƒ€ãƒ¼
-// Scene3D::Initialize() ã®ç›´æ›¸ãã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆé…ç½®ã‚’ãƒ‡ãƒ¼ã‚¿ãƒ‰ãƒªãƒ–ãƒ³ã«ç½®ãæ›ãˆã‚‹ãŸã‚ã«ä½¿ç”¨ã™ã‚‹
+// CSVƒtƒ@ƒCƒ‹‚©‚çƒXƒe[ƒWƒIƒuƒWƒFƒNƒg‚ğ‚Ü‚Æ‚ß‚Ä¶¬‚·‚éƒ[ƒ_[
+// GameScene::Initialize() ‚Ì’¼‘‚«”z’u‚ğƒf[ƒ^‹ì“®‚É’u‚«Š·‚¦‚é‚½‚ß‚Ég—p‚·‚é
 class StageLoader
 {
 public:
-	// csvPath ã§æŒ‡å®šã—ãŸ CSV ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã¿ã€è¡Œã”ã¨ã«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆã™ã‚‹
-	// [å…¥åŠ›] csvPath: Shift-JIS ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã® CSV ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
-	// [å‡ºåŠ›] ãªã—
-	// [å‰¯ä½œç”¨] ObjectManager ã«å„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒç™»éŒ²ã•ã‚Œã‚‹
+	// w’è‚³‚ê‚½CSV‚ğ“Ç‚İ‚İAs‚²‚Æ‚ÉƒIƒuƒWƒFƒNƒg‚ğ¶¬‚·‚é
 	static void LoadFromCSV(const std::string& csvPath);
 
 private:
-	// type=object_stage / type=rock è¡Œã‚’å‡¦ç†ã—ã¦Object_Stageã‚’ç”Ÿæˆã™ã‚‹
+	// type=object_stage / type=rock ‚Ìs‚ğˆ—‚·‚é
 	static void SpawnObjectStage(const std::vector<std::string>& cols);
 
-	// type=mountain è¡Œã‚’å‡¦ç†ã—ã¦Mountainã‚’ç”Ÿæˆã™ã‚‹
+	// type=mountain ‚Ìs‚ğˆ—‚·‚é
 	static void SpawnMountain(const std::vector<std::string>& cols);
 
-	// type=wall è¡Œã‚’å‡¦ç†ã—ã¦Wallã‚’ç”Ÿæˆã™ã‚‹
+	// type=wall ‚Ìs‚ğˆ—‚·‚é
 	static void SpawnWall(const std::vector<std::string>& cols);
 
-	// CSV ã®1è¡Œã‚’ã‚«ãƒ³ãƒã§åˆ†å‰²ã—ã¦è¿”ã™
+	// CSV‚Ì1s‚ğƒJƒ“ƒ}‚Å•ªŠ„‚·‚é
 	static std::vector<std::string> SplitCSV(const std::string& line);
 
-	// æ–‡å­—åˆ—ã‚’floatã«å¤‰æ›ã™ã‚‹ã€‚å¤‰æ›å¤±æ•—æ™‚ã¯ 0.0f ã‚’è¿”ã™
+	// •¶š—ñ‚ğfloat‚É•ÏŠ·‚·‚éB¸”s‚Í0.0f‚ğ•Ô‚·
 	static float ToFloat(const std::string& s);
 };

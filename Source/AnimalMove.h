@@ -1,14 +1,14 @@
-﻿#pragma once
+#pragma once
 #include "CharacterMove.h"
 
 class SphereCollider;
 class CapsuleCollider;
 
-// プレイヤーによる捕獲と自律移動の状態遷移を管理するため
+// �v���C���[�ɂ��ߊl�Ǝ����ړ��̏�ԑJ�ڂ��Ǘ����邽��
 class AnimalMove : public CharacterMove
 {
 public:
-	// コンボボーナスを動物の種類ごとに計算するため
+	// �R���{�{�[�i�X�𓮕��̎�ނ��ƂɌv�Z���邽��
 	enum TagAnimal
 	{
 		kNone,
@@ -21,91 +21,91 @@ public:
 
 public:
 	/*
-	 * 動物の3Dモデルと初期設定を行うため
-	 * [入力] filename: モデルのファイルパス, initPos: 出現座標
-	 * [出力] なし
-	 * [副作用] コライダーやステータスの初期化
+	 * ������3D���f���Ə����ݒ���s������
+	 * [����] filename: ���f���̃t�@�C���p�X, initPos: �o�����W
+	 * [�o��] �Ȃ�
+	 * [����p] �R���C�_�[��X�e�[�^�X�̏�����
 	 */
 	AnimalMove(std::string filename, VECTOR initPos);
 	virtual ~AnimalMove();
 
 	/*
-	 * 動物ごとのAIや移動ロジックを実行するため
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 座標と向きの更新
+	 * �������Ƃ�AI��ړ����W�b�N�����s���邽��
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] ���W�ƌ����̍X�V
 	 */
 	virtual void MoveCharacter() override;
 
 	/*
-	 * 特定の座標からリスポーンさせるため
-	 * [入力] pos: 復帰先の座標
-	 * [出力] なし
-	 * [副作用] 座標の変更および状態のリセット
+	 * ����̍��W���烊�X�|�[�������邽��
+	 * [����] pos: ���A��̍��W
+	 * [�o��] �Ȃ�
+	 * [����p] ���W�̕ύX����я�Ԃ̃��Z�b�g
 	 */
 	virtual void Reset(VECTOR pos) override;
 
 	/*
-	 * 状態に応じたアニメーションを割り当てるため
-	 * [入力] state: アニメーション状態, filename: アニメーションのファイルパス
-	 * [出力] なし
-	 * [副作用] アニメーションリストへの追加
+	 * ��Ԃɉ������A�j���[�V���������蓖�Ă邽��
+	 * [����] state: �A�j���[�V�������, filename: �A�j���[�V�����̃t�@�C���p�X
+	 * [�o��] �Ȃ�
+	 * [����p] �A�j���[�V�������X�g�ւ̒ǉ�
 	 */
 	void AddAnimation(AnimationState state, std::string filename);
 
 	/*
-	 * 衝突判定の開始を処理するため
-	 * [入力] collider: 自身のコライダー, check: 相手のコライダー
-	 * [出力] なし
-	 * [副作用] 衝突フラグの設定
+	 * �Փ˔���̊J�n���������邽��
+	 * [����] collider: ���g�̃R���C�_�[, check: ����̃R���C�_�[
+	 * [�o��] �Ȃ�
+	 * [����p] �Փ˃t���O�̐ݒ�
 	 */
 	virtual void OnEnter(Collider* collider, Collider* check) override;
 
 	/*
-	 * 衝突中の継続的な処理を行うため
-	 * [入力] collider: 自身のコライダー, check: 相手のコライダー
-	 * [出力] なし
-	 * [副作用] ダメージや押し出しの適用
+	 * �Փ˒��̌p���I�ȏ������s������
+	 * [����] collider: ���g�̃R���C�_�[, check: ����̃R���C�_�[
+	 * [�o��] �Ȃ�
+	 * [����p] �_���[�W�≟���o���̓K�p
 	 */
 	virtual void OnTrigger(Collider* collider, Collider* check) override;
 
 	/*
-	 * 衝突判定の終了を処理するため
-	 * [入力] collider: 自身のコライダー, check: 相手のコライダー
-	 * [出力] なし
-	 * [副作用] 衝突フラグの解除
+	 * �Փ˔���̏I�����������邽��
+	 * [����] collider: ���g�̃R���C�_�[, check: ����̃R���C�_�[
+	 * [�o��] �Ȃ�
+	 * [����p] �Փ˃t���O�̉���
 	 */
 	virtual void OnExit(Collider* collider, Collider* check) override;
 
 	/*
-	 * 死亡時のエフェクトやスコア処理を行うため
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] スコア加算とオブジェクト削除要求
+	 * ���S���̃G�t�F�N�g��X�R�A�������s������
+	 * [����] �Ȃ�
+	 * [�o��] �Ȃ�
+	 * [����p] �X�R�A���Z�ƃI�u�W�F�N�g�폜�v��
 	 */
 	virtual void CharacterDied() override;
 
 	/*
-	 * 特定の死因に応じて死亡処理を分岐させるため
-	 * [入力] reason: 死因
-	 * [出力] なし
-	 * [副作用] 死亡状態の設定とHP減少
+	 * ����̎����ɉ����Ď��S�����𕪊򂳂��邽��
+	 * [����] reason: ����
+	 * [�o��] �Ȃ�
+	 * [����p] ���S��Ԃ̐ݒ��HP����
 	 */
 	virtual void Die(DeathReason reason) override;
 
 	/*
-	 * コンボ判定用に動物の種類を設定するため
-	 * [入力] tag: 設定するタグ
-	 * [出力] なし
-	 * [副作用] tag_animal_の変更
+	 * �R���{����p�ɓ����̎�ނ�ݒ肷�邽��
+	 * [����] tag: �ݒ肷��^�O
+	 * [�o��] �Ȃ�
+	 * [����p] tag_animal_�̕ύX
 	 */
 	void SetTagAnimal(TagAnimal tag) { tag_animal_ = tag; }
 
 	/*
-	 * 現在の動物の種類を取得するため
-	 * [入力] なし
-	 * [出力] 設定されている動物タグ
-	 * [副作用] なし
+	 * ���݂̓����̎�ނ��擾���邽��
+	 * [����] �Ȃ�
+	 * [�o��] �ݒ肳��Ă��铮���^�O
+	 * [����p] �Ȃ�
 	 */
 	TagAnimal GetTagAnimal() { return tag_animal_; }
 

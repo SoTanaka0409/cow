@@ -1,4 +1,4 @@
-ï»¿#include "LoadingScene.h"
+#include "LoadingScene.h"
 #include "DxLib.h"
 #include "Master.h"
 #include "ResourceManager.h"
@@ -6,9 +6,9 @@
 #include "GameConstants.h"
 
 /*
- * å…¥åŠ›: ãªã—
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: å†…éƒ¨ã‚¿ã‚¤ãƒžãƒ¼ã¨ãƒ•ãƒ©ã‚°ã®åˆæœŸåŒ–
+ * “ü—Í: ‚È‚µ
+ * o—Í: ‚È‚µ
+ * •›ì—p: “à•”ƒ^ƒCƒ}[‚Æƒtƒ‰ƒO‚Ì‰Šú‰»
  */
 LoadingScene::LoadingScene()
 	: loading_timer_(0)
@@ -21,9 +21,9 @@ LoadingScene::~LoadingScene()
 }
 
 /*
- * å…¥åŠ›: ãªã—
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: å†…éƒ¨çŠ¶æ…‹ã®ãƒªã‚»ãƒƒãƒˆ
+ * “ü—Í: ‚È‚µ
+ * o—Í: ‚È‚µ
+ * •›ì—p: “à•”ó‘Ô‚ÌƒŠƒZƒbƒg
  */
 void LoadingScene::Initialize()
 {
@@ -32,9 +32,9 @@ void LoadingScene::Initialize()
 }
 
 /*
- * å…¥åŠ›: ãªã—
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: éžåŒæœŸãƒ­ãƒ¼ãƒ‰ã®ã‚­ãƒƒã‚¯ãŠã‚ˆã³ã‚·ãƒ¼ãƒ³é·ç§»æŒ‡ç¤º
+ * “ü—Í: ‚È‚µ
+ * o—Í: ‚È‚µ
+ * •›ì—p: ”ñ“¯Šúƒ[ƒh‚ÌƒLƒbƒN‚¨‚æ‚ÑƒV[ƒ“‘JˆÚŽwŽ¦
  */
 void LoadingScene::Update()
 {
@@ -42,8 +42,8 @@ void LoadingScene::Update()
 
 	loading_timer_++;
 
-	// ãƒ­ãƒ¼ãƒ‰ç”»é¢ã‚’æç”»ã™ã‚‹å‰ã«é‡ã„å‡¦ç†ãŒèµ°ã‚Šãƒ•ãƒªãƒ¼ã‚ºã™ã‚‹ã®ã‚’é˜²ãã“ã¨ã¨ã€DxLibã®éžåŒæœŸãƒ­ãƒ¼ãƒ‰é–¢æ•°ãŒ
-	// é–‹å§‹ç›´å¾Œã«èª¤ã£ã¦æœªå®Œäº†æ•°0ã‚’è¿”ã™ãƒã‚°ã‚’å›žé¿ã™ã‚‹ãŸã‚ã€2ãƒ•ãƒ¬ãƒ¼ãƒ ç›®ä»¥é™ã«å‡¦ç†ã‚’é…å»¶ã•ã›ã‚‹
+	// ƒ[ƒh‰æ–Ê‚ð•`‰æ‚·‚é‘O‚Éd‚¢ˆ—‚ª‘–‚èƒtƒŠ[ƒY‚·‚é‚Ì‚ð–h‚®‚±‚Æ‚ÆADxLib‚Ì”ñ“¯Šúƒ[ƒhŠÖ”‚ª
+	// ŠJŽn’¼Œã‚ÉŒë‚Á‚Ä–¢Š®—¹”0‚ð•Ô‚·ƒoƒO‚ð‰ñ”ð‚·‚é‚½‚ßA2ƒtƒŒ[ƒ€–ÚˆÈ~‚Éˆ—‚ð’x‰„‚³‚¹‚é
 	if (!load_started_ && loading_timer_ >= 2)
 	{
 		SetUseASyncLoadFlag(TRUE);
@@ -53,35 +53,35 @@ void LoadingScene::Update()
 		Master::resource_manager_->PreloadModel(GameConstants::kAnimalChicken.model_path);
 		Master::resource_manager_->PreloadModel(GameConstants::kAnimalBear.model_path);
 		Master::resource_manager_->PreloadModel(GameConstants::kAnimalSheep.model_path);
-		Master::resource_manager_->PreloadModel("Resource/3D/Player/UFO.mv1");
-		Master::resource_manager_->PreloadModel("Resource/3D/Fence1/Fence1/Fence.mv1");
-		Master::resource_manager_->PreloadModel("Resource/3D/SkyBox/SkyBox.mv1");
+		Master::resource_manager_->PreloadModel("Resource/3D/ƒLƒƒƒ‰ƒNƒ^[/ƒvƒŒƒCƒ„[/ƒvƒŒƒCƒ„[UFO.mv1");
+		Master::resource_manager_->PreloadModel("Resource/3D/ƒXƒe[ƒW/ò/ò.mv1");
+		Master::resource_manager_->PreloadModel("Resource/3D/ƒXƒe[ƒW/‹ó/ƒXƒJƒCƒ{ƒbƒNƒX.mv1");
 
 		SetUseASyncLoadFlag(FALSE);
 
 		load_started_ = true;
 	}
 
-	// ãƒ­ãƒ¼ãƒ‰ãŒå³åº§ã«çµ‚äº†ã—ãŸéš›ã«ç”»é¢ãŒä¸€çž¬ã ã‘æš—è»¢ã—ã¦ãƒãƒ©ã¤ã(3Dé…”ã„ã‚„ä¸å¿«æ„Ÿã«ç¹‹ãŒã‚‹)ã®ã‚’é˜²ããŸã‚ã€
-	// æœ€ä½Žã§ã‚‚60ãƒ•ãƒ¬ãƒ¼ãƒ (1ç§’é–“)ã¯å¼·åˆ¶çš„ã«ãƒ­ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ç”»é¢ã‚’ç¶­æŒã™ã‚‹
+	// ƒ[ƒh‚ª‘¦À‚ÉI—¹‚µ‚½Û‚É‰æ–Ê‚ªˆêu‚¾‚¯ˆÃ“]‚µ‚Äƒ`ƒ‰‚Â‚­(3DŒ‚¢‚â•s‰õŠ´‚ÉŒq‚ª‚é)‚Ì‚ð–h‚®‚½‚ßA
+	// Å’á‚Å‚à60ƒtƒŒ[ƒ€(1•bŠÔ)‚Í‹­§“I‚Éƒ[ƒfƒBƒ“ƒO‰æ–Ê‚ðˆÛŽ‚·‚é
 	if (load_started_ && GetASyncLoadNum() == 0 && loading_timer_ > 60)
 	{
-		// å¤–éƒ¨ä»•æ§˜ä¾å­˜: ã“ã®ã‚¯ãƒ©ã‚¹å˜ä½“ã§é·ç§»å‡¦ç†ã‚’å®Œçµã•ã›ãšã€SceneManagerã«ãƒ©ã‚¤ãƒ•ã‚µã‚¤ã‚¯ãƒ«ã‚’å§”è­²ã™ã‚‹
-		Master::scene_manager_->SetNextScene(SceneManager::kScene3D);
+		// ŠO•”Žd—lˆË‘¶: ‚±‚ÌƒNƒ‰ƒX’P‘Ì‚Å‘JˆÚˆ—‚ðŠ®Œ‹‚³‚¹‚¸ASceneManager‚Éƒ‰ƒCƒtƒTƒCƒNƒ‹‚ðˆÏ÷‚·‚é
+		Master::scene_manager_->SetNextScene(SceneManager::kGameScene);
 	}
 }
 
 /*
- * å…¥åŠ›: ãªã—
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: ãƒ­ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ç”»é¢ã®UIæç”»
+ * “ü—Í: ‚È‚µ
+ * o—Í: ‚È‚µ
+ * •›ì—p: ƒ[ƒfƒBƒ“ƒO‰æ–Ê‚ÌUI•`‰æ
  */
 void LoadingScene::Draw()
 {
 	DrawBox(0, 0, 1600, 900, GetColor(0, 0, 0), TRUE);
 
-	// éžåŒæœŸãƒ­ãƒ¼ãƒ‰ã®è£ã§ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãŒãƒ•ãƒªãƒ¼ã‚º(ãƒãƒ³ã‚°ã‚¢ãƒƒãƒ—)ã—ã¦ã„ãªã„ã“ã¨ã‚’ãƒ¦ãƒ¼ã‚¶ãƒ¼ã«è¦–è¦šçš„ã«ä¿è¨¼ã™ã‚‹ãŸã‚ã€
-	// å›ºå®šå‘¨æœŸã§ç‚¹æ»…ã™ã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’æç”»ã™ã‚‹
+	// ”ñ“¯Šúƒ[ƒh‚Ì— ‚ÅƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ªƒtƒŠ[ƒY(ƒnƒ“ƒOƒAƒbƒv)‚µ‚Ä‚¢‚È‚¢‚±‚Æ‚ðƒ†[ƒU[‚ÉŽ‹Šo“I‚É•ÛØ‚·‚é‚½‚ßA
+	// ŒÅ’èŽüŠú‚Å“_–Å‚·‚éƒAƒjƒ[ƒVƒ‡ƒ“‚ð•`‰æ‚·‚é
 	if ((loading_timer_ / 20) % 2 == 0)
 	{
 		DrawString(1600 / 2 - 60, 900 / 2, "NOW LOADING...", GetColor(255, 255, 255));
@@ -89,9 +89,9 @@ void LoadingScene::Draw()
 }
 
 /*
- * å…¥åŠ›: ãªã—
- * å‡ºåŠ›: ãªã—
- * å‰¯ä½œç”¨: ãªã—
+ * “ü—Í: ‚È‚µ
+ * o—Í: ‚È‚µ
+ * •›ì—p: ‚È‚µ
  */
 void LoadingScene::Finalize()
 {

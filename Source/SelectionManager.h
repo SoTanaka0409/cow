@@ -1,7 +1,7 @@
-﻿#pragma once
+#pragma once
 #include"dxlib.h"
 
-// 設計ルール：マジックナンバーによる画面遷移のバグを防ぎ、メニュー選択肢のIDを一元管理する静的メンバクラス
+// �݌v���[���F�}�W�b�N�i���o�[�ɂ���ʑJ�ڂ̃o�O��h���A���j���[�I������ID���ꌳ�Ǘ�����ÓI�����o�N���X
 class SelectionManager
 {
 public:
@@ -18,6 +18,6 @@ public:
 	SelectionManager();
 	~SelectionManager();
 
-	// 仕様制約：マウス操作を持たないコントローラーやキーボードでの項目選択状態を、シーンを跨いで同期・保持するための静的インデックス
+	// �d�l����F�}�E�X����������Ȃ��R���g���[���[��L�[�{�[�h�ł̍��ڑI����Ԃ��A�V�[�����ׂ��œ����E�ێ����邽�߂̐ÓI�C���f�b�N�X
 	static int TitlecrrentIndex;
 };

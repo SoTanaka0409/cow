@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -200,7 +200,7 @@
     <ClCompile Include="Source\ResultScene.cpp" />
     <ClCompile Include="Source\Rule.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
-    <ClCompile Include="Source\Scene3D.cpp" />
+    <ClCompile Include="Source\GameScene.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\Score.cpp" />
     <ClCompile Include="Source\SelectionManager.cpp" />
@@ -264,7 +264,7 @@
     <ClInclude Include="Source\ResultScene.h" />
     <ClInclude Include="Source\Rule.h" />
     <ClInclude Include="Source\Scene.h" />
-    <ClInclude Include="Source\Scene3D.h" />
+    <ClInclude Include="Source\GameScene.h" />
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\Score.h" />
     <ClInclude Include="Source\SelectionManager.h" />

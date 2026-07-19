@@ -1,6 +1,6 @@
-﻿#pragma once
+#pragma once
 
-// 爽快感の提供とスコア獲得のチャンスを作るため、フィーバー状態を管理する
+// �u�����̒񋟂ƃX�R�A�l���̃`�����X����邽�߁A�t�B�[�o�[��Ԃ��Ǘ�����
 class Fever
 {
 public:
@@ -18,11 +18,11 @@ public:
 	void EndFever();
 
 private:
-	int drop_time_;       // 難易度およびスコア調整のための金の牛スポーン間隔
-	int drop_count_;      // スポーン周期を管理するためのフレームカウンター
-	int gauge_;         // UI表示やフィーバー発動判定に用いるゲージ蓄積値
-	int timer_;         // フィーバー終了判定に用いる残り継続フレーム数
-	bool is_fever_;      // 他クラスから状態を参照・分岐させるためのフラグ
+	int drop_time_;       // ��Փx����уX�R�A�����̂��߂̋��̋��X�|�[���Ԋu
+	int drop_count_;      // �X�|�[���������Ǘ����邽�߂̃t���[���J�E���^�[
+	int gauge_;         // UI�\����t�B�[�o�[��������ɗp����Q�[�W�~�ϒl
+	int timer_;         // �t�B�[�o�[�I������ɗp����c��p���t���[����
+	bool is_fever_;      // ���N���X�����Ԃ��Q�ƁE���򂳂��邽�߂̃t���O
 	float player_status_;
-	class Player3D* fever_player_; // 終了時にステータスを復元するための対象プレイヤーポインタ
+	class Player3D* fever_player_; // �I�����ɃX�e�[�^�X�𕜌����邽�߂̑Ώۃv���C���[�|�C���^
 };
