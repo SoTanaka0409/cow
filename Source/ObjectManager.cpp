@@ -99,7 +99,8 @@ void ObjectManager::AddObject(Object3D* object3D)
  */
 void ObjectManager::RemoveObjectNoDelete(Object3D* object3D)
 {
-	auto itr = std::find_if(object3d_list_.begin(), object3d_list_.end(), [object3D](const std::unique_ptr<Object3D>& ptr) {
+	auto itr = std::find_if(object3d_list_.begin(), object3d_list_.end(), [object3D](const std::unique_ptr<Object3D>& ptr) 
+		{
 		return ptr.get() == object3D;
 		});
 	if (itr != object3d_list_.end())

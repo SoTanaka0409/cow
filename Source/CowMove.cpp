@@ -16,7 +16,7 @@
 #include "ServiceLocator.h"
 
 namespace {
-	// 暫定対応: コレクション要素廃止の仕様変更に伴い、これらの同種連続回収管理変数は次回更新で削除（期限: 今月末）
+	
 	int s_mnTagCountCow = 0;
 	CowMove::TagCow s_tag1Cow = CowMove::kNone;
 	CowMove::TagCow s_tag2Cow = CowMove::kNone;

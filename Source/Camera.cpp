@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+﻿#include "ServiceLocator.h"
 
 #include "Player3D.h"
 
@@ -18,7 +18,7 @@
 
 #include "GameManager.h"
 
-// ����p�F�J�����p�����[�^����уJ�����V�F�C�N����ϐ��̏�����
+// 副作用：カメラパラメータおよびカメラシェイク制御変数の初期化
 
 Camera::Camera()
 
@@ -62,7 +62,7 @@ Camera::~Camera()
 
 }
 
-// ����p�FDxLib�̃j�A�E�t�@�[�N���b�v�A�w�i�F�̓K�p�A�����ʒu�̔��f
+// 副作用：DxLibのニア・ファークリップ、背景色の適用、初期位置の反映
 
 void Camera::Initialize()
 
@@ -84,11 +84,11 @@ void Camera::Initialize()
 
 	shake_position_ = VGet(0.0f, 0.0f, 0.0f);
 
-	// ���i���f���̕s���R�ȏ�����AUI�\�����ɂ���O�|���S���̌����i�N���b�s���O�j��h�����߂̕`��[�x�ݒ�
+	// 遠景モデルの不自然な消失や、UI表示等による手前ポリゴンの欠け（クリッピング）を防ぐための描画深度設定
 
 	SetCameraNearFar(100.0f, 50000.0f);
 
-	// �X�J�C�{�b�N�X�����[�h��Ԃ̎��ɁA��ʊO�ɑO�t���[���̕`��c�����c��o�O��h�����߂̔w�i�N���A�J���[
+	// スカイボックス未ロード状態の時に、画面外に前フレームの描画残像が残るバグを防ぐための背景クリアカラー
 
 	SetBackgroundColor(128, 128, 128);
 
@@ -98,13 +98,13 @@ void Camera::Initialize()
 
 }
 
-// ����p�F�J�������W����ђ����_�̐ݒ�A���s���������̍X�V�AEffekseer�J�����s��̓���
+// 副作用：カメラ座標および注視点の設定、平行光源方向の更新、Effekseerカメラ行列の同期
 
 void Camera::Update()
 
 {
 
-	// �X�L���I������f�o�b�O�J�����N�����ɁA�}�E�X�ړ��ɂ�莋�_���ς��̂�h�����߂̓��̓J�b�g
+	// スキル選択時やデバッグカメラ起動時に、マウス移動により視点が変わるのを防ぐための入力カット
 
 	if (Master::SelectSkill) return;
 
@@ -124,7 +124,7 @@ void Camera::Update()
 
 	{
 
-		// �Ǐ]�Ώہi�v���C���[�j�̑����ł͂Ȃ��AUFO�̃R�b�N�s�b�g�t�߂𒆐S�ɑ����邽�߂̒����_�␳
+		// 追従対象（プレイヤー）の足元ではなく、UFOのコックピット付近を中心に捉えるための注視点補正
 
 		look_at_position_ = target_->GetPosition();
 
@@ -154,7 +154,7 @@ void Camera::UpdatePositionAndTarget()
 
 	VECTOR temp;
 
-	// �J��������苗���i1000px�j�ۂ��A�����_�𒆐S�ɋ����O����`�����߂̋ɍ��W�ϊ��v�Z
+	// カメラを一定距離（1000px）保ちつつ、注視点を中心に球を軌道を描くための極座標変換計算
 
 	temp.x = distance * cosf(vertical_angle_ / 180.0f * 3.14159265f) * sinf(horizontal_angle_ / 180.0f * DX_PI_F);
 
@@ -168,7 +168,7 @@ void Camera::UpdatePositionAndTarget()
 
 		position_ = VAdd(temp, look_at_position_);
 
-		// �����V�F�C�N���̔����ړ����Ō�ɉ��Z���A�J�����̃��[�J�����W�n����ɃY���Ă��܂��̂�h��
+		// 竜巻シェイク等の微小移動を最後に加算し、カメラのローカル座標系が上にズレてしまうのを防ぐ
 
 		SetCameraPositionAndTarget_UpVecY(VAdd(position_, shake_position_), VAdd(look_at_position_, shake_position_));
 
@@ -180,11 +180,11 @@ void Camera::UpdateEffekseerAndLight()
 
 {
 
-	// 3D�G�t�F�N�g���J�����̉�]�ړ��ɒǏ]���A�Q�[����ʏ�Ő������ʒu�ɕ`�悳���悤�ɓ�������
+	// 3Dエフェクトがカメラの回転移動に追従し、ゲーム画面上で正しい位置に描画されるように同期する
 
 	Effekseer_Sync3DSetting();
 
-	// �v���C���[���ǂ̎��_���猩�Ă��e�̗��������Â��Ȃ肷���Ȃ��悤�A�J�����̎��_���烉�C�g�̏Ǝˊp���t�Z����
+	// プレイヤーがどの視点から見ても影の落ち方が暗くなりすぎないよう、カメラの視点からライトの照射角を逆算する
 
 	VECTOR lightDir = VSub(look_at_position_, position_);
 
@@ -192,13 +192,13 @@ void Camera::UpdateEffekseerAndLight()
 
 }
 
-// ����p�F�R���g���[���[��}�E�X���͂Ɋ�Â����J��������p�x�̍X�V�A�}�E�X�J�[�\���̒����Œ�
+// 副作用：コントローラーやマウス入力に基づいたカメラ旋回角度の更新、マウスカーソルの中央固定
 
 void Camera::UpdateRotate()
 
 {
 
-	// �V�n�t�]���ہi�W���o�����b�N�j��h�����߂Ƀs�b�`�p�i��p�j�𐧌����A���[�p��360�x�V�[�����X�Ƀ��[�v������
+	// 天地逆転現象（ジンバルロック）を防ぐためにピッチ角（仰俯角）を制限し、ヨー角は360度シームレスにループさせる
 
 	if (horizontal_angle_ >= 180.0f)
 
@@ -238,23 +238,23 @@ void Camera::UpdateRotate()
 
 	{
 
-		// ��ʒ[�ւ̃}�E�X���B�ŃJ������]���X�g�b�v���錻�ۂ�������邽�߁A�Q�[�����̓J�[�\����s�������ĉ�ʒ����փN�����v����
+		// 画面端へのマウス到達でカメラ回転がストップする現象を回避するため、ゲーム中はカーソルを不可視化して画面中央へクランプする
 
 		SetMouseDispFlag(false);
 
 		GetMousePoint(&mouse_x_, &mouse_y_);
 
-		int center_x_ = 640;
+		int center_x = 640;
 
-		int center_y_ = 200;
+		int center_y = 200;
 
-		// �f�o�b�O���ɑ���ʂփX���[�Y�ɃJ�[�\�����ړ��ł���悤�A�L�[�{�[�h�́u0�v�������Ă���Ԃ͈ꎞ�I�ɒ����Œ����������
+		// デバッグ時に他画面へスムーズにカーソルを移動できるよう、キーボードの「0」を押している間は一時的に中央固定を解除する
 
 		if (!CheckHitKey(KEY_INPUT_0))
 
 		{
 
-			SetMousePoint(center_x_, center_y_);
+			SetMousePoint(center_x, center_y);
 
 		}
 
@@ -272,7 +272,7 @@ void Camera::UpdateRotate()
 
 }
 
-// �o�́F�}�E�X���K��s�N�Z���ȏ�ړ����Ă��邩�ǂ����̐^�U�l
+// 出力：マウスが規定ピクセル以上移動しているかどうかの真偽値
 
 bool Camera::IsMouseMoved()
 
@@ -292,7 +292,7 @@ void Camera::Finalize()
 
 }
 
-// ����p�F�T�C���g�Ɋ�Â��V�F�C�N�I�t�Z�b�g���W�̍X�V�A�����䗦�̉��Z
+// 副作用：サイン波に基づくシェイクオフセット座標の更新、減衰比率の加算
 
 void Camera::Shake()
 
@@ -302,7 +302,7 @@ void Camera::Shake()
 
 	{
 
-		// �h�ꏈ���ɂ��{���̃J�������W(position_)�̈Ӑ}���ʍ��W�Y���i�����j��h�����߁A�`�撼�O�ɂ̂݃I�t�Z�b�g���W�Ƃ��ĉ��Z����
+		// 揺れ処理による本来のカメラ座標(position_)の意図せぬ座標ズレ（汚染）を防ぐため、描画直前にのみオフセット座標として加算する
 
 		shake_position_.y = sinf(shake_angle_) * (1.0f - (shake_time_counter_ / old_shake_time_)) * shake_width_;
 
@@ -326,9 +326,9 @@ void Camera::Shake()
 
 }
 
-// ���́Ftime=�p������(s), width=�ő�h�ꕝ, angleSpeed=�g�`�̊p���x, stepTime=1�t���[���̐i�s����(s)
+// 入力：time=継続時間(s), width=最大揺れ幅, angleSpeed=波形の角速度, stepTime=1フレームの進行時間(s)
 
-// ����p�F�V�F�C�N����p�����[�^�̏�����
+// 副作用：シェイク制御パラメータの初期化
 
 void Camera::SetupShake(float time, float width, float angleSpeed, float stepTime)
 
@@ -346,9 +346,9 @@ void Camera::SetupShake(float time, float width, float angleSpeed, float stepTim
 
 }
 
-// ���́Fphase=���݂̃Q�[���i�s�i�K, ufoPos=UFO�̍��W, tornadoPos=�����̍��W
+// 入力：phase=現在のゲーム進行段階, ufoPos=UFOの座標, tornadoPos=竜巻の座標
 
-// ����p�F�w��t�F�[�Y�ɑΉ�����A���O����ԁALerp�ɂ����W�ω�
+// 副作用：指定フェーズに対応するアングル補間、Lerpによる座標変化
 
 void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 
@@ -372,9 +372,9 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 
 	phaseTimer++;
 
-	VECTOR targetPos;
+	VECTOR targetPos = VGet(0.0f, 0.0f, 0.0f);
 
-	VECTOR targetLookAt;
+	VECTOR targetLookAt = VGet(0.0f, 0.0f, 0.0f);
 
 	auto LerpVector = [](VECTOR start, VECTOR end, float t) -> VECTOR {
 
@@ -392,7 +392,7 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 
 	}
 
-	// ���o���̑���s�\�i�J�����Œ�j�ɂ��e���|������h�����߁A�ő�3�b�i180f�j�o�߂ŋ����I�ɒʏ���ՃJ�����֍����߂�
+	// 演出中の操作不能（カメラ固定）によるテンポ悪化を防ぐため、最大3秒（180f）経過で強制的に通常俯瞰カメラへ差し戻す
 
 	if (phaseTimer > 180)
 
@@ -410,7 +410,7 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 
 	{
 
-		// ���̑唭���t�F�[�Y�F�C�x���g�J�n����UFO�̋���r�[�������グ�錀�I�ȃA���O���ɂ��A���Ԍo�߂Ńv���C���[�̎����Ɋɂ₩�ɖ߂�
+		// 牛の大発生フェーズ：イベント開始時はUFOの巨大ビームを見上げる劇的なアングルにし、時間経過でプレイヤーの視線に緩やかに戻す
 
 		targetPos = VAdd(ufoPos, VGet(0.0f, 150.0f, -300.0f));
 
@@ -438,7 +438,7 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 
 	{
 
-		// �����P���t�F�[�Y�F�댯�𑁊��ɔF�������邽�߁A���@�iUFO�j�Ɨ����̑o����1�̉�ʂɎ��܂�悤�J�������΂ߏ��ֈ���
+		// 竜巻襲来フェーズ：危険を早期に認識させるため、自機（UFO）と竜巻の双方が1つの画面に収まるようカメラを斜め上空へ引く
 
 		targetPos = VAdd(ufoPos, VGet(0.0f, 500.0f, -200.0f));
 
@@ -448,7 +448,7 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 
 	}
 
-	// �u���ɃJ������؂�ւ��邱�Ƃɂ��}���ȉ�ʕω��i3D�����j��h�~���邽�߁A���݂̃J�����ʒu����ڕW�ʒu�֐��`��ԁiLerp�j�Ŋ��炩�Ɉړ�������
+	// 瞬時にカメラを切り替えることによる急激な画面変化（3D酔い）を防止するため、現在のカメラ位置から目標位置へ線形補間（Lerp）で滑らかに移動させる
 
 	float lerpSpeed = 0.1f * Master::GetDeltaTimeScaler();
 

@@ -117,9 +117,6 @@ void GameScene::Initialize()
  */
 void GameScene::Update()
 {
-	auto p = ServiceLocator::GetPlayer();
-	Player3D* player = dynamic_cast<Player3D*>(p);
-
 	Scene::Update();
 
 	cow_manager_->Update();

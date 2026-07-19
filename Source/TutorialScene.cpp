@@ -1,4 +1,4 @@
-#include "ServiceLocator.h"
+ï»¿#include "ServiceLocator.h"
 #include "TutorialScene.h"
 #include "CowManager.h"
 #include "Object_Stage.h"
@@ -37,7 +37,7 @@ TutorialScene::~TutorialScene()
 	if (texture5_) { delete texture5_; texture5_ = nullptr; }
 	if (texture6_) { delete texture6_; texture6_ = nullptr; }
 
-	// CowManager‚Ì¶¬‚Æ”jŠü‚ÍŒp³ƒNƒ‰ƒXScene‚É‚Äs‚¤‚½‚ß‚±‚±‚Å‚Ís‚í‚È‚¢
+	// CowManagerã®ç”Ÿæˆã¨ç ´æ£„ã¯ç¶™æ‰¿ã‚¯ãƒ©ã‚¹Sceneã«ã¦è¡Œã†ãŸã‚ã“ã“ã§ã¯è¡Œã‚ãªã„
 }
 
 void TutorialScene::Initialize()
@@ -46,32 +46,32 @@ void TutorialScene::Initialize()
 
 	fade_state_ = kSceneFadeIn;
 	SetFadeAlpha(255.0f);
-	font_handle_ = CreateFontToHandle("ƒƒCƒŠƒI", 40, 3, DX_FONTTYPE_ANTIALIASING_8X8);
+	font_handle_ = CreateFontToHandle("ãƒ¡ã‚¤ãƒªã‚ª", 40, 3, DX_FONTTYPE_ANTIALIASING_8X8);
 
 	CreateFences();
 	CreateWalls();
 
 	new Floor(
-		"Resource/2D/ƒQ[ƒ€‰æ–Ê/ƒQ[ƒ€”wŒi.png",
+		"Resource/2D/ã‚²ãƒ¼ãƒ ç”»é¢/ã‚²ãƒ¼ãƒ èƒŒæ™¯.png",
 		VGet(0, 0, 0),
 		VGet(-11500, 0, -11500),
 		VGet(11500, 0, 11500)
 	);
 
 	Master::sound_manager_->PlayBGM(SoundManager::kBgmTutorial);
-	auto Player = new Player3D("Resource/3D/ƒLƒƒƒ‰ƒNƒ^[/ƒvƒŒƒCƒ„[/ƒvƒŒƒCƒ„[UFO.mv1", VGet(0.0f, 1000.0f, 0.0f));
+	auto Player = new Player3D("Resource/3D/ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼/ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼/ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼UFO.mv1", VGet(0.0f, 1000.0f, 0.0f));
 	Player->SetScale(0.6f);
 
 	SetCamera(Master::camera_);
 
 	VECTOR pos = VGet(1200, 150, 0);
-	float GraphSize_x = 800, GraphSize_y = 300;
-	texture_  = new Texture("Resource/2D/ƒ`ƒ…[ƒgƒŠƒAƒ‹/ƒ`ƒ…[ƒgƒŠƒAƒ‹_ˆÚ“®.png", pos, GraphSize_x, GraphSize_y, true);
-	texture2_ = new Texture("Resource/2D/ƒ`ƒ…[ƒgƒŠƒAƒ‹/ƒ`ƒ…[ƒgƒŠƒAƒ‹_‹z‚¢‚İ.png", pos, GraphSize_x, GraphSize_y, true);
-	texture3_ = new Texture("Resource/2D/ƒ`ƒ…[ƒgƒŠƒAƒ‹/ƒ`ƒ…[ƒgƒŠƒAƒ‹_ƒRƒ“ƒ{.png", pos, GraphSize_x, GraphSize_y, true);
-	texture4_ = new Texture("Resource/2D/ƒ`ƒ…[ƒgƒŠƒAƒ‹/ƒ`ƒ…[ƒgƒŠƒAƒ‹_ƒtƒF[ƒY.png", pos, GraphSize_x, GraphSize_y, true);
-	texture5_ = new Texture("Resource/2D/ƒ`ƒ…[ƒgƒŠƒAƒ‹/ƒ`ƒ…[ƒgƒŠƒAƒ‹_ƒXƒLƒ‹.png", pos, GraphSize_x, GraphSize_y, true);
-	texture6_ = new Texture("Resource/2D/ƒ`ƒ…[ƒgƒŠƒAƒ‹/ƒ`ƒ…[ƒgƒŠƒAƒ‹_ƒtƒB[ƒo[.png", pos, GraphSize_x, GraphSize_y, true);
+	int GraphSize_x = 800, GraphSize_y = 300;
+	texture_  = new Texture("Resource/2D/ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«/ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«_ç§»å‹•.png", pos, GraphSize_x, GraphSize_y, true);
+	texture2_ = new Texture("Resource/2D/ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«/ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«_å¸ã„è¾¼ã¿.png", pos, GraphSize_x, GraphSize_y, true);
+	texture3_ = new Texture("Resource/2D/ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«/ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«_ã‚³ãƒ³ãƒœ.png", pos, GraphSize_x, GraphSize_y, true);
+	texture4_ = new Texture("Resource/2D/ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«/ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«_ãƒ•ã‚§ãƒ¼ã‚º.png", pos, GraphSize_x, GraphSize_y, true);
+	texture5_ = new Texture("Resource/2D/ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«/ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«_ã‚¹ã‚­ãƒ«.png", pos, GraphSize_x, GraphSize_y, true);
+	texture6_ = new Texture("Resource/2D/ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«/ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«_ãƒ•ã‚£ãƒ¼ãƒãƒ¼.png", pos, GraphSize_x, GraphSize_y, true);
 }
 
 void TutorialScene::CreateFences()
@@ -79,21 +79,21 @@ void TutorialScene::CreateFences()
 	for (int i = 0; i < 5; ++i) {
 		float z = 5050.0f;
 		float x = 500.0f + (i * 1000.0f);
-		new Object_Stage("Resource/3D/ƒXƒe[ƒW/ò/ò.mv1", VGet(x, -25.0f, z), 2.5f, VGet(0.0f, 0.0f, 0.0f));
-		new Object_Stage("Resource/3D/ƒXƒe[ƒW/ò/ò.mv1", VGet(-x, -25.0f, z), 2.5f, VGet(0.0f, 0.0f, 0.0f));
+		new Object_Stage("Resource/3D/ã‚¹ãƒ†ãƒ¼ã‚¸/æŸµ/æŸµ.mv1", VGet(x, -25.0f, z), 2.5f, VGet(0.0f, 0.0f, 0.0f));
+		new Object_Stage("Resource/3D/ã‚¹ãƒ†ãƒ¼ã‚¸/æŸµ/æŸµ.mv1", VGet(-x, -25.0f, z), 2.5f, VGet(0.0f, 0.0f, 0.0f));
 
-		new Object_Stage("Resource/3D/ƒXƒe[ƒW/ò/ò.mv1", VGet(x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F, 0.0f));
-		new Object_Stage("Resource/3D/ƒXƒe[ƒW/ò/ò.mv1", VGet(-x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F, 0.0f));
+		new Object_Stage("Resource/3D/ã‚¹ãƒ†ãƒ¼ã‚¸/æŸµ/æŸµ.mv1", VGet(x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F, 0.0f));
+		new Object_Stage("Resource/3D/ã‚¹ãƒ†ãƒ¼ã‚¸/æŸµ/æŸµ.mv1", VGet(-x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F, 0.0f));
 	}
 
 	for (int i = 0; i < 5; ++i) {
 		float x = 5050.0f;
 		float z = 500.0f + (i * 1000.0f);
-		new Object_Stage("Resource/3D/ƒXƒe[ƒW/ò/ò.mv1", VGet(x, -25.0f, z), 2.5f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
-		new Object_Stage("Resource/3D/ƒXƒe[ƒW/ò/ò.mv1", VGet(x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
+		new Object_Stage("Resource/3D/ã‚¹ãƒ†ãƒ¼ã‚¸/æŸµ/æŸµ.mv1", VGet(x, -25.0f, z), 2.5f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
+		new Object_Stage("Resource/3D/ã‚¹ãƒ†ãƒ¼ã‚¸/æŸµ/æŸµ.mv1", VGet(x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
 
-		new Object_Stage("Resource/3D/ƒXƒe[ƒW/ò/ò.mv1", VGet(-x, -25.0f, z), 2.5f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
-		new Object_Stage("Resource/3D/ƒXƒe[ƒW/ò/ò.mv1", VGet(-x, -25.0f, -z), 2.5f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
+		new Object_Stage("Resource/3D/ã‚¹ãƒ†ãƒ¼ã‚¸/æŸµ/æŸµ.mv1", VGet(-x, -25.0f, z), 2.5f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
+		new Object_Stage("Resource/3D/ã‚¹ãƒ†ãƒ¼ã‚¸/æŸµ/æŸµ.mv1", VGet(-x, -25.0f, -z), 2.5f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
 	}
 }
 
@@ -148,7 +148,7 @@ void TutorialScene::Update()
 		break;
 	}
 
-	// ƒ`ƒ…[ƒgƒŠƒAƒ‹I—¹AENTERƒL[“ü—Í‚Åƒ^ƒCƒgƒ‹‰æ–Ê‚Ö‘JˆÚ
+	// ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«çµ‚äº†ã€ENTERã‚­ãƒ¼å…¥åŠ›ã§ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ã¸é·ç§»
 	if(InputManager::CheckDownKey(KEY_INPUT_RETURN) && state_ != kStateEnd)
 	{
 		fade_state_ = kSceneFadeOut;
@@ -159,7 +159,7 @@ void TutorialScene::Update()
 
 }
 
-// ˆÚ“®‘€ìiWASDj‚ğŠm”F‚µAŸ‚ÌƒXƒeƒbƒv‚Öis‚·‚é
+// ç§»å‹•æ“ä½œï¼ˆWASDï¼‰ã‚’ç¢ºèªã—ã€æ¬¡ã®ã‚¹ãƒ†ãƒƒãƒ—ã¸é€²è¡Œã™ã‚‹
 void TutorialScene::UpdateStateMove()
 {
 	if (texture_) texture_->Draw();
@@ -174,7 +174,7 @@ void TutorialScene::UpdateStateMove()
 	}
 }
 
-// ƒ}ƒEƒX¶ƒNƒŠƒbƒN‚Åƒr[ƒ€‚ğÆË‚·‚é‚±‚Æ‚ğŠm”F
+// ãƒã‚¦ã‚¹å·¦ã‚¯ãƒªãƒƒã‚¯ã§ãƒ“ãƒ¼ãƒ ã‚’ç…§å°„ã™ã‚‹ã“ã¨ã‚’ç¢ºèª
 void TutorialScene::UpdateStateBeam()
 {
 	if (texture2_) texture2_->Draw();
@@ -184,13 +184,13 @@ void TutorialScene::UpdateStateBeam()
 		Master::sound_manager_->PlaySE(SoundManager::kSeTutorialChange);
 		state_ = kStateComboScore;
 
-		// ƒRƒ“ƒ{‰Ò‚¬—p‚Æ‚µ‚Ä‹‚ÌŒQ‚ê‚ğƒXƒ|[ƒ“
+		// ã‚³ãƒ³ãƒœç¨¼ãç”¨ã¨ã—ã¦ç‰›ã®ç¾¤ã‚Œã‚’ã‚¹ãƒãƒ¼ãƒ³
 		cow_manager_->SpawnCow(GameConstants::kCowDefault.model_path, VGet(150.0f, 0.0f, 150.0f), 50.0f, CowMove::kCowT, 2);
 		cow_manager_->SpawnCow(GameConstants::kCowDefault.model_path, VGet(-150.0f, 0.0f, 150.0f), 50.0f, CowMove::kCowT, 2);
 	}
 }
 
-// ƒvƒŒƒCƒ„[‚ÌƒRƒ“ƒ{‚ª2ˆÈã‚É‚È‚Á‚½‚±‚Æ‚ğŠm”F‚µ‚ÄŸ‚Éis
+// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚³ãƒ³ãƒœãŒ2ä»¥ä¸Šã«ãªã£ãŸã“ã¨ã‚’ç¢ºèªã—ã¦æ¬¡ã«é€²è¡Œ
 void TutorialScene::UpdateStateComboScore()
 {
 	if (texture3_) texture3_->Draw();
@@ -205,7 +205,7 @@ void TutorialScene::UpdateStateComboScore()
 	}
 }
 
-// ƒtƒF[ƒYˆÚs‚Ì‚½‚ßA‘Ò‹@i3•bjŠÔ‚ğİ‚¯‚Äis‚·‚é
+// ãƒ•ã‚§ãƒ¼ã‚ºç§»è¡Œã®ãŸã‚ã€å¾…æ©Ÿï¼ˆ3ç§’ï¼‰æ™‚é–“ã‚’è¨­ã‘ã¦é€²è¡Œã™ã‚‹
 void TutorialScene::UpdateStatePhase()
 {
 	if (texture4_) texture4_->Draw();
@@ -218,7 +218,7 @@ void TutorialScene::UpdateStatePhase()
 	}
 }
 
-// ƒXƒLƒ‹‚ğg—p‚·‚é‚±‚Æ‚ğŠm”F‚µAƒtƒB[ƒo[‚Ì“±ü‚ÖˆÚs‚·‚é
+// ã‚¹ã‚­ãƒ«ã‚’ä½¿ç”¨ã™ã‚‹ã“ã¨ã‚’ç¢ºèªã—ã€ãƒ•ã‚£ãƒ¼ãƒãƒ¼ã®å°ç·šã¸ç§»è¡Œã™ã‚‹
 void TutorialScene::UpdateStateSkill()
 {
 	Player3D* player = ServiceLocator::GetPlayer();
@@ -237,13 +237,13 @@ void TutorialScene::UpdateStateSkill()
 		state_ = kStateFever;
 		Master::sound_manager_->PlaySE(SoundManager::kSeTutorialChange);
 
-		// ƒtƒB[ƒo[ƒ‚[ƒh—p‚ÅƒS[ƒ‹ƒh‹‚ğ¢Š«
-		auto g = new GoldCow("Resource/3D/ƒLƒƒƒ‰ƒNƒ^[/‹/‹à‚Ì‹.mv1", VGet(1000, 0, 1000), GoldCow::kNoFever);
+		// ãƒ•ã‚£ãƒ¼ãƒãƒ¼ãƒ¢ãƒ¼ãƒ‰ç”¨ã§ã‚´ãƒ¼ãƒ«ãƒ‰ç‰›ã‚’å¬å–š
+		auto g = new GoldCow("Resource/3D/ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼/ç‰›/é‡‘ã®ç‰›.mv1", VGet(1000, 0, 1000), GoldCow::kNoFever);
 		g->SetScale(100);
 	}
 }
 
-// ƒtƒB[ƒo[ƒ‚[ƒh‚ÌŠJn‚ÆI—¹‚ğŠm”F‚·‚é
+// ãƒ•ã‚£ãƒ¼ãƒãƒ¼ãƒ¢ãƒ¼ãƒ‰ã®é–‹å§‹ã¨çµ‚äº†ã‚’ç¢ºèªã™ã‚‹
 void TutorialScene::UpdateStateFever()
 {
 	if (fever_state_ == kFever1)
@@ -262,10 +262,10 @@ void TutorialScene::UpdateStateFever()
 	}
 }
 
-// ƒ`ƒ…[ƒgƒŠƒAƒ‹I—¹ƒeƒLƒXƒg‚ğ•\¦‚µ‚Ä‘Ò‹@ó‘Ô‚É‚·‚é
+// ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«çµ‚äº†ãƒ†ã‚­ã‚¹ãƒˆã‚’è¡¨ç¤ºã—ã¦å¾…æ©ŸçŠ¶æ…‹ã«ã™ã‚‹
 void TutorialScene::UpdateStateEnd()
 {
-	DrawTutorialText("Enter‚Åƒ`ƒ…[ƒgƒŠƒAƒ‹‚ğI—¹‚µ‚Ü‚·");
+	DrawTutorialText("Enterã§ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«ã‚’çµ‚äº†ã—ã¾ã™");
 
 	if(CheckHitKey(KEY_INPUT_RETURN))
 	{

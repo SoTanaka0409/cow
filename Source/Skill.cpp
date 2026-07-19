@@ -249,6 +249,7 @@ void Skill::AddSkill()
 		flash_alpha_ = 255;
 		Master::sound_manager_->PlaySE(SoundManager::kSeSkillStatus);
 		SetMouseDispFlag(false);
+		add_skill_flag_ = false;
 	}
 	else if (ProcessSkill(texture2_, 2))
 	{
@@ -263,6 +264,7 @@ void Skill::AddSkill()
 		flash_alpha_ = 255;
 		Master::sound_manager_->PlaySE(SoundManager::kSeSkillFood);
 		SetMouseDispFlag(false);
+		add_skill_flag_ = false;
 	}
 	else if (ProcessSkill(texture3_, 3))
 	{
@@ -274,6 +276,7 @@ void Skill::AddSkill()
 		flash_alpha_ = 255;
 		Master::sound_manager_->PlaySE(SoundManager::kSeSkillStatus);
 		SetMouseDispFlag(false);
+		add_skill_flag_ = false;
 	}
 }
 
