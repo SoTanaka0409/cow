@@ -38,6 +38,8 @@ public:
 	 */
 	void Draw();
 
+	void PlayCowDeathEffect(VECTOR pos);
+
 private:
 	VECTOR play_pos_;
 
@@ -48,4 +50,5 @@ private:
 
 	int effect_resource_handle_;
 	int playing_effect_handle_;
+	int cow_death_effect_handle_;
 };

@@ -36,8 +36,8 @@ void SphereCollider::Draw()
 		position_,
 		radius_,
 		8,
-		GetColor(255, 255, 255),
-		GetColor(255, 255, 255),
+		GetColor(255, 0, 0),
+		GetColor(255, 0, 0),
 		false
 	);
 }

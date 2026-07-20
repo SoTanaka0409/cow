@@ -34,6 +34,15 @@ CapsuleCollider::~CapsuleCollider()
  */
 void CapsuleCollider::Draw()
 {
+	DrawCapsule3D(
+		position_,
+		position2_,
+		radius_,
+		8,
+		GetColor(255, 0, 0),
+		GetColor(255, 0, 0),
+		false
+	);
 }
 
 /*

@@ -120,7 +120,7 @@ const char* Score::GetName() const
 void Score::Save()
 {
 	FILE* fp = nullptr;
-	if (fopen_s(&fp, "score_.txt", "w") == 0)
+	if (fopen_s(&fp, "Data/score_.txt", "w") == 0)
 	{
 		fprintf(fp, "%d\n", result_score_);
 		for (int i = 0; i < 3; i++)
@@ -139,7 +139,7 @@ void Score::Save()
 void Score::Load()
 {
 	FILE* fp = nullptr;
-	if (fopen_s(&fp, "score_.txt", "r") == 0)
+	if (fopen_s(&fp, "Data/score_.txt", "r") == 0)
 	{
 		if (fscanf_s(fp, "%d", &score_) != 1) score_ = 0;
 		for (int i = 0; i < 3; i++)
@@ -256,7 +256,7 @@ void Score::DrawRanking(int x, int y)
 void Score::SaveRanking()
 {
 	FILE* fp = nullptr;
-	if (fopen_s(&fp, "rank.txt", "w") == 0)
+	if (fopen_s(&fp, "Data/rank.txt", "w") == 0)
 	{
 		for (int i = 0; i < 3; i++)
 		{
@@ -274,7 +274,7 @@ void Score::SaveRanking()
 void Score::LoadRanking()
 {
 	FILE* fp = nullptr;
-	if (fopen_s(&fp, "rank.txt", "r") == 0)
+	if (fopen_s(&fp, "Data/rank.txt", "r") == 0)
 	{
 		for (int i = 0; i < 3; i++)
 		{

@@ -15,6 +15,7 @@ EffectManager::EffectManager()
 
 EffectManager::~EffectManager()
 {
+	DeleteEffekseerEffect(cow_death_effect_handle_);
 }
 
 /*
@@ -42,6 +43,7 @@ void EffectManager::Initalize()
 	// 3Dエフェクト描画時に前後関係が正しく反映されるようZバッファを有効にする
 	SetUseZBuffer3D(TRUE);
 	SetWriteZBuffer3D(TRUE);
+	cow_death_effect_handle_ = LoadEffekseerEffect("Resource/3D/エフェクト/牛吸い込み.efk");
 }
 
 /*
@@ -64,4 +66,11 @@ void EffectManager::Update()
 void EffectManager::Draw()
 {
 	DrawEffekseer3D();
+}
+
+void EffectManager::PlayCowDeathEffect(VECTOR pos)
+{
+	int playing_handle = PlayEffekseer3DEffect(cow_death_effect_handle_);
+	SetPosPlayingEffekseer3DEffect(playing_handle, pos.x, pos.y, pos.z);
+	SetScalePlayingEffekseer3DEffect(playing_handle, 1.0f, 1.0f, 1.0f);
 }

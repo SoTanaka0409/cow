@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source">
@@ -51,372 +51,372 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Animal.cpp">
+    <ClCompile Include="Source\Animal\Animal.cpp">
       <Filter>Source\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AnimalManager.cpp">
+    <ClCompile Include="Source\Animal\AnimalManager.cpp">
       <Filter>Source\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AnimalMove.cpp">
+    <ClCompile Include="Source\Animal\AnimalMove.cpp">
       <Filter>Source\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Bait.cpp">
+    <ClCompile Include="Source\Stage\Bait.cpp">
       <Filter>Source\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Camera.cpp">
+    <ClCompile Include="Source\Camera\Camera.cpp">
       <Filter>Source\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CapsuleCollider.cpp">
+    <ClCompile Include="Source\Collision\CapsuleCollider.cpp">
       <Filter>Source\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Collider.cpp">
+    <ClCompile Include="Source\Collision\Collider.cpp">
       <Filter>Source\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ColliderManager.cpp">
+    <ClCompile Include="Source\Collision\ColliderManager.cpp">
       <Filter>Source\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Combo.cpp">
+    <ClCompile Include="Source\System\Combo.cpp">
       <Filter>Source\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Cow.cpp">
+    <ClCompile Include="Source\Animal\Cow.cpp">
       <Filter>Source\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CowManager.cpp">
+    <ClCompile Include="Source\Animal\CowManager.cpp">
       <Filter>Source\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CowMove.cpp">
+    <ClCompile Include="Source\Animal\CowMove.cpp">
       <Filter>Source\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CharacterMove.cpp">
+    <ClCompile Include="Source\Actor\CharacterMove.cpp">
       <Filter>Source\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Cow_2.cpp">
+    <ClCompile Include="Source\Animal\Cow_2.cpp">
       <Filter>Source\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GoldCow.cpp">
+    <ClCompile Include="Source\Animal\GoldCow.cpp">
       <Filter>Source\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Source\DebugCamera.cpp">
+    <ClCompile Include="Source\Camera\DebugCamera.cpp">
       <Filter>Source\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Cow_Tutorial.cpp">
+    <ClCompile Include="Source\Animal\Cow_Tutorial.cpp">
       <Filter>Source\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Source\EffectManager.cpp">
+    <ClCompile Include="Source\Graphics\EffectManager.cpp">
       <Filter>Source\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\EffekseerEffect.cpp">
+    <ClCompile Include="Source\Graphics\EffekseerEffect.cpp">
       <Filter>Source\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Fever.cpp">
+    <ClCompile Include="Source\System\Fever.cpp">
       <Filter>Source\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Floor.cpp">
+    <ClCompile Include="Source\Stage\Floor.cpp">
       <Filter>Source\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameManager.cpp">
+    <ClCompile Include="Source\System\GameManager.cpp">
       <Filter>Source\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameTimer.cpp">
+    <ClCompile Include="Source\System\GameTimer.cpp">
       <Filter>Source\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\LoadingScene.cpp">
+    <ClCompile Include="Source\Scene\LoadingScene.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\InputManager.cpp">
+    <ClCompile Include="Source\UI_Input_Sound\InputManager.cpp">
       <Filter>Source\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Level.cpp">
+    <ClCompile Include="Source\System\Level.cpp">
       <Filter>Source\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ServiceLocator.cpp">
+    <ClCompile Include="Source\System\ServiceLocator.cpp">
       <Filter>Source\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CharacterState.cpp">
+    <ClCompile Include="Source\Actor\CharacterState.cpp">
       <Filter>Source\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Main.cpp">
+    <ClCompile Include="Source\System\Main.cpp">
       <Filter>Source\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Model.cpp">
+    <ClCompile Include="Source\Graphics\Model.cpp">
       <Filter>Source\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ModelAnimation.cpp">
+    <ClCompile Include="Source\Graphics\ModelAnimation.cpp">
       <Filter>Source\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Object2D.cpp">
+    <ClCompile Include="Source\Object\Object2D.cpp">
       <Filter>Source\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Object3D.cpp">
+    <ClCompile Include="Source\Object\Object3D.cpp">
       <Filter>Source\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ObjectManager.cpp">
+    <ClCompile Include="Source\Object\ObjectManager.cpp">
       <Filter>Source\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Object_Stage.cpp">
+    <ClCompile Include="Source\Stage\Object_Stage.cpp">
       <Filter>Source\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Mountain.cpp">
+    <ClCompile Include="Source\Stage\Mountain.cpp">
       <Filter>Source\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Player3D.cpp">
+    <ClCompile Include="Source\Actor\Player3D.cpp">
       <Filter>Source\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ResourceManager.cpp">
+    <ClCompile Include="Source\UI_Input_Sound\ResourceManager.cpp">
       <Filter>Source\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ResultScene.cpp">
+    <ClCompile Include="Source\Scene\ResultScene.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Rule.cpp">
+    <ClCompile Include="Source\System\Rule.cpp">
       <Filter>Source\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene.cpp">
+    <ClCompile Include="Source\Scene\Scene.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameScene.cpp">
+    <ClCompile Include="Source\Scene\GameScene.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneManager.cpp">
+    <ClCompile Include="Source\Scene\SceneManager.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Score.cpp">
+    <ClCompile Include="Source\System\Score.cpp">
       <Filter>Source\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SelectionManager.cpp">
+    <ClCompile Include="Source\UI_Input_Sound\SelectionManager.cpp">
       <Filter>Source\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Skill.cpp">
+    <ClCompile Include="Source\UI_Input_Sound\Skill.cpp">
       <Filter>Source\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SkyBox.cpp">
+    <ClCompile Include="Source\Stage\SkyBox.cpp">
       <Filter>Source\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SoundManager.cpp">
+    <ClCompile Include="Source\UI_Input_Sound\SoundManager.cpp">
       <Filter>Source\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SphereCollider.cpp">
+    <ClCompile Include="Source\Collision\SphereCollider.cpp">
       <Filter>Source\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Stage.cpp">
+    <ClCompile Include="Source\Stage\Stage.cpp">
       <Filter>Source\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Source\test_constants.cpp">
+    <ClCompile Include="Source\System\test_constants.cpp">
       <Filter>Source\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Tornado.cpp">
+    <ClCompile Include="Source\Stage\Tornado.cpp">
       <Filter>Source\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Utility.cpp">
+    <ClCompile Include="Source\System\Utility.cpp">
       <Filter>Source\System</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Texture.cpp">
+    <ClCompile Include="Source\Graphics\Texture.cpp">
       <Filter>Source\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Thunder.cpp">
+    <ClCompile Include="Source\Stage\Thunder.cpp">
       <Filter>Source\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TitleScene.cpp">
+    <ClCompile Include="Source\Scene\TitleScene.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\UIButton.cpp">
+    <ClCompile Include="Source\UI_Input_Sound\UIButton.cpp">
       <Filter>Source\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TutorialScene.cpp">
+    <ClCompile Include="Source\Scene\TutorialScene.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\StageLoader.cpp">
+    <ClCompile Include="Source\Stage\StageLoader.cpp">
       <Filter>Source\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Wall.cpp">
+    <ClCompile Include="Source\Stage\Wall.cpp">
       <Filter>Source\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Animal.h">
+    <ClInclude Include="Source\Animal\Animal.h">
       <Filter>h\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AnimalManager.h">
+    <ClInclude Include="Source\Animal\AnimalManager.h">
       <Filter>h\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AnimalMove.h">
+    <ClInclude Include="Source\Animal\AnimalMove.h">
       <Filter>h\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Bait.h">
+    <ClInclude Include="Source\Stage\Bait.h">
       <Filter>h\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Camera.h">
+    <ClInclude Include="Source\Camera\Camera.h">
       <Filter>h\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CapsuleCollider.h">
+    <ClInclude Include="Source\Collision\CapsuleCollider.h">
       <Filter>h\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CharacterState.h">
+    <ClInclude Include="Source\Actor\CharacterState.h">
       <Filter>h\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Collider.h">
+    <ClInclude Include="Source\Collision\Collider.h">
       <Filter>h\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ColliderManager.h">
+    <ClInclude Include="Source\Collision\ColliderManager.h">
       <Filter>h\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Combo.h">
+    <ClInclude Include="Source\System\Combo.h">
       <Filter>h\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Cow.h">
+    <ClInclude Include="Source\Animal\Cow.h">
       <Filter>h\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CowManager.h">
+    <ClInclude Include="Source\Animal\CowManager.h">
       <Filter>h\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CowMove.h">
+    <ClInclude Include="Source\Animal\CowMove.h">
       <Filter>h\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CharacterMove.h">
+    <ClInclude Include="Source\Actor\CharacterMove.h">
       <Filter>h\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Cow_2.h">
+    <ClInclude Include="Source\Animal\Cow_2.h">
       <Filter>h\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CreatureManager.h">
+    <ClInclude Include="Source\Animal\CreatureManager.h">
       <Filter>h\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameConstants.h">
+    <ClInclude Include="Source\System\GameConstants.h">
       <Filter>h\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GoldCow.h">
+    <ClInclude Include="Source\Animal\GoldCow.h">
       <Filter>h\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Source\DebugCamera.h">
+    <ClInclude Include="Source\Camera\DebugCamera.h">
       <Filter>h\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Cow_Tutorial.h">
+    <ClInclude Include="Source\Animal\Cow_Tutorial.h">
       <Filter>h\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Source\EffectManager.h">
+    <ClInclude Include="Source\Graphics\EffectManager.h">
       <Filter>h\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\EffekseerEffect.h">
+    <ClInclude Include="Source\Graphics\EffekseerEffect.h">
       <Filter>h\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Fever.h">
+    <ClInclude Include="Source\System\Fever.h">
       <Filter>h\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Floor.h">
+    <ClInclude Include="Source\Stage\Floor.h">
       <Filter>h\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameManager.h">
+    <ClInclude Include="Source\System\GameManager.h">
       <Filter>h\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameTimer.h">
+    <ClInclude Include="Source\System\GameTimer.h">
       <Filter>h\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\InputManager.h">
+    <ClInclude Include="Source\UI_Input_Sound\InputManager.h">
       <Filter>h\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\LoadingScene.h">
+    <ClInclude Include="Source\Scene\LoadingScene.h">
       <Filter>h\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Level.h">
+    <ClInclude Include="Source\System\Level.h">
       <Filter>h\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Master.h">
+    <ClInclude Include="Source\System\Master.h">
       <Filter>h\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Model.h">
+    <ClInclude Include="Source\Graphics\Model.h">
       <Filter>h\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ModelAnimation.h">
+    <ClInclude Include="Source\Graphics\ModelAnimation.h">
       <Filter>h\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ModelUtility.h">
+    <ClInclude Include="Source\Graphics\ModelUtility.h">
       <Filter>h\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Object2D.h">
+    <ClInclude Include="Source\Object\Object2D.h">
       <Filter>h\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Object3D.h">
+    <ClInclude Include="Source\Object\Object3D.h">
       <Filter>h\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ObjectManager.h">
+    <ClInclude Include="Source\Object\ObjectManager.h">
       <Filter>h\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Object_Stage.h">
+    <ClInclude Include="Source\Stage\Object_Stage.h">
       <Filter>h\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Mountain.h">
+    <ClInclude Include="Source\Stage\Mountain.h">
       <Filter>h\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Player3D.h">
+    <ClInclude Include="Source\Actor\Player3D.h">
       <Filter>h\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ResourceManager.h">
+    <ClInclude Include="Source\UI_Input_Sound\ResourceManager.h">
       <Filter>h\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ResultScene.h">
+    <ClInclude Include="Source\Scene\ResultScene.h">
       <Filter>h\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Rule.h">
+    <ClInclude Include="Source\System\Rule.h">
       <Filter>h\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene.h">
+    <ClInclude Include="Source\Scene\Scene.h">
       <Filter>h\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameScene.h">
+    <ClInclude Include="Source\Scene\GameScene.h">
       <Filter>h\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneManager.h">
+    <ClInclude Include="Source\Scene\SceneManager.h">
       <Filter>h\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Score.h">
+    <ClInclude Include="Source\System\Score.h">
       <Filter>h\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SelectionManager.h">
+    <ClInclude Include="Source\UI_Input_Sound\SelectionManager.h">
       <Filter>h\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ServiceLocator.h">
+    <ClInclude Include="Source\System\ServiceLocator.h">
       <Filter>h\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Skill.h">
+    <ClInclude Include="Source\UI_Input_Sound\Skill.h">
       <Filter>h\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SkyBox.h">
+    <ClInclude Include="Source\Stage\SkyBox.h">
       <Filter>h\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SoundManager.h">
+    <ClInclude Include="Source\UI_Input_Sound\SoundManager.h">
       <Filter>h\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SphereCollider.h">
+    <ClInclude Include="Source\Collision\SphereCollider.h">
       <Filter>h\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Stage.h">
+    <ClInclude Include="Source\Stage\Stage.h">
       <Filter>h\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Tornado.h">
+    <ClInclude Include="Source\Stage\Tornado.h">
       <Filter>h\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Texture.h">
+    <ClInclude Include="Source\Graphics\Texture.h">
       <Filter>h\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Thunder.h">
+    <ClInclude Include="Source\Stage\Thunder.h">
       <Filter>h\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TitleScene.h">
+    <ClInclude Include="Source\Scene\TitleScene.h">
       <Filter>h\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Source\UIButton.h">
+    <ClInclude Include="Source\UI_Input_Sound\UIButton.h">
       <Filter>h\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TutorialScene.h">
+    <ClInclude Include="Source\Scene\TutorialScene.h">
       <Filter>h\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Utility.h">
+    <ClInclude Include="Source\System\Utility.h">
       <Filter>h\System</Filter>
     </ClInclude>
-    <ClInclude Include="Source\StageLoader.h">
+    <ClInclude Include="Source\Stage\StageLoader.h">
       <Filter>h\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Wall.h">
+    <ClInclude Include="Source\Stage\Wall.h">
       <Filter>h\Object</Filter>
     </ClInclude>
   </ItemGroup>

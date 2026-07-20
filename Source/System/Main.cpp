@@ -1,4 +1,4 @@
-ï»¿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include "DxLib.h"
 #include"Master.h"
 #include"Camera.h"
@@ -31,24 +31,25 @@ int Master::caught_cow_count_ = 0;
 bool Master::tutorial_vacum_flag_ = false;
 bool Master::FeverFlag = false;
 float Master::delta_time_ = 0.01666f;
-bool Master::is_shadow_enabled_ = false; // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯å½±OFF
-bool Master::is_debug_mode_ = false;    // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯ãƒ‡ãƒãƒƒã‚°ãƒ¢ãƒ¼ãƒ‰OFF
+bool Master::is_shadow_enabled_ = false; // ƒfƒtƒHƒ‹ƒg‚Í‰eOFF
+bool Master::is_debug_mode_ = false;    // ƒfƒtƒHƒ‹ƒg‚ÍƒfƒoƒbƒOƒ‚[ƒhOFF
 
-// ä»•æ§˜åˆ¶ç´„ï¼šãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚„ç‰›ãŒã‚¹ãƒ†ãƒ¼ã‚¸å¤–ã¸é£›ã³å‡ºã•ãªã„ã‚ˆã†ã€ä¾µå…¥åˆ¶é™ã‚’ã‹ã‘ã‚‹ãŸã‚ã®å¢ƒç•Œå€¤
+// d—l§–ñFƒvƒŒƒCƒ„[‚â‹‚ªƒXƒe[ƒWŠO‚Ö”ò‚Ño‚³‚È‚¢‚æ‚¤AN“ü§ŒÀ‚ğ‚©‚¯‚é‚½‚ß‚Ì‹«ŠE’l
 VECTOR Utility::StageSize = VGet(6000, 0, 6000);
 
-// å…¥åŠ›ï¼šWindowsã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³èµ·å‹•ç”¨ã®åŸºæœ¬ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æƒ…å ±
-// å‡ºåŠ›ï¼šæ­£å¸¸çµ‚äº†æ™‚ã¯0ã€ã‚¨ãƒ©ãƒ¼æ™‚ã¯-1
-// å‰¯ä½œç”¨ï¼šã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ç”Ÿæˆã€å„ç¨®ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼åˆæœŸåŒ–ã€ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—èµ·å‹•ã€ãƒ¡ãƒ¢ãƒªè§£æ”¾
+// “ü—ÍFWindowsƒAƒvƒŠƒP[ƒVƒ‡ƒ“‹N“®—p‚ÌŠî–{ƒCƒ“ƒXƒ^ƒ“ƒXî•ñ
+// o—ÍF³íI—¹‚Í0AƒGƒ‰[‚Í-1
+// •›ì—pFƒEƒBƒ“ƒhƒE¶¬AŠeíƒ}ƒl[ƒWƒƒ[‰Šú‰»AƒƒCƒ“ƒ‹[ƒv‹N“®Aƒƒ‚ƒŠ‰ğ•ú
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	// è¤‡æ•°ç«¯æœ«ã§ã®ãƒ†ã‚¹ãƒˆã‚„ãƒ‡ãƒãƒƒã‚°åŠ¹ç‡åŒ–ã®ãŸã‚ã€ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã§ã¯ãªãã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ¢ãƒ¼ãƒ‰ã§èµ·å‹•ã™ã‚‹
-	ChangeWindowMode(true);
+	// •¡”’[––‚Å‚ÌƒeƒXƒg‚âƒfƒoƒbƒOŒø—¦‰»‚Ì‚½‚ßAƒtƒ‹ƒXƒNƒŠ[ƒ“‚Å‚Í‚È‚­ƒEƒBƒ“ƒhƒEƒ‚[ƒh‚Å‹N“®‚·‚é
+	ChangeWindowMode(TRUE);
+	SetOutApplicationLogValidFlag(FALSE); // Disable Log.txt generation
 
 	SetGraphMode(Utility::kScreenWidth, Utility::kScreenHeight, 32, 60);
 	SetWindowSize(Utility::kScreenWidth, Utility::kScreenHeight);
 
-	// å‰å›ã®ä¸æ­£çµ‚äº†æ™‚ã«å†…éƒ¨ãƒŸãƒ¥ãƒ¼ãƒ†ãƒƒã‚¯ã‚¹ãŒæ®‹ã‚Šã€ãƒ—ãƒ­ã‚»ã‚¹ãŒå³è½ã¡ã™ã‚‹ãƒã‚°ã‚’å›é¿ã™ã‚‹è¨­å®š
+	// ‘O‰ñ‚Ì•s³I—¹‚É“à•”ƒ~ƒ…[ƒeƒbƒNƒX‚ªc‚èAƒvƒƒZƒX‚ª‘¦—‚¿‚·‚éƒoƒO‚ğ‰ñ”ğ‚·‚éİ’è
 	SetDoubleStartValidFlag(TRUE);
 
 	if (DxLib_Init() == -1)
@@ -56,7 +57,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		return -1;
 	}
 
-	// ä»•æ§˜åˆ¶ç´„ï¼šå†…éƒ¨ã§ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿ã‚’è¡Œã†ãŸã‚ã€DxLibã®åˆæœŸåŒ–ãŒå®Œäº†ã—ãŸå¾Œã«ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–ã™ã‚‹
+	// d—l§–ñF“à•”‚ÅƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ‚ğs‚¤‚½‚ßADxLib‚Ì‰Šú‰»‚ªŠ®—¹‚µ‚½Œã‚ÉƒCƒ“ƒXƒ^ƒ“ƒX‰»‚·‚é
 	Master::score_manager_ = new Score();
 
 	SRand(GetNowCount());
@@ -68,7 +69,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetUseZBufferFlag(true);
 	SetWriteZBufferFlag(true);
 
-	// ãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹ç†ç”±ï¼šã‚²ãƒ¼ãƒ ä¸­ã®ãƒ­ãƒ¼ãƒ‰é…å»¶ã«ã‚ˆã‚‹ã‚¹ãƒ‘ã‚¤ã‚¯ã‚’é˜²ããŸã‚ã€åˆæœŸåŒ–æ™‚ã«å…¨SEã‚’ãƒ—ãƒªãƒ­ãƒ¼ãƒ‰ã™ã‚‹
+	// ƒpƒtƒH[ƒ}ƒ“ƒX——RFƒQ[ƒ€’†‚Ìƒ[ƒh’x‰„‚É‚æ‚éƒXƒpƒCƒN‚ğ–h‚®‚½‚ßA‰Šú‰»‚É‘SSE‚ğƒvƒŠƒ[ƒh‚·‚é
 	Master::sound_manager_->Initialize();
 
 	Master::scene_manager_->Initialize();
@@ -85,13 +86,21 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ClearDrawScreen();
 		int time = GetNowCount();
 
-		// ãƒã‚°å›é¿ï¼šã‚¢ãƒ—ãƒªã®æœ€å°åŒ–ã‚„ä¸€æ™‚çš„ãªãƒ•ãƒªãƒ¼ã‚ºã§ãƒ‡ãƒ«ã‚¿ã‚¿ã‚¤ãƒ ãŒç•°å¸¸å€¤ã«ãªã‚Šã€æŒ™å‹•ãŒç ´ç¶»ã™ã‚‹ã®ã‚’é˜²ãä¸Šé™è¨­å®š
+		// ƒoƒO‰ñ”ğFƒAƒvƒŠ‚ÌÅ¬‰»‚âˆê“I‚ÈƒtƒŠ[ƒY‚Åƒfƒ‹ƒ^ƒ^ƒCƒ€‚ªˆÙí’l‚É‚È‚èA‹““®‚ª”j’]‚·‚é‚Ì‚ğ–h‚®ãŒÀİ’è
 		Master::delta_time_ = (time - previousTime) / 1000.0f;
 		if (Master::delta_time_ > 0.1f) Master::delta_time_ = 0.1f;
 		previousTime = time;
 
-		// é–‹ç™ºåŠ¹ç‡åŒ–ã®ãŸã‚ã€F1ã‚­ãƒ¼ã®ãƒˆã‚°ãƒ«å…¥åŠ›ã§ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼è¦–ç‚¹ã¨è‡ªç”±ã‚«ãƒ¡ãƒ©è¦–ç‚¹ã‚’åˆ‡ã‚Šæ›¿ãˆå¯èƒ½ã«ã™ã‚‹
+		// ŠJ”­Œø—¦‰»‚Ì‚½‚ßAF1ƒL[‚ÌƒgƒOƒ‹“ü—Í‚ÅƒvƒŒƒCƒ„[‹“_‚Æ©—RƒJƒƒ‰‹“_‚ğØ‚è‘Ö‚¦‰Â”\‚É‚·‚é
 		if (InputManager::CheckDownKey(KEY_INPUT_F1))
+		{
+			Master::is_debug_mode_ = !Master::is_debug_mode_;
+			if (!Master::is_debug_mode_) {
+				Master::is_debug_camera_ = false;
+			}
+		}
+
+		if (Master::is_debug_mode_ && InputManager::CheckDownKey(KEY_INPUT_F2))
 		{
 			Master::is_debug_camera_ = !Master::is_debug_camera_;
 			if (Master::is_debug_camera_) {
@@ -116,12 +125,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		ScreenFlip();
 
-		// ãƒ‘ãƒ•ã‚©ãƒ¼ãƒãƒ³ã‚¹ç†ç”±ï¼šCPUã®ãƒã‚¤ãƒ‘ãƒ¼ãƒˆãƒ¬ãƒƒãƒ‡ã‚£ãƒ³ã‚°ã«ã‚ˆã‚‹éè² è·ã‚’é˜²ãã€60FPSï¼ˆç´„16.6msï¼‰ã‚’ç¶­æŒã™ã‚‹å¾…æ©Ÿå‡¦ç†
+		// ƒpƒtƒH[ƒ}ƒ“ƒX——RFCPU‚ÌƒnƒCƒp[ƒgƒŒƒbƒfƒBƒ“ƒO‚É‚æ‚é‰ß•‰‰×‚ğ–h‚¬A60FPSi–ñ16.6msj‚ğˆÛ‚·‚é‘Ò‹@ˆ—
 		while (GetNowCount() - time < 17)
 		{
 		}
 
-		// ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯å›é¿ï¼šå‰Šé™¤ãƒ•ãƒ©ã‚°ãŒç«‹ã£ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨å½“ãŸã‚Šåˆ¤å®šã‚’ã€ãƒ•ãƒ¬ãƒ¼ãƒ çµ‚äº†æ™‚ã«å®‰å…¨ã«ä¸€æ‹¬è§£æ”¾ã™ã‚‹
+		// ƒƒ‚ƒŠƒŠ[ƒN‰ñ”ğFíœƒtƒ‰ƒO‚ª—§‚Á‚½ƒIƒuƒWƒFƒNƒg‚Æ“–‚½‚è”»’è‚ğAƒtƒŒ[ƒ€I—¹‚ÉˆÀ‘S‚ÉˆêŠ‡‰ğ•ú‚·‚é
 		if (auto scene = ServiceLocator::GetCurrentScene())
 		{
 			scene->GetCollisionManager()->DeleteAllColliderIfNeeded();
@@ -131,7 +140,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			objMgr->DeleteAll3DIfNeeded();
 		}
 
-		// ãƒã‚°å›é¿ï¼šUpdateã‚„Drawã®å‡¦ç†é€”ä¸­ã§è§£æ”¾ãŒèµ°ã‚‹ã®ã‚’é˜²ããŸã‚ã€å¿…ãšãƒ•ãƒ¬ãƒ¼ãƒ ã®æœ€å¾Œã§ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆã‚’è¡Œã†
+		// ƒoƒO‰ñ”ğFUpdate‚âDraw‚Ìˆ—“r’†‚Å‰ğ•ú‚ª‘–‚é‚Ì‚ğ–h‚®‚½‚ßA•K‚¸ƒtƒŒ[ƒ€‚ÌÅŒã‚ÅƒV[ƒ“Ø‚è‘Ö‚¦‚ğs‚¤
 		Master::scene_manager_->ChangeSceneIfNeeded();
 	}
 

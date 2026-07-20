@@ -89,6 +89,12 @@ void ColliderManager::Update()
  */
 void ColliderManager::Draw()
 {
+	if (!Master::is_debug_mode_) return;
+	for (auto* col : collider_list_) {
+		if (col != nullptr && !col->IsDeleteFlag()) {
+			col->Draw();
+		}
+	}
 }
 
 /*
