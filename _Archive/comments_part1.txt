@@ -1,0 +1,352 @@
+=== Scene3D.h ===
+9: // 3DアクションスチE?Eジ管?E
+13: // ゲーム進行?Eフェーズ
+16: kNormal,         // 通常
+17: kTornadoCrisis,  // 竜巻巨大匁E
+18: kMobSpawn,       // 生物大量スポ?Eン
+25: /*
+26: * @brief スチE?Eジ初期匁E
+27: * [入力] なし[出力] なし[副作用] オブジェクト生成、BGM再生
+28: */
+31: /*
+32: * @brief シーン終?E?E?E
+33: * [入力] なし[出力] なし[副作用] BGM停止
+34: */
+37: /*
+38: * @brief スチE?Eジ描画
+39: * [入力] なし[出力] なし[副作用] 画面描画
+40: */
+43: /*
+44: * @brief スチE?Eジ更新
+45: * [入力] なし[出力] なし[副作用] タイムアチE?E時?Eリザルト?E移
+46: */
+49: /*
+50: * @brief フェーズ進行による環?E??化
+51: * [入力] なし[出力] なし[副作用] カメラ・竜巻状態変更、スポ?Eン処?E
+52: */
+56: float warning_radius_;       // 警告エリア現在半征E(予?E
+57: float max_radius_;           // 警告エリア最大半征E(予?E
+59: int tatumaki_spawn_timer_;   // 竜巻出現タイマ?E
+60: int mass_spawn_timer_;       // 大量?E現の間隔タイマ?E
+61: Phase phase_;             // 現在のフェーズ
+62: int font_back_graph_;        // 警告テキスト背景用ハンドル
+=== SceneManager.cpp ===
+21: // メモリリークを防ぐためアクチE??ブなシーンの解放を保証する
+27: // 仕様上起動時はタイトル画面から開始すめE
+48: /*
+49: * 現在のアクチE??ブシーンを安?Eに解放し、後片付けを行う
+50: * [入力] なし
+51: * [出力] なし
+52: * [副作用] current_scene_ の Finalize 呼び出し、およ?Eメモリ delete
+53: */
+64: /*
+65: * 遷移先指定が異なる場合、現在シーンを破?E??次のシーンをインスタンス化すめE
+66: * [入力] なし
+67: * [出力] なし
+68: * [副作用] シーンオブジェクト?Eメモリ解放と新規割り当て、?E期化
+69: */
+72: // 遷移先が変わってぁE??ぁE??合?Eシーン?E??替えを行わなし
+=== SceneManager.h ===
+4: // シーン遷移およびライフサイクルを管?E??るクラス
+28: /*
+29: * 初期設定を行い、最初?Eシーン?E?タイトル?E?へ遷移する
+30: * [入力] なし
+31: * [出力] なし
+32: * [副作用] mnNextSceneTypeの更新およびシーン?E??替ぁE
+33: */
+36: /*
+37: * 現在アクチE??ブなシーンの描画処?E??呼び出ぁE
+38: * [入力] なし
+39: * [出力] なし
+40: * [副作用] 画面への描画処?E
+41: */
+44: /*
+45: * 現在アクチE??ブなシーンの更新処?E??呼び出ぁE
+46: * [入力] なし
+47: * [出力] なし
+48: * [副作用] 現在のシーン状態?E更新
+49: */
+52: /*
+53: * アクチE??ブなシーンオブジェクトを安?Eに解放・終?E??めE
+54: * [入力] なし
+55: * [出力] なし
+56: * [副作用] mpCurrentSceneのメモリ解放
+57: */
+60: /*
+61: * 遷移要求がある場合、古ぁE??ーンを破?E??新しいシーンを生成?E初期化すめE
+62: * [入力] なし
+63: * [出力] なし
+64: * [副作用] シーンオブジェクト?Eメモリ解放と新規生?E
+65: */
+73: Scene* GetCurrentScene() { return current_scene_; }
+79: Scene* current_scene_;
+=== Score.cpp ===
+27: // スコア描画用アセットロード
+70: score_ = 0; // 負のスコアを防止
+84: const char* Score::GetName() const
+91: FILE* fp = nullptr;
+105: FILE* fp = nullptr;
+126: // DxLibのキーボード入力システムを有効化
+136: /*DrawFormatString(300, 100, GetColor(255, 255, 255), "お名前を入力してください");
+138: DrawFormatString(300, 160, GetColor(255, 255, 0), ">> %s", player_name_);*/
+140: // 入力完了判定（ENTERキー）
+161: // 上位3枠以内にランクインした場合確定
+166: // 後続を一つ下へ
+172: // 仮に"PLAYER"で登録、ネームエントリー後に確定する
+188: y + 30 + i * 20,
+200: FILE* fp = nullptr;
+213: FILE* fp = nullptr;
+227: // ランキングファイルがない場合はダミーデータで新規作成
+239: // コンボボーナス: 1コンボあたり20%増加
+240: float multiplier = 1.0f + combo_count_ * 0.2f;
+241: int finalScore = static_cast<int>(baseScore * multiplier);
+287: int w = (int)(80 * scale);
+288: int h = (int)(80 * scale);
+350: int w = (int)(80 * scale);
+351: int h = (int)(80 * scale);
+352: int pointX = x + digitCount * w;
+=== Score.h ===
+3: // プレイヤーのスコア、ランキング、ネーム入力を管琁E��めE
+7: // ランキング保持用
+17: /*
+18: * @brief スコア初期匁E
+19: * [入力] �Ȃ�[出力] �Ȃ�[副作用] scoreの初期匁E
+20: */
+25: /*
+26: * @brief 負数にならなぁE��ぁE��コアを加箁E
+27: * [入力] value: 加算スコア [出力] �Ȃ�[副作用] scoreの更新
+28: */
+31: /*
+32: * @brief スコアリセチE��
+33: * [入力] �Ȃ�[出力] �Ȃ�[副作用] scoreめEに設宁E
+34: */
+38: const char* GetName() const;
+40: /*
+41: * @brief タイムアチE�E後�Eネ�Eムエントリー開姁E
+42: * [入力] �Ȃ�[出力] �Ȃ�[副作用] キー入力ハンドルの有効匁E
+43: */
+46: /*
+47: * @brief ネ�Eムエントリーの毎フレーム処琁E
+48: * [入力] �Ȃ�[出力] �Ȃ�[副作用] playerNameの更新、ENTERでの終亁E
+49: */
+54: /*
+55: * @brief スコアをランキング(上佁E佁Eに登録
+56: * [入力] �Ȃ�[出力] �Ȃ�[副作用] rankingの更新
+57: */
+60: /*
+61: * @brief ランキングをrank.txtに保孁E
+62: * [入力] �Ȃ�[出力] �Ȃ�[副作用] rank.txtへの書き込み
+63: */
+66: /*
+67: * @brief rank.txtからランキングを読み込み�E�不在時�E初期化！E
+68: * [入力] �Ȃ�[出力] �Ȃ�[副作用] rankingの更新、rank.txtの作�E
+69: */
+72: /*
+73: * @brief ランキングのチE��チE��描画
+74: * [入力] x, y: 描画座樁E[出力] �Ȃ�[副作用] 画面描画
+75: */
+78: /*
+79: * @brief 現在のスコアとランキングをscore.txtに保孁E
+80: * [入力] �Ȃ�[出力] �Ȃ�[副作用] score_.txtへの書き込み
+81: */
+84: /*
+85: * @brief score_.txtから前回のスコアとランキングを読み込み
+86: * [入力] �Ȃ�[出力] �Ȃ�[副作用] scoreとrankingの更新
+87: */
+90: /*
+91: * @brief プレイ中のスコア描画
+92: * [入力] �Ȃ�[出力] �Ȃ�[副作用] 画面描画
+93: */
+96: /*
+97: * @brief 任意�E数値を画像フォントで描画
+98: * [入力] x,y: 座樁E value: 数値 [出力] �Ȃ�[副作用] 画面描画
+99: */
+103: /*
+104: * @brief コンボ数に応じた倍率でスコア加箁E
+105: * [入力] baseScore: 基本値, combo_count_: コンボ数 [出力] �Ȃ�[副作用] scoreの更新
+106: */
+109: // シーン間引き継ぎ用
+114: int input_handle_;              // DxLibネ�Eム入力用
+115: char player_name_[64];          // 入力テキストバチE��ァ
+116: bool name_input_mode_;           // 入力モードフラグ
+118: int score_;                    // 現在のスコア
+120: int score_image_;               // 予紁E
+121: int number_img_[10];            // 数字画像ハンドル(0-9)
+122: int minus_img_;                 // マイナス画像ハンドル
+124: int name_index_;                // 予紁E
+125: int score_text_image_;           // 「SCORE」画像ハンドル
+127: RankData ranking_[3];          // ハイスコア上佁E�ꍇ
+129: static int result_score_;       // 最終獲得スコア
+=== SelectionManager.cpp ===
+=== SelectionManager.h ===
+4: // タイトル画面めE��ザルト画面でのメニュー頁E��選択IDおよび現在インチE��クスを管琁E��るクラス
+8: // ボタンなどのメニュー頁E��選択ID
+11: NewGame = 0,            // 新規ゲーム開姁E
+12: Tutorial,               // チュートリアル開姁E
+13: OperationProcedures,    // 操作説明画面へ遷移
+14: titleOUT,               // ゲームを終亁E
+15: title,                  // タイトルへ戻めE
+22: static int TitlecrrentIndex; // 現在選択中の頁E��インチE��クス�E�キーボ�Eド選択用�E�E
+=== ServiceLocator.cpp ===
+12: Scene* ServiceLocator::GetCurrentScene()
+14: // 未初期化時のクラチE??ュを防ぐため?Eインタの有効性を検証
+22: ObjectManager* ServiceLocator::GetObjectManager()
+24: Scene* scene = GetCurrentScene();
+32: Player3D* ServiceLocator::GetPlayer()
+34: // タグ検索によりプレイヤーオブジェクトを動的に特?E
+35: ObjectManager* objMgr = GetObjectManager();
+38: return dynamic_cast<Player3D*>(objMgr->GetObject3DByTag(Object3D::kTag3dPlayer));
+43: std::vector<Player3D*> ServiceLocator::GetPlayers()
+45: // マルチ?Eレイ対応等を老E?Eし、存在する全プレイヤーを収雁E
+46: std::vector<Player3D*> players;
+47: ObjectManager* objMgr = GetObjectManager();
+53: if (Player3D* p = dynamic_cast<Player3D*>(obj))
+62: CowManager* ServiceLocator::GetCowManager()
+64: Scene* scene = GetCurrentScene();
+72: AnimalManager* ServiceLocator::GetAnimalManager()
+74: Scene* scene = GetCurrentScene();
+82: GameManager* ServiceLocator::GetGameManager()
+84: Scene* scene = GetCurrentScene();
+92: Fever* ServiceLocator::GetFever()
+94: Scene* scene = GetCurrentScene();
+=== ServiceLocator.h ===
+12: // グローバルなマネージャーめE��ブジェクトへのアクセスを提供するロケーター
+13: // 依存性の注入を簡略化するため各インスタンスの取得を仲介すめE
+17: /*
+18: * @brief 現在アクチE��ブなシーンを取得すめE
+19: * [入力] �Ȃ�
+20: * [出力] Sceneポインタ (取得失敗時はnullptr)
+21: * [副作用] �Ȃ�
+22: */
+23: static Scene* GetCurrentScene();
+25: /*
+26: * @brief オブジェクト管琁E��ラスを取得すめE
+27: * [入力] �Ȃ�
+28: * [出力] ObjectManagerポインタ (取得失敗時はnullptr)
+29: * [副作用] �Ȃ�
+30: */
+31: static ObjectManager* GetObjectManager();
+33: /*
+34: * @brief プレイヤーオブジェクチE単佁Eを取得すめE
+35: * [入力] �Ȃ�
+36: * [出力] Player3Dポインタ (取得失敗時はnullptr)
+37: * [副作用] �Ȃ�
+38: */
+39: static Player3D* GetPlayer();
+41: /*
+42: * @brief 存在する全プレイヤーオブジェクト�Eリストを取得すめE
+43: * [入力] �Ȃ�
+44: * [出力] Player3Dポインタのベクター
+45: * [副作用] ベクター構築�EコストあめE
+46: */
+47: static std::vector<Player3D*> GetPlayers();
+49: /*
+50: * @brief 牛キャラクター管琁E��ラスを取得すめE
+51: * [入力] �Ȃ�
+52: * [出力] CowManagerポインタ (取得失敗時はnullptr)
+53: * [副作用] �Ȃ�
+54: */
+55: static CowManager* GetCowManager();
+57: /*
+58: * @brief そ�E他�E動物管琁E��ラスを取得すめE
+59: * [入力] �Ȃ�
+60: * [出力] AnimalManagerポインタ (取得失敗時はnullptr)
+61: * [副作用] �Ȃ�
+62: */
+63: static AnimalManager* GetAnimalManager();
+65: /*
+66: * @brief ゲーム進行管琁E��ラスを取得すめE
+67: * [入力] �Ȃ�
+68: * [出力] GameManagerポインタ (取得失敗時はnullptr)
+69: * [副作用] �Ȃ�
+70: */
+71: static GameManager* GetGameManager();
+73: /*
+74: * @brief フィーバ�E状態管琁E��ラスを取得すめE
+75: * [入力] �Ȃ�
+76: * [出力] Feverポインタ (取得失敗時はnullptr)
+77: * [副作用] �Ȃ�
+78: */
+79: static Fever* GetFever();
+=== Skill.cpp ===
+30: Skill::Skill(Object3D* parent)
+74: // 選択完亁E���Eカードが上�E�E退出してぁE��演�Eアニメーション
+122: // 選択されたカードが上空へ飛んで消える演�Eアニメーション
+126: select_pos_.y += (target.y - select_pos_.y) * 0.08f;
+140: // カード選択開始時に、カードが画面外から滑らかにスライドインするアニメーション
+143: card1_y_ += (450.0f - card1_y_) * 0.15f;
+144: card2_y_ += (450.0f - card2_y_) * 0.15f;
+145: card3_y_ += (450.0f - card3_y_) * 0.15f;
+165: SetMouseDispFlag(true); // スキル選択中はマウスポインタを表示
+172: // スキルカードをホバーまた�E左クリチE��した際�Eコライダー計算を行うラムダ関数
+173: auto ProcessSkill = [&](Texture* tex, int id) {
+198: // 速度アチE�E
+210: // 餌（デコイにんじん）設置
+225: // 吸引速度�E�攻撁E���E�アチE�E
+=== Skill.h ===
+6: // プレイヤーレベルアチE�E時�Eスキル�E�スチE�Eタス強化�E餌設置�E��EUI選択およ�E効果管琁E��行うクラス
+10: // スキルカード�E種類定義
+14: kSkill1,    // スチE�Eタス強匁E (吸引速度)
+15: kSkill2,    // 餌（デコイ�E�設置
+16: kSkill3,    // スチE�Eタス強匁E (プレイヤー速度)
+19: // 強化可能なプレイヤーパラメータのタグ定義
+27: /*
+28: * @brief スキル選択画面で表示するUI画像！E枚�Eスキルカード）をロードすめE
+29: * [入力] parent: プレイヤーなど関連付ける親アクター
+30: * [出力] �Ȃ�
+31: * [副作用] スキル選択カード用Textureインスタンスの動的確俁E
+32: */
+33: Skill(Object3D* parent);
+36: /*
+37: * @brief カード登場時、E��択中の退出アニメーション等�E補間計算を行う
+38: * [入力] �Ȃ�
+39: * [出力] �Ȃ�
+40: * [副作用] �ꍇ��ード表示用座標�E更新
+41: */
+44: /*
+45: * @brief 画面上にスキル選択�EカードUIを描画する
+46: * [入力] �Ȃ�
+47: * [出力] �Ȃ�
+48: * [副作用] �Ȃ�
+49: */
+52: /*
+53: * @brief マウスのホバーおよび左クリチE��検知を行い、E��択されたスキルの効果を発動させる
+54: * [入力] �Ȃ�
+55: * [出力] �Ȃ�
+56: * [副作用] スキル効果�E適用�E�EP加算、あるいは餌オブジェクト�Enew�E�E
+57: */
+62: /*
+63: * @brief 持E��された強化スチE�Eタスの合計�Eーナス値を取得すめE
+64: * [入力] tag: スチE�Eタス種顁E
+65: * [出力] 加算されるボ�Eナス実数値
+66: * [副作用] �Ȃ�
+67: */
+70: /*
+71: * @brief スキル選択画面の表示�E非表示フラグを設定し、カード�Eアニメーション変数を�E期化する
+72: * [入力] flag: 有効にするかどぁE��の真偽値
+73: * [出力] �Ȃ�
+74: * [副作用] カード�E初期表示位置、E��択アニメーションフラグの初期匁E
+75: */
+78: bool add_skill_flag_;          // スキル選択画面が現在オープンしてぁE��かどぁE��のフラグ
+81: Object3D* parent_;         // 親アクター
+82: SkillTag tag_;               // スキルタグ
+83: Texture* texture_;         // カーチE�E�速度アチE�E�E��EチE��スチャ
+84: Texture* texture2_;        // カーチE�E�餌にんじん）�EチE��スチャ
+85: Texture* texture3_;        // カーチE�E�吸引力アチE�E�E��EチE��スチャ
+86: float status_date_;           // パラメータ一時変数
+87: float status_a_;             // 吸引速度の合計強化値
+88: float status_s_;             // 移動速度の合計強化値
+90: int hover_skill_;            // マウスが�Eバ�EしてぁE��カード�E番号 (1?3)
+91: int flash_alpha_;            // 選択時のフラチE��ュ効果用アルファ値
+92: bool flash_;                // フラチE��ュ効果がアクチE��ブかどぁE��のフラグ
+94: bool select_anim_;           // カードが画面外へフェードアウトするアニメーション中かどぁE��のフラグ
+95: int selected_skill_;         // 選択されたカード番号
+96: float select_scale_;         // 選択アニメーション時�Eカードスケール
+97: VECTOR select_pos_;          // 選択されたカード�E表示現在位置
+99: VECTOR pos1_;               // カーチEの標準�E置座樁E
+100: VECTOR pos2_;               // カーチEの標準�E置座樁E
+101: VECTOR pos3_;               // カーチEの標準�E置座樁E
+103: bool open_anim_;             // カードが下からスライドインする登場アニメーション中かどぁE��のフラグ
+104: float card1_y_;              // カーチEの現在Y座樁E
+105: float card2_y_;              // カーチEの現在Y座樁E
+106: float card3_y_;              // カーチEの 現在Y座樁E

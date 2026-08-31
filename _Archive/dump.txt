@@ -1,0 +1,2195 @@
+﻿===== Scene3D.h =====
+#pragma once
+#include"Scene.h"
+#include"Dxlib.h"
+#include"Master.h"
+#include"Thunder.h"
+#include"CowManager.h"
+#include"AnimalManager.h"
+
+// 3DアクションスチE?Eジ管?E
+class Scene3D : public Scene
+{
+public: 
+	// ゲーム進行?Eフェーズ
+	enum Phase
+	{
+		kNormal,         // 通常
+		kTornadoCrisis,  // 竜巻巨大匁E
+		kMobSpawn,       // 生物大量スポ?Eン
+	};	
+	
+public:
+	Scene3D();
+	~Scene3D();
+
+	/*
+	 * @brief スチE?Eジ初期匁E
+	 * [入力] なし[出力] なし[副作用] オブジェクト生成、BGM再生
+	 */
+	void Initialize() override;
+
+	/*
+	 * @brief シーン終?E?E?E
+	 * [入力] なし[出力] なし[副作用] BGM停止
+	 */
+	void Finalize() override;
+
+	/*
+	 * @brief スチE?Eジ描画
+	 * [入力] なし[出力] なし[副作用] 画面描画
+	 */
+	void Draw() override;
+
+	/*
+	 * @brief スチE?Eジ更新
+	 * [入力] なし[出力] なし[副作用] タイムアチE?E時?Eリザルト?E移
+	 */
+	void Update() override;
+
+	/*
+	 * @brief フェーズ進行による環?E??化
+	 * [入力] なし[出力] なし[副作用] カメラ・竜巻状態変更、スポ?Eン処?E
+	 */
+	void PhaseUpdate();
+
+private:
+	float warning_radius_;       // 警告エリア現在半征E(予?E
+	float max_radius_;           // 警告エリア最大半征E(予?E
+	
+	int tatumaki_spawn_timer_;   // 竜巻出現タイマ?E
+	int mass_spawn_timer_;       // 大量?E現の間隔タイマ?E
+	Phase phase_;             // 現在のフェーズ
+	int font_back_graph_;        // 警告テキスト背景用ハンドル
+};
+===== SceneManager.cpp =====
+#include"SceneManager.h"
+#include"Scene3D.h"
+#include"Scene.h"
+#include"TitleScene.h"
+#include"TutorialScene.h"
+#include"ResultScene.h"
+#include "Rule.h"
+#include "LoadingScene.h"
+
+SceneManager::SceneManager()
+	: scene_type_(SCENE_TYPE::kSceneNone)
+	, next_scene_type_(SCENE_TYPE::kSceneNone)
+	, current_scene_(nullptr)
+	, scene_hard_(false)
+	, scene_normal_(false)
+{
+}
+
+SceneManager::~SceneManager()
+{
+	// メモリリークを防ぐためアクチE??ブなシーンの解放を保証する
+	Finalize();
+}
+
+void SceneManager::Initialize()
+{
+	// 仕様上起動時はタイトル画面から開始すめE
+	next_scene_type_ = SCENE_TYPE::kSceneTitle;
+	ChangeSceneIfNeeded();
+}
+
+void SceneManager::Update()
+{
+	if (current_scene_ != nullptr)
+	{
+		current_scene_->Update();
+	}
+}
+
+void SceneManager::Draw()
+{
+	if (current_scene_ != nullptr)
+	{
+		current_scene_->Draw();
+	}
+}
+
+/*
+ * 現在のアクチE??ブシーンを安?Eに解放し、後片付けを行う
+ * [入力] なし
+ * [出力] なし
+ * [副作用] current_scene_ の Finalize 呼び出し、およ?Eメモリ delete
+ */
+void SceneManager::Finalize()
+{
+	if (current_scene_ != nullptr)
+	{
+		current_scene_->Finalize();
+		delete current_scene_;
+		current_scene_ = nullptr;
+	}
+}
+
+/*
+ * 遷移先指定が異なる場合、現在シーンを破?E??次のシーンをインスタンス化すめE
+ * [入力] なし
+ * [出力] なし
+ * [副作用] シーンオブジェクト?Eメモリ解放と新規割り当て、?E期化
+ */
+void SceneManager::ChangeSceneIfNeeded()
+{
+	// 遷移先が変わってぁE??ぁE??合?Eシーン?E??替えを行わなし
+	if (scene_type_ == next_scene_type_)
+	{
+		return;
+	}
+
+	if (current_scene_ != nullptr)
+	{
+		current_scene_->Finalize();
+		delete current_scene_;
+		current_scene_ = nullptr;
+	}
+
+	scene_type_ = next_scene_type_;
+
+	switch (scene_type_)
+	{
+	case SCENE_TYPE::kSceneLoading:
+		current_scene_ = new LoadingScene();
+		break;
+	case SCENE_TYPE::kScene3D:
+		current_scene_ = new Scene3D();
+		break;
+	case SCENE_TYPE::kSceneTitle:
+		current_scene_ = new TitleScene();
+		break;
+	case SCENE_TYPE::kSceneTutorial:
+		current_scene_ = new TutorialScene();
+		break;
+	case SCENE_TYPE::kSceneResult:
+		current_scene_ = new ResultScene();
+		break;
+	case SCENE_TYPE::kSceneRule:
+		current_scene_ = new Rule();
+		break;
+	default:
+		break;
+	}
+
+	if (current_scene_ != nullptr)
+	{
+		current_scene_->Initialize();
+	}
+}
+
+===== SceneManager.h =====
+#pragma once
+#include"Scene.h"
+
+// シーン遷移およびライフサイクルを管?E??るクラス
+class SceneManager
+{
+public:
+	enum SCENE_TYPE
+	{
+		kSceneNone = 0,
+		kSceneTitle,
+		kSceneRule,
+		kSceneTutorial,
+		kSceneLevel,
+		kSceneGame,
+		kScene3DHard,
+		kSceneResult,
+		kSceneResultWin,
+		kSceneNormalResult,
+		kSceneLoading,
+		kScene3D
+	};
+
+public:
+	SceneManager();
+	~SceneManager();
+
+	/*
+	 * 初期設定を行い、最初?Eシーン?E?タイトル?E?へ遷移する
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] mnNextSceneTypeの更新およびシーン?E??替ぁE
+	 */
+	void Initialize();
+
+	/*
+	 * 現在アクチE??ブなシーンの描画処?E??呼び出ぁE
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 画面への描画処?E
+	 */
+	void Draw();
+
+	/*
+	 * 現在アクチE??ブなシーンの更新処?E??呼び出ぁE
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 現在のシーン状態?E更新
+	 */
+	void Update();
+
+	/*
+	 * アクチE??ブなシーンオブジェクトを安?Eに解放・終?E??めE
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] mpCurrentSceneのメモリ解放
+	 */
+	void Finalize();
+
+	/*
+	 * 遷移要求がある場合、古ぁE??ーンを破?E??新しいシーンを生成?E初期化すめE
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] シーンオブジェクト?Eメモリ解放と新規生?E
+	 */
+	void ChangeSceneIfNeeded();
+
+	void SetNextScene(SCENE_TYPE next) { next_scene_type_ = next; }
+	void SetSceneHard(bool Hard) { scene_hard_ = Hard; }
+	bool GetSceneHard() { return scene_hard_; }
+	void SetSceneNormal(bool Normal) { scene_normal_ = Normal; }
+	bool GetSceneNormal() { return scene_normal_; }
+	Scene* GetCurrentScene() { return current_scene_; }
+	SCENE_TYPE GetSceneType() const { return scene_type_; }
+
+private:
+	SCENE_TYPE scene_type_;
+	SCENE_TYPE next_scene_type_;
+	Scene* current_scene_;
+
+	bool scene_hard_;
+	bool scene_normal_;
+};
+
+===== Score.cpp =====
+#include "Score.h"
+#include <stdio.h>
+#include <string.h>
+#include "DxLib.h"
+#include "Utility.h"
+#include "Master.h"
+
+int Score::result_score_ = 0;
+
+Score::Score()
+{
+	score_ = 0;
+	strcpy_s(player_name_, sizeof(player_name_), "NO NAME");
+	name_index_ = 0;
+	name_input_mode_ = false;
+	input_handle_ = -1;
+
+	for (int i = 0; i < 3; i++)
+	{
+		strcpy_s(ranking_[i].name_, sizeof(ranking_[i].name_), "NONE");
+		ranking_[i].score_ = 0;
+	}
+
+	score_text_image_ = Master::mpResourceManager->LoadGraphics("Resource/2D/SCORE.png");
+	minus_img_ = Master::mpResourceManager->LoadGraphics("Resource/2D/マイナス.png");
+
+	// スコア描画用アセットロード
+	number_img_[0] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数00.png");
+	number_img_[1] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数01.png");
+	number_img_[2] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数02.png");
+	number_img_[3] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数03.png");
+	number_img_[4] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数04.png");
+	number_img_[5] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数05.png");
+	number_img_[6] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数06.png");
+	number_img_[7] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数07.png");
+	number_img_[8] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数08.png");
+	number_img_[9] = Master::mpResourceManager->LoadGraphics("Resource/2D/コンボ数09.png");
+
+	LoadRanking();
+}
+
+Score::~Score()
+{
+}
+
+void Score::Draw()
+{
+	int x = Utility::kUiBaseX;
+	int y = Utility::kUiScoreY;
+	int width = Utility::kUiPanelW;
+	int height = Utility::kUiPanelH;
+
+	DrawExtendGraph(
+		x,
+		y,
+		x + width,
+		y + height,
+		score_text_image_,
+		TRUE
+	);
+
+	DrawNumber(Utility::kUiDigitX, y, score_, 1.0f, 4);
+}
+
+void Score::AddScore(int value)
+{
+	score_ += value;
+	if (score_ < 0)
+	{
+		score_ = 0; // 負のスコアを防止
+	}
+}
+
+void Score::ResetScore()
+{
+	score_ = 0;
+}
+
+int Score::GetScore() const
+{
+	return score_;
+}
+
+const char* Score::GetName() const
+{
+	return player_name_;
+}
+
+void Score::Save()
+{
+	FILE* fp = nullptr;
+	if (fopen_s(&fp, "score_.txt", "w") == 0)
+	{
+		fprintf(fp, "%d\n", result_score_);
+		for (int i = 0; i < 3; i++)
+		{
+			fprintf(fp, "%s %d\n", ranking_[i].name_, ranking_[i].score_);
+		}
+		fclose(fp);
+	}
+}
+
+void Score::Load()
+{
+	FILE* fp = nullptr;
+	if (fopen_s(&fp, "score_.txt", "r") == 0)
+	{
+		if (fscanf_s(fp, "%d", &score_) != 1) score_ = 0;
+		for (int i = 0; i < 3; i++)
+		{
+			if (fscanf_s(fp, "%s %d", ranking_[i].name_, (unsigned)_countof(ranking_[i].name_), &ranking_[i].score_) != 2)
+			{
+				break;
+			}
+		}
+		fclose(fp);
+	}
+}
+
+void Score::StartNameInput()
+{
+	name_input_mode_ = true;
+	name_index_ = 0;
+	player_name_[0] = '\0';
+
+	// DxLibのキーボード入力システムを有効化
+	input_handle_ = MakeKeyInput(0, 0, 64, 1);
+	SetActiveKeyInput(input_handle_);
+}
+
+void Score::UpdateNameInput()
+{
+	if (!name_input_mode_) return;
+
+	GetKeyInputString(player_name_, input_handle_);
+	/*DrawFormatString(300, 100, GetColor(255, 255, 255), "お名前を入力してください");
+	DrawFormatString(300, 120, GetColor(255, 255, 255), "入力後はENTERキーを押してください");
+	DrawFormatString(300, 160, GetColor(255, 255, 0), ">> %s", player_name_);*/
+
+	// 入力完了判定（ENTERキー）
+	if (CheckHitKey(KEY_INPUT_RETURN) && strlen(player_name_) > 0)
+	{
+		name_input_mode_ = false;
+		if (name_index_ >= 0 && name_index_ < 3)
+		{
+			strcpy_s(ranking_[name_index_].name_, sizeof(ranking_[name_index_].name_), player_name_);
+		}
+	}
+}
+
+bool Score::IsNameInputFinished() const
+{
+	return !name_input_mode_;
+}
+
+void Score::AddRanking()
+{
+	int target = score_;
+	name_index_ = -1;
+
+	// 上位3枠以内にランクインした場合確定
+	for (int i = 0; i < 3; i++)
+	{
+		if (target > ranking_[i].score_)
+		{
+			// 後続を一つ下へ
+			for (int j = 2; j > i; j--)
+			{
+				ranking_[j] = ranking_[j - 1];
+			}
+
+			// 仮に"PLAYER"で登録、ネームエントリー後に確定する
+			strcpy_s(ranking_[i].name_, "PLAYER");
+			ranking_[i].score_ = target;
+			name_index_ = i;
+			break;
+		}
+	}
+}
+
+void Score::DrawRanking(int x, int y)
+{
+	DrawFormatString(x, y, GetColor(255, 255, 255), "RANKING");
+	for (int i = 0; i < 3; i++)
+	{
+		DrawFormatString(
+			x,
+			y + 30 + i * 20,
+			GetColor(255, 255, 255),
+			"%d位 %s : %d",
+			i + 1,
+			ranking_[i].name_,
+			ranking_[i].score_
+		);
+	}
+}
+
+void Score::SaveRanking()
+{
+	FILE* fp = nullptr;
+	if (fopen_s(&fp, "rank.txt", "w") == 0)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			fprintf(fp, "%s %d\n", ranking_[i].name_, ranking_[i].score_);
+		}
+		fclose(fp);
+	}
+}
+
+void Score::LoadRanking()
+{
+	FILE* fp = nullptr;
+	if (fopen_s(&fp, "rank.txt", "r") == 0)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			if (fscanf_s(fp, "%s %d", ranking_[i].name_, (unsigned)_countof(ranking_[i].name_), &ranking_[i].score_) != 2)
+			{
+				break;
+			}
+		}
+		fclose(fp);
+	}
+	else
+	{
+		// ランキングファイルがない場合はダミーデータで新規作成
+		for (int i = 0; i < 3; i++)
+		{
+			strcpy_s(ranking_[i].name_, "NONE");
+			ranking_[i].score_ = 0;
+		}
+		SaveRanking();
+	}
+}
+
+void Score::AddScoreWithCombo(int baseScore, int combo_count_)
+{
+	// コンボボーナス: 1コンボあたり20%増加
+	float multiplier = 1.0f + combo_count_ * 0.2f;
+	int finalScore = static_cast<int>(baseScore * multiplier);
+
+	score_ += finalScore;
+	if (score_ < 0)
+	{
+		score_ = 0;
+	}
+}
+
+void Score::Initialize()
+{
+	score_ = 0;
+}
+
+void Score::DrawNumber(int x, int y, int value, float scale, int minDigits)
+{
+	int digit[10];
+	int digitCount = 0;
+	bool isMinus = false;
+	int temp = value;
+
+	if (temp < 0)
+	{
+		isMinus = true;
+		temp = -temp;
+	}
+
+	if (temp == 0)
+	{
+		digit[digitCount++] = 0;
+	}
+	else
+	{
+		while (temp > 0)
+		{
+			digit[digitCount++] = temp % 10;
+			temp /= 10;
+		}
+	}
+
+	while (digitCount < minDigits)
+	{
+		digit[digitCount++] = 0;
+	}
+
+	int drawX = x;
+	int w = (int)(80 * scale);
+	int h = (int)(80 * scale);
+
+	if (isMinus)
+	{
+		DrawExtendGraph(
+			drawX,
+			y,
+			drawX + w,
+			y + h,
+			minus_img_,
+			TRUE
+		);
+		drawX += w;
+	}
+
+	for (int i = digitCount - 1; i >= 0; i--)
+	{
+		DrawExtendGraph(
+			drawX,
+			y,
+			drawX + w,
+			y + h,
+			number_img_[digit[i]],
+			TRUE
+		);
+		drawX += w;
+	}
+}
+
+const Score::RankData& Score::GetRanking(int index) const
+{
+	return ranking_[index];
+}
+
+void Score::SetResultScore(int value)
+{
+	result_score_ = value;
+}
+
+int Score::GetResultScore()
+{
+	return result_score_;
+}
+void Score::DrawScoreWithPoint(int x, int y, int score, float scale, int minDigits, int point_graph_handle)
+{
+	DrawNumber(x, y, score, scale, minDigits);
+
+	int temp = score;
+	int digitCount = 0;
+	if (temp == 0) {
+		digitCount = 1;
+	} else {
+		if (temp < 0) temp = -temp;
+		while (temp > 0) {
+			temp /= 10;
+			digitCount++;
+		}
+	}
+	if (digitCount < minDigits) {
+		digitCount = minDigits;
+	}
+
+	int w = (int)(80 * scale);
+	int h = (int)(80 * scale);
+	int pointX = x + digitCount * w;
+	DrawExtendGraph(pointX, y, pointX + w, y + h, point_graph_handle, TRUE);
+}
+===== Score.h =====
+#pragma once
+
+// 繝励Ξ繧､繝､繝ｼ縺ｮ繧ｹ繧ｳ繧｢縲√Λ繝ｳ繧ｭ繝ｳ繧ｰ縲√ロ繝ｼ繝蜈･蜉帙ｒ邂｡逅・☆繧・
+class Score
+{
+public:
+	// 繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ菫晄戟逕ｨ
+	struct RankData
+	{
+		char name_[64];
+		int score_;
+	};
+
+	Score();
+	~Score();
+
+	/*
+	 * @brief 繧ｹ繧ｳ繧｢蛻晄悄蛹・
+	 * [蜈･蜉嫋 なし[蜃ｺ蜉嫋 なし[蜑ｯ菴懃畑] score縺ｮ蛻晄悄蛹・
+	 */
+	void Initialize();
+
+	const RankData& GetRanking(int index) const;
+
+	/*
+	 * @brief 雋謨ｰ縺ｫ縺ｪ繧峨↑縺・ｈ縺・せ繧ｳ繧｢繧貞刈邂・
+	 * [蜈･蜉嫋 value: 蜉邂励せ繧ｳ繧｢ [蜃ｺ蜉嫋 なし[蜑ｯ菴懃畑] score縺ｮ譖ｴ譁ｰ
+	 */
+	void AddScore(int value);
+	
+	/*
+	 * @brief 繧ｹ繧ｳ繧｢繝ｪ繧ｻ繝・ヨ
+	 * [蜈･蜉嫋 なし[蜃ｺ蜉嫋 なし[蜑ｯ菴懃畑] score繧・縺ｫ險ｭ螳・
+	 */
+	void ResetScore();
+
+	int GetScore() const;
+	const char* GetName() const;
+
+	/*
+	 * @brief 繧ｿ繧､繝繧｢繝・・蠕後・繝阪・繝繧ｨ繝ｳ繝医Μ繝ｼ髢句ｧ・
+	 * [蜈･蜉嫋 なし[蜃ｺ蜉嫋 なし[蜑ｯ菴懃畑] 繧ｭ繝ｼ蜈･蜉帙ワ繝ｳ繝峨Ν縺ｮ譛牙柑蛹・
+	 */
+	void StartNameInput();
+
+	/*
+	 * @brief 繝阪・繝繧ｨ繝ｳ繝医Μ繝ｼ縺ｮ豈弱ヵ繝ｬ繝ｼ繝蜃ｦ逅・
+	 * [蜈･蜉嫋 なし[蜃ｺ蜉嫋 なし[蜑ｯ菴懃畑] playerName縺ｮ譖ｴ譁ｰ縲・NTER縺ｧ縺ｮ邨ゆｺ・
+	 */
+	void UpdateNameInput();
+
+	bool IsNameInputFinished() const;
+
+	/*
+	 * @brief 繧ｹ繧ｳ繧｢繧偵Λ繝ｳ繧ｭ繝ｳ繧ｰ(荳贋ｽ・菴・縺ｫ逋ｻ骭ｲ
+	 * [蜈･蜉嫋 なし[蜃ｺ蜉嫋 なし[蜑ｯ菴懃畑] ranking縺ｮ譖ｴ譁ｰ
+	 */
+	void AddRanking();
+
+	/*
+	 * @brief 繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ繧池ank.txt縺ｫ菫晏ｭ・
+	 * [蜈･蜉嫋 なし[蜃ｺ蜉嫋 なし[蜑ｯ菴懃畑] rank.txt縺ｸ縺ｮ譖ｸ縺崎ｾｼ縺ｿ
+	 */
+	void SaveRanking();
+
+	/*
+	 * @brief rank.txt縺九ｉ繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ繧定ｪｭ縺ｿ霎ｼ縺ｿ・井ｸ榊惠譎ゅ・蛻晄悄蛹厄ｼ・
+	 * [蜈･蜉嫋 なし[蜃ｺ蜉嫋 なし[蜑ｯ菴懃畑] ranking縺ｮ譖ｴ譁ｰ縲〉ank.txt縺ｮ菴懈・
+	 */
+	void LoadRanking();
+
+	/*
+	 * @brief 繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ縺ｮ繝・ヰ繝・げ謠冗判
+	 * [蜈･蜉嫋 x, y: 謠冗判蠎ｧ讓・[蜃ｺ蜉嫋 なし[蜑ｯ菴懃畑] 逕ｻ髱｢謠冗判
+	 */
+	void DrawRanking(int x, int y);
+
+	/*
+	 * @brief 迴ｾ蝨ｨ縺ｮ繧ｹ繧ｳ繧｢縺ｨ繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ繧痴core.txt縺ｫ菫晏ｭ・
+	 * [蜈･蜉嫋 なし[蜃ｺ蜉嫋 なし[蜑ｯ菴懃畑] score_.txt縺ｸ縺ｮ譖ｸ縺崎ｾｼ縺ｿ
+	 */
+	void Save();
+
+	/*
+	 * @brief score_.txt縺九ｉ蜑榊屓縺ｮ繧ｹ繧ｳ繧｢縺ｨ繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ繧定ｪｭ縺ｿ霎ｼ縺ｿ
+	 * [蜈･蜉嫋 なし[蜃ｺ蜉嫋 なし[蜑ｯ菴懃畑] score縺ｨranking縺ｮ譖ｴ譁ｰ
+	 */
+	void Load();
+
+	/*
+	 * @brief 繝励Ξ繧､荳ｭ縺ｮ繧ｹ繧ｳ繧｢謠冗判
+	 * [蜈･蜉嫋 なし[蜃ｺ蜉嫋 なし[蜑ｯ菴懃畑] 逕ｻ髱｢謠冗判
+	 */
+	void Draw();
+
+	/*
+	 * @brief 莉ｻ諢上・謨ｰ蛟､繧堤判蜒上ヵ繧ｩ繝ｳ繝医〒謠冗判
+	 * [蜈･蜉嫋 x,y: 蠎ｧ讓・ value: 謨ｰ蛟､ [蜃ｺ蜉嫋 なし[蜑ｯ菴懃畑] 逕ｻ髱｢謠冗判
+	 */
+	void DrawNumber(int x, int y, int value, float scale = 1.0f, int minDigits = 1);
+	void DrawScoreWithPoint(int x, int y, int score, float scale, int minDigits, int point_graph_handle);
+
+	/*
+	 * @brief 繧ｳ繝ｳ繝懈焚縺ｫ蠢懊§縺溷咲紫縺ｧ繧ｹ繧ｳ繧｢蜉邂・
+	 * [蜈･蜉嫋 baseScore: 蝓ｺ譛ｬ蛟､, combo_count_: 繧ｳ繝ｳ繝懈焚 [蜃ｺ蜉嫋 なし[蜑ｯ菴懃畑] score縺ｮ譖ｴ譁ｰ
+	 */
+	void AddScoreWithCombo(int baseScore, int combo_count_);
+
+	// 繧ｷ繝ｼ繝ｳ髢灘ｼ輔″邯吶℃逕ｨ
+	static void SetResultScore(int value);
+	static int GetResultScore();
+
+private:
+	int input_handle_;              // DxLib繝阪・繝蜈･蜉帷畑
+	char player_name_[64];          // 蜈･蜉帙ユ繧ｭ繧ｹ繝医ヰ繝・ヵ繧｡
+	bool name_input_mode_;           // 蜈･蜉帙Δ繝ｼ繝峨ヵ繝ｩ繧ｰ
+
+	int score_;                    // 迴ｾ蝨ｨ縺ｮ繧ｹ繧ｳ繧｢
+
+	int score_image_;               // 莠育ｴ・
+	int number_img_[10];            // 謨ｰ蟄礼判蜒上ワ繝ｳ繝峨Ν(0-9)
+	int minus_img_;                 // 繝槭う繝翫せ逕ｻ蜒上ワ繝ｳ繝峨Ν
+
+	int name_index_;                // 莠育ｴ・
+	int score_text_image_;           // 縲郡CORE縲咲判蜒上ワ繝ｳ繝峨Ν
+
+	RankData ranking_[3];          // 繝上う繧ｹ繧ｳ繧｢荳贋ｽ・場合
+
+	static int result_score_;       // 譛邨ら佐蠕励せ繧ｳ繧｢
+};
+===== SelectionManager.cpp =====
+#include "SelectionManager.h"
+#include "DxLib.h"
+#include "Utility.h"
+#include "Master.h"
+#include "InputManager.h"
+
+int SelectionManager::TitlecrrentIndex = 0;
+
+SelectionManager::SelectionManager()
+{
+}
+
+SelectionManager::~SelectionManager()
+{
+}
+
+===== SelectionManager.h =====
+#pragma once
+#include"dxlib.h"
+
+// 繧ｿ繧､繝医Ν逕ｻ髱｢繧・Μ繧ｶ繝ｫ繝育判髱｢縺ｧ縺ｮ繝｡繝九Η繝ｼ鬆・岼驕ｸ謚曵D縺翫ｈ縺ｳ迴ｾ蝨ｨ繧､繝ｳ繝・ャ繧ｯ繧ｹ繧堤ｮ｡逅・☆繧九け繝ｩ繧ｹ
+class SelectionManager
+{
+public:
+	// 繝懊ち繝ｳ縺ｪ縺ｩ縺ｮ繝｡繝九Η繝ｼ鬆・岼驕ｸ謚曵D
+	enum Title
+	{
+		NewGame = 0,            // 譁ｰ隕上ご繝ｼ繝髢句ｧ・
+		Tutorial,               // 繝√Η繝ｼ繝医Μ繧｢繝ｫ髢句ｧ・
+		OperationProcedures,    // 謫堺ｽ懆ｪｬ譏守判髱｢縺ｸ驕ｷ遘ｻ
+		titleOUT,               // 繧ｲ繝ｼ繝繧堤ｵゆｺ・
+		title,                  // 繧ｿ繧､繝医Ν縺ｸ謌ｻ繧・
+	};
+
+public:
+	SelectionManager();
+	~SelectionManager();
+	
+	static int TitlecrrentIndex; // 迴ｾ蝨ｨ驕ｸ謚樔ｸｭ縺ｮ鬆・岼繧､繝ｳ繝・ャ繧ｯ繧ｹ・医く繝ｼ繝懊・繝蛾∈謚樒畑・・
+};
+
+
+===== ServiceLocator.cpp =====
+#include "ServiceLocator.h"
+#include "Master.h"
+#include "SceneManager.h"
+#include "Scene.h"
+#include "ObjectManager.h"
+#include "Player3D.h"
+#include "CowManager.h"
+#include "AnimalManager.h"
+#include "GameManager.h"
+#include "Fever.h"
+
+Scene* ServiceLocator::GetCurrentScene()
+{
+	// 未初期化時のクラチE??ュを防ぐため?Eインタの有効性を検証
+	if (Master::mpSceneManager != nullptr)
+	{
+		return Master::mpSceneManager->GetCurrentScene();
+	}
+	return nullptr;
+}
+
+ObjectManager* ServiceLocator::GetObjectManager()
+{
+	Scene* scene = GetCurrentScene();
+	if (scene != nullptr)
+	{
+		return scene->GetObjectManager();
+	}
+	return nullptr;
+}
+
+Player3D* ServiceLocator::GetPlayer()
+{
+	// タグ検索によりプレイヤーオブジェクトを動的に特?E
+	ObjectManager* objMgr = GetObjectManager();
+	if (objMgr != nullptr)
+	{
+		return dynamic_cast<Player3D*>(objMgr->GetObject3DByTag(Object3D::kTag3dPlayer));
+	}
+	return nullptr;
+}
+
+std::vector<Player3D*> ServiceLocator::GetPlayers()
+{
+	// マルチ?Eレイ対応等を老E?Eし、存在する全プレイヤーを収雁E
+	std::vector<Player3D*> players;
+	ObjectManager* objMgr = GetObjectManager();
+	if (objMgr != nullptr)
+	{
+		const auto& list = objMgr->GetObject3DListByTag(Object3D::kTag3dPlayer);
+		for (auto obj : list)
+		{
+			if (Player3D* p = dynamic_cast<Player3D*>(obj))
+			{
+				players.push_back(p);
+			}
+		}
+	}
+	return players;
+}
+
+CowManager* ServiceLocator::GetCowManager()
+{
+	Scene* scene = GetCurrentScene();
+	if (scene != nullptr)
+	{
+		return scene->cow_manager_;
+	}
+	return nullptr;
+}
+
+AnimalManager* ServiceLocator::GetAnimalManager()
+{
+	Scene* scene = GetCurrentScene();
+	if (scene != nullptr)
+	{
+		return scene->animal_manager_;
+	}
+	return nullptr;
+}
+
+GameManager* ServiceLocator::GetGameManager()
+{
+	Scene* scene = GetCurrentScene();
+	if (scene != nullptr)
+	{
+		return scene->game_manager_;
+	}
+	return nullptr;
+}
+
+Fever* ServiceLocator::GetFever()
+{
+	Scene* scene = GetCurrentScene();
+	if (scene != nullptr)
+	{
+		return scene->fever_;
+	}
+	return nullptr;
+}
+===== ServiceLocator.h =====
+#pragma once
+#include <vector>
+
+class Scene;
+class ObjectManager;
+class CowManager;
+class AnimalManager;
+class GameManager;
+class Fever;
+class Player3D;
+
+// 繧ｰ繝ｭ繝ｼ繝舌Ν縺ｪ繝槭ロ繝ｼ繧ｸ繝｣繝ｼ繧・が繝悶ず繧ｧ繧ｯ繝医∈縺ｮ繧｢繧ｯ繧ｻ繧ｹ繧呈署萓帙☆繧九Ο繧ｱ繝ｼ繧ｿ繝ｼ
+// 萓晏ｭ俶ｧ縺ｮ豕ｨ蜈･繧堤ｰ｡逡･蛹悶☆繧九◆繧∝推繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ縺ｮ蜿門ｾ励ｒ莉ｲ莉九☆繧・
+class ServiceLocator
+{
+public:
+	/*
+	 * @brief 迴ｾ蝨ｨ繧｢繧ｯ繝・ぅ繝悶↑繧ｷ繝ｼ繝ｳ繧貞叙蠕励☆繧・
+	 * [蜈･蜉嫋 なし
+	 * [蜃ｺ蜉嫋 Scene繝昴う繝ｳ繧ｿ (蜿門ｾ怜､ｱ謨玲凾縺ｯnullptr)
+	 * [蜑ｯ菴懃畑] なし
+	 */
+	static Scene* GetCurrentScene();
+
+	/*
+	 * @brief 繧ｪ繝悶ず繧ｧ繧ｯ繝育ｮ｡逅・け繝ｩ繧ｹ繧貞叙蠕励☆繧・
+	 * [蜈･蜉嫋 なし
+	 * [蜃ｺ蜉嫋 ObjectManager繝昴う繝ｳ繧ｿ (蜿門ｾ怜､ｱ謨玲凾縺ｯnullptr)
+	 * [蜑ｯ菴懃畑] なし
+	 */
+	static ObjectManager* GetObjectManager();
+
+	/*
+	 * @brief 繝励Ξ繧､繝､繝ｼ繧ｪ繝悶ず繧ｧ繧ｯ繝・蜊倅ｽ・繧貞叙蠕励☆繧・
+	 * [蜈･蜉嫋 なし
+	 * [蜃ｺ蜉嫋 Player3D繝昴う繝ｳ繧ｿ (蜿門ｾ怜､ｱ謨玲凾縺ｯnullptr)
+	 * [蜑ｯ菴懃畑] なし
+	 */
+	static Player3D* GetPlayer();
+
+	/*
+	 * @brief 蟄伜惠縺吶ｋ蜈ｨ繝励Ξ繧､繝､繝ｼ繧ｪ繝悶ず繧ｧ繧ｯ繝医・繝ｪ繧ｹ繝医ｒ蜿門ｾ励☆繧・
+	 * [蜈･蜉嫋 なし
+	 * [蜃ｺ蜉嫋 Player3D繝昴う繝ｳ繧ｿ縺ｮ繝吶け繧ｿ繝ｼ
+	 * [蜑ｯ菴懃畑] 繝吶け繧ｿ繝ｼ讒狗ｯ峨・繧ｳ繧ｹ繝医≠繧・
+	 */
+	static std::vector<Player3D*> GetPlayers();
+
+	/*
+	 * @brief 迚帙く繝｣繝ｩ繧ｯ繧ｿ繝ｼ邂｡逅・け繝ｩ繧ｹ繧貞叙蠕励☆繧・
+	 * [蜈･蜉嫋 なし
+	 * [蜃ｺ蜉嫋 CowManager繝昴う繝ｳ繧ｿ (蜿門ｾ怜､ｱ謨玲凾縺ｯnullptr)
+	 * [蜑ｯ菴懃畑] なし
+	 */
+	static CowManager* GetCowManager();
+
+	/*
+	 * @brief 縺昴・莉悶・蜍慕黄邂｡逅・け繝ｩ繧ｹ繧貞叙蠕励☆繧・
+	 * [蜈･蜉嫋 なし
+	 * [蜃ｺ蜉嫋 AnimalManager繝昴う繝ｳ繧ｿ (蜿門ｾ怜､ｱ謨玲凾縺ｯnullptr)
+	 * [蜑ｯ菴懃畑] なし
+	 */
+	static AnimalManager* GetAnimalManager();
+
+	/*
+	 * @brief 繧ｲ繝ｼ繝騾ｲ陦檎ｮ｡逅・け繝ｩ繧ｹ繧貞叙蠕励☆繧・
+	 * [蜈･蜉嫋 なし
+	 * [蜃ｺ蜉嫋 GameManager繝昴う繝ｳ繧ｿ (蜿門ｾ怜､ｱ謨玲凾縺ｯnullptr)
+	 * [蜑ｯ菴懃畑] なし
+	 */
+	static GameManager* GetGameManager();
+
+	/*
+	 * @brief 繝輔ぅ繝ｼ繝舌・迥ｶ諷狗ｮ｡逅・け繝ｩ繧ｹ繧貞叙蠕励☆繧・
+	 * [蜈･蜉嫋 なし
+	 * [蜃ｺ蜉嫋 Fever繝昴う繝ｳ繧ｿ (蜿門ｾ怜､ｱ謨玲凾縺ｯnullptr)
+	 * [蜑ｯ菴懃畑] なし
+	 */
+	static Fever* GetFever();
+};
+
+===== Skill.cpp =====
+#include "Skill.h"
+#include "Player3D.h"
+#include "Texture.h"
+#include "Master.h"
+#include "InputManager.h"
+#include "Bait.h"
+#include <cmath>
+
+void Skill::SetSkillFlag(bool flag)
+{
+	add_skill_flag_ = flag;
+	if (flag)
+	{
+		texture_->SetPosition(pos1_);
+		texture2_->SetPosition(pos2_);
+		texture3_->SetPosition(pos3_);
+
+		select_scale_ = 1.0f;
+		select_anim_ = false;
+		selected_skill_ = 0;
+
+		open_anim_ = true;
+
+		card1_y_ = 1400.0f;
+		card2_y_ = 1500.0f;
+		card3_y_ = 1600.0f;
+	}
+}
+
+Skill::Skill(Object3D* parent)
+	: status_a_(0.0f)
+	, status_s_(0.0f)
+	, tag_(None)
+	, add_skill_flag_(false)
+	, hover_skill_(0)
+	, select_anim_(false)
+	, selected_skill_(0)
+	, select_scale_(1.0f)
+{
+	this->parent_ = parent;
+
+	pos1_ = VGet(200.0f, 450.0f, 0.0f);
+	pos2_ = VGet(800.0f, 450.0f, 0.0f);
+	pos3_ = VGet(1400.0f, 450.0f, 0.0f);
+
+	texture_ = new Texture("Resource/2D/Speed.png", pos1_, 300, 500, true);
+	texture2_ = new Texture("Resource/2D/food.png", pos2_, 300, 500, true);
+	texture3_ = new Texture("Resource/2D/Kyuusyuu.png", pos3_, 300, 500, true);
+}
+
+Skill::~Skill()
+{
+	if (texture_ != nullptr)
+	{
+		delete texture_;
+		texture_ = nullptr;
+	}
+	if (texture2_ != nullptr)
+	{
+		delete texture2_;
+		texture2_ = nullptr;
+	}
+	if (texture3_ != nullptr)
+	{
+		delete texture3_;
+		texture3_ = nullptr;
+	}
+}
+
+void Skill::Draw()
+{
+	if (!add_skill_flag_ && !select_anim_) return;
+
+	// 驕ｸ謚槫ｮ御ｺ・ｾ後・繧ｫ繝ｼ繝峨′荳頑・・騾蜃ｺ縺励※縺・￥貍泌・繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ
+	if (select_anim_)
+	{
+		if (selected_skill_ == 1)
+		{
+			texture_->SetPosition(select_pos_);
+			texture_->Draw();
+		}
+		else if (selected_skill_ == 2)
+		{
+			texture2_->SetPosition(select_pos_);
+			texture2_->Draw();
+		}
+		else if (selected_skill_ == 3)
+		{
+			texture3_->SetPosition(select_pos_);
+			texture3_->Draw();
+		}
+		return;
+	}
+
+	texture_->Draw();
+	texture2_->Draw();
+	texture3_->Draw();
+}
+
+void Skill::Update()
+{
+	if (add_skill_flag_)
+	{
+		AddSkill();
+	}
+
+	if (!add_skill_flag_ && !select_anim_)
+	{
+		Master::SelectSkill = false;
+	}
+
+	if (flash_)
+	{
+		flash_alpha_ -= 20;
+		if (flash_alpha_ <= 0)
+		{
+			flash_alpha_ = 0;
+			flash_ = false;
+		}
+	}
+
+	// 驕ｸ謚槭＆繧後◆繧ｫ繝ｼ繝峨′荳顔ｩｺ縺ｸ鬟帙ｓ縺ｧ豸医∴繧区ｼ泌・繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ
+	if (select_anim_)
+	{
+		VECTOR target = VGet(select_pos_.x, -400.0f, 0.0f);
+		select_pos_.y += (target.y - select_pos_.y) * 0.08f;
+
+		if (select_pos_.y <= -350.0f)
+		{
+			texture_->SetPosition(pos1_);
+			texture2_->SetPosition(pos2_);
+			texture3_->SetPosition(pos3_);
+
+			select_anim_ = false;
+			add_skill_flag_ = false;
+			Master::SelectSkill = false;
+		}
+	}
+
+	// 繧ｫ繝ｼ繝蛾∈謚樣幕蟋区凾縺ｫ縲√き繝ｼ繝峨′逕ｻ髱｢螟悶°繧画ｻ代ｉ縺九↓繧ｹ繝ｩ繧､繝峨う繝ｳ縺吶ｋ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ
+	if (open_anim_)
+	{
+		card1_y_ += (450.0f - card1_y_) * 0.15f;
+		card2_y_ += (450.0f - card2_y_) * 0.15f;
+		card3_y_ += (450.0f - card3_y_) * 0.15f;
+
+		texture_->SetPosition(VGet(200.0f, card1_y_, 0.0f));
+		texture2_->SetPosition(VGet(800.0f, card2_y_, 0.0f));
+		texture3_->SetPosition(VGet(1400.0f, card3_y_, 0.0f));
+
+		if (std::abs(card1_y_ - 450.0f) < 1.0f)
+		{
+			card1_y_ = 450.0f;
+			card2_y_ = 450.0f;
+			card3_y_ = 450.0f;
+			open_anim_ = false;
+		}
+	}
+}
+
+void Skill::AddSkill()
+{
+	if (!add_skill_flag_) return;
+	
+	SetMouseDispFlag(true); // 繧ｹ繧ｭ繝ｫ驕ｸ謚樔ｸｭ縺ｯ繝槭え繧ｹ繝昴う繝ｳ繧ｿ繧定｡ｨ遉ｺ
+	Master::SelectSkill = true;
+	int mouse_x_, mouse_y_;
+	GetMousePoint(&mouse_x_, &mouse_y_);
+
+	hover_skill_ = 0;
+
+	// 繧ｹ繧ｭ繝ｫ繧ｫ繝ｼ繝峨ｒ繝帙ヰ繝ｼ縺ｾ縺溘・蟾ｦ繧ｯ繝ｪ繝・け縺励◆髫帙・繧ｳ繝ｩ繧､繝繝ｼ險育ｮ励ｒ陦後≧繝ｩ繝繝髢｢謨ｰ
+	auto ProcessSkill = [&](Texture* tex, int id) {
+		if (tex == nullptr) return false;
+
+		VECTOR pos = tex->GetPosition();
+		int w = tex->GetWidth();
+		int h = tex->GetHeight();
+
+		float left = pos.x - (w / 2.0f);
+		float right = pos.x + (w / 2.0f);
+		float top = pos.y - (h / 2.0f);
+		float bottom = pos.y + (h / 2.0f);
+
+		if (mouse_x_ >= left && mouse_x_ <= right && mouse_y_ >= top && mouse_y_ <= bottom)
+		{
+			hover_skill_ = id;
+			if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0)
+			{
+				return true;
+			}
+		}
+		return false;
+	};
+
+	if (ProcessSkill(texture_, 1))
+	{
+		// 騾溷ｺｦ繧｢繝・・
+		status_s_ += 2.0f;
+		selected_skill_ = 1;
+		select_pos_ = texture_->GetPosition();
+		select_anim_ = true;
+		flash_ = true;
+		flash_alpha_ = 255;
+		Master::mpSoundManager->PlaySE(SoundManager::kSeSkillStatus);
+		SetMouseDispFlag(false);
+	}
+	else if (ProcessSkill(texture2_, 2))
+	{
+		// 鬢鯉ｼ医ョ繧ｳ繧､縺ｫ繧薙§繧難ｼ芽ｨｭ鄂ｮ
+		auto b = new Bait("Resource/3D/迚帙・鬢・Carrot.mv1", parent_->GetPosition());
+		float scale = 5000.0f;
+		b->model_->SetScale(VGet(scale, scale, scale));
+
+		selected_skill_ = 2;
+		select_pos_ = texture2_->GetPosition();
+		select_anim_ = true;
+		flash_ = true;
+		flash_alpha_ = 255;
+		Master::mpSoundManager->PlaySE(SoundManager::kSeSkillFood);
+		SetMouseDispFlag(false);
+	}
+	else if (ProcessSkill(texture3_, 3))
+	{
+		// 蜷ｸ蠑暮溷ｺｦ・域判謦・鴨・峨い繝・・
+		status_a_ += 1.0f;
+		selected_skill_ = 3;
+		select_pos_ = texture3_->GetPosition();
+		select_anim_ = true;
+		flash_ = true;
+		flash_alpha_ = 255;
+		Master::mpSoundManager->PlaySE(SoundManager::kSeSkillStatus);
+		SetMouseDispFlag(false);
+	}
+}
+
+float Skill::GetStatusDate(StatusTag tag)
+{
+	if (tag == kStatusAttackSpeed)
+	{
+		return status_a_;
+	}
+	if (tag == kStatusSpeed)
+	{
+		return status_s_;
+	}
+	return 0.0f;
+}
+===== Skill.h =====
+#pragma once
+#include "dxlib.h"
+#include "Object3D.h"
+#include "Texture.h"
+
+// 繝励Ξ繧､繝､繝ｼ繝ｬ繝吶Ν繧｢繝・・譎ゅ・繧ｹ繧ｭ繝ｫ・医せ繝・・繧ｿ繧ｹ蠑ｷ蛹悶・鬢瑚ｨｭ鄂ｮ・峨・UI驕ｸ謚槭♀繧医・蜉ｹ譫懃ｮ｡逅・ｒ陦後≧繧ｯ繝ｩ繧ｹ
+class Skill
+{
+public:
+	// 繧ｹ繧ｭ繝ｫ繧ｫ繝ｼ繝峨・遞ｮ鬘槫ｮ夂ｾｩ
+	enum SkillTag
+	{
+		None,
+		kSkill1,    // 繧ｹ繝・・繧ｿ繧ｹ蠑ｷ蛹・ (蜷ｸ蠑暮溷ｺｦ)
+		kSkill2,    // 鬢鯉ｼ医ョ繧ｳ繧､・芽ｨｭ鄂ｮ
+		kSkill3,    // 繧ｹ繝・・繧ｿ繧ｹ蠑ｷ蛹・ (繝励Ξ繧､繝､繝ｼ騾溷ｺｦ)
+	};
+
+	// 蠑ｷ蛹門庄閭ｽ縺ｪ繝励Ξ繧､繝､繝ｼ繝代Λ繝｡繝ｼ繧ｿ縺ｮ繧ｿ繧ｰ螳夂ｾｩ
+	enum StatusTag
+	{
+		kStatusAttackSpeed,
+		kStatusSpeed,
+	};
+
+public:
+	/*
+	 * @brief 繧ｹ繧ｭ繝ｫ驕ｸ謚樒判髱｢縺ｧ陦ｨ遉ｺ縺吶ｋUI逕ｻ蜒擾ｼ・譫壹・繧ｹ繧ｭ繝ｫ繧ｫ繝ｼ繝会ｼ峨ｒ繝ｭ繝ｼ繝峨☆繧・
+	 * [蜈･蜉嫋 parent: 繝励Ξ繧､繝､繝ｼ縺ｪ縺ｩ髢｢騾｣莉倥￠繧玖ｦｪ繧｢繧ｯ繧ｿ繝ｼ
+	 * [蜃ｺ蜉嫋 なし
+	 * [蜑ｯ菴懃畑] 繧ｹ繧ｭ繝ｫ驕ｸ謚槭き繝ｼ繝臥畑Texture繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ縺ｮ蜍慕噪遒ｺ菫・
+	 */
+	Skill(Object3D* parent);
+	~Skill();
+
+	/*
+	 * @brief 繧ｫ繝ｼ繝臥匳蝣ｴ譎ゅ・∈謚樔ｸｭ縺ｮ騾蜃ｺ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ遲峨・陬憺俣險育ｮ励ｒ陦後≧
+	 * [蜈･蜉嫋 なし
+	 * [蜃ｺ蜉嫋 なし
+	 * [蜑ｯ菴懃畑] 場合き繝ｼ繝芽｡ｨ遉ｺ逕ｨ蠎ｧ讓吶・譖ｴ譁ｰ
+	 */
+	void Update();
+
+	/*
+	 * @brief 逕ｻ髱｢荳翫↓繧ｹ繧ｭ繝ｫ驕ｸ謚槭・繧ｫ繝ｼ繝蔚I繧呈緒逕ｻ縺吶ｋ
+	 * [蜈･蜉嫋 なし
+	 * [蜃ｺ蜉嫋 なし
+	 * [蜑ｯ菴懃畑] なし
+	 */
+	void Draw();
+
+	/*
+	 * @brief 繝槭え繧ｹ縺ｮ繝帙ヰ繝ｼ縺翫ｈ縺ｳ蟾ｦ繧ｯ繝ｪ繝・け讀懃衍繧定｡後＞縲・∈謚槭＆繧後◆繧ｹ繧ｭ繝ｫ縺ｮ蜉ｹ譫懊ｒ逋ｺ蜍輔＆縺帙ｋ
+	 * [蜈･蜉嫋 なし
+	 * [蜃ｺ蜉嫋 なし
+	 * [蜑ｯ菴懃畑] 繧ｹ繧ｭ繝ｫ蜉ｹ譫懊・驕ｩ逕ｨ・・P蜉邂励√≠繧九＞縺ｯ鬢後が繝悶ず繧ｧ繧ｯ繝医・new・・
+	 */
+	void AddSkill();
+
+	SkillTag GetSkillTag() { return tag_; }
+
+	/*
+	 * @brief 謖・ｮ壹＆繧後◆蠑ｷ蛹悶せ繝・・繧ｿ繧ｹ縺ｮ蜷郁ｨ医・繝ｼ繝翫せ蛟､繧貞叙蠕励☆繧・
+	 * [蜈･蜉嫋 tag: 繧ｹ繝・・繧ｿ繧ｹ遞ｮ鬘・
+	 * [蜃ｺ蜉嫋 蜉邂励＆繧後ｋ繝懊・繝翫せ螳滓焚蛟､
+	 * [蜑ｯ菴懃畑] なし
+	 */
+	float GetStatusDate(StatusTag tag);
+
+	/*
+	 * @brief 繧ｹ繧ｭ繝ｫ驕ｸ謚樒判髱｢縺ｮ陦ｨ遉ｺ・髱櫁｡ｨ遉ｺ繝輔Λ繧ｰ繧定ｨｭ螳壹＠縲√き繝ｼ繝峨・繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ螟画焚繧貞・譛溷喧縺吶ｋ
+	 * [蜈･蜉嫋 flag: 譛牙柑縺ｫ縺吶ｋ縺九←縺・°縺ｮ逵溷⊃蛟､
+	 * [蜃ｺ蜉嫋 なし
+	 * [蜑ｯ菴懃畑] 繧ｫ繝ｼ繝峨・蛻晄悄陦ｨ遉ｺ菴咲ｽｮ縲・∈謚槭い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ繝輔Λ繧ｰ縺ｮ蛻晄悄蛹・
+	 */
+	void SetSkillFlag(bool flag);
+
+	bool add_skill_flag_;          // 繧ｹ繧ｭ繝ｫ驕ｸ謚樒判髱｢縺檎樟蝨ｨ繧ｪ繝ｼ繝励Φ縺励※縺・ｋ縺九←縺・°縺ｮ繝輔Λ繧ｰ
+
+private:
+	Object3D* parent_;         // 隕ｪ繧｢繧ｯ繧ｿ繝ｼ
+	SkillTag tag_;               // 繧ｹ繧ｭ繝ｫ繧ｿ繧ｰ
+	Texture* texture_;         // 繧ｫ繝ｼ繝・・磯溷ｺｦ繧｢繝・・・峨・繝・け繧ｹ繝√Ε
+	Texture* texture2_;        // 繧ｫ繝ｼ繝・・磯､後↓繧薙§繧難ｼ峨・繝・け繧ｹ繝√Ε
+	Texture* texture3_;        // 繧ｫ繝ｼ繝・・亥精蠑募鴨繧｢繝・・・峨・繝・け繧ｹ繝√Ε
+	float status_date_;           // 繝代Λ繝｡繝ｼ繧ｿ荳譎ょ､画焚
+	float status_a_;             // 蜷ｸ蠑暮溷ｺｦ縺ｮ蜷郁ｨ亥ｼｷ蛹門､
+	float status_s_;             // 遘ｻ蜍暮溷ｺｦ縺ｮ蜷郁ｨ亥ｼｷ蛹門､
+
+	int hover_skill_;            // 繝槭え繧ｹ縺後・繝舌・縺励※縺・ｋ繧ｫ繝ｼ繝峨・逡ｪ蜿ｷ (1?3)
+	int flash_alpha_;            // 驕ｸ謚樊凾縺ｮ繝輔Λ繝・す繝･蜉ｹ譫懃畑繧｢繝ｫ繝輔ぃ蛟､
+	bool flash_;                // 繝輔Λ繝・す繝･蜉ｹ譫懊′繧｢繧ｯ繝・ぅ繝悶°縺ｩ縺・°縺ｮ繝輔Λ繧ｰ
+
+	bool select_anim_;           // 繧ｫ繝ｼ繝峨′逕ｻ髱｢螟悶∈繝輔ぉ繝ｼ繝峨い繧ｦ繝医☆繧九い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ荳ｭ縺九←縺・°縺ｮ繝輔Λ繧ｰ
+	int selected_skill_;         // 驕ｸ謚槭＆繧後◆繧ｫ繝ｼ繝臥分蜿ｷ
+	float select_scale_;         // 驕ｸ謚槭い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ譎ゅ・繧ｫ繝ｼ繝峨せ繧ｱ繝ｼ繝ｫ
+	VECTOR select_pos_;          // 驕ｸ謚槭＆繧後◆繧ｫ繝ｼ繝峨・陦ｨ遉ｺ迴ｾ蝨ｨ菴咲ｽｮ
+
+	VECTOR pos1_;               // 繧ｫ繝ｼ繝・縺ｮ讓呎ｺ夜・鄂ｮ蠎ｧ讓・
+	VECTOR pos2_;               // 繧ｫ繝ｼ繝・縺ｮ讓呎ｺ夜・鄂ｮ蠎ｧ讓・
+	VECTOR pos3_;               // 繧ｫ繝ｼ繝・縺ｮ讓呎ｺ夜・鄂ｮ蠎ｧ讓・
+
+	bool open_anim_;             // 繧ｫ繝ｼ繝峨′荳九°繧峨せ繝ｩ繧､繝峨う繝ｳ縺吶ｋ逋ｻ蝣ｴ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ荳ｭ縺九←縺・°縺ｮ繝輔Λ繧ｰ
+	float card1_y_;              // 繧ｫ繝ｼ繝・縺ｮ迴ｾ蝨ｨY蠎ｧ讓・
+	float card2_y_;              // 繧ｫ繝ｼ繝・縺ｮ迴ｾ蝨ｨY蠎ｧ讓・
+	float card3_y_;              // 繧ｫ繝ｼ繝・縺ｮ 迴ｾ蝨ｨY蠎ｧ讓・
+};
+
+
+===== SkyBox.cpp =====
+#include "SkyBox.h"
+#include "Model.h"
+
+SkyBox::SkyBox(std::string filename, VECTOR pos)
+	: Object3D(pos)
+{
+	// 繧ｹ繧ｫ繧､繝懊ャ繧ｯ繧ｹ繝｢繝・Ν縺ｮ驟咲ｽｮ蛻晄悄蛹・
+	model_ = new Model(filename, VGet(0.0f, 0.0f, 0.0f));
+}
+
+SkyBox::~SkyBox()
+{
+	if (model_ != nullptr)
+	{
+		delete model_;
+	}
+}
+
+void SkyBox::Update()
+{
+	if (model_ != nullptr)
+	{
+		model_->Update();
+	}
+}
+
+void SkyBox::Draw()
+{
+	if (model_ != nullptr)
+	{
+		// 遨ｺ繝｢繝・Ν縺悟・貅占ｨ育ｮ励ｄ蜻ｨ蝗ｲ縺ｮ蠖ｱ縺ｮ蠖ｱ髻ｿ繧貞女縺代※證励￥豐医∪なしｈ縺・↓縲√Λ繧､繝・ぅ繝ｳ繧ｰ繧堤┌蜉ｹ蛹悶＠縺ｦ謠冗判縺吶ｋ
+		SetUseLighting(FALSE);
+		model_->Draw();
+		SetUseLighting(TRUE);
+	}
+}
+
+void SkyBox::SetScale(float scale)
+{
+	if (model_ != nullptr)
+	{
+		model_->SetScale(scale);
+	}
+}
+
+void SkyBox::SetModelTexture(std::string filename, int index)
+{
+	if (model_ != nullptr)
+	{
+		model_->SetTexture(filename, index);
+	}
+}
+
+===== SkyBox.h =====
+#pragma once
+class Model;
+
+#include "Object3D.h"
+
+// 閭梧勹縺ｮ遨ｺ・医せ繧ｫ繧､繝懊ャ繧ｯ繧ｹ繝｢繝・Ν・峨ｒ邂｡逅・・謠冗判縺吶ｋ繧ｯ繝ｩ繧ｹ
+class SkyBox : public Object3D
+{
+public:
+	/*
+	 * @brief 繧ｹ繧ｫ繧､繝懊ャ繧ｯ繧ｹ逕ｨ縺ｮ繝｢繝・Ν縺ｨ蛻晄悄蠎ｧ讓吶ｒ謖・ｮ壹＠縺ｦ繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ繧堤函謌舌☆繧・
+	 * [蜈･蜉嫋 filename: 繧ｹ繧ｫ繧､繝懊ャ繧ｯ繧ｹ縺ｮ繝｢繝・Ν繝輔ぃ繧､繝ｫ繝代せ, pos: 蛻晄悄蠎ｧ讓・
+	 * [蜃ｺ蜉嫋 なし
+	 * [蜑ｯ菴懃畑] 繧ｹ繧ｫ繧､繝懊ャ繧ｯ繧ｹ逕ｨModel繧ｯ繝ｩ繧ｹ縺ｮ繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ逕滓・
+	 */
+	SkyBox(std::string filename, VECTOR pos);
+	virtual ~SkyBox();
+
+	/*
+	 * @brief 繧ｹ繧ｫ繧､繝懊ャ繧ｯ繧ｹ縺ｮ繝医Λ繝ｳ繧ｹ繝輔か繝ｼ繝譖ｴ譁ｰ蜃ｦ逅・ｒ陦後≧
+	 * [蜈･蜉嫋 なし
+	 * [蜃ｺ蜉嫋 なし
+	 * [蜑ｯ菴懃畑] 蜀・Κ繝｢繝・Ν縺ｮ菴咲ｽｮ諠・ｱ縺ｮ譖ｴ譁ｰ
+	 */
+	void Update() override;
+
+	/*
+	 * @brief 繝ｩ繧､繝・ぅ繝ｳ繧ｰ險育ｮ励ｒ荳譎ら噪縺ｫ辟｡蜉ｹ蛹悶＠縲∫ｩｺ縺ｮ繝｢繝・Ν繧呈・繧九￥謠冗判縺吶ｋ
+	 * [蜈･蜉嫋 なし
+	 * [蜃ｺ蜉嫋 なし
+	 * [蜑ｯ菴懃畑] なし
+	 */
+	void Draw() override;
+
+	/*
+	 * @brief 遨ｺ繝｢繝・Ν蜈ｨ菴薙・陦ｨ遉ｺ繧ｹ繧ｱ繝ｼ繝ｫ・亥､ｧ縺阪＆・峨ｒ險ｭ螳壹☆繧・
+	 * [蜈･蜉嫋 scale: 諡｡螟ｧ邇・
+	 * [蜃ｺ蜉嫋 なし
+	 * [蜑ｯ菴懃畑] なし
+	 */
+	void SetScale(float scale);
+
+	/*
+	 * @brief 繧ｹ繧ｫ繧､繝懊ャ繧ｯ繧ｹ繝｢繝・Ν縺ｮ繝・け繧ｹ繝√Ε繧貞・繧頑崛縺医ｋ
+	 * [蜈･蜉嫋 filename: 繝・け繧ｹ繝√Ε逕ｻ蜒上ヱ繧ｹ, index: 繝槭ユ繝ｪ繧｢繝ｫ繧､繝ｳ繝・ャ繧ｯ繧ｹ
+	 * [蜃ｺ蜉嫋 なし
+	 * [蜑ｯ菴懃畑] なし
+	 */
+	void SetModelTexture(std::string filename, int index = 0);
+
+private:
+	Model* model_;          // 繧ｹ繧ｫ繧､繝懊ャ繧ｯ繧ｹ繧呈ｧ区・縺吶ｋ3D繝｢繝・Ν縺ｸ縺ｮ繝昴う繝ｳ繧ｿ
+};
+
+===== SoundManager.cpp =====
+#include"SoundManager.h"
+#include"DxLib.h"
+
+SoundManager::SoundManager()
+    : now_playing_bgm_((SoundBgm)-1)
+    , now_playing_se_((SoundSe)-1)
+{
+}
+
+SoundManager::~SoundManager()
+{
+    // 郢ｧ・ｪ郢晄じ縺夂ｹｧ・ｧ郢ｧ・ｯ郢晁ご・ｽ・ｴ隴ｽ繝ｻ蜃ｾ邵ｺ・ｮ郢晢ｽ｡郢晢ｽ｢郢晢ｽｪ郢晢ｽｪ郢晢ｽｼ郢ｧ・ｯ郢ｧ蝣､・｢・ｺ陞ｳ貅倪・鬮ｦ・ｲ邵ｺ闊娯螺郢ｧ竏ｵ繝ｻ驕会ｽｺ騾ｧ繝ｻ竊馴囓・｣隰ｾ・ｾ
+    Finalize();
+}
+
+/*
+ * 郢ｧ・ｲ郢晢ｽｼ郢晢ｿｽ郢晏干ﾎ樒ｹｧ・､闕ｳ・ｭ邵ｺ・ｮ郢晢ｽｭ郢晢ｽｼ郢晁崟竕ｦ陝抵ｽｶ郢ｧ蟶昜ｺ溽ｸｺ闊娯螺郢ｧ竏昴・鬮ｻ・ｳ雋・・・定崕譎・ｄ陋ｹ蛹∝・邵ｺ・ｫ髫ｱ・ｭ邵ｺ・ｿ髴趣ｽｼ郢ｧﾂ
+ * [陷茨ｽ･陷牙ｫ・縺ｪ縺・
+ * [陷・ｽｺ陷牙ｫ・縺ｪ縺・
+ * [陷托ｽｯ闖ｴ諛・舞] 蝣ｴ蜷医Ρ郢晢ｽｳ郢晏ｳｨﾎ晉ｹ晢ｽｪ郢ｧ・ｹ郢晏現竊鍋ｹｧ・ｵ郢ｧ・ｦ郢晢ｽｳ郢晏ｳｨﾎ懃ｹｧ・ｽ郢晢ｽｼ郢ｧ・ｹ郢ｧ蝣､蛹ｳ鬪ｭ・ｲ
+ */
+void SoundManager::Initialize()
+{
+    LoadBGM(SoundBgm::kBgmTitle, "Resource/BGM/hajimetenootsukai.mp3");
+    LoadBGM(SoundBgm::kBgmGame, "Resource/BGM/natsuyasuminotanken.mp3");
+    LoadBGM(SoundBgm::kBgmResult, "Resource/BGM/retrogamecenter3.mp3");
+    LoadBGM(SoundBgm::kBgmTutorial, "Resource/BGM/MusMus-BGM-103.mp3");
+    LoadBGM(SoundBgm::kBgmRule, "Resource/BGM/MusMus-BGM-158.mp3");
+
+    LoadSE(SoundSe::kSeDecide, "Resource/SE/豎ｺ螳壹・繧ｿ繝ｳ繧呈款縺・2.mp3");
+    LoadSE(SoundSe::kSeCow, "Resource/SE/迚帙・魑ｴ縺榊｣ｰ.mp3");
+    LoadSE(SoundSe::kSeChicken, "Resource/SE/MusMus-BGM-084");
+    LoadSE(SoundSe::kSeTornado, "Resource/SE/螟ｩ蛟吶・鬚ｨ荳蜷ｹ縺搾ｼ医＠繧峨￠陦ｨ迴ｾ・・mp3");
+    LoadSE(SoundSe::kSeKaminari, "Resource/SE/螟ｩ蛟吶・髮ｷ01.mp3");
+    LoadSE(SoundSe::kSeTutorialChange, "Resource/SE/繧ｷ繝ｼ繝ｳ蛻・ｊ譖ｿ縺・.mp3");
+    LoadSE(SoundSe::kSeBeam, "Resource/SE/HP蜷ｸ蜿朱ｭ疲ｳ・.mp3");
+    LoadSE(SoundSe::kSeSkillStatus, "Resource/SE/繧ｹ繝・・繧ｿ繧ｹ荳頑・鬲疲ｳ・.mp3");
+    LoadSE(SoundSe::kSeSkillFood, "Resource/SE/繝ｭ繝懊ャ繝郁ｵｷ蜍・.mp3");
+    LoadSE(SoundSe::kSeBaitFinal, "Resource/SE/鬮倬溽ｧｻ蜍・mp3");
+}
+
+/*
+ * 郢晢ｽ｡郢晢ｽ｢郢晢ｽｪ郢晢ｽｪ郢晢ｽｼ郢ｧ・ｯ郢ｧ蟶昜ｺ溽ｸｺ闊娯螺郢ｧ竏壹・陷茨ｽｨ郢ｧ・ｵ郢ｧ・ｦ郢晢ｽｳ郢晏ｳｨﾎ懃ｹｧ・ｽ郢晢ｽｼ郢ｧ・ｹ髫暦ｽ｣隰ｾ・ｾ
+ * [陷茨ｽ･陷牙ｫ・縺ｪ縺・
+ * [陷・ｽｺ陷牙ｫ・縺ｪ縺・
+ * [陷托ｽｯ闖ｴ諛・舞] BGM繝ｻSE郢昜ｸ莞ｦ郢晏ｳｨﾎ晉ｸｺ・ｮ陷台ｼ∝求邵ｺ・ｨ郢晢ｽｪ郢ｧ・ｹ郢晏現繝ｻ郢ｧ・ｯ郢晢ｽｪ郢ｧ・｢
+ */
+void SoundManager::Finalize()
+{
+    for (auto& pair : bgm_handle_list_)
+    {
+        DeleteSoundMem(pair.second);
+    }
+    bgm_handle_list_.clear();
+
+    for (auto& pair : se_handle_list_)
+    {
+        DeleteSoundMem(pair.second);
+    }
+    se_handle_list_.clear();
+}
+
+/*
+ * BGM邵ｺ・ｮ陷蜥ｲ蜃ｽ邵ｺ・ｨ邵ｲ竏晞・闕ｳﾂ隴厄ｽｲ邵ｺ・ｮ闔遒√裟陷蜥ｲ蜃ｽ鬮ｦ・ｲ雎・ｽ｢郢ｧ雋槫ｮ幄包ｽ｡邵ｺ蜷ｶ・・
+ * [陷茨ｽ･陷牙ｫ・bgm: 陷蜥ｲ蜃ｽ邵ｺ蜷ｶ・毅GMID, isTop: 陷育｣ｯ・ｽ・ｭ邵ｺ荵晢ｽ芽怙蜥ｲ蜃ｽ邵ｺ蜷ｶ・狗ｸｺ繝ｻ
+ * [陷・ｽｺ陷牙ｫ・縺ｪ縺・
+ * [陷托ｽｯ闖ｴ諛・舞] BGM陷蜥ｲ蜃ｽ鬮｢蜿･・ｧ荵敖・ｻnNowPlayingBgm邵ｺ・ｮ隴厄ｽｴ隴・ｽｰ
+ */
+void SoundManager::PlayBGM(SoundBgm bgm, bool isTop)
+{
+    // 陷ｷ蠕｡・ｸﾂ隴厄ｽｲ邵ｺ譴ｧ谺陞ｳ螢ｹ・・ｹｧ蠕娯螺陜｣・ｴ陷ｷ蛹ｻﾂ竏ｵ蟲・ｸｺ・ｮ闕ｳ蟠弱・霎滂ｽｶ邵ｺ・ｪ陷蝓ｼ蟷慕ｹｧ蟶昜ｺ溽ｸｺ闊娯螺郢ｧ竏昴・騾・・・堤ｹｧ・ｹ郢ｧ・ｭ郢昴・繝ｻ
+    if (now_playing_bgm_ == bgm && !isTop)
+    {
+        return;
+    }
+
+    for (auto it = bgm_handle_list_.begin(); it != bgm_handle_list_.end(); it++)
+    {
+        if (it->first == bgm)
+        {
+            // 髫ｪ・ｭ陞ｳ螢ｹ・・ｹｧ蠕娯ｻ邵ｺ繝ｻ・玖ｭ崢隴・ｽｰ邵ｺ・ｮ郢晄ｧｭ縺帷ｹｧ・ｿ郢晢ｽｼ鬮ｻ・ｳ鬩･荳翫定怙蜥ｲ蜃ｽ郢ｧ蟶晏ｹ戊沂荵昶・郢ｧ繝ｻ
+            ChangeVolumeSoundMem(master_bgm_volume_, it->second);
+            PlaySoundMem(it->second, DX_PLAYTYPE_LOOP, isTop);
+            now_playing_bgm_ = bgm;
+            break;
+        }
+    }
+}
+
+/*
+ * 陷会ｽｹ隴ｫ諞ｺ豬ｹ郢ｧ蛛ｵ繝ｰ郢昴・縺醍ｹｧ・ｰ郢晢ｽｩ郢ｧ・ｦ郢晢ｽｳ郢晏ｳｨ縲定叉・ｦ陋ｻ諤懊・騾墓ｺ倪・郢ｧ繝ｻ
+ * [陷茨ｽ･陷牙ｫ・se: 陷蜥ｲ蜃ｽ邵ｺ蜷ｶ・鬼E邵ｺ・ｮID
+ * [陷・ｽｺ陷牙ｫ・縺ｪ縺・
+ * [陷托ｽｯ闖ｴ諛・舞] SE陷蜥ｲ蜃ｽ鬮｢蜿･・ｧ荵敖・ｻnNowPlayingSe邵ｺ・ｮ隴厄ｽｴ隴・ｽｰ
+ */
+void SoundManager::PlaySE(SoundSe se)
+{
+    for (auto it = se_handle_list_.begin(); it != se_handle_list_.end(); it++)
+    {
+        if (it->first == se)
+        {
+            // SE邵ｺ・ｯ髫阪・辟夊惺譴ｧ蜃ｾ邵ｺ・ｫ鬲托ｽｴ郢ｧ蜿･蠎・妙・ｽ隲､・ｧ邵ｺ蠕娯旺郢ｧ荵昶螺郢ｧ竏ｽ・ｸ・ｦ陋ｻ諤懊・騾墓ｺ假ｽ定ｬ悶・・ｮ繝ｻ
+            PlaySoundMem(it->second, DX_PLAYTYPE_BACK);
+            now_playing_se_ = se;
+            break;
+        }
+    }
+}
+
+/*
+ * 鬮ｻ・ｳ雋・・繝ｻ闔遒√裟郢晢ｽｭ郢晢ｽｼ郢晏ｳｨ・帝ｫｦ・ｲ邵ｺ蠑ｱ笆ｽ邵ｺ・､BGM郢ｧ蛛ｵﾎ鍋ｹ晢ｽ｢郢晢ｽｪ邵ｺ・ｫ鬩溷調・ｽ・ｮ邵ｺ蜷ｶ・・
+ * [陷茨ｽ･陷牙ｫ・bgm: 騾具ｽｻ鬪ｭ・ｲID, filename: 郢晁ｼ斐＜郢ｧ・､郢晢ｽｫ郢昜ｻ｣縺・
+ * [陷・ｽｺ陷牙ｫ・縺ｪ縺・
+ * [陷托ｽｯ闖ｴ諛・舞] 郢昜ｸ莞ｦ郢晏ｳｨﾎ晁愾髢・ｾ蜉ｱ竊堤ｹ晢ｽｪ郢ｧ・ｹ郢晏現竏育ｸｺ・ｮ髴托ｽｽ陷会ｿｽ
+ */
+void SoundManager::LoadBGM(SoundBgm bgm, std::string filename)
+{
+    // 霎滂ｽ｡鬯ｧ繝ｻ竊醍ｹ晢ｽ｡郢晢ｽ｢郢晢ｽｪ雎ｸ驛・ｽｲ・ｻ郢ｧ蟶昜ｺ溽ｸｺ闊娯螺郢ｧ竏堋竏ｵ驥檎ｸｺ・ｫ騾具ｽｻ鬪ｭ・ｲ雋ょ現竏ｩ邵ｺ・ｮ陜｣・ｴ陷ｷ蛹ｻ繝ｻ郢ｧ・ｹ郢ｧ・ｭ郢昴・繝ｻ
+    for (auto it = bgm_handle_list_.begin(); it != bgm_handle_list_.end(); it++)
+    {
+        if (it->first == bgm)
+        {
+            return;
+        }
+    }
+
+    int handle = LoadSoundMem(filename.c_str());
+    // 陝・ｼ懈Β邵ｺ蜉ｱ竊醍ｸｺ繝ｻ繝ｵ郢ｧ・｡郢ｧ・､郢晢ｽｫ郢昜ｻ｣縺幃・蟲ｨ竊鍋ｹｧ蛹ｻ・玖ｾ滂ｽ｡陷会ｽｹ邵ｺ・ｪ郢昜ｸ莞ｦ郢晏ｳｨﾎ晞具ｽｻ鬪ｭ・ｲ郢ｧ蟶昜ｺ溽ｸｺ繝ｻ
+    if (handle == -1)
+    {
+        return;
+    }
+    ChangeVolumeSoundMem(master_bgm_volume_, handle);
+    bgm_handle_list_.push_back(std::pair<SoundBgm, int>(bgm, handle));
+}
+
+/*
+ * 鬮ｻ・ｳ雋・・繝ｻ闔遒√裟郢晢ｽｭ郢晢ｽｼ郢晏ｳｨ・帝ｫｦ・ｲ邵ｺ蠑ｱ笆ｽ邵ｺ・､SE郢ｧ蛛ｵﾎ鍋ｹ晢ｽ｢郢晢ｽｪ邵ｺ・ｫ鬩溷調・ｽ・ｮ邵ｺ蜷ｶ・・
+ * [陷茨ｽ･陷牙ｫ・se: 騾具ｽｻ鬪ｭ・ｲID, filename: 郢晁ｼ斐＜郢ｧ・､郢晢ｽｫ郢昜ｻ｣縺・
+ * [陷・ｽｺ陷牙ｫ・縺ｪ縺・
+ * [陷托ｽｯ闖ｴ諛・舞] 郢昜ｸ莞ｦ郢晏ｳｨﾎ晁愾髢・ｾ蜉ｱ竊堤ｹ晢ｽｪ郢ｧ・ｹ郢晏現竏育ｸｺ・ｮ髴托ｽｽ陷会ｿｽ
+ */
+void SoundManager::LoadSE(SoundSe se, std::string filename)
+{
+    // 霎滂ｽ｡鬯ｧ繝ｻ竊醍ｹ晢ｽ｡郢晢ｽ｢郢晢ｽｪ雎ｸ驛・ｽｲ・ｻ郢ｧ蟶昜ｺ溽ｸｺ闊娯螺郢ｧ竏堋竏ｵ驥檎ｸｺ・ｫ騾具ｽｻ鬪ｭ・ｲ雋ょ現竏ｩ邵ｺ・ｮ陜｣・ｴ陷ｷ蛹ｻ繝ｻ郢ｧ・ｹ郢ｧ・ｭ郢昴・繝ｻ
+    for (auto it = se_handle_list_.begin(); it != se_handle_list_.end(); it++)
+    {
+        if (it->first == se)
+        {
+            return;
+        }
+    }
+
+    int handle = LoadSoundMem(filename.c_str());
+    // 陝・ｼ懈Β邵ｺ蜉ｱ竊醍ｸｺ繝ｻ繝ｵ郢ｧ・｡郢ｧ・､郢晢ｽｫ郢昜ｻ｣縺幃・蟲ｨ竊鍋ｹｧ蛹ｻ・玖ｾ滂ｽ｡陷会ｽｹ邵ｺ・ｪ郢昜ｸ莞ｦ郢晏ｳｨﾎ晞具ｽｻ鬪ｭ・ｲ郢ｧ蟶昜ｺ溽ｸｺ繝ｻ
+    if (handle == -1)
+    {
+        return;
+    }
+    ChangeVolumeSoundMem(master_se_volume_, handle);
+    se_handle_list_.push_back(std::pair<SoundSe, int>(se, handle));
+}
+
+/*
+ * 郢ｧ・ｷ郢晢ｽｼ郢晢ｽｳ驍ｨ繧・ｽｺ繝ｻ蜃ｾ邵ｺ・ｪ邵ｺ・ｩ邵ｺ・ｫ霑ｴ・ｾ陜ｨ・ｨ陷蜥ｲ蜃ｽ闕ｳ・ｭ邵ｺ・ｮBGM郢ｧ蜻茨ｽｭ・｢郢ｧ竏夲ｽ・
+ * [陷茨ｽ･陷牙ｫ・縺ｪ縺・
+ * [陷・ｽｺ陷牙ｫ・縺ｪ縺・
+ * [陷托ｽｯ闖ｴ諛・舞] 陷蜥ｲ蜃ｽ闕ｳ・ｭ邵ｺ・ｮBGM郢ｧ雋樞酪雎・ｽ｢
+ */
+void SoundManager::StopBGM()
+{
+    for (auto it = bgm_handle_list_.begin(); it != bgm_handle_list_.end(); it++)
+    {
+        if (it->first == now_playing_bgm_)
+        {
+            // DxLib陋幢ｽｴ邵ｺ・ｧ隴鯉ｽ｢邵ｺ・ｫ陋帶㊧・ｭ・｢邵ｺ蜉ｱ窶ｻ邵ｺ繝ｻ・玖撻・ｴ陷ｷ蛹ｻ繝ｻ郢ｧ・ｨ郢晢ｽｩ郢晢ｽｼ郢ｧ雋槫ｱ馴ｩ包ｽｿ
+            if (CheckSoundMem(it->second))
+            {
+                StopSoundMem(it->second);
+                break;
+            }
+        }
+    }
+}
+
+/*
+ * 郢晢ｽｭ郢晢ｽｼ郢晉判・ｸ蛹ｻ竏ｩ陷茨ｽｨBGM邵ｺ・ｫ鬮ｻ・ｳ鬩･荳奇ｽ定叉ﾂ隲｡・ｬ鬩包ｽｩ騾包ｽｨ邵ｺ蜷ｶ・・
+ * [陷茨ｽ･陷牙ｫ・volume: 鬮ｻ・ｳ鬩･荳楪・､(0-255)
+ * [陷・ｽｺ陷牙ｫ・縺ｪ縺・
+ * [陷托ｽｯ闖ｴ諛・舞] 郢昜ｸ莞ｦ郢晏ｳｨﾎ晉ｹｧ蟶敖螢ｹﾂｧ邵ｺ讙ｻGM鬮ｻ・ｳ鬩･荳橸ｽ､逕ｻ蟲ｩ
+ */
+void SoundManager::SetBGMVolume(int volume)
+{
+    for (auto it = bgm_handle_list_.begin(); it != bgm_handle_list_.end(); it++)
+    {
+        ChangeVolumeSoundMem(volume, it->second);
+    }
+}
+
+/*
+ * 郢晢ｽｭ郢晢ｽｼ郢晉判・ｸ蛹ｻ竏ｩ陷茨ｽｨSE邵ｺ・ｫ鬮ｻ・ｳ鬩･荳奇ｽ定叉ﾂ隲｡・ｬ鬩包ｽｩ騾包ｽｨ邵ｺ蜷ｶ・・
+ * [陷茨ｽ･陷牙ｫ・volume: 鬮ｻ・ｳ鬩･荳楪・､(0-255)
+ * [陷・ｽｺ陷牙ｫ・縺ｪ縺・
+ * [陷托ｽｯ闖ｴ諛・舞] 郢昜ｸ莞ｦ郢晏ｳｨﾎ晉ｹｧ蟶敖螢ｹﾂｧ邵ｺ谺胞鬮ｻ・ｳ鬩･荳橸ｽ､逕ｻ蟲ｩ
+ */
+void SoundManager::SetSEVolume(int volume)
+{
+    for (auto it = se_handle_list_.begin(); it != se_handle_list_.end(); it++)
+    {
+        ChangeVolumeSoundMem(volume, it->second);
+    }
+}
+
+/*
+ * 郢ｧ・ｷ郢ｧ・ｹ郢昴・ﾎ帝坎・ｭ陞ｳ螢ｹ竊醍ｸｺ・ｩ邵ｺ・ｧ闕ｳﾂ隲｡・ｬ陞溽判蟲ｩ邵ｺ霈費ｽ檎ｹｧ豈・M郢晄ｧｭ縺帷ｹｧ・ｿ郢晢ｽｼ鬮ｻ・ｳ鬩･荳奇ｽ帝ｩ包ｽｩ騾包ｽｨ邵ｺ蜷ｶ・・
+ * [陷茨ｽ･陷牙ｫ・volume: 陜難ｽｺ雋・､懈ｵｹ鬩･繝ｻ0-255)
+ * [陷・ｽｺ陷牙ｫ・縺ｪ縺・
+ * [陷托ｽｯ闖ｴ諛・舞] mMasterBGMVolume隴厄ｽｴ隴・ｽｰ邵ｲ竏昴・BGM邵ｺ・ｸ鬮ｻ・ｳ鬩･荳樊ｸ夊ｭ擾ｿｽ
+ */
+void SoundManager::SetMasterBGMVolume(int volume)
+{
+    // DxLib邵ｺ・ｮ鬮ｻ・ｳ鬩･荵玲ｬ陞ｳ螟ゑｽｯ繝ｻ蟲・0-255)陞滓じ繝ｻ陋滂ｽ､郢ｧ蟶昜ｺ溽ｸｺ闊娯螺郢ｧ竏壹・郢ｧ・ｯ郢晢ｽｩ郢晢ｽｳ郢昴・
+    if (volume < 0) volume = 0;
+    if (volume > 255) volume = 255;
+    master_bgm_volume_ = volume;
+    SetBGMVolume(master_bgm_volume_);
+}
+
+/*
+ * 郢ｧ・ｷ郢ｧ・ｹ郢昴・ﾎ帝坎・ｭ陞ｳ螢ｹ竊醍ｸｺ・ｩ邵ｺ・ｧ闕ｳﾂ隲｡・ｬ陞溽判蟲ｩ邵ｺ霈費ｽ檎ｹｧ鬯ｼE郢晄ｧｭ縺帷ｹｧ・ｿ郢晢ｽｼ鬮ｻ・ｳ鬩･荳奇ｽ帝ｩ包ｽｩ騾包ｽｨ邵ｺ蜷ｶ・・
+ * [陷茨ｽ･陷牙ｫ・volume: 陜難ｽｺ雋・､懈ｵｹ鬩･繝ｻ0-255)
+ * [陷・ｽｺ陷牙ｫ・縺ｪ縺・
+ * [陷托ｽｯ闖ｴ諛・舞] mMasterSEVolume隴厄ｽｴ隴・ｽｰ邵ｲ竏昴・SE邵ｺ・ｸ鬮ｻ・ｳ鬩･荳樊ｸ夊ｭ擾ｿｽ
+ */
+void SoundManager::SetMasterSEVolume(int volume)
+{
+    // DxLib邵ｺ・ｮ鬮ｻ・ｳ鬩･荵玲ｬ陞ｳ螟ゑｽｯ繝ｻ蟲・0-255)陞滓じ繝ｻ陋滂ｽ､郢ｧ蟶昜ｺ溽ｸｺ闊娯螺郢ｧ竏壹・郢ｧ・ｯ郢晢ｽｩ郢晢ｽｳ郢昴・
+    if (volume < 0) volume = 0;
+    if (volume > 255) volume = 255;
+    master_se_volume_ = volume;
+    SetSEVolume(master_se_volume_);
+}
+===== SoundManager.h =====
+#pragma once
+#include<string>
+#include<vector>
+
+// 繧ｲ繝ｼ繝蜀・GM縺ｨSE縺ｮ莠碁㍾蜀咲函髦ｲ豁｢繧・浹驥上・荳諡ｬ蛻ｶ蠕｡繧定｡後≧縺溘ａ縺ｮ邂｡逅・け繝ｩ繧ｹ
+class SoundManager
+{
+public:
+    // 繧ｷ繝ｼ繝ｳ驕ｷ遘ｻ譎ゅ・BGM蛻・ｊ譖ｿ縺育畑ID
+    enum SoundBgm
+    {
+        kBgmTitle = 0,
+        kBgmGame,
+        kBgmResult,
+        kBgmTutorial,
+        kBgmRule,
+    };
+
+    // 場合ｨｮ繧｢繧ｯ繧ｷ繝ｧ繝ｳ蜉ｹ譫憺浹蜻ｼ縺ｳ蜃ｺ縺礼畑ID
+    enum SoundSe
+    {
+        kSeDecide = 0,
+        kSeCow,
+        kSeBeam,
+        kSeSkillStatus,
+        kSeSkillFood,
+        kSeChicken,
+        kSeTornado,
+        kSeKaminari,
+        kSeTutorialChange,
+        kSeBaitFinal,
+    };
+
+    SoundManager();
+    ~SoundManager();
+
+    /*
+     * 繧ｲ繝ｼ繝繝励Ξ繧､荳ｭ縺ｮ繝ｭ繝ｼ繝蛾≦蟒ｶ繧帝亟縺舌◆繧∝・髻ｳ貅舌ｒ蛻晄悄蛹匁凾縺ｫ隱ｭ縺ｿ霎ｼ繧
+     * [蜈･蜉嫋 なし
+     * [蜃ｺ蜉嫋 なし
+     * [蜑ｯ菴懃畑] 場合ワ繝ｳ繝峨Ν繝ｪ繧ｹ繝医↓繧ｵ繧ｦ繝ｳ繝峨Μ繧ｽ繝ｼ繧ｹ繧堤匳骭ｲ
+     */
+    void Initialize();
+
+    /*
+     * 繝｡繝｢繝ｪ繝ｪ繝ｼ繧ｯ繧帝亟縺舌◆繧√・蜈ｨ繧ｵ繧ｦ繝ｳ繝峨Μ繧ｽ繝ｼ繧ｹ隗｣謾ｾ
+     * [蜈･蜉嫋 なし
+     * [蜃ｺ蜉嫋 なし
+     * [蜑ｯ菴懃畑] BGM・SE繝上Φ繝峨Ν縺ｮ蜑企勁縺ｨ繝ｪ繧ｹ繝医・繧ｯ繝ｪ繧｢
+     */
+    void Finalize();
+
+    /*
+     * BGM縺ｮ蜀咲函縺ｨ縲∝酔荳譖ｲ縺ｮ莠碁㍾蜀咲函髦ｲ豁｢繧貞宛蠕｡縺吶ｋ
+     * [蜈･蜉嫋 bgm: 蜀咲函縺吶ｋBGMID, IsTop: true縺ｧ蜈磯ｭ縺九ｉ蜀咲函
+     * [蜃ｺ蜉嫋 なし
+     * [蜑ｯ菴懃畑] BGM蜀咲函髢句ｧ九［nNowPlayingBgm縺ｮ譖ｴ譁ｰ
+     */
+    void PlayBGM(SoundBgm bgm, bool IsTop = true);
+
+    /*
+     * 蜉ｹ譫憺浹繧偵ヰ繝・け繧ｰ繝ｩ繧ｦ繝ｳ繝峨〒荳ｦ蛻怜・逕溘☆繧・
+     * [蜈･蜉嫋 se: 蜀咲函縺吶ｋSE縺ｮID
+     * [蜃ｺ蜉嫋 なし
+     * [蜑ｯ菴懃畑] SE蜀咲函髢句ｧ九［nNowPlayingSe縺ｮ譖ｴ譁ｰ
+     */
+    void PlaySE(SoundSe se);
+
+    /*
+     * 髻ｳ貅舌・莠碁㍾繝ｭ繝ｼ繝峨ｒ髦ｲ縺弱▽縺､BGM繧偵Γ繝｢繝ｪ縺ｫ驟咲ｽｮ縺吶ｋ
+     * [蜈･蜉嫋 bgm: 逋ｻ骭ｲID, filename: 繝輔ぃ繧､繝ｫ繝代せ
+     * [蜃ｺ蜉嫋 なし
+     * [蜑ｯ菴懃畑] 繝上Φ繝峨Ν蜿門ｾ励→繝ｪ繧ｹ繝医∈縺ｮ霑ｽ蜉
+     */
+    void LoadBGM(SoundBgm bgm, std::string filename);
+
+    /*
+     * 髻ｳ貅舌・莠碁㍾繝ｭ繝ｼ繝峨ｒ髦ｲ縺弱▽縺､SE繧偵Γ繝｢繝ｪ縺ｫ驟咲ｽｮ縺吶ｋ
+     * [蜈･蜉嫋 se: 逋ｻ骭ｲID, filename: 繝輔ぃ繧､繝ｫ繝代せ
+     * [蜃ｺ蜉嫋 なし
+     * [蜑ｯ菴懃畑] 繝上Φ繝峨Ν蜿門ｾ励→繝ｪ繧ｹ繝医∈縺ｮ霑ｽ蜉
+     */
+    void LoadSE(SoundSe se, std::string filename);
+
+    /*
+     * 繧ｷ繝ｼ繝ｳ邨ゆｺ・凾縺ｪ縺ｩ縺ｫ迴ｾ蝨ｨ蜀咲函荳ｭ縺ｮBGM繧呈ｭ｢繧√ｋ
+     * [蜈･蜉嫋 なし
+     * [蜃ｺ蜉嫋 なし
+     * [蜑ｯ菴懃畑] 蜀咲函荳ｭ縺ｮBGM繧貞●豁｢
+     */
+    void StopBGM();
+
+    /*
+     * 繝ｭ繝ｼ繝画ｸ医∩蜈ｨBGM縺ｫ髻ｳ驥上ｒ荳諡ｬ驕ｩ逕ｨ縺吶ｋ
+     * [蜈･蜉嫋 volume: 髻ｳ驥丞､(0-255)
+     * [蜃ｺ蜉嫋 なし
+     * [蜑ｯ菴懃畑] 繝上Φ繝峨Ν繧帝壹§縺檻GM髻ｳ驥丞､画峩
+     */
+    void SetBGMVolume(int volume);
+
+    /*
+     * 繝ｭ繝ｼ繝画ｸ医∩蜈ｨSE縺ｫ髻ｳ驥上ｒ荳諡ｬ驕ｩ逕ｨ縺吶ｋ
+     * [蜈･蜉嫋 volume: 髻ｳ驥丞､(0-255)
+     * [蜃ｺ蜉嫋 なし
+     * [蜑ｯ菴懃畑] 繝上Φ繝峨Ν繧帝壹§縺欖E髻ｳ驥丞､画峩
+     */
+    void SetSEVolume(int volume);
+
+    int GetMasterBGMVolume() const { return master_bgm_volume_; }
+    int GetMasterSEVolume() const { return master_se_volume_; }
+
+    /*
+     * 繧ｷ繧ｹ繝・Β險ｭ螳壹↑縺ｩ縺ｧ荳諡ｬ螟画峩縺輔ｌ繧毅GM繝槭せ繧ｿ繝ｼ髻ｳ驥上ｒ驕ｩ逕ｨ縺吶ｋ
+     * [蜈･蜉嫋 volume: 蝓ｺ貅夜浹驥・0-255)
+     * [蜃ｺ蜉嫋 なし
+     * [蜑ｯ菴懃畑] mMasterBGMVolume譖ｴ譁ｰ縲∝・BGM縺ｸ髻ｳ驥丞渚譏
+     */
+    void SetMasterBGMVolume(int volume);
+
+    /*
+     * 繧ｷ繧ｹ繝・Β險ｭ螳壹↑縺ｩ縺ｧ荳諡ｬ螟画峩縺輔ｌ繧鬼E繝槭せ繧ｿ繝ｼ髻ｳ驥上ｒ驕ｩ逕ｨ縺吶ｋ
+     * [蜈･蜉嫋 volume: 蝓ｺ貅夜浹驥・0-255)
+     * [蜃ｺ蜉嫋 なし
+     * [蜑ｯ菴懃畑] mMasterSEVolume譖ｴ譁ｰ縲∝・SE縺ｸ髻ｳ驥丞渚譏
+     */
+    void SetMasterSEVolume(int volume);
+
+private:
+    int master_bgm_volume_ = 255;
+    int master_se_volume_ = 255;
+
+    // 蛛懈ｭ｢蜃ｦ逅・ｄ莠碁㍾蜀咲函髦ｲ豁｢縺ｮ蛻､螳壹↓逕ｨ縺・ｋ迥ｶ諷倶ｿ晄戟
+    SoundBgm now_playing_bgm_;
+    SoundSe now_playing_se_;
+
+    std::vector<std::pair<SoundBgm, int>> bgm_handle_list_;
+    std::vector<std::pair<SoundSe, int>> se_handle_list_;
+};
+===== SphereCollider.cpp =====
+#include "SphereCollider.h"
+#include"CapsuleCollider.h"
+
+SphereCollider::SphereCollider(Object3D* parent, VECTOR center, float radius)
+	: Collider(parent)
+{
+	position_ = center;
+	radius_ = radius;
+}
+
+SphereCollider::~SphereCollider()
+{
+
+}
+
+void SphereCollider::Draw()
+{
+	// 逅・・謠冗判蜃ｦ逅・
+	DrawSphere3D(
+		position_,
+		radius_,
+		8,
+		GetColor(255, 255, 255),
+		GetColor(255, 255, 255),
+		false
+	);
+}
+
+void SphereCollider::OnEnter()
+{
+
+}
+
+void SphereCollider::OnTrigger()
+{
+
+}
+
+void SphereCollider::OnExit()
+{
+
+}
+===== SphereCollider.h =====
+#pragma once
+#include "Collider.h"
+
+// 逅・ｽ灘ｽ｢迥ｶ・井ｸｭ必要せ縺ｨ蜊雁ｾ・ｼ峨・蠖薙◆繧雁愛螳壹さ繝ｩ繧､繝繝ｼ繧ｯ繝ｩ繧ｹ
+class SphereCollider : public Collider
+{
+public:
+	/*
+	 * @brief 逅・ｽ薙さ繝ｩ繧､繝繝ｼ縺ｮ蛻晄悄險ｭ螳壹ｒ陦後≧
+	 * [蜈･蜉嫋 parent: 隕ｪ繧ｪ繝悶ず繧ｧ繧ｯ繝・ center: 荳ｭ必要ｺｧ讓・ radius: 蜊雁ｾ・
+	 * [蜃ｺ蜉嫋 なし
+	 * [蜑ｯ菴懃畑] なし
+	 */
+	SphereCollider(Object3D* parent, VECTOR center, float radius);
+	virtual ~SphereCollider();
+
+	/*
+	 * @brief 逅・・3D繝ｯ繧､繝､繝ｼ繝輔Ξ繝ｼ繝繧呈緒逕ｻ縺吶ｋ・医ョ繝舌ャ繧ｰ陦ｨ遉ｺ逕ｨ・・
+	 * [蜈･蜉嫋 なし
+	 * [蜃ｺ蜉嫋 なし
+	 * [蜑ｯ菴懃畑] なし
+	 */
+	void Draw() override;
+
+	void OnEnter() override;
+	void OnTrigger() override;
+	void OnExit() override;
+
+};
+
+
+===== Stage.cpp =====
+#include "Stage.h"
+#include "Master.h"
+
+Stage::Stage(VECTOR initPos, std::string stageModelName, std::string stageCollisionModelName)
+	: Object3D(initPos)
+{
+	SetTag(Object3D::kTag3dStage);
+
+	model_handle_ = Master::mpResourceManager->LoadModel(stageModelName);
+	collision_handle_ = Master::mpResourceManager->LoadModel(stageCollisionModelName);
+
+	// 螳溯｡梧凾縺ｮ雋闕ｷ繧定ｻｽ貂帙☆繧九◆繧√∝・譛溷喧譎ゅ↓繝昴Μ繧ｴ繝ｳ諠・ｱ繧剃ｺ句燕讒狗ｯ峨＠縺ｦ縺翫￥
+	float StageSize = 5.0f;
+	MV1SetScale(model_handle_, VGet(StageSize, 0.3f, StageSize));
+	MV1SetScale(collision_handle_, VGet(StageSize, 0.3f, StageSize));
+	MV1SetPosition(collision_handle_, initPos);
+	MV1SetPosition(model_handle_, initPos);
+	MV1SetupCollInfo(collision_handle_);
+}
+
+Stage::~Stage()
+{
+	MV1DeleteModel(model_handle_);
+	MV1DeleteModel(collision_handle_);
+}
+
+void Stage::Update()
+{
+}
+
+void Stage::Draw()
+{
+	MV1DrawModel(model_handle_);
+}
+
+bool Stage::CheckHit_Capsule(VECTOR pos1, VECTOR pos2, float r)
+{
+	MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Capsule(collision_handle_, -1, pos1, pos2, r);
+
+	if (result.HitNum >= 1)
+	{
+		for (int i = 0; i < result.HitNum; i++)
+		{
+			DrawTriangle3D(
+				result.Dim[i].Position[0],
+				result.Dim[i].Position[1],
+				result.Dim[i].Position[2],
+				GetColor(255, 0, 0),
+				0
+			);
+		}
+	}
+	
+	// 繝｡繝｢繝ｪ繝ｪ繝ｼ繧ｯ繧帝亟縺舌◆繧√∝虚逧・｢ｺ菫昴＆繧後◆蛻､螳夂ｵ先棡縺ｯ必要★隗｣謾ｾ縺吶ｋ
+	MV1CollResultPolyDimTerminate(result);
+
+	return (result.HitNum >= 1);
+}
+
+VECTOR Stage::CheckHit_Line(VECTOR pos1, VECTOR pos2)
+{
+	VECTOR ret = VGet(0.0f, 0.0f, 0.0f);
+
+	auto result = MV1CollCheck_Line(collision_handle_, -1, pos1, pos2);
+
+	if (result.HitFlag)
+	{
+		ret = result.HitPosition;
+	}
+
+	return ret;
+}
+
+VECTOR Stage::CheckHit_LineDebug(VECTOR pos1, VECTOR pos2)
+{
+	VECTOR ret = VGet(0.0f, 0.0f, 0.0f);
+
+	auto result = MV1CollCheck_Line(collision_handle_, -1, pos1, pos2);
+
+	if (result.HitFlag)
+	{
+		ret = result.HitPosition;
+		DrawFormatString(200, 0, GetColor(255, 0, 0), "Hit: x:%f, y:%f. z:%f", ret.x, ret.y, ret.z);
+	}
+	else
+	{
+		DrawFormatString(200, 0, GetColor(255, 0, 0), "Hit None");
+	}
+
+	return ret;
+}
+===== Stage.h =====
+#pragma once
+#include "Object3D.h"
+#include <string>
+
+// 閭梧勹謠冗判縺ｨ迚ｩ逅・愛螳壹ｒ蛻・屬縺励※譛驕ｩ蛹悶☆繧九◆繧√・縺､縺ｮ繝｢繝・Ν繧貞酔譛溽ｮ｡逅・☆繧・
+class Stage : public Object3D
+{
+public:
+	/*
+	 * @brief 蝨ｰ蠖｢謠冗判繝｢繝・Ν縺ｨ陦晉ｪ∝愛螳夂畑繝｢繝・Ν繧偵◎繧後◇繧瑚ｪｭ縺ｿ霎ｼ繧薙〒驟咲ｽｮ縺吶ｋ
+	 * [蜈･蜉嫋 initPos: 驟咲ｽｮ蛻晄悄蠎ｧ讓・ StageModelName: 蝨ｰ蠖｢謠冗判逕ｨ繝｢繝・Ν繝輔ぃ繧､繝ｫ繝代せ, stageCollsionModelName: 陦晉ｪ∝愛螳夂畑繝｢繝・Ν繝輔ぃ繧､繝ｫ繝代せ
+	 * [蜃ｺ蜉嫋 なし
+	 * [蜑ｯ菴懃畑] 場合Δ繝・Ν縺ｮ繝ｭ繝ｼ繝峨√せ繧ｱ繝ｼ繝ｫ螟画峩縲√さ繝ｪ繧ｸ繝ｧ繝ｳ諠・ｱ縺ｮ讒狗ｯ峨′陦後ｏ繧後ｋ
+	 */
+	Stage(VECTOR initPos, std::string StageModelName, std::string stageCollsionModelName);
+	virtual ~Stage();
+
+	void Update() override;
+	void Draw() override;
+
+	/*
+	 * @brief 蠑墓焚縺ｧ謖・ｮ壹＆繧後◆繧ｫ繝励そ繝ｫ鬆伜沺縺ｨ繧ｹ繝・・繧ｸ蝨ｰ蠖｢縺ｨ縺ｮ莠､蟾ｮ繧貞愛螳壹＠縲∬｡晉ｪ∫ｮ・園繧偵ョ繝舌ャ繧ｰ謠冗判縺吶ｋ
+	 * [蜈･蜉嫋 pos1, pos2: 繧ｫ繝励そ繝ｫ縺ｮ蟋狗せ・邨らせ蠎ｧ讓・ r: 繧ｫ繝励そ繝ｫ縺ｮ蜊雁ｾ・
+	 * [蜃ｺ蜉嫋 莠､蟾ｮ縺励◆蝣ｴ蜷医・true縲√◎縺・〒なしｴ蜷医・false
+	 * [蜑ｯ菴懃畑] 莠､蟾ｮ縺励◆繝昴Μ繧ｴ繝ｳ縺・D繝・ヰ繝・げ謠冗判縺輔ｌ繧・
+	 */
+	bool CheckHit_Capsule(VECTOR pos1, VECTOR pos2, float r);
+
+	/*
+	 * @brief 謖・ｮ壹＆繧後◆邱壼・縺ｨ繧ｹ繝・・繧ｸ蝨ｰ蠖｢縺ｨ縺ｮ莠､蟾ｮ菴咲ｽｮ繧定ｨ育ｮ励＠縺ｦ霑斐☆
+	 * [蜈･蜉嫋 pos1, pos2: 邱壼・縺ｮ蟋狗せ・邨らせ蠎ｧ讓・
+	 * [蜃ｺ蜉嫋 莠､蟾ｮ縺励◆菴咲ｽｮ蠎ｧ讓呻ｼ井ｺ､蟾ｮ縺励※縺・↑縺・ｴ蜷医・(0,0,0)・・
+	 * [蜑ｯ菴懃畑] なし
+	 */
+	VECTOR CheckHit_Line(VECTOR pos1, VECTOR pos2);
+
+	/*
+	 * @brief 謖・ｮ壹＆繧後◆邱壼・縺ｨ繧ｹ繝・・繧ｸ蝨ｰ蠖｢縺ｨ縺ｮ莠､蟾ｮ蛻､螳壹ｒ陦後＞縲∫ｵ先棡繧偵ョ繝舌ャ繧ｰ陦ｨ遉ｺ縺吶ｋ
+	 * [蜈･蜉嫋 pos1, pos2: 邱壼・縺ｮ蟋狗せ・邨らせ蠎ｧ讓・
+	 * [蜃ｺ蜉嫋 莠､蟾ｮ縺励◆菴咲ｽｮ蠎ｧ讓呻ｼ井ｺ､蟾ｮ縺励※縺・↑縺・ｴ蜷医・(0,0,0)・・
+	 * [蜑ｯ菴懃畑] 逕ｻ髱｢荳翫↓莠､蟾ｮ蠎ｧ讓吶・繝・ヰ繝・げ繝・く繧ｹ繝医′謠冗判縺輔ｌ繧・
+	 */
+	VECTOR CheckHit_LineDebug(VECTOR pos1, VECTOR pos2);
+
+private:
+	int model_handle_;
+	int collision_handle_;
+};
+
+===== Texture.cpp =====
+#include "Texture.h"
+#include "DxLib.h"
+#include "Master.h"
+
+Texture::Texture(std::string filename, VECTOR centerPosition, int graphsize_x, int graphsize_y, int transFlag)
+	: mnHandle(-1)
+	, position_(centerPosition)
+	, new_game_w_(graphsize_x)
+	, new_game_h_(graphsize_y)
+	, mnTransFlag(transFlag)
+{
+	mnHandle = Master::mpResourceManager->LoadGraphics(filename.c_str());
+	GetGraphSize(mnHandle, &mnSizeX, &mnSizeY); // 拡大縮小描画の基準にするためオリジナルサイズを取征E
+}
+
+Texture::~Texture()
+{
+
+}
+
+/*
+	* @brief 設定された持E??サイズ(new_game_w_, new_game_h_)で、mvPositionを中?E??引き伸ばし描画する
+	* [入力] なし
+	* [出力] なし
+	* [副作用] 持E??篁E??へチE??スチャ描画
+	*/
+void Texture::Draw()
+{
+	DrawExtendGraph(
+		static_cast<int>(position_.x - (new_game_w_ / 2)),
+		static_cast<int>(position_.y - (new_game_h_ / 2)),
+		static_cast<int>(position_.x + (new_game_w_ / 2)),
+		static_cast<int>(position_.y + (new_game_h_ / 2)),
+		mnHandle, mnTransFlag
+	);
+}
+
+/*
+	* @brief ボタンホバー演?E用などに、E??常サイズに特定?E拡張?Eexpand)を加えて拡大描画する?E?現在未使用?E?E
+	* [入力] なし
+	* [出力] なし
+	* [副作用] 持E??された拡張領域へ拡大描画
+	*/
+void Texture::SizeDraw()
+{
+	int expand = 15; // 拡大表示する際?E拡張ピクセル数
+	int halfW = (new_game_w_ + expand) / 2;
+	int halfH = (new_game_h_ + expand) / 2;
+
+	DrawExtendGraph(
+		static_cast<int>(position_.x - halfW),
+		static_cast<int>(position_.y - halfH),
+		static_cast<int>(position_.x + halfW),
+		static_cast<int>(position_.y + halfH),
+		mnHandle, mnTransFlag
+	);
+}
+
+void Texture::Update()
+{
+}
+
+/*
+	* @brief 中?E??標を軸にして、比率持E??Escale)による拡大縮小描画を行う
+	* [入力] scale: スケーリング倍率?E?E.0fが等倍！E
+	* [出力] なし
+	* [副作用] 持E??サイズでチE??スチャ描画
+	*/
+void Texture::DrawScale(float scale)
+{
+	float halfW = (new_game_w_ * scale) / 2.0f;
+	float halfH = (new_game_h_ * scale) / 2.0f;
+
+	DrawExtendGraph(
+		static_cast<int>(position_.x - halfW),
+		static_cast<int>(position_.y - halfH),
+		static_cast<int>(position_.x + halfW),
+		static_cast<int>(position_.y + halfH),
+		mnHandle, mnTransFlag
+	);
+}
+
+===== Texture.h =====
+#ifndef _TEXTURE_H_
+#define _TEXTURE_H_
+
+#include <string>
+#include "DxLib.h"
+
+// 2D画像アセチE??を読み込み、位置めE??イズ、スケーリングを指定して画面描画を行うクラス
+class Texture
+{
+public:
+	Texture(std::string filename, VECTOR centerPosition, int graphsize_x, int graphsize_y, int transFlag);
+	~Texture();
+
+	/*
+	 * @brief チE??スチャめEposition_ を中?E??持E??サイズで描画する
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 画面?E?バチE??バッファ?E?に画像を描画
+	 */
+	void Draw();
+
+	/*
+	 * @brief チE??スチャを通常サイズより少し拡大した状態で中?E??画する?E??ボタンホバー用など、現在未使用?E?E
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] 画面に拡大画像を描画
+	 */
+	void SizeDraw();
+
+	/*
+	 * @brief チE??スチャの毎フレームの更新処?E??現在処?E??し！E
+	 * [入力] なし
+	 * [出力] なし
+	 * [副作用] なし
+	 */
+	void Update();
+
+	/*
+	 * @brief チE??スチャを任意?Eスケール比率で中?E??画する
+	 * [入力] scale: スケーリング倍率?E?E.0fが等倍！E
+	 * [出力] なし
+	 * [副作用] 画面に拡大/縮小した画像を描画
+	 */
+	void DrawScale(float scale);
+
+	// セチE??ー・ゲチE??ー群
+	void SetPosition(VECTOR centerPosition) { position_ = centerPosition; }
+	VECTOR GetPosition() { return position_; }
+	int GetSizeX() { return mnSizeX; }
+	int GetSizeY() { return mnSizeY; }
+	int GetWidth() { return new_game_w_; }
+	int GetHeight() { return new_game_h_; }
+
+private:
+	int mnHandle;       // ロードした画像?EグラフィチE??ハンドル
+	VECTOR position_;  // 画面描画時?E中?E???E
+	int mnSizeX;        // 画像ファイル本来の横?E
+	int mnSizeY;        // 画像ファイル本来の縦?E
+	bool mnTransFlag;   // 背景の透過?E?透過チャンネル?E?を有効にするかどぁE??のフラグ
+
+	int new_game_w_;      // 持E??された描画用の横?E
+	int new_game_h_;      // 持E??された描画用の縦?E
+};
+
+#endif
+

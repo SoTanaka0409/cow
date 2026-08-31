@@ -70,195 +70,225 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\Admin\Desktop\progtram\Cow\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\Users\Admin\Desktop\progtram\Cow\EFKforDxLib\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
-      <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(SolutionDir)DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)EFKforDxLib\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)Source;$(ProjectDir)Source\System;$(ProjectDir)Source\Scene;$(ProjectDir)Source\Object;$(ProjectDir)Source\Actor;$(ProjectDir)Source\Animal;$(ProjectDir)Source\Stage;$(ProjectDir)Source\Camera;$(ProjectDir)Source\Collision;$(ProjectDir)Source\Graphics;$(ProjectDir)Source\UI_Input_Sound</AdditionalIncludeDirectories>
+      <AdditionalOptions>/wd4100 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Admin\Desktop\progtram\Cow\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\Users\Admin\Desktop\progtram\Cow\EFKforDxLib\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)EFKforDxLib\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>C:\Users\Admin\Desktop\progtram\Cow\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\Users\Admin\Desktop\progtram\Cow\EFKforDxLib\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(SolutionDir)DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)EFKforDxLib\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)Source;$(ProjectDir)Source\System;$(ProjectDir)Source\Scene;$(ProjectDir)Source\Object;$(ProjectDir)Source\Actor;$(ProjectDir)Source\Animal;$(ProjectDir)Source\Stage;$(ProjectDir)Source\Camera;$(ProjectDir)Source\Collision;$(ProjectDir)Source\Graphics;$(ProjectDir)Source\UI_Input_Sound</AdditionalIncludeDirectories>
+      <AdditionalOptions>/wd4100 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Admin\Desktop\progtram\Cow\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\Users\Admin\Desktop\progtram\Cow\EFKforDxLib\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
-      <OutputFile>C:\Users\Admin\Desktop\progtram\Cow\DxLib_VC\プロジェクトに追加すべきファイル_VC用;%(AdditionalIncludeDirectories)</OutputFile>
+      <AdditionalLibraryDirectories>$(SolutionDir)DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)EFKforDxLib\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\Admin\Desktop\progtram\Cow\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\Users\Admin\Desktop\progtram\Cow\EFKforDxLib\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
-      <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(SolutionDir)DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)EFKforDxLib\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)Source;$(ProjectDir)Source\System;$(ProjectDir)Source\Scene;$(ProjectDir)Source\Object;$(ProjectDir)Source\Actor;$(ProjectDir)Source\Animal;$(ProjectDir)Source\Stage;$(ProjectDir)Source\Camera;$(ProjectDir)Source\Collision;$(ProjectDir)Source\Graphics;$(ProjectDir)Source\UI_Input_Sound</AdditionalIncludeDirectories>
+      <AdditionalOptions>/wd4100 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Admin\Desktop\progtram\Cow\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\Users\Admin\Desktop\progtram\Cow\EFKforDxLib\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)EFKforDxLib\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
       <PerUserRedirection>true</PerUserRedirection>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>C:\Users\Admin\Desktop\progtram\Cow\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\Users\Admin\Desktop\progtram\Cow\EFKforDxLib\プロジェクトに追加すべきファイル_VC用</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(SolutionDir)DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)EFKforDxLib\プロジェクトに追加すべきファイル_VC用;$(ProjectDir)Source;$(ProjectDir)Source\System;$(ProjectDir)Source\Scene;$(ProjectDir)Source\Object;$(ProjectDir)Source\Actor;$(ProjectDir)Source\Animal;$(ProjectDir)Source\Stage;$(ProjectDir)Source\Camera;$(ProjectDir)Source\Collision;$(ProjectDir)Source\Graphics;$(ProjectDir)Source\UI_Input_Sound</AdditionalIncludeDirectories>
+      <AdditionalOptions>/wd4100 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Admin\Desktop\progtram\Cow\DxLib_VC\プロジェクトに追加すべきファイル_VC用;C:\Users\Admin\Desktop\progtram\Cow\EFKforDxLib\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)EFKforDxLib\プロジェクトに追加すべきファイル_VC用</AdditionalLibraryDirectories>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Animal.cpp" />
-    <ClCompile Include="Source\AnimalManager.cpp" />
-    <ClCompile Include="Source\AnimalMove.cpp" />
-    <ClCompile Include="Source\Bait.cpp" />
-    <ClCompile Include="Source\Camera.cpp" />
-    <ClCompile Include="Source\CapsuleCollider.cpp" />
-    <ClCompile Include="Source\Collider.cpp" />
-    <ClCompile Include="Source\ColliderManager.cpp" />
-    <ClCompile Include="Source\Combo.cpp" />
-    <ClCompile Include="Source\Cow.cpp" />
-    <ClCompile Include="Source\CowManager.cpp" />
-    <ClCompile Include="Source\CowMove.cpp" />
-    <ClCompile Include="Source\CharacterMove.cpp" />
-    <ClCompile Include="Source\Cow_2.cpp" />
-    <ClCompile Include="Source\Cow_gold.cpp" />
-    <ClCompile Include="Source\DebugCamera.cpp" />
-    <ClCompile Include="Source\Cow_Tutorial.cpp" />
-    <ClCompile Include="Source\EffectManager.cpp" />
-    <ClCompile Include="Source\EffekseerEffect.cpp" />
-    <ClCompile Include="Source\Fever.cpp" />
-    <ClCompile Include="Source\Floor.cpp" />
-    <ClCompile Include="Source\GameManager.cpp" />
-    <ClCompile Include="Source\GameTimer.cpp" />
-    <ClCompile Include="Source\InputManager.cpp" />
-    <ClCompile Include="Source\Level.cpp" />
-    <ClCompile Include="Source\ServiceLocator.cpp" />
-    <ClCompile Include="Source\CharacterState.cpp" />
-    <ClCompile Include="Source\Main.cpp" />
-    <ClCompile Include="Source\Model.cpp" />
-    <ClCompile Include="Source\ModelAnimation.cpp" />
-    <ClCompile Include="Source\Object2D.cpp" />
-    <ClCompile Include="Source\Object3D.cpp" />
-    <ClCompile Include="Source\ObjectManager.cpp" />
-    <ClCompile Include="Source\Object_Stage.cpp" />
-    <ClCompile Include="Source\Mountain.cpp" />
-    <ClCompile Include="Source\Player3D.cpp" />
-    <ClCompile Include="Source\ResourceManager.cpp" />
-    <ClCompile Include="Source\ResultScene.cpp" />
-    <ClCompile Include="Source\Rule.cpp" />
-    <ClCompile Include="Source\Scene.cpp" />
-    <ClCompile Include="Source\Scene3D.cpp" />
-    <ClCompile Include="Source\SceneManager.cpp" />
-    <ClCompile Include="Source\Score.cpp" />
-    <ClCompile Include="Source\SelectionManager.cpp" />
-    <ClCompile Include="Source\Skill.cpp" />
-    <ClCompile Include="Source\SkyBox.cpp" />
-    <ClCompile Include="Source\SoundManager.cpp" />
-    <ClCompile Include="Source\SphereCollider.cpp" />
-    <ClCompile Include="Source\Stage.cpp" />
-    <ClCompile Include="Source\Tatumaki.cpp" />
-    <ClCompile Include="Source\Texture.cpp" />
-    <ClCompile Include="Source\Thunder.cpp" />
-    <ClCompile Include="Source\TitleScene.cpp" />
-    <ClCompile Include="Source\TutorialScene.cpp" />
-    <ClCompile Include="Source\Wall.cpp" />
+    <ClCompile Include="Source\Animal\Animal.cpp" />
+    <ClCompile Include="Source\Animal\AnimalManager.cpp" />
+    <ClCompile Include="Source\Animal\AnimalMove.cpp" />
+    <ClCompile Include="Source\Stage\Bait.cpp" />
+    <ClCompile Include="Source\Camera\Camera.cpp" />
+    <ClCompile Include="Source\Collision\CapsuleCollider.cpp" />
+    <ClCompile Include="Source\Collision\Collider.cpp" />
+    <ClCompile Include="Source\Collision\ColliderManager.cpp" />
+    <ClCompile Include="Source\System\Combo.cpp" />
+    <ClCompile Include="Source\Animal\Cow.cpp" />
+    <ClCompile Include="Source\Animal\CowManager.cpp" />
+    <ClCompile Include="Source\Animal\CowMove.cpp" />
+    <ClCompile Include="Source\Actor\CharacterMove.cpp" />
+    <ClCompile Include="Source\Animal\Cow_2.cpp" />
+    <ClCompile Include="Source\Animal\GoldCow.cpp" />
+    <ClCompile Include="Source\Camera\DebugCamera.cpp" />
+    <ClCompile Include="Source\Animal\Cow_Tutorial.cpp" />
+    <ClCompile Include="Source\Graphics\EffectManager.cpp" />
+    <ClCompile Include="Source\Graphics\EffekseerEffect.cpp" />
+    <ClCompile Include="Source\System\Fever.cpp" />
+    <ClCompile Include="Source\Stage\Floor.cpp" />
+    <ClCompile Include="Source\System\GameManager.cpp" />
+    <ClCompile Include="Source\System\GameTimer.cpp" />
+    <ClCompile Include="Source\Scene\LoadingScene.cpp" />
+    <ClCompile Include="Source\UI_Input_Sound\InputManager.cpp" />
+    <ClCompile Include="Source\System\Level.cpp" />
+    <ClCompile Include="Source\System\ServiceLocator.cpp" />
+    <ClCompile Include="Source\Actor\CharacterState.cpp" />
+    <ClCompile Include="Source\System\Main.cpp" />
+    <ClCompile Include="Source\Graphics\Model.cpp" />
+    <ClCompile Include="Source\Graphics\ModelAnimation.cpp" />
+    <ClCompile Include="Source\Object\Object2D.cpp" />
+    <ClCompile Include="Source\Object\Object3D.cpp" />
+    <ClCompile Include="Source\Object\ObjectManager.cpp" />
+    <ClCompile Include="Source\Stage\Object_Stage.cpp" />
+    <ClCompile Include="Source\Stage\Mountain.cpp" />
+    <ClCompile Include="Source\Actor\Player3D.cpp" />
+    <ClCompile Include="Source\UI_Input_Sound\ResourceManager.cpp" />
+    <ClCompile Include="Source\Scene\ResultScene.cpp" />
+    <ClCompile Include="Source\System\Rule.cpp" />
+    <ClCompile Include="Source\Scene\Scene.cpp" />
+    <ClCompile Include="Source\Scene\GameScene.cpp" />
+    <ClCompile Include="Source\Scene\SceneManager.cpp" />
+    <ClCompile Include="Source\System\Score.cpp" />
+    <ClCompile Include="Source\UI_Input_Sound\SelectionManager.cpp" />
+    <ClCompile Include="Source\UI_Input_Sound\Skill.cpp" />
+    <ClCompile Include="Source\Stage\SkyBox.cpp" />
+    <ClCompile Include="Source\UI_Input_Sound\SoundManager.cpp" />
+    <ClCompile Include="Source\Collision\SphereCollider.cpp" />
+    <ClCompile Include="Source\Stage\Stage.cpp" />
+    <ClCompile Include="Source\System\test_constants.cpp" />
+    <ClCompile Include="Source\Stage\Tornado.cpp" />
+    <ClCompile Include="Source\System\Utility.cpp" />
+    <ClCompile Include="Source\Graphics\Texture.cpp" />
+    <ClCompile Include="Source\Stage\Thunder.cpp" />
+    <ClCompile Include="Source\Scene\TitleScene.cpp" />
+    <ClCompile Include="Source\UI_Input_Sound\UIButton.cpp" />
+    <ClCompile Include="Source\Scene\TutorialScene.cpp" />
+    <ClCompile Include="Source\Stage\StageLoader.cpp" />
+    <ClCompile Include="Source\Stage\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Animal.h" />
-    <ClInclude Include="Source\AnimalManager.h" />
-    <ClInclude Include="Source\AnimalMove.h" />
-    <ClInclude Include="Source\Bait.h" />
-    <ClInclude Include="Source\Camera.h" />
-    <ClInclude Include="Source\CapsuleCollider.h" />
-    <ClInclude Include="Source\Collider.h" />
-    <ClInclude Include="Source\ColliderManager.h" />
-    <ClInclude Include="Source\Combo.h" />
-    <ClInclude Include="Source\Cow.h" />
-    <ClInclude Include="Source\CowManager.h" />
-    <ClInclude Include="Source\CowMove.h" />
-    <ClInclude Include="Source\CharacterMove.h" />
-    <ClInclude Include="Source\Cow_2.h" />
-    <ClInclude Include="Source\Cow_gold.h" />
-    <ClInclude Include="Source\DebugCamera.h" />
-    <ClInclude Include="Source\Cow_Tutorial.h" />
-    <ClInclude Include="Source\EffectManager.h" />
-    <ClInclude Include="Source\EffekseerEffect.h" />
-    <ClInclude Include="Source\Fever.h" />
-    <ClInclude Include="Source\Floor.h" />
-    <ClInclude Include="Source\GameManager.h" />
-    <ClInclude Include="Source\GameTimer.h" />
-    <ClInclude Include="Source\InputManager.h" />
-    <ClInclude Include="Source\Level.h" />
-    <ClInclude Include="Source\Master.h" />
-    <ClInclude Include="Source\Model.h" />
-    <ClInclude Include="Source\ModelAnimation.h" />
-    <ClInclude Include="Source\ModelUtility.h" />
-    <ClInclude Include="Source\Object2D.h" />
-    <ClInclude Include="Source\Object3D.h" />
-    <ClInclude Include="Source\ObjectManager.h" />
-    <ClInclude Include="Source\Object_Stage.h" />
-    <ClInclude Include="Source\Mountain.h" />
-    <ClInclude Include="Source\Player3D.h" />
-    <ClInclude Include="Source\ResourceManager.h" />
-    <ClInclude Include="Source\ResultScene.h" />
-    <ClInclude Include="Source\Rule.h" />
-    <ClInclude Include="Source\Scene.h" />
-    <ClInclude Include="Source\Scene3D.h" />
-    <ClInclude Include="Source\SceneManager.h" />
-    <ClInclude Include="Source\Score.h" />
-    <ClInclude Include="Source\SelectionManager.h" />
-    <ClInclude Include="Source\Skill.h" />
-    <ClInclude Include="Source\SkyBox.h" />
-    <ClInclude Include="Source\SoundManager.h" />
-    <ClInclude Include="Source\SphereCollider.h" />
-    <ClInclude Include="Source\Stage.h" />
-    <ClInclude Include="Source\Tatumaki.h" />
-    <ClInclude Include="Source\Texture.h" />
-    <ClInclude Include="Source\Thunder.h" />
-    <ClInclude Include="Source\TitleScene.h" />
-    <ClInclude Include="Source\TutorialScene.h" />
-    <ClInclude Include="Source\Utility.h" />
-    <ClInclude Include="Source\Wall.h" />
+    <ClInclude Include="Source\Animal\Animal.h" />
+    <ClInclude Include="Source\Animal\AnimalManager.h" />
+    <ClInclude Include="Source\Animal\AnimalMove.h" />
+    <ClInclude Include="Source\Stage\Bait.h" />
+    <ClInclude Include="Source\Camera\Camera.h" />
+    <ClInclude Include="Source\Collision\CapsuleCollider.h" />
+    <ClInclude Include="Source\Actor\CharacterState.h" />
+    <ClInclude Include="Source\Collision\Collider.h" />
+    <ClInclude Include="Source\Collision\ColliderManager.h" />
+    <ClInclude Include="Source\System\Combo.h" />
+    <ClInclude Include="Source\Animal\Cow.h" />
+    <ClInclude Include="Source\Animal\CowManager.h" />
+    <ClInclude Include="Source\Animal\CowMove.h" />
+    <ClInclude Include="Source\Actor\CharacterMove.h" />
+    <ClInclude Include="Source\Animal\Cow_2.h" />
+    <ClInclude Include="Source\Animal\CreatureManager.h" />
+    <ClInclude Include="Source\System\GameConstants.h" />
+    <ClInclude Include="Source\Animal\GoldCow.h" />
+    <ClInclude Include="Source\Camera\DebugCamera.h" />
+    <ClInclude Include="Source\Animal\Cow_Tutorial.h" />
+    <ClInclude Include="Source\Graphics\EffectManager.h" />
+    <ClInclude Include="Source\Graphics\EffekseerEffect.h" />
+    <ClInclude Include="Source\System\Fever.h" />
+    <ClInclude Include="Source\Stage\Floor.h" />
+    <ClInclude Include="Source\System\GameManager.h" />
+    <ClInclude Include="Source\System\GameTimer.h" />
+    <ClInclude Include="Source\UI_Input_Sound\InputManager.h" />
+    <ClInclude Include="Source\Scene\LoadingScene.h" />
+    <ClInclude Include="Source\System\Level.h" />
+    <ClInclude Include="Source\System\Master.h" />
+    <ClInclude Include="Source\Graphics\Model.h" />
+    <ClInclude Include="Source\Graphics\ModelAnimation.h" />
+    <ClInclude Include="Source\Graphics\ModelUtility.h" />
+    <ClInclude Include="Source\Object\Object2D.h" />
+    <ClInclude Include="Source\Object\Object3D.h" />
+    <ClInclude Include="Source\Object\ObjectManager.h" />
+    <ClInclude Include="Source\Stage\Object_Stage.h" />
+    <ClInclude Include="Source\Stage\Mountain.h" />
+    <ClInclude Include="Source\Actor\Player3D.h" />
+    <ClInclude Include="Source\UI_Input_Sound\ResourceManager.h" />
+    <ClInclude Include="Source\Scene\ResultScene.h" />
+    <ClInclude Include="Source\System\Rule.h" />
+    <ClInclude Include="Source\Scene\Scene.h" />
+    <ClInclude Include="Source\Scene\GameScene.h" />
+    <ClInclude Include="Source\Scene\SceneManager.h" />
+    <ClInclude Include="Source\System\Score.h" />
+    <ClInclude Include="Source\UI_Input_Sound\SelectionManager.h" />
+    <ClInclude Include="Source\System\ServiceLocator.h" />
+    <ClInclude Include="Source\UI_Input_Sound\Skill.h" />
+    <ClInclude Include="Source\Stage\SkyBox.h" />
+    <ClInclude Include="Source\UI_Input_Sound\SoundManager.h" />
+    <ClInclude Include="Source\Collision\SphereCollider.h" />
+    <ClInclude Include="Source\Stage\Stage.h" />
+    <ClInclude Include="Source\Stage\Tornado.h" />
+    <ClInclude Include="Source\Graphics\Texture.h" />
+    <ClInclude Include="Source\Stage\Thunder.h" />
+    <ClInclude Include="Source\Scene\TitleScene.h" />
+    <ClInclude Include="Source\UI_Input_Sound\UIButton.h" />
+    <ClInclude Include="Source\Scene\TutorialScene.h" />
+    <ClInclude Include="Source\System\Utility.h" />
+    <ClInclude Include="Source\Stage\StageLoader.h" />
+    <ClInclude Include="Source\Stage\Wall.h" />
+  </ItemGroup>
+  <ItemGroup>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
