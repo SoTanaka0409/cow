@@ -1,11 +1,11 @@
 #include "Model.h"
 #include "Master.h"
 
-/*
- * 入力: filename (モデルパス), initPos (初期座標), isSeparateAnimation (アニメーション分離フラグ)
- * 出力: なし
- * 副作用: 内部変数の初期化、およびリソースマネージャ経由でのモデルハンドルの取得
- */
+/// @brief 初期化処理を行う
+/// @details filename (モデルパス)
+/// @details initPos (初期座標)
+/// @details isSeparateAnimation (アニメーション分離フラグ)
+/// @details 内部変数の初期化、およびリソースマネージャ経由でのモデルハンドルの取得
 Model::Model(std::string filename, VECTOR initPos, bool isSeparateAnimation)
 	: position_(initPos)
 	, scale_(1.0f)
@@ -15,11 +15,7 @@ Model::Model(std::string filename, VECTOR initPos, bool isSeparateAnimation)
 	handle_ = Master::resource_manager_->LoadModel(filename.c_str());
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: 保持しているモデルハンドルの破棄
- */
+/// @brief 保持しているモデルハンドルの破棄
 Model::~Model()
 {
 	if (change_texture_handle_ != -1)
@@ -30,22 +26,14 @@ Model::~Model()
 	MV1DeleteModel(handle_);
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: 座標および回転のライブラリ側への同期
- */
+/// @brief 座標および回転のライブラリ側への同期
 void Model::Update()
 {
 	MV1SetPosition(handle_, position_);
 	MV1SetRotationXYZ(handle_, rotation_);
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: 3Dモデルの描画
- */
+/// @brief 3Dモデルの描画
 void Model::Draw()
 {
 	// 外部仕様依存: DxLibの仕様上、他オブジェクトの半透明設定がグローバルステートとして残留し、
@@ -54,31 +42,26 @@ void Model::Draw()
 	MV1DrawModel(handle_);
 }
 
-/*
- * 入力: scale (XYZ各軸のスケール倍率)
- * 出力: なし
- * 副作用: 3Dモデルの拡縮設定の適用
- */
+/// @brief 値を設定する
+/// @details scale (XYZ各軸のスケール倍率)
+/// @details 3Dモデルの拡縮設定の適用
 void Model::SetScale(VECTOR scale)
 {
 	MV1SetScale(handle_, scale);
 }
 
-/*
- * 入力: scale (全体に対する一律のスケール倍率)
- * 出力: なし
- * 副作用: 3Dモデルの拡縮設定の適用
- */
+/// @brief 値を設定する
+/// @details scale (全体に対する一律のスケール倍率)
+/// @details 3Dモデルの拡縮設定の適用
 void Model::SetScale(float scale)
 {
 	SetScale(VGet(scale, scale, scale));
 }
 
-/*
- * 入力: filename (テクスチャパス), index (差し替え対象のテクスチャ番号)
- * 出力: なし
- * 副作用: 差し替え用テクスチャのロードと適用
- */
+/// @brief 値を設定する
+/// @details filename (テクスチャパス)
+/// @details index (差し替え対象のテクスチャ番号)
+/// @details 差し替え用テクスチャのロードと適用
 void Model::SetTexture(std::string filename, int index)
 {
 	if (change_texture_handle_ != -1)
@@ -89,11 +72,11 @@ void Model::SetTexture(std::string filename, int index)
 	MV1SetTextureGraphHandle(handle_, index, change_texture_handle_, FALSE);
 }
 
-/*
- * 入力: r, g, b, a (適用する色のRGBA成分 0.0f～1.0f)
- * 出力: なし
- * 副作用: モデル内の全マテリアルに対するディフューズ(拡散反射)カラーの適用
- */
+/// @brief r
+/// @details g
+/// @details b
+/// @details a (適用する色のRGBA成分 0.0f～1.0f)
+/// @details モデル内の全マテリアルに対するディフューズ(拡散反射)カラーの適用
 void Model::SetColor(float r, float g, float b, float a)
 {
 	int matNum = MV1GetMaterialNum(handle_);

@@ -11,8 +11,8 @@
 #include <algorithm>
 #include <vector>
 
-// 入力：竜巻の初期発生座標
-// 副作用：EffekseerEffect インスタンスの動的メモリ確保
+/// @brief 竜巻の初期発生座標
+/// @details EffekseerEffect インスタンスの動的メモリ確保
 Tornado::Tornado(VECTOR pos)
 	: Object3D(pos)
 {
@@ -35,7 +35,7 @@ Tornado::Tornado(VECTOR pos)
 	tatu_->SetScale(VGet(1.0f * current_scale_ratio_, 1.4f * current_scale_ratio_, 1.0f * current_scale_ratio_));
 }
 
-// 副作用：動的確保したエフェクトインスタンスのメモリ解放
+/// @brief 動的確保したエフェクトインスタンスのメモリ解放
 Tornado::~Tornado()
 {
 	// メモリリークを防止するため、外からインジェクトされず自前で new 項目を解放
@@ -46,7 +46,7 @@ Tornado::~Tornado()
 	}
 }
 
-// 副作用：サイズ補間計算、追尾対象の選定、座標および移動ベクトルの更新、SEの再生、ノックバック物理シミュレーション
+/// @brief サイズ補間計算、追尾対象の選定、座標および移動ベクトルの更新、SEの再生、ノックバック物理シミュレーション
 void Tornado::Update()
 {
 	UpdateScaleAndRadius();
@@ -101,9 +101,12 @@ void Tornado::UpdateHomingPlayer()
 			targetDir = VNorm(targetDir);
 
 			float homingStrength = 0.001f;
-			if (VSquareSize(velocity_) < 0.001f) {
+			if (VSquareSize(velocity_) < 0.001f)
+			{
 				velocity_ = targetDir;
-			} else {
+			}
+			else
+			{
 				velocity_ = VAdd(velocity_, VScale(targetDir, homingStrength));
 				velocity_ = VNorm(velocity_);
 			}
@@ -121,8 +124,14 @@ void Tornado::UpdateWallBounce()
 {
 	// 竜巻がステージ外へ消失してゲーム進行不可になるのを防ぐため、5000 の壁で跳ね返らせる
 	float limit = 5000.0f;
-	if (position_.x < -limit || position_.x > limit) { velocity_.x *= -1; }
-	if (position_.z < -limit || position_.z > limit) { velocity_.z *= -1; }
+	if (position_.x < -limit || position_.x > limit)
+	{
+		velocity_.x *= -1;
+	}
+	if (position_.z < -limit || position_.z > limit)
+	{
+		velocity_.z *= -1;
+	}
 }
 
 void Tornado::UpdateEffectAndSound()
@@ -181,12 +190,14 @@ void Tornado::UpdateKnockback()
 			VECTOR oldPos = p_knock->GetPosition();
 			VECTOR newPos = VAdd(oldPos, vel);
 
-			// バグ回避：ノックバックの勢いでプレイヤーがステージの壁を貫通し、異次元へ落下するのを防ぐ
+			// ノックバックの勢いでプレイヤーがステージの壁を貫通し、異次元へ落下するのを防ぐ
 			bool hitwall = false;
 			const auto& walls = ServiceLocator::GetObjectManager()->GetObject3DListByTag(Object3D::kTag3dWall);
-			for (auto& w : walls) {
+			for (auto& w : walls)
+			{
 				Wall* wall = dynamic_cast<Wall*>(w);
-				if (wall != nullptr) {
+				if (wall != nullptr)
+				{
 					std::vector<VERTEX3D> vertex = wall->GetVertex();
 
 					if (HitCheck_Capsule_Triangle(
@@ -221,8 +232,9 @@ void Tornado::Draw()
 {
 }
 
-// 入力：collider=自身のカプセル衝突判定, check=相手の衝突判定
-// 副作用：接触したプレイヤーの速度ベクトル加算、カメラシェイク演出の発動
+/// @param collider 自身のカプセル衝突判定
+/// @param check 相手の衝突判定
+/// @brief 接触したプレイヤーの速度ベクトル加算、カメラシェイク演出の発動
 void Tornado::OnEnter(Collider* collider, Collider* check)
 {
 	// テレポートの代わりに、竜巻の中心から外周方向へ力強くプレイヤーを吹き飛ばす物理挙動を処理
@@ -234,7 +246,8 @@ void Tornado::OnEnter(Collider* collider, Collider* check)
 		diff.y = 0.0f;
 
 		// バグ回避：竜巻の完全な中心座標と重なった瞬間の、ゼロベクトル割り算（ゼロ除算）によるNaNバグを防止する
-		if (VSize(diff) < 0.1f) {
+		if (VSize(diff) < 0.1f)
+		{
 			diff = VGet(1.0f, 0.0f, 0.0f);
 		}
 
@@ -243,14 +256,17 @@ void Tornado::OnEnter(Collider* collider, Collider* check)
 
 		// 1フレーム中に複数回当たり判定が重複して発生し、過剰な多段ノックバックになるのを防ぐ
 		bool found = false;
-		for (auto& kb : knockbacks_) {
-			if (kb.player == Player) {
+		for (auto& kb : knockbacks_)
+		{
+			if (kb.player == Player)
+			{
 				kb.velocity = knockbackVelocity;
 				found = true;
 				break;
 			}
 		}
-		if (!found) {
+		if (!found)
+		{
 			knockbacks_.push_back({ Player, knockbackVelocity });
 		}
 

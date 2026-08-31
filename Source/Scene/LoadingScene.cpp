@@ -5,11 +5,7 @@
 #include "SceneManager.h"
 #include "GameConstants.h"
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: 内部タイマーとフラグの初期化
- */
+/// @brief 内部タイマーとフラグの初期化
 LoadingScene::LoadingScene()
 	: loading_timer_(0)
 	, load_started_(false)
@@ -20,22 +16,14 @@ LoadingScene::~LoadingScene()
 {
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: 内部状態のリセット
- */
+/// @brief 内部状態のリセット
 void LoadingScene::Initialize()
 {
 	loading_timer_ = 0;
 	load_started_ = false;
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: 非同期ロードのキックおよびシーン遷移指示
- */
+/// @brief 非同期ロードのキックおよびシーン遷移指示
 void LoadingScene::Update()
 {
 	Scene::Update();
@@ -71,11 +59,7 @@ void LoadingScene::Update()
 	}
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: ローディング画面のUI描画
- */
+/// @brief ローディング画面のUI描画
 void LoadingScene::Draw()
 {
 	DrawBox(0, 0, 1600, 900, GetColor(0, 0, 0), TRUE);
@@ -88,11 +72,7 @@ void LoadingScene::Draw()
 	}
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: なし
- */
+/// @brief 入力: なし
 void LoadingScene::Finalize()
 {
 }

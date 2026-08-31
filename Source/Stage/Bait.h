@@ -17,8 +17,8 @@ public:
 	virtual void OnEnter(Collider* collider, Collider* check) override;
 
 public:
-	Model* model_;
+	Model* model_; ///< 3Dモデルの管理に使用する情報
 
 private:
-	GameTimer* game_timer_;
+	GameTimer* game_timer_; ///< 時間経過や処理間隔を管理するカウンター
 };

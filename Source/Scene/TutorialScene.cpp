@@ -31,12 +31,36 @@ TutorialScene::~TutorialScene()
 {
 	DeleteFontToHandle(font_handle_);
 
-	if (texture_)  { delete texture_;  texture_ = nullptr; }
-	if (texture2_) { delete texture2_; texture2_ = nullptr; }
-	if (texture3_) { delete texture3_; texture3_ = nullptr; }
-	if (texture4_) { delete texture4_; texture4_ = nullptr; }
-	if (texture5_) { delete texture5_; texture5_ = nullptr; }
-	if (texture6_) { delete texture6_; texture6_ = nullptr; }
+	if (texture_)
+	{
+		delete texture_;
+		texture_ = nullptr;
+	}
+	if (texture2_)
+	{
+		delete texture2_;
+		texture2_ = nullptr;
+	}
+	if (texture3_)
+	{
+		delete texture3_;
+		texture3_ = nullptr;
+	}
+	if (texture4_)
+	{
+		delete texture4_;
+		texture4_ = nullptr;
+	}
+	if (texture5_)
+	{
+		delete texture5_;
+		texture5_ = nullptr;
+	}
+	if (texture6_)
+	{
+		delete texture6_;
+		texture6_ = nullptr;
+	}
 
 	// CowManagerの生成と破棄は継承クラスSceneにて行うためここでは行わない
 }
@@ -77,7 +101,8 @@ void TutorialScene::Initialize()
 
 void TutorialScene::CreateFences()
 {
-	for (int i = 0; i < 5; ++i) {
+	for (int i = 0; i < 5; ++i)
+	{
 		float z = 5050.0f;
 		float x = 500.0f + (i * 1000.0f);
 		new Object_Stage("Resource/3D/ステージ/柵/柵.mv1", VGet(x, -25.0f, z), 2.5f, VGet(0.0f, 0.0f, 0.0f));
@@ -87,7 +112,8 @@ void TutorialScene::CreateFences()
 		new Object_Stage("Resource/3D/ステージ/柵/柵.mv1", VGet(-x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F, 0.0f));
 	}
 
-	for (int i = 0; i < 5; ++i) {
+	for (int i = 0; i < 5; ++i)
+	{
 		float x = 5050.0f;
 		float z = 500.0f + (i * 1000.0f);
 		new Object_Stage("Resource/3D/ステージ/柵/柵.mv1", VGet(x, -25.0f, z), 2.5f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
@@ -160,7 +186,7 @@ void TutorialScene::Update()
 
 }
 
-// 移動操作（WASD）を確認し、次のステップへ進行する
+/// @brief 移動操作（WASD）を確認し、次のステップへ進行する
 void TutorialScene::UpdateStateMove()
 {
 	if (texture_) texture_->Draw();
@@ -175,7 +201,7 @@ void TutorialScene::UpdateStateMove()
 	}
 }
 
-// マウス左クリックでビームを照射することを確認
+/// @brief マウス左クリックでビームを照射することを確認
 void TutorialScene::UpdateStateBeam()
 {
 	if (texture2_) texture2_->Draw();
@@ -191,7 +217,7 @@ void TutorialScene::UpdateStateBeam()
 	}
 }
 
-// プレイヤーのコンボが2以上になったことを確認して次に進行
+/// @brief プレイヤーのコンボが2以上になったことを確認して次に進行
 void TutorialScene::UpdateStateComboScore()
 {
 	if (texture3_) texture3_->Draw();
@@ -206,7 +232,7 @@ void TutorialScene::UpdateStateComboScore()
 	}
 }
 
-// フェーズ移行のため、待機（3秒）時間を設けて進行する
+/// @brief フェーズ移行のため、待機（3秒）時間を設けて進行する
 void TutorialScene::UpdateStatePhase()
 {
 	if (texture4_) texture4_->Draw();
@@ -219,7 +245,7 @@ void TutorialScene::UpdateStatePhase()
 	}
 }
 
-// スキルを使用することを確認し、フィーバーの導線へ移行する
+/// @brief スキルを使用することを確認し、フィーバーの導線へ移行する
 void TutorialScene::UpdateStateSkill()
 {
 	Player3D* player = ServiceLocator::GetPlayer();
@@ -244,26 +270,28 @@ void TutorialScene::UpdateStateSkill()
 	}
 }
 
-// フィーバーモードの開始と終了を確認する
+/// @brief フィーバーモードの開始と終了を確認する
 void TutorialScene::UpdateStateFever()
 {
 	if (fever_state_ == kFever1)
 	{
 		if(texture6_) texture6_->Draw();
 
-		if (fever_ && fever_->IsFever()) {
+		if (fever_ && fever_->IsFever())
+		{
 			fever_state_ = kFever2;
 		}
 	}
 	else if (fever_state_ == kFever2)
 	{
-		if (fever_ && fever_->IsFever() == false) {
+		if (fever_ && fever_->IsFever() == false)
+		{
 			state_ = kStateEnd;
 		}
 	}
 }
 
-// チュートリアル終了テキストを表示して待機状態にする
+/// @brief チュートリアル終了テキストを表示して待機状態にする
 void TutorialScene::UpdateStateEnd()
 {
 	DrawTutorialText("Enterでチュートリアルを終了します");

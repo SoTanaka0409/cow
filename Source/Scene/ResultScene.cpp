@@ -3,11 +3,7 @@
 #include "GameConstants.h"
 #include "SceneManager.h"
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: UIリソースの読み込み、ボタンの初期化、リザルトBGMの再生
- */
+/// @brief UIリソースの読み込み、ボタンの初期化、リザルトBGMの再生
 ResultScene::ResultScene()
 {
 	flag_ = true;
@@ -36,22 +32,14 @@ ResultScene::ResultScene()
 	Master::score_manager_;
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: 終了処理の呼び出し
- */
+/// @brief 終了処理の呼び出し
 ResultScene::~ResultScene()
 {
 	// シーン遷移時にBGMが鳴り続けたり、VRAMのメモリリークが発生するのを防ぐため、デストラクタで確実な破棄を保証する
 	Finalize();
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: フェード状態の初期化とローカルランキングの読み込み
- */
+/// @brief フェード状態の初期化とローカルランキングの読み込み
 void ResultScene::Initialize()
 {
 	fade_state_ = kSceneFadeIn;
@@ -59,11 +47,7 @@ void ResultScene::Initialize()
 	Master::score_manager_->LoadRanking();
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: リザルト画面の全UIと最終スコアの描画
- */
+/// @brief リザルト画面の全UIと最終スコアの描画
 void ResultScene::Draw()
 {
 	DrawExtendGraph(0, 0, 1600, 900, result_graph_handle_, FALSE);
@@ -75,8 +59,10 @@ void ResultScene::Draw()
 	int temp = score;
 	int digitCount = 0;
 	if (temp == 0) digitCount = 1;
-	else {
-		while (temp > 0) {
+	else
+	{
+		while (temp > 0)
+		{
 			temp /= 10;
 			digitCount++;
 		}
@@ -86,7 +72,8 @@ void ResultScene::Draw()
 	if (digitCount < 4) digitCount = 4;
 
 	int startX = 850;
-	if (digitCount > 3) {
+	if (digitCount > 3)
+	{
 		startX = 850 - (digitCount - 3) * 40;
 	}
 
@@ -97,16 +84,13 @@ void ResultScene::Draw()
 	DrawExtendGraph(pointX, 430, pointX + 200, 630, point_img_, TRUE);
 
 	Scene::Draw();
-	if (fade_state_ != kSceneFadeNone) {
+	if (fade_state_ != kSceneFadeNone)
+	{
 		Scene::Fade(fade_state_);
 	}
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: シーン遷移タイマーの進行
- */
+/// @brief シーン遷移タイマーの進行
 void ResultScene::Update()
 {
 	count_++;
@@ -121,11 +105,7 @@ void ResultScene::Update()
 	Scene::Update();
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: 過去のトップ3ランキングのUI描画
- */
+/// @brief 過去のトップ3ランキングのUI描画
 void ResultScene::DrawRankingUI()
 {
 	int baseX = 40;
@@ -170,8 +150,10 @@ void ResultScene::DrawRankingUI()
 		int temp = data.score_;
 		int digitCount = 0;
 		if (temp == 0) digitCount = 1;
-		else {
-			while (temp > 0) {
+		else
+		{
+			while (temp > 0)
+			{
 				temp /= 10;
 				digitCount++;
 			}
@@ -184,11 +166,7 @@ void ResultScene::DrawRankingUI()
 	}
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: BGMの停止処理
- */
+/// @brief BGMの停止処理
 void ResultScene::Finalize()
 {
 	Master::sound_manager_->StopBGM();

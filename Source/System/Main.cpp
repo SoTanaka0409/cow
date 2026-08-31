@@ -34,12 +34,13 @@ float Master::delta_time_ = 0.01666f;
 bool Master::is_shadow_enabled_ = false; // デフォルトは影OFF
 bool Master::is_debug_mode_ = false;    // デフォルトはデバッグモードOFF
 
-// 仕様制約：プレイヤーや牛がステージ外へ飛び出さないよう、侵入制限をかけるための境界値
-VECTOR Utility::StageSize = VGet(6000, 0, 6000);
+/// @brief 仕様制約：プレイヤーや牛がステージ外へ飛び出さないよう、侵入制限をかけるための境界値
+VECTOR Utility::StageSize = VGet(4000, 0, 4000);
 
-// 入力：Windowsアプリケーション起動用の基本インスタンス情報
-// 出力：正常終了時は0、エラー時は-1
-// 副作用：ウィンドウ生成、各種マネージャー初期化、メインループ起動、メモリ解放
+
+/// @return 正常終了時は0、エラー時は-1
+/// @brief Windowsアプリケーション起動用の基本インスタンス情報
+/// @details ウィンドウ生成、各種マネージャー初期化、メインループ起動、メモリ解放
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	// 複数端末でのテストやデバッグ効率化のため、フルスクリーンではなくウィンドウモードで起動する
@@ -69,7 +70,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetUseZBufferFlag(true);
 	SetWriteZBufferFlag(true);
 
-	// パフォーマンス理由：ゲーム中のロード遅延によるスパイクを防ぐため、初期化時に全SEをプリロードする
+	// ゲーム中のロード遅延によるスパイクを防ぐため、初期化時に全SEをプリロードする
 	Master::sound_manager_->Initialize();
 
 	Master::scene_manager_->Initialize();
@@ -86,7 +87,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ClearDrawScreen();
 		int time = GetNowCount();
 
-		// バグ回避：アプリの最小化や一時的なフリーズでデルタタイムが異常値になり、挙動が破綻するのを防ぐ上限設定
+		// アプリの最小化や一時的なフリーズでデルタタイムが異常値になり、挙動が破綻するのを防ぐ上限設定
 		Master::delta_time_ = (time - previousTime) / 1000.0f;
 		if (Master::delta_time_ > 0.1f) Master::delta_time_ = 0.1f;
 		previousTime = time;
@@ -95,7 +96,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		if (InputManager::CheckDownKey(KEY_INPUT_F1))
 		{
 			Master::is_debug_mode_ = !Master::is_debug_mode_;
-			if (!Master::is_debug_mode_) {
+			if (!Master::is_debug_mode_)
+			{
 				Master::is_debug_camera_ = false;
 			}
 		}
@@ -103,15 +105,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		if (Master::is_debug_mode_ && InputManager::CheckDownKey(KEY_INPUT_F2))
 		{
 			Master::is_debug_camera_ = !Master::is_debug_camera_;
-			if (Master::is_debug_camera_) {
+			if (Master::is_debug_camera_)
+			{
 				Master::debug_camera_->Initialize();
 			}
 		}
 
-		if (Master::is_debug_camera_) {
+		if (Master::is_debug_camera_)
+		{
 			Master::debug_camera_->Update();
 		}
-		else {
+		else
+		{
 			Master::camera_->Update();
 		}
 
@@ -140,7 +145,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			objMgr->DeleteAll3DIfNeeded();
 		}
 
-		// バグ回避：UpdateやDrawの処理途中で解放が走るのを防ぐため、必ずフレームの最後でシーン切り替えを行う
+		// UpdateやDrawの処理途中で解放が走るのを防ぐため、必ずフレームの最後でシーン切り替えを行う
 		Master::scene_manager_->ChangeSceneIfNeeded();
 	}
 

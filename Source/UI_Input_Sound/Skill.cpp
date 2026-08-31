@@ -6,12 +6,9 @@
 #include "Bait.h"
 #include <cmath>
 
-/*
- * スキル選択画面の表示状態を切り替えるため。
- * [入力] flag: スキル画面を表示するかどうかのフラグ
- * [出力] なし
- * [副作用] add_skill_flag_等のUI関連メンバ変数が初期化される
- */
+/// @brief スキル選択画面の表示状態を切り替えるため。
+/// @param flag スキル画面を表示するかどうかのフラグ
+/// @details add_skill_flag_等のUI関連メンバ変数が初期化される
 void Skill::SetSkillFlag(bool flag)
 {
 	add_skill_flag_ = flag;
@@ -33,12 +30,9 @@ void Skill::SetSkillFlag(bool flag)
 	}
 }
 
-/*
- * スキルシステムの初期化とUIテクスチャの準備を行うため。
- * [入力] parent: スキルを保持する親オブジェクト(プレイヤー等)のポインタ
- * [出力] なし
- * [副作用] 各種メンバ変数の初期化、テクスチャの動的メモリ確保
- */
+/// @brief スキルシステムの初期化とUIテクスチャの準備を行うため。
+/// @param parent スキルを保持する親オブジェクト(プレイヤー等)のポインタ
+/// @details 各種メンバ変数の初期化、テクスチャの動的メモリ確保
 Skill::Skill(Object3D* parent)
 	: status_a_(0.0f)
 	, status_s_(0.0f)
@@ -60,12 +54,8 @@ Skill::Skill(Object3D* parent)
 	texture3_ = new Texture("Resource/2D/スキル/スキル画像_吸い込み.png", pos3_, 300, 500, true);
 }
 
-/*
- * 動的確保したテクスチャのメモリリークを防ぐため。
- * [入力] なし
- * [出力] なし
- * [副作用] UIテクスチャのメモリが解放される
- */
+/// @brief 動的確保したテクスチャのメモリリークを防ぐため。
+/// @details UIテクスチャのメモリが解放される
 Skill::~Skill()
 {
 	if (texture_ != nullptr)
@@ -85,12 +75,8 @@ Skill::~Skill()
 	}
 }
 
-/*
- * スキル選択中や決定時のUIを画面に描画するため。
- * [入力] なし
- * [出力] なし
- * [副作用] 画面にスキルカードが描画される
- */
+/// @brief スキル選択中や決定時のUIを画面に描画するため。
+/// @details 画面にスキルカードが描画される
 void Skill::Draw()
 {
 	if (!add_skill_flag_ && !select_anim_) return;
@@ -121,12 +107,8 @@ void Skill::Draw()
 	texture3_->Draw();
 }
 
-/*
- * スキルUIのアニメーションや選択状態を毎フレーム更新するため。
- * [入力] なし
- * [出力] なし
- * [副作用] アニメーション進行に伴い、UI座標やフラグが変化する
- */
+/// @brief スキルUIのアニメーションや選択状態を毎フレーム更新するため。
+/// @details アニメーション進行に伴い、UI座標やフラグが変化する
 void Skill::Update()
 {
 	if (add_skill_flag_)
@@ -199,12 +181,8 @@ void Skill::UpdateOpenAnimation()
 	}
 }
 
-/*
- * プレイヤーの入力に応じて対応するスキル効果を付与するため。
- * [入力] なし
- * [出力] なし
- * [副作用] マウス座標の取得、ステータスの上昇や餌の生成が発生する
- */
+/// @brief プレイヤーの入力に応じて対応するスキル効果を付与するため。
+/// @details マウス座標の取得、ステータスの上昇や餌の生成が発生する
 void Skill::AddSkill()
 {
 	if (!add_skill_flag_) return;
@@ -280,12 +258,9 @@ void Skill::AddSkill()
 	}
 }
 
-/*
- * 他のクラスから現在の強化状態を参照できるようにするため。
- * [入力] tag: 取得したいステータスの種類
- * [出力] 対象ステータスの現在値
- * [副作用] なし
- */
+/// @brief 他のクラスから現在の強化状態を参照できるようにするため。
+/// @param tag 取得したいステータスの種類
+/// @return 対象ステータスの現在値
 float Skill::GetStatusDate(StatusTag tag)
 {
 	if (tag == kStatusAttackSpeed)

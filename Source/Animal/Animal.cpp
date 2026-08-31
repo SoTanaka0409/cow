@@ -1,10 +1,9 @@
 #include "Animal.h"
 
-/*
- * 入力: filename (モデルパス), initPos (初期座標)
- * 出力: なし
- * 副作用: ベースクラスの初期化、および動物固有のパラメータのデフォルト値設定
- */
+/// @brief 初期化処理を行う
+/// @details filename (モデルパス)
+/// @details initPos (初期座標)
+/// @details ベースクラスの初期化、および動物固有のパラメータのデフォルト値設定
 Animal::Animal(std::string filename, VECTOR initPos)
 	: AnimalMove(filename, initPos)
 {
@@ -17,11 +16,7 @@ Animal::~Animal()
 {
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: 座標・回転の更新、当たり判定の追従、および死亡判定処理の実行
- */
+/// @brief 座標・回転の更新、当たり判定の追従、および死亡判定処理の実行
 void Animal::Update()
 {
 	MoveCharacter();

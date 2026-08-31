@@ -12,12 +12,10 @@ SoundManager::~SoundManager()
 	Finalize();
 }
 
-// 入力：なし
-// 出力：なし
-// 副作用：全サウンドデータの動的メモリ確保、および管理リストへの登録
+/// @brief 全サウンドデータの動的メモリ確保、および管理リストへの登録
 void SoundManager::Initialize()
 {
-	// パフォーマンス理由：ゲーム中のBGMロードによる一瞬のフレーム落ち（スパイク）を防ぐため、ゲーム起動時に先行ロードする
+	// ゲーム中のBGMロードによる一瞬のフレーム落ち（スパイク）を防ぐため、ゲーム起動時に先行ロードする
 	LoadBGM(SoundBgm::kBgmTitle, "Resource/BGM/シーン/BGM_タイトル.mp3");
 	LoadBGM(SoundBgm::kBgmGame, "Resource/BGM/シーン/BGM_ゲーム中.mp3");
 	LoadBGM(SoundBgm::kBgmResult, "Resource/BGM/シーン/BGM_リザルト.mp3");
@@ -36,9 +34,7 @@ void SoundManager::Initialize()
 	LoadSE(SoundSe::kSeBaitFinal, "Resource/SE/スキル/効果音_高速移動.mp3");
 }
 
-// 入力：なし
-// 出力：なし
-// 副作用：DxLib内の全サウンドメモリハンドルの破棄、および管理リストの全消去
+/// @brief DxLib内の全サウンドメモリハンドルの破棄、および管理リストの全消去
 void SoundManager::Finalize()
 {
 	// アプリ終了時にBGM・SEのハンドル解放漏れが発生し、OS上にゾンビプロセスが残留するメモリリークバグを防止する
@@ -55,9 +51,9 @@ void SoundManager::Finalize()
 	se_handle_list_.clear();
 }
 
-// 入力：bgm=再生対象のBGMID, isTop=再生位置を先頭に戻すかのフラグ
-// 出力：なし
-// 副作用：指定BGMのループ再生開始、および現在再生中BGM状態の更新
+/// @param bgm 再生対象のBGMID
+/// @param isTop 再生位置を先頭に戻すかのフラグ
+/// @brief 指定BGMのループ再生開始、および現在再生中BGM状態の更新
 void SoundManager::PlayBGM(SoundBgm bgm, bool isTop)
 {
 	// 同一シーンへの遷移や連続呼び出し時に、再生中のBGMが最初から再生し直されて曲が途切れるのを防ぐ
@@ -78,9 +74,8 @@ void SoundManager::PlayBGM(SoundBgm bgm, bool isTop)
 	}
 }
 
-// 入力：se=再生対象のSEID
-// 出力：なし
-// 副作用：SEの再生開始、現在再生中SE状態の更新
+/// @param se 再生対象のSEID
+/// @brief SEの再生開始、現在再生中SE状態の更新
 void SoundManager::PlaySE(SoundSe se)
 {
 	for (auto it = se_handle_list_.begin(); it != se_handle_list_.end(); it++)
@@ -95,9 +90,9 @@ void SoundManager::PlaySE(SoundSe se)
 	}
 }
 
-// 入力：bgm=ロード対象のBGMID, filename=ファイルパス
-// 出力：なし
-// 副作用：DxLibへのサウンドリソース登録、およびロード済み配列への登録
+/// @param bgm ロード対象のBGMID
+/// @param filename ファイルパス
+/// @brief DxLibへのサウンドリソース登録、およびロード済み配列への登録
 void SoundManager::LoadBGM(SoundBgm bgm, std::string filename)
 {
 	// 二重ロードによる同一リソースの重複登録と、無駄なサウンドメモリ消費を防ぐための事前確認
@@ -120,9 +115,9 @@ void SoundManager::LoadBGM(SoundBgm bgm, std::string filename)
 	bgm_handle_list_.push_back(std::pair<SoundBgm, int>(bgm, handle));
 }
 
-// 入力：se=ロード対象のSEID, filename=ファイルパス
-// 出力：なし
-// 副作用：DxLibへのサウンドリソース登録、およびロード済み配列への登録
+/// @param se ロード対象のSEID
+/// @param filename ファイルパス
+/// @brief DxLibへのサウンドリソース登録、およびロード済み配列への登録
 void SoundManager::LoadSE(SoundSe se, std::string filename)
 {
 	// BGMと同様、二重ロードによるサウンドメモリのリークおよびハンドル管理の重複バグを回避する
@@ -143,9 +138,7 @@ void SoundManager::LoadSE(SoundSe se, std::string filename)
 	se_handle_list_.push_back(std::pair<SoundSe, int>(se, handle));
 }
 
-// 入力：なし
-// 出力：なし
-// 副作用：現在再生中のBGMのサウンド停止
+/// @brief 現在再生中のBGMのサウンド停止
 void SoundManager::StopBGM()
 {
 	for (auto it = bgm_handle_list_.begin(); it != bgm_handle_list_.end(); it++)
@@ -162,9 +155,8 @@ void SoundManager::StopBGM()
 	}
 }
 
-// 入力：volume=変更先の音量値（0-255）
-// 出力：なし
-// 副作用：登録されている全BGMのシステム音量の書き換え
+/// @param volume 変更先の音量値（0-255）
+/// @brief 登録されている全BGMのシステム音量の書き換え
 void SoundManager::SetBGMVolume(int volume)
 {
 	for (auto it = bgm_handle_list_.begin(); it != bgm_handle_list_.end(); it++)
@@ -173,9 +165,8 @@ void SoundManager::SetBGMVolume(int volume)
 	}
 }
 
-// 入力：volume=変更先の音量値（0-255）
-// 出力：なし
-// 副作用：登録されている全SEのシステム音量の書き換え
+/// @param volume 変更先の音量値（0-255）
+/// @brief 登録されている全SEのシステム音量の書き換え
 void SoundManager::SetSEVolume(int volume)
 {
 	for (auto it = se_handle_list_.begin(); it != se_handle_list_.end(); it++)
@@ -184,9 +175,8 @@ void SoundManager::SetSEVolume(int volume)
 	}
 }
 
-// 入力：volume=設定するマスター音量（0-255）
-// 出力：なし
-// 副作用：基準音量値の変更、および登録されているすべてのBGM音量のリアルタイム反映更新
+/// @param volume 設定するマスター音量（0-255）
+/// @brief 基準音量値の変更、および登録されているすべてのBGM音量のリアルタイム反映更新
 void SoundManager::SetMasterBGMVolume(int volume)
 {
 	// 外部仕様依存：DxLibの ChangeVolumeSoundMem 引数上限（0?255）を越える値を弾くための安全クランプ
@@ -198,9 +188,8 @@ void SoundManager::SetMasterBGMVolume(int volume)
 	SetBGMVolume(master_bgm_volume_);
 }
 
-// 入力：volume=設定するマスター音量（0-255）
-// 出力：なし
-// 副作用：基準音量値の変更、および登録されているすべてのSE音量のリアルタイム反映更新
+/// @param volume 設定するマスター音量（0-255）
+/// @brief 基準音量値の変更、および登録されているすべてのSE音量のリアルタイム反映更新
 void SoundManager::SetMasterSEVolume(int volume)
 {
 	// BGMと同様、DxLibの規定音量範囲（0?255）から逸脱して予期せぬ内部バグが起きるのを防ぐ安全クランプ

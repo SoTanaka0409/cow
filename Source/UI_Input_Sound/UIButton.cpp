@@ -1,6 +1,6 @@
 #include "UIButton.h"
 
-// 副作用：ボタンの種類、座標、テクスチャハンドル、ホバー状態、アニメーション位相の初期化
+/// @brief ボタンの種類、座標、テクスチャハンドル、ホバー状態、アニメーション位相の初期化
 UIButton::UIButton()
 	: type(SelectionManager::Title::title)
 	, graph_handle(-1)
@@ -11,8 +11,11 @@ UIButton::UIButton()
 {
 }
 
-// 入力：t=ボタンの種類ID, handle=DxLib画像ハンドル, px/py=描画基準座標, anim_offset=波形アニメーションの初期位相
-// 副作用：画像アセット本来の解像度（w, h）の自動取得
+/// @param t ボタンの種類ID
+/// @param handle DxLib画像ハンドル
+/// @param anim_offset 波形アニメーションの初期位相
+/// @brief px/py=描画基準座標
+/// @details 画像アセット本来の解像度（w, h）の自動取得
 void UIButton::Initialize(SelectionManager::Title t, int handle, int px, int py, float anim_offset)
 {
 	type = t;
@@ -22,17 +25,20 @@ void UIButton::Initialize(SelectionManager::Title t, int handle, int px, int py,
 	animation_offset = anim_offset;
 	is_hover = false;
 
-	if (graph_handle != -1) {
+	if (graph_handle != -1)
+	{
 		GetGraphSize(graph_handle, &w, &h);
 	}
-	else {
+	else
+	{
 		w = 0;
 		h = 0;
 	}
 }
 
-// 入力：mouse_x, mouse_y = 現在の画面上のマウスポインタ座標
-// 副作用：マウスがボタンの矩形領域（AABB）と重なっているかどうかに応じたホバー状態（is_hover）の更新
+/// @param mouse_y 現在の画面上のマウスポインタ座標
+/// @brief mouse_x
+/// @details マウスがボタンの矩形領域（AABB）と重なっているかどうかに応じたホバー状態（is_hover）の更新
 void UIButton::Update(int mouse_x, int mouse_y)
 {
 	if (mouse_x >= x && mouse_x <= x + w &&
@@ -46,8 +52,8 @@ void UIButton::Update(int mouse_x, int mouse_y)
 	}
 }
 
-// 入力：frame_count = ゲーム全体の共通フレームカウンター
-// 副作用：ボタン画像の画面描画
+/// @param frame_count ゲーム全体の共通フレームカウンター
+/// @brief ボタン画像の画面描画
 void UIButton::Draw(int frame_count) const
 {
 	if (graph_handle == -1) return;

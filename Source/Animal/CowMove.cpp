@@ -22,8 +22,8 @@ namespace {
 	CowMove::TagCow s_tag3Cow = CowMove::kNone;
 }
 
-// 捕獲対象（牛）の基礎ステータス（スコア・XP・吸い込み上限高度）をゲームモードに応じて初期化する。
-// [入力: filename, initPos / 出力: なし] 固有パラメータ設定および吸い込み時エフェクトの動的生成を行う。
+/// @brief 捕獲対象（牛）の基礎ステータス（スコア・XP・吸い込み上限高度）をゲームモードに応じて初期化する。
+/// @details 固有パラメータ設定および吸い込み時エフェクトの動的生成を行う。
 CowMove::CowMove(std::string filename, VECTOR initPos)
 	: CharacterMove(filename, initPos)
 {
@@ -48,8 +48,8 @@ CowMove::~CowMove()
 {
 }
 
-// オブジェクトプーリングによる再利用時、前回の死亡フラグや吸い込みエフェクトの残価による誤動作を防止する。
-// [入力: pos / 出力: なし] 内部フラグ・エフェクト・コライダー座標の初期化を行う。
+/// @brief オブジェクトプーリングによる再利用時、前回の死亡フラグや吸い込みエフェクトの残価による誤動作を防止する。
+/// @details 内部フラグ・エフェクト・コライダー座標の初期化を行う。
 void CowMove::Reset(VECTOR pos)
 {
 	CharacterMove::Reset(pos);
@@ -67,8 +67,8 @@ void CowMove::Reset(VECTOR pos)
 	}
 }
 
-// キャラクターの移動・物理演算に加え、非表示状態（吸い込み完了直前）のエフェクト演出を進行させる。
-// [入出力: なし] 基底クラスの更新処理、および吸い込み用エフェクトのフレーム更新を行う。
+/// @brief キャラクターの移動・物理演算に加え、非表示状態（吸い込み完了直前）のエフェクト演出を進行させる。
+/// @details 基底クラスの更新処理、および吸い込み用エフェクトのフレーム更新を行う。
 void CowMove::Update()
 {
 	CharacterMove::Update();
@@ -79,8 +79,8 @@ void CowMove::Update()
 	}
 }
 
-// 生存時は3Dモデルを描画し、吸い込み消滅演出中はモデルを隠して吸い込みエフェクトのみをレンダリングする。
-// [入出力: なし] 可視性フラグに応じたモデル描画および演出エフェクトの描画を行う。
+/// @brief 生存時は3Dモデルを描画し、吸い込み消滅演出中はモデルを隠して吸い込みエフェクトのみをレンダリングする。
+/// @details 可視性フラグに応じたモデル描画および演出エフェクトの描画を行う。
 void CowMove::Draw()
 {
 	if (is_visible_)
@@ -93,8 +93,8 @@ void CowMove::Draw()
 	}
 }
 
-// 牛の身体サイズ・高さに合わせ、判定漏れを防ぐカプセルコライダーの上下空間座標を追従更新する。
-// [入出力: なし] 判定用カプセルコライダーの基準座標・到達点座標・半径を同期する。
+/// @brief 牛の身体サイズ・高さに合わせ、判定漏れを防ぐカプセルコライダーの上下空間座標を追従更新する。
+/// @details 判定用カプセルコライダーの基準座標・到達点座標・半径を同期する。
 void CowMove::ColliderMove()
 {
 	if (capsule_collider_ != nullptr)
@@ -105,8 +105,8 @@ void CowMove::ColliderMove()
 	}
 }
 
-// 他の牛との重なり回避、餌への誘導、および通常の徘徊AIを優先度順に合成して位置を決定する。
-// [入出力: なし] 回避・追従・徘徊・壁判定ロジックのディスパッチとモデル座標の同期を行う。
+/// @brief 他の牛との重なり回避、餌への誘導、および通常の徘徊AIを優先度順に合成して位置を決定する。
+/// @details 回避・追従・徘徊・壁判定ロジックのディスパッチとモデル座標の同期を行う。
 void CowMove::MoveCharacter()
 {
 	AvoidOtherCows();
@@ -122,8 +122,8 @@ void CowMove::MoveCharacter()
 	model_->SetPosition(position_);
 }
 
-// 多数の牛が一箇所に重なった際の描画チラつき（Zファイティング）と不自然な密集を押し出し演算で防止する。
-// [入出力: なし] 牛同士の距離計算を行い、近接時に互いを離す反発ベクトルを加算・適用する。
+/// @brief 多数の牛が一箇所に重なった際の描画チラつき（Zファイティング）と不自然な密集を押し出し演算で防止する。
+/// @details 牛同士の距離計算を行い、近接時に互いを離す反発ベクトルを加算・適用する。
 void CowMove::AvoidOtherCows()
 {
 	const auto& cows = ServiceLocator::GetObjectManager()->GetObject3DListByTag(Object3D::kTag3dCow);
@@ -155,8 +155,8 @@ void CowMove::AvoidOtherCows()
 	model_->SetPosition(position_);
 }
 
-// 設置された餌の匂い（範囲判定）を検知した際、通常の徘徊を中断して最寄りの餌へ直線移動させる。
-// [入力: なし / 出力: 餌追従中ならtrue] チュートリアル中やUFO吸い込み中のスタックを回避しつつ座標を更新する。
+/// @brief 設置された餌の匂い（範囲判定）を検知した際、通常の徘徊を中断して最寄りの餌へ直線移動させる。
+/// @details チュートリアル中やUFO吸い込み中のスタックを回避しつつ座標を更新する。
 bool CowMove::SeekBait()
 {
 	if (Master::scene_manager_->GetSceneType() == SceneManager::kSceneTutorial) return false;
@@ -191,42 +191,42 @@ bool CowMove::SeekBait()
 	return false;
 }
 
-// ランダムな徘徊行動の目的地選定および移動ベクトルの算出を行う。
-// [入出力: なし] 基底クラスの徘徊AIロジックを実行する。
+/// @brief ランダムな徘徊行動の目的地選定および移動ベクトルの算出を行う。
+/// @details 基底クラスの徘徊AIロジックを実行する。
 void CowMove::UpdateWanderAI()
 {
 	CharacterMove::UpdateWanderAI();
 }
 
-// ステージ外への脱出を防ぐため、境界壁との接触・めり込み防止処理を行う。
-// [入出力: なし] 基底クラスの壁衝突判定処理を実行する。
+/// @brief ステージ外への脱出を防ぐため、境界壁との接触・めり込み防止処理を行う。
+/// @details 基底クラスの壁衝突判定処理を実行する。
 void CowMove::CheckWallCollision()
 {
 	CharacterMove::CheckWallCollision();
 }
 
-// 移動方向ベクトルに合わせてモデルのY軸回転角度をイージング補間する。
-// [入出力: なし] 基底クラスの回転補間処理を実行する。
+/// @brief 移動方向ベクトルに合わせてモデルのY軸回転角度をイージング補間する。
+/// @details 基底クラスの回転補間処理を実行する。
 void CowMove::RotationCharacter()
 {
 	CharacterMove::RotationCharacter();
 }
 
-// 物理演算・移動結果に伴うモデルの回転行列を再計算して反映する。
-// [入出力: なし] 基底クラスのモデル回転適用処理を実行する。
+/// @brief 物理演算・移動結果に伴うモデルの回転行列を再計算して反映する。
+/// @details 基底クラスのモデル回転適用処理を実行する。
 void CowMove::CharacterRotate()
 {
 	CharacterMove::CharacterRotate();
 }
 
-// アニメーション追加インターフェース（個別アニメーション追加が必要な場合にオーバーライド）。
-// [入力: state, filename / 出力: なし] 処理なし（基底クラスの仕様に準拠）。
+/// @brief アニメーション追加インターフェース（個別アニメーション追加が必要な場合にオーバーライド）。
+/// @details 処理なし（基底クラスの仕様に準拠）。
 void CowMove::AddAnimation(AnimationState state, std::string filename)
 {
 }
 
-// 餌の感知範囲への侵入や、他の牛との物理的な重なり検知時の初期衝突解決を行う。
-// [入力: collider, check / 出力: なし] 餌フラグの有効化、または牛同士の急激な離脱ベクトル加算を行う。
+/// @brief 餌の感知範囲への侵入や、他の牛との物理的な重なり検知時の初期衝突解決を行う。
+/// @details 餌フラグの有効化、または牛同士の急激な離脱ベクトル加算を行う。
 void CowMove::OnEnter(Collider* collider, Collider* check)
 {
 	if (collider == capsule_collider_ && check->parent_object_ != nullptr)
@@ -256,8 +256,8 @@ void CowMove::OnEnter(Collider* collider, Collider* check)
 	}
 }
 
-// 牛同士がめり込み続けている間、反発力を継続的に加算して物理スタックを解除する。
-// [入力: collider, check / 出力: なし] 重なり解消のための押し出し移動ベクトルを適用する。
+/// @brief 牛同士がめり込み続けている間、反発力を継続的に加算して物理スタックを解除する。
+/// @details 重なり解消のための押し出し移動ベクトルを適用する。
 void CowMove::OnTrigger(Collider* collider, Collider* check)
 {
 	if (collider == capsule_collider_ && check->parent_object_ != nullptr)
@@ -282,8 +282,8 @@ void CowMove::OnTrigger(Collider* collider, Collider* check)
 	}
 }
 
-// 餌の感知範囲から完全に外れた際、餌追従フラグを降ろして通常の徘徊へ戻す。
-// [入力: collider, check / 出力: なし] 餌ターゲットフラグ（bait_flag_）を無効化する。
+/// @brief 餌の感知範囲から完全に外れた際、餌追従フラグを降ろして通常の徘徊へ戻す。
+/// @details 餌ターゲットフラグ（bait_flag_）を無効化する。
 void CowMove::OnExit(Collider* collider, Collider* check)
 {
 	if (collider == capsule_collider_ && check->parent_object_ != nullptr)
@@ -295,8 +295,8 @@ void CowMove::OnExit(Collider* collider, Collider* check)
 	}
 }
 
-// UFOの光線による吸引上昇アニメーション、フィーバー時の追従、および規定高度到達時のキャプチャ完了処理。
-// [入出力: なし] 上昇運動・UFO直下補正・高度判定に基づく消滅およびDie()関数の呼び出しを行う。
+/// @brief UFOの光線による吸引上昇アニメーション、フィーバー時の追従、および規定高度到達時のキャプチャ完了処理。
+/// @details 上昇運動・UFO直下補正・高度判定に基づく消滅およびDie()関数の呼び出しを行う。
 void CowMove::CharacterDied()
 {
 	if (mCurrentState == STATE_VACUUM)
@@ -350,8 +350,8 @@ void CowMove::CharacterDied()
 	}
 }
 
-// 餌の捕食アクション等により即座に消滅・回収された際の死亡処理をトリガーする。
-// [入出力: なし] モデル消滅フラグの設定、餌死亡理由でのDie()呼び出し、破棄フラグ付与を行う。
+/// @brief 餌の捕食アクション等により即座に消滅・回収された際の死亡処理をトリガーする。
+/// @details モデル消滅フラグの設定、餌死亡理由でのDie()呼び出し、破棄フラグ付与を行う。
 void CowMove::KilledByBait()
 {
 	is_visible_ = false;
@@ -359,8 +359,8 @@ void CowMove::KilledByBait()
 	mDeleteFlag = true;
 }
 
-// 牛のキャプチャ完了時、プレイヤーへスコア・XP・コンボ数を付与し、SEおよび爆発エフェクトを再生する。
-// [入力: reason / 出力: なし] プレイヤーリソース（Score/XP/Combo）の加算と削除予約フラグの設定を行う。
+/// @brief 牛のキャプチャ完了時、プレイヤーへスコア・XP・コンボ数を付与し、SEおよび爆発エフェクトを再生する。
+/// @details プレイヤーリソース（Score/XP/Combo）の加算と削除予約フラグの設定を行う。
 void CowMove::Die(DeathReason reason)
 {
 	if (mDeleteFlag) return;

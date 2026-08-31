@@ -1,11 +1,11 @@
 #include "Stage.h"
 #include "Master.h"
 
-/*
- * 入力: initPos (初期座標), stageModelName (描画用モデル), stageCollisionModelName (判定用モデル)
- * 出力: なし
- * 副作用: 描画用および判定用モデルの読み込みと、判定情報(コリジョン)のセットアップ
- */
+/// @brief 初期化処理を行う
+/// @details initPos (初期座標)
+/// @details stageModelName (描画用モデル)
+/// @details stageCollisionModelName (判定用モデル)
+/// @details 描画用および判定用モデルの読み込みと、判定情報(コリジョン)のセットアップ
 Stage::Stage(VECTOR initPos, std::string stageModelName, std::string stageCollisionModelName)
 	: Object3D(initPos)
 {
@@ -26,41 +26,28 @@ Stage::Stage(VECTOR initPos, std::string stageModelName, std::string stageCollis
 	MV1SetupCollInfo(collision_handle_);
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: ロードしたモデルリソースの破棄
- */
+/// @brief ロードしたモデルリソースの破棄
 Stage::~Stage()
 {
 	MV1DeleteModel(model_handle_);
 	MV1DeleteModel(collision_handle_);
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: なし
- */
+/// @brief 入力: なし
 void Stage::Update()
 {
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: ステージの3Dモデル描画
- */
+/// @brief ステージの3Dモデル描画
 void Stage::Draw()
 {
 	MV1DrawModel(model_handle_);
 }
 
-/*
- * 入力: pos1, pos2 (カプセルの両端座標), r (カプセルの半径)
- * 出力: 衝突していればtrue
- * 副作用: なし
- */
+/// @return 衝突していればtrue
+/// @brief pos1
+/// @details pos2 (カプセルの両端座標)
+/// @details r (カプセルの半径)
 bool Stage::CheckHit_Capsule(VECTOR pos1, VECTOR pos2, float r)
 {
 	MV1_COLL_RESULT_POLY_DIM result = MV1CollCheck_Capsule(collision_handle_, -1, pos1, pos2, r);
@@ -72,11 +59,9 @@ bool Stage::CheckHit_Capsule(VECTOR pos1, VECTOR pos2, float r)
 	return is_hit;
 }
 
-/*
- * 入力: pos1, pos2 (線分の始点と終点)
- * 出力: 衝突点の座標 (未衝突時はゼロベクトル)
- * 副作用: なし
- */
+/// @return 衝突点の座標 (未衝突時はゼロベクトル)
+/// @brief pos1
+/// @details pos2 (線分の始点と終点)
 VECTOR Stage::CheckHit_Line(VECTOR pos1, VECTOR pos2)
 {
 	VECTOR ret = VGet(0.0f, 0.0f, 0.0f);
@@ -91,11 +76,10 @@ VECTOR Stage::CheckHit_Line(VECTOR pos1, VECTOR pos2)
 	return ret;
 }
 
-/*
- * 入力: pos1, pos2 (線分の始点と終点)
- * 出力: 衝突点の座標
- * 副作用: 画面左上へのヒット座標のテキスト描画
- */
+/// @return 衝突点の座標
+/// @brief pos1
+/// @details pos2 (線分の始点と終点)
+/// @details 画面左上へのヒット座標のテキスト描画
 VECTOR Stage::CheckHit_LineDebug(VECTOR pos1, VECTOR pos2)
 {
 	VECTOR ret = VGet(0.0f, 0.0f, 0.0f);

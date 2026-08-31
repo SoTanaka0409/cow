@@ -6,7 +6,7 @@
 #include "InputManager.h"
 #include "SelectionManager.h"
 
-// 副作用：各種UIボタンの生成と配置、フェード状態の初期化
+/// @brief 各種UIボタンの生成と配置、フェード状態の初期化
 TitleScene::TitleScene()
 	: Scene()
 {
@@ -67,7 +67,7 @@ TitleScene::~TitleScene()
 {
 }
 
-// 副作用：システムフラグ・カメラ設定・BGMの再生、ファイルからのスコア読み込み
+/// @brief システムフラグ・カメラ設定・BGMの再生、ファイルからのスコア読み込み
 void TitleScene::Initialize()
 {
 	Master::GameFinishFlag = false;
@@ -79,7 +79,7 @@ void TitleScene::Initialize()
 	Master::sound_manager_->PlayBGM(SoundManager::kBgmTitle);
 }
 
-// 副作用：各種背景・UFO・ボタン・ランキングUIの描画、デバッグログの出力
+/// @brief 各種背景・UFO・ボタン・ランキングUIの描画、デバッグログの出力
 void TitleScene::Draw()
 {
 	Scene::Draw();
@@ -89,10 +89,12 @@ void TitleScene::Draw()
 	DrawRankingUI();
 
 	// 初回読み込み時のリソース解放漏れを検証するため、描画2フレーム目のみログ追記を行う
-	if (frame_count_ == 2) {
+	if (frame_count_ == 2)
+	{
 		FILE* fp = NULL;
 		fopen_s(&fp, "Data/debug_log.txt", "a");
-		if (fp) {
+		if (fp)
+		{
 			int w, h;
 			int res = GetGraphSize(title_graph_handle_, &w, &h);
 			fprintf(fp, "TitleScene Draw: handle=%d, res=%d, w=%d, h=%d\n", title_graph_handle_, res, w, h);
@@ -100,7 +102,8 @@ void TitleScene::Draw()
 		}
 	}
 
-	if (fade_state_ != kSceneFadeNone) {
+	if (fade_state_ != kSceneFadeNone)
+	{
 		Scene::Fade(fade_state_);
 	}
 }
@@ -155,7 +158,7 @@ void TitleScene::DrawMenuButtons()
 	}
 }
 
-// 副作用：フレームカウンターの加算、各種タイマーの更新、入力状態に基づく座標変更
+/// @brief フレームカウンターの加算、各種タイマーの更新、入力状態に基づく座標変更
 void TitleScene::Update()
 {
 	frame_count_++;
@@ -272,13 +275,14 @@ void TitleScene::UpdateMenuButtons(int mouse_x, int mouse_y)
 	else
 	{
 		// UFO操作中の画面のちらつきや誤動作を防止するため、全ボタンのホバー演Eを消去する
-		for (int i = 0; i < buttons_.size(); i++) {
+		for (int i = 0; i < buttons_.size(); i++)
+		{
 			buttons_[i].is_hover = false;
 		}
 	}
 }
 
-// 副作用：マウスカーソル非表示化、BGMの停止
+/// @brief マウスカーソル非表示化、BGMの停止
 void TitleScene::Finalize()
 {
 	// グラフィックメモリは ResourceManager が一括管理・自動解放するため、個別Deleteは行わない
@@ -286,7 +290,7 @@ void TitleScene::Finalize()
 	Master::sound_manager_->StopBGM();
 }
 
-// 副作用：ランキングタイトル、上位3名の順位バッジおよびハイスコアの画面描画
+/// @brief ランキングタイトル、上位3名の順位バッジおよびハイスコアの画面描画
 void TitleScene::DrawRankingUI()
 {
 	int baseX = 40;

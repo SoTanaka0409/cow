@@ -1,12 +1,11 @@
 #include "Cow.h"
 #include "CapsuleCollider.h"
 #include "Master.h"
-/*
- * プレイヤーの対象となる標準キャラクターを初期化する。
- * [入力] filename: モデルパス, initPos: 初期位置, num: 基礎スコア値
- * [出力] なし
- * [副作用] スコアと経験値が設定される
- */
+/// @brief プレイヤーの対象となる標準キャラクターを初期化する。
+/// @param filename モデルパス
+/// @param initPos 初期位置
+/// @param num 基礎スコア値
+/// @details スコアと経験値が設定される
 Cow::Cow(std::string filename, VECTOR initPos, float num)
 	: CowMove(filename, initPos)
 {
@@ -15,12 +14,7 @@ Cow::Cow(std::string filename, VECTOR initPos, float num)
 	SetTagCow(CowMove::kCow1);
 	mCurrentState = STATE_IDLE;
 }
-/*
- * リソース解放。
- * [入力] なし
- * [出力] なし
- * [副作用] なし
- */
+/// @brief リソース解放。
 Cow::~Cow()
 {
 }

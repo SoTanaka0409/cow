@@ -6,9 +6,7 @@
 #include "SceneManager.h"
 #include "InputManager.h"
 
-// 入力：なし
-// 出力：なし
-// 副作用：設定画面で使用する専用背景テクスチャおよび各種UIフォントのVRAMロード
+/// @brief 設定画面で使用する専用背景テクスチャおよび各種UIフォントのVRAMロード
 Rule::Rule()
 {
 	rule_graph_ = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kSettingsBg);
@@ -25,9 +23,7 @@ Rule::~Rule()
 	Finalize();
 }
 
-// 入力：なし
-// 出力：なし
-// 副作用：フレームカウントの進行、およびマウス・キーボード入力に同期した設定項目の更新
+/// @brief フレームカウントの進行、およびマウス・キーボード入力に同期した設定項目の更新
 void Rule::Update()
 {
 	Scene::Update();
@@ -55,9 +51,8 @@ void Rule::Update()
 	prevMouseInput = mouseInput;
 }
 
-// 入力：なし
-// 出力：フェードアウト処理中の場合は true、それ以外は false
-// 副作用：BGM音量の線形減衰、およびフェード完了時のシーンマネージャーへの遷移リクエスト
+/// @return フェードアウト処理中の場合は true、それ以外は false
+/// @brief BGM音量の線形減衰、およびフェード完了時のシーンマネージャーへの遷移リクエスト
 bool Rule::UpdateFadeState()
 {
 	if (fade_state_ == kSceneFadeOut)
@@ -74,9 +69,12 @@ bool Rule::UpdateFadeState()
 	return false;
 }
 
-// 入力：mouse_x, mouse_y = 現在のマウス座標, mouseInput = 現在のクリック状態, isMouseClicked = 1フレームクリック判定, isMouseHeld = 押し続け判定
-// 出力：なし
-// 副作用：ボリュームの書き換え、変更音SEのトリガー、フェードアウトステートへの移行処理
+/// @param mouse_y 現在のマウス座標
+/// @param mouseInput 現在のクリック状態
+/// @param isMouseClicked 1フレームクリック判定
+/// @param isMouseHeld 押し続け判定
+/// @brief mouse_x
+/// @details ボリュームの書き換え、変更音SEのトリガー、フェードアウトステートへの移行処理
 void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClicked, bool isMouseHeld)
 {
 	static int last_mouse_x = -1;
@@ -244,9 +242,7 @@ void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClic
 	}
 }
 
-// 入力：なし
-// 出力：なし
-// 副作用：暗転背景、ボリュームスライダー、各種文字項目のバックバッファへの転送
+/// @brief 暗転背景、ボリュームスライダー、各種文字項目のバックバッファへの転送
 void Rule::Draw()
 {
 	DrawBackground();
@@ -254,14 +250,13 @@ void Rule::Draw()
 
 	Scene::Draw();
 
-	if (fade_state_ != kSceneFadeNone) {
+	if (fade_state_ != kSceneFadeNone)
+	{
 		Scene::Fade(fade_state_);
 	}
 }
 
-// 入力：なし
-// 出力：なし
-// 副作用：背景の拡大描画、半透明の暗幕矩形描画、およびタイトルロゴテキストの描画
+/// @brief 背景の拡大描画、半透明の暗幕矩形描画、およびタイトルロゴテキストの描画
 void Rule::DrawBackground()
 {
 	DrawExtendGraph(0, -100, 1600, 1000, rule_graph_, TRUE);
@@ -274,9 +269,7 @@ void Rule::DrawBackground()
 	DrawStringToHandle(650, 100, "SETTINGS", GetColor(255, 255, 255), title_font_handle_);
 }
 
-// 入力：なし
-// 出力：なし
-// 副作用：選択状態に連動したカーソル記号、および各メニュー項目の描画
+/// @brief 選択状態に連動したカーソル記号、および各メニュー項目の描画
 void Rule::DrawMenu()
 {
 	int startY = 250;
@@ -332,9 +325,7 @@ void Rule::DrawMenu()
 	}
 }
 
-// 入力：なし
-// 出力：なし
-// 副作用：フェード状態の初期化、選択インデックスの規定、および設定画面用BGM（kBgmRule）の再生開始
+/// @brief フェード状態の初期化、選択インデックスの規定、および設定画面用BGM（kBgmRule）の再生開始
 void Rule::Initialize()
 {
 	SetMouseDispFlag(true); // 設定画面ではマウスカーソルを表示する
@@ -346,9 +337,7 @@ void Rule::Initialize()
 	Master::sound_manager_->PlayBGM(SoundManager::kBgmRule);
 }
 
-// 入力：なし
-// 出力：なし
-// 副作用：作成したフォントハンドルの破棄およびBGM再生の即時停止
+/// @brief 作成したフォントハンドルの破棄およびBGM再生の即時停止
 void Rule::Finalize()
 {
 	DeleteFontToHandle(font_handle_);

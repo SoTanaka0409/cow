@@ -4,22 +4,18 @@
 #include "Master.h"
 #include <cmath>
 
-/*
- * 入力: character (対象キャラクター)
- * 出力: なし
- * 副作用: 待機時間の初期化
- */
+/// @brief 状態開始時の処理を行う
+/// @details character (対象キャラクター)
+/// @details 待機時間の初期化
 void StateIdle::Enter(CharacterMove* character)
 {
 	// 複数キャラの待機モーションが完全に同期して不自然に見えるのを防ぐため、タイマーを分散させる
 	character->SetActionTimer(60 + GetRand(60));
 }
 
-/*
- * 入力: character (対象キャラクター)
- * 出力: なし
- * 副作用: アクションタイマーの更新、接地補正、状態遷移
- */
+/// @brief 更新処理を行う
+/// @details character (対象キャラクター)
+/// @details アクションタイマーの更新、接地補正、状態遷移
 void StateIdle::Update(CharacterMove* character)
 {
 	character->DecreaseActionTimer();
@@ -47,11 +43,9 @@ void StateIdle::Update(CharacterMove* character)
 	}
 }
 
-/*
- * 入力: character (対象キャラクター)
- * 出力: なし
- * 副作用: 歩行時間と進行方向ベクトルの初期化
- */
+/// @brief 状態開始時の処理を行う
+/// @details character (対象キャラクター)
+/// @details 歩行時間と進行方向ベクトルの初期化
 void StateWalk::Enter(CharacterMove* character)
 {
 	character->SetActionTimer(60 + GetRand(120));
@@ -65,11 +59,9 @@ void StateWalk::Enter(CharacterMove* character)
 	character->SetMoveVec(moveVec);
 }
 
-/*
- * 入力: character (対象キャラクター)
- * 出力: なし
- * 副作用: 座標の更新、接地補正、Idle状態への遷移
- */
+/// @brief 更新処理を行う
+/// @details character (対象キャラクター)
+/// @details 座標の更新、接地補正、Idle状態への遷移
 void StateWalk::Update(CharacterMove* character)
 {
 	character->DecreaseActionTimer();
@@ -94,22 +86,16 @@ void StateWalk::Update(CharacterMove* character)
 	}
 }
 
-/*
- * 入力: character (対象キャラクター)
- * 出力: なし
- * 副作用: なし
- */
+/// @brief 状態開始時の処理を行う
+/// @details character (対象キャラクター)
 void StateVacuum::Enter(CharacterMove* character)
 {
 	// 暫定対応: コレクション要素を廃止しアクション性を重視する仕様へ変更したため、
 	// 単純な回収ではない新しい吸引演出の実装まで空枠とする（期限：次回マイルストーンまで）
 }
 
-/*
- * 入力: character (対象キャラクター)
- * 出力: なし
- * 副作用: なし
- */
+/// @brief 更新処理を行う
+/// @details character (対象キャラクター)
 void StateVacuum::Update(CharacterMove* character)
 {
 }

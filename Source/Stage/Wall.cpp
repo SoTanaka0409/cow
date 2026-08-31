@@ -2,17 +2,24 @@
 #include "DxLib.h"
 #include "Master.h"
 
-/*
- * 描画用リソースと空間内の配置位置を初期化するため
- * [入力] filename: 画像パス, centerPos: 中心座標, topLeft: 左上相対位置, bottomRight: 右下相対位置
- * [出力] なし
- * [副作用] 画像メモリの確保と頂点配列の構築を行う
- */
+/// @brief 描画用リソースと空間内の配置位置を初期化するため
+/// @param filename 画像パス
+/// @param centerPos 中心座標
+/// @param topLeft 左上相対位置
+/// @param bottomRight 右下相対位置
+/// @details 画像メモリの確保と頂点配列の構築を行う
 Wall::Wall(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight)
 	: Object3D(centerPos)
 {
 	SetTag(Object3D::kTag3dWall);
-	if (!filename.empty()) { graph_handle_ = Master::resource_manager_->LoadGraphics(filename.c_str()); } else { graph_handle_ = -1; }
+	if (!filename.empty())
+	{
+		graph_handle_ = Master::resource_manager_->LoadGraphics(filename.c_str());
+	}
+	else
+	{
+		graph_handle_ = -1;
+	}
 
 	vertex_[0].pos = VAdd(centerPos, topLeft);
 	vertex_[0].norm = VGet(1.0f, 0.0f, 0.0f);
@@ -61,12 +68,8 @@ Wall::Wall(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottom
 	vertex_[3].norm = norm;
 }
 
-/*
- * 外部クラスが壁との当たり判定を計算できるようにするため
- * [入力] なし
- * [出力] 壁を構成する4つの頂点データ
- * [副作用] なし
- */
+/// @brief 外部クラスが壁との当たり判定を計算できるようにするため
+/// @return 壁を構成する4つの頂点データ
 std::vector<VERTEX3D> Wall::GetVertex()
 {
 	std::vector<VERTEX3D> result;
@@ -77,33 +80,20 @@ std::vector<VERTEX3D> Wall::GetVertex()
 	return result;
 }
 
-/*
- * オブジェクト破棄時の後処理を行うため
- * [入力] なし
- * [出力] なし
- * [副作用] なし
- */
+/// @brief オブジェクト破棄時の後処理を行うため
 Wall::~Wall()
 {
 
 }
 
-/*
- * 壁の動的な状態変化を毎フレーム反映させるため
- * [入力] なし
- * [出力] なし
- * [副作用] 状態変数を更新する
- */
+/// @brief 壁の動的な状態変化を毎フレーム反映させるため
+/// @details 状態変数を更新する
 void Wall::Update()
 {
 }
 
-/*
- * プレイヤーに壁の存在を視覚的に伝えるため
- * [入力] なし
- * [出力] なし
- * [副作用] 画面にポリゴンを描画する
- */
+/// @brief プレイヤーに壁の存在を視覚的に伝えるため
+/// @details 画面にポリゴンを描画する
 void Wall::Draw()
 {
 	WORD index[6];

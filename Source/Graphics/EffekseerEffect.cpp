@@ -2,11 +2,11 @@
 #include <EffekseerForDXLib.h>
 #include "Master.h"
 
-/*
- * 入力: filename (ファイルパス), initPos (初期座標), kEffectSize (基本スケール)
- * 出力: なし
- * 副作用: 内部変数の初期化とエフェクトリソースの読み込み
- */
+/// @brief 初期化処理を行う
+/// @details filename (ファイルパス)
+/// @details initPos (初期座標)
+/// @details kEffectSize (基本スケール)
+/// @details 内部変数の初期化とエフェクトリソースの読み込み
 EffekseerEffect::EffekseerEffect(const char* filename, VECTOR initPos, float kEffectSize)
 	: play_pos_(initPos)
 	, rotation_(VGet(0.0f, 0.0f, 0.0f))
@@ -21,33 +21,21 @@ EffekseerEffect::EffekseerEffect(const char* filename, VECTOR initPos, float kEf
 	Load();
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: エフェクトリソースの解放
- */
+/// @brief エフェクトリソースの解放
 EffekseerEffect::~EffekseerEffect()
 {
 	// アプリケーション終了時やオブジェクト破棄時に、VRAM/RAMのメモリリークが発生するのを防ぐため明示的に破棄する
 	DeleteEffekseerEffect(effect_resource_handle_);
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: VRAMへのエフェクトデータ展開およびリソースハンドルの取得
- */
+/// @brief VRAMへのエフェクトデータ展開およびリソースハンドルの取得
 void EffekseerEffect::Load()
 {
 	// 外部仕様依存: EffekseerForDXLibの仕様上、ベースサイズ(effectSize)は再生時ではなくロード時に確定させる必要がある
 	effect_resource_handle_ = LoadEffekseerEffect(file_path_, effectSize);
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: 再生中エフェクトのローカルトランスフォーム(座標・回転・スケール)の更新
- */
+/// @brief 再生中エフェクトのローカルトランスフォーム(座標・回転・スケール)の更新
 void EffekseerEffect::Update()
 {
 	if (playingEffectHandle != -1)
@@ -59,21 +47,13 @@ void EffekseerEffect::Update()
 	}
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: なし
- */
+/// @brief 入力: なし
 void EffekseerEffect::Draw()
 {
 	// 外部仕様依存: 本ライブラリにおける3Dエフェクトの描画はシステム側で一括処理されるため、個別オブジェクトからのDraw呼び出しは不要
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: エフェクトの再生開始と再生ハンドルの保持
- */
+/// @brief エフェクトの再生開始と再生ハンドルの保持
 void EffekseerEffect::Play()
 {
 	playingEffectHandle = PlayEffekseer3DEffect(effect_resource_handle_);
@@ -82,11 +62,7 @@ void EffekseerEffect::Play()
 	SetPosPlayingEffekseer3DEffect(playingEffectHandle, play_pos_.x, play_pos_.y, play_pos_.z);
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: エフェクトの強制停止処理
- */
+/// @brief エフェクトの強制停止処理
 void EffekseerEffect::Stop()
 {
 	// 無効なハンドルや既に自然消滅したエフェクトを停止しようとして、ライブラリ内部でクラッシュするのを防ぐための安全検証

@@ -3,44 +3,32 @@
 #include "Object3D.h"
 #include <vector>
 
-// 空間の区切りや衝突判定の基準として扱うため
+/// @brief 空間の区切りや衝突判定の基準として扱うため
 class Wall : public Object3D
 {
 public:
-	/*
-	 * 描画用リソースと空間内の配置位置を初期化するため
-	 * [入力] filename: 画像パス, centerPos: 中心座標, topLeft: 左上相対位置, bottomRight: 右下相対位置
-	 * [出力] なし
-	 * [副作用] 画像メモリの確保と頂点配列の構築を行う
-	 */
+	/// @brief 描画用リソースと空間内の配置位置を初期化するため
+	/// @param filename 画像パス
+	/// @param centerPos 中心座標
+	/// @param topLeft 左上相対位置
+	/// @param bottomRight 右下相対位置
+	/// @details 画像メモリの確保と頂点配列の構築を行う
 	Wall(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight);
 	virtual ~Wall();
 
-	/*
-	 * 壁の動的な状態変化を毎フレーム反映させるため
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 状態変数を更新する
-	 */
+	/// @brief 壁の動的な状態変化を毎フレーム反映させるため
+	/// @details 状態変数を更新する
 	void Update() override;
 
-	/*
-	 * プレイヤーに壁の存在を視覚的に伝えるため
-	 * [入力] なし
-	 * [出力] なし
-	 * [副作用] 画面にポリゴンを描画する
-	 */
+	/// @brief プレイヤーに壁の存在を視覚的に伝えるため
+	/// @details 画面にポリゴンを描画する
 	void Draw() override;
 
-	/*
-	 * 外部クラスが壁との当たり判定を計算できるようにするため
-	 * [入力] なし
-	 * [出力] 壁を構成する4つの頂点データ
-	 * [副作用] なし
-	 */
+	/// @brief 外部クラスが壁との当たり判定を計算できるようにするため
+	/// @return 壁を構成する4つの頂点データ
 	std::vector<VERTEX3D> GetVertex();
 
 private:
-	int graph_handle_;
-	VERTEX3D vertex_[4];
+	int graph_handle_;   ///< 描画やリソース管理に使用するハンドル
+	VERTEX3D vertex_[4]; ///< 描画や当たり判定に使用する頂点情報
 };

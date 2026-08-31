@@ -8,7 +8,7 @@
 #include "Object3D.h"
 #include "Scene.h"
 #include "GameManager.h"
-// 副作用：カメラパラメータおよびカメラシェイク制御変数の初期化
+/// @brief カメラパラメータおよびカメラシェイク制御変数の初期化
 Camera::Camera()
 	: horizontal_angle_(0.0f)
 	, vertical_angle_(-55.0f)
@@ -30,7 +30,7 @@ Camera::Camera()
 Camera::~Camera()
 {
 }
-// 副作用：DxLibのニア・ファークリップ、背景色の適用、初期位置の反映
+/// @brief DxLibのニア・ファークリップ、背景色の適用、初期位置の反映
 void Camera::Initialize()
 {
 	target_ = nullptr;
@@ -48,7 +48,7 @@ void Camera::Initialize()
 	SetCameraPositionAndTarget_UpVecY(position_, look_at_position_);
 	Update();
 }
-// 副作用：カメラ座標および注視点の設定、平行光源方向の更新、Effekseerカメラ行列の同期
+/// @brief カメラ座標および注視点の設定、平行光源方向の更新、Effekseerカメラ行列の同期
 void Camera::Update()
 {
 	// スキル選択時やデバッグカメラ起動時に、マウス移動により視点が変わるのを防ぐための入力カット
@@ -95,7 +95,7 @@ void Camera::UpdateEffekseerAndLight()
 	VECTOR lightDir = VSub(look_at_position_, position_);
 	SetLightDirection(lightDir);
 }
-// 副作用：コントローラーやマウス入力に基づいたカメラ旋回角度の更新、マウスカーソルの中央固定
+/// @brief コントローラーやマウス入力に基づいたカメラ旋回角度の更新、マウスカーソルの中央固定
 void Camera::UpdateRotate()
 {
 	// 天地逆転現象（ジンバルロック）を防ぐためにピッチ角（仰俯角）を制限し、ヨー角は360度シームレスにループさせる
@@ -136,7 +136,8 @@ void Camera::UpdateRotate()
 		}
 	}
 }
-// 出力：マウスが規定ピクセル以上移動しているかどうかの真偽値
+/// @brief 値を取得する
+/// @return マウスが規定ピクセル以上移動しているかどうかの真偽値
 bool Camera::IsMouseMoved()
 {
 	int moveX = abs(current_mouse_x_ - prev_mouse_x_);
@@ -146,7 +147,7 @@ bool Camera::IsMouseMoved()
 void Camera::Finalize()
 {
 }
-// 副作用：サイン波に基づくシェイクオフセット座標の更新、減衰比率の加算
+/// @brief サイン波に基づくシェイクオフセット座標の更新、減衰比率の加算
 void Camera::Shake()
 {
 	if (shake_time_counter_ < old_shake_time_)
@@ -163,8 +164,11 @@ void Camera::Shake()
 		shake_position_ = VGet(0.0f, 0.0f, 0.0f);
 	}
 }
-// 入力：time=継続時間(s), width=最大揺れ幅, angleSpeed=波形の角速度, stepTime=1フレームの進行時間(s)
-// 副作用：シェイク制御パラメータの初期化
+/// @param time 継続時間(s)
+/// @param width 最大揺れ幅
+/// @param angleSpeed 波形の角速度
+/// @param stepTime 1フレームの進行時間(s)
+/// @brief シェイク制御パラメータの初期化
 void Camera::SetupShake(float time, float width, float angleSpeed, float stepTime)
 {
 	shake_time_counter_ = 0.0f;
@@ -173,8 +177,10 @@ void Camera::SetupShake(float time, float width, float angleSpeed, float stepTim
 	shake_angle_speed_ = angleSpeed;
 	step_time_ = stepTime;
 }
-// 入力：phase=現在のゲーム進行段階, ufoPos=UFOの座標, tornadoPos=竜巻の座標
-// 副作用：指定フェーズに対応するアングル補間、Lerpによる座標変化
+/// @param phase 現在のゲーム進行段階
+/// @param ufoPos UFOの座標
+/// @param tornadoPos 竜巻の座標
+/// @brief 指定フェーズに対応するアングル補間、Lerpによる座標変化
 void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 {
 	if (Master::is_debug_camera_) return;

@@ -8,12 +8,11 @@
 #include "Bait.h"
 #include "Wall.h"
 
-/*
- * ゴールドカウの初期化を行う
- * [入力] filename: モデルのファイルパス, initPos: 初期位置, kFever: フィーバー由来のスポーンか
- * [出力] なし
- * [副作用] スコア、経験値、当たり判定のサイズを設定する
- */
+/// @brief ゴールドカウの初期化を行う
+/// @param filename モデルのファイルパス
+/// @param initPos 初期位置
+/// @param kFever フィーバー由来のスポーンか
+/// @details スコア、経験値、当たり判定のサイズを設定する
 GoldCow::GoldCow(std::string filename, VECTOR initPos, TagFever kFever)
 	: CowMove(filename, initPos)
 	, fever_(kFever)
@@ -27,34 +26,22 @@ GoldCow::GoldCow(std::string filename, VECTOR initPos, TagFever kFever)
 	collider_radius_ = 150.0f;
 }
 
-/*
- * デストラクタ
- * [入力] なし
- * [出力] なし
- * [副作用] なし
- */
+/// @brief デストラクタ
 GoldCow::~GoldCow()
 {
 }
 
-/*
- * 状態をリセットし、再配置する
- * [入力] pos: 再配置する位置
- * [出力] なし
- * [副作用] 死亡タイマーを初期化する
- */
+/// @brief 状態をリセットし、再配置する
+/// @param pos 再配置する位置
+/// @details 死亡タイマーを初期化する
 void GoldCow::Reset(VECTOR pos)
 {
 	CowMove::Reset(pos);
 	death_count_ = 0;
 }
 
-/*
- * 毎フレームの更新処理
- * [入力] なし
- * [出力] なし
- * [副作用] 寿命に達した際に自身を破棄する
- */
+/// @brief 毎フレームの更新処理
+/// @details 寿命に達した際に自身を破棄する
 void GoldCow::Update()
 {
 	death_count_++;
@@ -68,12 +55,9 @@ void GoldCow::Update()
 	}
 }
 
-/*
- * 死亡時の処理を行う
- * [入力] reason: 死亡の理由
- * [出力] なし
- * [副作用] 条件を満たす場合、フィーバー状態をトリガーする
- */
+/// @brief 死亡時の処理を行う
+/// @param reason 死亡の理由
+/// @details 条件を満たす場合、フィーバー状態をトリガーする
 void GoldCow::Die(DeathReason reason)
 {
 	if (mDeleteFlag) return;

@@ -22,12 +22,10 @@ namespace {
 	AnimalMove::TagAnimal s_tag3 = AnimalMove::kNone;
 }
 
-/*
- * 動物の初期化
- * [入力] filename: モデルパス, initPos: 初期座標
- * [出力] なし
- * [副作用] 各種ステータスの初期設定
- */
+/// @brief 動物の初期化
+/// @param filename モデルパス
+/// @param initPos 初期座標
+/// @details 各種ステータスの初期設定
 AnimalMove::AnimalMove(std::string filename, VECTOR initPos)
 	: CharacterMove(filename, initPos)
 {
@@ -40,22 +38,14 @@ AnimalMove::AnimalMove(std::string filename, VECTOR initPos)
 	SetTag(Object3D::kTag3dAnimal);
 }
 
-/*
- * 終了処理
- * [入力] なし
- * [出力] なし
- * [副作用] なし
- */
+/// @brief 終了処理
 AnimalMove::~AnimalMove()
 {
 }
 
-/*
- * 状態のリセット
- * [入力] pos: 再配置する座標
- * [出力] なし
- * [副作用] キャラクターとコライダーの座標を更新
- */
+/// @brief 状態のリセット
+/// @param pos 再配置する座標
+/// @details キャラクターとコライダーの座標を更新
 void AnimalMove::Reset(VECTOR pos)
 {
 	CharacterMove::Reset(pos);
@@ -66,33 +56,24 @@ void AnimalMove::Reset(VECTOR pos)
 	}
 }
 
-/*
- * 動物の移動処理
- * [入力] なし
- * [出力] なし
- * [副作用] 座標の更新
- */
+/// @brief 動物の移動処理
+/// @details 座標の更新
 void AnimalMove::MoveCharacter()
 {
 	CharacterMove::MoveCharacter();
 }
 
-/*
- * アニメーションの追加
- * [入力] state: アニメーション状態, filename: ファイルパス
- * [出力] なし
- * [副作用] なし
- */
+/// @brief アニメーションの追加
+/// @param state アニメーション状態
+/// @param filename ファイルパス
 void AnimalMove::AddAnimation(AnimationState state, std::string filename)
 {
 }
 
-/*
- * 接触時の処理
- * [入力] collider: 自身のコライダー, check: 相手のコライダー
- * [出力] なし
- * [副作用] 餌に接触した場合、誘引フラグを有効化
- */
+/// @brief 接触時の処理
+/// @param collider 自身のコライダー
+/// @param check 相手のコライダー
+/// @details 餌に接触した場合、誘引フラグを有効化
 void AnimalMove::OnEnter(Collider* collider, Collider* check)
 {
 	if (collider == capsule_collider_ && check->parent_object_ != nullptr)
@@ -104,22 +85,17 @@ void AnimalMove::OnEnter(Collider* collider, Collider* check)
 	}
 }
 
-/*
- * 接触中の処理
- * [入力] collider: 自身のコライダー, check: 相手のコライダー
- * [出力] なし
- * [副作用] なし
- */
+/// @brief 接触中の処理
+/// @param collider 自身のコライダー
+/// @param check 相手のコライダー
 void AnimalMove::OnTrigger(Collider* collider, Collider* check)
 {
 }
 
-/*
- * 接触終了時の処理
- * [入力] collider: 自身のコライダー, check: 相手のコライダー
- * [出力] なし
- * [副作用] 餌から離れた場合、誘引フラグを無効化
- */
+/// @brief 接触終了時の処理
+/// @param collider 自身のコライダー
+/// @param check 相手のコライダー
+/// @details 餌から離れた場合、誘引フラグを無効化
 void AnimalMove::OnExit(Collider* collider, Collider* check)
 {
 	if (collider == capsule_collider_ && check->parent_object_ != nullptr)
@@ -131,12 +107,8 @@ void AnimalMove::OnExit(Collider* collider, Collider* check)
 	}
 }
 
-/*
- * 死亡(捕獲)判定と演出
- * [入力] なし
- * [出力] なし
- * [副作用] 吸い込み演出の進行と捕獲完了時の死亡処理の呼び出し
- */
+/// @brief 死亡(捕獲)判定と演出
+/// @details 吸い込み演出の進行と捕獲完了時の死亡処理の呼び出し
 void AnimalMove::CharacterDied()
 {
 	auto fv = ServiceLocator::GetFever();
@@ -160,12 +132,9 @@ void AnimalMove::CharacterDied()
 	model_->SetPosition(position_);
 }
 
-/*
- * 死亡時の処理
- * [入力] reason: 死亡理由
- * [出力] なし
- * [副作用] 経験値・スコアの加算、コンボの更新、削除フラグの有効化
- */
+/// @brief 死亡時の処理
+/// @param reason 死亡理由
+/// @details 経験値・スコアの加算、コンボの更新、削除フラグの有効化
 void AnimalMove::Die(DeathReason reason)
 {
 	if (mDeleteFlag) return;

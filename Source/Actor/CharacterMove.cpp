@@ -10,12 +10,10 @@
 #include "ServiceLocator.h"
 #include "ColliderManager.h"
 #include "Utility.h"
-/*
- * キャラクターの初期化
- * [入力] filename: モデルのファイルパス, initPos: 初期座標
- * [出力] なし
- * [副作用] 各種メンバ変数の初期化、モデルのロード、初期状態(待機)の作成を行う
- */
+/// @brief キャラクターの初期化
+/// @param filename モデルのファイルパス
+/// @param initPos 初期座標
+/// @details 各種メンバ変数の初期化、モデルのロード、初期状態(待機)の作成を行う
 CharacterMove::CharacterMove(std::string filename, VECTOR initPos)
 	: Object3D(initPos)
 	, mCurrentState(STATE_IDLE)
@@ -40,12 +38,8 @@ CharacterMove::CharacterMove(std::string filename, VECTOR initPos)
 	rotation_.y = (float)GetRand(359) * (DX_PI_F / 180.0f);
 	model_->SetRotation(rotation_);
 }
-/*
- * キャラクターの破棄
- * [入力] なし
- * [出力] なし
- * [副作用] モデルおよび現在の状態オブジェクトのメモリを解放する
- */
+/// @brief キャラクターの破棄
+/// @details モデルおよび現在の状態オブジェクトのメモリを解放する
 CharacterMove::~CharacterMove()
 {
 	if (model_ != nullptr)
@@ -59,12 +53,9 @@ CharacterMove::~CharacterMove()
 		current_state_ = nullptr;
 	}
 }
-/*
- * キャラクターの再初期化
- * [入力] pos: 配置する座標
- * [出力] なし
- * [副作用] 状態を待機にリセットし、パラメータやフラグを初期化。マネージャーへ再登録する
- */
+/// @brief キャラクターの再初期化
+/// @param pos 配置する座標
+/// @details 状態を待機にリセットし、パラメータやフラグを初期化。マネージャーへ再登録する
 void CharacterMove::Reset(VECTOR pos)
 {
 	position_ = pos;
@@ -102,12 +93,8 @@ void CharacterMove::Reset(VECTOR pos)
 		ColliderManager::GetInstance()->AddCollider(capsule_collider_);
 	}
 }
-/*
- * オブジェクトの無効化処理
- * [入力] なし
- * [出力] なし
- * [副作用] is_visible_, 描画フラグ, コライダーの削除フラグを変更。ObjectManagerのリストから除外。
- */
+/// @brief オブジェクトの無効化処理
+/// @details is_visible_, 描画フラグ, コライダーの削除フラグを変更。ObjectManagerのリストから除外。
 void CharacterMove::Deactivate()
 {
 	is_visible_ = false;
@@ -125,12 +112,8 @@ void CharacterMove::Deactivate()
 		}
 	}
 }
-/*
- * 毎フレームの更新処理
- * [入力] なし
- * [出力] なし
- * [副作用] 座標移動、回転、コライダー追従、死亡判定、モデルの更新を行う
- */
+/// @brief 毎フレームの更新処理
+/// @details 座標移動、回転、コライダー追従、死亡判定、モデルの更新を行う
 void CharacterMove::Update()
 {
 	MoveCharacter();
@@ -142,12 +125,8 @@ void CharacterMove::Update()
 	ColliderMove();
 	model_->Update();
 }
-/*
- * 描画処理
- * [入力] なし
- * [出力] なし
- * [副作用] モデルを描画する
- */
+/// @brief 描画処理
+/// @details モデルを描画する
 void CharacterMove::Draw()
 {
 	model_->Draw();
@@ -160,12 +139,8 @@ void CharacterMove::DrawShadowCaster()
 		model_->Draw();
 	}
 }
-/*
- * キャラクターの移動処理
- * [入力] なし
- * [出力] なし
- * [副作用] AIに基づく移動量を計算し、壁判定を経て最終的な座標を決定する
- */
+/// @brief キャラクターの移動処理
+/// @details AIに基づく移動量を計算し、壁判定を経て最終的な座標を決定する
 void CharacterMove::MoveCharacter()
 {
 	if (mCurrentState == STATE_VACUUM) return;
@@ -180,12 +155,8 @@ void CharacterMove::MoveCharacter()
 
 	model_->SetPosition(position_);
 }
-/*
- * AIの更新
- * [入力] なし
- * [出力] なし
- * [副作用] 現在のStateオブジェクトのUpdateを呼び出す
- */
+/// @brief AIの更新
+/// @details 現在のStateオブジェクトのUpdateを呼び出す
 void CharacterMove::UpdateWanderAI()
 {
 	if (current_state_ != nullptr)
@@ -193,12 +164,9 @@ void CharacterMove::UpdateWanderAI()
 		current_state_->Update(this);
 	}
 }
-/*
- * 状態の変更
- * [入力] newState: 新しい状態クラスのポインタ
- * [出力] なし
- * [副作用] 現在の状態を終了・破棄し、新しい状態へ移行する
- */
+/// @brief 状態の変更
+/// @param newState 新しい状態クラスのポインタ
+/// @details 現在の状態を終了・破棄し、新しい状態へ移行する
 void CharacterMove::ChangeState(CharacterState* newState)
 {
 	if (current_state_ != nullptr)
@@ -212,23 +180,15 @@ void CharacterMove::ChangeState(CharacterState* newState)
 		current_state_->Enter(this);
 	}
 }
-/*
- * 吸い込み状態への変更
- * [入力] なし
- * [出力] なし
- * [副作用] 現在のAI状態をSTATE_VACUUMに変更し、StateVacuumへ移行する
- */
+/// @brief 吸い込み状態への変更
+/// @details 現在のAI状態をSTATE_VACUUMに変更し、StateVacuumへ移行する
 void CharacterMove::ChangeStateToVacuum()
 {
 	mCurrentState = STATE_VACUUM;
 	ChangeState(new StateVacuum());
 }
-/*
- * 壁との衝突判定と補正
- * [入力] なし
- * [出力] なし
- * [副作用] 壁に衝突した場合、進行を阻害する方向に座標を押し戻す
- */
+/// @brief 壁との衝突判定と補正
+/// @details 壁に衝突した場合、進行を阻害する方向に座標を押し戻す
 void CharacterMove::CheckWallCollision()
 {
 	bool hitwall = false;
@@ -274,12 +234,8 @@ void CharacterMove::CheckWallCollision()
 		}
 	}
 }
-/*
- * コライダーの追従
- * [入力] なし
- * [出力] なし
- * [副作用] キャラクターの座標に合わせてコライダーの位置と形状を更新する
- */
+/// @brief コライダーの追従
+/// @details キャラクターの座標に合わせてコライダーの位置と形状を更新する
 void CharacterMove::ColliderMove()
 {
 	if (capsule_collider_ != nullptr)
@@ -289,12 +245,8 @@ void CharacterMove::ColliderMove()
 		capsule_collider_->radius_ = 50.0f;
 	}
 }
-/*
- * 移動方向への回転
- * [入力] なし
- * [出力] なし
- * [副作用] 現在の移動ベクトルに基づいてモデルのY軸回転角度を更新する
- */
+/// @brief 移動方向への回転
+/// @details 現在の移動ベクトルに基づいてモデルのY軸回転角度を更新する
 void CharacterMove::RotationCharacter()
 {
 	if (moveVec.x != 0.0f || moveVec.z != 0.0f)
@@ -305,12 +257,8 @@ void CharacterMove::RotationCharacter()
 		model_->SetRotation(rotation_);
 	}
 }
-/*
- * 強制的な回転
- * [入力] なし
- * [出力] なし
- * [副作用] モデルをY軸に対して一定速度で回転させ続ける
- */
+/// @brief 強制的な回転
+/// @details モデルをY軸に対して一定速度で回転させ続ける
 void CharacterMove::CharacterRotate()
 {
 	rotation_.y += 0.1f;
@@ -320,12 +268,9 @@ void CharacterMove::CharacterRotate()
 	}
 	model_->SetRotation(rotation_);
 }
-/*
- * モデルのスケール設定
- * [入力] scale: 設定する倍率
- * [出力] なし
- * [副作用] モデルの表示サイズを変更する
- */
+/// @brief モデルのスケール設定
+/// @param scale 設定する倍率
+/// @details モデルの表示サイズを変更する
 void CharacterMove::SetScale(float scale)
 {
 	if (model_ != nullptr)
@@ -333,21 +278,14 @@ void CharacterMove::SetScale(float scale)
 		model_->SetScale(scale);
 	}
 }
-/*
- * 死亡判定
- * [入力] なし
- * [出力] なし
- * [副作用] 現在は未実装
- */
+/// @brief 死亡判定
+/// @details 現在は未実装
 void CharacterMove::CharacterDied()
 {
 }
-/*
- * キャラクターの死亡処理
- * [入力] reason: 死亡理由を示す列挙値
- * [出力] なし
- * [副作用] 削除フラグの判定や各種死亡に応じた演出・処理を行う
- */
+/// @brief キャラクターの死亡処理
+/// @param reason 死亡理由を示す列挙値
+/// @details 削除フラグの判定や各種死亡に応じた演出・処理を行う
 void CharacterMove::Die(DeathReason reason)
 {
 	if (mDeleteFlag) return;

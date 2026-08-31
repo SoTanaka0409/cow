@@ -6,7 +6,7 @@
 class SphereCollider;
 class CapsuleCollider;
 
-// 業務ルール：プレイヤーの移動エリアを制限し、ランダムな位置への落雷によってステージに緊張感を与える環境ギミッククラス
+/// @brief プレイヤーの移動エリアを制限し、ランダムな位置への落雷によってステージに緊張感を与える環境ギミッククラス
 class Thunder : public Object3D
 {
 public:
@@ -19,26 +19,29 @@ public:
 	};
 
 public:
-	// 入力：pos=発生中心座標
-	// 副作用：落雷・予兆・スタン用の各EffekseerEffectインスタンスの動的確保
+	/// @param pos 発生中心座標
+	/// @brief 落雷・予兆・スタン用の各EffekseerEffectインスタンスの動的確保
 	Thunder(VECTOR pos);
 	virtual ~Thunder() override;
 
-	// 副作用：落雷ステートマシンの更新、ランダムな落雷座標の再計算、SEおよびエフェクトの再生
+	/// @brief 落雷ステートマシンの更新、ランダムな落雷座標の再計算、SEおよびエフェクトの再生
 	void Update() override;
 
 	void Draw() override;
 
-	// 出力：オブジェクトの稼働状態（生存フラグ）
+	/// @brief 値を取得する
+	/// @return オブジェクトの稼働状態（生存フラグ）
 	bool IsActive() const;
 
-	// 入力：playerPos=判定対象座標, range=判定半径
-	// 出力：衝突しているかどうかの真偽値
-	// 一時対応：現在は物理エンジンのOnEnterによる自動判定に移行したため、旧来の球判定ロジックとして未使用保持
+	/// @brief 一時対応：現在は物理エンジンのOnEnterによる自動判定に移行したため、旧来の球判定ロジックとして未使用保持
+	/// @param playerPos 判定対象座標
+	/// @param range 判定半径
+	/// @return 衝突しているかどうかの真偽値
 	bool CheckHit(VECTOR playerPos, float range);
 
-	// 入力：collider=自身の衝突判定, check=相手の衝突判定
-	// 副作用：プレイヤーへのスタン状態（120f）適用、ヒットエフェクトの追従再生、カメラシェイクの発動
+	/// @param collider 自身の衝突判定
+	/// @param check 相手の衝突判定
+	/// @brief プレイヤーへのスタン状態（120f）適用、ヒットエフェクトの追従再生、カメラシェイクの発動
 	virtual void OnEnter(Collider* collider, Collider* check) override;
 	virtual void OnTrigger(Collider* collider, Collider* check) override;
 	virtual void OnExit(Collider* collider, Collider* check) override;
@@ -49,19 +52,19 @@ private:
 	void UpdateState();
 	void UpdateStunEffect();
 
-	VECTOR pos_;
-	int warning_timer_;
-	int strike_timer_;
-	State state_;
-	int interval_timer_;
-	bool active_;
+	VECTOR pos_;         ///< 座標や位置情報を管理する値
+	int warning_timer_;  ///< 時間経過や処理間隔を管理するカウンター
+	int strike_timer_;   ///< 時間経過や処理間隔を管理するカウンター
+	State state_;        ///< 現在の状態や種別を管理する値
+	int interval_timer_; ///< 時間経過や処理間隔を管理するカウンター
+	bool active_;        ///< 状態の有効・無効を管理するフラグ
 
 public:
-	EffekseerEffect* thunder_;
-	EffekseerEffect* warning_;
-	EffekseerEffect* stun_;
+	EffekseerEffect* thunder_; ///< 内部状態を管理する値
+	EffekseerEffect* warning_; ///< 内部状態を管理する値
+	EffekseerEffect* stun_;    ///< 内部状態を管理する値
 
-	// バグ回避：1回の落雷フレーム中に多段ヒットして、プレイヤーのスタン受付時間が意図せず延長されるのを防ぐためのフラグ
-	bool has_stunned_;
-	int stun_effect_timer_;
+	/// @brief 1回の落雷フレーム中に多段ヒットして、プレイヤーのスタン受付時間が意図せず延長されるのを防ぐためのフラグ
+	bool has_stunned_;      ///< 状態の有効・無効を管理するフラグ
+	int stun_effect_timer_; ///< 時間経過や処理間隔を管理するカウンター
 };

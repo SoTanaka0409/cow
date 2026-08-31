@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-// ゲームパラメータを定数として定義するデータ駆動設計の参照先 (Data-Driven Design)
+/// @brief ゲームパラメータを定数として定義するデータ駆動設計の参照先 (Data-Driven Design)
 namespace GameConstants
 {
 	namespace ImagePaths
@@ -27,25 +27,26 @@ namespace GameConstants
 		const std::string kMinus = "Resource/2D/スコア/マイナス文字.png";
 		const std::string kTitleBg = "Resource/2D/タイトル/タイトル背景.png";
 		const std::string kTitleUfo = "Resource/2D/タイトル/タイトル牛UFO.png";
-	}
+	};
+	
 	struct CharacterParams
 	{
-		float speed;
-		float score;
-		float xp;
-		float death_time_height;
-		std::string model_path;
+		float speed;             ///< 移動や回転の計算に使用する値
+		float score;             ///< スコアや成長値の管理に使用する値
+		float xp;                ///< スコアや成長値の管理に使用する値
+		float death_time_height; ///< 時間経過や処理間隔を管理するカウンター
+		std::string model_path;  ///< 3Dモデルの管理に使用する情報
 	};
 
-	// 牛
-	const CharacterParams kCowDefault  = { 10.0f,  30.0f,  10.0f, 1900.0f, "Resource/3D/キャラクター/牛/通常の牛.mv1" };
-	const CharacterParams kCow2        = { 10.0f,  20.0f,  10.0f, 1900.0f, "Resource/3D/キャラクター/牛/通常の牛.mv1" };
-	const CharacterParams kCowGold     = { 15.0f,  30.0f,  20.0f, 1900.0f, "Resource/3D/キャラクター/牛/金の牛.mv1" };
-	const CharacterParams kCowTutorial = { 10.0f,  30.0f, 150.0f,  700.0f, "Resource/3D/キャラクター/牛/通常の牛.mv1" };
+	/// @brief 牛
+	const CharacterParams kCowDefault  = { 10.0f,  30.0f,  10.0f, 1900.0f, "Resource/3D/キャラクター/牛/通常の牛.mv1" }; ///< ゲーム内で使用する固定値
+	const CharacterParams kCow2        = { 10.0f,  20.0f,  10.0f, 1900.0f, "Resource/3D/キャラクター/牛/通常の牛.mv1" }; ///< ゲーム内で使用する固定値
+	const CharacterParams kCowGold     = { 15.0f,  30.0f,  20.0f, 1900.0f, "Resource/3D/キャラクター/牛/金の牛.mv1" };  ///< ゲーム内で使用する固定値
+	const CharacterParams kCowTutorial = { 10.0f,  30.0f, 150.0f,  700.0f, "Resource/3D/キャラクター/牛/通常の牛.mv1" }; ///< ゲーム内で使用する固定値
 
-	// 動物（敵キャラクター）
-	const CharacterParams kAnimalSheep   = { 10.0f, -10.0f,   0.0f, 1000.0f, "Resource/3D/キャラクター/動物/羊.mv1" };
-	const CharacterParams kAnimalChicken = { 10.0f, -10.0f,   0.0f, 1000.0f, "Resource/3D/キャラクター/動物/ニワトリ.mv1" };
-	const CharacterParams kAnimalBear    = { 10.0f, -10.0f,   0.0f, 1000.0f, "Resource/3D/キャラクター/動物/熊.mv1" };
+	/// @brief 動物（敵キャラクター）
+	const CharacterParams kAnimalSheep   = { 10.0f, -10.0f,   0.0f, 1000.0f, "Resource/3D/キャラクター/動物/羊.mv1" };    ///< ゲーム内で使用する固定値
+	const CharacterParams kAnimalChicken = { 10.0f, -10.0f,   0.0f, 1000.0f, "Resource/3D/キャラクター/動物/ニワトリ.mv1" }; ///< ゲーム内で使用する固定値
+	const CharacterParams kAnimalBear    = { 10.0f, -10.0f,   0.0f, 1000.0f, "Resource/3D/キャラクター/動物/熊.mv1" };    ///< ゲーム内で使用する固定値
 }
 

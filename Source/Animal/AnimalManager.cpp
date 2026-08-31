@@ -7,20 +7,18 @@
 #include "Master.h"
 #include "Animal.h"
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: なし
- */
+/// @brief 入力: なし
 AnimalManager::AnimalManager()
 {
 }
 
-/*
- * 入力: filename (モデル), pos (基準座標), scale (倍率), tag (動物種別), count (生成数)
- * 出力: なし
- * 副作用: オブジェクトのメモリ確保(またはプールからの再利用)と管理リストへの追加
- */
+/// @brief 初期化処理を行う
+/// @details filename (モデル)
+/// @details pos (基準座標)
+/// @details scale (倍率)
+/// @details tag (動物種別)
+/// @details count (生成数)
+/// @details オブジェクトのメモリ確保(またはプールからの再利用)と管理リストへの追加
 void AnimalManager::SpawnAnimal(std::string filename, VECTOR pos, float scale, AnimalMove::TagAnimal tag, int count, float scatterRadius)
 {
 	for (int i = 0; i < count; i++)

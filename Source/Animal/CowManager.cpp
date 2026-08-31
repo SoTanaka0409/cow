@@ -11,21 +11,18 @@
 #include "Cow_Tutorial.h"
 #include "GoldCow.h"
 #include "CapsuleCollider.h"
-/*
- * 牛管理オブジェクトの初期化を行う。
- * [入力] なし
- * [出力] なし
- * [副作用] なし
- */
+/// @brief 牛管理オブジェクトの初期化を行う。
 CowManager::CowManager()
 {
 }
-/*
- * 指定された種類の牛を生成・配置する。上限到達時は既存の牛を間引く。
- * [入力] filename: モデルファイルパス, pos: 基準座標, scale: スケール, tag: 牛の種類, count: 生成数, is_fever: フィーバー状態フラグ
- * [出力] なし
- * [副作用] mCreaturesへのオブジェクト追加、および上限時は既存オブジェクトの破棄を行う。
- */
+/// @brief 指定された種類の牛を生成・配置する。上限到達時は既存の牛を間引く。
+/// @param filename モデルファイルパス
+/// @param pos 基準座標
+/// @param scale スケール
+/// @param tag 牛の種類
+/// @param count 生成数
+/// @param is_fever フィーバー状態フラグ
+/// @details mCreaturesへのオブジェクト追加、および上限時は既存オブジェクトの破棄を行う。
 void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove::TagCow tag, int count, bool is_fever, float scatterRadius)
 {
 	for (int i = 0; i < count; i++)

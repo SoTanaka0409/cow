@@ -1,11 +1,7 @@
 #include "EffectManager.h"
 
-/*
- * Effekseerの初期化処理を呼び出す
- * [入力] なし
- * [出力] なし
- * [副作用] メンバ変数の初期化、Effekseer初期化
- */
+/// @brief Effekseerの初期化処理を呼び出す
+/// @details メンバ変数の初期化、Effekseer初期化
 EffectManager::EffectManager()
 	: effect_resource_handle_(-1)
 	, playing_effect_handle_(-1)
@@ -18,12 +14,8 @@ EffectManager::~EffectManager()
 	DeleteEffekseerEffect(cow_death_effect_handle_);
 }
 
-/*
- * 描画デバイスの設定とEffekseerの起動を行う
- * [入力] なし
- * [出力] なし
- * [副作用] Effekseerのシステムが初期化される
- */
+/// @brief 描画デバイスの設定とEffekseerの起動を行う
+/// @details Effekseerのシステムが初期化される
 void EffectManager::Initalize()
 {
 	// Effekseerの要求仕様に合わせてDirect3D11を使用する
@@ -46,23 +38,15 @@ void EffectManager::Initalize()
 	cow_death_effect_handle_ = LoadEffekseerEffect("Resource/3D/エフェクト/牛吸い込み.efk");
 }
 
-/*
- * 再生中の全エフェクトの状態を更新する
- * [入力] なし
- * [出力] なし
- * [副作用] エフェクトのアニメーションが進む
- */
+/// @brief 再生中の全エフェクトの状態を更新する
+/// @details エフェクトのアニメーションが進む
 void EffectManager::Update()
 {
 	UpdateEffekseer3D();
 }
 
-/*
- * 空間上に存在する全てのエフェクトを描画する
- * [入力] なし
- * [出力] なし
- * [副作用] 画面にエフェクトが描画される
- */
+/// @brief 空間上に存在する全てのエフェクトを描画する
+/// @details 画面にエフェクトが描画される
 void EffectManager::Draw()
 {
 	DrawEffekseer3D();

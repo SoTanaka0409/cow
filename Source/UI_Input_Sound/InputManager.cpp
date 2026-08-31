@@ -7,12 +7,10 @@ InputManager::InputManager()
 InputManager::~InputManager()
 {
 }
-/*
- * 連続入力を防ぎ、押下開始フレームのみを検知する
- * [入力] KeyCode: DxLibのキーコード
- * [出力] 1: 押下開始フレーム、0: それ以外
- * [副作用] down_buffer_の更新
- */
+/// @brief 連続入力を防ぎ、押下開始フレームのみを検知する
+/// @param KeyCode DxLibのキーコード
+/// @return 1: 押下開始フレーム、0: それ以外
+/// @details down_buffer_の更新
 int InputManager::CheckDownKey(int KeyCode)
 {
     int result = 0;
@@ -27,12 +25,9 @@ int InputManager::CheckDownKey(int KeyCode)
     down_buffer_[KeyCode] = keyState;
     return result;
 }
-/*
- * 押し続けを許容する通常のキー入力判定を行う
- * [入力] KeyCode: DxLibのキーコード
- * [出力] 1: 押下中、0: それ以外
- * [副作用] なし
- */
+/// @brief 押し続けを許容する通常のキー入力判定を行う
+/// @param KeyCode DxLibのキーコード
+/// @return 1: 押下中、0: それ以外
 int InputManager::CheckPressKey(int KeyCode)
 {
     return CheckHitKey(KeyCode);

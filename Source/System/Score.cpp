@@ -5,12 +5,8 @@
 #include "Utility.h"
 #include "Master.h"
 int Score::result_score_ = 0;
-/*
- * オブジェクトの初期化を行うため
- * [入力] なし
- * [出力] なし
- * [副作用] メンバ変数の初期化、画像の読み込み
- */
+/// @brief オブジェクトの初期化を行うため
+/// @details メンバ変数の初期化、画像の読み込み
 Score::Score()
 {
 	score_ = 0;
@@ -37,21 +33,12 @@ Score::Score()
 	number_img_[9] = Master::resource_manager_->LoadGraphics("Resource/2D/スコア/スコア画像０９.png");
 	LoadRanking();
 }
-/*
- * メモリ解放のため
- * [入力] なし
- * [出力] なし
- * [副作用] なし
- */
+/// @brief メモリ解放のため
 Score::~Score()
 {
 }
-/*
- * 現在のスコアを画面に描画するため
- * [入力] なし
- * [出力] なし
- * [副作用] 画面描画
- */
+/// @brief 現在のスコアを画面に描画するため
+/// @details 画面描画
 void Score::Draw()
 {
 	int x = Utility::kUiBaseX;
@@ -61,12 +48,9 @@ void Score::Draw()
 	DrawExtendGraph(x, y, x + width, y + height, score_text_image_, TRUE);
 	DrawNumber(Utility::kUiDigitX, y, score_, 1.0f, 4);
 }
-/*
- * 獲得したスコアを加算するため
- * [入力] value: 加算するスコア
- * [出力] なし
- * [副作用] score_の更新
- */
+/// @brief 獲得したスコアを加算するため
+/// @param value 加算するスコア
+/// @details score_の更新
 void Score::AddScore(int value)
 {
 	score_ += value;
@@ -77,46 +61,30 @@ void Score::AddScore(int value)
 	}
 	else if (score_ >=9999)
 	{
-		//規定値を超えないように
+		// 規定値を超えないように
 		score_ = 9999;
 	}
 }
-/*
- * スコアをリセットするため
- * [入力] なし
- * [出力] なし
- * [副作用] score_を0に設定
- */
+/// @brief スコアをリセットするため
+/// @details score_を0に設定
 void Score::ResetScore()
 {
 	score_ = 0;
 }
-/*
- * 現在のスコアを取得するため
- * [入力] なし
- * [出力] 現在のスコア
- * [副作用] なし
- */
+/// @brief 現在のスコアを取得するため
+/// @return 現在のスコア
 int Score::GetScore() const
 {
 	return score_;
 }
-/*
- * 入力されたプレイヤー名を取得するため
- * [入力] なし
- * [出力] プレイヤー名の文字列
- * [副作用] なし
- */
+/// @brief 入力されたプレイヤー名を取得するため
+/// @return プレイヤー名の文字列
 const char* Score::GetName() const
 {
 	return player_name_;
 }
-/*
- * デバッグ用にスコア情報をファイルに保存するため
- * [入力] なし
- * [出力] なし
- * [副作用] score_.txtへの書き込み
- */
+/// @brief デバッグ用にスコア情報をファイルに保存するため
+/// @details score_.txtへの書き込み
 void Score::Save()
 {
 	FILE* fp = nullptr;
@@ -130,12 +98,8 @@ void Score::Save()
 		fclose(fp);
 	}
 }
-/*
- * デバッグ用にスコア情報をファイルから読み込むため
- * [入力] なし
- * [出力] なし
- * [副作用] score_とranking_の更新
- */
+/// @brief デバッグ用にスコア情報をファイルから読み込むため
+/// @details score_とranking_の更新
 void Score::Load()
 {
 	FILE* fp = nullptr;
@@ -152,12 +116,8 @@ void Score::Load()
 		fclose(fp);
 	}
 }
-/*
- * リザルト画面でネームエントリーを開始するため
- * [入力] なし
- * [出力] なし
- * [副作用] キー入力ハンドルの作成と有効化
- */
+/// @brief リザルト画面でネームエントリーを開始するため
+/// @details キー入力ハンドルの作成と有効化
 void Score::StartNameInput()
 {
 	name_input_mode_ = true;
@@ -167,12 +127,8 @@ void Score::StartNameInput()
 	input_handle_ = MakeKeyInput(0, 0, 64, 1);
 	SetActiveKeyInput(input_handle_);
 }
-/*
- * キーボード入力からプレイヤー名を更新するため
- * [入力] なし
- * [出力] なし
- * [副作用] player_name_の更新、入力完了状態の変更
- */
+/// @brief キーボード入力からプレイヤー名を更新するため
+/// @details player_name_の更新、入力完了状態の変更
 void Score::UpdateNameInput()
 {
 	if (!name_input_mode_) return;
@@ -187,22 +143,14 @@ void Score::UpdateNameInput()
 		}
 	}
 }
-/*
- * ネームエントリーが完了したか判定するため
- * [入力] なし
- * [出力] 完了したかどうか
- * [副作用] なし
- */
+/// @brief ネームエントリーが完了したか判定するため
+/// @return 完了したかどうか
 bool Score::IsNameInputFinished() const
 {
 	return !name_input_mode_;
 }
-/*
- * 獲得スコアをランキングに反映させるため
- * [入力] なし
- * [出力] なし
- * [副作用] ranking_の更新
- */
+/// @brief 獲得スコアをランキングに反映させるため
+/// @details ranking_の更新
 void Score::AddRanking()
 {
 	int target = score_;
@@ -225,12 +173,10 @@ void Score::AddRanking()
 		}
 	}
 }
-/*
- * ランキング結果を画面に描画するため
- * [入力] x: 描画X座標, y: 描画Y座標
- * [出力] なし
- * [副作用] 画面描画
- */
+/// @brief ランキング結果を画面に描画するため
+/// @param x 描画X座標
+/// @param y 描画Y座標
+/// @details 画面描画
 void Score::DrawRanking(int x, int y)
 {
 	DrawFormatString(x, y, GetColor(255, 255, 255), "RANKING");
@@ -247,12 +193,8 @@ void Score::DrawRanking(int x, int y)
 		);
 	}
 }
-/*
- * ランキング情報をファイルに保存するため
- * [入力] なし
- * [出力] なし
- * [副作用] rank.txtへの書き込み
- */
+/// @brief ランキング情報をファイルに保存するため
+/// @details rank.txtへの書き込み
 void Score::SaveRanking()
 {
 	FILE* fp = nullptr;
@@ -265,12 +207,8 @@ void Score::SaveRanking()
 		fclose(fp);
 	}
 }
-/*
- * ランキング情報をファイルから読み込むため
- * [入力] なし
- * [出力] なし
- * [副作用] ranking_の更新、ファイルがない場合は新規作成
- */
+/// @brief ランキング情報をファイルから読み込むため
+/// @details ranking_の更新、ファイルがない場合は新規作成
 void Score::LoadRanking()
 {
 	FILE* fp = nullptr;
@@ -296,12 +234,10 @@ void Score::LoadRanking()
 		SaveRanking();
 	}
 }
-/*
- * コンボボーナスを含めたスコアを加算するため
- * [入力] baseScore: 基本スコア, combo_count_: コンボ数
- * [出力] なし
- * [副作用] score_の更新
- */
+/// @brief コンボボーナスを含めたスコアを加算するため
+/// @param baseScore 基本スコア
+/// @param combo_count_ コンボ数
+/// @details score_の更新
 void Score::AddScoreWithCombo(int baseScore, int combo_count_)
 {
 	// コンボ数に応じてボーナス倍率を決定するため
@@ -313,22 +249,19 @@ void Score::AddScoreWithCombo(int baseScore, int combo_count_)
 		score_ = 0;
 	}
 }
-/*
- * ゲーム再開時にスコアを初期化するため
- * [入力] なし
- * [出力] なし
- * [副作用] score_の初期化
- */
+/// @brief ゲーム再開時にスコアを初期化するため
+/// @details score_の初期化
 void Score::Initialize()
 {
 	score_ = 0;
 }
-/*
- * 画像を使って数値を画面に描画するため
- * [入力] x: X座標, y: Y座標, value: 数値, scale: 拡大率, minDigits: 最小桁数
- * [出力] なし
- * [副作用] 画面描画
- */
+/// @brief 画像を使って数値を画面に描画するため
+/// @param x X座標
+/// @param y Y座標
+/// @param value 数値
+/// @param scale 拡大率
+/// @param minDigits 最小桁数
+/// @details 画面描画
 void Score::DrawNumber(int x, int y, int value, float scale, int minDigits)
 {
 	int digit[10];
@@ -370,57 +303,54 @@ void Score::DrawNumber(int x, int y, int value, float scale, int minDigits)
 		drawX += w;
 	}
 }
-/*
- * 指定した順位のランキングデータを取得するため
- * [入力] index: 取得する順位のインデックス
- * [出力] ランキングデータ
- * [副作用] なし
- */
+/// @brief 指定した順位のランキングデータを取得するため
+/// @param index 取得する順位のインデックス
+/// @return ランキングデータ
 const Score::RankData& Score::GetRanking(int index) const
 {
 	return ranking_[index];
 }
-/*
- * シーン間でリザルトスコアを引き継ぐため
- * [入力] value: 保存するスコア
- * [出力] なし
- * [副作用] result_score_の更新
- */
+/// @brief シーン間でリザルトスコアを引き継ぐため
+/// @param value 保存するスコア
+/// @details result_score_の更新
 void Score::SetResultScore(int value)
 {
 	result_score_ = value;
 }
-/*
- * リザルトスコアを取得するため
- * [入力] なし
- * [出力] リザルトスコア
- * [副作用] なし
- */
+/// @brief リザルトスコアを取得するため
+/// @return リザルトスコア
 int Score::GetResultScore()
 {
 	return result_score_;
 }
-/*
- * スコアと単位画像を並べて描画するため
- * [入力] x: X座標, y: Y座標, score: スコア, scale: 拡大率, minDigits: 最小桁数, point_graph_handle: 画像ハンドル
- * [出力] なし
- * [副作用] 画面描画
- */
+/// @brief スコアと単位画像を並べて描画するため
+/// @param x X座標
+/// @param y Y座標
+/// @param score スコア
+/// @param scale 拡大率
+/// @param minDigits 最小桁数
+/// @param point_graph_handle 画像ハンドル
+/// @details 画面描画
 void Score::DrawScoreWithPoint(int x, int y, int score, float scale, int minDigits, int point_graph_handle)
 {
 	DrawNumber(x, y, score, scale, minDigits);
 	int temp = score;
 	int digitCount = 0;
-	if (temp == 0) {
+	if (temp == 0)
+	{
 		digitCount = 1;
-	} else {
+	}
+	else
+	{
 		if (temp < 0) temp = -temp;
-		while (temp > 0) {
+		while (temp > 0)
+		{
 			temp /= 10;
 			digitCount++;
 		}
 	}
-	if (digitCount < minDigits) {
+	if (digitCount < minDigits)
+	{
 		digitCount = minDigits;
 	}
 	int w = (int)(80 * scale);

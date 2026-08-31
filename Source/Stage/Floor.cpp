@@ -2,11 +2,12 @@
 #include "DxLib.h"
 #include "Master.h"
 
-/*
- * 入力: filename (テクスチャパス), centerPos (基準座標), topLeft (左上オフセット), bottomRight (右下オフセット)
- * 出力: なし
- * 副作用: テクスチャのロードおよびポリゴン描画用の頂点データの初期化
- */
+/// @brief 初期化処理を行う
+/// @details filename (テクスチャパス)
+/// @details centerPos (基準座標)
+/// @details topLeft (左上オフセット)
+/// @details bottomRight (右下オフセット)
+/// @details テクスチャのロードおよびポリゴン描画用の頂点データの初期化
 Floor::Floor(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight)
 	: Object3D(centerPos)
 {
@@ -43,29 +44,17 @@ Floor::Floor(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bott
 	}
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: なし
- */
+/// @brief 入力: なし
 Floor::~Floor()
 {
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: なし
- */
+/// @brief 入力: なし
 void Floor::Update()
 {
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: ライティング設定の一時変更と3Dポリゴンの描画
- */
+/// @brief ライティング設定の一時変更と3Dポリゴンの描画
 void Floor::Draw()
 {
 	WORD index[6];

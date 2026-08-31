@@ -1,7 +1,7 @@
 #pragma once
 #include "Scene.h"
 
-// Scene to preload heavy 3D models asynchronously to prevent stuttering
+/// @brief Scene to preload heavy 3D models asynchronously to prevent stuttering
 class LoadingScene : public Scene
 {
 public:
@@ -14,6 +14,6 @@ public:
 	void Finalize() override;
 
 private:
-	int loading_timer_;
-	bool load_started_; // 非同期ロードが既に開始済みか?Eフラグ
+	int loading_timer_; ///< 時間経過や処理間隔を管理するカウンター
+	bool load_started_; ///< 内部状態を管理する値
 };

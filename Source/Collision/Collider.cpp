@@ -3,12 +3,9 @@
 #include "ColliderManager.h"
 #include <cassert>
 
-/*
- * コライダー生成時に必須となる親オブジェクトを設定するため
- * [入力] parent: このコライダーを所有する親オブジェクト
- * [出力] なし
- * [副作用] ColliderManagerに自身を登録
- */
+/// @brief コライダー生成時に必須となる親オブジェクトを設定するため
+/// @param parent このコライダーを所有する親オブジェクト
+/// @details ColliderManagerに自身を登録
 Collider::Collider(Object3D* parent)
 	: parent_object_(parent)
 	, position_(VGet(0.0f, 0.0f, 0.0f))
@@ -20,23 +17,17 @@ Collider::Collider(Object3D* parent)
 	ColliderManager::GetInstance()->AddCollider(this);
 }
 
-/*
- * 破棄時に他オブジェクトへの影響をなくすため
- * [入力] なし
- * [出力] なし
- * [副作用] ColliderManagerから自身を解除
- */
+/// @brief 破棄時に他オブジェクトへの影響をなくすため
+/// @details ColliderManagerから自身を解除
 Collider::~Collider()
 {
 	ColliderManager::GetInstance()->RemoveCollider(this);
 }
 
-/*
- * 衝突状態の変化を検知し、適切なイベントを通知するため
- * [入力] check: 判定対象のコライダー, isHit: 衝突判定の計算結果
- * [出力] なし
- * [副作用] collision_list_の更新、親オブジェクトへのイベント通知
- */
+/// @brief 衝突状態の変化を検知し、適切なイベントを通知するため
+/// @param check 判定対象のコライダー
+/// @param isHit 衝突判定の計算結果
+/// @details collision_list_の更新、親オブジェクトへのイベント通知
 void Collider::HitCheck(Collider* check, bool isHit)
 {
 	if (isHit)
@@ -82,42 +73,22 @@ void Collider::HitCheck(Collider* check, bool isHit)
 	}
 }
 
-/*
- * デバッグ用描画のため
- * [入力] なし
- * [出力] なし
- * [副作用] なし
- */
+/// @brief デバッグ用描画のため
 void Collider::Draw()
 {
 }
 
-/*
- * 衝突開始時の処理を定義するため
- * [入力] なし
- * [出力] なし
- * [副作用] なし
- */
+/// @brief 衝突開始時の処理を定義するため
 void Collider::OnEnter()
 {
 }
 
-/*
- * 衝突中の処理を定義するため
- * [入力] なし
- * [出力] なし
- * [副作用] なし
- */
+/// @brief 衝突中の処理を定義するため
 void Collider::OnTrigger()
 {
 }
 
-/*
- * 衝突終了時の処理を定義するため
- * [入力] なし
- * [出力] なし
- * [副作用] なし
- */
+/// @brief 衝突終了時の処理を定義するため
 void Collider::OnExit()
 {
 }

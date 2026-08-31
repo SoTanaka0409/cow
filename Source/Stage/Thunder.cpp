@@ -9,8 +9,8 @@
 #include "Scene.h"
 #include "ObjectManager.h"
 
-// 入力：落雷の初期中心座標
-// 副作用：EffekseerEffect インスタンスの動的メモリ確保
+/// @brief 落雷の初期中心座標
+/// @details EffekseerEffect インスタンスの動的メモリ確保
 Thunder::Thunder(VECTOR pos)
 	: Object3D(pos)
 {
@@ -33,7 +33,7 @@ Thunder::Thunder(VECTOR pos)
 	stun_ = new EffekseerEffect("Resource/3D/エフェクト/スタン.efk", pos_, 20.0f);
 }
 
-// 副作用：動的確保したエフェクトインスタンスのメモリ解放
+/// @brief 動的確保したエフェクトインスタンスのメモリ解放
 Thunder::~Thunder()
 {
 	// 各エフェクトはマネージャー登録せず個別に生存管理しているため、手動で解放する
@@ -56,7 +56,7 @@ Thunder::~Thunder()
 	}
 }
 
-// 副作用：各種タイマーの更新、エフェクトの再生、SEの再生
+/// @brief 各種タイマーの更新、エフェクトの再生、SEの再生
 void Thunder::Update()
 {
 	UpdateEffects();
@@ -182,14 +182,17 @@ void Thunder::Draw()
 {
 }
 
-// 出力：オブジェクトの稼働状態（生存フラグ）
+/// @brief 値を取得する
+/// @return オブジェクトの稼働状態（生存フラグ）
 bool Thunder::IsActive() const
 {
 	return active_;
 }
 
-// 入力：playerPos=判定対象の座標, range=判定半径
-// 出力：衝突しているかどうかの真偽値
+/// @brief 判定処理を行う
+/// @param playerPos 判定対象の座標
+/// @param range 判定半径
+/// @return 衝突しているかどうかの真偽値
 bool Thunder::CheckHit(VECTOR playerPos, float range)
 {
 	if (state_ != kStrike) return false;
@@ -200,8 +203,9 @@ bool Thunder::CheckHit(VECTOR playerPos, float range)
 	return distance < range;
 }
 
-// 入力：collider=自身の衝突判定, check=相手の衝突判定
-// 副作用：プレイヤーのスタン状態遷移、カメラシェイクの起動
+/// @param collider 自身の衝突判定
+/// @param check 相手の衝突判定
+/// @brief プレイヤーのスタン状態遷移、カメラシェイクの起動
 void Thunder::OnEnter(Collider* collider, Collider* check)
 {
 	if (state_ != kStrike) return;

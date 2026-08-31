@@ -1,11 +1,9 @@
 #include "DxLib.h"
 #include "ModelAnimation.h"
 
-/*
- * 入力: ModelHandle (管理対象となる3Dモデルのハンドル)
- * 出力: なし
- * 副作用: アニメーション変数の初期化、ルートボーンのローカル座標固定
- */
+/// @brief 初期化処理を行う
+/// @details ModelHandle (管理対象となる3Dモデルのハンドル)
+/// @details アニメーション変数の初期化、ルートボーンのローカル座標固定
 ModelAnimation::ModelAnimation(int ModelHandle)
 	: model_handle_(ModelHandle)
 	, animation_time_(0.0f)
@@ -35,11 +33,7 @@ ModelAnimation::~ModelAnimation()
 {
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: ブレンド率の更新、再生時間の進行、DxLib側へのアニメーション適用
- */
+/// @brief ブレンド率の更新、再生時間の進行、DxLib側へのアニメーション適用
 void ModelAnimation::Update()
 {
 	// 状態遷移時にモーションが瞬間的に切り替わりカクつくのを防ぐため、0.1(10フレーム)掛けて滑らかにブレンドする
@@ -96,11 +90,10 @@ void ModelAnimation::Update()
 	}
 }
 
-/*
- * 入力: state (遷移先のアニメーション状態), index (未使用)
- * 出力: なし
- * 副作用: 古いアニメーションの破棄と、新規アニメーションのアタッチ
- */
+/// @brief 初期化処理を行う
+/// @details state (遷移先のアニメーション状態)
+/// @details index (未使用)
+/// @details 古いアニメーションの破棄と、新規アニメーションのアタッチ
 void ModelAnimation::ChangeAnimation(AnimationState state, int index)
 {
 	// 既に同じ状態だった場合、再生位置が0にリセットされてモーションが初期化されるバグを防ぐ
@@ -128,11 +121,9 @@ void ModelAnimation::ChangeAnimation(AnimationState state, int index)
 	animation_time_ = 0.0f;
 }
 
-/*
- * 入力: isblend (ブレンドを有効にするか)
- * 出力: なし
- * 副作用: ブレンド率の強制上書きおよび旧アニメーションのデタッチ
- */
+/// @brief 値を設定する
+/// @details isblend (ブレンドを有効にするか)
+/// @details ブレンド率の強制上書きおよび旧アニメーションのデタッチ
 void ModelAnimation::SetAnimationBlend(bool isblend)
 {
 	if (isblend)

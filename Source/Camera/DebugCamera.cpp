@@ -4,11 +4,7 @@
 #include "Camera.h"
 #include "InputManager.h"
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: メンバ変数の初期化
- */
+/// @brief メンバ変数の初期化
 DebugCamera::DebugCamera()
 	: horizontal_angle_(0.0f)
 	, vertical_angle_(-30.0f)
@@ -20,11 +16,7 @@ DebugCamera::~DebugCamera()
 {
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: デバッグカメラの初期座標・角度の設定
- */
+/// @brief デバッグカメラの初期座標・角度の設定
 void DebugCamera::Initialize()
 {
 	// デバッグモード起動時に視点が原点へ飛ぶのを防ぐため、プレイ中のゲームカメラの座標をそのまま引き継ぐ
@@ -40,11 +32,7 @@ void DebugCamera::Initialize()
 	vertical_angle_ = -30.0f;
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: キー入力による座標更新と描画エンジン(DxLib)へのカメラ行列適用
- */
+/// @brief キー入力による座標更新と描画エンジン(DxLib)へのカメラ行列適用
 void DebugCamera::Update()
 {
 	float speed = 20.0f;
@@ -104,11 +92,7 @@ void DebugCamera::Update()
 	SetCameraPositionAndTarget_UpVecY(position_, target);
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: マウス移動量に基づくカメラ角度の更新と、OSのカーソル位置の強制変更
- */
+/// @brief マウス移動量に基づくカメラ角度の更新と、OSのカーソル位置の強制変更
 void DebugCamera::UpdateRotate()
 {
 	// 天地逆転(ジンバルロック)による操作不能状態や、角度値のオーバーフローによる浮動小数点誤差を防ぐためのクランプ処理

@@ -9,11 +9,7 @@
 
 ColliderManager* ColliderManager::instance_ = nullptr;
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: コライダーリストのメモリ事前確保
- */
+/// @brief コライダーリストのメモリ事前確保
 ColliderManager::ColliderManager()
 {
 	// 大量発生時などのオブジェクト一斉生成において、動的メモリ確保によるスパイク(処理落ち)を防ぐため領域を事前確保する
@@ -24,11 +20,8 @@ ColliderManager::~ColliderManager()
 {
 }
 
-/*
- * 入力: なし
- * 出力: ColliderManagerのシングルトンインスタンス
- * 副作用: 初回呼び出し時にインスタンスを生成する
- */
+/// @return ColliderManagerのシングルトンインスタンス
+/// @brief 初回呼び出し時にインスタンスを生成する
 ColliderManager* ColliderManager::GetInstance()
 {
 	if (instance_ == nullptr)
@@ -38,11 +31,7 @@ ColliderManager* ColliderManager::GetInstance()
 	return instance_;
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: インスタンスの破棄とポインタの初期化
- */
+/// @brief インスタンスの破棄とポインタの初期化
 void ColliderManager::Finalize()
 {
 	if (instance_ != nullptr)
@@ -52,11 +41,7 @@ void ColliderManager::Finalize()
 	}
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: 全コライダー間の総当たり判定と、不要コライダーの一括削除
- */
+/// @brief 全コライダー間の総当たり判定と、不要コライダーの一括削除
 void ColliderManager::Update()
 {
 	// パフォーマンス注記: 現状O(N^2)の総当たり。将来的にオブジェクト数が増大する場合は空間分割(Octree等)の導入を推奨
@@ -82,36 +67,28 @@ void ColliderManager::Update()
 	DeleteAllColliderIfNeeded();
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: なし
- */
+/// @brief 入力: なし
 void ColliderManager::Draw()
 {
 	if (!Master::is_debug_mode_) return;
-	for (auto* col : collider_list_) {
-		if (col != nullptr && !col->IsDeleteFlag()) {
+	for (auto* col : collider_list_)
+	{
+		if (col != nullptr && !col->IsDeleteFlag())
+		{
 			col->Draw();
 		}
 	}
 }
 
-/*
- * 入力: Collider (追加対象のコライダー)
- * 出力: なし
- * 副作用: リストへのコライダーポインタの追加
- */
+/// @brief データの追加処理を行う
+/// @details Collider (追加対象のコライダー)
+/// @details リストへのコライダーポインタの追加
 void ColliderManager::AddCollider(Collider* Collider)
 {
 	collider_list_.push_back(Collider);
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: 全コライダーへの削除フラグ設定と、リストの完全消去
- */
+/// @brief 全コライダーへの削除フラグ設定と、リストの完全消去
 void ColliderManager::DeleteAllCollider()
 {
 	// 即時deleteは他クラスが保持しているポインタをダングリング(不正な参照)にする危険があるため、フラグのみ立てる
@@ -125,11 +102,7 @@ void ColliderManager::DeleteAllCollider()
 	collider_list_.clear();
 }
 
-/*
- * 入力: なし
- * 出力: なし
- * 副作用: 削除フラグが立ったコライダーのリストからの除外
- */
+/// @brief 削除フラグが立ったコライダーのリストからの除外
 void ColliderManager::DeleteAllColliderIfNeeded()
 {
 	// 配列中途の要素削除によるメモリの詰め直し(O(N))が多発するのを防ぐため、erase-removeイディオムで一括処理する
@@ -143,11 +116,9 @@ void ColliderManager::DeleteAllColliderIfNeeded()
 	}
 }
 
-/*
- * 入力: collider (除外対象のコライダー)
- * 出力: なし
- * 副作用: 指定されたコライダーのリストからの除外
- */
+/// @brief データの除外処理を行う
+/// @details collider (除外対象のコライダー)
+/// @details 指定されたコライダーのリストからの除外
 void ColliderManager::RemoveCollider(Collider* collider)
 {
 	// 線形探索(O(N))が発生するため多用厳禁。原則としてDeleteAllColliderIfNeeded()による遅延一括削除を優先すること
@@ -158,11 +129,10 @@ void ColliderManager::RemoveCollider(Collider* collider)
 	}
 }
 
-/*
- * 入力: colA, colB (判定対象のコライダー2つ)
- * 出力: 衝突していればtrue
- * 副作用: 内部でのダウンキャスト実行
- */
+/// @return 衝突していればtrue
+/// @brief colA
+/// @details colB (判定対象のコライダー2つ)
+/// @details 内部でのダウンキャスト実行
 bool ColliderManager::CheckCollision(Collider* colA, Collider* colB)
 {
 	// パフォーマンス注記: 毎フレーム数万回呼ばれる箇所でのdynamic_castは重いため、Enum等による型判定へのリファクタリングを推奨

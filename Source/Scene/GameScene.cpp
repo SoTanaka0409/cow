@@ -22,12 +22,8 @@
 Thunder* thunder_ = nullptr;
 Tornado* tatumaki = nullptr;
 
-/*
- * 3Dシーンの初期化
- * [入力] なし
- * [出力] なし
- * [副作用] メンバ変数の初期化
- */
+/// @brief 3Dシーンの初期化
+/// @details メンバ変数の初期化
 GameScene::GameScene()
 {
 	mass_spawn_timer_ = 0;
@@ -35,22 +31,13 @@ GameScene::GameScene()
 	shadow_map_handle_ = -1;
 }
 
-/*
- * 3Dシーンの破棄
- * [入力] なし
- * [出力] なし
- * [副作用] なし
- */
+/// @brief 3Dシーンの破棄
 GameScene::~GameScene()
 {
 }
 
-/*
- * 3Dシーンのセットアップ
- * [入力] なし
- * [出力] なし
- * [副作用] 3Dオブジェクトの配置、BGM再生の開始
- */
+/// @brief 3Dシーンのセットアップ
+/// @details 3Dオブジェクトの配置、BGM再生の開始
 void GameScene::Initialize()
 {
 	// 設定画面でのON/OFF選択に従い、シャドウマップの生成を制御する
@@ -110,12 +97,8 @@ void GameScene::Initialize()
 	ServiceLocator::GetObjectManager()->RebuildTagCache3D();
 }
 
-/*
- * 毎フレームの更新処理
- * [入力] なし
- * [出力] なし
- * [副作用] マネージャー群の更新、制限時間終了時のシーン移行
- */
+/// @brief 毎フレームの更新処理
+/// @details マネージャー群の更新、制限時間終了時のシーン移行
 void GameScene::Update()
 {
 	Scene::Update();
@@ -133,12 +116,8 @@ void GameScene::Update()
 	}
 }
 
-/*
- * 3Dシーンの描画処理
- * [入力] なし
- * [出力] なし
- * [副作用] オブジェクトの描画、UIの表示
- */
+/// @brief 3Dシーンの描画処理
+/// @details オブジェクトの描画、UIの表示
 void GameScene::Draw()
 {
 	DrawShadowMap();
@@ -249,18 +228,15 @@ void GameScene::DrawPhaseUI()
 	}
 }
 
-/*
- * 現在のフェーズに合わせた処理
- * [入力] なし
- * [出力] なし
- * [副作用] カメラの更新、大量発生時の定期スポーン
- */
+/// @brief 現在のフェーズに合わせた処理
+/// @details カメラの更新、大量発生時の定期スポーン
 void GameScene::PhaseUpdate()
 {
 	auto p = ServiceLocator::GetPlayer();
 	Player3D* player = dynamic_cast<Player3D*>(p);
 
-	if (player != nullptr && tatumaki != nullptr) {
+	if (player != nullptr && tatumaki != nullptr)
+	{
 		int currentPhase = (int)game_manager_->GetCurrentPhase();
 		Master::camera_->UpdateCameraByPhase(currentPhase, player->GetPosition(), tatumaki->GetPosition());
 
@@ -284,12 +260,8 @@ void GameScene::PhaseUpdate()
 	}
 }
 
-/*
- * 3Dシーンの終了処理
- * [入力] なし
- * [出力] なし
- * [副作用] BGMの停止
- */
+/// @brief 3Dシーンの終了処理
+/// @details BGMの停止
 void GameScene::Finalize()
 {
 	if (shadow_map_handle_ != -1)

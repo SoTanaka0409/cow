@@ -2,8 +2,11 @@
 #include "DxLib.h"
 #include "Master.h"
 
-// 入力：filename=アセット画像パス, centerPosition=描画の中心となる座標, graphsize_x/y=指定描画サイズ, transFlag=透過の有無
-// 副作用：ResourceManagerを介したグラフィックハンドルのロード、およびオリジナル画像解像度の取得
+/// @param filename アセット画像パス
+/// @param centerPosition 描画の中心となる座標
+/// @param transFlag 透過の有無
+/// @brief graphsize_x/y=指定描画サイズ
+/// @details ResourceManagerを介したグラフィックハンドルのロード、およびオリジナル画像解像度の取得
 Texture::Texture(std::string filename, VECTOR centerPosition, int graphsize_x, int graphsize_y, int transFlag)
 	: handle_(-1)
 	, position_(centerPosition)
@@ -20,9 +23,7 @@ Texture::~Texture()
 {
 }
 
-// 入力：なし
-// 出力：なし
-// 副作用：バックバッファへの拡大縮小描画
+/// @brief バックバッファへの拡大縮小描画
 void Texture::Draw()
 {
 	// 設計ルール：回転や拡縮のアニメーション基準点を直感的に制御するため、左上基準ではなく指定の中心座標から逆算して描画
@@ -35,9 +36,7 @@ void Texture::Draw()
 	);
 }
 
-// 入力：なし
-// 出力：なし
-// 副作用：指定の拡張幅（15px）を加えたサイズでのバックバッファ描画
+/// @brief 指定の拡張幅（15px）を加えたサイズでのバックバッファ描画
 void Texture::SizeDraw()
 {
 	// 一時対応：UIの決定アニメーション等で、一時的に現在の見た目を少し強調（ポップアップ）させるための拡大処理
@@ -58,9 +57,8 @@ void Texture::Update()
 {
 }
 
-// 入力：scale=拡縮倍率（1.0fが指定サイズでの等倍）
-// 出力：なし
-// 副作用：指定倍率でスケーリングされたバックバッファ描画
+/// @param scale 拡縮倍率（1.0fが指定サイズでの等倍）
+/// @brief 指定倍率でスケーリングされたバックバッファ描画
 void Texture::DrawScale(float scale)
 {
 	// レベルアップ時のカードUIが滑らかに出現・拡大フェードする演出（サイン波補間）をピクセル単位で正確に描画するための小数演算

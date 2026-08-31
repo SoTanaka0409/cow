@@ -39,12 +39,9 @@ GameManager::~GameManager()
 		game_timer_ = nullptr;
 	}
 }
-/*
- * 指定した進行ステップへの移行処理を統一するため
- * [入力] type: 遷移先のステップタイプ
- * [出力] なし
- * [副作用] 進行ステップ変更、リザルト画面への遷移フラグ設定など
- */
+/// @brief 指定した進行ステップへの移行処理を統一するため
+/// @param type 遷移先のステップタイプ
+/// @details 進行ステップ変更、リザルト画面への遷移フラグ設定など
 void GameManager::GameNextStep(GameStepType type)
 {
 	Player3D* player = ServiceLocator::GetPlayer();
@@ -75,12 +72,8 @@ void GameManager::GameNextStep(GameStepType type)
 		type_ = type;
 	}
 }
-/*
- * ゲーム開始時の暗転演出を描画するため
- * [入力] なし
- * [出力] なし
- * [副作用] 画面全域に黒い矩形を描画
- */
+/// @brief ゲーム開始時の暗転演出を描画するため
+/// @details 画面全域に黒い矩形を描画
 void GameManager::Draw()
 {
 	if (fade_flag_)
@@ -96,12 +89,8 @@ void GameManager::Draw()
 		}
 	}
 }
-/*
- * 制限時間やフェーズ遷移など時間経過に伴う状態更新を行うため
- * [入力] なし
- * [出力] なし
- * [副作用] タイマーの更新、ランダムなフェーズ切り替え
- */
+/// @brief 制限時間やフェーズ遷移など時間経過に伴う状態更新を行うため
+/// @details タイマーの更新、ランダムなフェーズ切り替え
 void GameManager::Update()
 {
 

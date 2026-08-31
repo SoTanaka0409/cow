@@ -59,11 +59,9 @@ void ResourceManager::PreloadModel(std::string pathName)
 	}
 }
 
-/*
- * @brief 2D画像ファイルをキャッシュ読み込みする（既存ロード時は既存のハンドルを返す）
- * [注意] キャッシュヒット時もハンドルの有効性を検証し、無効なら再ロードする
- *        これによりシーン切り替え後にハンドルが無効になった場合でも正しく復元できる
- */
+/// @brief 2D画像ファイルをキャッシュ読み込みする（既存ロード時は既存のハンドルを返す）
+/// @details キャッシュヒット時もハンドルの有効性を検証し、無効なら再ロードする
+/// @details これによりシーン切り替え後にハンドルが無効になった場合でも正しく復元できる
 int ResourceManager::LoadGraphics(std::string pathName)
 {
 	for (int i = 0; i < graphic_resource_map_list_.size(); i++)

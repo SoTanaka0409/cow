@@ -26,12 +26,10 @@
 #include"GameTimer.h"
 #include"GameManager.h"
 
-/*
- * プレイヤーの初期化処理
- * [入力] filename: モデルのファイルパス, initPos: 初期座標
- * [出力] なし
- * [副作用] 各種コンポーネントの生成と初期化
- */
+/// @brief プレイヤーの初期化処理
+/// @param filename モデルのファイルパス
+/// @param initPos 初期座標
+/// @details 各種コンポーネントの生成と初期化
 Player3D::Player3D(std::string filename, VECTOR initPos)
 	: Object3D(initPos)
 	, vertical_angle_(0.0f)
@@ -73,12 +71,8 @@ Player3D::Player3D(std::string filename, VECTOR initPos)
 	mpSpeed = new EffekseerEffect("Resource/3D/エフェクト/スキル使用.efk", VGet(0, 0, 0), 100.0f);
 }
 
-/*
- * プレイヤーの終了処理
- * [入力] なし
- * [出力] なし
- * [副作用] 各種コンポーネントの破棄
- */
+/// @brief プレイヤーの終了処理
+/// @details 各種コンポーネントの破棄
 Player3D::~Player3D()
 {
 	Utility::SafeDelete(model_);
@@ -90,12 +84,8 @@ Player3D::~Player3D()
 	Utility::SafeDelete(mpSpeed);
 }
 
-/*
- * 毎フレームの更新処理
- * [入力] なし
- * [出力] なし
- * [副作用] 状態更新、移動処理、当たり判定処理の実行
- */
+/// @brief 毎フレームの更新処理
+/// @details 状態更新、移動処理、当たり判定処理の実行
 void Player3D::Update()
 {
 	// デバッグ時はカメラ操作に専念させるため
@@ -138,12 +128,8 @@ void Player3D::Update()
 	ScreenOutCheck();
 }
 
-/*
- * プレイヤーの入力処理と吸い込みゲージの管理
- * [入力] なし
- * [出力] なし
- * [副作用] mIsVacuumActiveとmVacuumGaugeの更新
- */
+/// @brief プレイヤーの入力処理と吸い込みゲージの管理
+/// @details mIsVacuumActiveとmVacuumGaugeの更新
 void Player3D::Play()
 {
 	int mouseInput = GetMouseInput();
@@ -181,12 +167,8 @@ void Player3D::Play()
 
 
 
-/*
- * コライダーとエフェクトの更新
- * [入力] なし
- * [出力] なし
- * [副作用] カプセルコライダーのサイズ変更、エフェクトの再生・停止
- */
+/// @brief コライダーとエフェクトの更新
+/// @details カプセルコライダーのサイズ変更、エフェクトの再生・停止
 void Player3D::ColliderUpdate()
 {
 	if (mIsVacuumActive)
@@ -232,16 +214,13 @@ void Player3D::ColliderUpdate()
 	}
 }
 
-/*
- * 画面外への逸脱判定と復帰処理
- * [入力] なし
- * [出力] なし
- * [副作用] mIsOutOfBoundsの更新、座標のリセット
- */
+/// @brief 画面外への逸脱判定と復帰処理
+/// @details mIsOutOfBoundsの更新、座標のリセット
 void Player3D::ScreenOutCheck()
 {
-	if (position_.x > Utility::StageSize.x || position_.x < -Utility::StageSize.x ||
-		position_.z > Utility::StageSize.z || position_.z < -Utility::StageSize.z)
+	VECTOR stage_out_pos = VGet(Utility::StageSize.x * 1.5f, 0.0f, Utility::StageSize.z * 1.5f);
+	if (position_.x > stage_out_pos.x || position_.x < -stage_out_pos.x ||
+		position_.z >stage_out_pos.z || position_.z < -stage_out_pos.z)
 	{
 		mIsOutOfBounds = true;
 
@@ -258,12 +237,8 @@ void Player3D::ScreenOutCheck()
 	}
 }
 
-/*
- * サブシステムの更新・描画の統括
- * [入力] なし
- * [出力] なし
- * [副作用] 各マネージャーオブジェクトの更新・描画
- */
+/// @brief サブシステムの更新・描画の統括
+/// @details 各マネージャーオブジェクトの更新・描画
 void Player3D::ManagerUpdate()
 {
 	level_manager_->Draw();
@@ -276,12 +251,8 @@ void Player3D::ManagerUpdate()
 	score_manager_->Draw();
 }
 
-/*
- * プレイヤー固有の描画処理
- * [入力] なし
- * [出力] なし
- * [副作用] サークルやUIの画面出力
- */
+/// @brief プレイヤー固有の描画処理
+/// @details サークルやUIの画面出力
 void Player3D::Draw()
 {
 	if (model_ != nullptr)
@@ -301,7 +272,8 @@ void Player3D::Draw()
 		color = GetColor(0, 255, 0);
 	}
 
-	for (int i = 0; i < DIV; i++) {
+	for (int i = 0; i < DIV; i++)
+	{
 		float angle1 = (float)i / DIV * DX_PI_F * 2.0f;
 		float angle2 = (float)(i + 1) / DIV * DX_PI_F * 2.0f;
 
@@ -322,12 +294,8 @@ void Player3D::DrawShadowCaster()
 	}
 }
 
-/*
- * 移動処理と壁との衝突判定
- * [入力] なし
- * [出力] なし
- * [副作用] 座標の更新、移動ベクトルの計算
- */
+/// @brief 移動処理と壁との衝突判定
+/// @details 座標の更新、移動ベクトルの計算
 void Player3D::MoveEx()
 {
 	old_position_ = position_;
@@ -409,12 +377,9 @@ void Player3D::MoveEx()
 	model_->SetRotation(rotation_);
 }
 
-/*
- * 指定されたステータス値の取得
- * [入力] id: 取得したいステータスID
- * [出力] スキル補正を含めたステータス値
- * [副作用] なし
- */
+/// @brief 指定されたステータス値の取得
+/// @param id 取得したいステータスID
+/// @return スキル補正を含めたステータス値
 float Player3D::Status(StatusID id)
 {
 	if (id == Status_AttackS)
@@ -432,12 +397,8 @@ float Player3D::Status(StatusID id)
 	return 0.0f;
 }
 
-/*
- * 移動方向への回転補間
- * [入力] なし
- * [出力] なし
- * [副作用] プレイヤーモデルの回転角度更新
- */
+/// @brief 移動方向への回転補間
+/// @details プレイヤーモデルの回転角度更新
 void Player3D::RotationByMove()
 {
 	float subAngle = target_angle_ - angle_;
@@ -463,12 +424,8 @@ void Player3D::RotationByMove()
 	model_->SetRotation(rotation_);
 }
 
-/*
- * 吸い込みゲージのUI描画
- * [入力] なし
- * [出力] なし
- * [副作用] 画面上へのゲージ表示
- */
+/// @brief 吸い込みゲージのUI描画
+/// @details 画面上へのゲージ表示
 void Player3D::bar()
 {
 	int gaugeWidth = Utility::kUiVacuumW;
@@ -524,12 +481,10 @@ void Player3D::bar()
 	DrawFormatString(gaugeX, gaugeY - 30, GetColor(0, 255, 255), "TRACTOR BEAM: %.1f%%", mVacuumGauge);
 }
 
-/*
- * オブジェクトが範囲内に入った時の処理
- * [入力] collider: 自身のコライダー, check: 相手のコライダー
- * [出力] なし
- * [副作用] 対象オブジェクトの吸い込み状態への移行
- */
+/// @brief オブジェクトが範囲内に入った時の処理
+/// @param collider 自身のコライダー
+/// @param check 相手のコライダー
+/// @details 対象オブジェクトの吸い込み状態への移行
 void Player3D::OnEnter(Collider* collider, Collider* check)
 {
 	if (collider == capsule_collider_ && check->parent_object_->GetTag() == kTag3dCow)
@@ -555,12 +510,10 @@ void Player3D::OnEnter(Collider* collider, Collider* check)
 	}
 }
 
-/*
- * オブジェクトが範囲外に出た時の処理
- * [入力] collider: 自身のコライダー, check: 相手のコライダー
- * [出力] なし
- * [副作用] 対象オブジェクトの通常状態への復帰
- */
+/// @brief オブジェクトが範囲外に出た時の処理
+/// @param collider 自身のコライダー
+/// @param check 相手のコライダー
+/// @details 対象オブジェクトの通常状態への復帰
 void Player3D::OnExit(Collider* collider, Collider* check)
 {
 	// 吸い込み対象から外れた場合、通常の挙動へ復帰させる
@@ -587,45 +540,32 @@ void Player3D::OnExit(Collider* collider, Collider* check)
 	}
 }
 
-/*
- * 範囲内にとどまっているオブジェクトへの処理
- * [入力] collider: 自身のコライダー, check: 相手のコライダー
- * [出力] なし
- * [副作用] なし
- */
+/// @brief 範囲内にとどまっているオブジェクトへの処理
+/// @param collider 自身のコライダー
+/// @param check 相手のコライダー
 void Player3D::OnTrigger(Collider* collider, Collider* check)
 {
 }
 
-/*
- * スケールの設定
- * [入力] scale: 変更する倍率
- * [出力] なし
- * [副作用] モデルサイズの変更
- */
+/// @brief スケールの設定
+/// @param scale 変更する倍率
+/// @details モデルサイズの変更
 void Player3D::SetScale(float scale)
 {
 	model_->SetScale(scale);
 }
 
-/*
- * スタン状態の適用
- * [入力] stunTime: スタンさせるフレーム数
- * [出力] なし
- * [副作用] 状態異常フラグとタイマーのセット
- */
+/// @brief スタン状態の適用
+/// @param stunTime スタンさせるフレーム数
+/// @details 状態異常フラグとタイマーのセット
 void Player3D::ApplyStun(int stunTime)
 {
 	mIsStunned = true;
 	mStunTimer = stunTime;
 }
 
-/*
- * スキルエフェクトの再生
- * [入力] なし
- * [出力] なし
- * [副作用] エフェクトの再生開始
- */
+/// @brief スキルエフェクトの再生
+/// @details エフェクトの再生開始
 void Player3D::PlaySkillEffect()
 {
 	if (mpSpeed != nullptr)

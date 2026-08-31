@@ -1,11 +1,11 @@
 #include "Mountain.h"
 
-/*
- * 背景演出用の静的モデルを構築するため
- * [入力] filename: モデルのファイルパス, initPos: 初期座標, scale: 拡大率, angle: 回転角度
- * [出力] なし
- * [副作用] model_に新しくModelインスタンスが確保される
- */
+/// @brief 背景演出用の静的モデルを構築するため
+/// @param filename モデルのファイルパス
+/// @param initPos 初期座標
+/// @param scale 拡大率
+/// @param angle 回転角度
+/// @details model_に新しくModelインスタンスが確保される
 Mountain::Mountain(std::string filename, VECTOR initPos, VECTOR scale, VECTOR angle)
 	: Object3D(initPos)
 {
@@ -14,12 +14,8 @@ Mountain::Mountain(std::string filename, VECTOR initPos, VECTOR scale, VECTOR an
 	model_->SetRotation(angle);
 }
 
-/*
- * メモリリークを防ぐため
- * [入力] なし
- * [出力] なし
- * [副作用] model_のメモリが解放される
- */
+/// @brief メモリリークを防ぐため
+/// @details model_のメモリが解放される
 Mountain::~Mountain()
 {
 	if (model_ != nullptr)
@@ -29,12 +25,7 @@ Mountain::~Mountain()
 	}
 }
 
-/*
- * 状態を最新に保つため
- * [入力] なし
- * [出力] なし
- * [副作用] なし
- */
+/// @brief 状態を最新に保つため
 void Mountain::Update()
 {
 	if (model_ != nullptr)
@@ -43,12 +34,8 @@ void Mountain::Update()
 	}
 }
 
-/*
- * 画面にモデルを可視化するため
- * [入力] なし
- * [出力] なし
- * [副作用] 画面に描画される
- */
+/// @brief 画面にモデルを可視化するため
+/// @details 画面に描画される
 void Mountain::Draw()
 {
 	if (model_ != nullptr)
@@ -57,12 +44,9 @@ void Mountain::Draw()
 	}
 }
 
-/*
- * モデルの大きさを柔軟に変更するため
- * [入力] scale: 新しい拡大率
- * [出力] なし
- * [副作用] スケール状態が更新される
- */
+/// @brief モデルの大きさを柔軟に変更するため
+/// @param scale 新しい拡大率
+/// @details スケール状態が更新される
 void Mountain::SetScale(VECTOR scale)
 {
 	if (model_ != nullptr)
@@ -71,12 +55,9 @@ void Mountain::SetScale(VECTOR scale)
 	}
 }
 
-/*
- * モデルの向きを柔軟に変更するため
- * [入力] angle: 新しい回転角度
- * [出力] なし
- * [副作用] 回転状態が更新される
- */
+/// @brief モデルの向きを柔軟に変更するため
+/// @param angle 新しい回転角度
+/// @details 回転状態が更新される
 void Mountain::SetRotation(VECTOR angle)
 {
 	if (model_ != nullptr)
@@ -85,12 +66,12 @@ void Mountain::SetRotation(VECTOR angle)
 	}
 }
 
-/*
- * 時間帯などの環境変化に合わせて色を変えるため
- * [入力] r: 赤, g: 緑, b: 青, a: アルファ値
- * [出力] なし
- * [副作用] 色状態が更新される
- */
+/// @brief 時間帯などの環境変化に合わせて色を変えるため
+/// @param r 赤
+/// @param g 緑
+/// @param b 青
+/// @param a アルファ値
+/// @details 色状態が更新される
 void Mountain::SetColor(float r, float g, float b, float a)
 {
 	if (model_ != nullptr)

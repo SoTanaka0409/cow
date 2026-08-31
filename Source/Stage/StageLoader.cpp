@@ -8,12 +8,9 @@
 #include <vector>
 #include <string>
 
-/*
- * CSVファイルを読み込んでステージオブジェクトを生成するため
- * [入力] csvPath: Shift-JISエンコードのCSVファイルパス
- * [出力] なし
- * [副作用] ObjectManagerに各オブジェクトが登録される
- */
+/// @brief CSVファイルを読み込んでステージオブジェクトを生成するため
+/// @param csvPath Shift-JISエンコードのCSVファイルパス
+/// @details ObjectManagerに各オブジェクトが登録される
 void StageLoader::LoadFromCSV(const std::string& csvPath)
 {
 	std::ifstream file(csvPath);
@@ -66,14 +63,11 @@ void StageLoader::LoadFromCSV(const std::string& csvPath)
 	}
 }
 
-/*
- * Object_Stageを1個生成するため
- * [入力] cols: CSVの分割済み列リスト
- *   cols[1]=model_path, [2-4]=position(x,y,z), [5]=scale(scalar),
- *   [8-10]=rotation(rx,ry,rz), [11-14]=color(r,g,b,a) ※省略可
- * [出力] なし
- * [副作用] ObjectManagerにObject_Stageが登録される
- */
+/// @brief Object_Stageを1個生成するため
+/// @param cols CSVの分割済み列リスト
+/// @details cols[1]=model_path, [2-4]=position(x,y,z), [5]=scale(scalar),
+/// @details =rotation(rx,ry,rz), [11-14]=color(r,g,b,a) ※省略可
+/// @details ObjectManagerにObject_Stageが登録される
 void StageLoader::SpawnObjectStage(const std::vector<std::string>& cols)
 {
 	if (cols.size() < 11) return;
@@ -96,14 +90,11 @@ void StageLoader::SpawnObjectStage(const std::vector<std::string>& cols)
 	}
 }
 
-/*
- * Mountainを1個生成するため
- * [入力] cols: CSVの分割済み列リスト
- *   cols[1]=model_path, [2-4]=position(x,y,z), [5-7]=scale(sx,sy,sz),
- *   [8-10]=rotation(rx,ry,rz), [11-14]=color(r,g,b,a) ※省略可
- * [出力] なし
- * [副作用] ObjectManagerにMountainが登録される
- */
+/// @brief Mountainを1個生成するため
+/// @param cols CSVの分割済み列リスト
+/// @details cols[1]=model_path, [2-4]=position(x,y,z), [5-7]=scale(sx,sy,sz),
+/// @details =rotation(rx,ry,rz), [11-14]=color(r,g,b,a) ※省略可
+/// @details ObjectManagerにMountainが登録される
 void StageLoader::SpawnMountain(const std::vector<std::string>& cols)
 {
 	if (cols.size() < 11) return;
@@ -126,14 +117,11 @@ void StageLoader::SpawnMountain(const std::vector<std::string>& cols)
 	}
 }
 
-/*
- * Wallを1枚生成するため
- * [入力] cols: CSVの分割済み列リスト
- *   cols[1]=model_path(空可), [2-4]=centerPos(x,y,z),
- *   [5-7]=topLeft(x,y,z), [8-10]=bottomRight(x,y,z)
- * [出力] なし
- * [副作用] ObjectManagerにWallが登録される
- */
+/// @brief Wallを1枚生成するため
+/// @param cols CSVの分割済み列リスト
+/// @details cols[1]=model_path(空可), [2-4]=centerPos(x,y,z),
+/// @details =topLeft(x,y,z), [8-10]=bottomRight(x,y,z)
+/// @details ObjectManagerにWallが登録される
 void StageLoader::SpawnWall(const std::vector<std::string>& cols)
 {
 	if (cols.size() < 11) return;
@@ -146,12 +134,9 @@ void StageLoader::SpawnWall(const std::vector<std::string>& cols)
 	new Wall(modelPath, center, topLeft, bottomRight);
 }
 
-/*
- * CSV の1行をカンマで分割するため
- * [入力] line: 処理対象の文字列
- * [出力] 分割結果の文字列ベクター
- * [副作用] なし
- */
+/// @brief CSV の1行をカンマで分割するため
+/// @param line 処理対象の文字列
+/// @return 分割結果の文字列ベクター
 std::vector<std::string> StageLoader::SplitCSV(const std::string& line)
 {
 	std::vector<std::string> result;
@@ -166,12 +151,9 @@ std::vector<std::string> StageLoader::SplitCSV(const std::string& line)
 	return result;
 }
 
-/*
- * 文字列をfloatに変換するため
- * [入力] s: 変換対象の文字列
- * [出力] 変換結果のfloat値。変換失敗時は 0.0f
- * [副作用] なし
- */
+/// @brief 文字列をfloatに変換するため
+/// @param s 変換対象の文字列
+/// @return 変換結果のfloat値。変換失敗時は 0.0f
 float StageLoader::ToFloat(const std::string& s)
 {
 	if (s.empty()) return 0.0f;
