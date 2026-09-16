@@ -76,26 +76,3 @@ VECTOR Stage::CheckHit_Line(VECTOR pos1, VECTOR pos2)
 	return ret;
 }
 
-/// @return 衝突点の座標
-/// @brief pos1
-/// @details pos2 (線分の始点と終点)
-/// @details 画面左上へのヒット座標のテキスト描画
-VECTOR Stage::CheckHit_LineDebug(VECTOR pos1, VECTOR pos2)
-{
-	VECTOR ret = VGet(0.0f, 0.0f, 0.0f);
-
-	auto result = MV1CollCheck_Line(collision_handle_, -1, pos1, pos2);
-
-	// デバッグ表示専用関数。キャラクターの接地判定や、カメラが壁にめり込んだ際の座標を視覚的に検証するために用いる
-	if (result.HitFlag)
-	{
-		ret = result.HitPosition;
-		DrawFormatString(200, 0, GetColor(255, 0, 0), "Hit: x:%f, y:%f. z:%f", ret.x, ret.y, ret.z);
-	}
-	else
-	{
-		DrawFormatString(200, 0, GetColor(255, 0, 0), "Hit None");
-	}
-
-	return ret;
-}

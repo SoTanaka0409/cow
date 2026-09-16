@@ -14,7 +14,11 @@ Level::~Level()
 void Level::Draw()
 {
 	DrawBar();
-	DrawFormatString(Utility::kUiBaseX, Utility::kUiLevelY - 35, GetColor(255, 255, 255), "Level : %d", now_level_);
+	// レベル表x8eｦ: ゆづったるんごのような緑色で描画
+	SetFontSize(18);
+	DrawFormatString(Utility::kUiBaseX + 2, Utility::kUiLevelY - 26, GetColor(80, 110, 60), "Lv.%d", now_level_);
+	DrawFormatString(Utility::kUiBaseX, Utility::kUiLevelY - 28, GetColor(200, 230, 160), "Lv.%d", now_level_);
+	SetFontSize(16);
 }
 void Level::Update()
 {
@@ -55,26 +59,30 @@ void Level::DrawBar()
 	int y1 = static_cast<int>(pos.y);
 	int x2 = static_cast<int>(pos.x + size.x);
 	int y2 = static_cast<int>(pos.y + size.y);
-	// --- Western Wood Background ---
-	// 木目のような暗い茶色
-	DrawBox(x1, y1, x2, y2, GetColor(60, 30, 15), TRUE);
-	// --- Alien Magenta Experience Fill ---
+
+	// やわらかなクリーム色の背景（貿場の塗の格示イメージ）
+	DrawBox(x1 - 2, y1 - 2, x2 + 2, y2 + 2, GetColor(170, 190, 150), TRUE);
+	DrawBox(x1, y1, x2, y2, GetColor(235, 245, 220), TRUE);
+
 	if (bar > 0.0f)
 	{
 		int fillX = static_cast<int>(pos.x + size.x * bar);
-		// 内側の明るい芯
-		DrawBox(x1 + 2, y1 + 4, fillX - 2, y2 - 4, GetColor(255, 100, 255), TRUE);
-		// 外側のエイリアン発光（加算ブレンド）
-		SetDrawBlendMode(DX_BLENDMODE_ADD, 128);
-		DrawBox(x1, y1 + 1, fillX, y2 - 1, GetColor(200, 0, 255), TRUE);
+
+		// のひたる貿場の縫のような緑色の結格
+		DrawBox(x1 + 1, y1 + 2, fillX - 1, y2 - 2, GetColor(100, 190, 130), TRUE);
+
+		// ぶわっとやわらかな輝き
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 80);
+		DrawBox(x1, y1 + 1, fillX, y2 - 1, GetColor(180, 255, 200), TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
-	// --- Alien Tech Border ---
-	// 外枠のシアン発光
-	DrawBox(x1 - 1, y1 - 1, x2 + 1, y2 + 1, GetColor(0, 255, 255), FALSE);
-	// 装飾的な四隅のポインター
-	DrawBox(x1 - 2, y1 - 2, x1 + 4, y1 + 4, GetColor(200, 0, 255), TRUE);
-	DrawBox(x2 - 4, y1 - 2, x2 + 2, y1 + 4, GetColor(200, 0, 255), TRUE);
-	DrawBox(x1 - 2, y2 - 4, x1 + 4, y2 + 2, GetColor(200, 0, 255), TRUE);
-	DrawBox(x2 - 4, y2 - 4, x2 + 2, y2 + 2, GetColor(200, 0, 255), TRUE);
+
+	// ゆったりした縫の外各
+	DrawBox(x1 - 2, y1 - 2, x2 + 2, y2 + 2, GetColor(100, 150, 80), FALSE);
+
+	// 革をやわらかくする小さな館の学
+	DrawBox(x1 - 2, y1 - 2, x1 + 3, y1 + 3, GetColor(80, 130, 60), TRUE);
+	DrawBox(x2 - 2, y1 - 2, x2 + 2, y1 + 3, GetColor(80, 130, 60), TRUE);
+	DrawBox(x1 - 2, y2 - 2, x1 + 3, y2 + 2, GetColor(80, 130, 60), TRUE);
+	DrawBox(x2 - 2, y2 - 2, x2 + 2, y2 + 2, GetColor(80, 130, 60), TRUE);
 }

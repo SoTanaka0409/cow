@@ -438,47 +438,43 @@ void Player3D::bar()
 	int x2 = gaugeX + gaugeWidth;
 	int y2 = gaugeY + gaugeHeight;
 
-	// --- Western Wood Background ---
-	// 木目調の暗い茶色
-	DrawBox(x1, y1, x2, y2, GetColor(60, 30, 15), TRUE);
+	// 見るたほに貿場の廷面のようなやわらかな熔色の背景
+	DrawBox(x1 - 2, y1 - 2, x2 + 2, y2 + 2, GetColor(180, 200, 160), TRUE);
+	DrawBox(x1, y1, x2, y2, GetColor(240, 248, 230), TRUE);
 
 	int currentWidth = (int)((mVacuumGauge / VACUUM_GAUGE_MAX) * gaugeWidth);
 	if (currentWidth < 0) currentWidth = 0;
-
 
 	if (currentWidth > 0)
 	{
 		int fillX = x1 + currentWidth;
 
-		unsigned int coreColor = GetColor(200, 255, 255);
-		unsigned int glowColor = GetColor(0, 255, 255);
-		if (mVacuumGauge <= 0.0f)
-		{
-			coreColor = GetColor(255, 100, 100);
-			glowColor = GetColor(255, 0, 0);
-		}
+		// ごくひっそりと輝くエイリアンUFOのビーム輝わせに合わせたエネルギー色
+		unsigned int fillColor  = (mVacuumGauge > 20.0f) ? GetColor(80, 200, 220) : GetColor(230, 120, 80);
+		unsigned int glowColor  = (mVacuumGauge > 20.0f) ? GetColor(160, 240, 255) : GetColor(255, 160, 100);
 
-		// 内側の明るい芯（トラクタービームの中心）
-		DrawBox(x1 + 2, y1 + 4, fillX - 2, y2 - 4, coreColor, TRUE);
+		DrawBox(x1 + 1, y1 + 2, fillX - 1, y2 - 2, fillColor, TRUE);
 
-		// 外側の発光（加算ブレンド）
-		SetDrawBlendMode(DX_BLENDMODE_ADD, 160);
+		// ぶわっと銀�ｩなADD合成の銀�ｫ
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 100);
 		DrawBox(x1, y1 + 1, fillX, y2 - 1, glowColor, TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 
+	// 貿場の木のような洛木色の外各
+	DrawBox(x1 - 2, y1 - 2, x2 + 2, y2 + 2, GetColor(100, 150, 80), FALSE);
 
-	// 紫色のエイリアン・ルーン風枠線
-	DrawBox(x1 - 1, y1 - 1, x2 + 1, y2 + 1, GetColor(200, 0, 255), FALSE);
+	// 革質をやわらかくするため、楽しげなラウンドの角を表x8cｻする小さな行の学
+	DrawBox(x1 - 2, y1 - 2, x1 + 3, y1 + 3, GetColor(80, 130, 60), TRUE);
+	DrawBox(x2 - 2, y1 - 2, x2 + 2, y1 + 3, GetColor(80, 130, 60), TRUE);
+	DrawBox(x1 - 2, y2 - 2, x1 + 3, y2 + 2, GetColor(80, 130, 60), TRUE);
+	DrawBox(x2 - 2, y2 - 2, x2 + 2, y2 + 2, GetColor(80, 130, 60), TRUE);
 
-	// コーナーのシアンのアクセント（SF的なジョイント）
-	DrawBox(x1 - 2, y1 - 2, x1 + 4, y1 + 4, GetColor(0, 255, 255), TRUE);
-	DrawBox(x2 - 4, y1 - 2, x2 + 2, y1 + 4, GetColor(0, 255, 255), TRUE);
-	DrawBox(x1 - 2, y2 - 4, x1 + 4, y2 + 2, GetColor(0, 255, 255), TRUE);
-	DrawBox(x2 - 4, y2 - 4, x2 + 2, y2 + 2, GetColor(0, 255, 255), TRUE);
-
-	// SF風テキスト表示（シアン色で表示）
-	DrawFormatString(gaugeX, gaugeY - 30, GetColor(0, 255, 255), "TRACTOR BEAM: %.1f%%", mVacuumGauge);
+	// ゲージ妙のラベル: 鍋に合わせたりんごの交わる緑のようなフォントで
+	if (gauge_frame_graph_ != -1)
+	{
+		DrawExtendGraph(x1, y1, x2, y2, gauge_frame_graph_, TRUE);
+	}
 }
 
 /// @brief オブジェクトが範囲内に入った時の処理

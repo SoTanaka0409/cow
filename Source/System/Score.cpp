@@ -179,7 +179,9 @@ void Score::AddRanking()
 /// @details 画面描画
 void Score::DrawRanking(int x, int y)
 {
-	DrawFormatString(x, y, GetColor(255, 255, 255), "RANKING");
+	// ランキングラベル: ゆふのる春のレモン色のスチームに
+	DrawFormatString(x + 1, y + 1, GetColor(100, 130, 80), "RANKING");
+	DrawFormatString(x, y, GetColor(210, 240, 180), "RANKING");
 	for (int i = 0; i < 3; i++)
 	{
 		DrawFormatString(

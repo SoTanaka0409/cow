@@ -9,6 +9,7 @@
 LoadingScene::LoadingScene()
 	: loading_timer_(0)
 	, load_started_(false)
+	, font_handle_(-1)
 {
 }
 
@@ -21,6 +22,7 @@ void LoadingScene::Initialize()
 {
 	loading_timer_ = 0;
 	load_started_ = false;
+	font_handle_ = CreateFontToHandle("Arial", 28, 2, DX_FONTTYPE_ANTIALIASING_EDGE, -1, 2);
 }
 
 /// @brief 非同期ロードのキックおよびシーン遷移指示
@@ -62,17 +64,31 @@ void LoadingScene::Update()
 /// @brief ローディング画面のUI描画
 void LoadingScene::Draw()
 {
-	DrawBox(0, 0, 1600, 900, GetColor(0, 0, 0), TRUE);
+	DrawBox(0, 0, 1600, 900, GetColor(20, 28, 18), TRUE);
 
 	// 非同期ロードの裏でアプリケーションがフリーズ(ハングアップ)していないことをユーザーに視覚的に保証するため、
 	// 固定周期で点滅するアニメーションを描画する
 	if ((loading_timer_ / 20) % 2 == 0)
 	{
-		DrawString(1600 / 2 - 60, 900 / 2, "NOW LOADING...", GetColor(255, 255, 255));
+		int cx = 1600 / 2;
+		int cy = 900 / 2;
+		if (font_handle_ != -1)
+		{
+			DrawStringToHandle(cx - 100, cy, "NOW LOADING...", GetColor(160, 220, 255), font_handle_, GetColor(0, 80, 120));
+		}
+		else
+		{
+			DrawString(cx - 60, cy, "NOW LOADING...", GetColor(160, 220, 255));
+		}
 	}
 }
 
 /// @brief 入力: なし
 void LoadingScene::Finalize()
 {
+	if (font_handle_ != -1)
+	{
+		DeleteFontToHandle(font_handle_);
+		font_handle_ = -1;
+	}
 }
