@@ -28,11 +28,6 @@ public:
 	/// @details UFOから真下に放つアブダクションビームや、牛の接地（高さ合わせ）の計算に使用する
 	VECTOR CheckHit_Line(VECTOR pos1, VECTOR pos2);
 
-	/// @param pos2 レイ（線分）の始点・終点座標
-	/// @return 地形と交差したヒット位置の3D座標（非衝突時はゼロベクトル）
-	/// @brief pos1
-	/// @details ゲーム画面上にレイの軌跡と交差点の座標テキストをデバッグ表示
-	VECTOR CheckHit_LineDebug(VECTOR pos1, VECTOR pos2);
 
 private:
 	/// @brief 描画負荷と物理演算（メッシュ衝突判定）の計算負荷をそれぞれ最適化するため、ハンドルを完全に分離

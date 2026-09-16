@@ -283,23 +283,38 @@ void Rule::DrawMenu()
 
 		if (selected_index_ == i)
 		{
-			DrawStringToHandle(startX - 60, y, "?", color, font_handle_);
+			DrawStringToHandle(startX - 60, y, "> ", color, font_handle_);
 		}
 
 		if (i == kMenuBgm)
 		{
 			int vol = Master::sound_manager_->GetMasterBGMVolume();
 			DrawFormatStringToHandle(startX, y, color, font_handle_, "BGM Volume");
-			DrawBox(startX + 350, y + 15, startX + 350 + (vol * 2), y + 45, color, TRUE);
-			DrawBox(startX + 350, y + 15, startX + 350 + (255 * 2), y + 45, GetColor(255, 255, 255), FALSE);
+			// スライダーレール: ゆふのる縫色
+			DrawBox(startX + 350, y + 18, startX + 350 + (255 * 2), y + 42, GetColor(200, 220, 180), TRUE);
+			// スライダー密った数字: 室を呼び起こすエネルギー輝わせ
+			DrawBox(startX + 350, y + 18, startX + 350 + (vol * 2), y + 42, GetColor(80, 180, 100), TRUE);
+			// ノブ: 館のような小さな始意の志と
+			int knobX = startX + 350 + (vol * 2);
+			DrawBox(knobX - 4, y + 13, knobX + 4, y + 47, GetColor(100, 160, 80), TRUE);
+			DrawBox(knobX - 4, y + 13, knobX + 4, y + 47, GetColor(60, 110, 40), FALSE);
+			// 全体の館
+			DrawBox(startX + 350, y + 18, startX + 350 + (255 * 2), y + 42, GetColor(100, 150, 80), FALSE);
 			DrawFormatStringToHandle(startX + 880, y, color, font_handle_, "%3d", (vol * 100) / 255);
 		}
 		else if (i == kMenuSe)
 		{
 			int vol = Master::sound_manager_->GetMasterSEVolume();
 			DrawFormatStringToHandle(startX, y, color, font_handle_, "SE Volume");
-			DrawBox(startX + 350, y + 15, startX + 350 + (vol * 2), y + 45, color, TRUE);
-			DrawBox(startX + 350, y + 15, startX + 350 + (255 * 2), y + 45, GetColor(255, 255, 255), FALSE);
+			// スライダーレール
+			DrawBox(startX + 350, y + 18, startX + 350 + (255 * 2), y + 42, GetColor(200, 220, 180), TRUE);
+			// 密った数字
+			DrawBox(startX + 350, y + 18, startX + 350 + (vol * 2), y + 42, GetColor(80, 180, 100), TRUE);
+			// ノブ
+			int knobX = startX + 350 + (vol * 2);
+			DrawBox(knobX - 4, y + 13, knobX + 4, y + 47, GetColor(100, 160, 80), TRUE);
+			DrawBox(knobX - 4, y + 13, knobX + 4, y + 47, GetColor(60, 110, 40), FALSE);
+			DrawBox(startX + 350, y + 18, startX + 350 + (255 * 2), y + 42, GetColor(100, 150, 80), FALSE);
 			DrawFormatStringToHandle(startX + 880, y, color, font_handle_, "%3d", (vol * 100) / 255);
 		}
 		else if (i == kMenuShadow)

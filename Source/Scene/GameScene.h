@@ -52,4 +52,5 @@ private:
 	Phase phase_;              ///< 現在の状態や種別を管理する値
 	int font_back_graph_;      ///< 描画やリソース管理に使用するハンドル
 	int shadow_map_handle_;    ///< 描画やリソース管理に使用するハンドル
+	int phase_font_handle_;    ///< MASS SPAWN!/TORNADO CRISIS!警告表示用フォント
 };

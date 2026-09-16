@@ -29,6 +29,7 @@ GameScene::GameScene()
 	mass_spawn_timer_ = 0;
 	font_back_graph_ = Master::resource_manager_->LoadGraphics("Resource/2D/ゲーム画面/文字パネル背景.png");
 	shadow_map_handle_ = -1;
+	phase_font_handle_ = -1;
 }
 
 /// @brief 3Dシーンの破棄
@@ -95,6 +96,7 @@ void GameScene::Initialize()
 	);
 
 	ServiceLocator::GetObjectManager()->RebuildTagCache3D();
+	phase_font_handle_ = CreateFontToHandle("Arial", 48, 4, DX_FONTTYPE_ANTIALIASING_EDGE, -1, 3);
 }
 
 /// @brief 毎フレームの更新処理
@@ -213,18 +215,34 @@ void GameScene::DrawPhaseUI()
 			DrawExtendGraph(0, 0, 1920, 1080, font_back_graph_, TRUE);
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		}
-		SetFontSize(40);
 		if (currentPhase == (int)GameManager::GamePhase::kMassSpawn)
 		{
-			DrawString(200, 300, "MASS SPAWN!", GetColor(255, 50, 50), true);
-			DrawString(200, 350, "牛が大量発生！", GetColor(255, 255, 255), true);
+			int tx = 200, ty = 290;
+			if (phase_font_handle_ != -1)
+			{
+				DrawStringToHandle(tx + 2, ty + 2, "MASS SPAWN!", GetColor(120, 60, 0), phase_font_handle_);
+				DrawStringToHandle(tx, ty, "MASS SPAWN!", GetColor(255, 160, 50), phase_font_handle_);
+				DrawStringToHandle(tx, ty + 58, "牛が大量発生！", GetColor(255, 235, 180), phase_font_handle_);
+			}
+			else
+			{
+				SetFontSize(40); DrawString(tx, ty, "MASS SPAWN!", GetColor(255, 160, 50), true); SetFontSize(fontSize);
+			}
 		}
 		else if (currentPhase == (int)GameManager::GamePhase::kTornadoCrisis)
 		{
-			DrawString(200, 300, "TORNADO CRISIS!", GetColor(255, 100, 0), true);
-			DrawString(200, 350, "巨大竜巻が接近中！", GetColor(255, 255, 255), true);
+			int tx = 200, ty = 290;
+			if (phase_font_handle_ != -1)
+			{
+				DrawStringToHandle(tx + 2, ty + 2, "TORNADO CRISIS!", GetColor(0, 60, 100), phase_font_handle_);
+				DrawStringToHandle(tx, ty, "TORNADO CRISIS!", GetColor(100, 200, 255), phase_font_handle_);
+				DrawStringToHandle(tx, ty + 58, "巨大竜巻が接近中！", GetColor(200, 240, 255), phase_font_handle_);
+			}
+			else
+			{
+				SetFontSize(40); DrawString(tx, ty, "TORNADO CRISIS!", GetColor(100, 200, 255), true); SetFontSize(fontSize);
+			}
 		}
-		SetFontSize(fontSize);
 	}
 }
 
@@ -268,6 +286,11 @@ void GameScene::Finalize()
 	{
 		DeleteShadowMap(shadow_map_handle_);
 		shadow_map_handle_ = -1;
+	}
+	if (phase_font_handle_ != -1)
+	{
+		DeleteFontToHandle(phase_font_handle_);
+		phase_font_handle_ = -1;
 	}
 	Master::sound_manager_->StopBGM();
 }
