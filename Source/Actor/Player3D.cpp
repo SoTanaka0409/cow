@@ -438,7 +438,7 @@ void Player3D::bar()
 	int x2 = gaugeX + gaugeWidth;
 	int y2 = gaugeY + gaugeHeight;
 
-	// 見るたほに貿場の廷面のようなやわらかな熔色の背景
+	// のどかな牧場の地面のようなやわらかな緑色の背景
 	DrawBox(x1 - 2, y1 - 2, x2 + 2, y2 + 2, GetColor(180, 200, 160), TRUE);
 	DrawBox(x1, y1, x2, y2, GetColor(240, 248, 230), TRUE);
 
@@ -448,39 +448,41 @@ void Player3D::bar()
 	if (currentWidth > 0)
 	{
 		int fillX = x1 + currentWidth;
+		float ratio = mVacuumGauge / VACUUM_GAUGE_MAX;
 
-		// ごくひっそりと輝くエイリアンUFOのビーム輝わせに合わせたエネルギー色
-		unsigned int fillColor  = (mVacuumGauge > 20.0f) ? GetColor(80, 200, 220) : GetColor(230, 120, 80);
-		unsigned int glowColor  = (mVacuumGauge > 20.0f) ? GetColor(160, 240, 255) : GetColor(255, 160, 100);
-
+		// 吸引が進むにつれて黄色からエメラルドグリーンへ滑らかにグラデーションするSF風の発色
+		int r = (int)(250 - 150 * ratio);
+		int g = (int)(180 + 75 * ratio);
+		int b = (int)(80 + 175 * ratio);
+		
+		unsigned int fillColor = GetColor(r, g, b);
 		DrawBox(x1 + 1, y1 + 2, fillX - 1, y2 - 2, fillColor, TRUE);
 
-		// ふわっとやわらかなADD合成の輝き
-		SetDrawBlendMode(DX_BLENDMODE_ADD, 100);
-		DrawBox(x1, y1 + 1, fillX, y2 - 1, glowColor, TRUE);
+		// ふわっとやわらかなADD合成の輝き（脈打つようなアニメーション付き）
+		float wave = sin(GetNowCount() * 0.005f) * 0.5f + 0.5f;
+		int alpha = (int)(100 + 50 * wave);
+		
+		SetDrawBlendMode(DX_BLENDMODE_ADD, alpha);
+		DrawBox(x1, y1 + 1, fillX, y2 - 1, GetColor(r, 255, 255), TRUE);
+		
+		// ゲージの先端にキラキラとしたパーティクル風のハイライトを追加
+		if (ratio > 0.1f)
+		{
+			DrawCircle(fillX - 5, y1 + gaugeHeight / 2, (int)(4 + wave * 2), GetColor(255, 255, 255), TRUE);
+		}
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 
-	// 貿場の木のような洛木色の外各
+	// 牧場の木のような落ち着いた外郭
 	DrawBox(x1 - 2, y1 - 2, x2 + 2, y2 + 2, GetColor(100, 150, 80), FALSE);
 
-	// 革質をやわらかくするため、楽しげなラウンドの角を表x8cｻする小さな行の学
-	DrawBox(x1 - 2, y1 - 2, x1 + 3, y1 + 3, GetColor(80, 130, 60), TRUE);
-	DrawBox(x2 - 2, y1 - 2, x2 + 2, y1 + 3, GetColor(80, 130, 60), TRUE);
-	DrawBox(x1 - 2, y2 - 2, x1 + 3, y2 + 2, GetColor(80, 130, 60), TRUE);
-	DrawBox(x2 - 2, y2 - 2, x2 + 2, y2 + 2, GetColor(80, 130, 60), TRUE);
-
-	// ゲージ妙のラベル: 鍋に合わせたりんごの交わる緑のようなフォントで
+	// ゲージ枠のラベル
 	if (gauge_frame_graph_ != -1)
 	{
 		DrawExtendGraph(x1, y1, x2, y2, gauge_frame_graph_, TRUE);
 	}
 }
 
-/// @brief オブジェクトが範囲内に入った時の処理
-/// @param collider 自身のコライダー
-/// @param check 相手のコライダー
-/// @details 対象オブジェクトの吸い込み状態への移行
 void Player3D::OnEnter(Collider* collider, Collider* check)
 {
 	if (collider == capsule_collider_ && check->parent_object_->GetTag() == kTag3dCow)

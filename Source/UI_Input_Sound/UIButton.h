@@ -9,7 +9,9 @@ struct UIButton
 	int graph_handle;             ///< 描画やリソース管理に使用するハンドル
 	int x, y;                     ///< 座標や位置情報を管理する値
 	int w, h;                     ///< 座標や位置情報を管理する値
-	bool is_hover;                ///< 状態の有効・無効を管理するフラグ
+	bool is_hover;
+	float hover_scale_;
+	float hover_glow_alpha_;                ///< 状態の有効・無効を管理するフラグ
 	float animation_offset;       ///< 内部状態を管理する値
 
 	UIButton();

@@ -48,7 +48,8 @@ public:
 	void SetSkillFlag(bool flag);
 
 	/// @brief フレーム跨ぎの複数回クリックによる、スキルの二重取得バグを防止するための購入確定フラグ
-	bool add_skill_flag_; ///< 状態の有効・無効を管理するフラグ
+	bool add_skill_flag_;
+	float overlay_alpha_; ///< 状態の有効・無効を管理するフラグ
 
 private:
 	void UpdateFlashAnimation();

@@ -79,7 +79,15 @@ Skill::~Skill()
 /// @details 画面にスキルカードが描画される
 void Skill::Draw()
 {
-	if (!add_skill_flag_ && !select_anim_) return;
+	if (!add_skill_flag_ && !select_anim_ && overlay_alpha_ <= 1.0f) return;
+
+	if (overlay_alpha_ > 1.0f)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)overlay_alpha_);
+		DrawBox(0, 0, Utility::kScreenWidth, Utility::kScreenHeight, GetColor(0, 0, 0), TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+
 
 	// 選択したスキルをプレイヤーに視覚的に強く印象付けるため。
 	if (select_anim_)
@@ -111,6 +119,16 @@ void Skill::Draw()
 /// @details アニメーション進行に伴い、UI座標やフラグが変化する
 void Skill::Update()
 {
+	float dt = Master::GetDeltaTimeScaler();
+	if (add_skill_flag_ || select_anim_)
+	{
+		overlay_alpha_ += (150.0f - overlay_alpha_) * 0.15f * dt;
+	}
+	else
+	{
+		overlay_alpha_ += (0.0f - overlay_alpha_) * 0.15f * dt;
+	}
+
 	if (add_skill_flag_)
 	{
 		AddSkill();
@@ -154,6 +172,7 @@ void Skill::UpdateSelectAnimation()
 
 			select_anim_ = false;
 			add_skill_flag_ = false;
+	overlay_alpha_ = 0.0f;
 			Master::SelectSkill = false;
 		}
 	}
@@ -228,6 +247,7 @@ void Skill::AddSkill()
 		Master::sound_manager_->PlaySE(SoundManager::kSeSkillStatus);
 		SetMouseDispFlag(false);
 		add_skill_flag_ = false;
+	overlay_alpha_ = 0.0f;
 	}
 	else if (ProcessSkill(texture2_, 2))
 	{
@@ -243,6 +263,7 @@ void Skill::AddSkill()
 		Master::sound_manager_->PlaySE(SoundManager::kSeSkillFood);
 		SetMouseDispFlag(false);
 		add_skill_flag_ = false;
+	overlay_alpha_ = 0.0f;
 	}
 	else if (ProcessSkill(texture3_, 3))
 	{
@@ -255,6 +276,7 @@ void Skill::AddSkill()
 		Master::sound_manager_->PlaySE(SoundManager::kSeSkillStatus);
 		SetMouseDispFlag(false);
 		add_skill_flag_ = false;
+	overlay_alpha_ = 0.0f;
 	}
 }
 
