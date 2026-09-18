@@ -20,14 +20,14 @@
 #include "GameConstants.h"
 
 Thunder* thunder_ = nullptr;
-Tornado* tatumaki = nullptr;
+Tornado* tornado = nullptr;
 
 /// @brief 3Dシーンの初期化
 /// @details メンバ変数の初期化
 GameScene::GameScene()
 {
 	mass_spawn_timer_ = 0;
-	font_back_graph_ = Master::resource_manager_->LoadGraphics("Resource/2D/ゲーム画面/文字パネル背景.png");
+	font_back_graph_ = Master::resource_manager_->LoadGraphics("Resource/2D/InGame/TextBackground_c378.png");
 	shadow_map_handle_ = -1;
 	phase_font_handle_ = -1;
 }
@@ -69,9 +69,9 @@ void GameScene::Initialize()
 	StageLoader::LoadFromCSV("Resource/Data/stage_objects.csv");
 
 	thunder_ = new Thunder(VGet(0.0f, 0.0f, 0.0f));
-	tatumaki = new Tornado(VGet(3000.0f, 0.0f, 3000.0f));
+	tornado = new Tornado(VGet(3000.0f, 0.0f, 3000.0f));
 
-	auto Player = new Player3D("Resource/3D/キャラクター/プレイヤー/プレイヤーUFO.mv1", VGet(1000.0f, 2000.0f, 0.0f));
+	auto Player = new Player3D("Resource/3D/Character/Player/PlayerUFO.mv1", VGet(1000.0f, 2000.0f, 0.0f));
 	Player->SetScale(0.6f);
 
 	VECTOR spawnPos = VGet(0.0f, 0.0f, 0.0f); // スポーン中心位置
@@ -84,12 +84,12 @@ void GameScene::Initialize()
 
 	phase_ = kNormal;
 
-	auto skybox = new SkyBox("Resource/3D/ステージ/空/スカイボックス.mv1", VGet(0, 0, 0));
+	auto skybox = new SkyBox("Resource/3D/Stage/Sky/Skybox.mv1", VGet(0, 0, 0));
 	skybox->SetScale(30.0f);
-	skybox->SetModelTexture("Resource/3D/ステージ/空/空画像０００.jpg", 0);
+	skybox->SetModelTexture("Resource/3D/Stage/Sky/SkyImage000.jpg", 0);
 
 	new Floor(
-		"Resource/2D/ゲーム画面/ゲーム背景.png",
+		"Resource/2D/InGame/GameBackground.png",
 		VGet(0, 0, 0),
 		VGet(-11500, 0, -11500),
 		VGet(11500, 0, 11500)
@@ -108,7 +108,7 @@ void GameScene::Update()
 	cow_manager_->Update();
 	game_manager_->Update();
 	PhaseUpdate();
-	tatumaki->Update();
+	tornado->Update();
 
 	// プレイ時間が終了した場合、進行を停止するためリザルト画面に移行
 	if (ServiceLocator::GetGameManager()->GetGameTimer()->GetTime() <= 0)
@@ -253,12 +253,12 @@ void GameScene::PhaseUpdate()
 	auto p = ServiceLocator::GetPlayer();
 	Player3D* player = dynamic_cast<Player3D*>(p);
 
-	if (player != nullptr && tatumaki != nullptr)
+	if (player != nullptr && tornado != nullptr)
 	{
 		int currentPhase = (int)game_manager_->GetCurrentPhase();
-		Master::camera_->UpdateCameraByPhase(currentPhase, player->GetPosition(), tatumaki->GetPosition());
+		Master::camera_->UpdateCameraByPhase(currentPhase, player->GetPosition(), tornado->GetPosition());
 
-		tatumaki->SetCrisisMode(currentPhase == (int)GameManager::GamePhase::kTornadoCrisis);
+		tornado->SetCrisisMode(currentPhase == (int)GameManager::GamePhase::kTornadoCrisis);
 
 		// 牛を連続して降らせるイベントのため、一定間隔で上空から追加スポーンする
 		if (currentPhase == (int)GameManager::GamePhase::kMassSpawn)

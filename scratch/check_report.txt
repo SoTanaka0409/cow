@@ -1,0 +1,458 @@
+=== ENCODING ERRORS ===
+Source\Object\Object3D.cpp:1 : Could not decode as cp932
+Source\Object\Object3D.cpp:9 : Could not decode as cp932
+Source\Object\Object3D.cpp:10 : Could not decode as cp932
+Source\Object\Object3D.cpp:11 : Could not decode as cp932
+Source\Object\Object3D.cpp:21 : Could not decode as cp932
+Source\Object\Object3D.cpp:26 : Could not decode as cp932
+Source\Object\Object3D.cpp:37 : Could not decode as cp932
+Source\Object\Object3D.cpp:55 : Could not decode as cp932
+Source\Object\Object3D.cpp:56 : Could not decode as cp932
+Source\Object\Object3D.cpp:61 : Could not decode as cp932
+Source\Object\Object3D.cpp:63 : Could not decode as cp932
+Source\Object\Object3D.cpp:64 : Could not decode as cp932
+Source\Object\Object3D.cpp:69 : Could not decode as cp932
+Source\Object\Object3D.cpp:71 : Could not decode as cp932
+Source\Object\Object3D.cpp:72 : Could not decode as cp932
+Source\Object\Object3D.cpp:77 : Could not decode as cp932
+Source\Object\Object3D.cpp:79 : Could not decode as cp932
+Source\Object\Object3D.cpp:80 : Could not decode as cp932
+Source\Object\Object3D.h:1 : Could not decode as cp932
+Source\Object\Object3D.h:24 : Could not decode as cp932
+Source\Object\Object3D.h:30 : Could not decode as cp932
+Source\Object\Object3D.h:31 : Could not decode as cp932
+Source\Object\Object3D.h:32 : Could not decode as cp932
+Source\Object\Object3D.h:40 : Could not decode as cp932
+Source\Object\Object3D.h:41 : Could not decode as cp932
+Source\Object\Object3D.h:47 : Could not decode as cp932
+Source\Object\Object3D.h:48 : Could not decode as cp932
+Source\Object\Object3D.h:51 : Could not decode as cp932
+Source\Object\Object3D.h:52 : Could not decode as cp932
+Source\Object\Object3D.h:57 : Could not decode as cp932
+Source\Object\Object3D.h:59 : Could not decode as cp932
+Source\Object\Object3D.h:60 : Could not decode as cp932
+Source\Object\Object3D.h:63 : Could not decode as cp932
+Source\Object\Object3D.h:65 : Could not decode as cp932
+Source\Object\Object3D.h:66 : Could not decode as cp932
+Source\Object\Object3D.h:69 : Could not decode as cp932
+Source\Object\Object3D.h:71 : Could not decode as cp932
+Source\Object\Object3D.h:72 : Could not decode as cp932
+Source\Object\Object3D.h:95 : Could not decode as cp932
+Source\Object\Object3D.h:97 : Could not decode as cp932
+Source\Object\Object3D.h:98 : Could not decode as cp932
+Source\Object\Object3D.h:99 : Could not decode as cp932
+Source\Object\Object3D.h:102 : Could not decode as cp932
+Source\Object\Object3D.h:103 : Could not decode as cp932
+Source\Object\Object3D.h:104 : Could not decode as cp932
+Source\Object\Object3D.h:105 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:1 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:5 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:8 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:13 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:16 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:19 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:34 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:40 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:45 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:67 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:68 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:69 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:72 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:77 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:78 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:79 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:88 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:95 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:102 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:108 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:125 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:126 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:142 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:143 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:150 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:151 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:152 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:159 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:166 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:186 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:187 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:204 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:205 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:212 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:215 : Could not decode as cp932
+Source\Object\ObjectManager.cpp:223 : Could not decode as cp932
+Source\System\Master.h:1 : Could not decode as cp932
+Source\System\Master.h:16 : Could not decode as cp932
+Source\System\Master.h:20 : Could not decode as cp932
+Source\System\Master.h:21 : Could not decode as cp932
+Source\System\Master.h:22 : Could not decode as cp932
+Source\System\Master.h:23 : Could not decode as cp932
+Source\System\Master.h:24 : Could not decode as cp932
+Source\System\Master.h:25 : Could not decode as cp932
+Source\System\Master.h:26 : Could not decode as cp932
+Source\System\Master.h:27 : Could not decode as cp932
+Source\System\Master.h:28 : Could not decode as cp932
+Source\System\Master.h:30 : Could not decode as cp932
+Source\System\Master.h:31 : Could not decode as cp932
+Source\System\Master.h:32 : Could not decode as cp932
+Source\System\Master.h:33 : Could not decode as cp932
+Source\System\Master.h:34 : Could not decode as cp932
+Source\System\Master.h:35 : Could not decode as cp932
+Source\System\Master.h:36 : Could not decode as cp932
+Source\System\Master.h:37 : Could not decode as cp932
+Source\System\Master.h:41 : Could not decode as cp932
+Source\System\Rule.h:1 : Could not decode as cp932
+Source\System\Rule.h:4 : Could not decode as cp932
+Source\System\Rule.h:11 : Could not decode as cp932
+Source\System\Rule.h:14 : Could not decode as cp932
+Source\System\Rule.h:20 : Could not decode as cp932
+Source\System\Rule.h:37 : Could not decode as cp932
+Source\System\Rule.h:38 : Could not decode as cp932
+Source\System\Rule.h:39 : Could not decode as cp932
+Source\System\Rule.h:41 : Could not decode as cp932
+Source\System\Rule.h:43 : Could not decode as cp932
+Source\System\Rule.h:44 : Could not decode as cp932
+Source\System\Rule.h:46 : Could not decode as cp932
+Source\System\Rule.h:47 : Could not decode as cp932
+
+=== MOJIBAKE PATTERNS ===
+Source\Object\Object3D.cpp:9 : Possible mojibake '縺' -> /// @brief Object3D縺ｮ繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ縲ゅ�槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｸ縺ｮ逋ｻ骭ｲ縺ｨ繧ｳ繝ｩ繧､繝繝ｼ逕滓�舌ｒ陦後≧縲�
+Source\Object\Object3D.cpp:9 : Possible mojibake '繝' -> /// @brief Object3D縺ｮ繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ縲ゅ�槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｸ縺ｮ逋ｻ骭ｲ縺ｨ繧ｳ繝ｩ繧､繝繝ｼ逕滓�舌ｒ陦後≧縲�
+Source\Object\Object3D.cpp:9 : Possible mojibake '繧' -> /// @brief Object3D縺ｮ繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ縲ゅ�槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｸ縺ｮ逋ｻ骭ｲ縺ｨ繧ｳ繝ｩ繧､繝繝ｼ逕滓�舌ｒ陦後≧縲�
+Source\Object\Object3D.cpp:11 : Possible mojibake '縺' -> /// @details 繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｫ閾ｪ霄ｫ繧堤匳骭ｲ縲√さ繝ｩ繧､繝繝ｼ縺ｮ逕滓�舌→菫晄戟
+Source\Object\Object3D.cpp:11 : Possible mojibake '繝' -> /// @details 繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｫ閾ｪ霄ｫ繧堤匳骭ｲ縲√さ繝ｩ繧､繝繝ｼ縺ｮ逕滓�舌→菫晄戟
+Source\Object\Object3D.cpp:11 : Possible mojibake '繧' -> /// @details 繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｫ閾ｪ霄ｫ繧堤匳骭ｲ縲√さ繝ｩ繧､繝繝ｼ縺ｮ逕滓�舌→菫晄戟
+Source\Object\Object3D.cpp:21 : Possible mojibake '縺' -> // 謠冗判繧�譖ｴ譁ｰ繧定�ｪ蜍募喧縺吶ｋ縺溘ａ縲√い繧ｯ繝�繧｣繝悶↑繧ｷ繝ｼ繝ｳ縺ｮ繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｫ逋ｻ骭ｲ縺吶ｋ
+Source\Object\Object3D.cpp:21 : Possible mojibake '繝' -> // 謠冗判繧�譖ｴ譁ｰ繧定�ｪ蜍募喧縺吶ｋ縺溘ａ縲√い繧ｯ繝�繧｣繝悶↑繧ｷ繝ｼ繝ｳ縺ｮ繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｫ逋ｻ骭ｲ縺吶ｋ
+Source\Object\Object3D.cpp:21 : Possible mojibake '繧' -> // 謠冗判繧�譖ｴ譁ｰ繧定�ｪ蜍募喧縺吶ｋ縺溘ａ縲√い繧ｯ繝�繧｣繝悶↑繧ｷ繝ｼ繝ｳ縺ｮ繝槭ロ繝ｼ繧ｸ繝｣繝ｼ縺ｫ逋ｻ骭ｲ縺吶ｋ
+Source\Object\Object3D.cpp:26 : Possible mojibake '縺' -> /// @brief Object3D縺ｮ繝�繧ｹ繝医Λ繧ｯ繧ｿ縲ゆｿ晄戟縺励※縺�繧九さ繝ｩ繧､繝繝ｼ繧堤ｴ譽�縺吶ｋ縲�
+Source\Object\Object3D.cpp:26 : Possible mojibake '繝' -> /// @brief Object3D縺ｮ繝�繧ｹ繝医Λ繧ｯ繧ｿ縲ゆｿ晄戟縺励※縺�繧九さ繝ｩ繧､繝繝ｼ繧堤ｴ譽�縺吶ｋ縲�
+Source\Object\Object3D.cpp:26 : Possible mojibake '繧' -> /// @brief Object3D縺ｮ繝�繧ｹ繝医Λ繧ｯ繧ｿ縲ゆｿ晄戟縺励※縺�繧九さ繝ｩ繧､繝繝ｼ繧堤ｴ譽�縺吶ｋ縲�
+Source\Object\Object3D.cpp:27 : Possible mojibake '縺' -> /// @details 繧ｳ繝ｩ繧､繝繝ｼ縺ｮ繝｡繝｢繝ｪ隗｣謾ｾ
+Source\Object\Object3D.cpp:27 : Possible mojibake '繝' -> /// @details 繧ｳ繝ｩ繧､繝繝ｼ縺ｮ繝｡繝｢繝ｪ隗｣謾ｾ
+Source\Object\Object3D.cpp:27 : Possible mojibake '繧' -> /// @details 繧ｳ繝ｩ繧､繝繝ｼ縺ｮ繝｡繝｢繝ｪ隗｣謾ｾ
+Source\Object\Object3D.cpp:37 : Possible mojibake '縺' -> /// @brief 謠冗判蜃ｦ逅�縲よｴｾ逕溘け繝ｩ繧ｹ縺ｧ繧ｪ繝ｼ繝舌�ｼ繝ｩ繧､繝峨☆繧九�
+Source\Object\Object3D.cpp:37 : Possible mojibake '繝' -> /// @brief 謠冗判蜃ｦ逅�縲よｴｾ逕溘け繝ｩ繧ｹ縺ｧ繧ｪ繝ｼ繝舌�ｼ繝ｩ繧､繝峨☆繧九�
+Source\Object\Object3D.cpp:37 : Possible mojibake '繧' -> /// @brief 謠冗判蜃ｦ逅�縲よｴｾ逕溘け繝ｩ繧ｹ縺ｧ繧ｪ繝ｼ繝舌�ｼ繝ｩ繧､繝峨☆繧九�
+Source\Object\Object3D.cpp:38 : Possible mojibake '縺' -> /// @details 逕ｻ髱｢縺ｸ縺ｮ謠冗判
+Source\Object\Object3D.cpp:55 : Possible mojibake '縺' -> /// @brief 陦晉ｪ∝愛螳壹�ｮ髢句ｧ九う繝吶Φ繝医ｒ蜃ｦ逅�縺励√ム繝｡繝ｼ繧ｸ繧�蜉ｹ譫憺浹縺ｮ繝医Μ繧ｬ繝ｼ縺ｨ縺吶ｋ縺溘ａ縲�
+Source\Object\Object3D.cpp:55 : Possible mojibake '繝' -> /// @brief 陦晉ｪ∝愛螳壹�ｮ髢句ｧ九う繝吶Φ繝医ｒ蜃ｦ逅�縺励√ム繝｡繝ｼ繧ｸ繧�蜉ｹ譫憺浹縺ｮ繝医Μ繧ｬ繝ｼ縺ｨ縺吶ｋ縺溘ａ縲�
+Source\Object\Object3D.cpp:55 : Possible mojibake '繧' -> /// @brief 陦晉ｪ∝愛螳壹�ｮ髢句ｧ九う繝吶Φ繝医ｒ蜃ｦ逅�縺励√ム繝｡繝ｼ繧ｸ繧�蜉ｹ譫憺浹縺ｮ繝医Μ繧ｬ繝ｼ縺ｨ縺吶ｋ縺溘ａ縲�
+Source\Object\Object3D.cpp:56 : Possible mojibake '繝' -> /// @details 繧ｪ繝悶ず繧ｧ繧ｯ繝育憾諷九�ｮ螟画峩
+Source\Object\Object3D.cpp:56 : Possible mojibake '繧' -> /// @details 繧ｪ繝悶ず繧ｧ繧ｯ繝育憾諷九�ｮ螟画峩
+Source\Object\Object3D.cpp:61 : Possible mojibake '縺' -> /// @brief 陦晉ｪ�髢句ｧ区凾縺ｮ蜃ｦ逅�縲�
+Source\Object\Object3D.cpp:62 : Possible mojibake '縺' -> /// @param collider 閾ｪ霄ｫ縺ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.cpp:62 : Possible mojibake '繝' -> /// @param collider 閾ｪ霄ｫ縺ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.cpp:62 : Possible mojibake '繧' -> /// @param collider 閾ｪ霄ｫ縺ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.cpp:63 : Possible mojibake '繝' -> /// @param check 逶ｸ謇九�ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.cpp:63 : Possible mojibake '繧' -> /// @param check 逶ｸ謇九�ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.cpp:64 : Possible mojibake '縺' -> /// @details 豢ｾ逕溷�医�ｮ螳溯｣�縺ｫ萓晏ｭ�
+Source\Object\Object3D.cpp:69 : Possible mojibake '縺' -> /// @brief 陦晉ｪ∽ｸｭ縺ｮ蜃ｦ逅�縲�
+Source\Object\Object3D.cpp:70 : Possible mojibake '縺' -> /// @param collider 閾ｪ霄ｫ縺ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.cpp:70 : Possible mojibake '繝' -> /// @param collider 閾ｪ霄ｫ縺ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.cpp:70 : Possible mojibake '繧' -> /// @param collider 閾ｪ霄ｫ縺ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.cpp:71 : Possible mojibake '繝' -> /// @param check 逶ｸ謇九�ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.cpp:71 : Possible mojibake '繧' -> /// @param check 逶ｸ謇九�ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.cpp:72 : Possible mojibake '縺' -> /// @details 豢ｾ逕溷�医�ｮ螳溯｣�縺ｫ萓晏ｭ�
+Source\Object\Object3D.cpp:78 : Possible mojibake '縺' -> /// @param collider 閾ｪ霄ｫ縺ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.cpp:78 : Possible mojibake '繝' -> /// @param collider 閾ｪ霄ｫ縺ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.cpp:78 : Possible mojibake '繧' -> /// @param collider 閾ｪ霄ｫ縺ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.cpp:79 : Possible mojibake '繝' -> /// @param check 逶ｸ謇九�ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.cpp:79 : Possible mojibake '繧' -> /// @param check 逶ｸ謇九�ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.cpp:80 : Possible mojibake '縺' -> /// @details 豢ｾ逕溷�医�ｮ螳溯｣�縺ｫ萓晏ｭ�
+Source\Object\Object3D.h:24 : Possible mojibake '縺' -> /// @brief 蜊企乗�取緒逕ｻ縺ｪ縺ｩ縺ｮZ繧ｽ繝ｼ繝医↓蛻ｩ逕ｨ縺吶ｋ縺溘ａ
+Source\Object\Object3D.h:24 : Possible mojibake '繝' -> /// @brief 蜊企乗�取緒逕ｻ縺ｪ縺ｩ縺ｮZ繧ｽ繝ｼ繝医↓蛻ｩ逕ｨ縺吶ｋ縺溘ａ
+Source\Object\Object3D.h:24 : Possible mojibake '繧' -> /// @brief 蜊企乗�取緒逕ｻ縺ｪ縺ｩ縺ｮZ繧ｽ繝ｼ繝医↓蛻ｩ逕ｨ縺吶ｋ縺溘ａ
+Source\Object\Object3D.h:25 : Possible mojibake '縺' -> /// @param distance 繧ｫ繝｡繝ｩ縺九ｉ縺ｮ霍晞屬
+Source\Object\Object3D.h:25 : Possible mojibake '繝' -> /// @param distance 繧ｫ繝｡繝ｩ縺九ｉ縺ｮ霍晞屬
+Source\Object\Object3D.h:25 : Possible mojibake '繧' -> /// @param distance 繧ｫ繝｡繝ｩ縺九ｉ縺ｮ霍晞屬
+Source\Object\Object3D.h:26 : Possible mojibake '縺' -> /// @details current_camera_distance_繧呈峩譁ｰ縺吶ｋ
+Source\Object\Object3D.h:26 : Possible mojibake '繧' -> /// @details current_camera_distance_繧呈峩譁ｰ縺吶ｋ
+Source\Object\Object3D.h:30 : Possible mojibake '縺' -> /// @brief 蜊企乗�弱が繝悶ず繧ｧ繧ｯ繝医�ｮ遐ｴ邯ｻ繧帝亟縺舌◆繧√∝･･縺九ｉ謇句燕縺ｫ謠冗判縺吶ｋ逕ｨ騾斐〒菴ｿ逕ｨ縺吶ｋ
+Source\Object\Object3D.h:30 : Possible mojibake '繝' -> /// @brief 蜊企乗�弱が繝悶ず繧ｧ繧ｯ繝医�ｮ遐ｴ邯ｻ繧帝亟縺舌◆繧√∝･･縺九ｉ謇句燕縺ｫ謠冗判縺吶ｋ逕ｨ騾斐〒菴ｿ逕ｨ縺吶ｋ
+Source\Object\Object3D.h:30 : Possible mojibake '繧' -> /// @brief 蜊企乗�弱が繝悶ず繧ｧ繧ｯ繝医�ｮ遐ｴ邯ｻ繧帝亟縺舌◆繧√∝･･縺九ｉ謇句燕縺ｫ謠冗判縺吶ｋ逕ｨ騾斐〒菴ｿ逕ｨ縺吶ｋ
+Source\Object\Object3D.h:31 : Possible mojibake '縺' -> /// @param b 豈碑ｼ�縺吶ｋ2縺､縺ｮ繧ｪ繝悶ず繧ｧ繧ｯ繝�
+Source\Object\Object3D.h:31 : Possible mojibake '繝' -> /// @param b 豈碑ｼ�縺吶ｋ2縺､縺ｮ繧ｪ繝悶ず繧ｧ繧ｯ繝�
+Source\Object\Object3D.h:31 : Possible mojibake '繧' -> /// @param b 豈碑ｼ�縺吶ｋ2縺､縺ｮ繧ｪ繝悶ず繧ｧ繧ｯ繝�
+Source\Object\Object3D.h:32 : Possible mojibake '縺' -> /// @return a縺恵繧医ｊ繧ｫ繝｡繝ｩ縺九ｉ驕縺�蝣ｴ蜷医�ｯtrue
+Source\Object\Object3D.h:32 : Possible mojibake '繝' -> /// @return a縺恵繧医ｊ繧ｫ繝｡繝ｩ縺九ｉ驕縺�蝣ｴ蜷医�ｯtrue
+Source\Object\Object3D.h:32 : Possible mojibake '繧' -> /// @return a縺恵繧医ｊ繧ｫ繝｡繝ｩ縺九ｉ驕縺�蝣ｴ蜷医�ｯtrue
+Source\Object\Object3D.h:40 : Possible mojibake '縺' -> /// @brief 逕滓�舌→蜷梧凾縺ｫ繧ｷ繝ｼ繝ｳ縺ｸ縺ｮ閾ｪ蜍慕匳骭ｲ繧定｡後＞縲∫ｮ｡逅�貍上ｌ繧帝亟縺�
+Source\Object\Object3D.h:40 : Possible mojibake '繝' -> /// @brief 逕滓�舌→蜷梧凾縺ｫ繧ｷ繝ｼ繝ｳ縺ｸ縺ｮ閾ｪ蜍慕匳骭ｲ繧定｡後＞縲∫ｮ｡逅�貍上ｌ繧帝亟縺�
+Source\Object\Object3D.h:40 : Possible mojibake '繧' -> /// @brief 逕滓�舌→蜷梧凾縺ｫ繧ｷ繝ｼ繝ｳ縺ｸ縺ｮ閾ｪ蜍慕匳骭ｲ繧定｡後＞縲∫ｮ｡逅�貍上ｌ繧帝亟縺�
+Source\Object\Object3D.h:42 : Possible mojibake '縺' -> /// @details 繧ｷ繝ｼ繝ｳ縺ｮObjectManager縺ｫ閾ｪ霄ｫ縺檎匳骭ｲ縺輔ｌ縲√き繝励そ繝ｫ繧ｳ繝ｩ繧､繝繝ｼ縺檎函謌舌＆繧後ｋ
+Source\Object\Object3D.h:42 : Possible mojibake '繝' -> /// @details 繧ｷ繝ｼ繝ｳ縺ｮObjectManager縺ｫ閾ｪ霄ｫ縺檎匳骭ｲ縺輔ｌ縲√き繝励そ繝ｫ繧ｳ繝ｩ繧､繝繝ｼ縺檎函謌舌＆繧後ｋ
+Source\Object\Object3D.h:42 : Possible mojibake '繧' -> /// @details 繧ｷ繝ｼ繝ｳ縺ｮObjectManager縺ｫ閾ｪ霄ｫ縺檎匳骭ｲ縺輔ｌ縲√き繝励そ繝ｫ繧ｳ繝ｩ繧､繝繝ｼ縺檎函謌舌＆繧後ｋ
+Source\Object\Object3D.h:47 : Possible mojibake '縺' -> /// @brief 繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ豈弱ヵ繝ｬ繝ｼ繝縺ｮ謖ｯ繧玖�槭＞繧貞ｮ溯｡後☆繧九◆繧�
+Source\Object\Object3D.h:47 : Possible mojibake '繝' -> /// @brief 繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ豈弱ヵ繝ｬ繝ｼ繝縺ｮ謖ｯ繧玖�槭＞繧貞ｮ溯｡後☆繧九◆繧�
+Source\Object\Object3D.h:47 : Possible mojibake '繧' -> /// @brief 繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ豈弱ヵ繝ｬ繝ｼ繝縺ｮ謖ｯ繧玖�槭＞繧貞ｮ溯｡後☆繧九◆繧�
+Source\Object\Object3D.h:48 : Possible mojibake '縺' -> /// @details 繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ蠎ｧ讓吶ｄ迥ｶ諷九′譖ｴ譁ｰ縺輔ｌ繧�
+Source\Object\Object3D.h:48 : Possible mojibake '繝' -> /// @details 繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ蠎ｧ讓吶ｄ迥ｶ諷九′譖ｴ譁ｰ縺輔ｌ繧�
+Source\Object\Object3D.h:48 : Possible mojibake '繧' -> /// @details 繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ蠎ｧ讓吶ｄ迥ｶ諷九′譖ｴ譁ｰ縺輔ｌ繧�
+Source\Object\Object3D.h:51 : Possible mojibake '縺' -> /// @brief 繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ迴ｾ蝨ｨ縺ｮ迥ｶ諷九ｒ逕ｻ髱｢縺ｫ蜿肴丐縺吶ｋ縺溘ａ
+Source\Object\Object3D.h:51 : Possible mojibake '繝' -> /// @brief 繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ迴ｾ蝨ｨ縺ｮ迥ｶ諷九ｒ逕ｻ髱｢縺ｫ蜿肴丐縺吶ｋ縺溘ａ
+Source\Object\Object3D.h:51 : Possible mojibake '繧' -> /// @brief 繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ迴ｾ蝨ｨ縺ｮ迥ｶ諷九ｒ逕ｻ髱｢縺ｫ蜿肴丐縺吶ｋ縺溘ａ
+Source\Object\Object3D.h:52 : Possible mojibake '縺' -> /// @details 逕ｻ髱｢縺ｫ繝｢繝�繝ｫ繧�逕ｻ蜒上′謠冗判縺輔ｌ繧�
+Source\Object\Object3D.h:52 : Possible mojibake '繝' -> /// @details 逕ｻ髱｢縺ｫ繝｢繝�繝ｫ繧�逕ｻ蜒上′謠冗判縺輔ｌ繧�
+Source\Object\Object3D.h:52 : Possible mojibake '繧' -> /// @details 逕ｻ髱｢縺ｫ繝｢繝�繝ｫ繧�逕ｻ蜒上′謠冗判縺輔ｌ繧�
+Source\Object\Object3D.h:57 : Possible mojibake '縺' -> /// @brief 陦晉ｪ∝愛螳壹�ｮ髢句ｧ九う繝吶Φ繝医ｒ蜃ｦ逅�縺励√ム繝｡繝ｼ繧ｸ繧�蜉ｹ譫憺浹縺ｮ繝医Μ繧ｬ繝ｼ縺ｨ縺吶ｋ縺溘ａ
+Source\Object\Object3D.h:57 : Possible mojibake '繝' -> /// @brief 陦晉ｪ∝愛螳壹�ｮ髢句ｧ九う繝吶Φ繝医ｒ蜃ｦ逅�縺励√ム繝｡繝ｼ繧ｸ繧�蜉ｹ譫憺浹縺ｮ繝医Μ繧ｬ繝ｼ縺ｨ縺吶ｋ縺溘ａ
+Source\Object\Object3D.h:57 : Possible mojibake '繧' -> /// @brief 陦晉ｪ∝愛螳壹�ｮ髢句ｧ九う繝吶Φ繝医ｒ蜃ｦ逅�縺励√ム繝｡繝ｼ繧ｸ繧�蜉ｹ譫憺浹縺ｮ繝医Μ繧ｬ繝ｼ縺ｨ縺吶ｋ縺溘ａ
+Source\Object\Object3D.h:58 : Possible mojibake '縺' -> /// @param collider 閾ｪ霄ｫ縺ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.h:58 : Possible mojibake '繝' -> /// @param collider 閾ｪ霄ｫ縺ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.h:58 : Possible mojibake '繧' -> /// @param collider 閾ｪ霄ｫ縺ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.h:59 : Possible mojibake '繝' -> /// @param check 逶ｸ謇九�ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.h:59 : Possible mojibake '繧' -> /// @param check 逶ｸ謇九�ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.h:60 : Possible mojibake '縺' -> /// @details 豢ｾ逕溘け繝ｩ繧ｹ縺ｧ縺ｮ螳溯｣�縺ｫ萓晏ｭ倥＠縺ｦ迥ｶ諷九′螟画峩縺輔ｌ繧�
+Source\Object\Object3D.h:60 : Possible mojibake '繝' -> /// @details 豢ｾ逕溘け繝ｩ繧ｹ縺ｧ縺ｮ螳溯｣�縺ｫ萓晏ｭ倥＠縺ｦ迥ｶ諷九′螟画峩縺輔ｌ繧�
+Source\Object\Object3D.h:60 : Possible mojibake '繧' -> /// @details 豢ｾ逕溘け繝ｩ繧ｹ縺ｧ縺ｮ螳溯｣�縺ｫ萓晏ｭ倥＠縺ｦ迥ｶ諷九′螟画峩縺輔ｌ繧�
+Source\Object\Object3D.h:63 : Possible mojibake '縺' -> /// @brief 邯咏ｶ夂噪縺ｪ謗･隗ｦ迥ｶ諷具ｼ域款縺怜�ｺ縺励ｄ邯咏ｶ壹ム繝｡繝ｼ繧ｸ縺ｪ縺ｩ�ｼ峨ｒ蜃ｦ逅�縺吶ｋ縺溘ａ
+Source\Object\Object3D.h:63 : Possible mojibake '繝' -> /// @brief 邯咏ｶ夂噪縺ｪ謗･隗ｦ迥ｶ諷具ｼ域款縺怜�ｺ縺励ｄ邯咏ｶ壹ム繝｡繝ｼ繧ｸ縺ｪ縺ｩ�ｼ峨ｒ蜃ｦ逅�縺吶ｋ縺溘ａ
+Source\Object\Object3D.h:63 : Possible mojibake '繧' -> /// @brief 邯咏ｶ夂噪縺ｪ謗･隗ｦ迥ｶ諷具ｼ域款縺怜�ｺ縺励ｄ邯咏ｶ壹ム繝｡繝ｼ繧ｸ縺ｪ縺ｩ�ｼ峨ｒ蜃ｦ逅�縺吶ｋ縺溘ａ
+Source\Object\Object3D.h:64 : Possible mojibake '縺' -> /// @param collider 閾ｪ霄ｫ縺ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.h:64 : Possible mojibake '繝' -> /// @param collider 閾ｪ霄ｫ縺ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.h:64 : Possible mojibake '繧' -> /// @param collider 閾ｪ霄ｫ縺ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.h:65 : Possible mojibake '繝' -> /// @param check 逶ｸ謇九�ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.h:65 : Possible mojibake '繧' -> /// @param check 逶ｸ謇九�ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.h:66 : Possible mojibake '縺' -> /// @details 豢ｾ逕溘け繝ｩ繧ｹ縺ｧ縺ｮ螳溯｣�縺ｫ萓晏ｭ倥＠縺ｦ迥ｶ諷九′螟画峩縺輔ｌ繧�
+Source\Object\Object3D.h:66 : Possible mojibake '繝' -> /// @details 豢ｾ逕溘け繝ｩ繧ｹ縺ｧ縺ｮ螳溯｣�縺ｫ萓晏ｭ倥＠縺ｦ迥ｶ諷九′螟画峩縺輔ｌ繧�
+Source\Object\Object3D.h:66 : Possible mojibake '繧' -> /// @details 豢ｾ逕溘け繝ｩ繧ｹ縺ｧ縺ｮ螳溯｣�縺ｫ萓晏ｭ倥＠縺ｦ迥ｶ諷九′螟画峩縺輔ｌ繧�
+Source\Object\Object3D.h:69 : Possible mojibake '縺' -> /// @brief 陦晉ｪ∫ｵゆｺ�繧､繝吶Φ繝医ｒ蜃ｦ逅�縺励∵磁隗ｦ迥ｶ諷九�ｮ繝ｪ繧ｻ繝�繝医↑縺ｩ繧定｡後≧縺溘ａ
+Source\Object\Object3D.h:69 : Possible mojibake '繝' -> /// @brief 陦晉ｪ∫ｵゆｺ�繧､繝吶Φ繝医ｒ蜃ｦ逅�縺励∵磁隗ｦ迥ｶ諷九�ｮ繝ｪ繧ｻ繝�繝医↑縺ｩ繧定｡後≧縺溘ａ
+Source\Object\Object3D.h:69 : Possible mojibake '繧' -> /// @brief 陦晉ｪ∫ｵゆｺ�繧､繝吶Φ繝医ｒ蜃ｦ逅�縺励∵磁隗ｦ迥ｶ諷九�ｮ繝ｪ繧ｻ繝�繝医↑縺ｩ繧定｡後≧縺溘ａ
+Source\Object\Object3D.h:70 : Possible mojibake '縺' -> /// @param collider 閾ｪ霄ｫ縺ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.h:70 : Possible mojibake '繝' -> /// @param collider 閾ｪ霄ｫ縺ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.h:70 : Possible mojibake '繧' -> /// @param collider 閾ｪ霄ｫ縺ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.h:71 : Possible mojibake '繝' -> /// @param check 逶ｸ謇九�ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.h:71 : Possible mojibake '繧' -> /// @param check 逶ｸ謇九�ｮ繧ｳ繝ｩ繧､繝繝ｼ
+Source\Object\Object3D.h:72 : Possible mojibake '縺' -> /// @details 豢ｾ逕溘け繝ｩ繧ｹ縺ｧ縺ｮ螳溯｣�縺ｫ萓晏ｭ倥＠縺ｦ迥ｶ諷九′螟画峩縺輔ｌ繧�
+Source\Object\Object3D.h:72 : Possible mojibake '繝' -> /// @details 豢ｾ逕溘け繝ｩ繧ｹ縺ｧ縺ｮ螳溯｣�縺ｫ萓晏ｭ倥＠縺ｦ迥ｶ諷九′螟画峩縺輔ｌ繧�
+Source\Object\Object3D.h:72 : Possible mojibake '繧' -> /// @details 豢ｾ逕溘け繝ｩ繧ｹ縺ｧ縺ｮ螳溯｣�縺ｫ萓晏ｭ倥＠縺ｦ迥ｶ諷九′螟画峩縺輔ｌ繧�
+Source\Object\Object3D.h:95 : Possible mojibake '縺' -> VECTOR position_;                   ///< 蠎ｧ讓吶ｄ菴咲ｽｮ諠�蝣ｱ繧堤ｮ｡逅�縺吶ｋ蛟､
+Source\Object\Object3D.h:95 : Possible mojibake '繧' -> VECTOR position_;                   ///< 蠎ｧ讓吶ｄ菴咲ｽｮ諠�蝣ｱ繧堤ｮ｡逅�縺吶ｋ蛟､
+Source\Object\Object3D.h:96 : Possible mojibake '縺' -> VECTOR rotation_;                   ///< 遘ｻ蜍輔ｄ蝗櫁ｻ｢縺ｮ險育ｮ励↓菴ｿ逕ｨ縺吶ｋ蛟､
+Source\Object\Object3D.h:97 : Possible mojibake '縺' -> VECTOR old_position_;               ///< 蠎ｧ讓吶ｄ菴咲ｽｮ諠�蝣ｱ繧堤ｮ｡逅�縺吶ｋ蛟､
+Source\Object\Object3D.h:97 : Possible mojibake '繧' -> VECTOR old_position_;               ///< 蠎ｧ讓吶ｄ菴咲ｽｮ諠�蝣ｱ繧堤ｮ｡逅�縺吶ｋ蛟､
+Source\Object\Object3D.h:98 : Possible mojibake '縺' -> CapsuleCollider* capsule_collider_; ///< 蠖薙◆繧雁愛螳壹�ｮ邂｡逅�縺ｫ菴ｿ逕ｨ縺吶ｋ諠�蝣ｱ
+Source\Object\Object3D.h:98 : Possible mojibake '繧' -> CapsuleCollider* capsule_collider_; ///< 蠖薙◆繧雁愛螳壹�ｮ邂｡逅�縺ｫ菴ｿ逕ｨ縺吶ｋ諠�蝣ｱ
+Source\Object\Object3D.h:99 : Possible mojibake '縺' -> float radius_;                      ///< 繧ｵ繧､繧ｺ繧�遽�蝗ｲ縺ｮ險育ｮ励↓菴ｿ逕ｨ縺吶ｋ蛟､
+Source\Object\Object3D.h:99 : Possible mojibake '繧' -> float radius_;                      ///< 繧ｵ繧､繧ｺ繧�遽�蝗ｲ縺ｮ險育ｮ励↓菴ｿ逕ｨ縺吶ｋ蛟､
+Source\Object\Object3D.h:102 : Possible mojibake '縺' -> bool delete_flag_;              ///< 迥ｶ諷九�ｮ譛牙柑繝ｻ辟｡蜉ｹ繧堤ｮ｡逅�縺吶ｋ繝輔Λ繧ｰ
+Source\Object\Object3D.h:102 : Possible mojibake '繝' -> bool delete_flag_;              ///< 迥ｶ諷九�ｮ譛牙柑繝ｻ辟｡蜉ｹ繧堤ｮ｡逅�縺吶ｋ繝輔Λ繧ｰ
+Source\Object\Object3D.h:102 : Possible mojibake '繧' -> bool delete_flag_;              ///< 迥ｶ諷九�ｮ譛牙柑繝ｻ辟｡蜉ｹ繧堤ｮ｡逅�縺吶ｋ繝輔Λ繧ｰ
+Source\Object\Object3D.h:103 : Possible mojibake '縺' -> Tag3D tag_;                     ///< 迴ｾ蝨ｨ縺ｮ迥ｶ諷九ｄ遞ｮ蛻･繧堤ｮ｡逅�縺吶ｋ蛟､
+Source\Object\Object3D.h:103 : Possible mojibake '繧' -> Tag3D tag_;                     ///< 迴ｾ蝨ｨ縺ｮ迥ｶ諷九ｄ遞ｮ蛻･繧堤ｮ｡逅�縺吶ｋ蛟､
+Source\Object\Object3D.h:104 : Possible mojibake '縺' -> bool draw_flag_;                ///< 迥ｶ諷九�ｮ譛牙柑繝ｻ辟｡蜉ｹ繧堤ｮ｡逅�縺吶ｋ繝輔Λ繧ｰ
+Source\Object\Object3D.h:104 : Possible mojibake '繝' -> bool draw_flag_;                ///< 迥ｶ諷九�ｮ譛牙柑繝ｻ辟｡蜉ｹ繧堤ｮ｡逅�縺吶ｋ繝輔Λ繧ｰ
+Source\Object\Object3D.h:104 : Possible mojibake '繧' -> bool draw_flag_;                ///< 迥ｶ諷九�ｮ譛牙柑繝ｻ辟｡蜉ｹ繧堤ｮ｡逅�縺吶ｋ繝輔Λ繧ｰ
+Source\Object\Object3D.h:105 : Possible mojibake '縺' -> float current_camera_distance_; ///< 蜀�驛ｨ迥ｶ諷九ｒ邂｡逅�縺吶ｋ蛟､
+Source\Object\ObjectManager.cpp:5 : Possible mojibake '繝' -> /// @brief 蜷�遞ｮ繧ｪ繝悶ず繧ｧ繧ｯ繝医Μ繧ｹ繝医�ｮ繝｡繝｢繝ｪ莠句燕遒ｺ菫�
+Source\Object\ObjectManager.cpp:5 : Possible mojibake '繧' -> /// @brief 蜷�遞ｮ繧ｪ繝悶ず繧ｧ繧ｯ繝医Μ繧ｹ繝医�ｮ繝｡繝｢繝ｪ莠句燕遒ｺ菫�
+Source\Object\ObjectManager.cpp:8 : Possible mojibake '縺' -> // 繧ｲ繝ｼ繝騾ｲ陦御ｸｭ縺ｮ蜍慕噪繝｡繝｢繝ｪ遒ｺ菫昴↓莨ｴ縺�繧ｹ繝代う繧ｯ�ｼ亥�ｦ逅�關ｽ縺｡�ｼ峨ｒ髦ｲ縺舌◆繧√∵Φ螳壹＆繧後ｋ譛螟ｧ謨ｰ繧剃ｺ句燕遒ｺ菫昴☆繧�
+Source\Object\ObjectManager.cpp:8 : Possible mojibake '繝' -> // 繧ｲ繝ｼ繝騾ｲ陦御ｸｭ縺ｮ蜍慕噪繝｡繝｢繝ｪ遒ｺ菫昴↓莨ｴ縺�繧ｹ繝代う繧ｯ�ｼ亥�ｦ逅�關ｽ縺｡�ｼ峨ｒ髦ｲ縺舌◆繧√∵Φ螳壹＆繧後ｋ譛螟ｧ謨ｰ繧剃ｺ句燕遒ｺ菫昴☆繧�
+Source\Object\ObjectManager.cpp:8 : Possible mojibake '繧' -> // 繧ｲ繝ｼ繝騾ｲ陦御ｸｭ縺ｮ蜍慕噪繝｡繝｢繝ｪ遒ｺ菫昴↓莨ｴ縺�繧ｹ繝代う繧ｯ�ｼ亥�ｦ逅�關ｽ縺｡�ｼ峨ｒ髦ｲ縺舌◆繧√∵Φ螳壹＆繧後ｋ譛螟ｧ謨ｰ繧剃ｺ句燕遒ｺ菫昴☆繧�
+Source\Object\ObjectManager.cpp:13 : Possible mojibake '縺' -> /// @brief unique_ptr縺ｫ繧医ｋ繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ閾ｪ蜍慕ｴ譽�
+Source\Object\ObjectManager.cpp:13 : Possible mojibake '繝' -> /// @brief unique_ptr縺ｫ繧医ｋ繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ閾ｪ蜍慕ｴ譽�
+Source\Object\ObjectManager.cpp:13 : Possible mojibake '繧' -> /// @brief unique_ptr縺ｫ繧医ｋ繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ閾ｪ蜍慕ｴ譽�
+Source\Object\ObjectManager.cpp:16 : Possible mojibake '縺' -> // 謇句虚delete縺ｫ繧医ｋ繝｡繝｢繝ｪ繝ｪ繝ｼ繧ｯ繧�莠碁㍾隗｣謾ｾ繝舌げ繧帝亟縺舌◆繧√∬ｧ｣謾ｾ蜃ｦ逅�縺ｯ繧ｹ繝槭�ｼ繝医�昴う繝ｳ繧ｿ(unique_ptr)縺ｫ蟋碑ｭｲ縺吶ｋ
+Source\Object\ObjectManager.cpp:16 : Possible mojibake '繝' -> // 謇句虚delete縺ｫ繧医ｋ繝｡繝｢繝ｪ繝ｪ繝ｼ繧ｯ繧�莠碁㍾隗｣謾ｾ繝舌げ繧帝亟縺舌◆繧√∬ｧ｣謾ｾ蜃ｦ逅�縺ｯ繧ｹ繝槭�ｼ繝医�昴う繝ｳ繧ｿ(unique_ptr)縺ｫ蟋碑ｭｲ縺吶ｋ
+Source\Object\ObjectManager.cpp:16 : Possible mojibake '繧' -> // 謇句虚delete縺ｫ繧医ｋ繝｡繝｢繝ｪ繝ｪ繝ｼ繧ｯ繧�莠碁㍾隗｣謾ｾ繝舌げ繧帝亟縺舌◆繧√∬ｧ｣謾ｾ蜃ｦ逅�縺ｯ繧ｹ繝槭�ｼ繝医�昴う繝ｳ繧ｿ(unique_ptr)縺ｫ蟋碑ｭｲ縺吶ｋ
+Source\Object\ObjectManager.cpp:19 : Possible mojibake '縺' -> /// @brief 蜈ｨ繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ譖ｴ譁ｰ縲√き繝｡繝ｩ霍晞屬縺ｮ險育ｮ励√♀繧医�ｳ荳崎ｦ√が繝悶ず繧ｧ繧ｯ繝医�ｮ蜑企勁
+Source\Object\ObjectManager.cpp:19 : Possible mojibake '繝' -> /// @brief 蜈ｨ繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ譖ｴ譁ｰ縲√き繝｡繝ｩ霍晞屬縺ｮ險育ｮ励√♀繧医�ｳ荳崎ｦ√が繝悶ず繧ｧ繧ｯ繝医�ｮ蜑企勁
+Source\Object\ObjectManager.cpp:19 : Possible mojibake '繧' -> /// @brief 蜈ｨ繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ譖ｴ譁ｰ縲√き繝｡繝ｩ霍晞屬縺ｮ險育ｮ励√♀繧医�ｳ荳崎ｦ√が繝悶ず繧ｧ繧ｯ繝医�ｮ蜑企勁
+Source\Object\ObjectManager.cpp:34 : Possible mojibake '縺' -> // 蜊企乗�弱が繝悶ず繧ｧ繧ｯ繝医�ｮZ繧ｽ繝ｼ繝域緒逕ｻ繧�縲∬ｷ晞屬繝吶�ｼ繧ｹ縺ｮLOD(雋闕ｷ霆ｽ貂�)繧貞ｾ檎ｶ壼�ｦ逅�縺ｧ陦後≧縺溘ａ繧ｫ繝｡繝ｩ霍晞屬繧剃ｺ句燕險育ｮ励☆繧�
+Source\Object\ObjectManager.cpp:34 : Possible mojibake '繝' -> // 蜊企乗�弱が繝悶ず繧ｧ繧ｯ繝医�ｮZ繧ｽ繝ｼ繝域緒逕ｻ繧�縲∬ｷ晞屬繝吶�ｼ繧ｹ縺ｮLOD(雋闕ｷ霆ｽ貂�)繧貞ｾ檎ｶ壼�ｦ逅�縺ｧ陦後≧縺溘ａ繧ｫ繝｡繝ｩ霍晞屬繧剃ｺ句燕險育ｮ励☆繧�
+Source\Object\ObjectManager.cpp:34 : Possible mojibake '繧' -> // 蜊企乗�弱が繝悶ず繧ｧ繧ｯ繝医�ｮZ繧ｽ繝ｼ繝域緒逕ｻ繧�縲∬ｷ晞屬繝吶�ｼ繧ｹ縺ｮLOD(雋闕ｷ霆ｽ貂�)繧貞ｾ檎ｶ壼�ｦ逅�縺ｧ陦後≧縺溘ａ繧ｫ繝｡繝ｩ霍晞屬繧剃ｺ句燕險育ｮ励☆繧�
+Source\Object\ObjectManager.cpp:40 : Possible mojibake '縺' -> // 繝ｫ繝ｼ繝怜�ｦ逅�荳ｭ縺ｫ隕∫ｴ繧堤峩謗･蜑企勁縺励※繧､繝�繝ｬ繝ｼ繧ｿ縺檎┌蜉ｹ蛹悶＆繧後け繝ｩ繝�繧ｷ繝･縺吶ｋ縺ｮ繧帝亟縺舌◆繧√√ヵ繝ｬ繝ｼ繝譛ｫ蟆ｾ縺ｧ驕�蟒ｶ蜃ｦ逅�縺吶ｋ
+Source\Object\ObjectManager.cpp:40 : Possible mojibake '繝' -> // 繝ｫ繝ｼ繝怜�ｦ逅�荳ｭ縺ｫ隕∫ｴ繧堤峩謗･蜑企勁縺励※繧､繝�繝ｬ繝ｼ繧ｿ縺檎┌蜉ｹ蛹悶＆繧後け繝ｩ繝�繧ｷ繝･縺吶ｋ縺ｮ繧帝亟縺舌◆繧√√ヵ繝ｬ繝ｼ繝譛ｫ蟆ｾ縺ｧ驕�蟒ｶ蜃ｦ逅�縺吶ｋ
+Source\Object\ObjectManager.cpp:40 : Possible mojibake '繧' -> // 繝ｫ繝ｼ繝怜�ｦ逅�荳ｭ縺ｫ隕∫ｴ繧堤峩謗･蜑企勁縺励※繧､繝�繝ｬ繝ｼ繧ｿ縺檎┌蜉ｹ蛹悶＆繧後け繝ｩ繝�繧ｷ繝･縺吶ｋ縺ｮ繧帝亟縺舌◆繧√√ヵ繝ｬ繝ｼ繝譛ｫ蟆ｾ縺ｧ驕�蟒ｶ蜃ｦ逅�縺吶ｋ
+Source\Object\ObjectManager.cpp:45 : Possible mojibake '繝' -> /// @brief 蜈ｨ繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ謠冗判
+Source\Object\ObjectManager.cpp:45 : Possible mojibake '繧' -> /// @brief 蜈ｨ繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ謠冗判
+Source\Object\ObjectManager.cpp:67 : Possible mojibake '縺' -> /// @brief 繝�繝ｼ繧ｿ縺ｮ霑ｽ蜉蜃ｦ逅�繧定｡後≧
+Source\Object\ObjectManager.cpp:67 : Possible mojibake '繝' -> /// @brief 繝�繝ｼ繧ｿ縺ｮ霑ｽ蜉蜃ｦ逅�繧定｡後≧
+Source\Object\ObjectManager.cpp:67 : Possible mojibake '繧' -> /// @brief 繝�繝ｼ繧ｿ縺ｮ霑ｽ蜉蜃ｦ逅�繧定｡後≧
+Source\Object\ObjectManager.cpp:68 : Possible mojibake '縺' -> /// @details object3D (霑ｽ蜉縺吶ｋ3D繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ繝昴う繝ｳ繧ｿ)
+Source\Object\ObjectManager.cpp:68 : Possible mojibake '繝' -> /// @details object3D (霑ｽ蜉縺吶ｋ3D繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ繝昴う繝ｳ繧ｿ)
+Source\Object\ObjectManager.cpp:68 : Possible mojibake '繧' -> /// @details object3D (霑ｽ蜉縺吶ｋ3D繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ繝昴う繝ｳ繧ｿ)
+Source\Object\ObjectManager.cpp:69 : Possible mojibake '縺' -> /// @details 邂｡逅�繝ｪ繧ｹ繝医∈縺ｮ霑ｽ蜉縺翫ｈ縺ｳ繧ｿ繧ｰ繧ｭ繝｣繝�繧ｷ繝･縺ｸ縺ｮ逋ｻ骭ｲ
+Source\Object\ObjectManager.cpp:69 : Possible mojibake '繝' -> /// @details 邂｡逅�繝ｪ繧ｹ繝医∈縺ｮ霑ｽ蜉縺翫ｈ縺ｳ繧ｿ繧ｰ繧ｭ繝｣繝�繧ｷ繝･縺ｸ縺ｮ逋ｻ骭ｲ
+Source\Object\ObjectManager.cpp:69 : Possible mojibake '繧' -> /// @details 邂｡逅�繝ｪ繧ｹ繝医∈縺ｮ霑ｽ蜉縺翫ｈ縺ｳ繧ｿ繧ｰ繧ｭ繝｣繝�繧ｷ繝･縺ｸ縺ｮ逋ｻ骭ｲ
+Source\Object\ObjectManager.cpp:72 : Possible mojibake '縺' -> // AI繧�陦晉ｪ∝愛螳壹↑縺ｩ縺ｧ迚ｹ螳壹ち繧ｰ縺ｮ蜈ｨ讀懃ｴ｢(O(N))縺梧ｯ弱ヵ繝ｬ繝ｼ繝逋ｺ逕溘＠縺ｦ蜃ｦ逅�關ｽ縺｡縺吶ｋ縺ｮ繧帝亟縺舌◆繧√∬ｿｽ蜉譎ゅ↓繧ｭ繝｣繝�繧ｷ繝･縺励※縺翫￥
+Source\Object\ObjectManager.cpp:72 : Possible mojibake '繝' -> // AI繧�陦晉ｪ∝愛螳壹↑縺ｩ縺ｧ迚ｹ螳壹ち繧ｰ縺ｮ蜈ｨ讀懃ｴ｢(O(N))縺梧ｯ弱ヵ繝ｬ繝ｼ繝逋ｺ逕溘＠縺ｦ蜃ｦ逅�關ｽ縺｡縺吶ｋ縺ｮ繧帝亟縺舌◆繧√∬ｿｽ蜉譎ゅ↓繧ｭ繝｣繝�繧ｷ繝･縺励※縺翫￥
+Source\Object\ObjectManager.cpp:72 : Possible mojibake '繧' -> // AI繧�陦晉ｪ∝愛螳壹↑縺ｩ縺ｧ迚ｹ螳壹ち繧ｰ縺ｮ蜈ｨ讀懃ｴ｢(O(N))縺梧ｯ弱ヵ繝ｬ繝ｼ繝逋ｺ逕溘＠縺ｦ蜃ｦ逅�關ｽ縺｡縺吶ｋ縺ｮ繧帝亟縺舌◆繧√∬ｿｽ蜉譎ゅ↓繧ｭ繝｣繝�繧ｷ繝･縺励※縺翫￥
+Source\Object\ObjectManager.cpp:77 : Possible mojibake '縺' -> /// @brief 繝�繝ｼ繧ｿ縺ｮ髯､螟門�ｦ逅�繧定｡後≧
+Source\Object\ObjectManager.cpp:77 : Possible mojibake '繝' -> /// @brief 繝�繝ｼ繧ｿ縺ｮ髯､螟門�ｦ逅�繧定｡後≧
+Source\Object\ObjectManager.cpp:77 : Possible mojibake '繧' -> /// @brief 繝�繝ｼ繧ｿ縺ｮ髯､螟門�ｦ逅�繧定｡後≧
+Source\Object\ObjectManager.cpp:78 : Possible mojibake '縺' -> /// @details object3D (邂｡逅�縺九ｉ髯､螟悶☆繧�3D繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ繝昴う繝ｳ繧ｿ)
+Source\Object\ObjectManager.cpp:78 : Possible mojibake '繝' -> /// @details object3D (邂｡逅�縺九ｉ髯､螟悶☆繧�3D繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ繝昴う繝ｳ繧ｿ)
+Source\Object\ObjectManager.cpp:78 : Possible mojibake '繧' -> /// @details object3D (邂｡逅�縺九ｉ髯､螟悶☆繧�3D繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ繝昴う繝ｳ繧ｿ)
+Source\Object\ObjectManager.cpp:79 : Possible mojibake '縺' -> /// @details unique_ptr縺ｮ謇譛画ｨｩ謾ｾ譽�縲√Μ繧ｹ繝医°繧峨�ｮ髯､螟悶√く繝｣繝�繧ｷ繝･縺ｮ蜀肴ｧ狗ｯ�
+Source\Object\ObjectManager.cpp:79 : Possible mojibake '繝' -> /// @details unique_ptr縺ｮ謇譛画ｨｩ謾ｾ譽�縲√Μ繧ｹ繝医°繧峨�ｮ髯､螟悶√く繝｣繝�繧ｷ繝･縺ｮ蜀肴ｧ狗ｯ�
+Source\Object\ObjectManager.cpp:79 : Possible mojibake '繧' -> /// @details unique_ptr縺ｮ謇譛画ｨｩ謾ｾ譽�縲√Μ繧ｹ繝医°繧峨�ｮ髯､螟悶√く繝｣繝�繧ｷ繝･縺ｮ蜀肴ｧ狗ｯ�
+Source\Object\ObjectManager.cpp:88 : Possible mojibake '縺' -> // 繧ｷ繝ｼ繝ｳ髢鍋ｧｻ蜍輔ｄ繝励�ｼ繝ｫ縺ｸ縺ｮ霑泌唆縺ｪ縺ｩ縲∵園譛画ｨｩ繧剃ｻ悶∈遘ｻ隴ｲ縺吶ｋ髫帙↓繧ｪ繝悶ず繧ｧ繧ｯ繝医＃縺ｨ遐ｴ譽�縺輔ｌ縺ｦ縺励∪縺�繝舌げ繧帝亟縺�
+Source\Object\ObjectManager.cpp:88 : Possible mojibake '繝' -> // 繧ｷ繝ｼ繝ｳ髢鍋ｧｻ蜍輔ｄ繝励�ｼ繝ｫ縺ｸ縺ｮ霑泌唆縺ｪ縺ｩ縲∵園譛画ｨｩ繧剃ｻ悶∈遘ｻ隴ｲ縺吶ｋ髫帙↓繧ｪ繝悶ず繧ｧ繧ｯ繝医＃縺ｨ遐ｴ譽�縺輔ｌ縺ｦ縺励∪縺�繝舌げ繧帝亟縺�
+Source\Object\ObjectManager.cpp:88 : Possible mojibake '繧' -> // 繧ｷ繝ｼ繝ｳ髢鍋ｧｻ蜍輔ｄ繝励�ｼ繝ｫ縺ｸ縺ｮ霑泌唆縺ｪ縺ｩ縲∵園譛画ｨｩ繧剃ｻ悶∈遘ｻ隴ｲ縺吶ｋ髫帙↓繧ｪ繝悶ず繧ｧ繧ｯ繝医＃縺ｨ遐ｴ譽�縺輔ｌ縺ｦ縺励∪縺�繝舌げ繧帝亟縺�
+Source\Object\ObjectManager.cpp:95 : Possible mojibake '縺' -> /// @brief 蜈ｨ3D繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ蜊ｳ譎らｴ譽�縺ｨ繧ｭ繝｣繝�繧ｷ繝･繧ｯ繝ｪ繧｢
+Source\Object\ObjectManager.cpp:95 : Possible mojibake '繝' -> /// @brief 蜈ｨ3D繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ蜊ｳ譎らｴ譽�縺ｨ繧ｭ繝｣繝�繧ｷ繝･繧ｯ繝ｪ繧｢
+Source\Object\ObjectManager.cpp:95 : Possible mojibake '繧' -> /// @brief 蜈ｨ3D繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ蜊ｳ譎らｴ譽�縺ｨ繧ｭ繝｣繝�繧ｷ繝･繧ｯ繝ｪ繧｢
+Source\Object\ObjectManager.cpp:102 : Possible mojibake '縺' -> /// @brief 蜑企勁繝輔Λ繧ｰ縺ｮ遶九▲縺�3D繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ遐ｴ譽�縺ｨ繧ｭ繝｣繝�繧ｷ繝･蜀肴ｧ狗ｯ�
+Source\Object\ObjectManager.cpp:102 : Possible mojibake '繝' -> /// @brief 蜑企勁繝輔Λ繧ｰ縺ｮ遶九▲縺�3D繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ遐ｴ譽�縺ｨ繧ｭ繝｣繝�繧ｷ繝･蜀肴ｧ狗ｯ�
+Source\Object\ObjectManager.cpp:102 : Possible mojibake '繧' -> /// @brief 蜑企勁繝輔Λ繧ｰ縺ｮ遶九▲縺�3D繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ遐ｴ譽�縺ｨ繧ｭ繝｣繝�繧ｷ繝･蜀肴ｧ狗ｯ�
+Source\Object\ObjectManager.cpp:108 : Possible mojibake '縺' -> // 荳ｭ騾泌炎髯､縺ｫ繧医ｋ驟榊�苓ｦ∫ｴ縺ｮ繝｡繝｢繝ｪ隧ｰ繧∫峩縺�(O(N))縺悟､夂匱縺励※繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ縺御ｽ惹ｸ九☆繧九�ｮ繧帝亟縺舌◆繧√‘rase-remove縺ｧ荳諡ｬ蜑企勁縺吶ｋ
+Source\Object\ObjectManager.cpp:108 : Possible mojibake '繝' -> // 荳ｭ騾泌炎髯､縺ｫ繧医ｋ驟榊�苓ｦ∫ｴ縺ｮ繝｡繝｢繝ｪ隧ｰ繧∫峩縺�(O(N))縺悟､夂匱縺励※繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ縺御ｽ惹ｸ九☆繧九�ｮ繧帝亟縺舌◆繧√‘rase-remove縺ｧ荳諡ｬ蜑企勁縺吶ｋ
+Source\Object\ObjectManager.cpp:108 : Possible mojibake '繧' -> // 荳ｭ騾泌炎髯､縺ｫ繧医ｋ驟榊�苓ｦ∫ｴ縺ｮ繝｡繝｢繝ｪ隧ｰ繧∫峩縺�(O(N))縺悟､夂匱縺励※繝代ヵ繧ｩ繝ｼ繝槭Φ繧ｹ縺御ｽ惹ｸ九☆繧九�ｮ繧帝亟縺舌◆繧√‘rase-remove縺ｧ荳諡ｬ蜑企勁縺吶ｋ
+Source\Object\ObjectManager.cpp:125 : Possible mojibake '繧' -> /// @brief 蛟､繧貞叙蠕励☆繧�
+Source\Object\ObjectManager.cpp:126 : Possible mojibake '縺' -> /// @return 譚｡莉ｶ縺ｫ蜷郁�ｴ縺励◆譛蛻昴�ｮObject3D繝昴う繝ｳ繧ｿ�ｼ育┌縺代ｌ縺ｰnullptr�ｼ�
+Source\Object\ObjectManager.cpp:126 : Possible mojibake '繝' -> /// @return 譚｡莉ｶ縺ｫ蜷郁�ｴ縺励◆譛蛻昴�ｮObject3D繝昴う繝ｳ繧ｿ�ｼ育┌縺代ｌ縺ｰnullptr�ｼ�
+Source\Object\ObjectManager.cpp:126 : Possible mojibake '繧' -> /// @return 譚｡莉ｶ縺ｫ蜷郁�ｴ縺励◆譛蛻昴�ｮObject3D繝昴う繝ｳ繧ｿ�ｼ育┌縺代ｌ縺ｰnullptr�ｼ�
+Source\Object\ObjectManager.cpp:127 : Possible mojibake '縺' -> /// @details tag (讀懃ｴ｢蟇ｾ雎｡縺ｮ3D繧ｿ繧ｰ)
+Source\Object\ObjectManager.cpp:127 : Possible mojibake '繧' -> /// @details tag (讀懃ｴ｢蟇ｾ雎｡縺ｮ3D繧ｿ繧ｰ)
+Source\Object\ObjectManager.cpp:142 : Possible mojibake '繧' -> /// @brief 蛟､繧貞叙蠕励☆繧�
+Source\Object\ObjectManager.cpp:143 : Possible mojibake '縺' -> /// @return 譚｡莉ｶ縺ｫ蜷郁�ｴ縺励◆Object3D繝昴う繝ｳ繧ｿ縺ｮ繝ｪ繧ｹ繝亥盾辣ｧ
+Source\Object\ObjectManager.cpp:143 : Possible mojibake '繝' -> /// @return 譚｡莉ｶ縺ｫ蜷郁�ｴ縺励◆Object3D繝昴う繝ｳ繧ｿ縺ｮ繝ｪ繧ｹ繝亥盾辣ｧ
+Source\Object\ObjectManager.cpp:143 : Possible mojibake '繧' -> /// @return 譚｡莉ｶ縺ｫ蜷郁�ｴ縺励◆Object3D繝昴う繝ｳ繧ｿ縺ｮ繝ｪ繧ｹ繝亥盾辣ｧ
+Source\Object\ObjectManager.cpp:144 : Possible mojibake '縺' -> /// @details tag (讀懃ｴ｢蟇ｾ雎｡縺ｮ3D繧ｿ繧ｰ)
+Source\Object\ObjectManager.cpp:144 : Possible mojibake '繧' -> /// @details tag (讀懃ｴ｢蟇ｾ雎｡縺ｮ3D繧ｿ繧ｰ)
+Source\Object\ObjectManager.cpp:150 : Possible mojibake '縺' -> /// @brief 繝�繝ｼ繧ｿ縺ｮ霑ｽ蜉蜃ｦ逅�繧定｡後≧
+Source\Object\ObjectManager.cpp:150 : Possible mojibake '繝' -> /// @brief 繝�繝ｼ繧ｿ縺ｮ霑ｽ蜉蜃ｦ逅�繧定｡後≧
+Source\Object\ObjectManager.cpp:150 : Possible mojibake '繧' -> /// @brief 繝�繝ｼ繧ｿ縺ｮ霑ｽ蜉蜃ｦ逅�繧定｡後≧
+Source\Object\ObjectManager.cpp:151 : Possible mojibake '縺' -> /// @details object2D (霑ｽ蜉縺吶ｋ2D繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ繝昴う繝ｳ繧ｿ)
+Source\Object\ObjectManager.cpp:151 : Possible mojibake '繝' -> /// @details object2D (霑ｽ蜉縺吶ｋ2D繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ繝昴う繝ｳ繧ｿ)
+Source\Object\ObjectManager.cpp:151 : Possible mojibake '繧' -> /// @details object2D (霑ｽ蜉縺吶ｋ2D繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ繝昴う繝ｳ繧ｿ)
+Source\Object\ObjectManager.cpp:152 : Possible mojibake '縺' -> /// @details 邂｡逅�繝ｪ繧ｹ繝医∈縺ｮ霑ｽ蜉縺翫ｈ縺ｳ繧ｿ繧ｰ繧ｭ繝｣繝�繧ｷ繝･縺ｸ縺ｮ逋ｻ骭ｲ
+Source\Object\ObjectManager.cpp:152 : Possible mojibake '繝' -> /// @details 邂｡逅�繝ｪ繧ｹ繝医∈縺ｮ霑ｽ蜉縺翫ｈ縺ｳ繧ｿ繧ｰ繧ｭ繝｣繝�繧ｷ繝･縺ｸ縺ｮ逋ｻ骭ｲ
+Source\Object\ObjectManager.cpp:152 : Possible mojibake '繧' -> /// @details 邂｡逅�繝ｪ繧ｹ繝医∈縺ｮ霑ｽ蜉縺翫ｈ縺ｳ繧ｿ繧ｰ繧ｭ繝｣繝�繧ｷ繝･縺ｸ縺ｮ逋ｻ骭ｲ
+Source\Object\ObjectManager.cpp:159 : Possible mojibake '縺' -> /// @brief 蜈ｨ2D繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ蜊ｳ譎らｴ譽�縺ｨ繧ｭ繝｣繝�繧ｷ繝･繧ｯ繝ｪ繧｢
+Source\Object\ObjectManager.cpp:159 : Possible mojibake '繝' -> /// @brief 蜈ｨ2D繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ蜊ｳ譎らｴ譽�縺ｨ繧ｭ繝｣繝�繧ｷ繝･繧ｯ繝ｪ繧｢
+Source\Object\ObjectManager.cpp:159 : Possible mojibake '繧' -> /// @brief 蜈ｨ2D繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ蜊ｳ譎らｴ譽�縺ｨ繧ｭ繝｣繝�繧ｷ繝･繧ｯ繝ｪ繧｢
+Source\Object\ObjectManager.cpp:166 : Possible mojibake '縺' -> /// @brief 蜑企勁繝輔Λ繧ｰ縺ｮ遶九▲縺�2D繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ遐ｴ譽�縺ｨ繧ｭ繝｣繝�繧ｷ繝･蜀肴ｧ狗ｯ�
+Source\Object\ObjectManager.cpp:166 : Possible mojibake '繝' -> /// @brief 蜑企勁繝輔Λ繧ｰ縺ｮ遶九▲縺�2D繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ遐ｴ譽�縺ｨ繧ｭ繝｣繝�繧ｷ繝･蜀肴ｧ狗ｯ�
+Source\Object\ObjectManager.cpp:166 : Possible mojibake '繧' -> /// @brief 蜑企勁繝輔Λ繧ｰ縺ｮ遶九▲縺�2D繧ｪ繝悶ず繧ｧ繧ｯ繝医�ｮ遐ｴ譽�縺ｨ繧ｭ繝｣繝�繧ｷ繝･蜀肴ｧ狗ｯ�
+Source\Object\ObjectManager.cpp:186 : Possible mojibake '繧' -> /// @brief 蛟､繧貞叙蠕励☆繧�
+Source\Object\ObjectManager.cpp:187 : Possible mojibake '縺' -> /// @return 譚｡莉ｶ縺ｫ蜷郁�ｴ縺励◆譛蛻昴�ｮObject2D繝昴う繝ｳ繧ｿ�ｼ育┌縺代ｌ縺ｰnullptr�ｼ�
+Source\Object\ObjectManager.cpp:187 : Possible mojibake '繝' -> /// @return 譚｡莉ｶ縺ｫ蜷郁�ｴ縺励◆譛蛻昴�ｮObject2D繝昴う繝ｳ繧ｿ�ｼ育┌縺代ｌ縺ｰnullptr�ｼ�
+Source\Object\ObjectManager.cpp:187 : Possible mojibake '繧' -> /// @return 譚｡莉ｶ縺ｫ蜷郁�ｴ縺励◆譛蛻昴�ｮObject2D繝昴う繝ｳ繧ｿ�ｼ育┌縺代ｌ縺ｰnullptr�ｼ�
+Source\Object\ObjectManager.cpp:188 : Possible mojibake '縺' -> /// @details tag (讀懃ｴ｢蟇ｾ雎｡縺ｮ2D繧ｿ繧ｰ)
+Source\Object\ObjectManager.cpp:188 : Possible mojibake '繧' -> /// @details tag (讀懃ｴ｢蟇ｾ雎｡縺ｮ2D繧ｿ繧ｰ)
+Source\Object\ObjectManager.cpp:204 : Possible mojibake '繧' -> /// @brief 蛟､繧貞叙蠕励☆繧�
+Source\Object\ObjectManager.cpp:205 : Possible mojibake '縺' -> /// @return 譚｡莉ｶ縺ｫ蜷郁�ｴ縺励◆Object2D繝昴う繝ｳ繧ｿ縺ｮ繝ｪ繧ｹ繝亥盾辣ｧ
+Source\Object\ObjectManager.cpp:205 : Possible mojibake '繝' -> /// @return 譚｡莉ｶ縺ｫ蜷郁�ｴ縺励◆Object2D繝昴う繝ｳ繧ｿ縺ｮ繝ｪ繧ｹ繝亥盾辣ｧ
+Source\Object\ObjectManager.cpp:205 : Possible mojibake '繧' -> /// @return 譚｡莉ｶ縺ｫ蜷郁�ｴ縺励◆Object2D繝昴う繝ｳ繧ｿ縺ｮ繝ｪ繧ｹ繝亥盾辣ｧ
+Source\Object\ObjectManager.cpp:206 : Possible mojibake '縺' -> /// @details tag (讀懃ｴ｢蟇ｾ雎｡縺ｮ2D繧ｿ繧ｰ)
+Source\Object\ObjectManager.cpp:206 : Possible mojibake '繧' -> /// @details tag (讀懃ｴ｢蟇ｾ雎｡縺ｮ2D繧ｿ繧ｰ)
+Source\Object\ObjectManager.cpp:212 : Possible mojibake '縺' -> /// @brief 3D繧ｿ繧ｰ繧ｭ繝｣繝�繧ｷ繝･縺ｮ螳悟�ｨ縺ｪ蜀咲函謌�
+Source\Object\ObjectManager.cpp:212 : Possible mojibake '繝' -> /// @brief 3D繧ｿ繧ｰ繧ｭ繝｣繝�繧ｷ繝･縺ｮ螳悟�ｨ縺ｪ蜀咲函謌�
+Source\Object\ObjectManager.cpp:212 : Possible mojibake '繧' -> /// @brief 3D繧ｿ繧ｰ繧ｭ繝｣繝�繧ｷ繝･縺ｮ螳悟�ｨ縺ｪ蜀咲函謌�
+Source\Object\ObjectManager.cpp:215 : Possible mojibake '縺' -> // 隕∫ｴ蜑企勁蠕後↓繧ｭ繝｣繝�繧ｷ繝･蜀�縺ｫ繝繝ｳ繧ｰ繝ｪ繝ｳ繧ｰ繝昴う繝ｳ繧ｿ(辟｡蜉ｹ縺ｪ繧｢繝峨Ξ繧ｹ)縺梧ｮ狗蕗縺励∽ｻ悶け繝ｩ繧ｹ蜿ら�ｧ譎ゅ↓繧ｯ繝ｩ繝�繧ｷ繝･縺吶ｋ縺ｮ繧帝亟縺�
+Source\Object\ObjectManager.cpp:215 : Possible mojibake '繝' -> // 隕∫ｴ蜑企勁蠕後↓繧ｭ繝｣繝�繧ｷ繝･蜀�縺ｫ繝繝ｳ繧ｰ繝ｪ繝ｳ繧ｰ繝昴う繝ｳ繧ｿ(辟｡蜉ｹ縺ｪ繧｢繝峨Ξ繧ｹ)縺梧ｮ狗蕗縺励∽ｻ悶け繝ｩ繧ｹ蜿ら�ｧ譎ゅ↓繧ｯ繝ｩ繝�繧ｷ繝･縺吶ｋ縺ｮ繧帝亟縺�
+Source\Object\ObjectManager.cpp:215 : Possible mojibake '繧' -> // 隕∫ｴ蜑企勁蠕後↓繧ｭ繝｣繝�繧ｷ繝･蜀�縺ｫ繝繝ｳ繧ｰ繝ｪ繝ｳ繧ｰ繝昴う繝ｳ繧ｿ(辟｡蜉ｹ縺ｪ繧｢繝峨Ξ繧ｹ)縺梧ｮ狗蕗縺励∽ｻ悶け繝ｩ繧ｹ蜿ら�ｧ譎ゅ↓繧ｯ繝ｩ繝�繧ｷ繝･縺吶ｋ縺ｮ繧帝亟縺�
+Source\Object\ObjectManager.cpp:223 : Possible mojibake '縺' -> /// @brief 2D繧ｿ繧ｰ繧ｭ繝｣繝�繧ｷ繝･縺ｮ螳悟�ｨ縺ｪ蜀咲函謌�
+Source\Object\ObjectManager.cpp:223 : Possible mojibake '繝' -> /// @brief 2D繧ｿ繧ｰ繧ｭ繝｣繝�繧ｷ繝･縺ｮ螳悟�ｨ縺ｪ蜀咲函謌�
+Source\Object\ObjectManager.cpp:223 : Possible mojibake '繧' -> /// @brief 2D繧ｿ繧ｰ繧ｭ繝｣繝�繧ｷ繝･縺ｮ螳悟�ｨ縺ｪ蜀咲函謌�
+Source\System\Master.h:16 : Possible mojibake '縺' -> /// @brief 繧ｲ繝ｼ繝蜈ｨ菴薙〒蜈ｱ譛峨☆繧狗ｮ｡逅�繧ｯ繝ｩ繧ｹ縺ｸ縺ｮ蜿ら�ｧ繧偵∪縺ｨ繧√ｋ
+Source\System\Master.h:16 : Possible mojibake '繝' -> /// @brief 繧ｲ繝ｼ繝蜈ｨ菴薙〒蜈ｱ譛峨☆繧狗ｮ｡逅�繧ｯ繝ｩ繧ｹ縺ｸ縺ｮ蜿ら�ｧ繧偵∪縺ｨ繧√ｋ
+Source\System\Master.h:16 : Possible mojibake '繧' -> /// @brief 繧ｲ繝ｼ繝蜈ｨ菴薙〒蜈ｱ譛峨☆繧狗ｮ｡逅�繧ｯ繝ｩ繧ｹ縺ｸ縺ｮ蜿ら�ｧ繧偵∪縺ｨ繧√ｋ
+Source\System\Master.h:20 : Possible mojibake '縺' -> static SceneManager* scene_manager_;       ///< 繧ｷ繝ｼ繝ｳ縺ｮ逕滓�舌∫ｴ譽�縲�驕ｷ遘ｻ繧堤ｮ｡逅�縺吶ｋ
+Source\System\Master.h:20 : Possible mojibake '繝' -> static SceneManager* scene_manager_;       ///< 繧ｷ繝ｼ繝ｳ縺ｮ逕滓�舌∫ｴ譽�縲�驕ｷ遘ｻ繧堤ｮ｡逅�縺吶ｋ
+Source\System\Master.h:20 : Possible mojibake '繧' -> static SceneManager* scene_manager_;       ///< 繧ｷ繝ｼ繝ｳ縺ｮ逕滓�舌∫ｴ譽�縲�驕ｷ遘ｻ繧堤ｮ｡逅�縺吶ｋ
+Source\System\Master.h:21 : Possible mojibake '縺' -> static SoundManager* sound_manager_;       ///< BGM縺ｨ蜉ｹ譫憺浹縺ｮ蜀咲函繧堤ｮ｡逅�縺吶ｋ
+Source\System\Master.h:21 : Possible mojibake '繧' -> static SoundManager* sound_manager_;       ///< BGM縺ｨ蜉ｹ譫憺浹縺ｮ蜀咲函繧堤ｮ｡逅�縺吶ｋ
+Source\System\Master.h:22 : Possible mojibake '縺' -> static Score* score_manager_;              ///< 繧ｹ繧ｳ繧｢險育ｮ励→陦ｨ遉ｺ逕ｨ繝�繝ｼ繧ｿ繧堤ｮ｡逅�縺吶ｋ
+Source\System\Master.h:22 : Possible mojibake '繝' -> static Score* score_manager_;              ///< 繧ｹ繧ｳ繧｢險育ｮ励→陦ｨ遉ｺ逕ｨ繝�繝ｼ繧ｿ繧堤ｮ｡逅�縺吶ｋ
+Source\System\Master.h:22 : Possible mojibake '繧' -> static Score* score_manager_;              ///< 繧ｹ繧ｳ繧｢險育ｮ励→陦ｨ遉ｺ逕ｨ繝�繝ｼ繧ｿ繧堤ｮ｡逅�縺吶ｋ
+Source\System\Master.h:23 : Possible mojibake '縺' -> static ResourceManager* resource_manager_; ///< 逕ｻ蜒上√Δ繝�繝ｫ縲�髻ｳ貅舌↑縺ｩ縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ繧堤ｮ｡逅�縺吶ｋ
+Source\System\Master.h:23 : Possible mojibake '繝' -> static ResourceManager* resource_manager_; ///< 逕ｻ蜒上√Δ繝�繝ｫ縲�髻ｳ貅舌↑縺ｩ縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ繧堤ｮ｡逅�縺吶ｋ
+Source\System\Master.h:23 : Possible mojibake '繧' -> static ResourceManager* resource_manager_; ///< 逕ｻ蜒上√Δ繝�繝ｫ縲�髻ｳ貅舌↑縺ｩ縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ繧堤ｮ｡逅�縺吶ｋ
+Source\System\Master.h:24 : Possible mojibake '縺' -> static Camera* camera_;                    ///< 騾壼ｸｸ繝励Ξ繧､譎ゅ�ｮ繧ｫ繝｡繝ｩ繧堤ｮ｡逅�縺吶ｋ
+Source\System\Master.h:24 : Possible mojibake '繝' -> static Camera* camera_;                    ///< 騾壼ｸｸ繝励Ξ繧､譎ゅ�ｮ繧ｫ繝｡繝ｩ繧堤ｮ｡逅�縺吶ｋ
+Source\System\Master.h:24 : Possible mojibake '繧' -> static Camera* camera_;                    ///< 騾壼ｸｸ繝励Ξ繧､譎ゅ�ｮ繧ｫ繝｡繝ｩ繧堤ｮ｡逅�縺吶ｋ
+Source\System\Master.h:25 : Possible mojibake '縺' -> static DebugCamera* debug_camera_;         ///< 繝�繝舌ャ繧ｰ逕ｨ繧ｫ繝｡繝ｩ繧堤ｮ｡逅�縺吶ｋ
+Source\System\Master.h:25 : Possible mojibake '繝' -> static DebugCamera* debug_camera_;         ///< 繝�繝舌ャ繧ｰ逕ｨ繧ｫ繝｡繝ｩ繧堤ｮ｡逅�縺吶ｋ
+Source\System\Master.h:25 : Possible mojibake '繧' -> static DebugCamera* debug_camera_;         ///< 繝�繝舌ャ繧ｰ逕ｨ繧ｫ繝｡繝ｩ繧堤ｮ｡逅�縺吶ｋ
+Source\System\Master.h:26 : Possible mojibake '縺' -> static bool is_debug_camera_;              ///< 繝�繝舌ャ繧ｰ繧ｫ繝｡繝ｩ繧剃ｽｿ縺�縺九←縺�縺九�ｮ繝輔Λ繧ｰ
+Source\System\Master.h:26 : Possible mojibake '繝' -> static bool is_debug_camera_;              ///< 繝�繝舌ャ繧ｰ繧ｫ繝｡繝ｩ繧剃ｽｿ縺�縺九←縺�縺九�ｮ繝輔Λ繧ｰ
+Source\System\Master.h:26 : Possible mojibake '繧' -> static bool is_debug_camera_;              ///< 繝�繝舌ャ繧ｰ繧ｫ繝｡繝ｩ繧剃ｽｿ縺�縺九←縺�縺九�ｮ繝輔Λ繧ｰ
+Source\System\Master.h:27 : Possible mojibake '縺' -> static Level* level_manager_;              ///< 髮｣譏灘ｺｦ繧�騾ｲ陦悟ｺｦ繧堤ｮ｡逅�縺吶ｋ
+Source\System\Master.h:27 : Possible mojibake '繧' -> static Level* level_manager_;              ///< 髮｣譏灘ｺｦ繧�騾ｲ陦悟ｺｦ繧堤ｮ｡逅�縺吶ｋ
+Source\System\Master.h:28 : Possible mojibake '縺' -> static EffectManager* effect_manager_;     ///< 逕ｻ髱｢荳翫�ｮ繧ｨ繝輔ぉ繧ｯ繝医ｒ邂｡逅�縺吶ｋ
+Source\System\Master.h:28 : Possible mojibake '繝' -> static EffectManager* effect_manager_;     ///< 逕ｻ髱｢荳翫�ｮ繧ｨ繝輔ぉ繧ｯ繝医ｒ邂｡逅�縺吶ｋ
+Source\System\Master.h:28 : Possible mojibake '繧' -> static EffectManager* effect_manager_;     ///< 逕ｻ髱｢荳翫�ｮ繧ｨ繝輔ぉ繧ｯ繝医ｒ邂｡逅�縺吶ｋ
+Source\System\Master.h:30 : Possible mojibake '縺' -> static bool SelectSkill;          ///< 繧ｹ繧ｭ繝ｫ驕ｸ謚樔ｸｭ縺九←縺�縺九�ｮ繝輔Λ繧ｰ
+Source\System\Master.h:30 : Possible mojibake '繝' -> static bool SelectSkill;          ///< 繧ｹ繧ｭ繝ｫ驕ｸ謚樔ｸｭ縺九←縺�縺九�ｮ繝輔Λ繧ｰ
+Source\System\Master.h:30 : Possible mojibake '繧' -> static bool SelectSkill;          ///< 繧ｹ繧ｭ繝ｫ驕ｸ謚樔ｸｭ縺九←縺�縺九�ｮ繝輔Λ繧ｰ
+Source\System\Master.h:31 : Possible mojibake '縺' -> static int tutorial_count_;       ///< 繝√Η繝ｼ繝医Μ繧｢繝ｫ騾ｲ陦後ｒ邂｡逅�縺吶ｋ繧ｫ繧ｦ繝ｳ繧ｿ繝ｼ
+Source\System\Master.h:31 : Possible mojibake '繝' -> static int tutorial_count_;       ///< 繝√Η繝ｼ繝医Μ繧｢繝ｫ騾ｲ陦後ｒ邂｡逅�縺吶ｋ繧ｫ繧ｦ繝ｳ繧ｿ繝ｼ
+Source\System\Master.h:31 : Possible mojibake '繧' -> static int tutorial_count_;       ///< 繝√Η繝ｼ繝医Μ繧｢繝ｫ騾ｲ陦後ｒ邂｡逅�縺吶ｋ繧ｫ繧ｦ繝ｳ繧ｿ繝ｼ
+Source\System\Master.h:32 : Possible mojibake '縺' -> static bool GameFinishFlag;       ///< 繧ｲ繝ｼ繝邨ゆｺ�蜃ｦ逅�縺ｮ驥崎､�繧帝亟縺舌ヵ繝ｩ繧ｰ
+Source\System\Master.h:32 : Possible mojibake '繝' -> static bool GameFinishFlag;       ///< 繧ｲ繝ｼ繝邨ゆｺ�蜃ｦ逅�縺ｮ驥崎､�繧帝亟縺舌ヵ繝ｩ繧ｰ
+Source\System\Master.h:32 : Possible mojibake '繧' -> static bool GameFinishFlag;       ///< 繧ｲ繝ｼ繝邨ゆｺ�蜃ｦ逅�縺ｮ驥崎､�繧帝亟縺舌ヵ繝ｩ繧ｰ
+Source\System\Master.h:33 : Possible mojibake '縺' -> static bool FeverFlag;            ///< 繝輔ぅ繝ｼ繝舌�ｼ迥ｶ諷九°縺ｩ縺�縺九�ｮ繝輔Λ繧ｰ
+Source\System\Master.h:33 : Possible mojibake '繝' -> static bool FeverFlag;            ///< 繝輔ぅ繝ｼ繝舌�ｼ迥ｶ諷九°縺ｩ縺�縺九�ｮ繝輔Λ繧ｰ
+Source\System\Master.h:33 : Possible mojibake '繧' -> static bool FeverFlag;            ///< 繝輔ぅ繝ｼ繝舌�ｼ迥ｶ諷九°縺ｩ縺�縺九�ｮ繝輔Λ繧ｰ
+Source\System\Master.h:34 : Possible mojibake '縺' -> static int caught_cow_count_;     ///< 謐輔∪縺医◆迚帙�ｮ謨ｰ繧定ｨ倬鹸縺吶ｋ繧ｫ繧ｦ繝ｳ繧ｿ繝ｼ
+Source\System\Master.h:34 : Possible mojibake '繝' -> static int caught_cow_count_;     ///< 謐輔∪縺医◆迚帙�ｮ謨ｰ繧定ｨ倬鹸縺吶ｋ繧ｫ繧ｦ繝ｳ繧ｿ繝ｼ
+Source\System\Master.h:34 : Possible mojibake '繧' -> static int caught_cow_count_;     ///< 謐輔∪縺医◆迚帙�ｮ謨ｰ繧定ｨ倬鹸縺吶ｋ繧ｫ繧ｦ繝ｳ繧ｿ繝ｼ
+Source\System\Master.h:35 : Possible mojibake '縺' -> static bool tutorial_vacum_flag_; ///< 繝√Η繝ｼ繝医Μ繧｢繝ｫ荳ｭ縲∫音螳壹�ｮ謇矩�繧定ｸ上�蜑阪↓蜷ｸ縺�霎ｼ縺ｿ繧｢繧ｯ繧ｷ繝ｧ繝ｳ縺梧垓逋ｺ縺励※騾ｲ陦御ｸ崎�ｽ縺ｫ縺ｪ繧九�ｮ繧帝亟縺仙宛邏�繝輔Λ繧ｰ
+Source\System\Master.h:35 : Possible mojibake '繝' -> static bool tutorial_vacum_flag_; ///< 繝√Η繝ｼ繝医Μ繧｢繝ｫ荳ｭ縲∫音螳壹�ｮ謇矩�繧定ｸ上�蜑阪↓蜷ｸ縺�霎ｼ縺ｿ繧｢繧ｯ繧ｷ繝ｧ繝ｳ縺梧垓逋ｺ縺励※騾ｲ陦御ｸ崎�ｽ縺ｫ縺ｪ繧九�ｮ繧帝亟縺仙宛邏�繝輔Λ繧ｰ
+Source\System\Master.h:35 : Possible mojibake '繧' -> static bool tutorial_vacum_flag_; ///< 繝√Η繝ｼ繝医Μ繧｢繝ｫ荳ｭ縲∫音螳壹�ｮ謇矩�繧定ｸ上�蜑阪↓蜷ｸ縺�霎ｼ縺ｿ繧｢繧ｯ繧ｷ繝ｧ繝ｳ縺梧垓逋ｺ縺励※騾ｲ陦御ｸ崎�ｽ縺ｫ縺ｪ繧九�ｮ繧帝亟縺仙宛邏�繝輔Λ繧ｰ
+Source\System\Master.h:36 : Possible mojibake '縺' -> static bool is_shadow_enabled_;   ///< 險ｭ螳夂判髱｢縺ｧ縺ｮON/OFF驕ｸ謚槭ｒ蠑輔″邯吶＄縺溘ａ縺ｮ繝輔Λ繧ｰ縲Ｕrue縺ｮ縺ｨ縺阪�ｮ縺ｿScene3D縺後す繝｣繝峨え繝槭ャ繝励ｒ逕滓�舌☆繧�
+Source\System\Master.h:36 : Possible mojibake '繝' -> static bool is_shadow_enabled_;   ///< 險ｭ螳夂判髱｢縺ｧ縺ｮON/OFF驕ｸ謚槭ｒ蠑輔″邯吶＄縺溘ａ縺ｮ繝輔Λ繧ｰ縲Ｕrue縺ｮ縺ｨ縺阪�ｮ縺ｿScene3D縺後す繝｣繝峨え繝槭ャ繝励ｒ逕滓�舌☆繧�
+Source\System\Master.h:36 : Possible mojibake '繧' -> static bool is_shadow_enabled_;   ///< 險ｭ螳夂判髱｢縺ｧ縺ｮON/OFF驕ｸ謚槭ｒ蠑輔″邯吶＄縺溘ａ縺ｮ繝輔Λ繧ｰ縲Ｕrue縺ｮ縺ｨ縺阪�ｮ縺ｿScene3D縺後す繝｣繝峨え繝槭ャ繝励ｒ逕滓�舌☆繧�
+Source\System\Master.h:37 : Possible mojibake '縺' -> static bool is_debug_mode_;       ///< 險ｭ螳夂判髱｢縺ｧ縺ｮON/OFF驕ｸ謚槭ｒ蠑輔″邯吶＄縺溘ａ縺ｮ繝�繝舌ャ繧ｰ繝｢繝ｼ繝峨ヵ繝ｩ繧ｰ
+Source\System\Master.h:37 : Possible mojibake '繝' -> static bool is_debug_mode_;       ///< 險ｭ螳夂判髱｢縺ｧ縺ｮON/OFF驕ｸ謚槭ｒ蠑輔″邯吶＄縺溘ａ縺ｮ繝�繝舌ャ繧ｰ繝｢繝ｼ繝峨ヵ繝ｩ繧ｰ
+Source\System\Master.h:37 : Possible mojibake '繧' -> static bool is_debug_mode_;       ///< 險ｭ螳夂判髱｢縺ｧ縺ｮON/OFF驕ｸ謚槭ｒ蠑輔″邯吶＄縺溘ａ縺ｮ繝�繝舌ャ繧ｰ繝｢繝ｼ繝峨ヵ繝ｩ繧ｰ
+Source\System\Master.h:39 : Possible mojibake '縺' -> static float delta_time_; ///< 蜑阪ヵ繝ｬ繝ｼ繝縺九ｉ縺ｮ邨碁℃譎る俣
+Source\System\Master.h:39 : Possible mojibake '繝' -> static float delta_time_; ///< 蜑阪ヵ繝ｬ繝ｼ繝縺九ｉ縺ｮ邨碁℃譎る俣
+Source\System\Master.h:41 : Possible mojibake '縺' -> /// @brief 60FPS蝓ｺ貅悶�ｮ遘ｻ蜍暮㍼繧堤樟蝨ｨ縺ｮ繝輔Ξ繝ｼ繝譎る俣縺ｫ蜷医ｏ縺帙ｋ
+Source\System\Master.h:41 : Possible mojibake '繝' -> /// @brief 60FPS蝓ｺ貅悶�ｮ遘ｻ蜍暮㍼繧堤樟蝨ｨ縺ｮ繝輔Ξ繝ｼ繝譎る俣縺ｫ蜷医ｏ縺帙ｋ
+Source\System\Master.h:41 : Possible mojibake '繧' -> /// @brief 60FPS蝓ｺ貅悶�ｮ遘ｻ蜍暮㍼繧堤樟蝨ｨ縺ｮ繝輔Ξ繝ｼ繝譎る俣縺ｫ蜷医ｏ縺帙ｋ
+Source\System\Rule.h:4 : Possible mojibake '縺' -> /// @brief 繝励Ξ繧､繝､繝ｼ縺後ご繝ｼ繝譛ｬ邱ｨ繧帝♀縺ｶ蜑阪↓縲∵桃菴懈婿豕輔ｄ繝ｫ繝ｼ繝ｫ�ｼ亥享謨玲擅莉ｶ繝ｻ蛻ｶ髯先凾髢鍋ｭ会ｼ峨ｒ遒ｺ隱阪�ｻ謚頑升縺吶ｋ縺溘ａ縺ｮ蟆ら畑繧ｷ繝ｼ繝ｳ
+Source\System\Rule.h:4 : Possible mojibake '繝' -> /// @brief 繝励Ξ繧､繝､繝ｼ縺後ご繝ｼ繝譛ｬ邱ｨ繧帝♀縺ｶ蜑阪↓縲∵桃菴懈婿豕輔ｄ繝ｫ繝ｼ繝ｫ�ｼ亥享謨玲擅莉ｶ繝ｻ蛻ｶ髯先凾髢鍋ｭ会ｼ峨ｒ遒ｺ隱阪�ｻ謚頑升縺吶ｋ縺溘ａ縺ｮ蟆ら畑繧ｷ繝ｼ繝ｳ
+Source\System\Rule.h:4 : Possible mojibake '繧' -> /// @brief 繝励Ξ繧､繝､繝ｼ縺後ご繝ｼ繝譛ｬ邱ｨ繧帝♀縺ｶ蜑阪↓縲∵桃菴懈婿豕輔ｄ繝ｫ繝ｼ繝ｫ�ｼ亥享謨玲擅莉ｶ繝ｻ蛻ｶ髯先凾髢鍋ｭ会ｼ峨ｒ遒ｺ隱阪�ｻ謚頑升縺吶ｋ縺溘ａ縺ｮ蟆ら畑繧ｷ繝ｼ繝ｳ
+Source\System\Rule.h:11 : Possible mojibake '縺' -> /// @brief 繝ｫ繝ｼ繝ｫ隱ｬ譏守判蜒上�ｮ隱ｭ縺ｿ霎ｼ縺ｿ縲√�壹�ｼ繧ｸ騾√ｊ逕ｨ繝輔か繝ｳ繝医�ｮ蛻晄悄蛹�
+Source\System\Rule.h:11 : Possible mojibake '繝' -> /// @brief 繝ｫ繝ｼ繝ｫ隱ｬ譏守判蜒上�ｮ隱ｭ縺ｿ霎ｼ縺ｿ縲√�壹�ｼ繧ｸ騾√ｊ逕ｨ繝輔か繝ｳ繝医�ｮ蛻晄悄蛹�
+Source\System\Rule.h:11 : Possible mojibake '繧' -> /// @brief 繝ｫ繝ｼ繝ｫ隱ｬ譏守判蜒上�ｮ隱ｭ縺ｿ霎ｼ縺ｿ縲√�壹�ｼ繧ｸ騾√ｊ逕ｨ繝輔か繝ｳ繝医�ｮ蛻晄悄蛹�
+Source\System\Rule.h:14 : Possible mojibake '縺' -> /// @brief 蜈･蜉帶､懃衍縺ｫ莨ｴ縺�繝壹�ｼ繧ｸ逡ｪ蜿ｷ縺ｮ譖ｴ譁ｰ縲∫音螳壹く繝ｼ蜈･蜉帶凾縺ｮ繧ｿ繧､繝医Ν繝ｻ繧ｲ繝ｼ繝縺ｸ縺ｮ逕ｻ髱｢驕ｷ遘ｻ繝医Μ繧ｬ繝ｼ
+Source\System\Rule.h:14 : Possible mojibake '繝' -> /// @brief 蜈･蜉帶､懃衍縺ｫ莨ｴ縺�繝壹�ｼ繧ｸ逡ｪ蜿ｷ縺ｮ譖ｴ譁ｰ縲∫音螳壹く繝ｼ蜈･蜉帶凾縺ｮ繧ｿ繧､繝医Ν繝ｻ繧ｲ繝ｼ繝縺ｸ縺ｮ逕ｻ髱｢驕ｷ遘ｻ繝医Μ繧ｬ繝ｼ
+Source\System\Rule.h:14 : Possible mojibake '繧' -> /// @brief 蜈･蜉帶､懃衍縺ｫ莨ｴ縺�繝壹�ｼ繧ｸ逡ｪ蜿ｷ縺ｮ譖ｴ譁ｰ縲∫音螳壹く繝ｼ蜈･蜉帶凾縺ｮ繧ｿ繧､繝医Ν繝ｻ繧ｲ繝ｼ繝縺ｸ縺ｮ逕ｻ髱｢驕ｷ遘ｻ繝医Μ繧ｬ繝ｼ
+Source\System\Rule.h:17 : Possible mojibake '縺' -> /// @brief 謫堺ｽ懷峙隗｣縲√ユ繧ｭ繧ｹ繝医∵ｬ｡縺ｸ騾ｲ繧縺溘ａ縺ｮ繝翫ン繧ｲ繝ｼ繧ｷ繝ｧ繝ｳUI縺ｮ逕ｻ髱｢謠冗判
+Source\System\Rule.h:17 : Possible mojibake '繝' -> /// @brief 謫堺ｽ懷峙隗｣縲√ユ繧ｭ繧ｹ繝医∵ｬ｡縺ｸ騾ｲ繧縺溘ａ縺ｮ繝翫ン繧ｲ繝ｼ繧ｷ繝ｧ繝ｳUI縺ｮ逕ｻ髱｢謠冗判
+Source\System\Rule.h:17 : Possible mojibake '繧' -> /// @brief 謫堺ｽ懷峙隗｣縲√ユ繧ｭ繧ｹ繝医∵ｬ｡縺ｸ騾ｲ繧縺溘ａ縺ｮ繝翫ン繧ｲ繝ｼ繧ｷ繝ｧ繝ｳUI縺ｮ逕ｻ髱｢謠冗判
+Source\System\Rule.h:20 : Possible mojibake '縺' -> /// @brief 陦ｨ遉ｺ逕ｨ繧ｰ繝ｩ繝輔ぅ繝�繧ｯ繝上Φ繝峨Ν縲√ヵ繧ｩ繝ｳ繝医Μ繧ｽ繝ｼ繧ｹ縺ｮ繝｡繝｢繝ｪ隗｣謾ｾ
+Source\System\Rule.h:20 : Possible mojibake '繝' -> /// @brief 陦ｨ遉ｺ逕ｨ繧ｰ繝ｩ繝輔ぅ繝�繧ｯ繝上Φ繝峨Ν縲√ヵ繧ｩ繝ｳ繝医Μ繧ｽ繝ｼ繧ｹ縺ｮ繝｡繝｢繝ｪ隗｣謾ｾ
+Source\System\Rule.h:20 : Possible mojibake '繧' -> /// @brief 陦ｨ遉ｺ逕ｨ繧ｰ繝ｩ繝輔ぅ繝�繧ｯ繝上Φ繝峨Ν縲√ヵ繧ｩ繝ｳ繝医Μ繧ｽ繝ｼ繧ｹ縺ｮ繝｡繝｢繝ｪ隗｣謾ｾ
+Source\System\Rule.h:37 : Possible mojibake '縺' -> int rule_graph_;        ///< 謠冗判繧�繝ｪ繧ｽ繝ｼ繧ｹ邂｡逅�縺ｫ菴ｿ逕ｨ縺吶ｋ繝上Φ繝峨Ν
+Source\System\Rule.h:37 : Possible mojibake '繝' -> int rule_graph_;        ///< 謠冗判繧�繝ｪ繧ｽ繝ｼ繧ｹ邂｡逅�縺ｫ菴ｿ逕ｨ縺吶ｋ繝上Φ繝峨Ν
+Source\System\Rule.h:37 : Possible mojibake '繧' -> int rule_graph_;        ///< 謠冗判繧�繝ｪ繧ｽ繝ｼ繧ｹ邂｡逅�縺ｫ菴ｿ逕ｨ縺吶ｋ繝上Φ繝峨Ν
+Source\System\Rule.h:38 : Possible mojibake '縺' -> int font_handle_;       ///< 謠冗判繧�繝ｪ繧ｽ繝ｼ繧ｹ邂｡逅�縺ｫ菴ｿ逕ｨ縺吶ｋ繝上Φ繝峨Ν
+Source\System\Rule.h:38 : Possible mojibake '繝' -> int font_handle_;       ///< 謠冗判繧�繝ｪ繧ｽ繝ｼ繧ｹ邂｡逅�縺ｫ菴ｿ逕ｨ縺吶ｋ繝上Φ繝峨Ν
+Source\System\Rule.h:38 : Possible mojibake '繧' -> int font_handle_;       ///< 謠冗判繧�繝ｪ繧ｽ繝ｼ繧ｹ邂｡逅�縺ｫ菴ｿ逕ｨ縺吶ｋ繝上Φ繝峨Ν
+Source\System\Rule.h:39 : Possible mojibake '縺' -> int title_font_handle_; ///< 謠冗判繧�繝ｪ繧ｽ繝ｼ繧ｹ邂｡逅�縺ｫ菴ｿ逕ｨ縺吶ｋ繝上Φ繝峨Ν
+Source\System\Rule.h:39 : Possible mojibake '繝' -> int title_font_handle_; ///< 謠冗判繧�繝ｪ繧ｽ繝ｼ繧ｹ邂｡逅�縺ｫ菴ｿ逕ｨ縺吶ｋ繝上Φ繝峨Ν
+Source\System\Rule.h:39 : Possible mojibake '繧' -> int title_font_handle_; ///< 謠冗判繧�繝ｪ繧ｽ繝ｼ繧ｹ邂｡逅�縺ｫ菴ｿ逕ｨ縺吶ｋ繝上Φ繝峨Ν
+Source\System\Rule.h:41 : Possible mojibake '縺' -> MenuType selected_index_ = kMenuBgm; ///< 蜀�驛ｨ迥ｶ諷九ｒ邂｡逅�縺吶ｋ蛟､
+Source\System\Rule.h:43 : Possible mojibake '縺' -> /// @brief 髻ｳ驥上せ繝ｩ繧､繝繝ｼ謫堺ｽ懈凾縺ｫSE縺梧ｯ弱ヵ繝ｬ繝ｼ繝證ｴ逋ｺ縺励※蜃ｦ逅�雋闕ｷ縺ｨ閠ｳ髫懊ｊ縺ｪ髻ｳ隕壹′谿九ｋ縺ｮ繧帝亟縺舌ち繧､繝槭�ｼ
+Source\System\Rule.h:43 : Possible mojibake '繝' -> /// @brief 髻ｳ驥上せ繝ｩ繧､繝繝ｼ謫堺ｽ懈凾縺ｫSE縺梧ｯ弱ヵ繝ｬ繝ｼ繝證ｴ逋ｺ縺励※蜃ｦ逅�雋闕ｷ縺ｨ閠ｳ髫懊ｊ縺ｪ髻ｳ隕壹′谿九ｋ縺ｮ繧帝亟縺舌ち繧､繝槭�ｼ
+Source\System\Rule.h:43 : Possible mojibake '繧' -> /// @brief 髻ｳ驥上せ繝ｩ繧､繝繝ｼ謫堺ｽ懈凾縺ｫSE縺梧ｯ弱ヵ繝ｬ繝ｼ繝證ｴ逋ｺ縺励※蜃ｦ逅�雋闕ｷ縺ｨ閠ｳ髫懊ｊ縺ｪ髻ｳ隕壹′谿九ｋ縺ｮ繧帝亟縺舌ち繧､繝槭�ｼ
+Source\System\Rule.h:44 : Possible mojibake '縺' -> int play_se_delay_ = 0; ///< 髻ｳ驥上ｄ繧ｵ繧ｦ繝ｳ繝牙�咲函迥ｶ諷九ｒ邂｡逅�縺吶ｋ蛟､
+Source\System\Rule.h:44 : Possible mojibake '繝' -> int play_se_delay_ = 0; ///< 髻ｳ驥上ｄ繧ｵ繧ｦ繝ｳ繝牙�咲函迥ｶ諷九ｒ邂｡逅�縺吶ｋ蛟､
+Source\System\Rule.h:44 : Possible mojibake '繧' -> int play_se_delay_ = 0; ///< 髻ｳ驥上ｄ繧ｵ繧ｦ繝ｳ繝牙�咲函迥ｶ諷九ｒ邂｡逅�縺吶ｋ蛟､
+Source\System\Rule.h:46 : Possible mojibake '縺' -> /// @brief 蜑阪す繝ｼ繝ｳ縺ｮ豎ｺ螳壹く繝ｼ蜈･蜉帙�ｮ縲碁聞謚ｼ縺励阪ｒ隱､讀懃衍縺励√Ο繝ｼ繝臥峩蠕後↓諢丞峙縺帙★繝壹�ｼ繧ｸ縺後ａ縺上ｌ縺ｦ縺励∪縺�謖吝虚繧帝亟縺千幻莠医き繧ｦ繝ｳ繧ｿ繝ｼ
+Source\System\Rule.h:46 : Possible mojibake '繝' -> /// @brief 蜑阪す繝ｼ繝ｳ縺ｮ豎ｺ螳壹く繝ｼ蜈･蜉帙�ｮ縲碁聞謚ｼ縺励阪ｒ隱､讀懃衍縺励√Ο繝ｼ繝臥峩蠕後↓諢丞峙縺帙★繝壹�ｼ繧ｸ縺後ａ縺上ｌ縺ｦ縺励∪縺�謖吝虚繧帝亟縺千幻莠医き繧ｦ繝ｳ繧ｿ繝ｼ
+Source\System\Rule.h:46 : Possible mojibake '繧' -> /// @brief 蜑阪す繝ｼ繝ｳ縺ｮ豎ｺ螳壹く繝ｼ蜈･蜉帙�ｮ縲碁聞謚ｼ縺励阪ｒ隱､讀懃衍縺励√Ο繝ｼ繝臥峩蠕後↓諢丞峙縺帙★繝壹�ｼ繧ｸ縺後ａ縺上ｌ縺ｦ縺励∪縺�謖吝虚繧帝亟縺千幻莠医き繧ｦ繝ｳ繧ｿ繝ｼ
+Source\System\Rule.h:47 : Possible mojibake '縺' -> int scene_frames_ = 0; ///< 蜀�驛ｨ迥ｶ諷九ｒ邂｡逅�縺吶ｋ蛟､
+
+=== TYPOS & ROMAJI ===
+Source\Graphics\EffectManager.cpp:9 : Typo 'Initalize' -> maybe you meant 'initialize'
+Source\Graphics\EffectManager.cpp:19 : Typo 'Initalize' -> maybe you meant 'initialize'
+Source\Graphics\EffectManager.h:15 : Typo 'Initalize' -> maybe you meant 'initialize'
+Source\Scene\GameScene.cpp:23 : Typo 'tatumaki' -> maybe you meant 'tornado'
+Source\Scene\GameScene.cpp:72 : Typo 'tatumaki' -> maybe you meant 'tornado'
+Source\Scene\GameScene.cpp:111 : Typo 'tatumaki' -> maybe you meant 'tornado'
+Source\Scene\GameScene.cpp:256 : Typo 'tatumaki' -> maybe you meant 'tornado'
+Source\Scene\GameScene.cpp:259 : Typo 'tatumaki' -> maybe you meant 'tornado'
+Source\Scene\GameScene.cpp:261 : Typo 'tatumaki' -> maybe you meant 'tornado'
+Source\Scene\GameScene.h:50 : Typo 'tatumaki' -> maybe you meant 'tornado'
+Source\Stage\Tornado.cpp:19 : Typo 'tatumaki' -> maybe you meant 'tornado'
+Source\Stage\Tornado.h:48 : Typo 'tatumaki' -> maybe you meant 'tornado'
+Source\System\Main.cpp:81 : Typo 'Initalize' -> maybe you meant 'initialize'

@@ -16,7 +16,7 @@
 Tornado::Tornado(VECTOR pos)
 	: Object3D(pos)
 {
-	tatumaki_spawn_timer_ = 0;
+	tornado_spawn_timer_ = 0;
 	move_timer_ = 0;
 	speed_ = 5.0f;
 	velocity_ = VGet(1.0f, 0.0f, 0.0f);
@@ -28,7 +28,7 @@ Tornado::Tornado(VECTOR pos)
 	current_radius_ = 400.0f;
 	capsule_collider_->radius_ = current_radius_;
 
-	tatu_ = new EffekseerEffect("Resource/3D/エフェクト/竜巻.efk", position_, 200.0f);
+	tatu_ = new EffekseerEffect("Resource/3D/Effect/Tornado.efk", position_, 200.0f);
 	tatu_->Play();
 
 	// 序盤の難易度を抑え、プレイヤーに回避の余裕を与えるため初期サイズを小さく設定

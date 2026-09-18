@@ -78,7 +78,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Master::camera_->Initialize();
 	Master::debug_camera_->Initialize();
 
-	Master::effect_manager_->Initalize();
+	Master::effect_manager_->Initialize();
 
 	int previousTime = GetNowCount();
 

@@ -10,7 +10,7 @@ Combo::Combo()
 	combo_timer_ = 0.0f;
 	combo_max_time_ = 3.0f; // 難易度調整のためコンボ継続時間は3秒に固定
 
-	combo_image_ = Master::resource_manager_->LoadGraphics("Resource/2D/コンボ/コンボ文字.png");
+	combo_image_ = Master::resource_manager_->LoadGraphics("Resource/2D/Combo/ComboText.png");
 
 	combo_show_ = false;
 	combo_show_timer_ = 0.0f;

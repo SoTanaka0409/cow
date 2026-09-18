@@ -45,7 +45,7 @@ private:
 	float current_radius_;      ///< 見た目の拡縮と当たり判定を同期させるための現在の判定半径
 
 	int effect_timer_;         ///< 定期的なエフェクト再再生とSE暴発を防ぐインターバルタイマー
-	int tatumaki_spawn_timer_; ///< 前回の竜巻消失から次に出現するまでの湧き待ち猶予カウンタ
+	int tornado_spawn_timer_; ///< 前回の竜巻消失から次に出現するまでの湧き待ち猶予カウンタ
 
 	/// @brief ノックバック中のプレイヤー情報
 	struct KnockbackInfo {

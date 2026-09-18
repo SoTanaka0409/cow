@@ -41,7 +41,7 @@ CowMove::CowMove(std::string filename, VECTOR initPos)
 		death_timer_ = GameConstants::kCowTutorial.death_time_height;
 	}
 
-	cow_vm_ = new EffekseerEffect("Resource/3D/吸い込みエフェクト.efk", position_, 50.0f);
+	cow_vm_ = new EffekseerEffect("Resource/3D/Effect/CowVacuum.efk", position_, 50.0f);
 }
 
 CowMove::~CowMove()

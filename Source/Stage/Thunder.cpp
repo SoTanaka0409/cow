@@ -26,11 +26,11 @@ Thunder::Thunder(VECTOR pos)
 
 	capsule_collider_->radius_ = 230;
 
-	thunder_ = new EffekseerEffect("Resource/3D/エフェクト/雷落下.efk", pos_, 200.0f);
+	thunder_ = new EffekseerEffect("Resource/3D/Effect/Thunder_5a32.efk", pos_, 200.0f);
 	thunder_->SetScale(VGet(1.0f, 1.0f, 1.0f));
 
-	warning_ = new EffekseerEffect("Resource/3D/エフェクト/雷警告.efk", pos_, 40.0f);
-	stun_ = new EffekseerEffect("Resource/3D/エフェクト/スタン.efk", pos_, 20.0f);
+	warning_ = new EffekseerEffect("Resource/3D/Effect/Thunder_8a1c.efk", pos_, 40.0f);
+	stun_ = new EffekseerEffect("Resource/3D/Effect/.efk_fafd", pos_, 20.0f);
 }
 
 /// @brief 動的確保したエフェクトインスタンスのメモリ解放
