@@ -1,4 +1,5 @@
 #include "UIButton.h"
+#include "Master.h"
 
 /// @brief ボタンの種類、座標、テクスチャハンドル、ホバー状態、アニメーション位相の初期化
 UIButton::UIButton()
@@ -7,6 +8,8 @@ UIButton::UIButton()
 	, x(0), y(0)
 	, w(0), h(0)
 	, is_hover(false)
+	, hover_scale_(0.0f)
+	, hover_glow_alpha_(0.0f)
 	, animation_offset(0.0f)
 {
 }
@@ -24,6 +27,8 @@ void UIButton::Initialize(SelectionManager::Title t, int handle, int px, int py,
 	y = py;
 	animation_offset = anim_offset;
 	is_hover = false;
+	hover_scale_ = 0.0f;
+	hover_glow_alpha_ = 0.0f;
 
 	if (graph_handle != -1)
 	{
@@ -50,6 +55,19 @@ void UIButton::Update(int mouse_x, int mouse_y)
 	{
 		is_hover = false;
 	}
+	
+	// のどかなSFの「ふわっと」した挙動を出すため、フレームレート非依存の補間で滑らかに変化させる
+	float dt = Master::GetDeltaTimeScaler();
+	if (is_hover)
+	{
+		hover_scale_ += (1.0f - hover_scale_) * 0.2f * dt;
+		hover_glow_alpha_ += (255.0f - hover_glow_alpha_) * 0.15f * dt;
+	}
+	else
+	{
+		hover_scale_ += (0.0f - hover_scale_) * 0.2f * dt;
+		hover_glow_alpha_ += (0.0f - hover_glow_alpha_) * 0.15f * dt;
+	}
 }
 
 /// @param frame_count ゲーム全体の共通フレームカウンター
@@ -62,19 +80,34 @@ void UIButton::Draw(int frame_count) const
 	float wave = sin(frame_count * 0.05f + animation_offset) * 10.0f;
 	int drawY = y + (int)wave;
 
-	// 選択中の視覚的フィードバックを強調するため、ホバー時は中心から外側へ15pxずつ拡大して描画する
-	if (is_hover)
+	// 通常の拡大とADD（加算合成）によるSF風のふんわりした発光エフェクトを描画
+	int expand = (int)(25.0f * hover_scale_);
+	int center_x = x + w / 2;
+	int center_y = drawY + h / 2;
+	int target_w = (w / 2) + expand;
+	int target_h = (h / 2) + expand;
+
+	// メイン描画
+	DrawExtendGraph(
+		center_x - target_w,
+		center_y - target_h,
+		center_x + target_w,
+		center_y + target_h,
+		graph_handle, TRUE);
+
+	// 発光層（ADD合成）
+	if (hover_glow_alpha_ > 5.0f)
 	{
-		int expand = 15;
+		SetDrawBlendMode(DX_BLENDMODE_ADD, (int)hover_glow_alpha_);
+		// 発光層はメインよりさらに少しだけ大きくする
+		int glow_w = target_w + 10;
+		int glow_h = target_h + 10;
 		DrawExtendGraph(
-			x - expand,
-			drawY - expand,
-			x + w + expand,
-			drawY + h + expand,
+			center_x - glow_w,
+			center_y - glow_h,
+			center_x + glow_w,
+			center_y + glow_h,
 			graph_handle, TRUE);
-	}
-	else
-	{
-		DrawGraph(x, drawY, graph_handle, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 }
