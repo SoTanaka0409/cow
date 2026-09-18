@@ -16,22 +16,22 @@ SoundManager::~SoundManager()
 void SoundManager::Initialize()
 {
 	// ゲーム中のBGMロードによる一瞬のフレーム落ち（スパイク）を防ぐため、ゲーム起動時に先行ロードする
-	LoadBGM(SoundBgm::kBgmTitle, "Resource/BGM/シーン/BGM_タイトル.mp3");
-	LoadBGM(SoundBgm::kBgmGame, "Resource/BGM/シーン/BGM_ゲーム中.mp3");
-	LoadBGM(SoundBgm::kBgmResult, "Resource/BGM/シーン/BGM_リザルト.mp3");
-	LoadBGM(SoundBgm::kBgmTutorial, "Resource/BGM/シーン/BGM_チュートリアル.mp3");
-	LoadBGM(SoundBgm::kBgmRule, "Resource/BGM/シーン/BGM_ルール説明.mp3");
+	LoadBGM(SoundBgm::kBgmTitle, "Resource/BGM/Scene/BGM_Title.mp3");
+	LoadBGM(SoundBgm::kBgmGame, "Resource/BGM/Scene/BGM_InGame.mp3");
+	LoadBGM(SoundBgm::kBgmResult, "Resource/BGM/Scene/BGM_Result.mp3");
+	LoadBGM(SoundBgm::kBgmTutorial, "Resource/BGM/Scene/BGM_Tutorial.mp3");
+	LoadBGM(SoundBgm::kBgmRule, "Resource/BGM/Scene/BGM__ba57.mp3");
 
-	LoadSE(SoundSe::kSeDecide, "Resource/SE/UI/効果音_決定.mp3");
-	LoadSE(SoundSe::kSeCow, "Resource/SE/牛/効果音_牛の鳴き声.mp3");
-	LoadSE(SoundSe::kSeChicken, "Resource/SE/牛/効果音_牛の鳴き声.mp3");
-	LoadSE(SoundSe::kSeTornado, "Resource/SE/天候/効果音_竜巻.mp3");
-	LoadSE(SoundSe::kSeKaminari, "Resource/SE/天候/効果音_雷.mp3");
-	LoadSE(SoundSe::kSeTutorialChange, "Resource/SE/UI/効果音_画面切り替え.mp3");
-	LoadSE(SoundSe::kSeBeam, "Resource/SE/プレイヤー/効果音_吸い込み.mp3");
-	LoadSE(SoundSe::kSeSkillStatus, "Resource/SE/スキル/効果音_ステータス上昇.mp3");
-	LoadSE(SoundSe::kSeSkillFood, "Resource/SE/スキル/効果音_牛の餌スキル.mp3");
-	LoadSE(SoundSe::kSeBaitFinal, "Resource/SE/スキル/効果音_高速移動.mp3");
+	LoadSE(SoundSe::kSeDecide, "Resource/SE/UI/SE_Decide.mp3");
+	LoadSE(SoundSe::kSeCow, "Resource/SE/Cow/SE_CowCry_f318.mp3");
+	LoadSE(SoundSe::kSeChicken, "Resource/SE/Cow/SE_CowCry_f318.mp3");
+	LoadSE(SoundSe::kSeTornado, "Resource/SE/Weather/SE_Tornado.mp3");
+	LoadSE(SoundSe::kSeKaminari, "Resource/SE/Weather/SE_Thunder.mp3");
+	LoadSE(SoundSe::kSeTutorialChange, "Resource/SE/UI/SE_Switch_cbce.mp3");
+	LoadSE(SoundSe::kSeBeam, "Resource/SE/Player/SE_Vacuum.mp3");
+	LoadSE(SoundSe::kSeSkillStatus, "Resource/SE/Skill/SE_StatusUp.mp3");
+	LoadSE(SoundSe::kSeSkillFood, "Resource/SE/Skill/SE_CowBaitSkill_e203.mp3");
+	LoadSE(SoundSe::kSeBaitFinal, "Resource/SE/Skill/SE__79aa.mp3");
 }
 
 /// @brief DxLib内の全サウンドメモリハンドルの破棄、および管理リストの全消去

@@ -77,26 +77,26 @@ void TutorialScene::Initialize()
 	CreateWalls();
 
 	new Floor(
-		"Resource/2D/ゲーム画面/ゲーム背景.png",
+		"Resource/2D/InGame/GameBackground.png",
 		VGet(0, 0, 0),
 		VGet(-11500, 0, -11500),
 		VGet(11500, 0, 11500)
 	);
 
 	Master::sound_manager_->PlayBGM(SoundManager::kBgmTutorial);
-	auto Player = new Player3D("Resource/3D/キャラクター/プレイヤー/プレイヤーUFO.mv1", VGet(0.0f, 1000.0f, 0.0f));
+	auto Player = new Player3D("Resource/3D/Character/Player/PlayerUFO.mv1", VGet(0.0f, 1000.0f, 0.0f));
 	Player->SetScale(0.6f);
 
 	SetCamera(Master::camera_);
 
 	VECTOR pos = VGet(1200, 150, 0);
 	int GraphSize_x = 800, GraphSize_y = 300;
-	texture_  = new Texture("Resource/2D/チュートリアル/チュートリアル_移動.png", pos, GraphSize_x, GraphSize_y, true);
-	texture2_ = new Texture("Resource/2D/チュートリアル/チュートリアル_吸い込み.png", pos, GraphSize_x, GraphSize_y, true);
-	texture3_ = new Texture("Resource/2D/チュートリアル/チュートリアル_コンボ.png", pos, GraphSize_x, GraphSize_y, true);
-	texture4_ = new Texture("Resource/2D/チュートリアル/チュートリアル_フェーズ.png", pos, GraphSize_x, GraphSize_y, true);
-	texture5_ = new Texture("Resource/2D/チュートリアル/チュートリアル_スキル.png", pos, GraphSize_x, GraphSize_y, true);
-	texture6_ = new Texture("Resource/2D/チュートリアル/チュートリアル_フィーバー.png", pos, GraphSize_x, GraphSize_y, true);
+	texture_  = new Texture("Resource/2D/Tutorial/Tutorial__d07a.png", pos, GraphSize_x, GraphSize_y, true);
+	texture2_ = new Texture("Resource/2D/Tutorial/Tutorial_Vacuum.png", pos, GraphSize_x, GraphSize_y, true);
+	texture3_ = new Texture("Resource/2D/Tutorial/Tutorial_Combo.png", pos, GraphSize_x, GraphSize_y, true);
+	texture4_ = new Texture("Resource/2D/Tutorial/Tutorial_Phase.png", pos, GraphSize_x, GraphSize_y, true);
+	texture5_ = new Texture("Resource/2D/Tutorial/Tutorial_Skill.png", pos, GraphSize_x, GraphSize_y, true);
+	texture6_ = new Texture("Resource/2D/Tutorial/Tutorial__e727.png", pos, GraphSize_x, GraphSize_y, true);
 }
 
 void TutorialScene::CreateFences()
@@ -105,22 +105,22 @@ void TutorialScene::CreateFences()
 	{
 		float z = 5050.0f;
 		float x = 500.0f + (i * 1000.0f);
-		new Object_Stage("Resource/3D/ステージ/柵/柵.mv1", VGet(x, -25.0f, z), 2.5f, VGet(0.0f, 0.0f, 0.0f));
-		new Object_Stage("Resource/3D/ステージ/柵/柵.mv1", VGet(-x, -25.0f, z), 2.5f, VGet(0.0f, 0.0f, 0.0f));
+		new Object_Stage("Resource/3D/Stage/Fence/Fence.mv1", VGet(x, -25.0f, z), 2.5f, VGet(0.0f, 0.0f, 0.0f));
+		new Object_Stage("Resource/3D/Stage/Fence/Fence.mv1", VGet(-x, -25.0f, z), 2.5f, VGet(0.0f, 0.0f, 0.0f));
 
-		new Object_Stage("Resource/3D/ステージ/柵/柵.mv1", VGet(x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F, 0.0f));
-		new Object_Stage("Resource/3D/ステージ/柵/柵.mv1", VGet(-x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F, 0.0f));
+		new Object_Stage("Resource/3D/Stage/Fence/Fence.mv1", VGet(x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F, 0.0f));
+		new Object_Stage("Resource/3D/Stage/Fence/Fence.mv1", VGet(-x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F, 0.0f));
 	}
 
 	for (int i = 0; i < 5; ++i)
 	{
 		float x = 5050.0f;
 		float z = 500.0f + (i * 1000.0f);
-		new Object_Stage("Resource/3D/ステージ/柵/柵.mv1", VGet(x, -25.0f, z), 2.5f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
-		new Object_Stage("Resource/3D/ステージ/柵/柵.mv1", VGet(x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
+		new Object_Stage("Resource/3D/Stage/Fence/Fence.mv1", VGet(x, -25.0f, z), 2.5f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
+		new Object_Stage("Resource/3D/Stage/Fence/Fence.mv1", VGet(x, -25.0f, -z), 2.5f, VGet(0.0f, DX_PI_F / 2.0f, 0.0f));
 
-		new Object_Stage("Resource/3D/ステージ/柵/柵.mv1", VGet(-x, -25.0f, z), 2.5f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
-		new Object_Stage("Resource/3D/ステージ/柵/柵.mv1", VGet(-x, -25.0f, -z), 2.5f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
+		new Object_Stage("Resource/3D/Stage/Fence/Fence.mv1", VGet(-x, -25.0f, z), 2.5f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
+		new Object_Stage("Resource/3D/Stage/Fence/Fence.mv1", VGet(-x, -25.0f, -z), 2.5f, VGet(0.0f, -DX_PI_F / 2.0f, 0.0f));
 	}
 }
 
@@ -265,7 +265,7 @@ void TutorialScene::UpdateStateSkill()
 		Master::sound_manager_->PlaySE(SoundManager::kSeTutorialChange);
 
 		// フィーバーモード用でゴールド牛を召喚
-		auto g = new GoldCow("Resource/3D/キャラクター/牛/金の牛.mv1", VGet(1000, 0, 1000), GoldCow::kNoFever);
+		auto g = new GoldCow("Resource/3D/Character/Cow/Cow_f6cf.mv1", VGet(1000, 0, 1000), GoldCow::kNoFever);
 		g->SetScale(100);
 	}
 }

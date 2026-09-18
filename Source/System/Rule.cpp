@@ -1,4 +1,4 @@
-ï»¿#include "Scene.h"
+#include "Scene.h"
 #include "Rule.h"
 #include "DxLib.h"
 #include "Master.h"
@@ -6,12 +6,12 @@
 #include "SceneManager.h"
 #include "InputManager.h"
 
-/// @brief è¨­å®šç”»é¢ã§ä½¿ç”¨ã™ã‚‹å°‚ç”¨èƒŒæ™¯ãƒ†ã‚¯ã‚¹ãƒãƒ£ãŠã‚ˆã³å„ç¨®UIãƒ•ã‚©ãƒ³ãƒˆã®VRAMãƒ­ãƒ¼ãƒ‰
+/// @brief İ’è‰æ–Ê‚Åg—p‚·‚éê—p”wŒiƒeƒNƒXƒ`ƒƒ‚¨‚æ‚ÑŠeíUIƒtƒHƒ“ƒg‚ÌVRAMƒ[ƒh
 Rule::Rule()
 {
 	rule_graph_ = Master::resource_manager_->LoadGraphics(GameConstants::ImagePaths::kSettingsBg);
-	title_font_handle_ = CreateFontToHandle("ãƒ¡ã‚¤ãƒªã‚ª", 80, 5);
-	font_handle_ = CreateFontToHandle("ãƒ¡ã‚¤ãƒªã‚ª", 50, 3);
+	title_font_handle_ = CreateFontToHandle("ƒƒCƒŠƒI", 80, 5);
+	font_handle_ = CreateFontToHandle("ƒƒCƒŠƒI", 50, 3);
 
 	selected_index_ = kMenuBgm;
 	play_se_delay_ = 0;
@@ -19,11 +19,11 @@ Rule::Rule()
 
 Rule::~Rule()
 {
-	// ãƒ¡ãƒ¢ãƒªç®¡ç†ï¼šã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆãŒä½•åº¦ã‚‚è¡Œã‚ã‚ŒãŸéš›ã«ã€DxLibå†…éƒ¨ã®å‹•çš„ãƒ•ã‚©ãƒ³ãƒˆãƒãƒ³ãƒ‰ãƒ«ãŒVRAMã«è“„ç©ã—ã¦èµ·ãã‚‹ãƒªãƒ¼ã‚¯ã‚’é˜²æ­¢
+	// ƒƒ‚ƒŠŠÇ—FƒV[ƒ“Ø‚è‘Ö‚¦‚ª‰½“x‚às‚í‚ê‚½Û‚ÉADxLib“à•”‚Ì“®“IƒtƒHƒ“ƒgƒnƒ“ƒhƒ‹‚ªVRAM‚É’~Ï‚µ‚Ä‹N‚«‚éƒŠ[ƒN‚ğ–h~
 	Finalize();
 }
 
-/// @brief ãƒ•ãƒ¬ãƒ¼ãƒ ã‚«ã‚¦ãƒ³ãƒˆã®é€²è¡Œã€ãŠã‚ˆã³ãƒã‚¦ã‚¹ãƒ»ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰å…¥åŠ›ã«åŒæœŸã—ãŸè¨­å®šé …ç›®ã®æ›´æ–°
+/// @brief ƒtƒŒ[ƒ€ƒJƒEƒ“ƒg‚ÌisA‚¨‚æ‚Ñƒ}ƒEƒXEƒL[ƒ{[ƒh“ü—Í‚É“¯Šú‚µ‚½İ’è€–Ú‚ÌXV
 void Rule::Update()
 {
 	Scene::Update();
@@ -39,7 +39,7 @@ void Rule::Update()
 	bool isMouseClicked = (mouseInput & MOUSE_INPUT_LEFT) != 0 && (prevMouseInput & MOUSE_INPUT_LEFT) == 0;
 	bool isMouseHeld = (mouseInput & MOUSE_INPUT_LEFT) != 0;
 
-	// UIè¨­è¨ˆï¼šå‰ã‚·ãƒ¼ãƒ³ï¼ˆã‚¿ã‚¤ãƒˆãƒ«ç­‰ï¼‰ã§ã®æ±ºå®šã‚¯ãƒªãƒƒã‚¯ã®å…¥åŠ›æ®‹éŸ¿ãŒå³åº§ã«åæ˜ ã•ã‚Œã€äºˆæœŸã›ã¬èª¤æ“ä½œã‚’å¼•ãèµ·ã“ã™ãƒã‚°ã‚’é˜²ããƒãƒ£ã‚¿ãƒªãƒ³ã‚°é˜²æ­¢çŒ¶äºˆ
+	// UIİŒvF‘OƒV[ƒ“iƒ^ƒCƒgƒ‹“™j‚Å‚ÌŒˆ’èƒNƒŠƒbƒN‚Ì“ü—Íc‹¿‚ª‘¦À‚É”½‰f‚³‚êA—\Šú‚¹‚ÊŒë‘€ì‚ğˆø‚«‹N‚±‚·ƒoƒO‚ğ–h‚®ƒ`ƒƒƒ^ƒŠƒ“ƒO–h~—P—\
 	if (scene_frames_ < 30)
 	{
 		prevMouseInput = mouseInput;
@@ -51,13 +51,13 @@ void Rule::Update()
 	prevMouseInput = mouseInput;
 }
 
-/// @return ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆå‡¦ç†ä¸­ã®å ´åˆã¯ trueã€ãã‚Œä»¥å¤–ã¯ false
-/// @brief BGMéŸ³é‡ã®ç·šå½¢æ¸›è¡°ã€ãŠã‚ˆã³ãƒ•ã‚§ãƒ¼ãƒ‰å®Œäº†æ™‚ã®ã‚·ãƒ¼ãƒ³ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã¸ã®é·ç§»ãƒªã‚¯ã‚¨ã‚¹ãƒˆ
+/// @return ƒtƒF[ƒhƒAƒEƒgˆ—’†‚Ìê‡‚Í trueA‚»‚êˆÈŠO‚Í false
+/// @brief BGM‰¹—Ê‚ÌüŒ`Œ¸ŠA‚¨‚æ‚ÑƒtƒF[ƒhŠ®—¹‚ÌƒV[ƒ“ƒ}ƒl[ƒWƒƒ[‚Ö‚Ì‘JˆÚƒŠƒNƒGƒXƒg
 bool Rule::UpdateFadeState()
 {
 	if (fade_state_ == kSceneFadeOut)
 	{
-		// æ¼”å‡ºä»•æ§˜ï¼šç„¡éŸ³ã®ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ã¸æ€¥ã«é·ç§»ã™ã‚‹éš›ã®è´è¦šçš„é•å’Œæ„Ÿã‚’å’Œã‚‰ã’ã‚‹ãŸã‚ã€ç”»é¢ã®æš—è»¢ç‡ï¼ˆAlphaï¼‰ã«åŒæœŸã•ã›ã¦è¨­å®šBGMã‚’ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆ
+		// ‰‰od—lF–³‰¹‚Ìƒ^ƒCƒgƒ‹‰æ–Ê‚Ö‹}‚É‘JˆÚ‚·‚éÛ‚Ì’®Šo“Iˆá˜aŠ´‚ğ˜a‚ç‚°‚é‚½‚ßA‰æ–Ê‚ÌˆÃ“]—¦iAlphaj‚É“¯Šú‚³‚¹‚Äİ’èBGM‚ğƒtƒF[ƒhƒAƒEƒg
 		Master::sound_manager_->SetBGMVolume((Master::sound_manager_->GetMasterBGMVolume() * (int)(255 - GetFadeAlpha())) / 255);
 		if (GetFadeAlpha() >= 255)
 		{
@@ -69,12 +69,12 @@ bool Rule::UpdateFadeState()
 	return false;
 }
 
-/// @param mouse_y ç¾åœ¨ã®ãƒã‚¦ã‚¹åº§æ¨™
-/// @param mouseInput ç¾åœ¨ã®ã‚¯ãƒªãƒƒã‚¯çŠ¶æ…‹
-/// @param isMouseClicked 1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚¯ãƒªãƒƒã‚¯åˆ¤å®š
-/// @param isMouseHeld æŠ¼ã—ç¶šã‘åˆ¤å®š
+/// @param mouse_y Œ»İ‚Ìƒ}ƒEƒXÀ•W
+/// @param mouseInput Œ»İ‚ÌƒNƒŠƒbƒNó‘Ô
+/// @param isMouseClicked 1ƒtƒŒ[ƒ€ƒNƒŠƒbƒN”»’è
+/// @param isMouseHeld ‰Ÿ‚µ‘±‚¯”»’è
 /// @brief mouse_x
-/// @details ãƒœãƒªãƒ¥ãƒ¼ãƒ ã®æ›¸ãæ›ãˆã€å¤‰æ›´éŸ³SEã®ãƒˆãƒªã‚¬ãƒ¼ã€ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆã‚¹ãƒ†ãƒ¼ãƒˆã¸ã®ç§»è¡Œå‡¦ç†
+/// @details ƒ{ƒŠƒ…[ƒ€‚Ì‘‚«Š·‚¦A•ÏX‰¹SE‚ÌƒgƒŠƒK[AƒtƒF[ƒhƒAƒEƒgƒXƒe[ƒg‚Ö‚ÌˆÚsˆ—
 void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClicked, bool isMouseHeld)
 {
 	static int last_mouse_x = -1;
@@ -89,8 +89,8 @@ void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClic
 	int gapY = 120;
 	int startX = 400;
 
-	// ãƒã‚¦ã‚¹ãŒå®Ÿéš›ã«å‹•ã„ãŸæ™‚ã®ã¿ã€ãƒã‚¦ã‚¹åº§æ¨™ã«ã‚ˆã‚‹ãƒ¡ãƒ‹ãƒ¥ãƒ¼é¸æŠã®ä¸Šæ›¸ãã‚’è¡Œã†
-	// ï¼ˆã“ã‚Œã«ã‚ˆã‚Šã‚­ãƒ¼ãƒœãƒ¼ãƒ‰æ“ä½œã¨ãƒã‚¦ã‚¹ãŒå¹²æ¸‰ã—ã¦ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãŒé¸ã¹ãªããªã‚‹ãƒã‚°ã‚’é˜²ãï¼‰
+	// ƒ}ƒEƒX‚ªÀÛ‚É“®‚¢‚½‚Ì‚İAƒ}ƒEƒXÀ•W‚É‚æ‚éƒƒjƒ…[‘I‘ğ‚Ìã‘‚«‚ğs‚¤
+	// i‚±‚ê‚É‚æ‚èƒL[ƒ{[ƒh‘€ì‚Æƒ}ƒEƒX‚ªŠ±Â‚µ‚Äƒƒjƒ…[‚ª‘I‚×‚È‚­‚È‚éƒoƒO‚ğ–h‚®j
 	if (mouse_moved)
 	{
 		for (int i = 0; i < kMenuMax; i++)
@@ -129,7 +129,7 @@ void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClic
 					{
 						Master::sound_manager_->SetMasterSEVolume(newVol);
 
-						// è´è¦šä¿è­·ï¼šãƒ‰ãƒ©ãƒƒã‚°ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ä¸­ã«SEå†ç”ŸAPIï¼ˆPlaySEï¼‰ãŒæ¯ãƒ•ãƒ¬ãƒ¼ãƒ é‡è¤‡ã—ã¦æš´ç™ºã—ã€éŸ³å‰²ã‚Œã‚„ã‚¯ãƒ©ãƒƒã‚·ãƒ¥ã‚’å¼•ãèµ·ã“ã™ã®ã‚’æŠ‘æ­¢
+						// ’®Šo•ÛŒìFƒhƒ‰ƒbƒOƒXƒNƒ[ƒ‹’†‚ÉSEÄ¶APIiPlaySEj‚ª–ˆƒtƒŒ[ƒ€d•¡‚µ‚Ä–\”­‚µA‰¹Š„‚ê‚âƒNƒ‰ƒbƒVƒ…‚ğˆø‚«‹N‚±‚·‚Ì‚ğ—}~
 						if (play_se_delay_ <= 0)
 						{
 							Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
@@ -165,7 +165,7 @@ void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClic
 		Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
 	}
 
-	// Backspaceã‚­ãƒ¼ãŒæŠ¼ã•ã‚ŒãŸå ´åˆã¯ç„¡æ¡ä»¶ã§ã‚¿ã‚¤ãƒˆãƒ«ã¸æˆ»ã‚‹
+	// BackspaceƒL[‚ª‰Ÿ‚³‚ê‚½ê‡‚Í–³ğŒ‚Åƒ^ƒCƒgƒ‹‚Ö–ß‚é
 	if (InputManager::CheckDownKey(KEY_INPUT_BACK))
 	{
 		Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
@@ -195,7 +195,7 @@ void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClic
 			int currentVol = Master::sound_manager_->GetMasterSEVolume();
 			Master::sound_manager_->SetMasterSEVolume(currentVol + volChange);
 
-			// ãƒã‚¦ã‚¹ãƒ‰ãƒ©ãƒƒã‚°æ“ä½œæ™‚ã¨åŒæ§˜ã€ã‚­ãƒ¼æŠ¼ã—ã£ã±ãªã—ã«ã‚ˆã‚‹çŸ­æ™‚é–“ã§ã®å¤§é‡ã®SEå¤šé‡å†ç”Ÿã‚’åˆ¶é™ã™ã‚‹ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒ«
+			// ƒ}ƒEƒXƒhƒ‰ƒbƒO‘€ì‚Æ“¯—lAƒL[‰Ÿ‚µ‚Á‚Ï‚È‚µ‚É‚æ‚é’ZŠÔ‚Å‚Ì‘å—Ê‚ÌSE‘½dÄ¶‚ğ§ŒÀ‚·‚éƒCƒ“ƒ^[ƒoƒ‹
 			if (play_se_delay_ <= 0)
 			{
 				Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
@@ -208,13 +208,13 @@ void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClic
 	{
 		if (selected_index_ == kMenuShadow)
 		{
-			// æ±ºå®šã‚­ãƒ¼ã§å½±ã®ON/OFFã‚’åè»¢ã•ã›ã€SEå†ç”Ÿã§ãƒ•ã‚£ãƒ¼ãƒ‰ãƒãƒƒã‚¯ã‚’ä¸ãˆã‚‹
+			// Œˆ’èƒL[‚Å‰e‚ÌON/OFF‚ğ”½“]‚³‚¹ASEÄ¶‚ÅƒtƒB[ƒhƒoƒbƒN‚ğ—^‚¦‚é
 			Master::is_shadow_enabled_ = !Master::is_shadow_enabled_;
 			Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
 		}
 		else if (selected_index_ == kMenuDebug)
 		{
-			// ãƒ‡ãƒãƒƒã‚°ãƒ¢ãƒ¼ãƒ‰ã®ON/OFFã‚’åè»¢
+			// ƒfƒoƒbƒOƒ‚[ƒh‚ÌON/OFF‚ğ”½“]
 			Master::is_debug_mode_ = !Master::is_debug_mode_;
 			Master::sound_manager_->PlaySE(SoundManager::kSeDecide);
 		}
@@ -226,7 +226,7 @@ void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClic
 		}
 	}
 
-	// ãƒã‚¦ã‚¹ã‚¯ãƒªãƒƒã‚¯ã§ã‚‚ON/OFFã‚’åˆ‡ã‚Šæ›¿ãˆã‚‰ã‚Œã‚‹ã‚ˆã†ã«ã™ã‚‹
+	// ƒ}ƒEƒXƒNƒŠƒbƒN‚Å‚àON/OFF‚ğØ‚è‘Ö‚¦‚ç‚ê‚é‚æ‚¤‚É‚·‚é
 	if (isMouseClicked)
 	{
 		if (selected_index_ == kMenuShadow)
@@ -242,7 +242,7 @@ void Rule::UpdateMenu(int mouse_x, int mouse_y, int mouseInput, bool isMouseClic
 	}
 }
 
-/// @brief æš—è»¢èƒŒæ™¯ã€ãƒœãƒªãƒ¥ãƒ¼ãƒ ã‚¹ãƒ©ã‚¤ãƒ€ãƒ¼ã€å„ç¨®æ–‡å­—é …ç›®ã®ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã¸ã®è»¢é€
+/// @brief ˆÃ“]”wŒiAƒ{ƒŠƒ…[ƒ€ƒXƒ‰ƒCƒ_[AŠeí•¶š€–Ú‚ÌƒoƒbƒNƒoƒbƒtƒ@‚Ö‚Ì“]‘—
 void Rule::Draw()
 {
 	DrawBackground();
@@ -256,12 +256,12 @@ void Rule::Draw()
 	}
 }
 
-/// @brief èƒŒæ™¯ã®æ‹¡å¤§æç”»ã€åŠé€æ˜ã®æš—å¹•çŸ©å½¢æç”»ã€ãŠã‚ˆã³ã‚¿ã‚¤ãƒˆãƒ«ãƒ­ã‚´ãƒ†ã‚­ã‚¹ãƒˆã®æç”»
+/// @brief ”wŒi‚ÌŠg‘å•`‰æA”¼“§–¾‚ÌˆÃ–‹‹éŒ`•`‰æA‚¨‚æ‚Ñƒ^ƒCƒgƒ‹ƒƒSƒeƒLƒXƒg‚Ì•`‰æ
 void Rule::DrawBackground()
 {
 	DrawExtendGraph(0, -100, 1600, 1000, rule_graph_, TRUE);
 
-	// è¦–èªæ€§ç¢ºä¿ï¼šæ˜ã‚‹ã„è‰²èª¿ã®èƒŒæ™¯ç”»åƒãŒãƒ­ãƒ¼ãƒ‰ã•ã‚ŒãŸå ´åˆã§ã‚‚ã€é‡ã­ã¦æç”»ã•ã‚Œã‚‹ç™½ã„ãƒ•ã‚©ãƒ³ãƒˆã‚„é»„è‰²ã®é¸æŠãƒãƒ¼ã‚«ãƒ¼ãŒæ½°ã‚Œãªã„ã‚ˆã†ã«é®å…‰ã™ã‚‹
+	// ‹”F«Šm•ÛF–¾‚é‚¢F’²‚Ì”wŒi‰æ‘œ‚ªƒ[ƒh‚³‚ê‚½ê‡‚Å‚àAd‚Ë‚Ä•`‰æ‚³‚ê‚é”’‚¢ƒtƒHƒ“ƒg‚â‰©F‚Ì‘I‘ğƒ}[ƒJ[‚ª’×‚ê‚È‚¢‚æ‚¤‚ÉÕŒõ‚·‚é
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
 	DrawBox(0, 0, 1600, 900, GetColor(0, 0, 0), TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
@@ -269,7 +269,7 @@ void Rule::DrawBackground()
 	DrawStringToHandle(650, 100, "SETTINGS", GetColor(255, 255, 255), title_font_handle_);
 }
 
-/// @brief é¸æŠçŠ¶æ…‹ã«é€£å‹•ã—ãŸã‚«ãƒ¼ã‚½ãƒ«è¨˜å·ã€ãŠã‚ˆã³å„ãƒ¡ãƒ‹ãƒ¥ãƒ¼é …ç›®ã®æç”»
+/// @brief ‘I‘ğó‘Ô‚É˜A“®‚µ‚½ƒJ[ƒ\ƒ‹‹L†A‚¨‚æ‚ÑŠeƒƒjƒ…[€–Ú‚Ì•`‰æ
 void Rule::DrawMenu()
 {
 	int startY = 250;
@@ -319,7 +319,7 @@ void Rule::DrawMenu()
 		}
 		else if (i == kMenuShadow)
 		{
-			// ç¾åœ¨ã®å½±ã®çŠ¶æ…‹ã‚’æ–‡å­—åˆ—ã§è¡¨ç¤ºã—ã€ã‚¯ãƒªãƒƒã‚¯ or Enterã§åˆ‡ã‚Šæ›¿ãˆã§ãã‚‹ã“ã¨ã‚’ç¤ºã™
+			// Œ»İ‚Ì‰e‚Ìó‘Ô‚ğ•¶š—ñ‚Å•\¦‚µAƒNƒŠƒbƒN or Enter‚ÅØ‚è‘Ö‚¦‚Å‚«‚é‚±‚Æ‚ğ¦‚·
 			const char* shadowState = Master::is_shadow_enabled_ ? "[ ON  ]" : "[ OFF ]";
 			unsigned int stateColor = Master::is_shadow_enabled_ ? GetColor(0, 255, 100) : GetColor(180, 180, 180);
 			DrawFormatStringToHandle(startX, y, color, font_handle_, "Shadow");
@@ -327,7 +327,7 @@ void Rule::DrawMenu()
 		}
 		else if (i == kMenuDebug)
 		{
-			// ãƒ‡ãƒãƒƒã‚°ãƒ¢ãƒ¼ãƒ‰ã®çŠ¶æ…‹ã‚’è¡¨ç¤º
+			// ƒfƒoƒbƒOƒ‚[ƒh‚Ìó‘Ô‚ğ•\¦
 			const char* debugState = Master::is_debug_mode_ ? "[ ON  ]" : "[ OFF ]";
 			unsigned int stateColor = Master::is_debug_mode_ ? GetColor(0, 255, 100) : GetColor(180, 180, 180);
 			DrawFormatStringToHandle(startX, y, color, font_handle_, "Debug Mode");
@@ -340,10 +340,10 @@ void Rule::DrawMenu()
 	}
 }
 
-/// @brief ãƒ•ã‚§ãƒ¼ãƒ‰çŠ¶æ…‹ã®åˆæœŸåŒ–ã€é¸æŠã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®è¦å®šã€ãŠã‚ˆã³è¨­å®šç”»é¢ç”¨BGMï¼ˆkBgmRuleï¼‰ã®å†ç”Ÿé–‹å§‹
+/// @brief ƒtƒF[ƒhó‘Ô‚Ì‰Šú‰»A‘I‘ğƒCƒ“ƒfƒbƒNƒX‚Ì‹K’èA‚¨‚æ‚Ñİ’è‰æ–Ê—pBGMikBgmRulej‚ÌÄ¶ŠJn
 void Rule::Initialize()
 {
-	SetMouseDispFlag(true); // è¨­å®šç”»é¢ã§ã¯ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã‚’è¡¨ç¤ºã™ã‚‹
+	SetMouseDispFlag(true); // İ’è‰æ–Ê‚Å‚Íƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ğ•\¦‚·‚é
 
 	fade_state_ = kSceneFadeIn;
 	SetFadeAlpha(255.0f);
@@ -352,7 +352,7 @@ void Rule::Initialize()
 	Master::sound_manager_->PlayBGM(SoundManager::kBgmRule);
 }
 
-/// @brief ä½œæˆã—ãŸãƒ•ã‚©ãƒ³ãƒˆãƒãƒ³ãƒ‰ãƒ«ã®ç ´æ£„ãŠã‚ˆã³BGMå†ç”Ÿã®å³æ™‚åœæ­¢
+/// @brief ì¬‚µ‚½ƒtƒHƒ“ƒgƒnƒ“ƒhƒ‹‚Ì”jŠü‚¨‚æ‚ÑBGMÄ¶‚Ì‘¦’â~
 void Rule::Finalize()
 {
 	DeleteFontToHandle(font_handle_);

@@ -47,7 +47,7 @@ private:
 
 
 
-	int tatumaki_spawn_timer_; ///< 時間経過や処理間隔を管理するカウンター
+	int tornado_spawn_timer_; ///< 時間経過や処理間隔を管理するカウンター
 	int mass_spawn_timer_;     ///< 時間経過や処理間隔を管理するカウンター
 	Phase phase_;              ///< 現在の状態や種別を管理する値
 	int font_back_graph_;      ///< 描画やリソース管理に使用するハンドル

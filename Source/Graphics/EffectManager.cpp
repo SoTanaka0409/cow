@@ -6,7 +6,7 @@ EffectManager::EffectManager()
 	: effect_resource_handle_(-1)
 	, playing_effect_handle_(-1)
 {
-	Initalize();
+	Initialize();
 }
 
 EffectManager::~EffectManager()
@@ -16,7 +16,7 @@ EffectManager::~EffectManager()
 
 /// @brief 描画デバイスの設定とEffekseerの起動を行う
 /// @details Effekseerのシステムが初期化される
-void EffectManager::Initalize()
+void EffectManager::Initialize()
 {
 	// Effekseerの要求仕様に合わせてDirect3D11を使用する
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
@@ -35,7 +35,7 @@ void EffectManager::Initalize()
 	// 3Dエフェクト描画時に前後関係が正しく反映されるようZバッファを有効にする
 	SetUseZBuffer3D(TRUE);
 	SetWriteZBuffer3D(TRUE);
-	cow_death_effect_handle_ = LoadEffekseerEffect("Resource/3D/エフェクト/牛吸い込み.efk");
+	cow_death_effect_handle_ = LoadEffekseerEffect("Resource/3D/Effect/CowVacuum.efk");
 }
 
 /// @brief 再生中の全エフェクトの状態を更新する

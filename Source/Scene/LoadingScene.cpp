@@ -43,9 +43,9 @@ void LoadingScene::Update()
 		Master::resource_manager_->PreloadModel(GameConstants::kAnimalChicken.model_path);
 		Master::resource_manager_->PreloadModel(GameConstants::kAnimalBear.model_path);
 		Master::resource_manager_->PreloadModel(GameConstants::kAnimalSheep.model_path);
-		Master::resource_manager_->PreloadModel("Resource/3D/キャラクター/プレイヤー/プレイヤーUFO.mv1");
-		Master::resource_manager_->PreloadModel("Resource/3D/ステージ/柵/柵.mv1");
-		Master::resource_manager_->PreloadModel("Resource/3D/ステージ/空/スカイボックス.mv1");
+		Master::resource_manager_->PreloadModel("Resource/3D/Character/Player/PlayerUFO.mv1");
+		Master::resource_manager_->PreloadModel("Resource/3D/Stage/Fence/Fence.mv1");
+		Master::resource_manager_->PreloadModel("Resource/3D/Stage/Sky/Skybox.mv1");
 
 		SetUseASyncLoadFlag(FALSE);
 

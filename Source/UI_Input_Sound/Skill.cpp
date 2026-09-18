@@ -49,9 +49,9 @@ Skill::Skill(Object3D* parent)
 	pos2_ = VGet(800.0f, 450.0f, 0.0f);
 	pos3_ = VGet(1400.0f, 450.0f, 0.0f);
 
-	texture_ = new Texture("Resource/2D/スキル/スキル画像_移動速度.png", pos1_, 300, 500, true);
-	texture2_ = new Texture("Resource/2D/スキル/スキル画像_牛の餌.png", pos2_, 300, 500, true);
-	texture3_ = new Texture("Resource/2D/スキル/スキル画像_吸い込み.png", pos3_, 300, 500, true);
+	texture_ = new Texture("Resource/2D/Skill/SkillImage_MoveSpeed.png", pos1_, 300, 500, true);
+	texture2_ = new Texture("Resource/2D/Skill/SkillImage_CowBait_17f7.png", pos2_, 300, 500, true);
+	texture3_ = new Texture("Resource/2D/Skill/SkillImage_Vacuum.png", pos3_, 300, 500, true);
 }
 
 /// @brief 動的確保したテクスチャのメモリリークを防ぐため。
@@ -231,7 +231,7 @@ void Skill::AddSkill()
 	}
 	else if (ProcessSkill(texture2_, 2))
 	{
-		auto b = new Bait("Resource/3D/小物/牛の餌/にんじん.mv1", parent_->GetPosition());
+		auto b = new Bait("Resource/3D/Props/CowBait_05a8/Carrot.mv1", parent_->GetPosition());
 		float scale = 5000.0f;
 		b->model_->SetScale(VGet(scale, scale, scale));
 

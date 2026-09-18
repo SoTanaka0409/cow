@@ -103,6 +103,11 @@ void CharacterMove::Deactivate()
 	{
 		capsule_collider_->SetDeleteFlag(true);
 	}
+
+	if (auto objMgr = ServiceLocator::GetObjectManager())
+	{
+		objMgr->RemoveObjectNoDelete(this);
+	}
 	// 再利用時の負荷を軽減するため、メモリ破棄ではなく更新対象から外す。
 	if (auto scene = Master::scene_manager_->GetCurrentScene())
 	{

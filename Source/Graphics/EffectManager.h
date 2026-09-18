@@ -12,7 +12,7 @@ public:
 
 	/// @brief 描画デバイスの設定とEffekseerの起動を行う
 	/// @details Effekseerのシステムが初期化される
-	void Initalize();
+	void Initialize();
 
 	/// @brief 再生中の全エフェクトの状態を更新する
 	/// @details エフェクトのアニメーションが進む

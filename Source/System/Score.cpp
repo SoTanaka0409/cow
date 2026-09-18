@@ -19,18 +19,18 @@ Score::Score()
 		strcpy_s(ranking_[i].name_, sizeof(ranking_[i].name_), "NONE");
 		ranking_[i].score_ = 0;
 	}
-	score_text_image_ = Master::resource_manager_->LoadGraphics("Resource/2D/スコア/スコア文字.png");
-	minus_img_ = Master::resource_manager_->LoadGraphics("Resource/2D/スコア/マイナス文字.png");
-	number_img_[0] = Master::resource_manager_->LoadGraphics("Resource/2D/スコア/スコア画像００.png");
-	number_img_[1] = Master::resource_manager_->LoadGraphics("Resource/2D/スコア/スコア画像０１.png");
-	number_img_[2] = Master::resource_manager_->LoadGraphics("Resource/2D/スコア/スコア画像０２.png");
-	number_img_[3] = Master::resource_manager_->LoadGraphics("Resource/2D/スコア/スコア画像０３.png");
-	number_img_[4] = Master::resource_manager_->LoadGraphics("Resource/2D/スコア/スコア画像０４.png");
-	number_img_[5] = Master::resource_manager_->LoadGraphics("Resource/2D/スコア/スコア画像０５.png");
-	number_img_[6] = Master::resource_manager_->LoadGraphics("Resource/2D/スコア/スコア画像０６.png");
-	number_img_[7] = Master::resource_manager_->LoadGraphics("Resource/2D/スコア/スコア画像０７.png");
-	number_img_[8] = Master::resource_manager_->LoadGraphics("Resource/2D/スコア/スコア画像０８.png");
-	number_img_[9] = Master::resource_manager_->LoadGraphics("Resource/2D/スコア/スコア画像０９.png");
+	score_text_image_ = Master::resource_manager_->LoadGraphics("Resource/2D/Score/ScoreText.png");
+	minus_img_ = Master::resource_manager_->LoadGraphics("Resource/2D/Score/MinusText.png");
+	number_img_[0] = Master::resource_manager_->LoadGraphics("Resource/2D/Score/ScoreImage00.png");
+	number_img_[1] = Master::resource_manager_->LoadGraphics("Resource/2D/Score/ScoreImage01.png");
+	number_img_[2] = Master::resource_manager_->LoadGraphics("Resource/2D/Score/ScoreImage02.png");
+	number_img_[3] = Master::resource_manager_->LoadGraphics("Resource/2D/Score/ScoreImage03.png");
+	number_img_[4] = Master::resource_manager_->LoadGraphics("Resource/2D/Score/ScoreImage04.png");
+	number_img_[5] = Master::resource_manager_->LoadGraphics("Resource/2D/Score/ScoreImage05.png");
+	number_img_[6] = Master::resource_manager_->LoadGraphics("Resource/2D/Score/ScoreImage06.png");
+	number_img_[7] = Master::resource_manager_->LoadGraphics("Resource/2D/Score/ScoreImage07.png");
+	number_img_[8] = Master::resource_manager_->LoadGraphics("Resource/2D/Score/ScoreImage08.png");
+	number_img_[9] = Master::resource_manager_->LoadGraphics("Resource/2D/Score/ScoreImage09.png");
 	LoadRanking();
 }
 /// @brief メモリ解放のため

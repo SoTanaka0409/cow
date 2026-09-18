@@ -56,19 +56,19 @@ Player3D::Player3D(std::string filename, VECTOR initPos)
 
 	Master::camera_->Initialize();
 
-	light_graph_ = Master::resource_manager_->LoadGraphics("Resource/2D/プレイヤー/吸い込みビーム.png");
-	gauge_frame_graph_ = Master::resource_manager_->LoadGraphics("Resource/2D/プレイヤー/吸い込みゲージ枠.png");
+	light_graph_ = Master::resource_manager_->LoadGraphics("Resource/2D/Player/VacuumBeam.png");
+	gauge_frame_graph_ = Master::resource_manager_->LoadGraphics("Resource/2D/Player/VacuumGaugeFrame.png");
 
 	capsule_collider_->position_ = VGet(position_.x, 0, position_.z);
 	capsule_collider_->position2_ = position_;
 	capsule_collider_->radius_ = radius_;
 
 	// プレイヤーから真下に向けて光線を出す表現にするため
-	beam_ = new EffekseerEffect("Resource/3D/エフェクト/吸い込みビーム.efk", position_, 80.0f);
+	beam_ = new EffekseerEffect("Resource/3D/Effect/VacuumBeam.efk", position_, 80.0f);
 	beam_->SetRotation(VGet(DX_PI_F / -2.0f, 0.0f, 0.0f));
 	beam_->SetScale(VGet(1.0f, 1.0f, 4.0f));
 
-	mpSpeed = new EffekseerEffect("Resource/3D/エフェクト/スキル使用.efk", VGet(0, 0, 0), 100.0f);
+	mpSpeed = new EffekseerEffect("Resource/3D/Effect/Skill_af20.efk", VGet(0, 0, 0), 100.0f);
 }
 
 /// @brief プレイヤーの終了処理
@@ -111,7 +111,7 @@ void Player3D::Update()
 		return;
 	}
 
-	if (!mIsStunned)
+	if (!mIsStunned && !skill_->add_skill_flag_)
 	{
 		MoveEx();
 		RotationByMove();
@@ -455,7 +455,7 @@ void Player3D::bar()
 
 		DrawBox(x1 + 1, y1 + 2, fillX - 1, y2 - 2, fillColor, TRUE);
 
-		// ぶわっと銀�ｩなADD合成の銀�ｫ
+		// ふわっとやわらかなADD合成の輝き
 		SetDrawBlendMode(DX_BLENDMODE_ADD, 100);
 		DrawBox(x1, y1 + 1, fillX, y2 - 1, glowColor, TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
