@@ -7,7 +7,7 @@
 /// @param transFlag 透過の有無
 /// @brief graphsize_x/y=指定描画サイズ
 /// @details ResourceManagerを介したグラフィックハンドルのロード、およびオリジナル画像解像度の取得
-Texture::Texture(std::string filename, VECTOR centerPosition, int graphsize_x, int graphsize_y, int transFlag)
+Texture::Texture(const std::string& filename, VECTOR centerPosition, int graphsize_x, int graphsize_y, int transFlag)
 	: handle_(-1)
 	, position_(centerPosition)
 	, new_game_w_(graphsize_x)

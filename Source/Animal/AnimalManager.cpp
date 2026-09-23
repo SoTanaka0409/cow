@@ -19,7 +19,7 @@ AnimalManager::AnimalManager()
 /// @details tag (動物種別)
 /// @details count (生成数)
 /// @details オブジェクトのメモリ確保(またはプールからの再利用)と管理リストへの追加
-void AnimalManager::SpawnAnimal(std::string filename, VECTOR pos, float scale, AnimalMove::TagAnimal tag, int count, float scatterRadius)
+void AnimalManager::SpawnAnimal(const std::string& filename, VECTOR pos, float scale, AnimalMove::TagAnimal tag, int count, float scatterRadius)
 {
 	for (int i = 0; i < count; i++)
 	{

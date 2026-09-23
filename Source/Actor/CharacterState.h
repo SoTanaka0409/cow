@@ -25,7 +25,9 @@ public:
 class StateIdle : public CharacterState
 {
 public:
+	/// @brief 処理の実行
 	void Enter(CharacterMove* character) override;
+	/// @brief 毎フレームの更新処理
 	void Update(CharacterMove* character) override;
 };
 
@@ -33,7 +35,9 @@ public:
 class StateWalk : public CharacterState
 {
 public:
+	/// @brief 処理の実行
 	void Enter(CharacterMove* character) override;
+	/// @brief 毎フレームの更新処理
 	void Update(CharacterMove* character) override;
 };
 
@@ -41,6 +45,8 @@ public:
 class StateVacuum : public CharacterState
 {
 public:
+	/// @brief 処理の実行
 	void Enter(CharacterMove* character) override;
+	/// @brief 毎フレームの更新処理
 	void Update(CharacterMove* character) override;
 };

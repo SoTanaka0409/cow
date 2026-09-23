@@ -14,9 +14,9 @@ public:
 public:
 	/// @brief ゴールドカウの初期化を行う
 	/// @param filename モデルのファイルパス
-	/// @param initPos 初期位置
+	/// @param init_pos 初期位置
 	/// @param fever フィーバー由来のスポーンか
-	GoldCow(std::string filename, VECTOR initPos, TagFever fever);
+	GoldCow(const std::string& filename, VECTOR init_pos, TagFever fever);
 
 	/// @brief デストラクタ
 	virtual ~GoldCow();

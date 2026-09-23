@@ -20,7 +20,7 @@ public:
 	/// @details tag
 	/// @details count | 出力: なし
 	/// @details 新規メモリ確保またはプールからの復帰が発生する。フレーム落ち回避のため大量生成(count)に注意
-	void SpawnAnimal(std::string filename, VECTOR pos, float scale, AnimalMove::TagAnimal tag, int count, float scatterRadius = 200.0f);
+	void SpawnAnimal(const std::string& filename, VECTOR pos, float scale, AnimalMove::TagAnimal tag, int count, float scatterRadius = 200.0f);
 
 protected:
 	/// @brief 仕様制約: 基底クラス側で対象インスタンスの種別（タグ）を型安全に特定・分類させるためオーバーライド必須

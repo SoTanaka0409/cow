@@ -24,8 +24,8 @@ public:
 	/// @brief ステータスID
 	enum StatusID
 	{
-		Status_Hp,
-		Status_AttackS,
+		kStatusHp,
+		kStatusAttackS,
 		kStatusSpeed,
 	};
 
@@ -39,8 +39,8 @@ public:
 public:
 	/// @brief 動的確保するポインタ群（サブシステムや判定）のメモリリークを防ぐため、破棄時のdeleteと対にすること
 	/// @param filename モデルパス
-	/// @param initPos 初期座標 [出力] なし [副作用] 各種リソースの動的確保
-	Player3D(std::string filename, VECTOR initPos);
+	/// @param init_pos 初期座標 [出力] なし [副作用] 各種リソースの動的確保
+	Player3D(const std::string& filename, VECTOR init_pos);
 
 	/// @brief EffekseerやModelなどのリソース解放順序を間違えるとアクセス違反でクラッシュするため注意
 	/// @details なし [出力] なし [副作用] 確保したポインタの解放
@@ -49,6 +49,7 @@ public:
 	/// @brief Zバッファの仕様上、半透明オブジェクトより先に描画されるようマネージャ側で制御すること
 	/// @details なし [出力] なし [副作用] 3Dモデルの描画コール
 	void Draw() override;
+	/// @brief 処理の実行
 	void DrawShadowCaster() override;
 
 	/// @brief なし [出力] なし [副作用] 各種状態の更新処理
@@ -94,12 +95,12 @@ public:
 	void SetStatusAttack(float f) { attack_speed_ = f; }
 
 	/// @brief なし [出力] 現在の攻撃速度 [副作用] なし
-	float GetStatusAttack() { return attack_speed_; }
+	float GetStatusAttack() const { return attack_speed_; }
 
 	/// @brief 事前ロード機構を持たないため、ゲーム中の動的追加はスパイク（処理落ち）を招く点に留意して使用すること
 	/// @param state アニメーション状態
 	/// @param filename モデルパス [出力] なし [副作用] アニメーションのロードと追加
-	void AddAnimation(AnimationState state, std::string filename);
+	void AddAnimation(AnimationState state, const std::string& filename);
 
 	/// @brief 多段ヒットによる即死バグを防ぐため、ダメージ処理を行う場合は必ず無敵時間（インビンシブル）のフラグガードを噛ませること
 	/// @param collider 自身のコライダー
@@ -151,7 +152,7 @@ private:
 	bool mIsVacuumActive = false;                ///< 吸引アクション実行中フラグ
 	int CatchNowCount;                           ///< 現在の同時捕獲数
 	float currentSpeed;                          ///< 最終計算された実際の移動速度
-	VECTOR moveVec = VGet(0.0f, 0.0f, 0.0f);     ///< 最終的な移動ベクトル
+	VECTOR move_vec_ = VGet(0.0f, 0.0f, 0.0f);     ///< 最終的な移動ベクトル
 	VECTOR oldmoveVec;                           ///< 前フレームの移動ベクトル
 	VECTOR hitPos = VGet(0.0f, 0.0f, 0.0f);      ///< 当たり判定の衝突検知座標
 	float horizontal_angle_;                     ///< カメラ基準の水平回転角

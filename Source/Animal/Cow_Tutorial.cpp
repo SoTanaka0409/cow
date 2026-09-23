@@ -2,10 +2,10 @@
 
 /// @brief チュートリアル用の固有パラメータを設定するため
 /// @param filename モデルファイルパス
-/// @param initPos 初期座標
+/// @param init_pos 初期座標
 /// @details スコアと経験値が設定される
-Cow_Tutorial::Cow_Tutorial(std::string filename, VECTOR initPos)
-	: CowMove(filename, initPos)
+Cow_Tutorial::Cow_Tutorial(const std::string& filename, VECTOR init_pos)
+	: CowMove(filename, init_pos)
 {
 	score_ = 30;
 	// 短時間でレベルアップを体験させるため経験値を高く設定

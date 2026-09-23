@@ -8,10 +8,12 @@
 class Bait : public Object3D
 {
 public:
-	Bait(std::string filename, VECTOR pos);
+	Bait(const std::string& filename, VECTOR pos);
 	virtual ~Bait();
 
+	/// @brief 毎フレームの更新処理
 	void Update() override;
+	/// @brief 描画処理
 	void Draw() override;
 
 	virtual void OnEnter(Collider* collider, Collider* check) override;

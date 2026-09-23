@@ -18,9 +18,9 @@ public:
 
 	/// @brief 衝突状態の遷移を検知し、適切な処理を呼ぶため。
 	/// @param check 判定対象の別コライダー
-	/// @param isHit 衝突したかどうかの結果
+	/// @param is_hit 衝突したかどうかの結果
 	/// @details collision_list_の更新、親オブジェクトへの通知
-	void HitCheck(Collider* check, bool isHit);
+	void HitCheck(Collider* check, bool is_hit);
 
 	/// @brief デバッグ用にコライダーの形状を可視化するため。
 	/// @details 画面への描画命令の追加
@@ -45,7 +45,7 @@ public:
 
 	/// @brief オブジェクトの生存状態を確認するため。
 	/// @return 削除フラグ
-	bool IsDeleteFlag() { return delete_flag_; }
+	bool IsDeleteFlag() const { return delete_flag_; }
 
 	/// @brief 親のステータスにアクセスするため。
 	/// @return 親オブジェクトのポインタ

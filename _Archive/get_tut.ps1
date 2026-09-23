@@ -1,1 +1,0 @@
-$bytes = git show origin/sou:Source/TutorialScene.cpp; [System.IO.File]::WriteAllBytes("tut_tmp.bin", $bytes); $text = [System.Text.Encoding]::GetEncoding(932).GetString([System.IO.File]::ReadAllBytes("tut_tmp.bin")); ($text -split "`n") | Where-Object { $_ -match "Enter" }

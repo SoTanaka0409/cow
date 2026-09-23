@@ -8,7 +8,7 @@
 /// @details topLeft (左上オフセット)
 /// @details bottomRight (右下オフセット)
 /// @details テクスチャのロードおよびポリゴン描画用の頂点データの初期化
-Floor::Floor(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight)
+Floor::Floor(const std::string& filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight)
 	: Object3D(centerPos)
 {
 	graph_handle_ = Master::resource_manager_->LoadGraphics(filename.c_str());

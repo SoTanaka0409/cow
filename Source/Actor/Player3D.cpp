@@ -28,10 +28,10 @@
 
 /// @brief プレイヤーの初期化処理
 /// @param filename モデルのファイルパス
-/// @param initPos 初期座標
+/// @param init_pos 初期座標
 /// @details 各種コンポーネントの生成と初期化
-Player3D::Player3D(std::string filename, VECTOR initPos)
-	: Object3D(initPos)
+Player3D::Player3D(const std::string& filename, VECTOR init_pos)
+	: Object3D(init_pos)
 	, vertical_angle_(0.0f)
 	, horizontal_angle_(0.0f)
 	, speed_(35.0f)
@@ -47,7 +47,7 @@ Player3D::Player3D(std::string filename, VECTOR initPos)
 
 	SetTag(Object3D::kTag3dPlayer);
 
-	model_ = new Model(filename, initPos, false);
+	model_ = new Model(filename, init_pos, false);
 	level_manager_ = new Level(this);
 	level_manager_->SetNextLevel();
 	skill_ = new Skill(this);
@@ -299,7 +299,7 @@ void Player3D::DrawShadowCaster()
 void Player3D::MoveEx()
 {
 	old_position_ = position_;
-	moveVec = VGet(0.0f, 0.0f, 0.0f);
+	move_vec_ = VGet(0.0f, 0.0f, 0.0f);
 
 	VECTOR UpMoveVector = VGet(0.0f, 0.0f, 0.0f);
 	VECTOR leftMoveVector = VGet(0.0f, 0.0f, 0.0f);
@@ -315,20 +315,20 @@ void Player3D::MoveEx()
 		leftMoveVector = VNorm(leftMoveVector);
 	}
 
-	if (CheckHitKey(KEY_INPUT_A)) moveVec = VAdd(moveVec, leftMoveVector);
-	if (CheckHitKey(KEY_INPUT_D)) moveVec = VAdd(moveVec, VScale(leftMoveVector, -1.0f));
-	if (CheckHitKey(KEY_INPUT_W)) moveVec = VAdd(moveVec, UpMoveVector);
-	if (CheckHitKey(KEY_INPUT_S)) moveVec = VAdd(moveVec, VScale(UpMoveVector, -1.0f));
+	if (CheckHitKey(KEY_INPUT_A)) move_vec_ = VAdd(move_vec_, leftMoveVector);
+	if (CheckHitKey(KEY_INPUT_D)) move_vec_ = VAdd(move_vec_, VScale(leftMoveVector, -1.0f));
+	if (CheckHitKey(KEY_INPUT_W)) move_vec_ = VAdd(move_vec_, UpMoveVector);
+	if (CheckHitKey(KEY_INPUT_S)) move_vec_ = VAdd(move_vec_, VScale(UpMoveVector, -1.0f));
 
-	bool isMove = (moveVec.x != 0.0f || moveVec.z != 0.0f);
+	bool isMove = (move_vec_.x != 0.0f || move_vec_.z != 0.0f);
 	if (isMove)
 	{
-		moveVec = VNorm(moveVec);
-		target_angle_ = atan2f(moveVec.x, moveVec.z);
-		oldmoveVec = moveVec;
+		move_vec_ = VNorm(move_vec_);
+		target_angle_ = atan2f(move_vec_.x, move_vec_.z);
+		oldmoveVec = move_vec_;
 
 		currentSpeed = Status(kStatusSpeed) * Master::GetDeltaTimeScaler();
-		position_ = VAdd(position_, VScale(moveVec, currentSpeed));
+		position_ = VAdd(position_, VScale(move_vec_, currentSpeed));
 	}
 
 	bool hitwall = false;
@@ -354,8 +354,8 @@ void Player3D::MoveEx()
 					hitwall = true;
 					VECTOR slide = VGet(0.0f, 0.0f, 0.0f);
 
-					float a = VDot(VScale(moveVec, -1.0f), vertex.at(0).norm);
-					slide = VAdd(moveVec, VScale(vertex.at(0).norm, a));
+					float a = VDot(VScale(move_vec_, -1.0f), vertex.at(0).norm);
+					slide = VAdd(move_vec_, VScale(vertex.at(0).norm, a));
 
 					if (hitwall == true && hitwalls == false)
 					{
@@ -382,11 +382,11 @@ void Player3D::MoveEx()
 /// @return スキル補正を含めたステータス値
 float Player3D::Status(StatusID id)
 {
-	if (id == Status_AttackS)
+	if (id == kStatusAttackS)
 	{
 		return attack_speed_ + skill_->GetStatusDate(Skill::kStatusAttackSpeed);
 	}
-	if (id == Status_Hp)
+	if (id == kStatusHp)
 	{
 		return hp_;
 	}
@@ -488,7 +488,7 @@ void Player3D::OnEnter(Collider* collider, Collider* check)
 	if (collider == capsule_collider_ && check->parent_object_->GetTag() == kTag3dCow)
 	{
 		CowMove* cow = dynamic_cast<CowMove*>(check->parent_object_);
-		if (cow->GetCurrentState() != STATE_VACUUM)
+		if (cow->GetCurrentState() != kStateVacuum)
 		{
 			cow->SetTargetPlayer(this);
 			cow->IncreaseVacuumTimer();
@@ -499,7 +499,7 @@ void Player3D::OnEnter(Collider* collider, Collider* check)
 	if (collider == capsule_collider_ && check->parent_object_->GetTag() == kTag3dAnimal)
 	{
 		AnimalMove* ani = dynamic_cast<AnimalMove*>(check->parent_object_);
-		if (ani->GetCurrentState() != STATE_VACUUM)
+		if (ani->GetCurrentState() != kStateVacuum)
 		{
 			ani->SetTargetPlayer(this);
 			ani->IncreaseVacuumTimer();
@@ -521,7 +521,7 @@ void Player3D::OnExit(Collider* collider, Collider* check)
 
 		cow->SetTargetPlayer(nullptr);
 		cow->ResetVacuumTimer();
-		cow->SetCurrentState(STATE_WALK);
+		cow->SetCurrentState(kStateWalk);
 		cow->ChangeState(new StateWalk());
 
 		VECTOR pos = cow->GetPosition();
@@ -532,7 +532,7 @@ void Player3D::OnExit(Collider* collider, Collider* check)
 	{
 		AnimalMove* ani = dynamic_cast<AnimalMove*>(check->parent_object_);
 		ani->SetTargetPlayer(nullptr);
-		ani->SetCurrentState(STATE_WALK);
+		ani->SetCurrentState(kStateWalk);
 		ani->ChangeState(new StateWalk());
 		ani->SetPosition(ani->GetPosition());
 	}

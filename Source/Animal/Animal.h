@@ -8,9 +8,9 @@ class Animal : public AnimalMove
 public:
 	/// @brief 初期化処理を行う
 	/// @details filename(モデルファイルパス)
-	/// @details initPos(初期生成座標) | 出力: なし
+	/// @details init_pos(初期生成座標) | 出力: なし
 	/// @details 外部モデルのロード処理が走るため、大量生成時のパフォーマンス低下に注意
-	Animal(std::string filename, VECTOR initPos);
+	Animal(const std::string& filename, VECTOR init_pos);
 
 	/// @brief メモリリーク防止のため、ロードしたモデルや確保済みの物理リソースを破棄する
 	virtual ~Animal();

@@ -38,12 +38,19 @@ public:
 
 	/// @brief 遷移要求があれば現在のシーンを破棄し、次のシーンを生成する
 	void ChangeSceneIfNeeded();
+	/// @brief NextSceneの設定
 	void SetNextScene(SCENE_TYPE next) { next_scene_type_ = next; }
+	/// @brief SceneHardの設定
 	void SetSceneHard(bool Hard) { scene_hard_ = Hard; }
-	bool GetSceneHard() { return scene_hard_; }
+	/// @brief SceneHardの取得
+	bool GetSceneHard() const { return scene_hard_; }
+	/// @brief SceneNormalの設定
 	void SetSceneNormal(bool Normal) { scene_normal_ = Normal; }
-	bool GetSceneNormal() { return scene_normal_; }
+	/// @brief SceneNormalの取得
+	bool GetSceneNormal() const { return scene_normal_; }
+	/// @brief CurrentSceneの取得
 	Scene* GetCurrentScene() { return current_scene_; }
+	/// @brief SceneTypeの取得
 	SCENE_TYPE GetSceneType() const { return scene_type_; }
 private:
 	SCENE_TYPE scene_type_;      ///< 現在の状態や種別を管理する値

@@ -9,9 +9,9 @@ class Model
 public:
 	/// @brief 生成毎の同期ロードによるスパイク（処理落ち）を防ぐため、極力シーン初期化時にインスタンス化を済ませること
 	/// @param filename モデルパス
-	/// @param initPos 初期座標
-	/// @param isSeparateAnimation アニメ分離フラグ [出力] なし [副作用] リソースマネージャーからのハンドル取得
-	Model(std::string filename, VECTOR initPos, bool isSeparateAnimation = false);
+	/// @param init_pos 初期座標
+	/// @param is_separate_animation アニメ分離フラグ [出力] なし [副作用] リソースマネージャーからのハンドル取得
+	Model(const std::string& filename, VECTOR init_pos, bool is_separate_animation = false);
 
 	/// @brief ResourceManagerで管理されない独自確保のリソース（差し替えテクスチャ等）のVRAMリークをここで確実に防ぐこと
 	/// @details なし [出力] なし [副作用] 動的変更したテクスチャハンドルの解放
@@ -25,10 +25,14 @@ public:
 	/// @details なし [出力] なし [副作用] バックバッファへの3Dモデル描画
 	void Draw();
 
-	VECTOR GetPosition() { return position_; }
+	/// @brief Positionの取得
+	VECTOR GetPosition() const { return position_; }
+	/// @brief Positionの設定
 	void SetPosition(VECTOR pos) { position_ = pos; }
 
-	VECTOR GetRotation() { return rotation_; }
+	/// @brief Rotationの取得
+	VECTOR GetRotation() const { return rotation_; }
+	/// @brief Rotationの設定
 	void SetRotation(VECTOR rot) { rotation_ = rot; }
 
 	/// @brief 非等倍スケールは物理演算や当たり判定のスケール（半径など）との乖離を生みやすいため、適用時は判定側も同期させること
@@ -42,7 +46,7 @@ public:
 	/// @brief 毎フレーム呼ぶと深刻なメモリリークと処理落ちを招くため、状態変化時（ダメージ演出など）の1回のみ実行するようガードすること
 	/// @param filename 画像パス
 	/// @param index マテリアル番号 [出力] なし [副作用] VRAMへの画像ロードとハンドル差し替え
-	void SetTexture(std::string filename, int index = 0);
+	void SetTexture(const std::string& filename, int index = 0);
 
 	/// @brief マテリアル設定を強制上書きするため、元モデルに焼き付けられた色情報が意図せず消失するリスクに注意して利用すること
 	/// @param a カラー成分(0.0～1.0) [出力] なし [副作用] モデルマテリアルのディフューズ色変更

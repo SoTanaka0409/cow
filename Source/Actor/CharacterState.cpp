@@ -52,11 +52,11 @@ void StateWalk::Enter(CharacterMove* character)
 
 	// 徘徊仕様に基づき、Y軸(高さ)を排除した平面上のランダムな進行方向ベクトルを生成する
 	float angle = GetRand(359) * DX_PI_F / 180.0f;
-	VECTOR moveVec;
-	moveVec.x = sinf(angle);
-	moveVec.y = 0.0f;
-	moveVec.z = cosf(angle);
-	character->SetMoveVec(moveVec);
+	VECTOR move_vec_;
+	move_vec_.x = sinf(angle);
+	move_vec_.y = 0.0f;
+	move_vec_.z = cosf(angle);
+	character->SetMoveVec(move_vec_);
 }
 
 /// @brief 更新処理を行う
@@ -67,10 +67,10 @@ void StateWalk::Update(CharacterMove* character)
 	character->DecreaseActionTimer();
 
 	VECTOR pos = character->GetPosition();
-	VECTOR moveVec = character->GetMoveVec();
+	VECTOR move_vec_ = character->GetMoveVec();
 	float speed = character->GetSpeed();
 
-	pos = VAdd(pos, VScale(moveVec, speed * Master::GetDeltaTimeScaler()));
+	pos = VAdd(pos, VScale(move_vec_, speed * Master::GetDeltaTimeScaler()));
 
 	// 移動による段差抜けや浮遊バグを防ぐための接地処理（StateIdleと同様）
 	pos.y -= 4.0f;

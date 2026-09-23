@@ -112,7 +112,6 @@ void Fever::Update()
 
 /// @brief 外部からフィーバー中かどうか判定し、専用の処理を分岐させるため
 /// @return フィーバー中ならtrue
-bool Fever::IsFever()
-{
+bool Fever::IsFever() const {
 	return is_fever_;
 }

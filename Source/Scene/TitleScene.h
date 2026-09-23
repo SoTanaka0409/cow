@@ -27,12 +27,19 @@ public:
 	virtual void Finalize() override;
 
 private:
+	/// @brief 処理の実行
 	void DrawBackground();
+	/// @brief 処理の実行
 	void DrawMenuButtons();
+	/// @brief 処理の実行
 	void DrawRankingUI();
+	/// @brief 処理の実行
 	void UpdateCowVoice();
+	/// @brief 処理の実行
 	void UpdateUFOInteraction(int mouseInput, int mouse_x, int mouse_y, int ufoSize);
+	/// @brief 処理の実行
 	void UpdateUFOAutoPatrol(int ufoSize);
+	/// @brief 処理の実行
 	void UpdateMenuButtons(int mouse_x, int mouse_y);
 
 private:

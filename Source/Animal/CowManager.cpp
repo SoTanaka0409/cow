@@ -23,7 +23,7 @@ CowManager::CowManager()
 /// @param count 生成数
 /// @param is_fever フィーバー状態フラグ
 /// @details mCreaturesへのオブジェクト追加、および上限時は既存オブジェクトの破棄を行う。
-void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove::TagCow tag, int count, bool is_fever, float scatterRadius)
+void CowManager::SpawnCow(const std::string& filename, VECTOR pos, float scale, CowMove::TagCow tag, int count, bool is_fever, float scatterRadius)
 {
 	for (int i = 0; i < count; i++)
 	{
@@ -56,7 +56,7 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 				}
 				if (furthestIt != mCreatures.end())
 				{
-					(*furthestIt)->Die(DEATH_LIMIT);
+					(*furthestIt)->Die(kDeathLimit);
 					auto cow = *furthestIt;
 					cow->Deactivate();
 					pools_[cow->GetTagCow()].push_back(cow);
@@ -66,7 +66,7 @@ void CowManager::SpawnCow(std::string filename, VECTOR pos, float scale, CowMove
 				else if (!mCreatures.empty())
 				{
 					// 一般牛がいない場合でも、最も古い牛を破棄して金牛の枠を強制的に空ける。
-					mCreatures.front()->Die(DEATH_LIMIT);
+					mCreatures.front()->Die(kDeathLimit);
 					auto cow = mCreatures.front();
 					cow->Deactivate();
 					pools_[cow->GetTagCow()].push_back(cow);

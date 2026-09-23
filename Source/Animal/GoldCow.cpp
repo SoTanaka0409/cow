@@ -10,11 +10,11 @@
 
 /// @brief ゴールドカウの初期化を行う
 /// @param filename モデルのファイルパス
-/// @param initPos 初期位置
+/// @param init_pos 初期位置
 /// @param kFever フィーバー由来のスポーンか
 /// @details スコア、経験値、当たり判定のサイズを設定する
-GoldCow::GoldCow(std::string filename, VECTOR initPos, TagFever kFever)
-	: CowMove(filename, initPos)
+GoldCow::GoldCow(const std::string& filename, VECTOR init_pos, TagFever kFever)
+	: CowMove(filename, init_pos)
 	, fever_(kFever)
 	, death_count_(0)
 	, death_timer_(1200)
@@ -51,7 +51,7 @@ void GoldCow::Update()
 	auto fv = ServiceLocator::GetFever();
 	if (fever_ == kFever && (fv == nullptr || fv->IsFever() == false || death_count_ >= death_timer_))
 	{
-		Die(DEATH_LIMIT);
+		Die(kDeathLimit);
 	}
 }
 
@@ -64,7 +64,7 @@ void GoldCow::Die(DeathReason reason)
 	CowMove::Die(reason);
 
 	// プレイヤーが通常時に倒した場合、フィーバー状態へ移行させるため
-	if (reason == DEATH_VACUUM || reason == DEATH_BAIT)
+	if (reason == kDeathVacuum || reason == kDeathBait)
 	{
 		if (this->fever_ == kNoFever)
 		{

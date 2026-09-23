@@ -1,9 +1,9 @@
 #include "Object_Stage.h"
 
-Object_Stage::Object_Stage(std::string filename, VECTOR initPos, float scale, VECTOR angle)
-	: Object3D(initPos)
+Object_Stage::Object_Stage(const std::string& filename, VECTOR init_pos, float scale, VECTOR angle)
+	: Object3D(init_pos)
 {
-	model_ = new Model(filename, initPos);
+	model_ = new Model(filename, init_pos);
 	model_->SetScale(scale);
 	model_->SetRotation(angle);
 }

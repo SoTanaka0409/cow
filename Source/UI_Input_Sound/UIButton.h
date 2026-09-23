@@ -16,7 +16,10 @@ struct UIButton
 
 	UIButton();
 
+	/// @brief 初期化処理
 	void Initialize(SelectionManager::Title t, int handle, int px, int py, float anim_offset);
+	/// @brief 毎フレームの更新処理
 	void Update(int mouse_x, int mouse_y);
+	/// @brief 描画処理
 	void Draw(int frame_count) const;
 };

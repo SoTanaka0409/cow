@@ -22,6 +22,7 @@ public:
 	/// @details 画面にエフェクトが描画される
 	void Draw();
 
+	/// @brief 処理の実行
 	void PlayCowDeathEffect(VECTOR pos);
 
 private:

@@ -12,20 +12,20 @@
 #include "Utility.h"
 /// @brief キャラクターの初期化
 /// @param filename モデルのファイルパス
-/// @param initPos 初期座標
+/// @param init_pos 初期座標
 /// @details 各種メンバ変数の初期化、モデルのロード、初期状態(待機)の作成を行う
-CharacterMove::CharacterMove(std::string filename, VECTOR initPos)
-	: Object3D(initPos)
-	, mCurrentState(STATE_IDLE)
+CharacterMove::CharacterMove(const std::string& filename, VECTOR init_pos)
+	: Object3D(init_pos)
+	, ai_state_(kStateIdle)
 	, current_state_(new StateIdle())
-	, mActionTimer(60)
+	, action_timer_(60)
 	, speed_(10.0f)
 	, target_angle_(0.0f)
 	, angle_(0.0f)
-	, moveVec(VGet(0.0f, 0.0f, 0.0f))
+	, move_vec_(VGet(0.0f, 0.0f, 0.0f))
 	, oldmoveVec(VGet(0.0f, 0.0f, 0.0f))
 	, hitPos(VGet(0.0f, 0.0f, 0.0f))
-	, mVacuumTimer(0)
+	, vacuum_timer_(0)
 	, mDeleteFlag(false)
 	, death_timer_(1000.0f)
 	, score_(0.0f)
@@ -33,7 +33,7 @@ CharacterMove::CharacterMove(std::string filename, VECTOR initPos)
 	, bait_flag_(false)
 	, is_visible_(true)
 {
-	model_ = new Model(filename, initPos, false);
+	model_ = new Model(filename, init_pos, false);
 	// 自然な群れを表現するため、初期向きをランダムに分散させる。
 	rotation_.y = (float)GetRand(359) * (DX_PI_F / 180.0f);
 	model_->SetRotation(rotation_);
@@ -59,18 +59,18 @@ CharacterMove::~CharacterMove()
 void CharacterMove::Reset(VECTOR pos)
 {
 	position_ = pos;
-	mCurrentState = STATE_IDLE;
+	ai_state_ = kStateIdle;
 	target_player_ = nullptr;
 	if (current_state_ != nullptr)
 	{
 		delete current_state_;
 	}
 	current_state_ = new StateIdle();
-	mActionTimer = 60;
+	action_timer_ = 60;
 	rotation_.y = (float)GetRand(359) * (DX_PI_F / 180.0f);
-	moveVec = VGet(0.0f, 0.0f, 0.0f);
+	move_vec_ = VGet(0.0f, 0.0f, 0.0f);
 	oldmoveVec = VGet(0.0f, 0.0f, 0.0f);
-	mVacuumTimer = 0;
+	vacuum_timer_ = 0;
 	mDeleteFlag = false;
 	bait_flag_ = false;
 	is_visible_ = true;
@@ -123,7 +123,7 @@ void CharacterMove::Update()
 {
 	MoveCharacter();
 	CharacterDied();
-	if (mCurrentState != STATE_VACUUM)
+	if (ai_state_ != kStateVacuum)
 	{
 		RotationCharacter();
 	}
@@ -148,7 +148,7 @@ void CharacterMove::DrawShadowCaster()
 /// @details AIに基づく移動量を計算し、壁判定を経て最終的な座標を決定する
 void CharacterMove::MoveCharacter()
 {
-	if (mCurrentState == STATE_VACUUM) return;
+	if (ai_state_ == kStateVacuum) return;
 	old_position_ = position_;
 	UpdateWanderAI();
 	CheckWallCollision();
@@ -189,7 +189,7 @@ void CharacterMove::ChangeState(CharacterState* newState)
 /// @details 現在のAI状態をSTATE_VACUUMに変更し、StateVacuumへ移行する
 void CharacterMove::ChangeStateToVacuum()
 {
-	mCurrentState = STATE_VACUUM;
+	ai_state_ = kStateVacuum;
 	ChangeState(new StateVacuum());
 }
 /// @brief 壁との衝突判定と補正
@@ -221,8 +221,8 @@ void CharacterMove::CheckWallCollision()
 				{
 					hitwall = true;
 					VECTOR slide = VGet(0.0f, 0.0f, 0.0f);
-					float a = VDot(VScale(moveVec, -1.0f), vertex.at(0).norm);
-					slide = VAdd(moveVec, VScale(vertex.at(0).norm, a));
+					float a = VDot(VScale(move_vec_, -1.0f), vertex.at(0).norm);
+					slide = VAdd(move_vec_, VScale(vertex.at(0).norm, a));
 					if (hitwall && !hitwalls)
 					{
 						position_ = old_position_;
@@ -254,9 +254,9 @@ void CharacterMove::ColliderMove()
 /// @details 現在の移動ベクトルに基づいてモデルのY軸回転角度を更新する
 void CharacterMove::RotationCharacter()
 {
-	if (moveVec.x != 0.0f || moveVec.z != 0.0f)
+	if (move_vec_.x != 0.0f || move_vec_.z != 0.0f)
 	{
-		float targetAngle = atan2f(moveVec.x, moveVec.z);
+		float targetAngle = atan2f(move_vec_.x, move_vec_.z);
 		// モデルの正面ベクトルが仕様上逆を向いているため、180度補正する。
 		rotation_.y = targetAngle + DX_PI_F;
 		model_->SetRotation(rotation_);

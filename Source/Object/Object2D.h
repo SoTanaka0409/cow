@@ -18,8 +18,8 @@ public:
 
 public:
 	/// @brief 登録後にスコープを抜けるとダングリングポインタとなりクラッシュするため、必ずヒープ領域（new）で生成すること
-	/// @param initPos 初期座標 [出力] なし [副作用] 現在のアクティブなObjectManagerへの自身の自動登録
-	Object2D(VECTOR initPos);
+	/// @param init_pos 初期座標 [出力] なし [副作用] 現在のアクティブなObjectManagerへの自身の自動登録
+	Object2D(VECTOR init_pos);
 
 	/// @brief 派生クラス側で確保した画像ハンドルなどのリソース解放漏れを防ぐため、virtual修飾は絶対に外さないこと
 	/// @details なし [出力] なし [副作用] なし
@@ -34,19 +34,29 @@ public:
 	virtual void Draw();
 
 public:
+	/// @brief Positionの設定
 	void SetPosition(VECTOR pos) { position_ = pos; };
-	VECTOR GetPosition() { return position_; }
+	/// @brief Positionの取得
+	VECTOR GetPosition() const { return position_; }
 
+	/// @brief Rotationの設定
 	void SetRotation(VECTOR rot) { rotation_ = rot; }
-	VECTOR GETRotation() { return rotation_; }
+	/// @brief Rotationの取得
+	VECTOR GetRotation() const { return rotation_; }
 
+	/// @brief DeleteFlagの設定
 	void SetDeleteFlag(bool flag) { delete_flag_ = flag; }
-	bool IsDeleteFlag() { return delete_flag_; }
+	/// @brief DeleteFlagの判定
+	bool IsDeleteFlag() const { return delete_flag_; }
 
+	/// @brief DrawFlagの設定
 	void SetDrawFlag(bool flag) { draw_flag_ = flag; }
-	bool IsDrawFlag() { return draw_flag_; }
+	/// @brief DrawFlagの判定
+	bool IsDrawFlag() const { return draw_flag_; }
 
+	/// @brief Tagの設定
 	void SetTag(Tag2D tag) { tag_ = tag; }
+	/// @brief Tagの取得
 	Tag2D GetTag() { return tag_; }
 
 protected:

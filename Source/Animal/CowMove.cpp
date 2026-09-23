@@ -24,8 +24,8 @@ namespace {
 
 /// @brief 捕獲対象（牛）の基礎ステータス（スコア・XP・吸い込み上限高度）をゲームモードに応じて初期化する。
 /// @details 固有パラメータ設定および吸い込み時エフェクトの動的生成を行う。
-CowMove::CowMove(std::string filename, VECTOR initPos)
-	: CharacterMove(filename, initPos)
+CowMove::CowMove(const std::string& filename, VECTOR init_pos)
+	: CharacterMove(filename, init_pos)
 {
 	death_timer_ = GameConstants::kCowDefault.death_time_height;
 	score_ = GameConstants::kCowDefault.score;
@@ -160,7 +160,7 @@ void CowMove::AvoidOtherCows()
 bool CowMove::SeekBait()
 {
 	if (Master::scene_manager_->GetSceneType() == SceneManager::kSceneTutorial) return false;
-	if (mCurrentState == STATE_VACUUM) return false;
+	if (ai_state_ == kStateVacuum) return false;
 
 	old_position_ = position_;
 
@@ -221,7 +221,7 @@ void CowMove::CharacterRotate()
 
 /// @brief アニメーション追加インターフェース（個別アニメーション追加が必要な場合にオーバーライド）。
 /// @details 処理なし（基底クラスの仕様に準拠）。
-void CowMove::AddAnimation(AnimationState state, std::string filename)
+void CowMove::AddAnimation(AnimationState state, const std::string& filename)
 {
 }
 
@@ -299,14 +299,14 @@ void CowMove::OnExit(Collider* collider, Collider* check)
 /// @details 上昇運動・UFO直下補正・高度判定に基づく消滅およびDie()関数の呼び出しを行う。
 void CowMove::CharacterDied()
 {
-	if (mCurrentState == STATE_VACUUM)
+	if (ai_state_ == kStateVacuum)
 	{
 		Player3D* player = target_player_;
 
 		CharacterRotate();
 		if (player != nullptr)
 		{
-			position_.y += player->Status(Player3D::Status_AttackS) * Master::GetDeltaTimeScaler();
+			position_.y += player->Status(Player3D::kStatusAttackS) * Master::GetDeltaTimeScaler();
 
 			if (Master::FeverFlag)
 			{
@@ -336,7 +336,7 @@ void CowMove::CharacterDied()
 
 				if (effect_timer_ <= 0 && !is_visible_)
 				{
-					Die(DEATH_VACUUM);
+					Die(kDeathVacuum);
 				}
 			}
 		}
@@ -344,7 +344,7 @@ void CowMove::CharacterDied()
 		{
 			if (position_.y > death_timer_)
 			{
-				Die(DEATH_VACUUM);
+				Die(kDeathVacuum);
 			}
 		}
 	}
@@ -355,7 +355,7 @@ void CowMove::CharacterDied()
 void CowMove::KilledByBait()
 {
 	is_visible_ = false;
-	Die(DEATH_BAIT);
+	Die(kDeathBait);
 	mDeleteFlag = true;
 }
 
@@ -369,7 +369,7 @@ void CowMove::Die(DeathReason reason)
 
 	switch (reason)
 	{
-	case DEATH_VACUUM:
+	case kDeathVacuum:
 		Master::sound_manager_->PlaySE(SoundManager::kSeCow);
 		Master::effect_manager_->PlayCowDeathEffect(position_);
 		if (player != nullptr)
@@ -409,7 +409,7 @@ void CowMove::Die(DeathReason reason)
 		mDeleteFlag = true;
 		break;
 
-	case DEATH_BAIT:
+	case kDeathBait:
 		Master::sound_manager_->PlaySE(SoundManager::kSeCow);
 		Master::effect_manager_->PlayCowDeathEffect(position_);
 		if (player != nullptr)
@@ -421,7 +421,7 @@ void CowMove::Die(DeathReason reason)
 		mDeleteFlag = true;
 		break;
 
-	case DEATH_LIMIT:
+	case kDeathLimit:
 		mDeleteFlag = true;
 		break;
 	}

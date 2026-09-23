@@ -4,8 +4,8 @@
 #include "ObjectManager.h"
 #include "Scene.h"
 
-Object2D::Object2D(VECTOR initPos)
-	: position_(initPos)
+Object2D::Object2D(VECTOR init_pos)
+	: position_(init_pos)
 	, rotation_(VGet(0.0f, 0.0f, 0.0f))
 	, delete_flag_(false)
 	, tag_(Tag2D::kNone2d)

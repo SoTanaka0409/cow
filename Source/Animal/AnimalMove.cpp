@@ -24,13 +24,13 @@ namespace {
 
 /// @brief 動物の初期化
 /// @param filename モデルパス
-/// @param initPos 初期座標
+/// @param init_pos 初期座標
 /// @details 各種ステータスの初期設定
-AnimalMove::AnimalMove(std::string filename, VECTOR initPos)
-	: CharacterMove(filename, initPos)
+AnimalMove::AnimalMove(const std::string& filename, VECTOR init_pos)
+	: CharacterMove(filename, init_pos)
 {
 	speed_ = GameConstants::kAnimalSheep.speed;
-	mActionTimer = 60;
+	action_timer_ = 60;
 	score_ = GameConstants::kAnimalSheep.score;
 	xp_ = GameConstants::kAnimalSheep.xp;
 	bait_flag_ = false;
@@ -66,7 +66,7 @@ void AnimalMove::MoveCharacter()
 /// @brief アニメーションの追加
 /// @param state アニメーション状態
 /// @param filename ファイルパス
-void AnimalMove::AddAnimation(AnimationState state, std::string filename)
+void AnimalMove::AddAnimation(AnimationState state, const std::string& filename)
 {
 }
 
@@ -113,20 +113,20 @@ void AnimalMove::CharacterDied()
 {
 	auto fv = ServiceLocator::GetFever();
 	// 通常状態では捕獲演出へ移行させないため
-	if (mCurrentState != STATE_VACUUM || (fv && fv->IsFever())) return;
+	if (ai_state_ != kStateVacuum || (fv && fv->IsFever())) return;
 
 	Player3D* player = target_player_;
 
 	CharacterRotate();
 	if (player != nullptr)
 	{
-		position_.y += player->Status(Player3D::Status_AttackS) * Master::GetDeltaTimeScaler();
+		position_.y += player->Status(Player3D::kStatusAttackS) * Master::GetDeltaTimeScaler();
 	}
 
 	// UFOへの吸い込み演出を完遂したか判定するため
 	if (position_.y > death_timer_ && !mDeleteFlag)
 	{
-		Die(DEATH_VACUUM);
+		Die(kDeathVacuum);
 	}
 
 	model_->SetPosition(position_);
@@ -143,8 +143,8 @@ void AnimalMove::Die(DeathReason reason)
 
 	switch (reason)
 	{
-	case DEATH_VACUUM:
-	case DEATH_BAIT:
+	case kDeathVacuum:
+	case kDeathBait:
 		if (player != nullptr)
 		{
 			player->level_manager_->AddXp(xp_);
@@ -184,7 +184,7 @@ void AnimalMove::Die(DeathReason reason)
 		mDeleteFlag = true;
 		break;
 
-	case DEATH_LIMIT:
+	case kDeathLimit:
 		mDeleteFlag = true;
 		break;
 	}

@@ -22,9 +22,9 @@ public:
 public:
 	/// @brief 動物の3Dモデルと初期設定を行うため
 	/// @param filename モデルのファイルパス
-	/// @param initPos 出現座標
+	/// @param init_pos 出現座標
 	/// @details コライダーやステータスの初期化
-	AnimalMove(std::string filename, VECTOR initPos);
+	AnimalMove(const std::string& filename, VECTOR init_pos);
 	virtual ~AnimalMove();
 
 	/// @brief 動物ごとのAIや移動ロジックを実行するため
@@ -40,7 +40,7 @@ public:
 	/// @param state アニメーション状態
 	/// @param filename アニメーションのファイルパス
 	/// @details アニメーションリストへの追加
-	void AddAnimation(AnimationState state, std::string filename);
+	void AddAnimation(AnimationState state, const std::string& filename);
 
 	/// @brief 衝突判定の開始を処理するため
 	/// @param collider 自身のコライダー

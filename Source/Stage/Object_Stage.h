@@ -9,10 +9,10 @@ class Object_Stage : public Object3D
 public:
 	/// @brief 頻繁な生成破棄はメモリ断片化やスパイクを招くため、ステージロード時に一括してインスタンス化すること
 	/// @param filename モデルパス
-	/// @param initPos 初期座標
+	/// @param init_pos 初期座標
 	/// @param scale 拡大率
 	/// @param angle 回転角度 [出力] なし [副作用] Modelインスタンスの動的生成
-	Object_Stage(std::string filename, VECTOR initPos, float scale, VECTOR angle);
+	Object_Stage(const std::string& filename, VECTOR init_pos, float scale, VECTOR angle);
 
 	/// @brief 動的確保したModelリソースの解放漏れ（メモリリーク）を防ぐため、破棄時に確実にdeleteを呼ぶこと
 	/// @details なし [出力] なし [副作用] model_のメモリ解放

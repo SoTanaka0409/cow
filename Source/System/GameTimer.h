@@ -33,6 +33,7 @@ public:
 
 	/// @brief タイムアップ演出の多重再生や、シーンの重複遷移バグを防ぐために外部から参照・制御するフラグ
 	bool OutTimerFlag() { return flag_; }
+	/// @brief OutTimerFlagの設定
 	void SetOutTimerFlag(bool flag) { flag_ = flag; }
 
 	/// @brief スコア計算や演出分岐のためのゲッター。値のマイナス転落（UI表示崩れ）がないことを保証する前提

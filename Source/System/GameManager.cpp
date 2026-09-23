@@ -17,11 +17,11 @@ GameManager::GameManager()
 
 	auto data = new GameStepData;
 	data->type = GameStepType::kCowGet;
-	data->TrueFlag = true;
+	data->true_flag = true;
 	data_.push_back(data);
 	data = new GameStepData;
 	data->type = GameStepType::kFinal;
-	data->TrueFlag = true;
+	data->true_flag = true;
 	data_.push_back(data);
 	phase_timer_ = GetNowCount();
 	phase_change_count_ = 0;
@@ -122,10 +122,10 @@ void GameManager::UpdateGameTimerAndPhase()
 			game_timer_->Update();
 		}
 	}
-	int Timer = GetNowCount();
-	if (Timer - phase_timer_ >= 1000)
+	int timer = GetNowCount();
+	if (timer - phase_timer_ >= 1000)
 	{
-		phase_timer_ = Timer;
+		phase_timer_ = timer;
 		phase_change_count_++;
 	}
 
@@ -133,13 +133,13 @@ void GameManager::UpdateGameTimerAndPhase()
 	if (phase_change_count_ >= 30)
 	{
 		phase_change_count_ = 0;
-		int m_Num = rand() % 2 + 1;
+		int num = rand() % 2 + 1;
 
-		if (m_Num == 1)
+		if (num == 1)
 		{
 			current_phase_ = GamePhase::kTornadoCrisis;
 		}
-		else if (m_Num == 2)
+		else if (num == 2)
 		{
 			current_phase_ = GamePhase::kMassSpawn;
 		}
