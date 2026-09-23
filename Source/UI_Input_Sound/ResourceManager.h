@@ -17,7 +17,7 @@ struct DivGraphData
 	/// @param div_y_ 縦分割数
 	/// @param all_num_ 総数 [出力] なし [副作用] ヒープ領域への配列確保
 	DivGraphData(
-		std::string file_path_,
+		const std::string& file_path_,
 		int div_x_,
 		int div_y_,
 		int all_num_
@@ -47,30 +47,30 @@ public:
 
 	/// @brief モデルは姿勢(アニメーション等)を個別に持つため、同じパスでも参照ではなくMV1DuplicateModelによるクローン（複製）を返す仕様にしている
 	/// @param pathName ファイルパス [出力] 複製モデルハンドル(エラー時-1) [副作用] オリジナルハンドルのロードとキャッシュ登録
-	int LoadModel(std::string pathName);
+	int LoadModel(const std::string& pathName);
 
 	/// @brief プレイ中の動的ロードによるフレーム落ち（スパイク）を防ぐため、シーン初期化時などの安全なタイミングで事前読み込みを行う
 	/// @param pathName ファイルパス [出力] なし [副作用] オリジナルハンドルのロードとキャッシュ登録
-	void PreloadModel(std::string pathName);
+	void PreloadModel(const std::string& pathName);
 
 	/// @brief 2D画像は個別の状態を持たないため、VRAM節約を優先し、複製ではなくキャッシュした同じハンドル（参照）を使い回す
 	/// @param pathName ファイルパス [出力] 画像ハンドル(エラー時-1) [副作用] 画像のロードとキャッシュ登録
-	int LoadGraphics(std::string pathName);
+	int LoadGraphics(const std::string& pathName);
 
 	/// @brief 非同期ロード未対応のため、ゲームプレイ中の呼び出しは避け、必ずロード画面等で読み込みを完了させること
 	/// @param pathName ファイルパス [出力] なし [副作用] 画像のロードとキャッシュ登録
-	void PreloadGraphics(std::string pathName);
+	void PreloadGraphics(const std::string& pathName);
 
 	/// @brief 異なる分割数で同じパスをロードした場合の不整合バグを考慮していないため、アセットごとに分割数は一意である前提で運用すること
 	/// @param pathName パス
 	/// @param all_num_ 総数
 	/// @param numX 横分割数
 	/// @param numY 縦分割数 [出力] 分割画像データへのポインタ(エラー時nullptr) [副作用] 画像ロードとキャッシュ登録
-	DivGraphData* LoadDivGraphics(std::string pathName, int all_num_, int numX, int numY);
+	DivGraphData* LoadDivGraphics(const std::string& pathName, int all_num_, int numX, int numY);
 
 	/// @brief 主にデバッグ時のメモリ使用量見積もりや、シーン遷移時のリーク検知の指標として用いる
 	/// @details なし [出力] 登録リソース総数 [副作用] なし
-	int GetTotalResource() { return static_cast<int>(resource_map_list_.size() + graphic_resource_map_list_.size() + div_graphic_resource_map_list_.size()); }
+	int GetTotalResource() const { return static_cast<int>(resource_map_list_.size() + graphic_resource_map_list_.size() + div_graphic_resource_map_list_.size()); }
 
 private:
 	std::vector<std::pair<std::string, int>> resource_map_list_;         ///< 3Dモデルのパスとオリジナルハンドルのペアリスト

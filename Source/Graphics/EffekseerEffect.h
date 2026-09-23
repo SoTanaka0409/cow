@@ -9,9 +9,9 @@ class EffekseerEffect
 public:
 	/// @brief 動的生成時の同期ロードはフレーム落ち（スパイク）の原因となるため、頻出エフェクトは事前ロードを検討すること
 	/// @param filename ファイルパス
-	/// @param initPos 初期座標
+	/// @param init_pos 初期座標
 	/// @param kEffectSize 描画スケール [出力] なし [副作用] リソースの同期読み込み
-	EffekseerEffect(const char* filename, VECTOR initPos, float kEffectSize);
+	EffekseerEffect(const char* filename, VECTOR init_pos, float kEffectSize);
 
 	/// @brief VRAMリークを防ぐため、オブジェクト破棄時に確実にDxLib側のDeleteEffekseerEffectを呼ぶこと
 	/// @details なし [出力] なし [副作用] エフェクトリソースの解放
@@ -37,21 +37,28 @@ public:
 	/// @details なし [出力] なし [副作用] 再生中インスタンスの破棄
 	void Stop();
 
+	/// @brief Positionの設定
 	void SetPosition(VECTOR pos) { play_pos_ = pos; }
-	VECTOR GetPosition() { return play_pos_; }
+	/// @brief Positionの取得
+	VECTOR GetPosition() const { return play_pos_; }
 
+	/// @brief Rotationの設定
 	void SetRotation(VECTOR rot) { rotation_ = rot; }
-	VECTOR GetRotation() { return rotation_; }
+	/// @brief Rotationの取得
+	VECTOR GetRotation() const { return rotation_; }
 
+	/// @brief Scaleの設定
 	void SetScale(VECTOR scale) { mvScale = scale; }
-	VECTOR GetScale() { return mvScale; }
+	/// @brief Scaleの取得
+	VECTOR GetScale() const { return mvScale; }
 
+	/// @brief Loopの設定
 	void SetLoop(bool loop_value_) { LoopFlag = loop_value_; }
 
 	/// @brief 戻り値-1(無効値)の判定。ワンショットエフェクト再生終了後の自動破棄処理のトリガーなどに使用する
 	/// @details なし [出力] 再生中ならtrue [副作用] なし
-	bool IsPlaying()
-	{
+	bool IsPlaying() const {
+		/// @brief Effekseer3DEffectPlayingの判定
 		return IsEffekseer3DEffectPlaying(playingEffectHandle) != -1;
 	}
 

@@ -12,7 +12,7 @@ public:
 	/// @param filename テクスチャパス
 	/// @param centerPos 中心座標
 	/// @details topLeft/bottomRight: 矩形サイズ [出力] なし [副作用] VRAMへのテクスチャロード
-	Floor(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight);
+	Floor(const std::string& filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight);
 
 	/// @brief VRAMリークを避けるため、DXライブラリのDeleteGraphを確実に呼び出して解放すること
 	/// @details なし [出力] なし [副作用] graph_handle_の解放

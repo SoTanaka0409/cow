@@ -8,7 +8,7 @@
 /// @param topLeft 左上相対位置
 /// @param bottomRight 右下相対位置
 /// @details 画像メモリの確保と頂点配列の構築を行う
-Wall::Wall(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight)
+Wall::Wall(const std::string& filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight)
 	: Object3D(centerPos)
 {
 	SetTag(Object3D::kTag3dWall);

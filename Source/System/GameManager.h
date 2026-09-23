@@ -14,7 +14,7 @@ public:
 	struct GameStepData
 	{
 		GameStepType type;    ///< 現在の状態や種別を管理する値
-		bool TrueFlag = true; ///< 状態の有効・無効を管理するフラグ
+		bool true_flag = true; ///< 状態の有効・無効を管理するフラグ
 	};
 	enum class GamePhase
 	{
@@ -64,5 +64,6 @@ private:
 	int phase_change_count_; ///< 時間経過や処理間隔を管理するカウンター
 	GameTimer* game_timer_;  ///< 時間経過や処理間隔を管理するカウンター
 
+	/// @brief 処理の実行
 	void UpdateGameTimerAndPhase();
 };

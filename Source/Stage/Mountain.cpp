@@ -2,14 +2,14 @@
 
 /// @brief 背景演出用の静的モデルを構築するため
 /// @param filename モデルのファイルパス
-/// @param initPos 初期座標
+/// @param init_pos 初期座標
 /// @param scale 拡大率
 /// @param angle 回転角度
 /// @details model_に新しくModelインスタンスが確保される
-Mountain::Mountain(std::string filename, VECTOR initPos, VECTOR scale, VECTOR angle)
-	: Object3D(initPos)
+Mountain::Mountain(const std::string& filename, VECTOR init_pos, VECTOR scale, VECTOR angle)
+	: Object3D(init_pos)
 {
-	model_ = new Model(filename, initPos);
+	model_ = new Model(filename, init_pos);
 	model_->SetScale(scale);
 	model_->SetRotation(angle);
 }

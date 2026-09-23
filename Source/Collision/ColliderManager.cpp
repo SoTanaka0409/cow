@@ -55,11 +55,11 @@ void ColliderManager::Update()
 			auto colB = collider_list_[j];
 			if (colB == nullptr || colB->IsDeleteFlag()) continue;
 
-			bool isHit = CheckCollision(colA, colB);
+			bool is_hit = CheckCollision(colA, colB);
 
 			// 衝突時の反発やダメージ処理を各オブジェクト自身に委譲し、Managerへの依存度を下げるため双方に通知する
-			colA->HitCheck(colB, isHit);
-			colB->HitCheck(colA, isHit);
+			colA->HitCheck(colB, is_hit);
+			colB->HitCheck(colA, is_hit);
 		}
 	}
 

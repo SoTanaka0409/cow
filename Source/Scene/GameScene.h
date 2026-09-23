@@ -41,8 +41,11 @@ public:
 	void PhaseUpdate();
 
 private:
+	/// @brief ˆ—‚ÌÀs
 	void DrawShadowMap();
+	/// @brief ˆ—‚ÌÀs
 	void DrawGrid();
+	/// @brief ˆ—‚ÌÀs
 	void DrawPhaseUI();
 
 

@@ -21,13 +21,19 @@ public:
 	/// @param index アニメーション番号 [出力] なし [副作用] ブレンド処理の開始
 	void ChangeAnimation(AnimationState state, int index = 1);
 
+	/// @brief Loopの設定
 	void SetLoop(bool isLoop) { is_loop_ = isLoop; }
+	/// @brief LoopFinishStateの設定
 	void SetLoopFinishState(AnimationState state) { loop_finish_state_ = state; }
+	/// @brief AnimationBlendの設定
 	void SetAnimationBlend(bool isBlend);
 
+	/// @brief NowStateの取得
 	AnimationState GetNowState() { return state_; }
-	bool IsLoopFinish() { return is_loop_finish_; }
+	/// @brief LoopFinishの判定
+	bool IsLoopFinish() const { return is_loop_finish_; }
 
+	/// @brief AnimationCountの設定
 	void SetAnimationCount(float count) { animation_count_ = count; }
 
 private:

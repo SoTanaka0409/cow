@@ -5,7 +5,7 @@
 /// @details filename (モデルパス)
 /// @details pos (初期座標)
 /// @details スカイボックス用3Dモデルの動的生成
-SkyBox::SkyBox(std::string filename, VECTOR pos)
+SkyBox::SkyBox(const std::string& filename, VECTOR pos)
 	: Object3D(pos)
 {
 	model_ = new Model(filename, VGet(0.0f, 0.0f, 0.0f));
@@ -57,7 +57,7 @@ void SkyBox::SetScale(float scale)
 /// @details filename (テクスチャパス)
 /// @details index (対象マテリアルのインデックス)
 /// @details スカイボックスのテクスチャ差し替え
-void SkyBox::SetModelTexture(std::string filename, int index)
+void SkyBox::SetModelTexture(const std::string& filename, int index)
 {
 	if (model_ != nullptr)
 	{

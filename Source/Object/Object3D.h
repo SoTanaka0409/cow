@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 #include "DxLib.h"
 #include <string>
 
@@ -21,15 +21,15 @@ public:
 	};
 
 public:
-	/// @brief åŠé€æ˜æç”»ãªã©ã®Zã‚½ãƒ¼ãƒˆã«åˆ©ç”¨ã™ã‚‹ãŸã‚
-	/// @param distance ã‚«ãƒ¡ãƒ©ã‹ã‚‰ã®è·é›¢
-	/// @details current_camera_distance_ã‚’æ›´æ–°ã™ã‚‹
+	/// @brief ”¼“§–¾•`‰æ‚È‚Ç‚ÌZƒ\[ƒg‚É—˜—p‚·‚é‚½‚ß
+	/// @param distance ƒJƒƒ‰‚©‚ç‚Ì‹——£
+	/// @details current_camera_distance_‚ğXV‚·‚é
 	void SetCameraDistance(float distance) { current_camera_distance_ = distance; }
 
 	struct CompareZOrder {
-		/// @brief åŠé€æ˜ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç ´ç¶»ã‚’é˜²ããŸã‚ã€å¥¥ã‹ã‚‰æ‰‹å‰ã«æç”»ã™ã‚‹ç”¨é€”ã§ä½¿ç”¨ã™ã‚‹
-		/// @param b æ¯”è¼ƒã™ã‚‹2ã¤ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
-		/// @return aãŒbã‚ˆã‚Šã‚«ãƒ¡ãƒ©ã‹ã‚‰é ã„å ´åˆã¯true
+		/// @brief ”¼“§–¾ƒIƒuƒWƒFƒNƒg‚Ì”j’]‚ğ–h‚®‚½‚ßA‰œ‚©‚çè‘O‚É•`‰æ‚·‚é—p“r‚Åg—p‚·‚é
+		/// @param b ”äŠr‚·‚é2‚Â‚ÌƒIƒuƒWƒFƒNƒg
+		/// @return a‚ªb‚æ‚èƒJƒƒ‰‚©‚ç‰“‚¢ê‡‚Ítrue
 		/// @details a
 		bool operator()(Object3D* a, Object3D* b) const {
 			return a->current_camera_distance_ > b->current_camera_distance_;
@@ -37,70 +37,82 @@ public:
 	};
 
 public:
-	/// @brief ç”Ÿæˆã¨åŒæ™‚ã«ã‚·ãƒ¼ãƒ³ã¸ã®è‡ªå‹•ç™»éŒ²ã‚’è¡Œã„ã€ç®¡ç†æ¼ã‚Œã‚’é˜²ã
-	/// @param initPos åˆæœŸåº§æ¨™
-	/// @details ã‚·ãƒ¼ãƒ³ã®ObjectManagerã«è‡ªèº«ãŒç™»éŒ²ã•ã‚Œã€ã‚«ãƒ—ã‚»ãƒ«ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ãŒç”Ÿæˆã•ã‚Œã‚‹
-	Object3D(VECTOR initPos);
+	/// @brief ¶¬‚Æ“¯‚ÉƒV[ƒ“‚Ö‚Ì©“®“o˜^‚ğs‚¢AŠÇ—˜R‚ê‚ğ–h‚®
+	/// @param init_pos ‰ŠúÀ•W
+	/// @details ƒV[ƒ“‚ÌObjectManager‚É©g‚ª“o˜^‚³‚êAƒJƒvƒZƒ‹ƒRƒ‰ƒCƒ_[‚ª¶¬‚³‚ê‚é
+	Object3D(VECTOR init_pos);
 
 	virtual ~Object3D();
 
-	/// @brief ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ¯ãƒ•ãƒ¬ãƒ¼ãƒ ã®æŒ¯ã‚‹èˆã„ã‚’å®Ÿè¡Œã™ã‚‹ãŸã‚
-	/// @details ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åº§æ¨™ã‚„çŠ¶æ…‹ãŒæ›´æ–°ã•ã‚Œã‚‹
+	/// @brief ƒIƒuƒWƒFƒNƒg‚Ì–ˆƒtƒŒ[ƒ€‚ÌU‚é•‘‚¢‚ğÀs‚·‚é‚½‚ß
+	/// @details ƒIƒuƒWƒFƒNƒg‚ÌÀ•W‚âó‘Ô‚ªXV‚³‚ê‚é
 	virtual void Update();
 
-	/// @brief ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç¾åœ¨ã®çŠ¶æ…‹ã‚’ç”»é¢ã«åæ˜ ã™ã‚‹ãŸã‚
-	/// @details ç”»é¢ã«ãƒ¢ãƒ‡ãƒ«ã‚„ç”»åƒãŒæç”»ã•ã‚Œã‚‹
+	/// @brief ƒIƒuƒWƒFƒNƒg‚ÌŒ»İ‚Ìó‘Ô‚ğ‰æ–Ê‚É”½‰f‚·‚é‚½‚ß
+	/// @details ‰æ–Ê‚Éƒ‚ƒfƒ‹‚â‰æ‘œ‚ª•`‰æ‚³‚ê‚é
 	virtual void Draw();
 	virtual void DrawShadowCaster();
 	virtual void DrawDebug();
 
-	/// @brief è¡çªåˆ¤å®šã®é–‹å§‹ã‚¤ãƒ™ãƒ³ãƒˆã‚’å‡¦ç†ã—ã€ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚„åŠ¹æœéŸ³ã®ãƒˆãƒªã‚¬ãƒ¼ã¨ã™ã‚‹ãŸã‚
-	/// @param collider è‡ªèº«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
-	/// @param check ç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
-	/// @details æ´¾ç”Ÿã‚¯ãƒ©ã‚¹ã§ã®å®Ÿè£…ã«ä¾å­˜ã—ã¦çŠ¶æ…‹ãŒå¤‰æ›´ã•ã‚Œã‚‹
+	/// @brief Õ“Ë”»’è‚ÌŠJnƒCƒxƒ“ƒg‚ğˆ—‚µAƒ_ƒ[ƒW‚âŒø‰Ê‰¹‚ÌƒgƒŠƒK[‚Æ‚·‚é‚½‚ß
+	/// @param collider ©g‚ÌƒRƒ‰ƒCƒ_[
+	/// @param check ‘Šè‚ÌƒRƒ‰ƒCƒ_[
+	/// @details ”h¶ƒNƒ‰ƒX‚Å‚ÌÀ‘•‚ÉˆË‘¶‚µ‚Äó‘Ô‚ª•ÏX‚³‚ê‚é
 	virtual void OnEnter(Collider* collider, Collider* check);
 
-	/// @brief ç¶™ç¶šçš„ãªæ¥è§¦çŠ¶æ…‹ï¼ˆæŠ¼ã—å‡ºã—ã‚„ç¶™ç¶šãƒ€ãƒ¡ãƒ¼ã‚¸ãªã©ï¼‰ã‚’å‡¦ç†ã™ã‚‹ãŸã‚
-	/// @param collider è‡ªèº«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
-	/// @param check ç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
-	/// @details æ´¾ç”Ÿã‚¯ãƒ©ã‚¹ã§ã®å®Ÿè£…ã«ä¾å­˜ã—ã¦çŠ¶æ…‹ãŒå¤‰æ›´ã•ã‚Œã‚‹
+	/// @brief Œp‘±“I‚ÈÚGó‘Ôi‰Ÿ‚µo‚µ‚âŒp‘±ƒ_ƒ[ƒW‚È‚Çj‚ğˆ—‚·‚é‚½‚ß
+	/// @param collider ©g‚ÌƒRƒ‰ƒCƒ_[
+	/// @param check ‘Šè‚ÌƒRƒ‰ƒCƒ_[
+	/// @details ”h¶ƒNƒ‰ƒX‚Å‚ÌÀ‘•‚ÉˆË‘¶‚µ‚Äó‘Ô‚ª•ÏX‚³‚ê‚é
 	virtual void OnTrigger(Collider* collider, Collider* check);
 
-	/// @brief è¡çªçµ‚äº†ã‚¤ãƒ™ãƒ³ãƒˆã‚’å‡¦ç†ã—ã€æ¥è§¦çŠ¶æ…‹ã®ãƒªã‚»ãƒƒãƒˆãªã©ã‚’è¡Œã†ãŸã‚
-	/// @param collider è‡ªèº«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
-	/// @param check ç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
-	/// @details æ´¾ç”Ÿã‚¯ãƒ©ã‚¹ã§ã®å®Ÿè£…ã«ä¾å­˜ã—ã¦çŠ¶æ…‹ãŒå¤‰æ›´ã•ã‚Œã‚‹
+	/// @brief Õ“ËI—¹ƒCƒxƒ“ƒg‚ğˆ—‚µAÚGó‘Ô‚ÌƒŠƒZƒbƒg‚È‚Ç‚ğs‚¤‚½‚ß
+	/// @param collider ©g‚ÌƒRƒ‰ƒCƒ_[
+	/// @param check ‘Šè‚ÌƒRƒ‰ƒCƒ_[
+	/// @details ”h¶ƒNƒ‰ƒX‚Å‚ÌÀ‘•‚ÉˆË‘¶‚µ‚Äó‘Ô‚ª•ÏX‚³‚ê‚é
 	virtual void OnExit(Collider* collider, Collider* check);
 
 public:
+	/// @brief Position‚Ìİ’è
 	void SetPosition(VECTOR pos) { position_ = pos; };
-	VECTOR GetPosition() { return position_; }
+	/// @brief Position‚Ìæ“¾
+	VECTOR GetPosition() const { return position_; }
 
+	/// @brief OldPosition‚Ìİ’è
 	void SetOldPosition(VECTOR pos) { old_position_ = pos; }
-	VECTOR GetOldPosition() { return old_position_; }
+	/// @brief OldPosition‚Ìæ“¾
+	VECTOR GetOldPosition() const { return old_position_; }
 
+	/// @brief Rotation‚Ìİ’è
 	void SetRotation(VECTOR rot) { rotation_ = rot; }
-	VECTOR GETRotation() { return rotation_; }
+	/// @brief Rotation‚Ìæ“¾
+	VECTOR GetRotation() const { return rotation_; }
 
+	/// @brief DeleteFlag‚Ìİ’è
 	void SetDeleteFlag(bool flag) { delete_flag_ = flag; }
-	bool IsDeleteFlag() { return delete_flag_; }
+	/// @brief DeleteFlag‚Ì”»’è
+	bool IsDeleteFlag() const { return delete_flag_; }
 
+	/// @brief DrawFlag‚Ìİ’è
 	void SetDrawFlag(bool flag) { draw_flag_ = flag; }
-	bool IsDrawFlag() { return draw_flag_; }
+	/// @brief DrawFlag‚Ì”»’è
+	bool IsDrawFlag() const { return draw_flag_; }
 
+	/// @brief Tag‚Ìİ’è
 	void SetTag(Tag3D tag) { tag_ = tag; }
+	/// @brief Tag‚Ìæ“¾
 	Tag3D GetTag() { return tag_; }
 
 protected:
-	VECTOR position_;                   ///< åº§æ¨™ã‚„ä½ç½®æƒ…å ±ã‚’ç®¡ç†ã™ã‚‹å€¤
-	VECTOR rotation_;                   ///< ç§»å‹•ã‚„å›è»¢ã®è¨ˆç®—ã«ä½¿ç”¨ã™ã‚‹å€¤
-	VECTOR old_position_;               ///< åº§æ¨™ã‚„ä½ç½®æƒ…å ±ã‚’ç®¡ç†ã™ã‚‹å€¤
-	CapsuleCollider* capsule_collider_; ///< å½“ãŸã‚Šåˆ¤å®šã®ç®¡ç†ã«ä½¿ç”¨ã™ã‚‹æƒ…å ±
-	float radius_;                      ///< ã‚µã‚¤ã‚ºã‚„ç¯„å›²ã®è¨ˆç®—ã«ä½¿ç”¨ã™ã‚‹å€¤
+	VECTOR position_;                   ///< À•W‚âˆÊ’uî•ñ‚ğŠÇ—‚·‚é’l
+	VECTOR rotation_;                   ///< ˆÚ“®‚â‰ñ“]‚ÌŒvZ‚Ég—p‚·‚é’l
+	VECTOR old_position_;               ///< À•W‚âˆÊ’uî•ñ‚ğŠÇ—‚·‚é’l
+	CapsuleCollider* capsule_collider_; ///< “–‚½‚è”»’è‚ÌŠÇ—‚Ég—p‚·‚éî•ñ
+	float radius_;                      ///< ƒTƒCƒY‚â”ÍˆÍ‚ÌŒvZ‚Ég—p‚·‚é’l
 
 private:
-	bool delete_flag_;              ///< çŠ¶æ…‹ã®æœ‰åŠ¹ãƒ»ç„¡åŠ¹ã‚’ç®¡ç†ã™ã‚‹ãƒ•ãƒ©ã‚°
-	Tag3D tag_;                     ///< ç¾åœ¨ã®çŠ¶æ…‹ã‚„ç¨®åˆ¥ã‚’ç®¡ç†ã™ã‚‹å€¤
-	bool draw_flag_;                ///< çŠ¶æ…‹ã®æœ‰åŠ¹ãƒ»ç„¡åŠ¹ã‚’ç®¡ç†ã™ã‚‹ãƒ•ãƒ©ã‚°
-	float current_camera_distance_; ///< å†…éƒ¨çŠ¶æ…‹ã‚’ç®¡ç†ã™ã‚‹å€¤
+	bool delete_flag_;              ///< ó‘Ô‚Ì—LŒøE–³Œø‚ğŠÇ—‚·‚éƒtƒ‰ƒO
+	Tag3D tag_;                     ///< Œ»İ‚Ìó‘Ô‚âí•Ê‚ğŠÇ—‚·‚é’l
+	bool draw_flag_;                ///< ó‘Ô‚Ì—LŒøE–³Œø‚ğŠÇ—‚·‚éƒtƒ‰ƒO
+	float current_camera_distance_; ///< “à•”ó‘Ô‚ğŠÇ—‚·‚é’l
 };

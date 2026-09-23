@@ -321,8 +321,7 @@ void Score::SetResultScore(int value)
 }
 /// @brief リザルトスコアを取得するため
 /// @return リザルトスコア
-int Score::GetResultScore()
-{
+int Score::GetResultScore() {
 	return result_score_;
 }
 /// @brief スコアと単位画像を並べて描画するため

@@ -9,11 +9,11 @@ class Mountain : public Object3D
 public:
 	/// @brief 背景演出用の静的モデルを構築するため
 	/// @param filename モデルのファイルパス
-	/// @param initPos 初期座標
+	/// @param init_pos 初期座標
 	/// @param scale 拡大率
 	/// @param angle 回転角度
 	/// @details model_に新しくModelインスタンスが確保される
-	Mountain(std::string filename, VECTOR initPos, VECTOR scale, VECTOR angle);
+	Mountain(const std::string& filename, VECTOR init_pos, VECTOR scale, VECTOR angle);
 
 	/// @brief メモリリークを防ぐため
 	/// @details model_のメモリが解放される

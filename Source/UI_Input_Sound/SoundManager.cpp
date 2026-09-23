@@ -93,7 +93,7 @@ void SoundManager::PlaySE(SoundSe se)
 /// @param bgm ロード対象のBGMID
 /// @param filename ファイルパス
 /// @brief DxLibへのサウンドリソース登録、およびロード済み配列への登録
-void SoundManager::LoadBGM(SoundBgm bgm, std::string filename)
+void SoundManager::LoadBGM(SoundBgm bgm, const std::string& filename)
 {
 	// 二重ロードによる同一リソースの重複登録と、無駄なサウンドメモリ消費を防ぐための事前確認
 	for (auto it = bgm_handle_list_.begin(); it != bgm_handle_list_.end(); it++)
@@ -118,7 +118,7 @@ void SoundManager::LoadBGM(SoundBgm bgm, std::string filename)
 /// @param se ロード対象のSEID
 /// @param filename ファイルパス
 /// @brief DxLibへのサウンドリソース登録、およびロード済み配列への登録
-void SoundManager::LoadSE(SoundSe se, std::string filename)
+void SoundManager::LoadSE(SoundSe se, const std::string& filename)
 {
 	// BGMと同様、二重ロードによるサウンドメモリのリークおよびハンドル管理の重複バグを回避する
 	for (auto it = se_handle_list_.begin(); it != se_handle_list_.end(); it++)

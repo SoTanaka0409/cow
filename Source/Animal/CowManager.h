@@ -18,7 +18,8 @@ public:
 	/// @param count 生成個数
 	/// @param is_fever フィーバー中か
 	/// @details 管理リストへ牛を追加、またはプールから復帰
-	void SpawnCow(std::string filename, VECTOR pos, float scale, CowMove::TagCow tag, int count, bool is_fever = false, float scatterRadius = 200.0f);
+	void SpawnCow(const std::string& filename, VECTOR pos, float scale, CowMove::TagCow tag, int count, bool is_fever = false, float scatterRadius = 200.0f);
 protected:
+	/// @brief Tagの取得
 	CowMove::TagCow GetTag(CowMove* creature) override { return creature->GetTagCow(); }
 };

@@ -24,7 +24,7 @@ ResourceManager::~ResourceManager()
 	InitGraph(); // DxLibに読み込まれているすべての画像を一括削除
 }
 
-int ResourceManager::LoadModel(std::string pathName)
+int ResourceManager::LoadModel(const std::string& pathName)
 {
 	// 既に同じモデルがロード済みの場合は、そのオリジナルから複製を作成して返す
 	for (int i = 0; i < resource_map_list_.size(); i++)
@@ -45,7 +45,7 @@ int ResourceManager::LoadModel(std::string pathName)
 	return MV1DuplicateModel(handle);
 }
 
-void ResourceManager::PreloadModel(std::string pathName)
+void ResourceManager::PreloadModel(const std::string& pathName)
 {
 	for (int i = 0; i < resource_map_list_.size(); i++)
 	{
@@ -62,7 +62,7 @@ void ResourceManager::PreloadModel(std::string pathName)
 /// @brief 2D画像ファイルをキャッシュ読み込みする（既存ロード時は既存のハンドルを返す）
 /// @details キャッシュヒット時もハンドルの有効性を検証し、無効なら再ロードする
 /// @details これによりシーン切り替え後にハンドルが無効になった場合でも正しく復元できる
-int ResourceManager::LoadGraphics(std::string pathName)
+int ResourceManager::LoadGraphics(const std::string& pathName)
 {
 	for (int i = 0; i < graphic_resource_map_list_.size(); i++)
 	{
@@ -93,7 +93,7 @@ int ResourceManager::LoadGraphics(std::string pathName)
 	return handle;
 }
 
-void ResourceManager::PreloadGraphics(std::string pathName)
+void ResourceManager::PreloadGraphics(const std::string& pathName)
 {
 	for (int i = 0; i < graphic_resource_map_list_.size(); i++)
 	{
@@ -107,7 +107,7 @@ void ResourceManager::PreloadGraphics(std::string pathName)
 	}
 }
 
-DivGraphData* ResourceManager::LoadDivGraphics(std::string pathName, int all_num_, int numX, int numY)
+DivGraphData* ResourceManager::LoadDivGraphics(const std::string& pathName, int all_num_, int numX, int numY)
 {
 	for (int i = 0; i < div_graphic_resource_map_list_.size(); i++)
 	{

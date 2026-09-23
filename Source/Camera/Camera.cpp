@@ -138,8 +138,7 @@ void Camera::UpdateRotate()
 }
 /// @brief 値を取得する
 /// @return マウスが規定ピクセル以上移動しているかどうかの真偽値
-bool Camera::IsMouseMoved()
-{
+bool Camera::IsMouseMoved() const {
 	int moveX = abs(current_mouse_x_ - prev_mouse_x_);
 	int moveY = abs(current_mouse_y_ - prev_mouse_y_);
 	return moveX > 0.05f || moveY > 0.05f;
@@ -178,10 +177,10 @@ void Camera::SetupShake(float time, float width, float angleSpeed, float stepTim
 	step_time_ = stepTime;
 }
 /// @param phase 現在のゲーム進行段階
-/// @param ufoPos UFOの座標
-/// @param tornadoPos 竜巻の座標
+/// @param ufo_pos UFOの座標
+/// @param tornado_pos 竜巻の座標
 /// @brief 指定フェーズに対応するアングル補間、Lerpによる座標変化
-void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
+void Camera::UpdateCameraByPhase(int phase, VECTOR ufo_pos, VECTOR tornado_pos)
 {
 	if (Master::is_debug_camera_) return;
 	static int lastPhase = -1;
@@ -212,23 +211,23 @@ void Camera::UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos)
 	if (phase == (int)GameManager::GamePhase::kMassSpawn)
 	{
 		// 牛の大発生フェーズ：イベント開始時はUFOの巨大ビームを見上げる劇的なアングルにし、時間経過でプレイヤーの視線に緩やかに戻す
-		targetPos = VAdd(ufoPos, VGet(0.0f, 150.0f, -300.0f));
+		targetPos = VAdd(ufo_pos, VGet(0.0f, 150.0f, -300.0f));
 		if (phaseTimer < 180)
 		{
 			float lookUpAmount = 400.0f * (1.0f - (float)phaseTimer / 120.0f);
-			targetLookAt = VAdd(ufoPos, VGet(0.0f, 100.0f + lookUpAmount, 0.0f));
+			targetLookAt = VAdd(ufo_pos, VGet(0.0f, 100.0f + lookUpAmount, 0.0f));
 		}
 		else
 		{
-			targetLookAt = VAdd(ufoPos, VGet(0.0f, 100.0f, 0.0f));
+			targetLookAt = VAdd(ufo_pos, VGet(0.0f, 100.0f, 0.0f));
 		}
 	}
 	else if (phase == (int)GameManager::GamePhase::kTornadoCrisis)
 	{
 		// 竜巻襲来フェーズ：危険を早期に認識させるため、自機（UFO）と竜巻の双方が1つの画面に収まるようカメラを斜め上空へ引く
-		targetPos = VAdd(ufoPos, VGet(0.0f, 500.0f, -200.0f));
-		VECTOR toTornado = VSub(tornadoPos, ufoPos);
-		targetLookAt = VAdd(ufoPos, toTornado);
+		targetPos = VAdd(ufo_pos, VGet(0.0f, 500.0f, -200.0f));
+		VECTOR toTornado = VSub(tornado_pos, ufo_pos);
+		targetLookAt = VAdd(ufo_pos, toTornado);
 	}
 	// 瞬時にカメラを切り替えることによる急激な画面変化（3D酔い）を防止するため、現在のカメラ位置から目標位置へ線形補間（Lerp）で滑らかに移動させる
 	float lerpSpeed = 0.1f * Master::GetDeltaTimeScaler();

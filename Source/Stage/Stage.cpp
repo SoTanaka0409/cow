@@ -2,25 +2,25 @@
 #include "Master.h"
 
 /// @brief 初期化処理を行う
-/// @details initPos (初期座標)
-/// @details stageModelName (描画用モデル)
+/// @details init_pos (初期座標)
+/// @details stage_model_name (描画用モデル)
 /// @details stageCollisionModelName (判定用モデル)
 /// @details 描画用および判定用モデルの読み込みと、判定情報(コリジョン)のセットアップ
-Stage::Stage(VECTOR initPos, std::string stageModelName, std::string stageCollisionModelName)
-	: Object3D(initPos)
+Stage::Stage(VECTOR init_pos, const std::string& stage_model_name, const std::string& stageCollisionModelName)
+	: Object3D(init_pos)
 {
 	SetTag(Object3D::kTag3dStage);
 
 	// ハイポリゴンの描画用モデルで直接当たり判定を行うと処理落ち(パフォーマンス低下)を招くため、
 	// 軽量な判定専用モデルを別途読み込んで使用する
-	model_handle_ = Master::resource_manager_->LoadModel(stageModelName);
+	model_handle_ = Master::resource_manager_->LoadModel(stage_model_name);
 	collision_handle_ = Master::resource_manager_->LoadModel(stageCollisionModelName);
 
 	float StageSize = 5.0f;
 	MV1SetScale(model_handle_, VGet(StageSize, 0.3f, StageSize));
 	MV1SetScale(collision_handle_, VGet(StageSize, 0.3f, StageSize));
-	MV1SetPosition(collision_handle_, initPos);
-	MV1SetPosition(model_handle_, initPos);
+	MV1SetPosition(collision_handle_, init_pos);
+	MV1SetPosition(model_handle_, init_pos);
 
 	// パフォーマンス制約: 毎フレームの衝突判定負荷を軽減するため、ロード時に空間分割などの判定メタデータを事前構築する
 	MV1SetupCollInfo(collision_handle_);

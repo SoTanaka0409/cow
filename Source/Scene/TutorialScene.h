@@ -45,6 +45,7 @@ public:
 	/// @brief チュートリアル専用BGMの停止、ロードしたUI用リソースの全解放
 	void Finalize() override;
 
+	/// @brief Cameraの設定
 	void SetCamera(Camera* camera);
 
 	/// @details プレイヤーが牛の格納（アブダクション）に成功したというトリガーをシーン側に通知する
@@ -56,12 +57,19 @@ private:
 	/// @brief カメラやプレイヤーがステージ外の暗黒空間に落下するのを防ぐ透明な衝突判定（防壁）を生成する
 	void CreateWalls();
 
+	/// @brief 処理の実行
 	void UpdateStateMove();
+	/// @brief 処理の実行
 	void UpdateStateBeam();
+	/// @brief 処理の実行
 	void UpdateStateComboScore();
+	/// @brief 処理の実行
 	void UpdateStatePhase();
+	/// @brief 処理の実行
 	void UpdateStateSkill();
+	/// @brief 処理の実行
 	void UpdateStateFever();
+	/// @brief 処理の実行
 	void UpdateStateEnd();
 
 	/// @param text 表示したい文章

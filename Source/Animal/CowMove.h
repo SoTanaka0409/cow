@@ -29,11 +29,13 @@ public:
 public:
 	/// @brief 非同期読み込み未対応のため、大量生成によるメインスレッドのブロック（処理落ち）に注意すること
 	/// @param filename モデルパス
-	/// @param initPos 初期配置座標 [出力] なし [副作用] エフェクトのインスタンス確保
-	CowMove(std::string filename, VECTOR initPos);
+	/// @param init_pos 初期配置座標 [出力] なし [副作用] エフェクトのインスタンス確保
+	CowMove(const std::string& filename, VECTOR init_pos);
 	virtual ~CowMove();
 
+	/// @brief 毎フレームの更新処理
 	void Update() override;
+	/// @brief 描画処理
 	void Draw() override;
 
 	/// @brief 物理演算（重力など）との競合による座標の暴れを防ぐため、吸い込み中は通常の移動処理をバイパスする
@@ -62,7 +64,8 @@ public:
 	virtual void RotationCharacter() override;
 	virtual void CharacterRotate() override;
 
-	void AddAnimation(AnimationState state, std::string filename);
+	/// @brief 処理の実行
+	void AddAnimation(AnimationState state, const std::string& filename);
 
 	/// @brief 多重発火による複数回ダメージや連続吸い込みを防ぐため、内部で状態フラグによるガードを必ず行うこと
 	virtual void OnEnter(Collider* collider, Collider* check) override;
@@ -81,9 +84,12 @@ public:
 	/// @param reason 死亡要因 [出力] なし [副作用] 要因別スコア計算と破棄フラグ有効化
 	virtual void Die(DeathReason reason) override;
 
+	/// @brief TagCowの設定
 	void SetTagCow(TagCow tag) { tag_cow_ = tag; }
+	/// @brief TagCowの取得
 	TagCow GetTagCow() { return tag_cow_; }
 
+	/// @brief ColliderRadiusの設定
 	void SetColliderRadius(float radius) { collider_radius_ = radius; }
 
 protected:

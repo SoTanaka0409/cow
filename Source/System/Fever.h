@@ -7,14 +7,19 @@ public:
 	Fever();
 	~Fever();
 
+	/// @brief 毎フレームの更新処理
 	void Update();
 
+	/// @brief 処理の実行
 	void AddGauge(int value);
 
-	bool IsFever();
+	/// @brief Feverの判定
+	bool IsFever() const;
 
+	/// @brief 処理の実行
 	void StartFever(class Player3D* player);
 
+	/// @brief 処理の実行
 	void EndFever();
 
 private:

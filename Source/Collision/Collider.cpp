@@ -26,11 +26,11 @@ Collider::~Collider()
 
 /// @brief 衝突状態の変化を検知し、適切なイベントを通知するため
 /// @param check 判定対象のコライダー
-/// @param isHit 衝突判定の計算結果
+/// @param is_hit 衝突判定の計算結果
 /// @details collision_list_の更新、親オブジェクトへのイベント通知
-void Collider::HitCheck(Collider* check, bool isHit)
+void Collider::HitCheck(Collider* check, bool is_hit)
 {
-	if (isHit)
+	if (is_hit)
 	{
 		auto itr = std::find_if(
 			collision_list_.begin(),

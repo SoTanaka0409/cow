@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 #include"SceneManager.h"
 #include"SoundManager.h"
 #include"ResourceManager.h"
@@ -13,31 +13,31 @@
 #include"EffectManager.h"
 #include"Fever.h"
 
-/// @brief ã‚²ãƒ¼ãƒ å…¨ä½“ã§å…±æœ‰ã™ã‚‹ç®¡ç†ã‚¯ãƒ©ã‚¹ã¸ã®å‚ç…§ã‚’ã¾ã¨ã‚ã‚‹
+/// @brief ƒQ[ƒ€‘S‘Ì‚Å‹¤—L‚·‚éŠÇ—ƒNƒ‰ƒX‚Ö‚ÌQÆ‚ğ‚Ü‚Æ‚ß‚é
 class Master
 {
 public:
-	static SceneManager* scene_manager_;       ///< ã‚·ãƒ¼ãƒ³ã®ç”Ÿæˆã€ç ´æ£„ã€é·ç§»ã‚’ç®¡ç†ã™ã‚‹
-	static SoundManager* sound_manager_;       ///< BGMã¨åŠ¹æœéŸ³ã®å†ç”Ÿã‚’ç®¡ç†ã™ã‚‹
-	static Score* score_manager_;              ///< ã‚¹ã‚³ã‚¢è¨ˆç®—ã¨è¡¨ç¤ºç”¨ãƒ‡ãƒ¼ã‚¿ã‚’ç®¡ç†ã™ã‚‹
-	static ResourceManager* resource_manager_; ///< ç”»åƒã€ãƒ¢ãƒ‡ãƒ«ã€éŸ³æºãªã©ã®èª­ã¿è¾¼ã¿ã‚’ç®¡ç†ã™ã‚‹
-	static Camera* camera_;                    ///< é€šå¸¸ãƒ—ãƒ¬ã‚¤æ™‚ã®ã‚«ãƒ¡ãƒ©ã‚’ç®¡ç†ã™ã‚‹
-	static DebugCamera* debug_camera_;         ///< ãƒ‡ãƒãƒƒã‚°ç”¨ã‚«ãƒ¡ãƒ©ã‚’ç®¡ç†ã™ã‚‹
-	static bool is_debug_camera_;              ///< ãƒ‡ãƒãƒƒã‚°ã‚«ãƒ¡ãƒ©ã‚’ä½¿ã†ã‹ã©ã†ã‹ã®ãƒ•ãƒ©ã‚°
-	static Level* level_manager_;              ///< é›£æ˜“åº¦ã‚„é€²è¡Œåº¦ã‚’ç®¡ç†ã™ã‚‹
-	static EffectManager* effect_manager_;     ///< ç”»é¢ä¸Šã®ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’ç®¡ç†ã™ã‚‹
+	static SceneManager* scene_manager_;       ///< ƒV[ƒ“‚Ì¶¬A”jŠüA‘JˆÚ‚ğŠÇ—‚·‚é
+	static SoundManager* sound_manager_;       ///< BGM‚ÆŒø‰Ê‰¹‚ÌÄ¶‚ğŠÇ—‚·‚é
+	static Score* score_manager_;              ///< ƒXƒRƒAŒvZ‚Æ•\¦—pƒf[ƒ^‚ğŠÇ—‚·‚é
+	static ResourceManager* resource_manager_; ///< ‰æ‘œAƒ‚ƒfƒ‹A‰¹Œ¹‚È‚Ç‚Ì“Ç‚İ‚İ‚ğŠÇ—‚·‚é
+	static Camera* camera_;                    ///< ’ÊíƒvƒŒƒC‚ÌƒJƒƒ‰‚ğŠÇ—‚·‚é
+	static DebugCamera* debug_camera_;         ///< ƒfƒoƒbƒO—pƒJƒƒ‰‚ğŠÇ—‚·‚é
+	static bool is_debug_camera_;              ///< ƒfƒoƒbƒOƒJƒƒ‰‚ğg‚¤‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
+	static Level* level_manager_;              ///< “ïˆÕ“x‚âis“x‚ğŠÇ—‚·‚é
+	static EffectManager* effect_manager_;     ///< ‰æ–Êã‚ÌƒGƒtƒFƒNƒg‚ğŠÇ—‚·‚é
 
-	static bool SelectSkill;          ///< ã‚¹ã‚­ãƒ«é¸æŠä¸­ã‹ã©ã†ã‹ã®ãƒ•ãƒ©ã‚°
-	static int tutorial_count_;       ///< ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«é€²è¡Œã‚’ç®¡ç†ã™ã‚‹ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼
-	static bool GameFinishFlag;       ///< ã‚²ãƒ¼ãƒ çµ‚äº†å‡¦ç†ã®é‡è¤‡ã‚’é˜²ããƒ•ãƒ©ã‚°
-	static bool FeverFlag;            ///< ãƒ•ã‚£ãƒ¼ãƒãƒ¼çŠ¶æ…‹ã‹ã©ã†ã‹ã®ãƒ•ãƒ©ã‚°
-	static int caught_cow_count_;     ///< æ•ã¾ãˆãŸç‰›ã®æ•°ã‚’è¨˜éŒ²ã™ã‚‹ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼
-	static bool tutorial_vacum_flag_; ///< ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«ä¸­ã€ç‰¹å®šã®æ‰‹é †ã‚’è¸ã‚€å‰ã«å¸ã„è¾¼ã¿ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãŒæš´ç™ºã—ã¦é€²è¡Œä¸èƒ½ã«ãªã‚‹ã®ã‚’é˜²ãåˆ¶ç´„ãƒ•ãƒ©ã‚°
-	static bool is_shadow_enabled_;   ///< è¨­å®šç”»é¢ã§ã®ON/OFFé¸æŠã‚’å¼•ãç¶™ããŸã‚ã®ãƒ•ãƒ©ã‚°ã€‚trueã®ã¨ãã®ã¿Scene3DãŒã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—ã‚’ç”Ÿæˆã™ã‚‹
-	static bool is_debug_mode_;       ///< è¨­å®šç”»é¢ã§ã®ON/OFFé¸æŠã‚’å¼•ãç¶™ããŸã‚ã®ãƒ‡ãƒãƒƒã‚°ãƒ¢ãƒ¼ãƒ‰ãƒ•ãƒ©ã‚°
+	static bool SelectSkill;          ///< ƒXƒLƒ‹‘I‘ğ’†‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
+	static int tutorial_count_;       ///< ƒ`ƒ…[ƒgƒŠƒAƒ‹is‚ğŠÇ—‚·‚éƒJƒEƒ“ƒ^[
+	static bool GameFinishFlag;       ///< ƒQ[ƒ€I—¹ˆ—‚Ìd•¡‚ğ–h‚®ƒtƒ‰ƒO
+	static bool FeverFlag;            ///< ƒtƒB[ƒo[ó‘Ô‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
+	static int caught_cow_count_;     ///< •ß‚Ü‚¦‚½‹‚Ì”‚ğ‹L˜^‚·‚éƒJƒEƒ“ƒ^[
+	static bool tutorial_vacum_flag_; ///< ƒ`ƒ…[ƒgƒŠƒAƒ‹’†A“Á’è‚Ìè‡‚ğ“¥‚Ş‘O‚É‹z‚¢‚İƒAƒNƒVƒ‡ƒ“‚ª–\”­‚µ‚Äis•s”\‚É‚È‚é‚Ì‚ğ–h‚®§–ñƒtƒ‰ƒO
+	static bool is_shadow_enabled_;   ///< İ’è‰æ–Ê‚Å‚ÌON/OFF‘I‘ğ‚ğˆø‚«Œp‚®‚½‚ß‚Ìƒtƒ‰ƒOBtrue‚Ì‚Æ‚«‚Ì‚İScene3D‚ªƒVƒƒƒhƒEƒ}ƒbƒv‚ğ¶¬‚·‚é
+	static bool is_debug_mode_;       ///< İ’è‰æ–Ê‚Å‚ÌON/OFF‘I‘ğ‚ğˆø‚«Œp‚®‚½‚ß‚ÌƒfƒoƒbƒOƒ‚[ƒhƒtƒ‰ƒO
 
-	static float delta_time_; ///< å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã‹ã‚‰ã®çµŒéæ™‚é–“
+	static float delta_time_; ///< ‘OƒtƒŒ[ƒ€‚©‚ç‚ÌŒo‰ßŠÔ
 
-	/// @brief 60FPSåŸºæº–ã®ç§»å‹•é‡ã‚’ç¾åœ¨ã®ãƒ•ãƒ¬ãƒ¼ãƒ æ™‚é–“ã«åˆã‚ã›ã‚‹
+	/// @brief 60FPSŠî€‚ÌˆÚ“®—Ê‚ğŒ»İ‚ÌƒtƒŒ[ƒ€ŠÔ‚É‡‚í‚¹‚é
 	static float GetDeltaTimeScaler() { return delta_time_ * 60.0f; }
 };

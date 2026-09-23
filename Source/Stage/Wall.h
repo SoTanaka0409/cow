@@ -13,7 +13,7 @@ public:
 	/// @param topLeft 左上相対位置
 	/// @param bottomRight 右下相対位置
 	/// @details 画像メモリの確保と頂点配列の構築を行う
-	Wall(std::string filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight);
+	Wall(const std::string& filename, VECTOR centerPos, VECTOR topLeft, VECTOR bottomRight);
 	virtual ~Wall();
 
 	/// @brief 壁の動的な状態変化を毎フレーム反映させるため

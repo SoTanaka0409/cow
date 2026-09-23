@@ -47,21 +47,30 @@ public:
 	/// @brief 指定SEの単発再生（同一SEが重複した場合は多重再生）
 	void PlaySE(SoundSe se);
 
-	void LoadBGM(SoundBgm bgm, std::string filename);
-	void LoadSE(SoundSe se, std::string filename);
+	/// @brief 処理の実行
+	void LoadBGM(SoundBgm bgm, const std::string& filename);
+	/// @brief 処理の実行
+	void LoadSE(SoundSe se, const std::string& filename);
+	/// @brief 処理の実行
 	void StopBGM();
+	/// @brief BGMVolumeの設定
 	void SetBGMVolume(int volume);
+	/// @brief SEVolumeの設定
 	void SetSEVolume(int volume);
 
+	/// @brief MasterBGMVolumeの取得
 	int GetMasterBGMVolume() const { return master_bgm_volume_; }
+	/// @brief MasterSEVolumeの取得
 	int GetMasterSEVolume() const { return master_se_volume_; }
 
+	/// @brief MasterBGMVolumeの設定
 	void SetMasterBGMVolume(int volume);
+	/// @brief MasterSEVolumeの設定
 	void SetMasterSEVolume(int volume);
 
 private:
 	/// @brief 仕様制約：DxLibの最大音量値（255）を基準とした、ユーザー設定用のシステム音量基準値
-	int master_bgm_volume_ = 255; ///< 音量やサウンド再生状態を管理する値
+	int master_bgm_volume_ = 128; ///< 音量やサウンド再生状態を管理する値 (初期値50%)
 	int master_se_volume_ = 255;  ///< 音量やサウンド再生状態を管理する値
 
 	/// @brief 同じBGMを重ねて再生しようとした際のリスタート（音途切れ）を検知・防御するための現在再生ID

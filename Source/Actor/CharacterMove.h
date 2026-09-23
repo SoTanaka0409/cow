@@ -12,22 +12,24 @@ class CharacterState;
 class Player3D;
 enum AIState
 {
-	STATE_IDLE,
-	STATE_WALK,
-	STATE_VACUUM
+	kStateIdle,
+	kStateWalk,
+	kStateVacuum
 };
 enum DeathReason
 {
-	DEATH_VACUUM,
-	DEATH_BAIT,
-	DEATH_LIMIT
+	kDeathVacuum,
+	kDeathBait,
+	kDeathLimit
 };
 class CharacterMove : public Object3D
 {
 public:
+	/// @brief TargetPlayerの設定
 	void SetTargetPlayer(Player3D* player) { target_player_ = player; }
+	/// @brief TargetPlayerの取得
 	Player3D* GetTargetPlayer() const { return target_player_; }
-	CharacterMove(std::string filename, VECTOR initPos);
+	CharacterMove(const std::string& filename, VECTOR init_pos);
 	virtual ~CharacterMove();
 	virtual void Update() override;
 	virtual void Draw() override;
@@ -57,10 +59,13 @@ public:
 	virtual void Die(DeathReason reason);
 	virtual void Reset(VECTOR pos);
 	virtual void Deactivate();
-	void AddAnimation(AnimationState state, std::string filename) {}
+	void AddAnimation(AnimationState state, const std::string& filename) {}
+	/// @brief Scaleの設定
 	void SetScale(float scale);
-	AIState GetCurrentState() const { return mCurrentState; }
-	void SetCurrentState(AIState state) { mCurrentState = state; }
+	/// @brief CurrentStateの取得
+	AIState GetCurrentState() const { return ai_state_; }
+	/// @brief CurrentStateの設定
+	void SetCurrentState(AIState state) { ai_state_ = state; }
 	/// @brief 行動パターンを切り替えるため。
 	/// @param newState 新しい状態クラスのポインタ
 	/// @details 古いStateの破棄と新しいStateへの移行
@@ -68,32 +73,43 @@ public:
 	/// @brief プレイヤーに吸い込まれる挙動を開始するため。
 	/// @details mCurrentStateをSTATE_VACUUMに変更
 	void ChangeStateToVacuum();
-	void SetActionTimer(int timer) { mActionTimer = timer; }
-	void DecreaseActionTimer() { mActionTimer--; }
-	int GetActionTimer() const { return mActionTimer; }
-	void SetMoveVec(VECTOR vec) { moveVec = vec; }
-	VECTOR GetMoveVec() const { return moveVec; }
+	/// @brief ActionTimerの設定
+	void SetActionTimer(int timer) { action_timer_ = timer; }
+	/// @brief 処理の実行
+	void DecreaseActionTimer() { action_timer_--; }
+	/// @brief ActionTimerの取得
+	int GetActionTimer() const { return action_timer_; }
+	/// @brief MoveVecの設定
+	void SetMoveVec(VECTOR vec) { move_vec_ = vec; }
+	/// @brief MoveVecの取得
+	VECTOR GetMoveVec() const { return move_vec_; }
+	/// @brief Speedの取得
 	float GetSpeed() const { return speed_; }
-	void IncreaseVacuumTimer() { mVacuumTimer++; }
-	void ResetVacuumTimer() { mVacuumTimer = 0; }
-	int GetVacuumTimer() const { return mVacuumTimer; }
+	/// @brief 処理の実行
+	void IncreaseVacuumTimer() { vacuum_timer_++; }
+	/// @brief 処理の実行
+	void ResetVacuumTimer() { vacuum_timer_ = 0; }
+	/// @brief VacuumTimerの取得
+	int GetVacuumTimer() const { return vacuum_timer_; }
+	/// @brief BaitFlagの取得
 	bool GetBaitFlag() const { return bait_flag_; }
+	/// @brief CharacterDeleteの取得
 	bool GetCharacterDelete() const { return mDeleteFlag; }
 protected:
 	Player3D* target_player_ = nullptr; ///< 参照対象のオブジェクトを保持するポインタ
 	Model* model_;                      ///< 3Dモデルの管理に使用する情報
-	AIState mCurrentState;              ///< 現在の状態や種別を管理する値
+	AIState ai_state_;              ///< 現在の状態や種別を管理する値
 	CharacterState* current_state_;     ///< 現在の状態や種別を管理する値
-	int mActionTimer;                   ///< 時間経過や処理間隔を管理するカウンター
+	int action_timer_;                   ///< 時間経過や処理間隔を管理するカウンター
 	float speed_;                       ///< 移動や回転の計算に使用する値
 	float target_angle_;                ///< 移動や回転の計算に使用する値
 	float angle_;                       ///< 移動や回転の計算に使用する値
 	const float kRotateSpeed = 0.2f;    ///< ゲーム内で使用する固定値
 	VECTOR UpMoveVector;                ///< 移動や回転の計算に使用する値
-	VECTOR moveVec;                     ///< 移動や回転の計算に使用する値
+	VECTOR move_vec_;                     ///< 移動や回転の計算に使用する値
 	VECTOR oldmoveVec;                  ///< 移動や回転の計算に使用する値
 	VECTOR hitPos;                      ///< 座標や位置情報を管理する値
-	int mVacuumTimer;                   ///< 時間経過や処理間隔を管理するカウンター
+	int vacuum_timer_;                   ///< 時間経過や処理間隔を管理するカウンター
 	bool mDeleteFlag;                   ///< 状態の有効・無効を管理するフラグ
 	float death_timer_;                 ///< 時間経過や処理間隔を管理するカウンター
 	float score_;                       ///< スコアや成長値の管理に使用する値

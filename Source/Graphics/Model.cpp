@@ -3,11 +3,11 @@
 
 /// @brief 初期化処理を行う
 /// @details filename (モデルパス)
-/// @details initPos (初期座標)
-/// @details isSeparateAnimation (アニメーション分離フラグ)
+/// @details init_pos (初期座標)
+/// @details is_separate_animation (アニメーション分離フラグ)
 /// @details 内部変数の初期化、およびリソースマネージャ経由でのモデルハンドルの取得
-Model::Model(std::string filename, VECTOR initPos, bool isSeparateAnimation)
-	: position_(initPos)
+Model::Model(const std::string& filename, VECTOR init_pos, bool is_separate_animation)
+	: position_(init_pos)
 	, scale_(1.0f)
 	, change_texture_handle_(-1)
 {
@@ -62,7 +62,7 @@ void Model::SetScale(float scale)
 /// @details filename (テクスチャパス)
 /// @details index (差し替え対象のテクスチャ番号)
 /// @details 差し替え用テクスチャのロードと適用
-void Model::SetTexture(std::string filename, int index)
+void Model::SetTexture(const std::string& filename, int index)
 {
 	if (change_texture_handle_ != -1)
 	{

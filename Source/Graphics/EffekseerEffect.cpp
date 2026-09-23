@@ -4,11 +4,11 @@
 
 /// @brief 初期化処理を行う
 /// @details filename (ファイルパス)
-/// @details initPos (初期座標)
+/// @details init_pos (初期座標)
 /// @details kEffectSize (基本スケール)
 /// @details 内部変数の初期化とエフェクトリソースの読み込み
-EffekseerEffect::EffekseerEffect(const char* filename, VECTOR initPos, float kEffectSize)
-	: play_pos_(initPos)
+EffekseerEffect::EffekseerEffect(const char* filename, VECTOR init_pos, float kEffectSize)
+	: play_pos_(init_pos)
 	, rotation_(VGet(0.0f, 0.0f, 0.0f))
 	, effect_resource_handle_(-1)
 	, file_path_(filename)

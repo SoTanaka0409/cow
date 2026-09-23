@@ -36,6 +36,7 @@ public:
 	/// @brief プレイヤーのステータス加算、または餌オブジェクトの生成トリガーの発行
 	void AddSkill();
 
+	/// @brief SkillTagの取得
 	SkillTag GetSkillTag() { return tag_; }
 
 	/// @brief 値を取得する
@@ -52,8 +53,11 @@ public:
 	float overlay_alpha_; ///< 状態の有効・無効を管理するフラグ
 
 private:
+	/// @brief 処理の実行
 	void UpdateFlashAnimation();
+	/// @brief 処理の実行
 	void UpdateSelectAnimation();
+	/// @brief 処理の実行
 	void UpdateOpenAnimation();
 
 private:

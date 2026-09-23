@@ -25,18 +25,22 @@ public:
 	void UpdateRotate();
 
 	/// @param phase 現在の演出フェーズ
-	/// @brief ufoPos/tornadoPos = ターゲット座標
+	/// @brief ufo_pos/tornado_pos = ターゲット座標
 	/// @details プレイヤー操作を遮断し、特定の座標を強制注視させるカメラワークへの移行
-	void UpdateCameraByPhase(int phase, VECTOR ufoPos, VECTOR tornadoPos);
+	void UpdateCameraByPhase(int phase, VECTOR ufo_pos, VECTOR tornado_pos);
 
+	/// @brief Positionの設定
 	void SetPosition(VECTOR pos) { position_ = pos; }
+	/// @brief Targetの設定
 	void SetTarget(Object3D* target) { target_ = target; }
-	VECTOR GetPosition() { return position_; }
-	VECTOR GetLookAtPosition() { return look_at_position_; }
+	/// @brief Positionの取得
+	VECTOR GetPosition() const { return position_; }
+	/// @brief LookAtPositionの取得
+	VECTOR GetLookAtPosition() const { return look_at_position_; }
 
 	/// @brief 値を取得する
 	/// @return 前フレームとのマウス座標差分があれば true
-	bool IsMouseMoved();
+	bool IsMouseMoved() const;
 
 	/// @brief 三角関数を用いた加算的な揺れ（shake_position_）の計算
 	void Shake();
@@ -48,10 +52,13 @@ public:
 	/// @brief シェイク制御用カウンタの初期化
 	void SetupShake(float time, float width, float angleSpeed, float stepTime = 1.0f);
 
+	/// @brief IsPhaseCameraActiveの取得
 	bool GetIsPhaseCameraActive() const { return is_phase_camera_active_; }
 
 private:
+	/// @brief 処理の実行
 	void UpdatePositionAndTarget();
+	/// @brief 処理の実行
 	void UpdateEffekseerAndLight();
 
 	/// @brief 設計ルール：ジンバルロック回避のため、垂直回転は±89度のクランプ処理により計算の特異点を排除する

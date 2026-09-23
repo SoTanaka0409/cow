@@ -27,6 +27,7 @@ public:
 	/// @brief 落雷ステートマシンの更新、ランダムな落雷座標の再計算、SEおよびエフェクトの再生
 	void Update() override;
 
+	/// @brief 描画処理
 	void Draw() override;
 
 	/// @brief 値を取得する
@@ -47,9 +48,13 @@ public:
 	virtual void OnExit(Collider* collider, Collider* check) override;
 
 private:
+	/// @brief 処理の実行
 	void UpdateEffects();
+	/// @brief 処理の実行
 	void UpdateCollider();
+	/// @brief 処理の実行
 	void UpdateState();
+	/// @brief 処理の実行
 	void UpdateStunEffect();
 
 	VECTOR pos_;         ///< 座標や位置情報を管理する値

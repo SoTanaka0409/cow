@@ -13,7 +13,7 @@
 /// @param filename モデルのファイルパス
 /// @param pos 初期座標
 /// @details GameTimerとモデルを生成し、吸引コライダーのサイズを設定する
-Bait::Bait(std::string filename, VECTOR pos)
+Bait::Bait(const std::string& filename, VECTOR pos)
 	: Object3D(pos)
 {
 	model_ = new Model(filename, pos, false);

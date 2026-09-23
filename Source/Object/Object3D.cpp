@@ -1,4 +1,4 @@
-ï»¿#include "ServiceLocator.h"
+#include "ServiceLocator.h"
 #include "Object3D.h"
 #include "Master.h"
 #include "ObjectManager.h"
@@ -6,11 +6,11 @@
 #include "Stage.h"
 #include "CapsuleCollider.h"
 
-/// @brief Object3Dã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã€‚ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã¸ã®ç™»éŒ²ã¨ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ç”Ÿæˆã‚’è¡Œã†ã€‚
-/// @param initPos åˆæœŸåº§æ¨™
-/// @details ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«è‡ªèº«ã‚’ç™»éŒ²ã€ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®ç”Ÿæˆã¨ä¿æŒ
-Object3D::Object3D(VECTOR initPos)
-	: position_(initPos)
+/// @brief Object3D‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^Bƒ}ƒl[ƒWƒƒ[‚Ö‚Ì“o˜^‚ÆƒRƒ‰ƒCƒ_[¶¬‚ğs‚¤B
+/// @param init_pos ‰ŠúÀ•W
+/// @details ƒ}ƒl[ƒWƒƒ[‚É©g‚ğ“o˜^AƒRƒ‰ƒCƒ_[‚Ì¶¬‚Æ•Û
+Object3D::Object3D(VECTOR init_pos)
+	: position_(init_pos)
 	, capsule_collider_(nullptr)
 	, rotation_(VGet(0.0f, 0.0f, 0.0f))
 	, delete_flag_(false)
@@ -18,13 +18,13 @@ Object3D::Object3D(VECTOR initPos)
 	, draw_flag_(true)
 	, radius_(0)
 {
-	// æç”»ã‚„æ›´æ–°ã‚’è‡ªå‹•åŒ–ã™ã‚‹ãŸã‚ã€ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãªã‚·ãƒ¼ãƒ³ã®ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«ç™»éŒ²ã™ã‚‹
+	// •`‰æ‚âXV‚ğ©“®‰»‚·‚é‚½‚ßAƒAƒNƒeƒBƒu‚ÈƒV[ƒ“‚Ìƒ}ƒl[ƒWƒƒ[‚É“o˜^‚·‚é
 	ServiceLocator::GetObjectManager()->AddObject(this);
-	capsule_collider_ = new CapsuleCollider(this, initPos, initPos, 0);
+	capsule_collider_ = new CapsuleCollider(this, init_pos, init_pos, 0);
 }
 
-/// @brief Object3Dã®ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã€‚ä¿æŒã—ã¦ã„ã‚‹ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’ç ´æ£„ã™ã‚‹ã€‚
-/// @details ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®ãƒ¡ãƒ¢ãƒªè§£æ”¾
+/// @brief Object3D‚ÌƒfƒXƒgƒ‰ƒNƒ^B•Û‚µ‚Ä‚¢‚éƒRƒ‰ƒCƒ_[‚ğ”jŠü‚·‚éB
+/// @details ƒRƒ‰ƒCƒ_[‚Ìƒƒ‚ƒŠ‰ğ•ú
 Object3D::~Object3D()
 {
 	if (capsule_collider_ != nullptr)
@@ -34,8 +34,8 @@ Object3D::~Object3D()
 	}
 }
 
-/// @brief æç”»å‡¦ç†ã€‚æ´¾ç”Ÿã‚¯ãƒ©ã‚¹ã§ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã™ã‚‹ã€‚
-/// @details ç”»é¢ã¸ã®æç”»
+/// @brief •`‰æˆ—B”h¶ƒNƒ‰ƒX‚ÅƒI[ƒo[ƒ‰ƒCƒh‚·‚éB
+/// @details ‰æ–Ê‚Ö‚Ì•`‰æ
 void Object3D::Draw()
 {
 }
@@ -52,32 +52,32 @@ void Object3D::DrawDebug()
 	}
 }
 
-/// @brief è¡çªåˆ¤å®šã®é–‹å§‹ã‚¤ãƒ™ãƒ³ãƒˆã‚’å‡¦ç†ã—ã€ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚„åŠ¹æœéŸ³ã®ãƒˆãƒªã‚¬ãƒ¼ã¨ã™ã‚‹ãŸã‚ã€‚
-/// @details ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆçŠ¶æ…‹ã®å¤‰æ›´
+/// @brief Õ“Ë”»’è‚ÌŠJnƒCƒxƒ“ƒg‚ğˆ—‚µAƒ_ƒ[ƒW‚âŒø‰Ê‰¹‚ÌƒgƒŠƒK[‚Æ‚·‚é‚½‚ßB
+/// @details ƒIƒuƒWƒFƒNƒgó‘Ô‚Ì•ÏX
 void Object3D::Update()
 {
 }
 
-/// @brief è¡çªé–‹å§‹æ™‚ã®å‡¦ç†ã€‚
-/// @param collider è‡ªèº«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
-/// @param check ç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
-/// @details æ´¾ç”Ÿå…ˆã®å®Ÿè£…ã«ä¾å­˜
+/// @brief Õ“ËŠJn‚Ìˆ—B
+/// @param collider ©g‚ÌƒRƒ‰ƒCƒ_[
+/// @param check ‘Šè‚ÌƒRƒ‰ƒCƒ_[
+/// @details ”h¶æ‚ÌÀ‘•‚ÉˆË‘¶
 void Object3D::OnEnter(Collider* collider, Collider* check)
 {
 }
 
-/// @brief è¡çªä¸­ã®å‡¦ç†ã€‚
-/// @param collider è‡ªèº«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
-/// @param check ç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
-/// @details æ´¾ç”Ÿå…ˆã®å®Ÿè£…ã«ä¾å­˜
+/// @brief Õ“Ë’†‚Ìˆ—B
+/// @param collider ©g‚ÌƒRƒ‰ƒCƒ_[
+/// @param check ‘Šè‚ÌƒRƒ‰ƒCƒ_[
+/// @details ”h¶æ‚ÌÀ‘•‚ÉˆË‘¶
 void Object3D::OnTrigger(Collider* collider, Collider* check)
 {
 }
 
-/// @brief è¡çªçµ‚äº†æ™‚ã®å‡¦ç†ã€‚
-/// @param collider è‡ªèº«ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
-/// @param check ç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
-/// @details æ´¾ç”Ÿå…ˆã®å®Ÿè£…ã«ä¾å­˜
+/// @brief Õ“ËI—¹‚Ìˆ—B
+/// @param collider ©g‚ÌƒRƒ‰ƒCƒ_[
+/// @param check ‘Šè‚ÌƒRƒ‰ƒCƒ_[
+/// @details ”h¶æ‚ÌÀ‘•‚ÉˆË‘¶
 void Object3D::OnExit(Collider* collider, Collider* check)
 {
 }

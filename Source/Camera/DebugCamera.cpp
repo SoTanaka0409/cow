@@ -40,7 +40,7 @@ void DebugCamera::Update()
 	// 広大な3Dマップを迅速に巡回・レベルデザイン確認できるよう、左Shift押下で移動速度を大幅に上げる
 	if (CheckHitKey(KEY_INPUT_LSHIFT)) speed = 100.0f;
 
-	VECTOR moveVec = VGet(0, 0, 0);
+	VECTOR move_vec_ = VGet(0, 0, 0);
 	VECTOR UpMoveVector = VGet(0.0f, 0.0f, 0.0f);
 	VECTOR leftMoveVector = VGet(0.0f, 0.0f, 0.0f);
 
@@ -63,26 +63,26 @@ void DebugCamera::Update()
 
 	if (CheckHitKey(KEY_INPUT_A))
 	{
-		moveVec = VAdd(moveVec, leftMoveVector);
+		move_vec_ = VAdd(move_vec_, leftMoveVector);
 	}
 	if (CheckHitKey(KEY_INPUT_D))
 	{
-		moveVec = VAdd(moveVec, VScale(leftMoveVector, -1.0f));
+		move_vec_ = VAdd(move_vec_, VScale(leftMoveVector, -1.0f));
 	}
 	if (CheckHitKey(KEY_INPUT_W))
 	{
-		moveVec = VAdd(moveVec, UpMoveVector);
+		move_vec_ = VAdd(move_vec_, UpMoveVector);
 	}
 	if (CheckHitKey(KEY_INPUT_S))
 	{
-		moveVec = VAdd(moveVec, VScale(UpMoveVector, -1.0f));
+		move_vec_ = VAdd(move_vec_, VScale(UpMoveVector, -1.0f));
 	}
 
-	if (VSquareSize(moveVec) > 0.0f)
+	if (VSquareSize(move_vec_) > 0.0f)
 	{
-		moveVec = VScale(VNorm(moveVec), speed);
+		move_vec_ = VScale(VNorm(move_vec_), speed);
 	}
-	position_ = VAdd(position_, moveVec);
+	position_ = VAdd(position_, move_vec_);
 
 	// 移動処理によってカメラ座標と注視点の相対距離が崩れると視界が歪むため、移動後の座標を基に注視点を再計算する
 	target.x = position_.x + dist * cosf(vertical_angle_ * DX_PI_F / 180.0f) * sinf(horizontal_angle_ * DX_PI_F / 180.0f);

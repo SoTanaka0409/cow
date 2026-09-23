@@ -6,14 +6,16 @@
 class Stage : public Object3D
 {
 public:
-	/// @param initPos 配置初期座標
-	/// @param StageModelName 地形描画用モデルパス
-	/// @param stageCollsionModelName 衝突判定用モデルパス
+	/// @param init_pos 配置初期座標
+	/// @param stage_model_name 地形描画用モデルパス
+	/// @param stage_collision_model_name 衝突判定用モデルパス
 	/// @brief 各種地形モデルハンドル（DxLib）のロード
-	Stage(VECTOR initPos, std::string StageModelName, std::string stageCollsionModelName);
+	Stage(VECTOR init_pos, const std::string& stage_model_name, const std::string& stage_collision_model_name);
 	virtual ~Stage();
 
+	/// @brief 毎フレームの更新処理
 	void Update() override;
+	/// @brief 描画処理
 	void Draw() override;
 
 	/// @param pos2 カプセルの始点・終点座標

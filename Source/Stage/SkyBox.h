@@ -10,7 +10,7 @@ public:
 	/// @param filename スカイボックスのモデルファイルパス
 	/// @param pos 初期座標
 	/// @brief 天球用Modelクラスのインスタンス生成
-	SkyBox(std::string filename, VECTOR pos);
+	SkyBox(const std::string& filename, VECTOR pos);
 	virtual ~SkyBox();
 
 	/// @brief 天球モデルのトランスフォーム（位置・回転・縮尺）行列の更新
@@ -27,7 +27,7 @@ public:
 	/// @param filename テクスチャ画像パス
 	/// @param index マテリアルインデックス
 	/// @brief 時間経過や天候変化（昼・夜・フェーバータイム等）に応じて、空のテクスチャを動的に差し替える
-	void SetModelTexture(std::string filename, int index = 0);
+	void SetModelTexture(const std::string& filename, int index = 0);
 
 private:
 	/// @brief カメラが天球のポリゴン外に飛び出して背景が消失するのを防ぐため、プレイヤーの現在座標を毎フレーム追従させる
