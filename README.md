@@ -25,3 +25,6 @@ UFOを操作して牛をビームで捕獲し、コンボを繋いでハイス�
 - `SceneManager.cpp` : シーン管理の基盤
 - `ColliderManager.cpp` : 衝突検知とイベント発火ロジック
 - `CowState.cpp` : 牛のAI状態遷移
+---
+※ゲームのプレイ動画や詳しい企画書については、以下のWebポートフォリオをご覧ください。
+👉 https://SoTanaka0409.github.io/portfolio_new/
