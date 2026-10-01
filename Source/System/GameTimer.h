@@ -23,7 +23,7 @@ public:
 	~GameTimer();
 
 	/// @brief FPS低下によるタイマー進行の遅延バグを防ぐため、フレーム単位ではなくシステム時刻の差分ベースで計算する
-	/// @details なし [出力] なし [副作用] mLastTimeを用いた残秒数の減算
+	/// @details なし [出力] なし [副作用] last_time_を用いた残秒数の減算
 	/// @details および0到達時の状態変更
 	void Update();
 
@@ -45,6 +45,6 @@ private:
 	bool flag_;            ///< タイムアップ判定フラグ
 	bool stop_flag_;       ///< 時間進行の停止フラグ
 	int score_text_image_; ///< 制限時間UIの画像ハンドル
-	int mLastTime;         ///< 前回計算時のシステム時刻
+	int last_time_;         ///< 前回計算時のシステム時刻
 	Tag_Num tag_;          ///< 現在のタイマー動作モード
 };

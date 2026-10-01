@@ -22,23 +22,23 @@ CowManager::CowManager()
 /// @param tag 牛の種類
 /// @param count 生成数
 /// @param is_fever フィーバー状態フラグ
-/// @details mCreaturesへのオブジェクト追加、および上限時は既存オブジェクトの破棄を行う。
+/// @details creatures_へのオブジェクト追加、および上限時は既存オブジェクトの破棄を行う。
 void CowManager::SpawnCow(const std::string& filename, VECTOR pos, float scale, CowMove::TagCow tag, int count, bool is_fever, float scatterRadius)
 {
 	for (int i = 0; i < count; i++)
 	{
 		// パフォーマンス低下を防ぐため、フィールド上の牛の最大数を30匹に制限する。
-		if (mCreatures.size() >= 30)
+		if (creatures_.size() >= 30)
 		{
 			if (tag == CowMove::kCowGold)
 			{
 				// 金牛は出現優先度が高いため、遠方にいる不要な一般牛を破棄して生成枠を確保する。
 				bool erased = false;
 				float maxDistSq = -1.0f;
-				auto furthestIt = mCreatures.end();
+				auto furthestIt = creatures_.end();
 
 				VECTOR playerPos = Master::camera_->GetPosition();
-				for (auto it = mCreatures.begin(); it != mCreatures.end(); ++it)
+				for (auto it = creatures_.begin(); it != creatures_.end(); ++it)
 				{
 					if ((*it)->GetTagCow() != CowMove::kCowGold)
 					{
@@ -54,23 +54,23 @@ void CowManager::SpawnCow(const std::string& filename, VECTOR pos, float scale, 
 						}
 					}
 				}
-				if (furthestIt != mCreatures.end())
+				if (furthestIt != creatures_.end())
 				{
 					(*furthestIt)->Die(kDeathLimit);
 					auto cow = *furthestIt;
 					cow->Deactivate();
 					pools_[cow->GetTagCow()].push_back(cow);
-					mCreatures.erase(furthestIt);
+					creatures_.erase(furthestIt);
 					erased = true;
 				}
-				else if (!mCreatures.empty())
+				else if (!creatures_.empty())
 				{
 					// 一般牛がいない場合でも、最も古い牛を破棄して金牛の枠を強制的に空ける。
-					mCreatures.front()->Die(kDeathLimit);
-					auto cow = mCreatures.front();
+					creatures_.front()->Die(kDeathLimit);
+					auto cow = creatures_.front();
 					cow->Deactivate();
 					pools_[cow->GetTagCow()].push_back(cow);
-					mCreatures.erase(mCreatures.begin());
+					creatures_.erase(creatures_.begin());
 					erased = true;
 				}
 				if (!erased) break;

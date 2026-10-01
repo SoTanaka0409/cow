@@ -81,7 +81,7 @@ public:
 
 	/// @brief 3D空間描画の完了後に呼ばないとZテストでUIが裏に隠れるため、2D描画フェーズで呼び出すこと
 	/// @details なし [出力] なし [副作用] HUD（UI）の描画
-	void bar();
+	void Bar();
 
 	/// @brief リリースビルドでの意図せぬ情報露出を防ぐため、本番環境ではコンパイルスイッチ等で確実に除外すること
 	/// @details なし [出力] なし [副作用] デバッグ用テキスト等の描画
@@ -138,18 +138,18 @@ private:
 	float target_angle_;                         ///< 旋回目標の角度
 	float angle_;                                ///< 現在の旋回角度
 	const float kRotateSpeed = 0.2f;             ///< 旋回時の補間係数
-	const float JUMP_POWER = 30.0f;              ///< ジャンプ力
-	bool mIsOutOfBounds = false;                 ///< 画面外判定フラグ
+	const float kJumpPower = 30.0f;              ///< ジャンプ力
+	bool is_out_of_bounds_ = false;                 ///< 画面外判定フラグ
 	int light_graph_;                            ///< ライティング用画像ハンドル
 	int gauge_frame_graph_;                      ///< ゲージ枠の画像ハンドル
-	bool mIsCowInVacuumRange;                    ///< 吸引対象が範囲内にいるかのフラグ
-	const float VACUUM_RADIUS = 300.0f;          ///< 吸引有効半径
+	bool is_cow_in_vacuum_range_;                    ///< 吸引対象が範囲内にいるかのフラグ
+	const float kVacuumRadius = 300.0f;          ///< 吸引有効半径
 	const int VACUUM_REQUIRE_TIME = 120;         ///< 吸引完了に必要なフレーム数
-	float mVacuumGauge = 100.0f;                 ///< 現在の吸引ゲージ残量
-	const float VACUUM_GAUGE_MAX = 100.0f;       ///< 吸引ゲージの最大値
-	const float VACUUM_COST_PER_FRAME = 0.2f;    ///< 吸引中の毎フレーム消費量
-	const float VACUUM_RECOVER_PER_FRAME = 0.4f; ///< 非吸引時の毎フレーム回復量
-	bool mIsVacuumActive = false;                ///< 吸引アクション実行中フラグ
+	float vacuum_gauge_ = 100.0f;                 ///< 現在の吸引ゲージ残量
+	const float kVacuumGaugeMax = 100.0f;       ///< 吸引ゲージの最大値
+	const float kVacuumCostPerFrame = 0.2f;    ///< 吸引中の毎フレーム消費量
+	const float kVacuumRecoverPerFrame = 0.4f; ///< 非吸引時の毎フレーム回復量
+	bool is_vacuum_active_ = false;                ///< 吸引アクション実行中フラグ
 	int CatchNowCount;                           ///< 現在の同時捕獲数
 	float currentSpeed;                          ///< 最終計算された実際の移動速度
 	VECTOR move_vec_ = VGet(0.0f, 0.0f, 0.0f);     ///< 最終的な移動ベクトル
@@ -157,14 +157,14 @@ private:
 	VECTOR hitPos = VGet(0.0f, 0.0f, 0.0f);      ///< 当たり判定の衝突検知座標
 	float horizontal_angle_;                     ///< カメラ基準の水平回転角
 	float vertical_angle_;                       ///< カメラ基準の垂直回転角
-	const int SIZE_RAND_MAX = 800;               ///< エフェクト等のランダムサイズ最大値
-	const int SIZE_RAND_MIN = 400;               ///< エフェクト等のランダムサイズ最小値
-	const int VISIBLE_TIME_RAND_MAX = 30;        ///< エフェクト等のランダム表示時間最大値
-	const int VISIBLE_TIME_RAND_MIN = 5;         ///< エフェクト等のランダム表示時間最小値
+	const int kSizeRandMax = 800;               ///< エフェクト等のランダムサイズ最大値
+	const int kSizeRandMin = 400;               ///< エフェクト等のランダムサイズ最小値
+	const int kVisibleTimeRandMax = 30;        ///< エフェクト等のランダム表示時間最大値
+	const int kVisibleTimeRandMin = 5;         ///< エフェクト等のランダム表示時間最小値
 	EffekseerEffect* mpSpeed;                    ///< スピードバフ用エフェクト
 	EffekseerEffect* beam_;                      ///< ビーム攻撃用エフェクト
 	int effect_timer_;                           ///< エフェクトの再生時間管理タイマー
-	bool mIsStunned;                             ///< スタン(行動不能)状態フラグ
-	int mStunTimer;                              ///< スタン解除までの残りフレーム数
+	bool is_stunned_;                             ///< スタン(行動不能)状態フラグ
+	int stun_timer_;                              ///< スタン解除までの残りフレーム数
 
 };

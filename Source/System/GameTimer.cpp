@@ -9,7 +9,7 @@ GameTimer::GameTimer(VECTOR pos, int timer, Tag_Num num)
 	, stop_flag_(false)
 	, tag_(num)
 {
-	mLastTime = GetNowCount();
+	last_time_ = GetNowCount();
 
 	score_text_image_ = Master::resource_manager_->LoadGraphics("Resource/2D/InGame/Text_089b.png"); // 描画遅延軽減のため先読み込み
 }
@@ -51,9 +51,9 @@ void GameTimer::Update()
 	int now = GetNowCount();
 
 	// フレームレート非依存で時間を計測するためGetNowCountの差分を使用
-	if (now - mLastTime >= 1000)
+	if (now - last_time_ >= 1000)
 	{
-		mLastTime = now;
+		last_time_ = now;
 		Time--;
 
 		// 0未満の表示やマイナス値によるバグを防ぐため下限をストップ

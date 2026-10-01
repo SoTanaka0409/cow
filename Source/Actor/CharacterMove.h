@@ -94,7 +94,7 @@ public:
 	/// @brief BaitFlagの取得
 	bool GetBaitFlag() const { return bait_flag_; }
 	/// @brief CharacterDeleteの取得
-	bool GetCharacterDelete() const { return mDeleteFlag; }
+	bool GetCharacterDelete() const { return delete_flag_; }
 protected:
 	Player3D* target_player_ = nullptr; ///< 参照対象のオブジェクトを保持するポインタ
 	Model* model_;                      ///< 3Dモデルの管理に使用する情報
@@ -110,7 +110,7 @@ protected:
 	VECTOR oldmoveVec;                  ///< 移動や回転の計算に使用する値
 	VECTOR hitPos;                      ///< 座標や位置情報を管理する値
 	int vacuum_timer_;                   ///< 時間経過や処理間隔を管理するカウンター
-	bool mDeleteFlag;                   ///< 状態の有効・無効を管理するフラグ
+	bool delete_flag_;                   ///< 状態の有効・無効を管理するフラグ
 	float death_timer_;                 ///< 時間経過や処理間隔を管理するカウンター
 	float score_;                       ///< スコアや成長値の管理に使用する値
 	float xp_;                          ///< スコアや成長値の管理に使用する値

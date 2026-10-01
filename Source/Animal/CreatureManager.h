@@ -13,13 +13,13 @@ public:
 	CreatureManager()
 	{
 		/// @brief 実行中の動的配列の拡張（再確保）に伴うスパイクを防ぐため、初期領域を最大想定数（500）確保しておく
-		mCreatures.reserve(500);
+		creatures_.reserve(500);
 	}
 
 	virtual ~CreatureManager()
 	{
 		/// @brief 稼働中のキャラはObjectManager側が一括破棄するため、ここでdeleteすると多重解放（二重解放バグ）になるためクリアのみ行う
-		mCreatures.clear();
+		creatures_.clear();
 		for (auto& pair : pools_)
 		{
 			for (auto creature : pair.second)
@@ -33,7 +33,7 @@ public:
 	/// @brief 管理下にあるすべての生存キャラクターのUpdate呼び出し、および非アクティブ化したキャラのプール回収
 	void Update()
 	{
-		for (auto creature : mCreatures)
+		for (auto creature : creatures_)
 		{
 			creature->Update();
 		}
@@ -47,10 +47,10 @@ public:
 	/// @brief 削除要求フラグが立ったキャラを生存リストから除外し、対応する識別タグのオブジェクトプール（待機リスト）へ返却する
 	void Erase()
 	{
-		if (!mCreatures.empty())
+		if (!creatures_.empty())
 		{
-			mCreatures.erase(
-				std::remove_if(mCreatures.begin(), mCreatures.end(), [this](auto creature) {
+			creatures_.erase(
+				std::remove_if(creatures_.begin(), creatures_.end(), [this](auto creature) {
 					/// @details CowMoveとAnimalMoveはいずれもCharacterMoveを継承しており削除フラグの共通監視が可能
 					if (creature->GetCharacterDelete())
 					{
@@ -62,7 +62,7 @@ public:
 					}
 					return false;
 					}),
-				mCreatures.end()
+				creatures_.end()
 			);
 		}
 	}
@@ -95,11 +95,11 @@ protected:
 			creature = new TConcrete(std::forward<Args>(args)...);
 		}
 		creature->SetScale(scale);
-		mCreatures.push_back(creature);
+		creatures_.push_back(creature);
 		return creature;
 	}
 
 protected:
-	std::vector<TMove*> mCreatures;             ///< 現在ステージ上で稼働しており、毎フレームの更新処理が走る生存キャラクターリスト
+	std::vector<TMove*> creatures_;             ///< 現在ステージ上で稼働しており、毎フレームの更新処理が走る生存キャラクターリスト
 	std::map<TTag, std::vector<TMove*>> pools_; ///< メモリ再確保を回避するために、待機（非アクティブ）状態のアクターをプールしておく連想配列
 };

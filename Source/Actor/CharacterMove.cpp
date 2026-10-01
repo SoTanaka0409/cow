@@ -26,7 +26,7 @@ CharacterMove::CharacterMove(const std::string& filename, VECTOR init_pos)
 	, oldmoveVec(VGet(0.0f, 0.0f, 0.0f))
 	, hitPos(VGet(0.0f, 0.0f, 0.0f))
 	, vacuum_timer_(0)
-	, mDeleteFlag(false)
+	, delete_flag_(false)
 	, death_timer_(1000.0f)
 	, score_(0.0f)
 	, xp_(0.0f)
@@ -71,7 +71,7 @@ void CharacterMove::Reset(VECTOR pos)
 	move_vec_ = VGet(0.0f, 0.0f, 0.0f);
 	oldmoveVec = VGet(0.0f, 0.0f, 0.0f);
 	vacuum_timer_ = 0;
-	mDeleteFlag = false;
+	delete_flag_ = false;
 	bait_flag_ = false;
 	is_visible_ = true;
 	SetDrawFlag(true);
@@ -293,5 +293,5 @@ void CharacterMove::CharacterDied()
 /// @details 削除フラグの判定や各種死亡に応じた演出・処理を行う
 void CharacterMove::Die(DeathReason reason)
 {
-	if (mDeleteFlag) return;
+	if (delete_flag_) return;
 }

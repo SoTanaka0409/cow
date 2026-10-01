@@ -124,7 +124,7 @@ void AnimalMove::CharacterDied()
 	}
 
 	// UFOへの吸い込み演出を完遂したか判定するため
-	if (position_.y > death_timer_ && !mDeleteFlag)
+	if (position_.y > death_timer_ && !delete_flag_)
 	{
 		Die(kDeathVacuum);
 	}
@@ -137,7 +137,7 @@ void AnimalMove::CharacterDied()
 /// @details 経験値・スコアの加算、コンボの更新、削除フラグの有効化
 void AnimalMove::Die(DeathReason reason)
 {
-	if (mDeleteFlag) return;
+	if (delete_flag_) return;
 
 	Player3D* player = target_player_;
 
@@ -181,11 +181,11 @@ void AnimalMove::Die(DeathReason reason)
 				s_tag3 = AnimalMove::kNone;
 			}
 		}
-		mDeleteFlag = true;
+		delete_flag_ = true;
 		break;
 
 	case kDeathLimit:
-		mDeleteFlag = true;
+		delete_flag_ = true;
 		break;
 	}
 }

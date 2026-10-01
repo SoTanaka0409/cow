@@ -40,8 +40,8 @@ Player3D::Player3D(const std::string& filename, VECTOR init_pos)
 	, CatchNowCount(0)
 
 {
-	mIsStunned = false;
-	mStunTimer = 0;
+	is_stunned_ = false;
+	stun_timer_ = 0;
 	effect_timer_ = 80;
 	radius_ = 100;
 
@@ -91,27 +91,27 @@ void Player3D::Update()
 	// デバッグ時はカメラ操作に専念させるため
 	if (Master::is_debug_camera_) return;
 
-	if (mIsStunned)
+	if (is_stunned_)
 	{
-		mStunTimer--;
-		if (mStunTimer <= 0)
+		stun_timer_--;
+		if (stun_timer_ <= 0)
 		{
-			mIsStunned = false;
+			is_stunned_ = false;
 		}
 	}
 
-	mIsCowInVacuumRange = false;
+	is_cow_in_vacuum_range_ = false;
 
 	ManagerUpdate();
 
 	// 落下時は安全な空中へ移動させ、画面外への永続的な逸脱を防ぐ
-	if (Master::GameFinishFlag || mIsOutOfBounds)
+	if (Master::GameFinishFlag || is_out_of_bounds_)
 	{
 		position_ = VGet(0, 2000, 0);
 		return;
 	}
 
-	if (!mIsStunned && !skill_->add_skill_flag_)
+	if (!is_stunned_ && !skill_->add_skill_flag_)
 	{
 		MoveEx();
 		RotationByMove();
@@ -121,7 +121,7 @@ void Player3D::Update()
 	else
 	{
 		// スタン中は意図しない吸い込みが発生しないようにする
-		mIsVacuumActive = false;
+		is_vacuum_active_ = false;
 		ColliderUpdate();
 	}
 
@@ -129,23 +129,23 @@ void Player3D::Update()
 }
 
 /// @brief プレイヤーの入力処理と吸い込みゲージの管理
-/// @details mIsVacuumActiveとmVacuumGaugeの更新
+/// @details is_vacuum_active_とvacuum_gauge_の更新
 void Player3D::Play()
 {
 	int mouseInput = GetMouseInput();
 
-	if ((mouseInput & MOUSE_INPUT_LEFT) && mVacuumGauge > 0.0f && !Master::FeverFlag)
+	if ((mouseInput & MOUSE_INPUT_LEFT) && vacuum_gauge_ > 0.0f && !Master::FeverFlag)
 	{
-		mIsVacuumActive = true;
-		mVacuumGauge -= VACUUM_COST_PER_FRAME;
+		is_vacuum_active_ = true;
+		vacuum_gauge_ -= kVacuumCostPerFrame;
 
-		if (mVacuumGauge < 0.0f) mVacuumGauge = 0.0f;
+		if (vacuum_gauge_ < 0.0f) vacuum_gauge_ = 0.0f;
 	}
 	else
 	{
-		mIsVacuumActive = false;
+		is_vacuum_active_ = false;
 
-		float recoverySpeed = VACUUM_RECOVER_PER_FRAME;
+		float recoverySpeed = kVacuumRecoverPerFrame;
 
 		// ラストスパート時はゲージ回復速度を上げ、プレイヤーを有利にする
 		if (Master::scene_manager_ && Master::scene_manager_->GetCurrentScene() && ServiceLocator::GetGameManager())
@@ -157,12 +157,12 @@ void Player3D::Play()
 			}
 		}
 
-		mVacuumGauge += recoverySpeed;
-		if (mVacuumGauge > VACUUM_GAUGE_MAX) mVacuumGauge = VACUUM_GAUGE_MAX;
+		vacuum_gauge_ += recoverySpeed;
+		if (vacuum_gauge_ > kVacuumGaugeMax) vacuum_gauge_ = kVacuumGaugeMax;
 	}
 
 	// フィーバー中は無制限に吸い込みを可能にするため
-	if (Master::FeverFlag) mIsVacuumActive = true;
+	if (Master::FeverFlag) is_vacuum_active_ = true;
 }
 
 
@@ -171,12 +171,12 @@ void Player3D::Play()
 /// @details カプセルコライダーのサイズ変更、エフェクトの再生・停止
 void Player3D::ColliderUpdate()
 {
-	if (mIsVacuumActive)
+	if (is_vacuum_active_)
 	{
 		// 空中の対象も吸い込めるように判定を上に伸ばす
 		capsule_collider_->position_ = VGet(position_.x, -1000, position_.z);
 		capsule_collider_->position2_ = VGet(position_.x, 3000, position_.z);
-		capsule_collider_->radius_ = VACUUM_RADIUS;
+		capsule_collider_->radius_ = kVacuumRadius;
 
 		effect_timer_--;
 		if (effect_timer_ <= 0)
@@ -215,25 +215,25 @@ void Player3D::ColliderUpdate()
 }
 
 /// @brief 画面外への逸脱判定と復帰処理
-/// @details mIsOutOfBoundsの更新、座標のリセット
+/// @details is_out_of_bounds_の更新、座標のリセット
 void Player3D::ScreenOutCheck()
 {
 	VECTOR stage_out_pos = VGet(Utility::StageSize.x * 1.5f, 0.0f, Utility::StageSize.z * 1.5f);
 	if (position_.x > stage_out_pos.x || position_.x < -stage_out_pos.x ||
 		position_.z >stage_out_pos.z || position_.z < -stage_out_pos.z)
 	{
-		mIsOutOfBounds = true;
+		is_out_of_bounds_ = true;
 
 		// 画面外にスタックした場合、手動で復帰できるようにする
 		if (CheckHitKey(KEY_INPUT_SPACE))
 		{
 			SetPosition(VGet(0, 2000, 0));
-			mIsOutOfBounds = false;
+			is_out_of_bounds_ = false;
 		}
 	}
 	else
 	{
-		mIsOutOfBounds = false;
+		is_out_of_bounds_ = false;
 	}
 }
 
@@ -263,7 +263,7 @@ void Player3D::Draw()
 	const int DIV = 32;
 	unsigned int color;
 
-	if (mIsCowInVacuumRange == true)
+	if (is_cow_in_vacuum_range_ == true)
 	{
 		color = GetColor(255, 0, 0);
 	}
@@ -277,13 +277,13 @@ void Player3D::Draw()
 		float angle1 = (float)i / DIV * DX_PI_F * 2.0f;
 		float angle2 = (float)(i + 1) / DIV * DX_PI_F * 2.0f;
 
-		VECTOR p1 = VAdd(position_, VGet(cosf(angle1) * VACUUM_RADIUS, -position_.y + 0.1f, sinf(angle1) * VACUUM_RADIUS));
-		VECTOR p2 = VAdd(position_, VGet(cosf(angle2) * VACUUM_RADIUS, -position_.y + 0.1f, sinf(angle2) * VACUUM_RADIUS));
+		VECTOR p1 = VAdd(position_, VGet(cosf(angle1) * kVacuumRadius, -position_.y + 0.1f, sinf(angle1) * kVacuumRadius));
+		VECTOR p2 = VAdd(position_, VGet(cosf(angle2) * kVacuumRadius, -position_.y + 0.1f, sinf(angle2) * kVacuumRadius));
 
 		DrawLine3D(p1, p2, color);
 	}
 
-	bar();
+	Bar();
 }
 
 void Player3D::DrawShadowCaster()
@@ -426,7 +426,7 @@ void Player3D::RotationByMove()
 
 /// @brief 吸い込みゲージのUI描画
 /// @details 画面上へのゲージ表示
-void Player3D::bar()
+void Player3D::Bar()
 {
 	int gaugeWidth = Utility::kUiVacuumW;
 	int gaugeHeight = Utility::kUiVacuumH;
@@ -442,13 +442,13 @@ void Player3D::bar()
 	DrawBox(x1 - 2, y1 - 2, x2 + 2, y2 + 2, GetColor(180, 200, 160), TRUE);
 	DrawBox(x1, y1, x2, y2, GetColor(240, 248, 230), TRUE);
 
-	int currentWidth = (int)((mVacuumGauge / VACUUM_GAUGE_MAX) * gaugeWidth);
+	int currentWidth = (int)((vacuum_gauge_ / kVacuumGaugeMax) * gaugeWidth);
 	if (currentWidth < 0) currentWidth = 0;
 
 	if (currentWidth > 0)
 	{
 		int fillX = x1 + currentWidth;
-		float ratio = mVacuumGauge / VACUUM_GAUGE_MAX;
+		float ratio = vacuum_gauge_ / kVacuumGaugeMax;
 
 		// 吸引が進むにつれて黄色からエメラルドグリーンへ滑らかにグラデーションするSF風の発色
 		int r = (int)(250 - 150 * ratio);
@@ -558,8 +558,8 @@ void Player3D::SetScale(float scale)
 /// @details 状態異常フラグとタイマーのセット
 void Player3D::ApplyStun(int stunTime)
 {
-	mIsStunned = true;
-	mStunTimer = stunTime;
+	is_stunned_ = true;
+	stun_timer_ = stunTime;
 }
 
 /// @brief スキルエフェクトの再生

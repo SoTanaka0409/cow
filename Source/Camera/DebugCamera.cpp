@@ -114,7 +114,7 @@ void DebugCamera::UpdateRotate()
 		vertical_angle_ = -80.0f;
 	}
 
-	const float MOUSE_SENSITIVITY = 0.05f;
+	const float kMouseSensitivity = 0.05f;
 
 	if (Master::scene_manager_->GetSceneType() == SceneManager::SCENE_TYPE::kGameScene || Master::scene_manager_->GetSceneType() == SceneManager::SCENE_TYPE::kSceneTutorial)
 	{
@@ -134,7 +134,7 @@ void DebugCamera::UpdateRotate()
 		int deltaX = mouse_x_ - center_x_;
 		int deltaY = mouse_y_ - center_y_;
 
-		horizontal_angle_ -= deltaX * MOUSE_SENSITIVITY;
-		vertical_angle_ += deltaY * MOUSE_SENSITIVITY;
+		horizontal_angle_ -= deltaX * kMouseSensitivity;
+		vertical_angle_ += deltaY * kMouseSensitivity;
 	}
 }

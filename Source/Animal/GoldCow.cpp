@@ -60,7 +60,7 @@ void GoldCow::Update()
 /// @details 条件を満たす場合、フィーバー状態をトリガーする
 void GoldCow::Die(DeathReason reason)
 {
-	if (mDeleteFlag) return;
+	if (delete_flag_) return;
 	CowMove::Die(reason);
 
 	// プレイヤーが通常時に倒した場合、フィーバー状態へ移行させるため

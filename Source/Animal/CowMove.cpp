@@ -54,7 +54,7 @@ void CowMove::Reset(VECTOR pos)
 {
 	CharacterMove::Reset(pos);
 
-	mDeleteFlag = false;
+	delete_flag_ = false;
 	effect_timer_ = 0;
 	if (cow_vm_ != nullptr)
 	{
@@ -356,14 +356,14 @@ void CowMove::KilledByBait()
 {
 	is_visible_ = false;
 	Die(kDeathBait);
-	mDeleteFlag = true;
+	delete_flag_ = true;
 }
 
 /// @brief 牛のキャプチャ完了時、プレイヤーへスコア・XP・コンボ数を付与し、SEおよび爆発エフェクトを再生する。
 /// @details プレイヤーリソース（Score/XP/Combo）の加算と削除予約フラグの設定を行う。
 void CowMove::Die(DeathReason reason)
 {
-	if (mDeleteFlag) return;
+	if (delete_flag_) return;
 
 	Player3D* player = target_player_;
 
@@ -406,7 +406,7 @@ void CowMove::Die(DeathReason reason)
 				s_tag3Cow = CowMove::kNone;
 			}
 		}
-		mDeleteFlag = true;
+		delete_flag_ = true;
 		break;
 
 	case kDeathBait:
@@ -418,11 +418,11 @@ void CowMove::Die(DeathReason reason)
 			player->combo_->AddHit();
 			player->score_manager_->AddScore(static_cast<int>(score_ * player->combo_->GetMultiplier()));
 		}
-		mDeleteFlag = true;
+		delete_flag_ = true;
 		break;
 
 	case kDeathLimit:
-		mDeleteFlag = true;
+		delete_flag_ = true;
 		break;
 	}
 }
