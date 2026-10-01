@@ -1,11 +1,9 @@
-# === Visual Studio 関連 ===
+﻿# === Visual Studio & Build ===
 .vs/
 *.user
 *.userosscache
 *.sln.docstates
 *.suo
-
-# === C++ ビルド結果・中間ファイル ===
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
@@ -19,7 +17,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 
-# 一時ファイル・デバッグ情報
+# === Intermediate & Executable Files ===
 *.obj
 *.exe
 *.pdb
@@ -31,7 +29,20 @@ bld/
 *.sdf
 *.ipch
 *.cache
+*.tlog
+*.idb
+*.iobj
+*.ipdb
+*.lastbuildstate
 
-# === その他 OS が勝手に作るファイル ===
+# === Raw 3D Model / Asset Files (DxLib uses .mv1) ===
+*.x
+*.fbx
+*.blend
+*.mqo
+
+# === OS generated ===
 .DS_Store
 Thumbs.db
+ehthumbs.db
+desktop.ini
