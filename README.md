@@ -107,7 +107,14 @@ UFOを操作して地上にいる牛をビームで吸い込み捕獲する、�
 | 必要なもの | 内容 |
 | :--- | :--- |
 | **開発環境** | Visual Studio 2022（C++ によるデスクトップ開発） |
-| **ライブラリ** | DxLib Ver 3.24b と、Effekseer の DxLib 用ファイル（EffekseerForDXLib） |
+| **ライブラリ** | Effekseer For DXライブラリ 1.70e（DXライブラリ Ver 3.24b 用。DXライブラリ本体も含まれています） |
 
-1. ライブラリの「プロジェクトに追加すべきファイル_VC用」フォルダを、`DxLib_VC/プロジェクトに追加すべきファイル_VC用/` に置きます。
+### ライブラリの入手先
+
+- [Effekseer 公式サイトのダウンロードページ](https://effekseer.github.io/jp/download.html) の「Effekseer For DXライブラリ」から、**「1.70e, 3.24b」** をダウンロードしてください（`EffekseerForDXLib_170e_324b.zip`）。
+- 参考：[DXライブラリ 公式サイト](https://dxlib.xsrv.jp/)
+
+### 手順
+
+1. zip の中にある「プロジェクトに追加すべきファイル_VC用」フォルダを、`DxLib_VC/` フォルダの中に置きます（`DxLib_VC/プロジェクトに追加すべきファイル_VC用/` になるようにします）。
 2. `Project1.sln` を Visual Studio で開き、ビルドします。
