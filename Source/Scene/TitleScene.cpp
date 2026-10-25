@@ -88,20 +88,6 @@ void TitleScene::Draw()
 	DrawMenuButtons();
 	DrawRankingUI();
 
-	// 初回読み込み時のリソース解放漏れを検証するため、描画2フレーム目のみログ追記を行う
-	if (frame_count_ == 2)
-	{
-		FILE* fp = NULL;
-		fopen_s(&fp, "Data/debug_log.txt", "a");
-		if (fp)
-		{
-			int w, h;
-			int res = GetGraphSize(title_graph_handle_, &w, &h);
-			fprintf(fp, "TitleScene Draw: handle=%d, res=%d, w=%d, h=%d\n", title_graph_handle_, res, w, h);
-			fclose(fp);
-		}
-	}
-
 	if (fade_state_ != kSceneFadeNone)
 	{
 		Scene::Fade(fade_state_);
