@@ -51,3 +51,7 @@ desktop.ini
 /Log.txt
 /Data/Log.txt
 /Data/debug_log.txt
+
+# 他の人が作ったライブラリ（DxLib / Effekseer）。各自で用意する（README の「ビルド方法」参照）
+/DxLib_VC/
+/EFKforDxLib/
