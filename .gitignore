@@ -46,3 +46,8 @@ bld/
 Thumbs.db
 ehthumbs.db
 desktop.ini
+
+# === 実行時のログ（ゲームを動かすと作られる） ===
+/Log.txt
+/Data/Log.txt
+/Data/debug_log.txt

@@ -1,2 +1,0 @@
- 
-TitleScene Draw: handle=70778893, res=0, w=1264, h=842
